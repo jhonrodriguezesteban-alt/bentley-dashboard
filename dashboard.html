@@ -180,14 +180,14 @@
   .kpi-tooltip-row:last-child { border-bottom: none; }
   .kpi-tooltip-label { color: var(--text-dim); }
   .kpi-tooltip-val { color: var(--text); font-weight: 600; }
-  .pill-tip { position: relative; cursor: default; }
+  .pill-tip { position: relative; cursor: pointer; }
   .pill-tip::after {
     content: attr(data-tip); position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%);
     background: var(--navy3); color: var(--text); padding: 4px 8px; border-radius: 6px;
     font-size: 0.65rem; white-space: nowrap; opacity: 0; pointer-events: none;
     transition: opacity 0.15s; border: 1px solid var(--border); z-index: 10;
   }
-  .pill-tip:hover::after { opacity: 1; }
+  .pill-tip:hover::after, .pill-tip.visible::after { opacity: 1; }
   .rent-item:first-child .pill-tip::after { bottom: auto; top: 125%; }
   .rent-item { margin-bottom: 16px; }
   .rent-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
@@ -311,7 +311,7 @@
       </div>
     </div>
     <div class="header-meta">
-      <span class="semana-badge">Reporte al Jueves 7/5/2026 · 12:30 AM</span>
+      <span class="semana-badge">Reporte al Jueves 7/5/2026 · 12:46 AM</span>
       <p><span class="status-dot"></span>Bentley Kids + Acolchado · Rentabilidad solo Kids</p>
     </div>
   </header>
@@ -506,6 +506,18 @@ const TOP30={"items": [{"i": 1, "r": "CAZADORA UNICOLOR", "u": 432, "v": 2705722
   window.t30togCol=function(key,e){e.stopPropagation();if(expandedCol.has(key))expandedCol.delete(key);else expandedCol.add(key);render();};
   render();
 })();
+
+document.addEventListener('click', function(e) {
+  var pill = e.target.closest('.pill-tip');
+  if (pill) {
+    e.stopPropagation();
+    pill.classList.toggle('visible');
+  } else {
+    document.querySelectorAll('.pill-tip.visible').forEach(function(p) {
+      p.classList.remove('visible');
+    });
+  }
+});
   </script>
 
   <div class="section-title">Clientes — Análisis de Compra</div>
@@ -515,65 +527,75 @@ const TOP30={"items": [{"i": 1, "r": "CAZADORA UNICOLOR", "u": 432, "v": 2705722
       <div style="max-height:480px;overflow-y:auto;padding-right:4px">
         <div class="cli-row"><span class="cli-rank cli-r1">1</span><span class="cli-name">JESSIKA DURLEY BELLO MORA</span><span class="cli-uds">270 uds</span><span class="cli-val">$13,742,700</span></div>
 <div class="cli-row"><span class="cli-rank cli-r2">2</span><span class="cli-name">JOHN HAROLD GUEVARA</span><span class="cli-uds">225 uds</span><span class="cli-val">$9,993,200</span></div>
-<div class="cli-row"><span class="cli-rank cli-r3">3</span><span class="cli-name">JOHN ESTEBAN RODRIGUEZ ARBELAEZ</span><span class="cli-uds">80 uds</span><span class="cli-val">$9,460,000</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">4</span><span class="cli-name">CONSUMIDOR FINAL NEOS</span><span class="cli-uds">147 uds</span><span class="cli-val">$6,910,894</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">5</span><span class="cli-name">CONSUMIDOR FINAL 1156</span><span class="cli-uds">146 uds</span><span class="cli-val">$5,781,990</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">6</span><span class="cli-name">VANESSA ZULUAGA</span><span class="cli-uds">109 uds</span><span class="cli-val">$5,650,405</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">7</span><span class="cli-name">CINTHYA MORALES</span><span class="cli-uds">99 uds</span><span class="cli-val">$4,390,400</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">8</span><span class="cli-name">ANDRES CANTON</span><span class="cli-uds">79 uds</span><span class="cli-val">$4,140,400</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">9</span><span class="cli-name">RAQUEL RAMIREZ</span><span class="cli-uds">72 uds</span><span class="cli-val">$4,024,800</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">10</span><span class="cli-name">ANA ELSY CAÑON</span><span class="cli-uds">58 uds</span><span class="cli-val">$3,775,700</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">11</span><span class="cli-name">JOHN ALEXANDER RUEDA ACERO</span><span class="cli-uds">56 uds</span><span class="cli-val">$3,721,900</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">12</span><span class="cli-name">GUGU STORE BABY AND KIDS</span><span class="cli-uds">64 uds</span><span class="cli-val">$3,682,400</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">13</span><span class="cli-name">CONSUMIDOR FINAL CONTENEDOR</span><span class="cli-uds">72 uds</span><span class="cli-val">$3,655,155</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">14</span><span class="cli-name">LUZ ADRIANA GIRALDO</span><span class="cli-uds">58 uds</span><span class="cli-val">$3,526,200</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">15</span><span class="cli-name">JUAN PABLO GOMEZ</span><span class="cli-uds">73 uds</span><span class="cli-val">$3,510,700</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">16</span><span class="cli-name">NANCY CABEZAS ANDARINES</span><span class="cli-uds">60 uds</span><span class="cli-val">$3,194,300</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">17</span><span class="cli-name">GUILLERMO VALENCIA</span><span class="cli-uds">55 uds</span><span class="cli-val">$3,045,100</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">18</span><span class="cli-name">KELLY BECERRA</span><span class="cli-uds">66 uds</span><span class="cli-val">$2,648,600</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">19</span><span class="cli-name">yenifer espitia</span><span class="cli-uds">48 uds</span><span class="cli-val">$2,477,300</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">20</span><span class="cli-name">MARTHA BETANCOUR</span><span class="cli-uds">36 uds</span><span class="cli-val">$2,384,700</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">21</span><span class="cli-name">Isabel Uribe Londoño</span><span class="cli-uds">45 uds</span><span class="cli-val">$2,368,400</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">22</span><span class="cli-name">Oscar Fernando Daza Pérez</span><span class="cli-uds">39 uds</span><span class="cli-val">$2,305,600</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">23</span><span class="cli-name">Edilia Castañeda</span><span class="cli-uds">37 uds</span><span class="cli-val">$2,173,800</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">24</span><span class="cli-name">SEBASTIAN CASTELLANOS</span><span class="cli-uds">39 uds</span><span class="cli-val">$1,929,000</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">25</span><span class="cli-name">PATRICIA MARROQUIN</span><span class="cli-uds">28 uds</span><span class="cli-val">$1,716,900</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">26</span><span class="cli-name">MIRIAM CASTAÑEDA</span><span class="cli-uds">27 uds</span><span class="cli-val">$1,699,000</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">27</span><span class="cli-name">PAULA ANDREA DUARTE</span><span class="cli-uds">45 uds</span><span class="cli-val">$1,690,500</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">28</span><span class="cli-name">CONSUMIDOR FINAL 2408</span><span class="cli-uds">23 uds</span><span class="cli-val">$1,615,701</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">29</span><span class="cli-name">IVAN GIRALDO</span><span class="cli-uds">24 uds</span><span class="cli-val">$1,531,700</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">30</span><span class="cli-name">Ivone Lorena Torres</span><span class="cli-uds">26 uds</span><span class="cli-val">$1,456,301</span></div>
+<div class="cli-row"><span class="cli-rank cli-r3">3</span><span class="cli-name">VANESSA ZULUAGA</span><span class="cli-uds">109 uds</span><span class="cli-val">$5,650,405</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">4</span><span class="cli-name">CINTHYA MORALES</span><span class="cli-uds">99 uds</span><span class="cli-val">$4,390,400</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">5</span><span class="cli-name">ANDRES CANTON</span><span class="cli-uds">79 uds</span><span class="cli-val">$4,140,400</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">6</span><span class="cli-name">RAQUEL RAMIREZ</span><span class="cli-uds">72 uds</span><span class="cli-val">$4,024,800</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">7</span><span class="cli-name">ANA ELSY CAÑON</span><span class="cli-uds">58 uds</span><span class="cli-val">$3,775,700</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">8</span><span class="cli-name">JOHN ALEXANDER RUEDA ACERO</span><span class="cli-uds">56 uds</span><span class="cli-val">$3,721,900</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">9</span><span class="cli-name">GUGU STORE BABY AND KIDS</span><span class="cli-uds">64 uds</span><span class="cli-val">$3,682,400</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">10</span><span class="cli-name">LUZ ADRIANA GIRALDO</span><span class="cli-uds">58 uds</span><span class="cli-val">$3,526,200</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">11</span><span class="cli-name">JUAN PABLO GOMEZ</span><span class="cli-uds">73 uds</span><span class="cli-val">$3,510,700</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">12</span><span class="cli-name">NANCY CABEZAS ANDARINES</span><span class="cli-uds">60 uds</span><span class="cli-val">$3,194,300</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">13</span><span class="cli-name">GUILLERMO VALENCIA</span><span class="cli-uds">55 uds</span><span class="cli-val">$3,045,100</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">14</span><span class="cli-name">KELLY BECERRA</span><span class="cli-uds">66 uds</span><span class="cli-val">$2,648,600</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">15</span><span class="cli-name">yenifer espitia</span><span class="cli-uds">48 uds</span><span class="cli-val">$2,477,300</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">16</span><span class="cli-name">MARTHA BETANCOUR</span><span class="cli-uds">36 uds</span><span class="cli-val">$2,384,700</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">17</span><span class="cli-name">Isabel Uribe Londoño</span><span class="cli-uds">45 uds</span><span class="cli-val">$2,368,400</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">18</span><span class="cli-name">Oscar Fernando Daza Pérez</span><span class="cli-uds">39 uds</span><span class="cli-val">$2,305,600</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">19</span><span class="cli-name">Edilia Castañeda</span><span class="cli-uds">37 uds</span><span class="cli-val">$2,173,800</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">20</span><span class="cli-name">SEBASTIAN CASTELLANOS</span><span class="cli-uds">39 uds</span><span class="cli-val">$1,929,000</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">21</span><span class="cli-name">PATRICIA MARROQUIN</span><span class="cli-uds">28 uds</span><span class="cli-val">$1,716,900</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">22</span><span class="cli-name">MIRIAM CASTAÑEDA</span><span class="cli-uds">27 uds</span><span class="cli-val">$1,699,000</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">23</span><span class="cli-name">PAULA ANDREA DUARTE</span><span class="cli-uds">45 uds</span><span class="cli-val">$1,690,500</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">24</span><span class="cli-name">IVAN GIRALDO</span><span class="cli-uds">24 uds</span><span class="cli-val">$1,531,700</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">25</span><span class="cli-name">Ivone Lorena Torres</span><span class="cli-uds">26 uds</span><span class="cli-val">$1,456,301</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">26</span><span class="cli-name">GLORIA MUÑOS</span><span class="cli-uds">45 uds</span><span class="cli-val">$1,375,900</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">27</span><span class="cli-name">ERIKA BARRETO</span><span class="cli-uds">25 uds</span><span class="cli-val">$1,293,500</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">28</span><span class="cli-name">DEIVER OROZCO</span><span class="cli-uds">21 uds</span><span class="cli-val">$1,274,000</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">29</span><span class="cli-name">GROUP FAM SAS</span><span class="cli-uds">23 uds</span><span class="cli-val">$1,265,000</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">30</span><span class="cli-name">NYDIA LORETH CHAPARRO</span><span class="cli-uds">36 uds</span><span class="cli-val">$1,252,000</span></div>
 
       </div>
     </div>
     <div class="chart-card" style="overflow:hidden">
-      <div class="chart-title">Top 20 más Recurrentes — Bentley Kids</div>
+      <div class="chart-title">Top 30 más Recurrentes — Bentley Kids</div>
       <div style="max-height:480px;overflow-y:auto;padding-right:4px">
-        <div class="cli-row"><span class="cli-rank cli-r1">1</span><span class="cli-name">CONSUMIDOR FINAL 1156</span><span class="cli-uds">64 compras</span><span class="cli-val">$5,781,990</span></div>
-<div class="cli-row"><span class="cli-rank cli-r2">2</span><span class="cli-name">CONSUMIDOR FINAL NEOS</span><span class="cli-uds">64 compras</span><span class="cli-val">$6,910,894</span></div>
-<div class="cli-row"><span class="cli-rank cli-r3">3</span><span class="cli-name">CONSUMIDOR FINAL CONTENEDOR</span><span class="cli-uds">37 compras</span><span class="cli-val">$3,655,155</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">4</span><span class="cli-name">CONSUMIDOR FINAL PASTO</span><span class="cli-uds">18 compras</span><span class="cli-val">$795,000</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">5</span><span class="cli-name">CONSUMIDOR FINAL 2408</span><span class="cli-uds">13 compras</span><span class="cli-val">$1,615,701</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">6</span><span class="cli-name">ERIKA BARRETO</span><span class="cli-uds">13 compras</span><span class="cli-val">$1,293,500</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">7</span><span class="cli-name">MARIURY IMBACUAN</span><span class="cli-uds">11 compras</span><span class="cli-val">$1,055,560</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">8</span><span class="cli-name">CONSUMIDOR FINAL</span><span class="cli-uds">9 compras</span><span class="cli-val">$1,302,851</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">9</span><span class="cli-name">IVAN GIRALDO</span><span class="cli-uds">8 compras</span><span class="cli-val">$1,531,700</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">10</span><span class="cli-name">LUZ ADRIANA GIRALDO</span><span class="cli-uds">7 compras</span><span class="cli-val">$3,526,200</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">11</span><span class="cli-name">ANDREA CARVAJAL</span><span class="cli-uds">7 compras</span><span class="cli-val">$545,300</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">12</span><span class="cli-name">KELLY BECERRA</span><span class="cli-uds">6 compras</span><span class="cli-val">$2,648,600</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">13</span><span class="cli-name">LIZETH ACOSTA ALARCÓN</span><span class="cli-uds">6 compras</span><span class="cli-val">$527,800</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">14</span><span class="cli-name">alexa</span><span class="cli-uds">6 compras</span><span class="cli-val">$439,800</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">15</span><span class="cli-name">JANETH TORRES</span><span class="cli-uds">6 compras</span><span class="cli-val">$449,262</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">16</span><span class="cli-name">SANTIAGO VELEZ</span><span class="cli-uds">5 compras</span><span class="cli-val">$608,500</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">17</span><span class="cli-name">SARA XIMENA VILLAMIL DIAZ</span><span class="cli-uds">5 compras</span><span class="cli-val">$500,700</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">18</span><span class="cli-name">CLARA GUERRERO</span><span class="cli-uds">4 compras</span><span class="cli-val">$285,401</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">19</span><span class="cli-name">PAULA ANDREA DUARTE</span><span class="cli-uds">4 compras</span><span class="cli-val">$1,690,500</span></div>
-<div class="cli-row"><span class="cli-rank cli-rn">20</span><span class="cli-name">ENNA ALEXIS LINARES</span><span class="cli-uds">4 compras</span><span class="cli-val">$705,002</span></div>
+        <div class="cli-row"><span class="cli-rank cli-r1">1</span><span class="cli-name">ERIKA BARRETO</span><span class="cli-uds">13 compras</span><span class="cli-val">$1,293,500</span></div>
+<div class="cli-row"><span class="cli-rank cli-r2">2</span><span class="cli-name">MARIURY IMBACUAN</span><span class="cli-uds">11 compras</span><span class="cli-val">$1,055,560</span></div>
+<div class="cli-row"><span class="cli-rank cli-r3">3</span><span class="cli-name">IVAN GIRALDO</span><span class="cli-uds">8 compras</span><span class="cli-val">$1,531,700</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">4</span><span class="cli-name">LUZ ADRIANA GIRALDO</span><span class="cli-uds">7 compras</span><span class="cli-val">$3,526,200</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">5</span><span class="cli-name">ANDREA CARVAJAL</span><span class="cli-uds">7 compras</span><span class="cli-val">$545,300</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">6</span><span class="cli-name">JANETH TORRES</span><span class="cli-uds">6 compras</span><span class="cli-val">$449,262</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">7</span><span class="cli-name">LIZETH ACOSTA ALARCÓN</span><span class="cli-uds">6 compras</span><span class="cli-val">$527,800</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">8</span><span class="cli-name">KELLY BECERRA</span><span class="cli-uds">6 compras</span><span class="cli-val">$2,648,600</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">9</span><span class="cli-name">alexa</span><span class="cli-uds">6 compras</span><span class="cli-val">$439,800</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">10</span><span class="cli-name">SANTIAGO VELEZ</span><span class="cli-uds">5 compras</span><span class="cli-val">$608,500</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">11</span><span class="cli-name">SARA XIMENA VILLAMIL DIAZ</span><span class="cli-uds">5 compras</span><span class="cli-val">$500,700</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">12</span><span class="cli-name">PAULA ANDREA DUARTE</span><span class="cli-uds">4 compras</span><span class="cli-val">$1,690,500</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">13</span><span class="cli-name">ENNA ALEXIS LINARES</span><span class="cli-uds">4 compras</span><span class="cli-val">$705,002</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">14</span><span class="cli-name">TATIANA ROJAS VECINA</span><span class="cli-uds">4 compras</span><span class="cli-val">$273,900</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">15</span><span class="cli-name">JESSICA VANESSA HURTADO LOPEZ</span><span class="cli-uds">4 compras</span><span class="cli-val">$358,000</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">16</span><span class="cli-name">CLARA GUERRERO</span><span class="cli-uds">4 compras</span><span class="cli-val">$285,401</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">17</span><span class="cli-name">JULIANA NEIRA</span><span class="cli-uds">4 compras</span><span class="cli-val">$549,600</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">18</span><span class="cli-name">KAREN BRIYID SANTACRUZ RODRIGUEZ</span><span class="cli-uds">3 compras</span><span class="cli-val">$659,600</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">19</span><span class="cli-name">ANDRES HERRERA</span><span class="cli-uds">3 compras</span><span class="cli-val">$230,419</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">20</span><span class="cli-name">MATEO ANDRES MORENO</span><span class="cli-uds">3 compras</span><span class="cli-val">$522,300</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">21</span><span class="cli-name">PATRICIA MARROQUIN</span><span class="cli-uds">3 compras</span><span class="cli-val">$1,716,900</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">22</span><span class="cli-name">TATIANA MENDOZA</span><span class="cli-uds">3 compras</span><span class="cli-val">$316,000</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">23</span><span class="cli-name">BLANCA INÉS CONTRERAS AVELLANEDA</span><span class="cli-uds">3 compras</span><span class="cli-val">$276,800</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">24</span><span class="cli-name">ANDRES MUÑOZ</span><span class="cli-uds">3 compras</span><span class="cli-val">$596,900</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">25</span><span class="cli-name">allyson nieto Sánchez</span><span class="cli-uds">3 compras</span><span class="cli-val">$474,885</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">26</span><span class="cli-name">GLORIA LOPEZ</span><span class="cli-uds">3 compras</span><span class="cli-val">$260,400</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">27</span><span class="cli-name">Carol Coronado</span><span class="cli-uds">3 compras</span><span class="cli-val">$229,700</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">28</span><span class="cli-name">CAMILO CORDERO DETAL</span><span class="cli-uds">3 compras</span><span class="cli-val">$432,000</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">29</span><span class="cli-name">LEILA ALMANZA</span><span class="cli-uds">3 compras</span><span class="cli-val">$296,800</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">30</span><span class="cli-name">DAYANA GALINDO</span><span class="cli-uds">3 compras</span><span class="cli-val">$418,327</span></div>
 
       </div>
     </div>
     <div class="chart-card" style="overflow:hidden">
-      <div class="chart-title">Top 10 por Volumen — Acolchado</div>
+      <div class="chart-title">Clientes Acolchado — por Venta</div>
       <div style="max-height:480px;overflow-y:auto;padding-right:4px">
         <div class="cli-row"><span class="cli-rank cli-r1">1</span><span class="cli-name">CONFECCIONES PARCHES SAS</span><span class="cli-uds">4,317 uds</span><span class="cli-val">$20,744,737</span></div>
 <div class="cli-row"><span class="cli-rank cli-r2">2</span><span class="cli-name">TWK MANUFACTURING SAS BIC</span><span class="cli-uds">2,106 uds</span><span class="cli-val">$10,841,285</span></div>
@@ -585,6 +607,26 @@ const TOP30={"items": [{"i": 1, "r": "CAZADORA UNICOLOR", "u": 432, "v": 2705722
 <div class="cli-row"><span class="cli-rank cli-rn">8</span><span class="cli-name">ALEXANDER PORTILLA RODRIGUEZ</span><span class="cli-uds">1,424 uds</span><span class="cli-val">$5,698,800</span></div>
 <div class="cli-row"><span class="cli-rank cli-rn">9</span><span class="cli-name">BENTLEY ACOLCHADOS</span><span class="cli-uds">1,572 uds</span><span class="cli-val">$3,931,500</span></div>
 <div class="cli-row"><span class="cli-rank cli-rn">10</span><span class="cli-name">VALENTIN ROJAS</span><span class="cli-uds">918 uds</span><span class="cli-val">$3,306,960</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">11</span><span class="cli-name">JOSE LUIS VILLAMIL K.</span><span class="cli-uds">875 uds</span><span class="cli-val">$3,225,400</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">12</span><span class="cli-name">JHON RAMIREZ</span><span class="cli-uds">918 uds</span><span class="cli-val">$3,123,300</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">13</span><span class="cli-name">MULTIPROYECTOS INDUSTRIAL S.A.</span><span class="cli-uds">607 uds</span><span class="cli-val">$2,890,272</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">14</span><span class="cli-name">YOHANNA LOPEZ</span><span class="cli-uds">777 uds</span><span class="cli-val">$2,785,600</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">15</span><span class="cli-name">JACK CEPEDA CASTAÑEDA</span><span class="cli-uds">550 uds</span><span class="cli-val">$2,200,000</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">16</span><span class="cli-name">SANDRA MORALES</span><span class="cli-uds">600 uds</span><span class="cli-val">$2,100,000</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">17</span><span class="cli-name">EDWARD FABIAN JIMENEZ MORALES</span><span class="cli-uds">350 uds</span><span class="cli-val">$1,388,400</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">18</span><span class="cli-name">LUCIA CASTAÑEDA</span><span class="cli-uds">400 uds</span><span class="cli-val">$1,360,000</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">19</span><span class="cli-name">GRUPO ARAMON S.A.S</span><span class="cli-uds">200 uds</span><span class="cli-val">$856,800</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">20</span><span class="cli-name">RAFAEL CEBALLOS</span><span class="cli-uds">200 uds</span><span class="cli-val">$720,000</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">21</span><span class="cli-name">SABANDIJA SAS</span><span class="cli-uds">125 uds</span><span class="cli-val">$683,774</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">22</span><span class="cli-name">IMPORTADORA DE INSUMOS EL MAYORISTA SAS</span><span class="cli-uds">200 uds</span><span class="cli-val">$678,300</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">23</span><span class="cli-name">DOMINGO ARQUITECTURA SAS</span><span class="cli-uds">59 uds</span><span class="cli-val">$619,276</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">24</span><span class="cli-name">CONFECCIONES MONTHELIER SAS</span><span class="cli-uds">38 uds</span><span class="cli-val">$353,192</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">25</span><span class="cli-name">GLORIA CARRILLO HURTADO</span><span class="cli-uds">17 uds</span><span class="cli-val">$207,000</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">26</span><span class="cli-name">DIANA MORENO - SILENTIUM</span><span class="cli-uds">14 uds</span><span class="cli-val">$146,760</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">27</span><span class="cli-name">DEZAINA SAS</span><span class="cli-uds">3 uds</span><span class="cli-val">$99,532</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">28</span><span class="cli-name">Najasly Lorena león Martinez</span><span class="cli-uds">6 uds</span><span class="cli-val">$95,000</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">29</span><span class="cli-name">LEIDY ARIZA</span><span class="cli-uds">1 uds</span><span class="cli-val">$85,000</span></div>
+<div class="cli-row"><span class="cli-rank cli-rn">30</span><span class="cli-name">DK INNOVACION TEXTIL</span><span class="cli-uds">3 uds</span><span class="cli-val">$82,200</span></div>
 
       </div>
     </div>
