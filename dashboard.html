@@ -448,76 +448,78 @@
   .section-panel.active{display:block;}
   .prod-placeholder{padding:80px 24px;text-align:center;}
   /* ── Gerencia de Producción ─────────────────────────────── */
-  .prod-inv-grid{{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;}}
-  @media(max-width:900px){{.prod-inv-grid{{grid-template-columns:1fr;}}}}
-  .prod-inv-card{{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:24px;text-align:center;position:relative;overflow:hidden;}}
-  .prod-inv-card::before{{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:16px 16px 0 0;}}
-  .prod-disp::before{{background:var(--green);}}
-  .prod-prox::before{{background:var(--gold);}}
-  .prod-en-prod::before{{background:var(--accent2);}}
-  .prod-inv-num{{font-family:'Bebas Neue',sans-serif;font-size:3rem;line-height:1;margin-bottom:4px;}}
-  .prod-disp .prod-inv-num{{color:var(--green);}}
-  .prod-prox .prod-inv-num{{color:var(--gold);}}
-  .prod-en-prod .prod-inv-num{{color:var(--accent2);}}
-  .prod-inv-ico{{font-size:1.6rem;margin-bottom:8px;}}
-  .prod-inv-lbl{{font-size:0.65rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:14px;}}
-  .prod-inv-bods{{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;}}
-  .prod-bod-pill{{font-size:0.6rem;padding:2px 7px;border-radius:99px;background:rgba(255,255,255,0.06);color:var(--text-dim);}}
-  .prod-emp-grid{{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;}}
-  @media(max-width:1100px){{.prod-emp-grid{{grid-template-columns:repeat(2,1fr);}}}}
-  @media(max-width:700px){{.prod-emp-grid{{grid-template-columns:1fr;}}}}
-  .prod-emp-card{{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:18px;transition:transform .15s,box-shadow .15s;}}
-  .prod-emp-card:hover{{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3);}}
-  .prod-emp-header{{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}}
-  .prod-emp-name{{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;color:var(--accent);}}
-  .prod-pr-badge{{font-size:0.55rem;font-weight:700;padding:2px 6px;border-radius:99px;background:rgba(206,147,216,0.2);color:var(--purple);}}
-  .prod-emp-cats{{font-size:0.62rem;color:var(--text-dim);margin-bottom:10px;letter-spacing:.5px;}}
-  .prod-emp-bench{{border-top:1px solid rgba(255,255,255,0.06);padding-top:10px;margin-bottom:10px;}}
-  .prod-bench-row{{display:flex;justify-content:space-between;font-size:0.72rem;padding:3px 0;}}
-  .prod-bench-lbl{{color:var(--text-dim);}}
-  .prod-bench-val{{font-weight:600;color:var(--text);}}
-  .prod-mg-g{{color:var(--green)!important;}}
-  .prod-mg-o{{color:var(--gold)!important;}}
-  .prod-mg-r{{color:var(--red)!important;}}
-  .prod-no-inv-small{{font-size:0.65rem;color:var(--text-dim);padding:6px 0;border-top:1px solid rgba(255,255,255,0.06);}}
-  .prod-emp-inv-ttl{{font-size:0.7rem;color:var(--text-dim);padding:6px 0 4px;border-top:1px solid rgba(255,255,255,0.06);}}
-  .prod-emp-refs{{display:flex;flex-direction:column;gap:2px;}}
-  .prod-emp-ref-row{{display:flex;justify-content:space-between;font-size:0.65rem;padding:2px 0;}}
-  .prod-emp-ref-name{{color:var(--text-dim);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}}
-  .prod-emp-ref-qty{{color:var(--text);font-weight:600;margin-left:8px;}}
-  .prod-sat-wrap{{display:flex;flex-direction:column;gap:12px;margin-bottom:32px;}}
-  .prod-sat-group{{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;overflow:hidden;}}
-  .prod-sat-group-hdr{{display:flex;align-items:center;gap:10px;padding:14px 18px;cursor:pointer;transition:background .15s;user-select:none;}}
-  .prod-sat-group-hdr:hover{{background:rgba(255,255,255,0.04);}}
-  .prod-sat-cnt{{margin-left:auto;font-size:0.7rem;font-weight:600;}}
-  .prod-sat-arr{{font-size:0.65rem;color:var(--text-dim);}}
-  .prod-sat-body{{padding:0 18px 14px;}}
-  .prod-sat-bod{{display:flex;align-items:center;gap:12px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:0.78rem;}}
-  .prod-sat-bod:last-child{{border-bottom:none;}}
-  .prod-sat-bod-name{{flex:1;color:var(--text);font-weight:500;}}
-  .prod-sat-bod-suc{{color:var(--text-dim);font-size:0.68rem;}}
-  .prod-sat-bod-inv{{font-size:0.65rem;color:var(--accent);font-weight:600;}}
-  .prod-inv-sub{{font-size:0.68rem;color:var(--text-dim);margin-top:2px;margin-bottom:8px;}}
-  .prod-emp-inv-stats{{display:flex;gap:6px;margin:10px 0 6px;border-top:1px solid rgba(255,255,255,0.06);padding-top:8px;}}
-  .prod-inv-stat{{flex:1;text-align:center;padding:4px 0;border-radius:6px;}}
-  .prod-stat-g{{background:rgba(0,200,83,0.1);}}
-  .prod-stat-y{{background:rgba(255,214,0,0.08);}}
-  .prod-stat-r{{background:rgba(255,109,0,0.08);}}
-  .prod-inv-stat-v{{display:block;font-family:'Bebas Neue',sans-serif;font-size:1rem;line-height:1.2;}}
-  .prod-stat-g .prod-inv-stat-v{{color:var(--green);}}
-  .prod-stat-y .prod-inv-stat-v{{color:var(--gold);}}
-  .prod-stat-r .prod-inv-stat-v{{color:var(--accent2);}}
-  .prod-inv-stat-l{{display:block;font-size:0.55rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);}}
-  .prod-ref-toggle{{cursor:pointer;}}
-  .prod-ref-toggle:hover{{background:rgba(0,229,255,0.06);border-radius:4px;}}
-  .prod-drill-arr{{font-size:0.55rem;color:var(--text-dim);min-width:10px;text-align:right;}}
-  .prod-drill-body{{background:rgba(0,0,0,0.2);border-radius:6px;padding:6px 8px;margin-bottom:3px;}}
-  .prod-drill-color{{display:flex;align-items:baseline;gap:8px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:0.65rem;}}
-  .prod-drill-color:last-child{{border-bottom:none;}}
-  .prod-drill-cn{{color:var(--gold);min-width:60px;font-weight:600;white-space:nowrap;}}
-  .prod-drill-ts{{color:var(--text-dim);flex:1;}}
-  .prod-no-inv{{display:flex;align-items:center;gap:12px;background:rgba(0,229,255,0.05);border:1px solid rgba(0,229,255,0.15);border-radius:10px;padding:14px 18px;margin-bottom:16px;font-size:0.82rem;color:var(--text-dim);}}
-  .prod-alertas{{display:flex;align-items:center;gap:14px;background:rgba(255,214,0,0.05);border:1px solid rgba(255,214,0,0.2);border-radius:12px;padding:20px 24px;font-size:0.85rem;margin-bottom:24px;}}
+  .prod-inv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;}
+  @media(max-width:900px){.prod-inv-grid{grid-template-columns:1fr;}}
+  .prod-inv-card{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:24px;text-align:center;position:relative;overflow:hidden;backdrop-filter:blur(12px);transition:transform .2s,box-shadow .2s;}
+  .prod-inv-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.3);}
+  .prod-inv-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:16px 16px 0 0;}
+  .prod-disp::before{background:var(--green);}
+  .prod-prox::before{background:var(--gold);}
+  .prod-en-prod::before{background:var(--accent2);}
+  .prod-inv-num{font-family:'Bebas Neue',sans-serif;font-size:3rem;line-height:1;margin-bottom:4px;}
+  .prod-disp .prod-inv-num{color:var(--green);}
+  .prod-prox .prod-inv-num{color:var(--gold);}
+  .prod-en-prod .prod-inv-num{color:var(--accent2);}
+  .prod-inv-ico{font-size:1.6rem;margin-bottom:8px;}
+  .prod-inv-lbl{font-size:0.65rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:10px;}
+  .prod-inv-sub{font-size:0.7rem;color:var(--text-dim);margin-bottom:12px;}
+  .prod-inv-bods{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;}
+  .prod-bod-pill{font-size:0.6rem;padding:2px 8px;border-radius:99px;background:rgba(255,255,255,0.07);color:var(--text-dim);border:1px solid rgba(255,255,255,0.08);}
+  .prod-emp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;}
+  @media(max-width:1100px){.prod-emp-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:700px){.prod-emp-grid{grid-template-columns:1fr;}}
+  .prod-emp-card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:18px;transition:transform .15s,box-shadow .15s;backdrop-filter:blur(12px);}
+  .prod-emp-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3);}
+  .prod-emp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
+  .prod-emp-name{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;color:var(--accent);}
+  .prod-pr-badge{font-size:0.55rem;font-weight:700;padding:2px 6px;border-radius:99px;background:rgba(206,147,216,0.2);color:var(--purple);border:1px solid rgba(206,147,216,0.3);}
+  .prod-emp-cats{font-size:0.62rem;color:var(--text-dim);margin-bottom:10px;letter-spacing:.5px;}
+  .prod-emp-bench{border-top:1px solid rgba(255,255,255,0.06);padding-top:10px;margin-bottom:8px;}
+  .prod-bench-row{display:flex;justify-content:space-between;align-items:baseline;font-size:0.72rem;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.03);}
+  .prod-bench-row:last-child{border-bottom:none;}
+  .prod-bench-lbl{color:var(--text-dim);font-size:0.67rem;letter-spacing:.5px;}
+  .prod-bench-val{font-weight:700;color:var(--text);font-size:0.85rem;}
+  .prod-mg-g{color:var(--green)!important;}
+  .prod-mg-o{color:var(--gold)!important;}
+  .prod-mg-r{color:var(--red)!important;}
+  .prod-no-inv-small{font-size:0.65rem;color:var(--gold);padding:6px 8px;border-top:1px solid rgba(255,255,255,0.06);margin-top:4px;background:rgba(255,214,0,0.06);border-radius:6px;display:flex;align-items:center;gap:5px;}
+  .prod-emp-inv-ttl{font-size:0.68rem;color:var(--text-dim);padding:4px 0 2px;}
+  .prod-emp-refs{display:flex;flex-direction:column;gap:2px;margin-top:4px;}
+  .prod-emp-ref-row{display:flex;align-items:center;justify-content:space-between;font-size:0.65rem;padding:3px 4px;border-radius:4px;}
+  .prod-emp-ref-name{color:var(--text-dim);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .prod-emp-ref-qty{color:var(--accent);font-weight:700;margin-left:8px;font-size:0.7rem;}
+  .prod-emp-inv-stats{display:flex;gap:6px;margin:8px 0 6px;border-top:1px solid rgba(255,255,255,0.06);padding-top:8px;}
+  .prod-inv-stat{flex:1;text-align:center;padding:5px 2px;border-radius:8px;}
+  .prod-stat-g{background:rgba(0,200,83,0.1);border:1px solid rgba(0,200,83,0.2);}
+  .prod-stat-y{background:rgba(255,214,0,0.08);border:1px solid rgba(255,214,0,0.2);}
+  .prod-stat-r{background:rgba(255,109,0,0.08);border:1px solid rgba(255,109,0,0.2);}
+  .prod-inv-stat-v{display:block;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;line-height:1.2;}
+  .prod-stat-g .prod-inv-stat-v{color:var(--green);}
+  .prod-stat-y .prod-inv-stat-v{color:var(--gold);}
+  .prod-stat-r .prod-inv-stat-v{color:var(--accent2);}
+  .prod-inv-stat-l{display:block;font-size:0.52rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);}
+  .prod-ref-toggle{cursor:pointer;}
+  .prod-ref-toggle:hover{background:rgba(0,229,255,0.06);border-radius:4px;}
+  .prod-drill-arr{font-size:0.55rem;color:var(--text-dim);min-width:12px;text-align:right;flex-shrink:0;}
+  .prod-drill-body{background:rgba(0,0,0,0.25);border-radius:6px;padding:6px 10px;margin:2px 0 4px;border:1px solid rgba(255,255,255,0.04);}
+  .prod-drill-color{display:flex;align-items:baseline;gap:8px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:0.65rem;}
+  .prod-drill-color:last-child{border-bottom:none;}
+  .prod-drill-cn{color:var(--gold);min-width:60px;font-weight:600;white-space:nowrap;}
+  .prod-drill-ts{color:var(--text-dim);flex:1;}
+  .prod-sat-wrap{display:flex;flex-direction:column;gap:12px;margin-bottom:32px;}
+  .prod-sat-group{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;overflow:hidden;backdrop-filter:blur(12px);}
+  .prod-sat-group-hdr{display:flex;align-items:center;gap:10px;padding:14px 18px;cursor:pointer;transition:background .15s;user-select:none;}
+  .prod-sat-group-hdr:hover{background:rgba(255,255,255,0.04);}
+  .prod-sat-cnt{margin-left:auto;font-size:0.7rem;font-weight:600;}
+  .prod-sat-arr{font-size:0.65rem;color:var(--text-dim);}
+  .prod-sat-body{padding:0 18px 14px;}
+  .prod-sat-bod{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:0.78rem;}
+  .prod-sat-bod:last-child{border-bottom:none;}
+  .prod-sat-bod-name{flex:1;color:var(--text);font-weight:500;}
+  .prod-sat-bod-suc{color:var(--text-dim);font-size:0.68rem;}
+  .prod-sat-bod-inv{font-size:0.65rem;color:var(--accent);font-weight:600;}
+  .prod-no-inv{display:flex;align-items:center;gap:12px;background:rgba(0,229,255,0.05);border:1px solid rgba(0,229,255,0.15);border-radius:10px;padding:14px 18px;margin-bottom:16px;font-size:0.82rem;color:var(--text-dim);}
+  .prod-alertas{display:flex;align-items:center;gap:14px;background:rgba(255,214,0,0.05);border:1px solid rgba(255,214,0,0.2);border-radius:12px;padding:20px 24px;font-size:0.85rem;margin-bottom:24px;}
   @media(max-width:700px){
     .hamburger-btn{top:14px;left:14px;}
     header{padding-left:52px;}
@@ -560,8 +562,8 @@
       </div>
     </div>
     <div class="header-meta">
-      <span class="semana-badge">Reporte al Sábado 16/5/2026 · 04:51 PM</span>
-      <span class="upd-badge">&#9685; Últ. actualización: 04:50 PM</span>
+      <span class="semana-badge">Reporte al Sábado 16/5/2026 · 04:54 PM</span>
+      <span class="upd-badge">&#9685; Últ. actualización: 04:51 PM</span>
       <button class="logout-btn" onclick="doLogout()">Cerrar sesión</button>
       <p><span class="status-dot"></span>Bentley Kids + Acolchado · Rentabilidad solo Kids</p>
       <p style="font-size:0.62rem;color:#666;letter-spacing:0.04em;margin-top:2px">Powered by JERA Labs</p>
@@ -635,14 +637,14 @@
 
 <div style="margin-bottom:16px">
 <div style="background:rgba(123,31,162,0.15);border:1px solid rgba(206,147,216,0.3);border-left:4px solid var(--purple);border-radius:12px;padding:20px 24px">
-<div class="kpi-label" style="color:var(--purple);margin-bottom:6px">VENTA HOY — Act. 04:50 PM</div>
+<div class="kpi-label" style="color:var(--purple);margin-bottom:6px">VENTA HOY — Act. 04:51 PM</div>
 <div style="font-family:'Bebas Neue',cursive;font-size:2.8rem;color:var(--purple);line-height:1">$9.3M</div>
 <div style="margin-top:10px;font-size:0.73rem;color:var(--text-dim);line-height:2">LOCAL 2408: $3.8M&nbsp;&nbsp;|&nbsp;&nbsp;LOCAL 1156: $1.6M&nbsp;&nbsp;|&nbsp;&nbsp;NEOS CENTRO: $1.5M&nbsp;&nbsp;|&nbsp;&nbsp;CONTENEDOR: $1.4M&nbsp;&nbsp;|&nbsp;&nbsp;PASTO: $765K&nbsp;&nbsp;|&nbsp;&nbsp;PAGINA WEB: $259K</div><div style="margin-top:12px;font-size:0.78rem;color:var(--text-dim)">Ayer: <span style="color:var(--text)">$2.7M</span>&nbsp;&nbsp;<span style="color:var(--green);font-weight:600">▲ 249.3% vs ayer</span></div></div>
 </div>
 
 
   <div class="section-title">Ventas Hoy por Punto de Venta</div>
-  <div class="chart-card" style="margin-bottom:24px"><div class="chart-title">VENTAS HOY — 16/05/2026 · 16:51</div>
+  <div class="chart-card" style="margin-bottom:24px"><div class="chart-title">VENTAS HOY — 16/05/2026 · 16:54</div>
 <div class="bar-item"><div class="bar-header"><span class="bar-label">LOCAL 2408</span><span class="bar-val" style="color:var(--purple)">$3,753,500</span></div><div class="bar-track"><div class="bar-fill" style="width:100.0%;background:linear-gradient(90deg,#7b1fa2,var(--purple))"></div></div></div>
 <div class="bar-item"><div class="bar-header"><span class="bar-label">LOCAL 1156</span><span class="bar-val" style="color:var(--purple)">$1,649,426</span></div><div class="bar-track"><div class="bar-fill" style="width:43.9%;background:linear-gradient(90deg,#7b1fa2,var(--purple))"></div></div></div>
 <div class="bar-item"><div class="bar-header"><span class="bar-label">NEOS CENTRO</span><span class="bar-val" style="color:var(--purple)">$1,476,200</span></div><div class="bar-track"><div class="bar-fill" style="width:39.3%;background:linear-gradient(90deg,#7b1fa2,var(--purple))"></div></div></div>
@@ -1723,7 +1725,7 @@ renderHist();
   </div><!-- /sec-comercial -->
 
   <footer>
-    <p><span class="status-dot"></span>Generado automáticamente desde Effi ERP · Año en curso al 16/05/2026</p>
+    <p><span class="status-dot"></span>Generado automáticamente desde Effi ERP · Al 15/05/2026</p>
     <p>Grupo Bentley SAS · Todos los valores en COP</p>
     <p style="margin-top:8px;font-size:0.62rem;color:#555;letter-spacing:0.04em">© 2026 JERA Labs · Inteligencia operativa para Grupo Bentley SAS</p>
   </footer>
