@@ -489,8 +489,8 @@
       </div>
     </div>
     <div class="header-meta">
-      <span class="semana-badge">Reporte al Sábado 16/5/2026 · 04:14 PM</span>
-      <span class="upd-badge">&#9685; Últ. actualización: 04:13 PM</span>
+      <span class="semana-badge">Reporte al Sábado 16/5/2026 · 04:20 PM</span>
+      <span class="upd-badge">&#9685; Últ. actualización: 04:19 PM</span>
       <button class="logout-btn" onclick="doLogout()">Cerrar sesión</button>
       <p><span class="status-dot"></span>Bentley Kids + Acolchado · Rentabilidad solo Kids</p>
       <p style="font-size:0.62rem;color:#666;letter-spacing:0.04em;margin-top:2px">Powered by JERA Labs</p>
@@ -564,14 +564,14 @@
 
 <div style="margin-bottom:16px">
 <div style="background:rgba(123,31,162,0.15);border:1px solid rgba(206,147,216,0.3);border-left:4px solid var(--purple);border-radius:12px;padding:20px 24px">
-<div class="kpi-label" style="color:var(--purple);margin-bottom:6px">VENTA HOY — Act. 04:13 PM</div>
+<div class="kpi-label" style="color:var(--purple);margin-bottom:6px">VENTA HOY — Act. 04:19 PM</div>
 <div style="font-family:'Bebas Neue',cursive;font-size:2.8rem;color:var(--purple);line-height:1">$9.2M</div>
 <div style="margin-top:10px;font-size:0.73rem;color:var(--text-dim);line-height:2">LOCAL 2408: $3.8M&nbsp;&nbsp;|&nbsp;&nbsp;LOCAL 1156: $1.6M&nbsp;&nbsp;|&nbsp;&nbsp;CONTENEDOR: $1.4M&nbsp;&nbsp;|&nbsp;&nbsp;NEOS CENTRO: $1.3M&nbsp;&nbsp;|&nbsp;&nbsp;PASTO: $765K&nbsp;&nbsp;|&nbsp;&nbsp;PAGINA WEB: $259K</div><div style="margin-top:12px;font-size:0.78rem;color:var(--text-dim)">Ayer: <span style="color:var(--text)">$2.7M</span>&nbsp;&nbsp;<span style="color:var(--green);font-weight:600">▲ 243.7% vs ayer</span></div></div>
 </div>
 
 
   <div class="section-title">Ventas Hoy por Punto de Venta</div>
-  <div class="chart-card" style="margin-bottom:24px"><div class="chart-title">VENTAS HOY — 16/05/2026 · 16:14</div>
+  <div class="chart-card" style="margin-bottom:24px"><div class="chart-title">VENTAS HOY — 16/05/2026 · 16:20</div>
 <div class="bar-item"><div class="bar-header"><span class="bar-label">LOCAL 2408</span><span class="bar-val" style="color:var(--purple)">$3,753,500</span></div><div class="bar-track"><div class="bar-fill" style="width:100.0%;background:linear-gradient(90deg,#7b1fa2,var(--purple))"></div></div></div>
 <div class="bar-item"><div class="bar-header"><span class="bar-label">LOCAL 1156</span><span class="bar-val" style="color:var(--purple)">$1,649,426</span></div><div class="bar-track"><div class="bar-fill" style="width:43.9%;background:linear-gradient(90deg,#7b1fa2,var(--purple))"></div></div></div>
 <div class="bar-item"><div class="bar-header"><span class="bar-label">CONTENEDOR</span><span class="bar-val" style="color:var(--purple)">$1,415,874</span></div><div class="bar-track"><div class="bar-fill" style="width:37.7%;background:linear-gradient(90deg,#7b1fa2,var(--purple))"></div></div></div>
@@ -1019,7 +1019,13 @@ function renderHist(){
           }
         } else {
           let cell='<span class="hist-v-main" style="color:'+yc+'">'+formatCOP(v)+'</span>';
-          if(_metaV>0){const p=(v/_metaV-1)*100;const cl=p>=0?'hist-var-up':'hist-var-dn';cell+='<span class="hist-v-cmp" style="color:#90a4ae">'+formatCOP(_metaV)+'</span><span class="'+cl+'">'+(p>=0?'+':'')+p.toFixed(1)+'%</span>';}
+          if(CD&&vc>0){
+            const p=(v-vc)/vc*100;const cl=p>=0?'hist-var-up':'hist-var-dn';
+            cell+='<span class="hist-v-cmp" style="color:'+cc+'">'+formatCOP(vc)+'</span><span class="'+cl+'">'+(p>=0?'+':'')+p.toFixed(1)+'%</span>';
+          } else if(_metaV>0){
+            const p=(v/_metaV-1)*100;const cl=p>=0?'hist-var-up':'hist-var-dn';
+            cell+='<span class="hist-v-cmp" style="color:#90a4ae">'+formatCOP(_metaV)+'</span><span class="'+cl+'">'+(p>=0?'+':'')+p.toFixed(1)+'%</span>';
+          }
           h+='<td>'+cell+'</td>';
         }
       } else {
@@ -1057,7 +1063,13 @@ function renderHist(){
         h+=mfc;
       } else {
         let fc='<span style="color:'+yc+'">'+formatCOP(t)+'</span>';
-        if(tMeta>0){const p=(t/tMeta-1)*100;const cl=p>=0?'hist-var-up':'hist-var-dn';fc+='<span style="color:#90a4ae;font-size:0.65rem;display:block">'+formatCOP(tMeta)+'</span><span class="'+cl+'" style="font-size:0.65rem;display:block">'+(p>=0?'+':'')+p.toFixed(1)+'%</span>';}
+        if(CD&&tc2>0){
+          const p=(t-tc2)/tc2*100;const cl=p>=0?'hist-var-up':'hist-var-dn';
+          fc+='<span style="color:'+cc+';font-size:0.65rem;display:block">'+formatCOP(tc2)+'</span><span class="'+cl+'" style="font-size:0.65rem;display:block">'+(p>=0?'+':'')+p.toFixed(1)+'%</span>';
+        } else if(tMeta>0){
+          const p=(t/tMeta-1)*100;const cl=p>=0?'hist-var-up':'hist-var-dn';
+          fc+='<span style="color:#90a4ae;font-size:0.65rem;display:block">'+formatCOP(tMeta)+'</span><span class="'+cl+'" style="font-size:0.65rem;display:block">'+(p>=0?'+':'')+p.toFixed(1)+'%</span>';
+        }
         h+='<td>'+fc+'</td>';
       }
     } else {
