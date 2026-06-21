@@ -78,20 +78,10 @@
       "id": "sat_02",
       "nombre": "MELISSA MARTINEZ",
       "activo": true,
-      "maquinas": [
-        {
-          "tipo": "PLANA",
-          "cantidad": 2
-        }
-      ],
-      "personas": 2,
-      "especialidades": [
-        "CHAQUETAS",
-        "GABAN",
-        "CHALECOS",
-        "ABRIGOS"
-      ],
-      "capacidad_semanal": 100,
+      "maquinas": [],
+      "personas": 0,
+      "especialidades": [],
+      "capacidad_semanal": 0,
       "telefono": "",
       "notas": "",
       "created_at": "2025-01-01"
@@ -136,10 +126,29 @@
       "id": "sat_06",
       "nombre": "ISABEL PARRA",
       "activo": true,
-      "maquinas": [],
-      "personas": 0,
-      "especialidades": [],
-      "capacidad_semanal": 0,
+      "maquinas": [
+        {
+          "tipo": "PLANA",
+          "cantidad": 1
+        },
+        {
+          "tipo": "FILETE",
+          "cantidad": 1
+        },
+        {
+          "tipo": "COLLARIN",
+          "cantidad": 1
+        }
+      ],
+      "personas": 1,
+      "especialidades": [
+        "BUZOS",
+        "GABAN",
+        "CONJUNTOS",
+        "PANTALONES",
+        "CAMISONES"
+      ],
+      "capacidad_semanal": 80,
       "telefono": "",
       "notas": "",
       "created_at": "2025-01-01"
