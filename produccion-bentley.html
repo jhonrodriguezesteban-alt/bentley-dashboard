@@ -881,7 +881,7 @@ function renderDashboard(){
     return !filtro || (o.fecha_entrega_real||'').startsWith(filtro);
   }).forEach(function(o){ satMapTop[o.satelite_id]=(satMapTop[o.satelite_id]||0)+(o.unidades_entregadas||0); });
   var topSat = Object.keys(satMapTop).map(function(k){ return {id:k,uds:satMapTop[k]}; })
-                                     .sort(function(a,b){ return b.uds-a.uds; }).slice(0,8);
+                                     .sort(function(a,b){ return b.uds-a.uds; });
   var maxTS = topSat.length ? topSat[0].uds : 1;
   var satBarColors = [C_CYAN,C_PURPLE,C_GREEN,C_ORANGE,C_PINK,C_GOLD,'#38bdf8','#a3e635'];
 
@@ -909,34 +909,40 @@ function renderDashboard(){
 
   h += '</div>'; // fin two-col
 
-  // ── Estado de OTs — card ancho completo con donut grande ────────────────────
-  var eData = [
-    {k:'PENDIENTE_CORTAR', label:'Pendiente Cortar',  color:'#64748b'},
-    {k:'CORTE_POR_ALISTAR',label:'Corte por Alistar', color:'#fbbf24'},
-    {k:'EN_CONFECCION',    label:'En Confección',     color:'#a855f7'},
-    {k:'ASIGNADO',         label:'Asignado',          color:'#00d4ff'},
-    {k:'NOVEDAD',          label:'Novedad',           color:'#ec4899'},
+  // ── Estado de OPs — card ancho completo con donut grande ───────────────────
+  var opData = [
+    {k:'COMPLETADO',  label:'Completadas',  color:'#34d399'},
+    {k:'EN_PROCESO',  label:'En Proceso',   color:'#a855f7'},
+    {k:'CON_NOVEDAD', label:'Con Novedad',  color:'#ec4899'},
+    {k:'PENDIENTE',   label:'Pendiente',    color:'#64748b'},
   ];
-  var eMap2 = {};
-  eData.forEach(function(e){ eMap2[e.k]=0; });
-  activas.forEach(function(o){ if(eMap2.hasOwnProperty(o.estado)) eMap2[o.estado]++; });
-  var totalAct2 = activas.length || 1;
+  // Cuando hay filtro de mes, filtrar OPs que tienen OTs en ese mes
+  var opsScope = filtro
+    ? DB.ops.filter(function(op){
+        return DB.ots.some(function(o){ return o.op_id===op.id && (o.fecha_estimada_entrega||'').startsWith(filtro); });
+      })
+    : DB.ops;
+
+  var opMap = {};
+  opData.forEach(function(e){ opMap[e.k]=0; });
+  opsScope.forEach(function(op){ if(opMap.hasOwnProperty(op.estado_op)) opMap[op.estado_op]++; });
+  var totalOps = opsScope.length || 1;
 
   var CX=200, CY=200, R=165, IR=95;
   var segs2 = [];
   var ang2 = -Math.PI/2;
-  eData.forEach(function(e){
-    var cnt = eMap2[e.k];
+  opData.forEach(function(e){
+    var cnt = opMap[e.k];
     if(!cnt) return;
-    var sweep = (cnt/totalAct2)*2*Math.PI;
-    segs2.push({label:e.label, color:e.color, cnt:cnt, pct:Math.round(cnt/totalAct2*100), start:ang2, end:ang2+sweep});
+    var sweep = (cnt/totalOps)*2*Math.PI;
+    segs2.push({label:e.label, color:e.color, cnt:cnt, pct:Math.round(cnt/totalOps*100), start:ang2, end:ang2+sweep});
     ang2 += sweep;
   });
 
   h += '<div class="card" style="margin-top:16px;padding:24px 28px;">';
   h += '<div style="display:flex;align-items:baseline;gap:12px;margin-bottom:20px;">';
-  h += '<span style="font-family:var(--bebas);font-size:22px;letter-spacing:1px;">Estado de OTs</span>';
-  h += '<span style="font-size:12px;color:#64748b;">'+activas.length+' órdenes activas · '+(filtro||'todo el año')+'</span>';
+  h += '<span style="font-family:var(--bebas);font-size:22px;letter-spacing:1px;">Estado de Órdenes de Producción</span>';
+  h += '<span style="font-size:12px;color:#64748b;">'+opsScope.length+' OPs · '+(filtro||'todo el año')+'</span>';
   h += '</div>';
   h += '<div style="display:flex;align-items:center;gap:40px;flex-wrap:wrap;">';
 
@@ -961,8 +967,8 @@ function renderDashboard(){
       h += '<text x="'+lx+'" y="'+(ly+13)+'" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="11" font-family="system-ui,sans-serif">'+seg.cnt+' OTs</text>';
     }
   });
-  h += '<text x="'+CX+'" y="'+(CY-16)+'" text-anchor="middle" fill="#f1f5f9" font-size="52" font-weight="700" font-family="system-ui,sans-serif">'+activas.length+'</text>';
-  h += '<text x="'+CX+'" y="'+(CY+18)+'" text-anchor="middle" fill="#64748b" font-size="16" font-family="system-ui,sans-serif">OTs Activas</text>';
+  h += '<text x="'+CX+'" y="'+(CY-16)+'" text-anchor="middle" fill="#f1f5f9" font-size="52" font-weight="700" font-family="system-ui,sans-serif">'+opsScope.length+'</text>';
+  h += '<text x="'+CX+'" y="'+(CY+18)+'" text-anchor="middle" fill="#64748b" font-size="16" font-family="system-ui,sans-serif">OPs</text>';
   h += '</svg>';
 
   // Leyenda derecha con números grandes
