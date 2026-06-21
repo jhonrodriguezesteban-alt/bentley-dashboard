@@ -399,7 +399,8 @@ textarea.form-control{resize:vertical;min-height:80px;}
   .card{padding:10px;}
 }
 #sidebar.collapsed{width:60px;min-width:60px;}
-#sidebar.collapsed .nav-item span:not(.icon){display:none;}
+#sidebar.collapsed .nav-label{display:none;}
+#sidebar.collapsed #nov-badge{display:none !important;}
 #sidebar.collapsed .nav-item{justify-content:center;padding:14px 0;}
 #sidebar.collapsed #sidebar-logo .brand,#sidebar.collapsed #sidebar-logo .sub{display:none;}
 #sidebar.collapsed #sidebar-footer span{display:none;}
@@ -421,31 +422,31 @@ textarea.form-control{resize:vertical;min-height:80px;}
   </div>
   <nav>
     <div class="nav-item active" onclick="navTo('dashboard')" data-page="dashboard">
-      <span class="icon">⬡</span> Dashboard
+      <span class="icon">⬡</span><span class="nav-label"> Dashboard</span>
     </div>
     <div class="nav-item" onclick="navTo('satelites')" data-page="satelites">
-      <span class="icon">🏭</span> Satélites
+      <span class="icon">🏭</span><span class="nav-label"> Satélites</span>
     </div>
     <div class="nav-item" onclick="navTo('ops')" data-page="ops">
-      <span class="icon">📋</span> Órdenes de Producción
+      <span class="icon">📋</span><span class="nav-label"> Órdenes de Producción</span>
     </div>
     <div class="nav-item" onclick="navTo('entregas')" data-page="entregas">
-      <span class="icon">📦</span> Entregas
+      <span class="icon">📦</span><span class="nav-label"> Entregas</span>
     </div>
     <div class="nav-item" onclick="navTo('diseno')" data-page="diseno">
-      <span class="icon">🎨</span> Diseño
+      <span class="icon">🎨</span><span class="nav-label"> Diseño</span>
     </div>
     <div class="nav-item" onclick="navTo('programacion')" data-page="programacion">
-      <span class="icon">📅</span> Programación
+      <span class="icon">📅</span><span class="nav-label"> Programación</span>
     </div>
     <div class="nav-item" onclick="navTo('novedades')" data-page="novedades">
-      <span class="icon">⚠</span> Novedades <span id="nov-badge" style="display:none;background:var(--red);color:#fff;border-radius:10px;font-size:10px;padding:1px 6px;margin-left:4px;"></span>
+      <span class="icon">⚠</span><span class="nav-label"> Novedades</span> <span id="nov-badge" style="display:none;background:var(--red);color:#fff;border-radius:10px;font-size:10px;padding:1px 6px;margin-left:4px;"></span>
     </div>
     <div class="nav-item" onclick="navTo('historial')" data-page="historial">
-      <span class="icon">📋</span> Historial
+      <span class="icon">📋</span><span class="nav-label"> Historial</span>
     </div>
     <div class="nav-item" onclick="navTo('costos_mo')" data-page="costos_mo">
-      <span class="icon">💰</span> Costos MO
+      <span class="icon">💰</span><span class="nav-label"> Costos MO</span>
     </div>
   </nav>
   <div id="sidebar-footer">
