@@ -874,7 +874,7 @@ function renderDashboard(){
   // ── Dos columnas ────────────────────────────────────────────────────────────
   h += '<div class="two-col" style="margin-top:16px;">';
 
-  // LEFT — Top Satélites con barras de colores
+  // LEFT — Top Satélites
   var satMapTop = {};
   DB.ots.filter(function(o){
     if(o.estado!=='ENTREGADO'||!o.satelite_id) return false;
@@ -907,77 +907,78 @@ function renderDashboard(){
   }
   h += '</div>';
 
-  // RIGHT — Estado de OTs: donut vibrante con labels de %
-  var eData = [
-    {k:'PENDIENTE_CORTAR', label:'Pend. Cortar',  color:'#64748b'},
-    {k:'CORTE_POR_ALISTAR',label:'Corte x Alistar',color:'#fbbf24'},
-    {k:'EN_CONFECCION',    label:'En Confección', color:'#a855f7'},
-    {k:'ASIGNADO',         label:'Asignado',      color:'#00d4ff'},
-    {k:'NOVEDAD',          label:'Novedad',       color:'#ec4899'},
-  ];
-  var eMap = {};
-  eData.forEach(function(e){ eMap[e.k]=0; });
-  activas.forEach(function(o){ if(eMap.hasOwnProperty(o.estado)) eMap[o.estado]++; });
-  var totalAct = activas.length || 1;
+  h += '</div>'; // fin two-col
 
-  // Construir segmentos del donut
-  var CX=110, CY=110, R=88, IR=52;
-  var segments = [];
-  var ang = -Math.PI/2;
+  // ── Estado de OTs — card ancho completo con donut grande ────────────────────
+  var eData = [
+    {k:'PENDIENTE_CORTAR', label:'Pendiente Cortar',  color:'#64748b'},
+    {k:'CORTE_POR_ALISTAR',label:'Corte por Alistar', color:'#fbbf24'},
+    {k:'EN_CONFECCION',    label:'En Confección',     color:'#a855f7'},
+    {k:'ASIGNADO',         label:'Asignado',          color:'#00d4ff'},
+    {k:'NOVEDAD',          label:'Novedad',           color:'#ec4899'},
+  ];
+  var eMap2 = {};
+  eData.forEach(function(e){ eMap2[e.k]=0; });
+  activas.forEach(function(o){ if(eMap2.hasOwnProperty(o.estado)) eMap2[o.estado]++; });
+  var totalAct2 = activas.length || 1;
+
+  var CX=200, CY=200, R=165, IR=95;
+  var segs2 = [];
+  var ang2 = -Math.PI/2;
   eData.forEach(function(e){
-    var cnt = eMap[e.k];
+    var cnt = eMap2[e.k];
     if(!cnt) return;
-    var sweep = (cnt/totalAct)*2*Math.PI;
-    segments.push({label:e.label, color:e.color, cnt:cnt, pct:Math.round(cnt/totalAct*100), start:ang, end:ang+sweep});
-    ang += sweep;
+    var sweep = (cnt/totalAct2)*2*Math.PI;
+    segs2.push({label:e.label, color:e.color, cnt:cnt, pct:Math.round(cnt/totalAct2*100), start:ang2, end:ang2+sweep});
+    ang2 += sweep;
   });
 
-  h += '<div class="card" style="padding:18px 16px;">';
-  h += '<div style="font-family:var(--bebas);font-size:18px;letter-spacing:1px;margin-bottom:2px;">Estado de OTs</div>';
-  h += '<div style="font-size:11px;color:#64748b;margin-bottom:14px;">'+activas.length+' órdenes · '+(filtro||'todo el año')+'</div>';
-  h += '<div style="display:flex;align-items:center;gap:20px;">';
-  // SVG donut
-  h += '<svg viewBox="0 0 220 220" style="width:160px;min-width:160px;flex-shrink:0;" xmlns="http://www.w3.org/2000/svg">';
-  // fondo oscuro del ring
-  h += '<circle cx="'+CX+'" cy="'+CY+'" r="'+R+'" fill="none" stroke="#1e2535" stroke-width="'+(R-IR)+'"/>';
-  segments.forEach(function(seg){
+  h += '<div class="card" style="margin-top:16px;padding:24px 28px;">';
+  h += '<div style="display:flex;align-items:baseline;gap:12px;margin-bottom:20px;">';
+  h += '<span style="font-family:var(--bebas);font-size:22px;letter-spacing:1px;">Estado de OTs</span>';
+  h += '<span style="font-size:12px;color:#64748b;">'+activas.length+' órdenes activas · '+(filtro||'todo el año')+'</span>';
+  h += '</div>';
+  h += '<div style="display:flex;align-items:center;gap:40px;flex-wrap:wrap;">';
+
+  // SVG grande centrado
+  h += '<svg viewBox="0 0 400 400" style="width:min(380px,100%);flex-shrink:0;" xmlns="http://www.w3.org/2000/svg">';
+  h += '<circle cx="'+CX+'" cy="'+CY+'" r="'+R+'" fill="none" stroke="#1a2032" stroke-width="'+(R-IR)+'"/>';
+  segs2.forEach(function(seg){
     var sweep = seg.end - seg.start;
     var large = sweep > Math.PI ? 1 : 0;
-    var x1=CX+R*Math.cos(seg.start), y1=CY+R*Math.sin(seg.start);
-    var x2=CX+R*Math.cos(seg.end),   y2=CY+R*Math.sin(seg.end);
+    var x1=CX+R*Math.cos(seg.start),  y1=CY+R*Math.sin(seg.start);
+    var x2=CX+R*Math.cos(seg.end),    y2=CY+R*Math.sin(seg.end);
     var ix1=CX+IR*Math.cos(seg.start),iy1=CY+IR*Math.sin(seg.start);
     var ix2=CX+IR*Math.cos(seg.end),  iy2=CY+IR*Math.sin(seg.end);
-    var r1=Math.round(x1*100)/100, r2=Math.round(y1*100)/100;
-    var r3=Math.round(x2*100)/100, r4=Math.round(y2*100)/100;
-    var r5=Math.round(ix1*100)/100,r6=Math.round(iy1*100)/100;
-    var r7=Math.round(ix2*100)/100,r8=Math.round(iy2*100)/100;
-    h += '<path d="M '+r5+' '+r6+' L '+r1+' '+r2+' A '+R+' '+R+' 0 '+large+' 1 '+r3+' '+r4+' L '+r7+' '+r8+' A '+IR+' '+IR+' 0 '+large+' 0 '+r5+' '+r6+' Z" fill="'+seg.color+'"/>';
-    // label de % en el segmento si es > 8%
-    if(seg.pct >= 8){
+    function r(n){ return Math.round(n*1000)/1000; }
+    h += '<path d="M '+r(ix1)+' '+r(iy1)+' L '+r(x1)+' '+r(y1)+' A '+R+' '+R+' 0 '+large+' 1 '+r(x2)+' '+r(y2)+' L '+r(ix2)+' '+r(iy2)+' A '+IR+' '+IR+' 0 '+large+' 0 '+r(ix1)+' '+r(iy1)+' Z" fill="'+seg.color+'" stroke="#0d1117" stroke-width="2"/>';
+    if(seg.pct >= 5){
       var midA = (seg.start+seg.end)/2;
       var lr = (R+IR)/2;
-      var lx = Math.round((CX+lr*Math.cos(midA))*10)/10;
-      var ly = Math.round((CY+lr*Math.sin(midA))*10)/10;
-      h += '<text x="'+lx+'" y="'+(ly+4)+'" text-anchor="middle" fill="#fff" font-size="12" font-weight="700" font-family="system-ui">'+seg.pct+'%</text>';
+      var lx = r(CX+lr*Math.cos(midA));
+      var ly = r(CY+lr*Math.sin(midA));
+      h += '<text x="'+lx+'" y="'+(ly-6)+'" text-anchor="middle" fill="#fff" font-size="18" font-weight="700" font-family="system-ui,sans-serif">'+seg.pct+'%</text>';
+      h += '<text x="'+lx+'" y="'+(ly+13)+'" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="11" font-family="system-ui,sans-serif">'+seg.cnt+' OTs</text>';
     }
   });
-  // Centro: total
-  h += '<text x="'+CX+'" y="'+(CY-6)+'" text-anchor="middle" fill="#f1f5f9" font-size="26" font-weight="700" font-family="system-ui">'+activas.length+'</text>';
-  h += '<text x="'+CX+'" y="'+(CY+14)+'" text-anchor="middle" fill="#64748b" font-size="11" font-family="system-ui">OTs</text>';
+  h += '<text x="'+CX+'" y="'+(CY-16)+'" text-anchor="middle" fill="#f1f5f9" font-size="52" font-weight="700" font-family="system-ui,sans-serif">'+activas.length+'</text>';
+  h += '<text x="'+CX+'" y="'+(CY+18)+'" text-anchor="middle" fill="#64748b" font-size="16" font-family="system-ui,sans-serif">OTs Activas</text>';
   h += '</svg>';
-  // leyenda
-  h += '<div style="flex:1;min-width:0;">';
-  segments.forEach(function(seg){
-    h += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:9px;">';
-    h += '<div style="width:12px;height:12px;border-radius:3px;background:'+seg.color+';flex-shrink:0;"></div>';
-    h += '<div style="flex:1;font-size:12px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+seg.label+'</div>';
-    h += '<div style="font-size:14px;font-weight:700;color:'+seg.color+';">'+seg.cnt+'</div>';
+
+  // Leyenda derecha con números grandes
+  h += '<div style="flex:1;min-width:200px;">';
+  segs2.forEach(function(seg){
+    h += '<div style="display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid #1e2535;">';
+    h += '<div style="width:16px;height:16px;border-radius:4px;background:'+seg.color+';flex-shrink:0;"></div>';
+    h += '<div style="flex:1;">';
+    h += '<div style="font-size:14px;font-weight:600;color:#e2e8f0;">'+seg.label+'</div>';
+    h += '<div style="font-size:12px;color:#64748b;margin-top:2px;">'+seg.pct+'% del total</div>';
+    h += '</div>';
+    h += '<div style="font-size:28px;font-weight:700;color:'+seg.color+';font-family:var(--bebas);letter-spacing:1px;">'+seg.cnt+'</div>';
     h += '</div>';
   });
   h += '</div>';
   h += '</div></div>';
-
-  h += '</div>'; // fin two-col
 
   // ── Alertas urgentes ─────────────────────────────────────────────────────────
   var alertas = DB.ots.filter(function(o){
