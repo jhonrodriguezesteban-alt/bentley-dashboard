@@ -487,14 +487,23 @@ textarea.form-control{resize:vertical;min-height:80px;}
     </div>
     <div class="form-group">
       <label class="form-label">Usuario</label>
-      <input id="login-user" class="form-control" placeholder="usuario" autocomplete="username" style="height:44px;font-size:15px;" onkeydown="if(event.key==='Enter')document.getElementById('login-pass').focus()">
+      <input id="login-user" class="form-control" placeholder="Ej: jhon, juan, produccion..." autocomplete="username" style="height:44px;font-size:15px;" onkeydown="if(event.key==='Enter')document.getElementById('login-pass').focus()">
     </div>
-    <div class="form-group" style="margin-bottom:8px;">
+    <div class="form-group" style="margin-bottom:12px;">
       <label class="form-label">Contraseña</label>
-      <input id="login-pass" class="form-control" type="password" placeholder="••••••••" autocomplete="current-password" style="height:44px;font-size:15px;" onkeydown="if(event.key==='Enter')doLogin()">
+      <div style="position:relative;">
+        <input id="login-pass" class="form-control" type="password" placeholder="••••••••" autocomplete="current-password" style="height:44px;font-size:15px;padding-right:48px;" onkeydown="if(event.key==='Enter')doLogin()">
+        <button onclick="togglePassVis()" type="button" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#64748b;font-size:18px;padding:4px;line-height:1;" title="Mostrar/ocultar contraseña">
+          <span id="login-eye">👁</span>
+        </button>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+      <input type="checkbox" id="login-remember" style="width:16px;height:16px;accent-color:#00d4ff;cursor:pointer;" checked>
+      <label for="login-remember" style="font-size:13px;color:#94a3b8;cursor:pointer;">Recordar sesión en este dispositivo</label>
     </div>
     <div id="login-err" style="display:none;color:#ef4444;font-size:13px;margin-bottom:14px;padding:8px 12px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:8px;">Usuario o contraseña incorrectos</div>
-    <button onclick="doLogin()" class="btn btn-primary" style="width:100%;height:46px;font-size:15px;font-weight:600;margin-top:8px;">Ingresar</button>
+    <button onclick="doLogin()" class="btn btn-primary" style="width:100%;height:46px;font-size:15px;font-weight:600;">Ingresar</button>
     <div style="text-align:center;margin-top:20px;font-size:11px;color:#334155;">Grupo Bentley SAS · Acceso restringido</div>
   </div>
 </div>
@@ -580,8 +589,24 @@ var _NAMES = {
   'calidad':'Jefa de Calidad'
 };
 function _xd(h){ return h.match(/.{2}/g).map(function(x){ return String.fromCharCode(parseInt(x,16)^57); }).join(''); }
+function _findUser(input){
+  var s = input.trim().toLowerCase();
+  // buscar por clave exacta O por nombre completo (case-insensitive)
+  if(_U[s]) return s;
+  var found = null;
+  Object.keys(_NAMES).forEach(function(k){
+    if(_NAMES[k].toLowerCase() === s) found = k;
+  });
+  return found;
+}
+function togglePassVis(){
+  var inp = document.getElementById('login-pass');
+  var eye = document.getElementById('login-eye');
+  if(inp.type === 'password'){ inp.type = 'text'; eye.textContent = '🙈'; }
+  else { inp.type = 'password'; eye.textContent = '👁'; }
+}
 function checkAuth(){
-  var s = localStorage.getItem('bentley_prod_auth');
+  var s = localStorage.getItem('bentley_prod_auth') || sessionStorage.getItem('bentley_prod_auth');
   if(s){ try{
     var a = JSON.parse(s);
     if(a && a.user && _U[a.user]){
@@ -594,11 +619,15 @@ function checkAuth(){
   return false;
 }
 function doLogin(){
-  var u = (document.getElementById('login-user').value||'').trim().toLowerCase();
+  var rawUser = document.getElementById('login-user').value || '';
   var p = document.getElementById('login-pass').value || '';
   var err = document.getElementById('login-err');
-  if(_U[u] && _xd(_U[u]) === p){
-    localStorage.setItem('bentley_prod_auth', JSON.stringify({user:u}));
+  var remember = document.getElementById('login-remember') ? document.getElementById('login-remember').checked : true;
+  var u = _findUser(rawUser);
+  if(u && _U[u] && _xd(_U[u]) === p){
+    var authData = JSON.stringify({user:u});
+    if(remember){ localStorage.setItem('bentley_prod_auth', authData); }
+    else { sessionStorage.setItem('bentley_prod_auth', authData); }
     document.getElementById('login-overlay').style.display = 'none';
     document.getElementById('badge-user').textContent = _NAMES[u];
     var lastPage = localStorage.getItem('bentley_last_page') || 'dashboard';
@@ -612,8 +641,11 @@ function doLogin(){
 }
 function doLogout(){
   localStorage.removeItem('bentley_prod_auth');
+  sessionStorage.removeItem('bentley_prod_auth');
   document.getElementById('login-user').value = '';
   document.getElementById('login-pass').value = '';
+  document.getElementById('login-pass').type = 'password';
+  document.getElementById('login-eye').textContent = '👁';
   document.getElementById('login-err').style.display = 'none';
   document.getElementById('login-overlay').style.display = 'flex';
   setTimeout(function(){ document.getElementById('login-user').focus(); }, 100);
