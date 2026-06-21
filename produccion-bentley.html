@@ -450,12 +450,9 @@ textarea.form-control{resize:vertical;min-height:80px;}
 'use strict';
 
 // ─── Token (obfuscated, XOR 57) ───────────────────────────────────────────────
-var _GHE = '';
+var _GHE = '5e514966524e5f6168087d4e7f6b080d70607d6d48545c0d0c724953755c727f5100085d0e537d78';
 var GT = (function(){
-  // Pull from localStorage if user set it
-  var stored = localStorage.getItem('bentley_gh_token');
-  if (stored) return stored;
-  // Decode embedded token (empty by default, set via settings)
+  // Decode embedded token
   return _GHE ? _GHE.match(/.{2}/g).map(function(h){return String.fromCharCode(parseInt(h,16)^57);}).join('') : '';
 })();
 
