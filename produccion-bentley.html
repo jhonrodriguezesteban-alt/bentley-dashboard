@@ -356,9 +356,6 @@ textarea.form-control{resize:vertical;min-height:80px;}
     <div class="nav-item" onclick="navTo('ops')" data-page="ops">
       <span class="icon">📋</span> Órdenes de Producción
     </div>
-    <div class="nav-item" onclick="navTo('activas')" data-page="activas">
-      <span class="icon">⚙</span> OTs Activas
-    </div>
     <div class="nav-item" onclick="navTo('entregas')" data-page="entregas">
       <span class="icon">📦</span> Entregas
     </div>
@@ -476,6 +473,7 @@ var ESTADO_LABELS = {
 // ─── State ─────────────────────────────────────────────────────────────────────
 var DB = { satelites: [], ops: [], ots: [] };
 var currentPage = 'dashboard';
+var _opDetalleId = null; // OP abierta en detalle
 var drawerCtx = null;
 var selectedOTs = new Set();
 
@@ -657,12 +655,12 @@ function updateNovBadge(){
 // ─── Navigation ────────────────────────────────────────────────────────────────
 function navTo(page){
   currentPage = page;
+  if(page !== 'ops') _opDetalleId = null; // limpiar detalle al salir del módulo
   document.querySelectorAll('.nav-item').forEach(function(el){ el.classList.toggle('active', el.dataset.page===page); });
-  var titles = {dashboard:'DASHBOARD',satelites:'SATÉLITES',ops:'ÓRDENES DE PRODUCCIÓN',activas:'ÓRDENES ACTIVAS',entregas:'REGISTRO DE ENTREGAS',indicadores:'INDICADORES',novedades:'NOVEDADES',historial:'HISTORIAL'};
+  var titles = {dashboard:'DASHBOARD',satelites:'SATÉLITES',ops:'ÓRDENES DE PRODUCCIÓN',entregas:'REGISTRO DE ENTREGAS',indicadores:'INDICADORES',novedades:'NOVEDADES',historial:'HISTORIAL'};
   document.getElementById('topbar-title').textContent = titles[page] || page.toUpperCase();
   closeDrawer(); closeModal(); selectedOTs.clear();
   renderPage(page);
-  // mobile: close sidebar
   document.getElementById('sidebar').classList.remove('mob-open');
 }
 
@@ -672,9 +670,7 @@ function renderPage(page){
   var el = document.getElementById('page-content');
   if(page==='dashboard') el.innerHTML = renderDashboard();
   else if(page==='satelites') el.innerHTML = renderSatelites();
-  else if(page==='ops') el.innerHTML = renderOPs();
-  else if(page==='nueva-op') el.innerHTML = renderNuevaOP();
-  else if(page==='activas') el.innerHTML = renderActivas();
+  else if(page==='ops') el.innerHTML = _opDetalleId ? renderOPDetalle(_opDetalleId) : renderOPs();
   else if(page==='entregas') el.innerHTML = renderEntregas();
   else if(page==='indicadores') el.innerHTML = renderIndicadores();
   else if(page==='novedades') el.innerHTML = renderNovedades();
@@ -985,12 +981,131 @@ function mostrarFormNuevaOP(){
 function cerrarFormNuevaOP(){ closeModal(); }
 
 function verDetalleOP(opId){
-  // Navegar a OTs Activas filtrado por OP
-  navTo('activas');
-  setTimeout(function(){
-    var fb = document.getElementById('f-buscar');
-    if(fb){ fb.value = opId; filtrarActivas(); }
-  }, 100);
+  _opDetalleId = opId;
+  currentPage = 'ops';
+  document.querySelectorAll('.nav-item').forEach(function(el){ el.classList.toggle('active', el.dataset.page==='ops'); });
+  var op = DB.ops.find(function(o){ return o.id === opId; });
+  document.getElementById('topbar-title').textContent = op ? op.id + ' — ' + op.nombre_producto : 'DETALLE OP';
+  closeDrawer(); closeModal();
+  document.getElementById('page-content').innerHTML = renderOPDetalle(opId);
+}
+
+function abrirOT(id){ verOT(id); }
+
+function volverAOPs(){
+  _opDetalleId = null;
+  document.getElementById('topbar-title').textContent = 'ÓRDENES DE PRODUCCIÓN';
+  document.getElementById('page-content').innerHTML = renderOPs();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// DETALLE DE OP
+// ═══════════════════════════════════════════════════════════════════════════════
+function renderOPDetalle(opId){
+  var op = DB.ops.find(function(o){ return o.id === opId; });
+  if(!op) return '<div class="empty-state">OP no encontrada</div>';
+
+  var otsOp = DB.ots.filter(function(o){ return o.op_id === opId; });
+  var udsTotal = otsOp.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
+  var udsEntregadas = otsOp.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+(o.unidades_entregadas||0); }, 0);
+  var pct = udsTotal ? Math.round(udsEntregadas/udsTotal*100) : 0;
+
+  var estadoColor = {'EN_PROCESO':'var(--accent)','COMPLETADO':'var(--green)','CON_NOVEDAD':'var(--red)'}[op.estado_op] || 'var(--dim)';
+
+  var h = '';
+  // ── Cabecera con botón volver ──
+  h += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">';
+  h += '<button onclick="volverAOPs()" style="background:rgba(255,255,255,.08);border:1px solid var(--card-border);border-radius:8px;color:var(--text);padding:8px 14px;cursor:pointer;font-size:14px;display:flex;align-items:center;gap:6px;">← Volver</button>';
+  h += '<div style="flex:1;">';
+  h += '<div style="font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;">Orden de Producción</div>';
+  h += '<div style="font-size:22px;font-weight:700;color:var(--accent);">' + op.id + ' <span style="color:var(--text);font-size:18px;">— ' + op.nombre_producto + '</span></div>';
+  h += '</div>';
+  h += '<span style="background:' + estadoColor + '22;color:' + estadoColor + ';border:1px solid ' + estadoColor + '44;border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700;">' + (op.estado_op||'EN_PROCESO') + '</span>';
+  h += '</div>';
+
+  // ── KPIs de la OP ──
+  var enConf = otsOp.filter(function(o){ return o.estado==='EN_CONFECCION'; }).reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
+  var pendCorte = otsOp.filter(function(o){ return o.estado==='PENDIENTE_CORTAR'||o.estado==='CORTE_POR_ALISTAR'; }).reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
+  var conNovedad = otsOp.filter(function(o){ return o.estado==='NOVEDAD'||(o.unidades_novedad||0)>0; }).length;
+
+  h += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:20px;">';
+  var kpis = [
+    ['TOTAL UDS', udsTotal.toLocaleString('es-CO'), 'var(--text)'],
+    ['ENTREGADO', udsEntregadas.toLocaleString('es-CO') + ' (' + pct + '%)', 'var(--green)'],
+    ['EN CONFECCIÓN', enConf.toLocaleString('es-CO'), 'var(--accent)'],
+    ['PTE. CORTE', pendCorte.toLocaleString('es-CO'), 'var(--yellow)'],
+    ['CORTADOR', op.cortador||'—', 'var(--text)'],
+    ['FECHA OP', fmtDate(op.fecha_op), 'var(--dim)'],
+  ];
+  if(conNovedad) kpis.push(['NOVEDADES', conNovedad + ' OTs', 'var(--red)']);
+  kpis.forEach(function(k){
+    h += '<div class="card" style="padding:12px 14px;"><div style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">' + k[0] + '</div>';
+    h += '<div style="font-size:17px;font-weight:700;color:' + k[2] + ';">' + k[1] + '</div></div>';
+  });
+  h += '</div>';
+
+  // Barra progreso
+  h += '<div style="height:6px;background:rgba(255,255,255,.08);border-radius:6px;overflow:hidden;margin-bottom:24px;">';
+  h += '<div style="height:100%;width:' + pct + '%;background:var(--green);border-radius:6px;"></div></div>';
+
+  // ── OTs agrupadas por COLOR ──
+  var colores = {};
+  otsOp.forEach(function(ot){
+    var c = ot.color || '—';
+    if(!colores[c]) colores[c] = [];
+    colores[c].push(ot);
+  });
+
+  var ESTADO_ORDER = ['PENDIENTE_CORTAR','CORTE_POR_ALISTAR','ASIGNADO','EN_CONFECCION','ENTREGADO_PARCIAL','NOVEDAD','ENTREGADO'];
+
+  Object.keys(colores).forEach(function(color){
+    var otsColor = colores[color].sort(function(a,b){ return ESTADO_ORDER.indexOf(a.estado)-ESTADO_ORDER.indexOf(b.estado); });
+    var udsC = otsColor.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
+    var udsEntC = otsColor.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+(o.unidades_entregadas||0); }, 0);
+    var pctC = udsC ? Math.round(udsEntC/udsC*100) : 0;
+
+    h += '<div class="card" style="margin-bottom:12px;padding:0;overflow:hidden;">';
+    // Cabecera color
+    h += '<div style="padding:12px 16px;background:rgba(255,255,255,.04);display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--card-border);">';
+    h += '<div style="font-size:14px;font-weight:700;flex:1;">🎨 ' + color + '</div>';
+    h += '<div style="font-size:12px;color:var(--dim);">' + otsColor.length + ' OTs · ' + udsC + ' uds · <span style="color:var(--green);">' + pctC + '% entregado</span></div>';
+    h += '</div>';
+    // Tabla de OTs
+    h += '<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:13px;">';
+    h += '<thead><tr style="background:rgba(255,255,255,.02);">';
+    h += '<th style="padding:8px 12px;text-align:left;color:var(--dim);font-weight:500;font-size:11px;white-space:nowrap;">OT #</th>';
+    h += '<th style="padding:8px 12px;text-align:left;color:var(--dim);font-weight:500;font-size:11px;">Talla</th>';
+    h += '<th style="padding:8px 12px;text-align:center;color:var(--dim);font-weight:500;font-size:11px;">Cant.</th>';
+    h += '<th style="padding:8px 12px;text-align:left;color:var(--dim);font-weight:500;font-size:11px;">Estado</th>';
+    h += '<th style="padding:8px 12px;text-align:left;color:var(--dim);font-weight:500;font-size:11px;">Satélite</th>';
+    h += '<th style="padding:8px 12px;text-align:center;color:var(--dim);font-weight:500;font-size:11px;">Entregado</th>';
+    h += '<th style="padding:8px 12px;text-align:center;color:var(--dim);font-weight:500;font-size:11px;">F. Est.</th>';
+    h += '<th style="padding:8px 12px;text-align:center;color:var(--dim);font-weight:500;font-size:11px;">Días</th>';
+    h += '<th style="padding:8px 12px;text-align:center;color:var(--dim);font-weight:500;font-size:11px;">Acción</th>';
+    h += '</tr></thead><tbody>';
+
+    otsColor.forEach(function(ot, idx){
+      var dias = diasRestantes(ot.fecha_estimada_entrega);
+      var rowBg = idx % 2 === 0 ? '' : 'background:rgba(255,255,255,.015);';
+      h += '<tr style="border-top:1px solid rgba(255,255,255,.04);' + rowBg + '">';
+      h += '<td style="padding:10px 12px;font-weight:700;color:var(--cyan);white-space:nowrap;">OT-' + ot.numero_ot + '</td>';
+      h += '<td style="padding:10px 12px;font-weight:600;">' + (ot.talla||'—') + '</td>';
+      h += '<td style="padding:10px 12px;text-align:center;">' + (ot.cantidad||0) + '</td>';
+      h += '<td style="padding:10px 12px;">' + badge(ot.estado) + '</td>';
+      h += '<td style="padding:10px 12px;font-size:12px;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + getSatNombre(ot.satelite_id) + '</td>';
+      h += '<td style="padding:10px 12px;text-align:center;color:var(--green);font-weight:600;">' + (ot.unidades_entregadas||0) + '</td>';
+      h += '<td style="padding:10px 12px;text-align:center;font-size:12px;color:var(--dim);">' + (ot.fecha_estimada_entrega ? fmtDate(ot.fecha_estimada_entrega) : '—') + '</td>';
+      h += '<td style="padding:10px 12px;text-align:center;">' + diasChip(dias) + '</td>';
+      h += '<td style="padding:10px 12px;text-align:center;">';
+      h += '<button onclick="abrirOT(\'' + ot.id + '\')" style="background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.3);color:var(--accent);border-radius:6px;padding:4px 10px;cursor:pointer;font-size:11px;">Ver / Editar</button>';
+      h += '</td>';
+      h += '</tr>';
+    });
+
+    h += '</tbody></table></div></div>';
+  });
+
+  return h;
 }
 
 function renderNuevaOP(){
