@@ -421,9 +421,6 @@ textarea.form-control{resize:vertical;min-height:80px;}
     <div class="nav-item" onclick="navTo('entregas')" data-page="entregas">
       <span class="icon">📦</span> Entregas
     </div>
-    <div class="nav-item" onclick="navTo('indicadores')" data-page="indicadores">
-      <span class="icon">📊</span> Indicadores
-    </div>
     <div class="nav-item" onclick="navTo('novedades')" data-page="novedades">
       <span class="icon">⚠</span> Novedades <span id="nov-badge" style="display:none;background:var(--red);color:#fff;border-radius:10px;font-size:10px;padding:1px 6px;margin-left:4px;"></span>
     </div>
@@ -433,6 +430,7 @@ textarea.form-control{resize:vertical;min-height:80px;}
   </nav>
   <div id="sidebar-footer">
     <button class="btn-settings" onclick="openSettings()">⚙️ <span>Configuración</span></button>
+    <button class="btn-settings" onclick="doLogout()" style="margin-top:6px;color:#64748b;">↩ <span>Cerrar sesión</span></button>
   </div>
 </nav>
 
@@ -479,6 +477,27 @@ textarea.form-control{resize:vertical;min-height:80px;}
 
 <!-- Toast container -->
 <div id="toast-container"></div>
+
+<!-- Login Overlay -->
+<div id="login-overlay" style="display:none;position:fixed;inset:0;background:#0a0d14;z-index:9999;align-items:center;justify-content:center;">
+  <div style="background:#13161f;border:1px solid #1e2a3a;border-radius:22px;width:90%;max-width:400px;padding:44px 36px;box-shadow:0 32px 80px rgba(0,0,0,.6);">
+    <div style="text-align:center;margin-bottom:36px;">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:44px;letter-spacing:5px;color:#00d4ff;line-height:1;">BENTLEY</div>
+      <div style="font-size:11px;color:#475569;letter-spacing:3px;margin-top:4px;text-transform:uppercase;">Producción · Control de Planta</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Usuario</label>
+      <input id="login-user" class="form-control" placeholder="usuario" autocomplete="username" style="height:44px;font-size:15px;" onkeydown="if(event.key==='Enter')document.getElementById('login-pass').focus()">
+    </div>
+    <div class="form-group" style="margin-bottom:8px;">
+      <label class="form-label">Contraseña</label>
+      <input id="login-pass" class="form-control" type="password" placeholder="••••••••" autocomplete="current-password" style="height:44px;font-size:15px;" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div id="login-err" style="display:none;color:#ef4444;font-size:13px;margin-bottom:14px;padding:8px 12px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:8px;">Usuario o contraseña incorrectos</div>
+    <button onclick="doLogin()" class="btn btn-primary" style="width:100%;height:46px;font-size:15px;font-weight:600;margin-top:8px;">Ingresar</button>
+    <div style="text-align:center;margin-top:20px;font-size:11px;color:#334155;">Grupo Bentley SAS · Acceso restringido</div>
+  </div>
+</div>
 
 <!-- Settings Modal (special) -->
 <div id="settings-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:600;backdrop-filter:blur(6px);align-items:center;justify-content:center;">
@@ -546,8 +565,66 @@ var selectedOTs = new Set();
 // ─── UUID ──────────────────────────────────────────────────────────────────────
 function uid(){ return 'id_' + Date.now() + '_' + Math.random().toString(36).substr(2,9); }
 
-// ─── User session ──────────────────────────────────────────────────────────────
-function getUser(){ return localStorage.getItem('bentley_prod_user') || 'Invitado'; }
+// ─── Auth system ──────────────────────────────────────────────────────────────
+// Passwords encoded XOR-57 (same scheme as GitHub token)
+var _U = {
+  'jhon':       '7b5c574d555c400b090b0f',
+  'juan':       '734c58570b090b0f',
+  'produccion': '694b565d0b090b0f',
+  'calidad':    '7a58550b090b0f'
+};
+var _NAMES = {
+  'jhon':'John Rodriguez',
+  'juan':'Juan',
+  'produccion':'Jefa de Producción',
+  'calidad':'Jefa de Calidad'
+};
+function _xd(h){ return h.match(/.{2}/g).map(function(x){ return String.fromCharCode(parseInt(x,16)^57); }).join(''); }
+function checkAuth(){
+  var s = localStorage.getItem('bentley_prod_auth');
+  if(s){ try{
+    var a = JSON.parse(s);
+    if(a && a.user && _U[a.user]){
+      document.getElementById('badge-user').textContent = _NAMES[a.user] || a.user;
+      return true;
+    }
+  }catch(e){} }
+  document.getElementById('login-overlay').style.display = 'flex';
+  setTimeout(function(){ document.getElementById('login-user').focus(); }, 100);
+  return false;
+}
+function doLogin(){
+  var u = (document.getElementById('login-user').value||'').trim().toLowerCase();
+  var p = document.getElementById('login-pass').value || '';
+  var err = document.getElementById('login-err');
+  if(_U[u] && _xd(_U[u]) === p){
+    localStorage.setItem('bentley_prod_auth', JSON.stringify({user:u}));
+    document.getElementById('login-overlay').style.display = 'none';
+    document.getElementById('badge-user').textContent = _NAMES[u];
+    var lastPage = localStorage.getItem('bentley_last_page') || 'dashboard';
+    navTo(lastPage);
+    if(!DB.ops.length) cargarDatos();
+  } else {
+    err.style.display = 'block';
+    document.getElementById('login-pass').value = '';
+    document.getElementById('login-pass').focus();
+  }
+}
+function doLogout(){
+  localStorage.removeItem('bentley_prod_auth');
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+  document.getElementById('login-err').style.display = 'none';
+  document.getElementById('login-overlay').style.display = 'flex';
+  setTimeout(function(){ document.getElementById('login-user').focus(); }, 100);
+}
+
+// ─── User session (legacy) ─────────────────────────────────────────────────────
+function getUser(){
+  var s = localStorage.getItem('bentley_prod_auth');
+  if(s){ try{ var a=JSON.parse(s); return _NAMES[a.user]||a.user||'Invitado'; }catch(e){} }
+  return 'Invitado';
+}
 function initUser(){
   document.getElementById('badge-user').textContent = getUser();
 }
@@ -721,9 +798,10 @@ function updateNovBadge(){
 // ─── Navigation ────────────────────────────────────────────────────────────────
 function navTo(page){
   currentPage = page;
-  if(page !== 'ops') _opDetalleId = null; // limpiar detalle al salir del módulo
+  localStorage.setItem('bentley_last_page', page);
+  if(page !== 'ops') _opDetalleId = null;
   document.querySelectorAll('.nav-item').forEach(function(el){ el.classList.toggle('active', el.dataset.page===page); });
-  var titles = {dashboard:'DASHBOARD',satelites:'SATÉLITES',ops:'ÓRDENES DE PRODUCCIÓN',entregas:'REGISTRO DE ENTREGAS',indicadores:'INDICADORES',novedades:'NOVEDADES',historial:'HISTORIAL'};
+  var titles = {dashboard:'DASHBOARD',satelites:'SATÉLITES',ops:'ÓRDENES DE PRODUCCIÓN',entregas:'REGISTRO DE ENTREGAS',novedades:'NOVEDADES',historial:'HISTORIAL'};
   document.getElementById('topbar-title').textContent = titles[page] || page.toUpperCase();
   closeDrawer(); closeModal(); selectedOTs.clear();
   renderPage(page);
@@ -2234,15 +2312,21 @@ if(!window.CSS || !window.CSS.escape){
 }
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
-initUser();
-// Try loading from local first for instant render
+// Load cached DB for instant render
 var _localDB = localStorage.getItem('bentley_prod_db');
 if(_localDB){ try{ DB = JSON.parse(_localDB); if(DB.satelites.length===0) seedSatelites(); }catch(e){ seedSatelites(); } }
 else { seedSatelites(); }
 updateNovBadge();
-renderPage('dashboard');
-// Then load from GitHub Pages (async)
-cargarDatos();
+// Restore last page
+var _initPage = localStorage.getItem('bentley_last_page') || 'dashboard';
+currentPage = _initPage;
+renderPage(_initPage);
+// Auth check — shows login overlay if not authenticated
+if(checkAuth()){
+  // Already logged in — async refresh from GitHub
+  cargarDatos();
+}
+// If not authenticated, cargarDatos() is called inside doLogin() after successful login
 </script>
 </body>
 </html>
