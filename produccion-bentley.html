@@ -3138,8 +3138,21 @@ function renderCostosMO(){
       items.forEach(function(p){
         h += '<div style="display:flex;align-items:center;gap:12px;padding:8px 16px;border-bottom:1px solid rgba(30,37,53,.5);">';
         h += '<div style="flex:1;"><div style="font-size:12px;color:#e2e8f0;font-weight:600;">'+esc(p.referencia)+'</div>';
-        h += '<div style="font-size:11px;color:#64748b;">'+p.uds+' uds × $'+(p.precio_mo||0).toLocaleString('es-CO')+' = <span style="color:#f97316;">$'+(p.total||0).toLocaleString('es-CO')+'</span> · '+esc(p.fecha||'')+'</div></div>';
-        h += '<button data-id="'+p.id+'" onclick="marcarPagado(this.dataset.id)" class="btn btn-sm btn-success" style="padding:4px 10px;flex-shrink:0;">✓ Pagado</button>';
+        var abonado = p.total_abonado||0;
+        var saldo = p.total - abonado;
+        var detalleAbono = abonado>0 ? ' · <span style="color:#fbbf24;">Abonado: $'+abonado.toLocaleString('es-CO')+'</span> · <span style="color:#f97316;font-weight:700;">Saldo: $'+saldo.toLocaleString('es-CO')+'</span>' : '';
+        h += '<div style="font-size:11px;color:#64748b;">'+p.uds+' uds × $'+(p.precio_mo||0).toLocaleString('es-CO')+' = <span style="color:#f97316;">$'+(p.total||0).toLocaleString('es-CO')+'</span>'+detalleAbono+' · '+esc(p.fecha||'')+'</div>';
+        if(p.abonos && p.abonos.length){
+          p.abonos.forEach(function(ab){
+            h += '<div style="font-size:10px;color:#475569;margin-top:2px;">↳ Abono '+esc(ab.fecha)+': $'+ab.valor.toLocaleString('es-CO')+'</div>';
+          });
+        }
+        h += '</div>';
+        var pendAct = p.total - (p.total_abonado||0);
+        h += '<div style="display:flex;gap:5px;flex-shrink:0;">';
+        h += '<button data-id="'+p.id+'" onclick="abrirAbono(this.dataset.id)" style="padding:4px 10px;border-radius:6px;font-size:11px;cursor:pointer;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:#fbbf24;font-weight:600;">$ Abonar</button>';
+        h += '<button data-id="'+p.id+'" onclick="marcarPagado(this.dataset.id)" class="btn btn-sm btn-success" style="padding:4px 10px;">✓ Pagado</button>';
+        h += '</div>';
         h += '</div>';
       });
       h += '</div></div>';
@@ -3176,6 +3189,45 @@ function marcarPagado(id){
   p.estado = 'PAGADO';
   guardarCostosMO(); renderPage('costos_mo');
   toast('Pago registrado','success');
+}
+
+function abrirAbono(id){
+  var p = (DB.costos_mo&&DB.costos_mo.pagos||[]).find(function(x){ return x.id===id; });
+  if(!p) return;
+  var saldo = p.total - (p.total_abonado||0);
+  var body = '';
+  body += '<div style="background:#0f1520;border:1px solid #1e2535;border-radius:8px;padding:12px 16px;margin-bottom:14px;">';
+  body += '<div style="font-size:11px;color:#64748b;">'+esc(p.satelite_nombre)+' · '+esc(p.referencia)+'</div>';
+  body += '<div style="display:flex;justify-content:space-between;margin-top:6px;">';
+  body += '<span style="font-size:12px;color:#94a3b8;">Total: $'+p.total.toLocaleString('es-CO')+'</span>';
+  if((p.total_abonado||0)>0) body += '<span style="font-size:12px;color:#fbbf24;">Abonado: $'+(p.total_abonado).toLocaleString('es-CO')+'</span>';
+  body += '<span style="font-size:13px;font-weight:700;color:#f97316;">Saldo: $'+saldo.toLocaleString('es-CO')+'</span>';
+  body += '</div></div>';
+  body += '<div class="form-group"><label class="form-label">Valor del abono (COP)</label><input id="abono-valor" type="number" class="form-control" placeholder="0" max="'+saldo+'" autofocus></div>';
+  body += '<div class="form-group"><label class="form-label">Fecha</label><input id="abono-fecha" type="date" class="form-control" value="'+hoy()+'"></div>';
+  body += '<input type="hidden" id="abono-id" value="'+id+'">';
+  var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>';
+  footer += '<button class="btn btn-primary" style="background:#fbbf24;border-color:#fbbf24;color:#000;" onclick="guardarAbono()">Registrar abono</button>';
+  openModal('Registrar Abono', body, footer);
+  setTimeout(function(){ var el=document.getElementById('abono-valor'); if(el) el.focus(); }, 100);
+}
+
+function guardarAbono(){
+  var id = document.getElementById('abono-id').value;
+  var valor = parseInt(document.getElementById('abono-valor').value)||0;
+  var fecha = document.getElementById('abono-fecha').value;
+  var p = (DB.costos_mo&&DB.costos_mo.pagos||[]).find(function(x){ return x.id===id; });
+  if(!p) return;
+  var saldo = p.total - (p.total_abonado||0);
+  if(!valor||valor<=0){ toast('Ingresa un valor mayor a 0','error'); return; }
+  if(valor > saldo){ toast('El abono supera el saldo ($'+saldo.toLocaleString('es-CO')+')','error'); return; }
+  if(!p.abonos) p.abonos = [];
+  p.abonos.push({fecha: fecha, valor: valor});
+  p.total_abonado = (p.total_abonado||0) + valor;
+  if(p.total_abonado >= p.total){ p.estado = 'PAGADO'; toast('Saldo completado — marcado como PAGADO','success'); }
+  else { toast('Abono de $'+valor.toLocaleString('es-CO')+' registrado','success'); }
+  closeModal();
+  guardarCostosMO(); renderPage('costos_mo');
 }
 function pagarSatelite(satNom){
   if(!DB.costos_mo||!DB.costos_mo.pagos) return;
