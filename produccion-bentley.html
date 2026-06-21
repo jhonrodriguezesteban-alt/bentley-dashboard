@@ -554,7 +554,7 @@ var GT = (function(){
 
 // ─── Constants ─────────────────────────────────────────────────────────────────
 var REPO = 'jhonrodriguezesteban-alt/bentley-dashboard';
-var FILES = { satelites: 'prod_satelites.json', ops: 'prod_ops.json', ots: 'prod_ots.json', disenos: 'prod_disenos.json' };
+var FILES = { satelites: 'prod_satelites.json', ops: 'prod_ops.json', ots: 'prod_ots.json', disenos: 'prod_disenos.json', prog_ops: 'prod_prog_ops.json' };
 var BASE_URL = 'https://jhonrodriguezesteban-alt.github.io/bentley-dashboard/';
 
 var CATALOGO = []; // cargado de prod_catalogo.json
@@ -570,7 +570,7 @@ var ESTADO_LABELS = {
 };
 
 // ─── State ─────────────────────────────────────────────────────────────────────
-var DB = { satelites: [], ops: [], ots: [], disenos: [] };
+var DB = { satelites: [], ops: [], ots: [], disenos: [], prog_ops: [], disenos_cfg: {} };
 var currentPage = 'dashboard';
 var _opDetalleId = null;
 var _opEditMode = false;
@@ -780,7 +780,9 @@ async function cargarDatos(){
     if(otsR.ok){ var d3 = await otsR.json(); DB.ots = d3.ots || []; }
     if(catR.ok){ var d4 = await catR.json(); CATALOGO = d4.catalogo || []; }
     var disR = await fetch(BASE_URL + 'prod_disenos.json?t=' + t);
-    if(disR.ok){ var d5 = await disR.json(); DB.disenos = d5.disenos || []; }
+    if(disR.ok){ var d5 = await disR.json(); DB.disenos = d5.disenos || []; DB.disenos_cfg = d5.disenos_cfg || {}; }
+    var progR = await fetch(BASE_URL + 'prod_prog_ops.json?t=' + t);
+    if(progR.ok){ var d6 = await progR.json(); DB.prog_ops = d6.ops_plan || []; }
     if(DB.satelites.length === 0) seedSatelites();
     saveLocal();
     var msg = 'Datos cargados: ' + DB.ops.length + ' OPs, ' + DB.ots.length + ' OTs, ' + CATALOGO.length + ' refs SKU';
@@ -1981,253 +1983,375 @@ function toggleEntSat(satId){ _entSatOpen[satId] = !_entSatOpen[satId]; renderPa
 function setEntFiltro(mes){ _entFiltroMes = mes; renderPage('entregas'); }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// DISEÑO — KANBAN
+// DISEÑO — STICKERS POR MARCA
 // ═══════════════════════════════════════════════════════════════════════════════
-var DIS_ESTADOS = [
-  {k:'EN_DISENO_DIGITAL',   label:'En Diseño Digital',      color:'#a855f7', bg:'rgba(168,85,247,.1)'},
-  {k:'EN_CORTE_MUESTRA',    label:'En Corte de Muestra',    color:'#f97316', bg:'rgba(249,115,22,.1)'},
-  {k:'EN_CONFECCION_MUESTRA',label:'En Confección Muestra', color:'#00d4ff', bg:'rgba(0,212,255,.1)'},
-  {k:'EN_REVISION_GERENCIA',label:'Revisión Gerencia',      color:'#fbbf24', bg:'rgba(251,191,36,.1)'},
-  {k:'EN_ESCALADO',         label:'En Escalado de Tallas',  color:'#34d399', bg:'rgba(52,211,153,.1)'},
-];
-var DIS_MARCAS = ['Bentley Kids','Prime','Terceros'];
+var DIS_RESPONSABLES = ['Carolina','Isa','John','Juan'];
+var DIS_RESP_COLORS  = {Carolina:'#fbbf24',Isa:'#c084fc',John:'#34d399',Juan:'#38bdf8'};
+var DIS_MARCAS_DEFAULT = ['Bentley Kids','Prime','Maquilas'];
+var DIS_CATEGORIAS = ['Chaquetas','Abrigos','Conjuntos','Pantalones','Buzos','Chalecos','Camisetas','Vestidos','Tejido de Punto','Overol','Accesorios','Otro'];
+var _disFiltroMarca = 'Bentley Kids';
+
+function getDisMarcas(){ return (DB.disenos_cfg && DB.disenos_cfg.marcas) ? DB.disenos_cfg.marcas : DIS_MARCAS_DEFAULT; }
 
 function renderDiseno(){
-  var filtroMarca = _disFiltroMarca || '';
+  var marcas = getDisMarcas();
+  if(!_disFiltroMarca || !marcas.includes(_disFiltroMarca)) _disFiltroMarca = marcas[0];
+  var items = (DB.disenos||[]).filter(function(d){ return d.marca===_disFiltroMarca; })
+    .sort(function(a,b){ return (a.prioridad||99)-(b.prioridad||99); });
+
   var h = '';
 
-  // Header + botón nuevo
-  h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">';
-  h += '<div style="display:flex;gap:8px;flex-wrap:wrap;">';
-  h += '<button onclick="setDisFiltroMarca(\'\')" class="mes-pill'+((!filtroMarca)?' active':'')+'" style="flex-shrink:0;">Todas las marcas</button>';
-  DIS_MARCAS.forEach(function(m){
-    h += '<button data-marca="'+m+'" onclick="setDisFiltroMarca(this.dataset.marca)" class="mes-pill'+((filtroMarca===m)?' active':'')+'" style="flex-shrink:0;">'+m+'</button>';
+  // Pestañas por marca
+  h += '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:16px;">';
+  marcas.forEach(function(m){
+    var active = m===_disFiltroMarca;
+    var cnt = (DB.disenos||[]).filter(function(d){ return d.marca===m; }).length;
+    h += '<button data-marca="'+esc(m)+'" onclick="setDisFiltroMarca(this.dataset.marca)" style="padding:7px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;border:1px solid '+(active?'#00d4ff':'#1e2535')+';background:'+(active?'rgba(0,212,255,.12)':'#0f1520')+';color:'+(active?'#00d4ff':'#64748b')+';">'+esc(m)+' <span style="font-size:11px;opacity:.7;">('+cnt+')</span></button>';
   });
-  h += '</div>';
+  h += '<button onclick="abrirNuevaMarca()" style="padding:7px 14px;border-radius:20px;font-size:12px;cursor:pointer;border:1px dashed #1e2535;background:transparent;color:#475569;">+ Nueva marca</button>';
+  h += '<div style="flex:1;"></div>';
   h += '<button class="btn btn-primary" onclick="abrirFormDiseno(null)" style="flex-shrink:0;">+ Nuevo diseño</button>';
   h += '</div>';
 
-  // Kanban board (scroll horizontal)
-  h += '<div style="display:flex;gap:14px;overflow-x:auto;padding-bottom:12px;align-items:flex-start;">';
-
-  DIS_ESTADOS.forEach(function(est){
-    var items = (DB.disenos||[]).filter(function(d){
-      return d.estado===est.k && (!filtroMarca || d.marca===filtroMarca);
-    });
-    h += '<div style="min-width:260px;max-width:280px;flex-shrink:0;">';
-    // Column header
-    h += '<div style="padding:10px 14px;border-radius:10px 10px 0 0;background:'+est.bg+';border:1px solid '+est.color+'44;border-bottom:none;margin-bottom:0;">';
-    h += '<div style="font-size:12px;font-weight:700;color:'+est.color+';letter-spacing:.5px;text-transform:uppercase;">'+est.label+'</div>';
-    h += '<div style="font-size:11px;color:#64748b;margin-top:2px;">'+items.length+' diseño'+(items.length!==1?'s':'')+'</div>';
-    h += '</div>';
-    h += '<div style="background:#0f1520;border:1px solid '+est.color+'33;border-top:none;border-radius:0 0 10px 10px;padding:10px;min-height:120px;">';
-
-    items.forEach(function(d){
-      var esIdx = DIS_ESTADOS.findIndex(function(e){ return e.k===d.estado; });
-      var puedeAvanzar = esIdx < DIS_ESTADOS.length-1;
-      var puedeRetroceder = esIdx > 0;
-      h += '<div style="background:#13161f;border:1px solid #1e2535;border-radius:10px;padding:12px;margin-bottom:8px;">';
-      h += '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:6px;margin-bottom:6px;">';
-      h += '<div style="font-size:13px;font-weight:600;color:#e2e8f0;flex:1;">'+d.nombre+'</div>';
-      h += '<button data-id="'+d.id+'" onclick="editarDiseno(this.dataset.id)" style="background:none;border:none;color:#475569;cursor:pointer;font-size:14px;padding:0;flex-shrink:0;" title="Editar">✏</button>';
-      h += '</div>';
-      h += '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">';
-      h += '<span style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(255,255,255,.05);color:#94a3b8;">'+d.marca+'</span>';
-      if(d.fecha_creacion) h += '<span style="font-size:10px;color:#475569;">'+d.fecha_creacion+'</span>';
-      h += '</div>';
-      if(d.notas) h += '<div style="font-size:11px;color:#64748b;margin-bottom:8px;font-style:italic;">'+d.notas+'</div>';
-      h += '<div style="display:flex;gap:6px;justify-content:flex-end;">';
-      if(puedeRetroceder) h += '<button data-id="'+d.id+'" data-dir="-1" onclick="moverDiseno(this.dataset.id,-1)" style="background:rgba(255,255,255,.05);border:1px solid #1e2535;border-radius:6px;padding:3px 8px;color:#64748b;cursor:pointer;font-size:11px;">← Atrás</button>';
-      if(puedeAvanzar){
-        var sigLabel = DIS_ESTADOS[esIdx+1] ? DIS_ESTADOS[esIdx+1].label : 'Lista';
-        h += '<button data-id="'+d.id+'" data-dir="1" onclick="moverDiseno(this.dataset.id,1)" style="background:'+est.color+'22;border:1px solid '+est.color+'44;border-radius:6px;padding:3px 10px;color:'+est.color+';cursor:pointer;font-size:11px;font-weight:600;">Avanzar →</button>';
-      } else {
-        h += '<button data-id="'+d.id+'" onclick="moverDisenoAProduccion(this.dataset.id)" style="background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.3);border-radius:6px;padding:3px 10px;color:#34d399;cursor:pointer;font-size:11px;font-weight:700;">✓ Lista p/ Producción</button>';
-      }
-      h += '</div></div>';
-    });
-
-    if(!items.length){
-      h += '<div style="text-align:center;padding:20px 0;color:#334155;font-size:12px;">Sin diseños</div>';
-    }
-    h += '</div></div>';
-  });
-  h += '</div>';
-
-  // Sección diseños listos para producción
-  var listos = (DB.disenos||[]).filter(function(d){ return d.estado==='LISTA_PRODUCCION' && (!filtroMarca||d.marca===filtroMarca); });
-  if(listos.length){
-    h += '<div class="card" style="margin-top:16px;padding:16px;">';
-    h += '<div style="font-family:var(--bebas);font-size:16px;letter-spacing:1px;margin-bottom:12px;color:#34d399;">✓ Listos para Producción ('+listos.length+')</div>';
-    listos.forEach(function(d){
-      h += '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #1e2535;">';
-      h += '<span style="font-size:13px;color:#e2e8f0;flex:1;">'+d.nombre+'</span>';
-      h += '<span style="font-size:11px;color:#475569;">'+d.marca+'</span>';
-      h += '<button data-id="'+d.id+'" onclick="eliminarDiseno(this.dataset.id)" style="background:none;border:none;color:#475569;cursor:pointer;font-size:12px;">🗑</button>';
-      h += '</div>';
-    });
-    h += '</div>';
+  // Grid de stickers
+  if(!items.length){
+    h += '<div class="empty-state"><div class="icon">🎨</div><p>Sin diseños para '+esc(_disFiltroMarca)+'</p></div>';
+    return h;
   }
 
+  h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;">';
+  items.forEach(function(d){
+    var respColor = DIS_RESP_COLORS[d.responsable] || '#94a3b8';
+    var prioBg = d.prioridad<=2?'rgba(236,72,153,.07)':d.prioridad<=3?'rgba(251,191,36,.05)':'rgba(255,255,255,.03)';
+    h += '<div style="background:#13161f;border:1px solid #1e2535;border-left:4px solid '+respColor+';border-radius:12px;padding:14px;position:relative;background:'+prioBg+';border-color:#1e2535;border-left-color:'+respColor+';">';
+    // Badge prioridad
+    h += '<div style="position:absolute;top:10px;right:10px;display:flex;gap:6px;">';
+    h += '<span style="font-size:10px;font-weight:700;background:rgba(0,0,0,.3);color:#475569;border-radius:6px;padding:2px 6px;">P'+d.prioridad+'</span>';
+    h += '<button data-id="'+d.id+'" onclick="editarDiseno(this.dataset.id)" style="background:none;border:none;cursor:pointer;color:#334155;font-size:13px;padding:0;" title="Editar">✏</button>';
+    h += '</div>';
+    // Responsable pill
+    h += '<div style="font-size:11px;font-weight:700;color:'+respColor+';margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;">'+esc(d.responsable||'—')+'</div>';
+    // Categoria
+    h += '<div style="font-size:10px;color:#475569;margin-bottom:3px;text-transform:uppercase;letter-spacing:.5px;">'+esc(d.categoria||'')+'</div>';
+    // Referencia — nombre principal
+    h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:10px;padding-right:36px;">'+esc(d.nombre)+'</div>';
+    // Estado — chip editable (click abre input)
+    var estadoColor = d.estado_color || '#64748b';
+    h += '<div id="dis-estado-chip-'+d.id+'" style="display:inline-flex;align-items:center;gap:6px;background:rgba(100,116,139,.1);border:1px solid #1e2535;border-radius:20px;padding:4px 10px;cursor:pointer;max-width:100%;" onclick="editarEstadoDiseno(\''+d.id+'\')">';
+    h += '<span style="width:7px;height:7px;border-radius:50%;background:'+estadoColor+';flex-shrink:0;"></span>';
+    h += '<span style="font-size:11px;color:#94a3b8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(d.estado||'Sin estado')+'</span>';
+    h += '</div>';
+    h += '</div>';
+  });
+  h += '</div>';
   return h;
 }
 
-var _disFiltroMarca = '';
 function setDisFiltroMarca(m){ _disFiltroMarca=m; renderPage('diseno'); }
+
+function abrirNuevaMarca(){
+  var body = '<div class="form-group"><label class="form-label">Nombre de la nueva marca</label><input id="dis-nueva-marca" class="form-control" placeholder="Ej: Terceros, Dama BK..."></div>';
+  var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" onclick="guardarNuevaMarca()">Crear</button>';
+  openModal('Nueva Marca', body, footer);
+}
+function guardarNuevaMarca(){
+  var nom = (document.getElementById('dis-nueva-marca').value||'').trim();
+  if(!nom){ toast('Ingresa un nombre','error'); return; }
+  if(!DB.disenos_cfg) DB.disenos_cfg = {marcas: getDisMarcas().slice()};
+  if(!DB.disenos_cfg.marcas) DB.disenos_cfg.marcas = getDisMarcas().slice();
+  if(DB.disenos_cfg.marcas.includes(nom)){ toast('Ya existe','error'); return; }
+  DB.disenos_cfg.marcas.push(nom);
+  _disFiltroMarca = nom;
+  closeModal();
+  guardarDisenos();
+  renderPage('diseno');
+}
 
 function abrirFormDiseno(id){
   var d = id ? (DB.disenos||[]).find(function(x){ return x.id===id; }) : null;
-  var title = d ? 'Editar Diseño' : 'Nuevo Diseño';
-  var body = '<div class="form-group"><label class="form-label">Nombre del diseño</label><input id="dis-nombre" class="form-control" value="'+(d?esc(d.nombre):'')+'" placeholder="Ej: Chaqueta Polar Azul 2026"></div>';
+  var marcas = getDisMarcas();
+  var body = '';
+  body += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">';
+  body += '<div class="form-group"><label class="form-label">Prioridad</label><select id="dis-prio" class="form-control">';
+  [1,2,3,4,5,6].forEach(function(n){ body += '<option value="'+n+'"'+(d&&d.prioridad==n?' selected':'')+'>'+n+'</option>'; });
+  body += '</select></div>';
+  body += '<div class="form-group"><label class="form-label">Responsable</label><select id="dis-resp" class="form-control">';
+  DIS_RESPONSABLES.forEach(function(r){ body += '<option value="'+r+'"'+(d&&d.responsable===r?' selected':'')+'>'+r+'</option>'; });
+  body += '</select></div>';
+  body += '</div>';
   body += '<div class="form-group"><label class="form-label">Marca</label><select id="dis-marca" class="form-control">';
-  DIS_MARCAS.forEach(function(m){ body += '<option value="'+m+'"'+(d&&d.marca===m?' selected':'')+'>'+m+'</option>'; });
+  marcas.forEach(function(m){ body += '<option value="'+esc(m)+'"'+(d&&d.marca===m?' selected':(!d&&m===_disFiltroMarca?' selected':''))+'>'+esc(m)+'</option>'; });
   body += '</select></div>';
-  body += '<div class="form-group"><label class="form-label">Estado inicial</label><select id="dis-estado" class="form-control">';
-  DIS_ESTADOS.forEach(function(e){ body += '<option value="'+e.k+'"'+(d&&d.estado===e.k?' selected':'')+'>'+e.label+'</option>'; });
+  body += '<div class="form-group"><label class="form-label">Categoría</label><select id="dis-cat" class="form-control">';
+  DIS_CATEGORIAS.forEach(function(c){ body += '<option value="'+c+'"'+(d&&d.categoria===c?' selected':'')+'>'+c+'</option>'; });
   body += '</select></div>';
-  body += '<div class="form-group"><label class="form-label">Notas</label><textarea id="dis-notas" class="form-control" rows="3" placeholder="Observaciones, referencias, etc.">'+(d?esc(d.notas||''):'')+' </textarea></div>';
+  body += '<div class="form-group"><label class="form-label">Referencia</label><input id="dis-nombre" class="form-control" value="'+esc(d?d.nombre:'')+'" placeholder="Nombre del diseño o referencia"></div>';
+  body += '<div class="form-group"><label class="form-label">Estado / Nota</label><input id="dis-estado" class="form-control" value="'+esc(d?d.estado||'':'')+'" placeholder="Ej: EN CONFECCION, PDTE FOTO JUAN, POR REVISAR..."></div>';
   if(d) body += '<input type="hidden" id="dis-edit-id" value="'+d.id+'">';
-  var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" onclick="guardarDisenoForm()">Guardar</button>';
-  openModal(title, body, footer);
+  var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>';
+  if(d) footer += '<button class="btn btn-danger" data-id="'+d.id+'" onclick="eliminarDiseno(this.dataset.id)" style="margin-right:auto;">Eliminar</button>';
+  footer += '<button class="btn btn-primary" onclick="guardarDisenoForm()">Guardar</button>';
+  openModal(d?'Editar Diseño':'Nuevo Diseño', body, footer);
 }
 function editarDiseno(id){ abrirFormDiseno(id); }
+
+function editarEstadoDiseno(id){
+  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
+  if(!d) return;
+  var body = '<div class="form-group"><label class="form-label">Estado</label><input id="dis-estado-inline" class="form-control" value="'+esc(d.estado||'')+'" placeholder="Ej: EN CONFECCION, PDTE FOTO..." autofocus></div>';
+  body += '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">';
+  ['PDTE','EN CORTE','EN CONFECCION','POR REVISAR','LISTO'].forEach(function(s){
+    body += '<button onclick="document.getElementById(\'dis-estado-inline\').value=\''+s+'\';" style="padding:3px 10px;border-radius:10px;font-size:11px;cursor:pointer;background:rgba(255,255,255,.05);border:1px solid #1e2535;color:#94a3b8;">'+s+'</button>';
+  });
+  body += '</div>';
+  var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" data-id="'+id+'" onclick="guardarEstadoDiseno(this.dataset.id)">Guardar</button>';
+  openModal('Actualizar estado', body, footer);
+  setTimeout(function(){ var el=document.getElementById('dis-estado-inline'); if(el){el.focus();el.select();} },100);
+}
+function guardarEstadoDiseno(id){
+  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
+  if(!d) return;
+  d.estado = (document.getElementById('dis-estado-inline').value||'').trim();
+  closeModal();
+  guardarDisenos();
+  renderPage('diseno');
+}
+
 function guardarDisenoForm(){
   var nombre = (document.getElementById('dis-nombre').value||'').trim();
   var marca = document.getElementById('dis-marca').value;
-  var estado = document.getElementById('dis-estado').value;
-  var notas = (document.getElementById('dis-notas').value||'').trim();
+  var cat = document.getElementById('dis-cat').value;
+  var resp = document.getElementById('dis-resp').value;
+  var prio = parseInt(document.getElementById('dis-prio').value)||1;
+  var estado = (document.getElementById('dis-estado').value||'').trim();
   var editId = document.getElementById('dis-edit-id') ? document.getElementById('dis-edit-id').value : null;
-  if(!nombre){ toast('El nombre es requerido','error'); return; }
+  if(!nombre){ toast('La referencia es requerida','error'); return; }
   if(!DB.disenos) DB.disenos = [];
   if(editId){
     var ex = DB.disenos.find(function(d){ return d.id===editId; });
-    if(ex){ ex.nombre=nombre; ex.marca=marca; ex.estado=estado; ex.notas=notas; }
+    if(ex){ ex.nombre=nombre; ex.marca=marca; ex.categoria=cat; ex.responsable=resp; ex.prioridad=prio; ex.estado=estado; }
   } else {
-    DB.disenos.push({id:uid(), nombre:nombre, marca:marca, estado:estado, notas:notas, fecha_creacion:hoy()});
+    DB.disenos.push({id:uid(), nombre:nombre, marca:marca, categoria:cat, responsable:resp, prioridad:prio, estado:estado, fecha_creacion:hoy()});
   }
   closeModal();
   guardarDisenos();
   renderPage('diseno');
 }
-function moverDiseno(id, dir){
-  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
-  if(!d) return;
-  var idx = DIS_ESTADOS.findIndex(function(e){ return e.k===d.estado; });
-  var nuevoIdx = idx + dir;
-  if(nuevoIdx < 0 || nuevoIdx >= DIS_ESTADOS.length) return;
-  d.estado = DIS_ESTADOS[nuevoIdx].k;
-  guardarDisenos();
-  renderPage('diseno');
-}
-function moverDisenoAProduccion(id){
-  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
-  if(!d) return;
-  if(!confirm('¿Marcar "'+d.nombre+'" como Lista para Producción? Saldrá del tablero activo.')) return;
-  d.estado = 'LISTA_PRODUCCION';
-  guardarDisenos();
-  renderPage('diseno');
-}
+
 function eliminarDiseno(id){
   var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
   if(!d||!confirm('¿Eliminar "'+d.nombre+'"?')) return;
   DB.disenos = DB.disenos.filter(function(x){ return x.id!==id; });
+  closeModal();
   guardarDisenos();
   renderPage('diseno');
 }
 async function guardarDisenos(){
-  var ok = await guardarArchivo('disenos', {disenos: DB.disenos||[]});
+  var data = {disenos: DB.disenos||[], disenos_cfg: DB.disenos_cfg||{marcas: getDisMarcas()}};
+  var ok = await guardarArchivo('disenos', data);
   if(ok) toast('Diseños guardados','success');
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// PROGRAMACIÓN DE TRABAJO
+// PROGRAMACIÓN DE TRABAJO — PLANEACIÓN DE OPs
 // ═══════════════════════════════════════════════════════════════════════════════
+var TALLAS_BK    = ['T4','T6','T8','T10','T12','T14','T16'];
+var TALLAS_PRIME = ['S','M','L','XL','G','P','U'];
+var PROG_ESTADOS = ['NUEVO','REPROGRAMACION','EN PROCESO','COMPLETADO'];
+var PROG_CATEGORIAS = ['Chaquetas','Abrigos','Conjuntos','Pantalones','Buzos','Chalecos','Camisetas','Vestidos','Overol','Tejido de Punto','Accesorios','Otro'];
+
+function getTallasByMarca(marca){
+  return (marca||'').toLowerCase().includes('prime') ? TALLAS_PRIME : TALLAS_BK;
+}
+
+var _progFiltroMarca = '';
+var _progFiltroEstado = '';
+
 function renderProgramacion(){
+  var marcas = getDisMarcas();
+  var ops = DB.prog_ops || [];
+  var filtered = ops.filter(function(o){
+    return (!_progFiltroMarca||o.marca===_progFiltroMarca) && (!_progFiltroEstado||o.estado===_progFiltroEstado);
+  }).sort(function(a,b){ return (a.prioridad||99)-(b.prioridad||99); });
+
   var h = '';
 
-  // OTs pendientes sin satélite en CORTE_POR_ALISTAR
-  var sinSat = DB.ots.filter(function(o){ return o.estado==='CORTE_POR_ALISTAR' && !o.satelite_id; });
-  if(sinSat.length){
-    h += '<div class="card" style="margin-bottom:16px;padding:16px;border-color:rgba(251,191,36,.3);">';
-    h += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">';
-    h += '<span style="font-family:var(--bebas);font-size:16px;letter-spacing:1px;color:#fbbf24;">⚡ Corte por Alistar — Sin Satélite ('+sinSat.length+')</span>';
-    h += '</div>';
-    sinSat.forEach(function(ot){
-      h += '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #1e2535;flex-wrap:wrap;">';
-      h += '<span style="font-size:12px;font-weight:700;color:#fbbf24;min-width:70px;">OT-'+ot.numero_ot+'</span>';
-      h += '<span style="font-size:12px;color:#e2e8f0;flex:1;">'+ot.nombre+' '+ot.color+' '+ot.talla+' ('+ot.cantidad+' uds)</span>';
-      h += '<select data-ot="'+ot.id+'" onchange="asignarSateliteOT(this.dataset.ot,this.value)" class="form-control" style="width:180px;padding:4px 8px;font-size:12px;">';
-      h += '<option value="">— Asignar satélite —</option>';
-      DB.satelites.filter(function(s){ return s.activo; }).forEach(function(s){
-        h += '<option value="'+s.id+'">'+s.nombre+'</option>';
-      });
-      h += '</select></div>';
-    });
-    h += '</div>';
+  // Filtros + botón
+  h += '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:16px;">';
+  h += '<select onchange="_progFiltroMarca=this.value;renderPage(\'programacion\')" class="form-control" style="width:160px;padding:6px 10px;">';
+  h += '<option value="">Todas las marcas</option>';
+  marcas.forEach(function(m){ h += '<option value="'+esc(m)+'"'+(_progFiltroMarca===m?' selected':'')+'>'+esc(m)+'</option>'; });
+  h += '</select>';
+  h += '<select onchange="_progFiltroEstado=this.value;renderPage(\'programacion\')" class="form-control" style="width:160px;padding:6px 10px;">';
+  h += '<option value="">Todos los estados</option>';
+  PROG_ESTADOS.forEach(function(e){ h += '<option value="'+e+'"'+(_progFiltroEstado===e?' selected':'')+'>'+e+'</option>'; });
+  h += '</select>';
+  h += '<div style="flex:1;"></div>';
+  h += '<button class="btn btn-primary" onclick="abrirFormProgOp(null)">+ Nueva OP</button>';
+  h += '</div>';
+
+  if(!filtered.length){
+    h += '<div class="empty-state"><div class="icon">📋</div><p>Sin órdenes de producción planeadas</p></div>';
+    return h;
   }
 
-  // Agrupar OTs activas (no ENTREGADO) por satélite ordenadas por fecha_estimada_entrega
-  var bySat = {};
-  DB.ots.filter(function(o){ return o.estado!=='ENTREGADO' && o.satelite_id; }).forEach(function(o){
-    (bySat[o.satelite_id]=bySat[o.satelite_id]||[]).push(o);
+  // Tabla
+  h += '<div style="overflow-x:auto;">';
+  h += '<table style="width:100%;border-collapse:collapse;font-size:12px;min-width:900px;">';
+  h += '<thead><tr style="background:#0f1520;">';
+  ['P','Estado','Marca','Categoría','Referencia','Color','Tallas / Uds','Total','KG',''].forEach(function(col){
+    h += '<th style="padding:8px 10px;text-align:left;color:#475569;font-weight:600;white-space:nowrap;">'+col+'</th>';
   });
+  h += '</tr></thead><tbody>';
 
-  // Ordenar satélites por su próxima entrega más urgente
-  var satKeys = Object.keys(bySat).sort(function(a,b){
-    var dA = Math.min.apply(null, bySat[a].map(function(o){ return diasRestantes(o.fecha_estimada_entrega)||999; }));
-    var dB = Math.min.apply(null, bySat[b].map(function(o){ return diasRestantes(o.fecha_estimada_entrega)||999; }));
-    return dA-dB;
-  });
-
-  satKeys.forEach(function(satId){
-    var ots = bySat[satId].sort(function(a,b){ return (a.fecha_estimada_entrega||'').localeCompare(b.fecha_estimada_entrega||''); });
-    var satNom = getSatNombre(satId);
-    var urgentes = ots.filter(function(o){ var d=diasRestantes(o.fecha_estimada_entrega); return d!==null&&d<=5; }).length;
-    var udsTotales = ots.reduce(function(a,o){ return a+(o.cantidad||0); },0);
-
-    h += '<div class="card" style="margin-bottom:12px;padding:0;overflow:hidden;">';
-    // Header satélite
-    h += '<div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:#1a2032;border-bottom:1px solid #1e2535;flex-wrap:wrap;">';
-    h += '<span style="font-weight:700;font-size:14px;color:#e2e8f0;">'+satNom+'</span>';
-    h += '<span style="font-size:12px;color:#64748b;">'+ots.length+' OTs · '+fmtNum(udsTotales)+' uds</span>';
-    if(urgentes) h += '<span style="background:rgba(236,72,153,.15);border:1px solid rgba(236,72,153,.3);color:#ec4899;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;">'+urgentes+' urgentes</span>';
-    h += '</div>';
-    // Tabla OTs
-    h += '<table style="width:100%;border-collapse:collapse;font-size:12px;">';
-    h += '<thead><tr style="background:#0f1520;">';
-    h += '<th style="padding:7px 12px;text-align:left;color:#475569;font-weight:600;">OT</th>';
-    h += '<th style="padding:7px 8px;text-align:left;color:#475569;font-weight:600;">Producto</th>';
-    h += '<th style="padding:7px 8px;text-align:left;color:#475569;font-weight:600;">Color</th>';
-    h += '<th style="padding:7px 8px;text-align:center;color:#475569;font-weight:600;">Talla</th>';
-    h += '<th style="padding:7px 8px;text-align:right;color:#475569;font-weight:600;">Cant</th>';
-    h += '<th style="padding:7px 8px;text-align:left;color:#475569;font-weight:600;">Estado</th>';
-    h += '<th style="padding:7px 8px;text-align:right;color:#475569;font-weight:600;">Entrega</th>';
-    h += '<th style="padding:7px 12px;text-align:center;color:#475569;font-weight:600;">Acción</th>';
-    h += '</tr></thead><tbody>';
-
-    ots.forEach(function(ot){
-      var dias = diasRestantes(ot.fecha_estimada_entrega);
-      var rowBg = (dias!==null&&dias<0) ? 'rgba(236,72,153,.04)' : (dias!==null&&dias<=3?'rgba(251,191,36,.04)':'transparent');
-      var estColor = {EN_CONFECCION:'#a855f7',ASIGNADO:'#00d4ff',CORTE_POR_ALISTAR:'#fbbf24',PENDIENTE_CORTAR:'#475569',NOVEDAD:'#ec4899'}[ot.estado]||'#64748b';
-      h += '<tr style="border-top:1px solid #1e2535;background:'+rowBg+';">';
-      h += '<td style="padding:7px 12px;font-weight:700;color:#00d4ff;">OT-'+ot.numero_ot+'</td>';
-      h += '<td style="padding:7px 8px;color:#e2e8f0;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+ot.nombre+'</td>';
-      h += '<td style="padding:7px 8px;color:#94a3b8;">'+ot.color+'</td>';
-      h += '<td style="padding:7px 8px;text-align:center;color:#94a3b8;">'+ot.talla+'</td>';
-      h += '<td style="padding:7px 8px;text-align:right;font-weight:600;color:#e2e8f0;">'+ot.cantidad+'</td>';
-      h += '<td style="padding:7px 8px;"><span style="font-size:10px;color:'+estColor+';font-weight:600;">'+( ESTADO_LABELS[ot.estado]||ot.estado )+'</span></td>';
-      h += '<td style="padding:7px 8px;text-align:right;">'+diasChip(dias)+'</td>';
-      h += '<td style="padding:7px 12px;text-align:center;"><button class="btn btn-success btn-sm" data-ot="'+ot.id+'" onclick="modalEntrega(this.dataset.ot)" style="font-size:11px;padding:3px 8px;">✓ Entregar</button></td>';
-      h += '</tr>';
+  var lastRef = '';
+  filtered.forEach(function(op){
+    var tallas = getTallasByMarca(op.marca);
+    var total = tallas.reduce(function(s,t){ return s+(parseInt(op['uds_'+t])||0); },0);
+    var estColor = {NUEVO:'#00d4ff',REPROGRAMACION:'#fbbf24','EN PROCESO':'#a855f7',COMPLETADO:'#34d399'}[op.estado]||'#64748b';
+    var isNewRef = op.referencia !== lastRef;
+    lastRef = op.referencia;
+    h += '<tr style="border-top:1px solid #1e2535;">';
+    h += '<td style="padding:7px 10px;"><span style="font-size:11px;font-weight:700;color:#e2e8f0;">'+op.prioridad+'</span></td>';
+    h += '<td style="padding:7px 10px;"><span style="font-size:10px;font-weight:700;color:'+estColor+';">'+op.estado+'</span></td>';
+    h += '<td style="padding:7px 10px;color:#64748b;font-size:11px;">'+esc(op.marca||'')+'</td>';
+    h += '<td style="padding:7px 10px;color:#64748b;font-size:11px;">'+esc(op.categoria||'')+'</td>';
+    h += '<td style="padding:7px 10px;font-weight:600;color:#e2e8f0;">'+esc(op.referencia||'')+'</td>';
+    h += '<td style="padding:7px 10px;color:#94a3b8;">'+esc(op.color||'')+'</td>';
+    // Tallas inline
+    h += '<td style="padding:7px 10px;"><div style="display:flex;gap:4px;flex-wrap:nowrap;">';
+    tallas.forEach(function(t){
+      var uds = parseInt(op['uds_'+t])||0;
+      if(!uds) return;
+      h += '<span style="font-size:10px;background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.12);border-radius:4px;padding:1px 5px;color:#94a3b8;white-space:nowrap;">'+t+':<b style="color:#e2e8f0;">'+uds+'</b></span>';
     });
-    h += '</tbody></table></div>';
+    h += '</div></td>';
+    h += '<td style="padding:7px 10px;font-weight:700;color:#00d4ff;text-align:right;">'+total+'</td>';
+    h += '<td style="padding:7px 10px;color:#64748b;text-align:right;">'+(op.kg||'—')+'</td>';
+    h += '<td style="padding:7px 10px;text-align:right;">';
+    h += '<button data-id="'+op.id+'" onclick="abrirFormProgOp(this.dataset.id)" style="background:none;border:none;cursor:pointer;color:#475569;font-size:12px;" title="Editar">✏</button>';
+    h += '</td>';
+    h += '</tr>';
   });
+  h += '</tbody></table></div>';
 
-  if(!satKeys.length && !sinSat.length){
-    h += '<div class="empty-state"><div class="icon">🎉</div><p>No hay órdenes activas en programación.</p></div>';
-  }
+  // Resumen totales por marca
+  h += '<div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">';
+  marcas.forEach(function(m){
+    var mOps = ops.filter(function(o){ return o.marca===m; });
+    if(!mOps.length) return;
+    var tallas = getTallasByMarca(m);
+    var tot = mOps.reduce(function(s,o){ return s+tallas.reduce(function(ss,t){ return ss+(parseInt(o['uds_'+t])||0); },0); },0);
+    h += '<div style="background:#13161f;border:1px solid #1e2535;border-radius:10px;padding:10px 16px;">';
+    h += '<div style="font-size:10px;color:#64748b;margin-bottom:2px;">'+esc(m)+'</div>';
+    h += '<div style="font-size:20px;font-weight:700;color:#e2e8f0;">'+fmtNum(tot)+'<span style="font-size:11px;color:#475569;margin-left:4px;">uds</span></div>';
+    h += '<div style="font-size:11px;color:#475569;">'+mOps.length+' OPs</div>';
+    h += '</div>';
+  });
+  h += '</div>';
 
   return h;
+}
+
+function abrirFormProgOp(id){
+  var op = id ? (DB.prog_ops||[]).find(function(x){ return x.id===id; }) : null;
+  var marcas = getDisMarcas();
+  var marcaActual = op ? op.marca : (_progFiltroMarca || marcas[0]);
+  var tallas = getTallasByMarca(marcaActual);
+
+  var body = '';
+  body += '<div style="display:grid;grid-template-columns:80px 1fr 1fr;gap:10px;">';
+  body += '<div class="form-group"><label class="form-label">Prioridad</label><select id="prog-prio" class="form-control">';
+  [1,2,3,4,5,6].forEach(function(n){ body += '<option value="'+n+'"'+(op&&op.prioridad==n?' selected':'')+'>'+n+'</option>'; });
+  body += '</select></div>';
+  body += '<div class="form-group"><label class="form-label">Marca</label><select id="prog-marca" class="form-control" onchange="actualizarTallasForm()">';
+  marcas.forEach(function(m){ body += '<option value="'+esc(m)+'"'+(marcaActual===m?' selected':'')+'>'+esc(m)+'</option>'; });
+  body += '</select></div>';
+  body += '<div class="form-group"><label class="form-label">Estado</label><select id="prog-estado" class="form-control">';
+  PROG_ESTADOS.forEach(function(e){ body += '<option value="'+e+'"'+(op&&op.estado===e?' selected':'')+'>'+e+'</option>'; });
+  body += '</select></div>';
+  body += '</div>';
+  body += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">';
+  body += '<div class="form-group"><label class="form-label">Categoría</label><select id="prog-cat" class="form-control">';
+  PROG_CATEGORIAS.forEach(function(c){ body += '<option value="'+c+'"'+(op&&op.categoria===c?' selected':'')+'>'+c+'</option>'; });
+  body += '</select></div>';
+  body += '<div class="form-group"><label class="form-label">Color</label><input id="prog-color" class="form-control" value="'+esc(op?op.color||'':'')+'" placeholder="Ej: ROJO, AZUL OSCURO"></div>';
+  body += '</div>';
+  body += '<div class="form-group"><label class="form-label">Referencia</label><input id="prog-ref" class="form-control" value="'+esc(op?op.referencia||'':'')+'" placeholder="Nombre de la referencia"></div>';
+  // Grilla de tallas
+  body += '<div class="form-group"><label class="form-label">Unidades por talla</label>';
+  body += '<div id="prog-tallas-grid" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">';
+  tallas.forEach(function(t){
+    body += '<div style="text-align:center;">';
+    body += '<div style="font-size:10px;color:#64748b;margin-bottom:3px;">'+t+'</div>';
+    body += '<input id="prog-t-'+t+'" type="number" min="0" step="1" class="form-control" value="'+(op&&op['uds_'+t]?op['uds_'+t]:'')+'" style="width:56px;text-align:center;padding:4px;" oninput="actualizarTotalProgOp()">';
+    body += '</div>';
+  });
+  body += '</div></div>';
+  body += '<div style="display:grid;grid-template-columns:1fr 100px;gap:10px;">';
+  body += '<div class="form-group"><label class="form-label">Total unidades</label><input id="prog-total" class="form-control" value="'+(op?getTallasByMarca(marcaActual).reduce(function(s,t){ return s+(parseInt(op['uds_'+t])||0); },0):0)+'" readonly style="background:rgba(0,212,255,.05);color:#00d4ff;font-weight:700;"></div>';
+  body += '<div class="form-group"><label class="form-label">KG</label><input id="prog-kg" class="form-control" value="'+esc(op?op.kg||'':'')+'" type="number" step="0.1" placeholder="0.0"></div>';
+  body += '</div>';
+  if(op) body += '<input type="hidden" id="prog-edit-id" value="'+op.id+'">';
+
+  var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>';
+  if(op) footer += '<button class="btn btn-danger" data-id="'+op.id+'" onclick="eliminarProgOp(this.dataset.id)" style="margin-right:auto;">Eliminar</button>';
+  footer += '<button class="btn btn-primary" onclick="guardarFormProgOp()">Guardar</button>';
+  openModal(op?'Editar OP':'Nueva OP de Producción', body, footer);
+  setTimeout(function(){ actualizarTotalProgOp(); },50);
+}
+
+function actualizarTallasForm(){
+  var marca = document.getElementById('prog-marca') ? document.getElementById('prog-marca').value : '';
+  var tallas = getTallasByMarca(marca);
+  var grid = document.getElementById('prog-tallas-grid');
+  if(!grid) return;
+  grid.innerHTML = '';
+  tallas.forEach(function(t){
+    var div = document.createElement('div');
+    div.style.textAlign = 'center';
+    div.innerHTML = '<div style="font-size:10px;color:#64748b;margin-bottom:3px;">'+t+'</div><input id="prog-t-'+t+'" type="number" min="0" step="1" class="form-control" value="" style="width:56px;text-align:center;padding:4px;" oninput="actualizarTotalProgOp()">';
+    grid.appendChild(div);
+  });
+  actualizarTotalProgOp();
+}
+function actualizarTotalProgOp(){
+  var marca = document.getElementById('prog-marca') ? document.getElementById('prog-marca').value : '';
+  var tallas = getTallasByMarca(marca);
+  var total = 0;
+  tallas.forEach(function(t){ total += parseInt(document.getElementById('prog-t-'+t) ? document.getElementById('prog-t-'+t).value||0 : 0)||0; });
+  var el = document.getElementById('prog-total'); if(el) el.value = total;
+}
+function guardarFormProgOp(){
+  var prio = parseInt(document.getElementById('prog-prio').value)||1;
+  var marca = document.getElementById('prog-marca').value;
+  var estado = document.getElementById('prog-estado').value;
+  var cat = document.getElementById('prog-cat').value;
+  var ref = (document.getElementById('prog-ref').value||'').trim();
+  var color = (document.getElementById('prog-color').value||'').trim();
+  var kg = document.getElementById('prog-kg').value||'';
+  var editId = document.getElementById('prog-edit-id') ? document.getElementById('prog-edit-id').value : null;
+  if(!ref){ toast('La referencia es requerida','error'); return; }
+  var tallas = getTallasByMarca(marca);
+  var obj = {id:editId||uid(), prioridad:prio, marca:marca, estado:estado, categoria:cat, referencia:ref, color:color, kg:kg};
+  tallas.forEach(function(t){ obj['uds_'+t] = parseInt(document.getElementById('prog-t-'+t) ? document.getElementById('prog-t-'+t).value||0 : 0)||0; });
+  if(!DB.prog_ops) DB.prog_ops = [];
+  if(editId){ DB.prog_ops = DB.prog_ops.filter(function(x){ return x.id!==editId; }); }
+  DB.prog_ops.push(obj);
+  closeModal();
+  guardarProgOps();
+  renderPage('programacion');
+}
+function eliminarProgOp(id){
+  if(!confirm('¿Eliminar esta OP?')) return;
+  DB.prog_ops = (DB.prog_ops||[]).filter(function(x){ return x.id!==id; });
+  closeModal();
+  guardarProgOps();
+  renderPage('programacion');
+}
+async function guardarProgOps(){
+  var ok = await guardarArchivo('prog_ops', {ops_plan: DB.prog_ops||[]});
+  if(ok) toast('Programación guardada','success');
 }
 
 function asignarSateliteOT(otId, satId){
