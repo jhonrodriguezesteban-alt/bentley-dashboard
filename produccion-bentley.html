@@ -1271,7 +1271,7 @@ function filtrarActivas(){
     if(fEstado && o.estado !== fEstado) return false;
     if(fCat && o.categoria !== fCat) return false;
     if(fSat && o.satelite_id !== fSat) return false;
-    if(fBuscar && !(o.nombre||'').toLowerCase().includes(fBuscar) && !(o.color||'').toLowerCase().includes(fBuscar)) return false;
+    if(fBuscar && !(o.nombre||'').toLowerCase().includes(fBuscar) && !(o.color||'').toLowerCase().includes(fBuscar) && !(o.op_id||'').toLowerCase().includes(fBuscar)) return false;
     return true;
   });
 
