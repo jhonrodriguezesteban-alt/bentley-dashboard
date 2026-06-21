@@ -17,7 +17,7 @@
   --gold: #ffd60a;
   --text: #e8f0fe;
   --dim: rgba(255,255,255,0.45);
-  --sidebar-w: 200px;
+  --sidebar-w: 220px;
   --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
   --bebas: 'Bebas Neue', sans-serif;
 }
@@ -31,12 +31,12 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
   display:flex;flex-direction:column;z-index:200;transition:transform .3s;overflow:hidden;
 }
 #sidebar-logo{padding:20px 16px 12px;border-bottom:1px solid var(--card-border);}
-#sidebar-logo .brand{font-family:var(--bebas);font-size:22px;color:var(--cyan);letter-spacing:1px;line-height:1;}
-#sidebar-logo .sub{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:2px;margin-top:2px;}
+#sidebar-logo .brand{font-family:var(--bebas);font-size:28px;color:var(--cyan);letter-spacing:2px;line-height:1;}
+#sidebar-logo .sub{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:2px;margin-top:3px;}
 #sidebar nav{flex:1;padding:8px 0;overflow-y:auto;}
 .nav-item{
-  display:flex;align-items:center;gap:10px;padding:11px 16px;cursor:pointer;
-  font-size:13px;font-weight:500;color:var(--dim);transition:all .2s;border-left:3px solid transparent;
+  display:flex;align-items:center;gap:10px;padding:12px 18px;cursor:pointer;
+  font-size:14px;font-weight:500;color:var(--dim);transition:all .2s;border-left:3px solid transparent;
   user-select:none;white-space:nowrap;
 }
 .nav-item:hover{color:var(--text);background:rgba(255,255,255,0.04);}
@@ -398,15 +398,26 @@ textarea.form-control{resize:vertical;min-height:80px;}
   #page-content{padding:8px;}
   .card{padding:10px;}
 }
+#sidebar.collapsed{width:60px;min-width:60px;}
+#sidebar.collapsed .nav-item span:not(.icon){display:none;}
+#sidebar.collapsed .nav-item{justify-content:center;padding:14px 0;}
+#sidebar.collapsed #sidebar-logo .brand,#sidebar.collapsed #sidebar-logo .sub{display:none;}
+#sidebar.collapsed #sidebar-footer span{display:none;}
+#sidebar.collapsed #sidebar-logo{justify-content:center;}
+#main.sidebar-collapsed{margin-left:60px;}
+#sidebar.collapsed .nav-item .icon{width:auto;font-size:18px;}
 </style>
 </head>
 <body>
 
 <!-- Sidebar -->
 <nav id="sidebar">
-  <div id="sidebar-logo">
-    <div class="brand">BENTLEY</div>
-    <div class="sub">Producción</div>
+  <div id="sidebar-logo" style="display:flex;align-items:center;gap:10px;">
+    <button id="hamburger-btn" onclick="toggleSidebarCollapse()" style="background:none;border:none;cursor:pointer;color:var(--cyan);font-size:20px;padding:0;flex-shrink:0;line-height:1;" title="Colapsar menú">☰</button>
+    <div>
+      <div class="brand">BENTLEY</div>
+      <div class="sub">Producción</div>
+    </div>
   </div>
   <nav>
     <div class="nav-item active" onclick="navTo('dashboard')" data-page="dashboard">
@@ -451,6 +462,10 @@ textarea.form-control{resize:vertical;min-height:80px;}
       <div id="topbar-title">DASHBOARD</div>
     </div>
     <div id="topbar-right">
+      <div id="topbar-clock" style="font-size:12px;color:#64748b;text-align:right;line-height:1.4;">
+        <div id="clock-time" style="font-weight:700;color:#94a3b8;font-size:14px;"></div>
+        <div id="clock-date" style="font-size:10px;color:#475569;"></div>
+      </div>
       <span class="badge-user" id="badge-user">Invitado</span>
       <div id="sync-indicator" style="font-size:11px;color:var(--dim);">⬡ Local</div>
     </div>
@@ -831,7 +846,7 @@ function nextOTNum(){ return DB.ots.length > 0 ? Math.max.apply(null, DB.ots.map
 function nextOPNum(){ return DB.ops.length > 0 ? Math.max.apply(null, DB.ops.map(function(o){return o.numero||0;})) + 1 : 100; }
 
 function updateNovBadge(){
-  var n = DB.ots.filter(function(o){ return o.estado==='NOVEDAD' || (o.unidades_novedad||0)>0; }).length;
+  var n = DB.ots.filter(function(o){ return o.estado==='NOVEDAD'; }).length;
   var el = document.getElementById('nov-badge');
   if(n>0){ el.textContent = n; el.style.display='inline'; }
   else el.style.display='none';
@@ -854,6 +869,31 @@ function navTo(page){
 function toggleSidebar(){
   document.getElementById('sidebar').classList.toggle('mob-open');
   document.getElementById('mob-sidebar-bg').classList.toggle('open');
+}
+
+function toggleSidebarCollapse(){
+  var sb = document.getElementById('sidebar');
+  var main = document.getElementById('main');
+  sb.classList.toggle('collapsed');
+  main.classList.toggle('sidebar-collapsed');
+  localStorage.setItem('bentley_sidebar_collapsed', sb.classList.contains('collapsed')?'1':'0');
+}
+
+function startClock(){
+  function tick(){
+    var now = new Date();
+    var h = now.getHours().toString().padStart(2,'0');
+    var m = now.getMinutes().toString().padStart(2,'0');
+    var s = now.getSeconds().toString().padStart(2,'0');
+    var dias = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+    var meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+    var tEl = document.getElementById('clock-time');
+    var dEl = document.getElementById('clock-date');
+    if(tEl) tEl.textContent = h+':'+m+':'+s;
+    if(dEl) dEl.textContent = dias[now.getDay()]+' '+now.getDate()+' '+meses[now.getMonth()]+' '+now.getFullYear();
+  }
+  tick();
+  setInterval(tick, 1000);
 }
 
 function renderPage(page){
@@ -924,8 +964,10 @@ function renderDashboard(){
     '</div>';
   }
   h += '<div class="kpi-grid">';
-  h += kpiV('OTs en Proceso',    fmtNum(activas.length),      C_CYAN,   'Activas en producción', null);
-  h += kpiV('Uds en Confección', fmtNum(udsConf),             C_PURPLE, 'En talleres ahora ↗',   'entregas');
+  var opsActivas = DB.ops.filter(function(op){ return op.estado !== 'COMPLETADO' && op.estado !== 'CERRADO'; });
+  h += kpiV('OPs en Proceso',    fmtNum(opsActivas.length),   C_CYAN,   'Órdenes abiertas', 'ops');
+  var opsConNovedad = DB.ots.filter(function(o){ return o.estado==='NOVEDAD'; }).length;
+  h += kpiV('Uds en Confección', fmtNum(udsConf),             C_PURPLE, 'En talleres ahora ↗',   'programacion');
   h += kpiV('Uds Entregadas',    fmtNum(udsEntregadas),       C_GREEN,  (filtro||yearActual)+' ↗', null);
   h += kpiV('OPs en Proceso',    fmtNum(entOps),              C_ORANGE, 'Órdenes abiertas ↗',    'ops');
   h += kpiV('Satélites Activos', fmtNum(satActivos),          '#e2e8f0','De '+DB.satelites.length+' total ↗','satelites');
@@ -2194,7 +2236,9 @@ function renderProgEjecucion(){
     Object.keys(sinSatByOp).forEach(function(opId){
       var opOts = sinSatByOp[opId];
       var op = DB.ops.find(function(x){ return x.id===opId; });
-      var opNom = op ? (op.referencia||op.nombre||'OP-'+op.numero_op) : opOts[0].nombre;
+      var _opRef = op ? (op.referencia||op.nombre||op.nombre_op||op.descripcion||op.articulo||null) : null;
+      var _opNum = op && op.numero_op ? 'OP-'+op.numero_op : null;
+      var opNom = _opRef || opOts[0].nombre || _opNum || 'OP sin nombre';
       var totalUds = opOts.reduce(function(s,o){ return s+(o.cantidad||0); },0);
       h += '<div style="border:1px solid #1e2535;border-radius:10px;margin-bottom:8px;overflow:hidden;">';
       h += '<div style="background:#1a2032;padding:10px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">';
@@ -2254,7 +2298,9 @@ function renderProgEjecucion(){
     Object.keys(byOp).forEach(function(opId){
       var opOts = byOp[opId].sort(function(a,b){ return (a.talla||'').localeCompare(b.talla||''); });
       var op = DB.ops.find(function(x){ return x.id===opId; });
-      var opNom = op ? (op.referencia||op.nombre||'OP-'+op.numero_op) : opOts[0].nombre;
+      var _opRef = op ? (op.referencia||op.nombre||op.nombre_op||op.descripcion||op.articulo||null) : null;
+      var _opNum = op && op.numero_op ? 'OP-'+op.numero_op : null;
+      var opNom = _opRef || opOts[0].nombre || _opNum || 'OP sin nombre';
       var opColor = opOts[0].color||'';
       var opTotalUds = opOts.reduce(function(s,o){ return s+(o.cantidad||0); },0);
       var opMinFecha = opOts.map(function(o){ return o.fecha_estimada_entrega||''; }).filter(Boolean).sort()[0];
@@ -2987,6 +3033,9 @@ var _localDB = localStorage.getItem('bentley_prod_db');
 if(_localDB){ try{ DB = JSON.parse(_localDB); if(DB.satelites.length===0) seedSatelites(); }catch(e){ seedSatelites(); } }
 else { seedSatelites(); }
 updateNovBadge();
+startClock();
+var _sc = localStorage.getItem('bentley_sidebar_collapsed');
+if(_sc==='1'){ var _sb=document.getElementById('sidebar'); var _mn=document.getElementById('main'); if(_sb)_sb.classList.add('collapsed'); if(_mn)_mn.classList.add('sidebar-collapsed'); }
 // Restore last page
 var _initPage = localStorage.getItem('bentley_last_page') || 'dashboard';
 currentPage = _initPage;
