@@ -543,34 +543,39 @@ function openModal(title, bodyHtml, footerHtml){
 function closeModal(){ document.getElementById('modal-overlay').classList.remove('open'); }
 
 // ─── GitHub API ────────────────────────────────────────────────────────────────
+var _saving = {};
 async function guardarArchivo(key, data){
-  var tk = localStorage.getItem('bentley_gh_token') || GT;
-  if(!tk){ toast('Sin token GitHub — configura en ⚙️', 'error'); return false; }
+  if(_saving[key]){ return false; } // evitar doble guardado
+  _saving[key] = true;
+  var tk = GT || localStorage.getItem('bentley_gh_token') || '';
+  if(!tk){ toast('Sin token GitHub', 'error'); _saving[key]=false; return false; }
   var path = FILES[key];
   try {
-    var getR = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + path, {
-      headers: { 'Authorization': 'token ' + tk, 'Cache-Control': 'no-cache' }
+    // Cache-Control NO se incluye: falla CORS preflight de GitHub API
+    var getR = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + path + '?t=' + Date.now(), {
+      headers: { 'Authorization': 'token ' + tk }
     });
     var sha = null;
     if(getR.ok){ var cur = await getR.json(); sha = cur.sha || null; }
     var content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
-    var body = { message: 'Producción: actualizar ' + key, content: content };
+    var body = { message: 'Produccion Bentley: actualizar ' + key, content: content };
     if(sha) body.sha = sha;
     var putR = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + path, {
       method: 'PUT',
       headers: { 'Authorization': 'token ' + tk, 'Content-Type': 'application/json' },
       body: JSON.stringify(body)
     });
+    _saving[key] = false;
     if(putR.ok){
-      document.getElementById('sync-indicator').textContent = '✓ Sync ' + new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
-      document.getElementById('sync-indicator').style.color = 'var(--green)';
+      var si = document.getElementById('sync-indicator');
+      if(si){ si.textContent = '✓ Sync ' + new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}); si.style.color = 'var(--green)'; }
       return true;
     } else {
       var err = await putR.json();
-      toast('Error GitHub: ' + (err.message||''), 'error');
+      toast('Error GitHub ' + putR.status + ': ' + (err.message||''), 'error');
       return false;
     }
-  } catch(e){ toast('Error de red: ' + e.message, 'error'); return false; }
+  } catch(e){ _saving[key]=false; toast('Error de red: ' + e.message, 'error'); return false; }
 }
 
 async function guardarTodo(){
