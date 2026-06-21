@@ -974,23 +974,15 @@ function renderOPs(){
   });
   h += '</div>';
 
-  // Overlay form (oculto por defecto)
-  h += '<div id="nueva-op-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:900;overflow-y:auto;padding:20px;" onclick="if(event.target===this)cerrarFormNuevaOP()">';
-  h += '<div style="max-width:720px;margin:0 auto;" onclick="event.stopPropagation()">';
-  h += '<div id="nueva-op-form-content">' + _buildFormNuevaOP() + '</div>';
-  h += '</div></div>';
   return h;
 }
 
 function mostrarFormNuevaOP(){
   _colores = [];
-  var overlay = document.getElementById('nueva-op-overlay');
-  if(overlay){ overlay.style.display='block'; document.body.style.overflow='hidden'; setTimeout(function(){ generarTablaQty(); },50); }
+  openModal('CREAR ORDEN DE PRODUCCIÓN', _buildFormNuevaOP(), '');
+  setTimeout(function(){ generarTablaQty(); }, 80);
 }
-function cerrarFormNuevaOP(){
-  var overlay = document.getElementById('nueva-op-overlay');
-  if(overlay){ overlay.style.display='none'; document.body.style.overflow=''; }
-}
+function cerrarFormNuevaOP(){ closeModal(); }
 
 function verDetalleOP(opId){
   // Navegar a OTs Activas filtrado por OP
@@ -1009,11 +1001,7 @@ function renderNuevaOP(){
 }
 
 function _buildFormNuevaOP(){
-  var h = '<div class="card" style="max-width:720px;position:relative;">';
-  h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">';
-  h += '<div class="section-title" style="margin:0;">Crear Orden de Producción</div>';
-  h += '<button type="button" class="btn btn-ghost btn-sm" onclick="cerrarFormNuevaOP()" style="font-size:18px;line-height:1;">✕</button>';
-  h += '</div>';
+  var h = '';
   h += '<div class="form-row">';
   h += '<div class="form-group"><label class="form-label">Fecha OP *</label><input class="form-control" type="date" id="op-fecha" value="' + hoy() + '"></div>';
   h += '<div class="form-group"><label class="form-label">Número OP</label><input class="form-control" type="number" id="op-num" value="' + nextOPNum() + '"></div>';
@@ -1054,9 +1042,7 @@ function _buildFormNuevaOP(){
   h += '<button class="btn btn-primary" id="btn-crear-op" onclick="crearOP()"><span class="btn-text">✚ Crear OP y generar OTs</span><span class="spinner"></span></button>';
   h += '<button type="button" class="btn btn-ghost" onclick="cerrarFormNuevaOP()">Cancelar</button>';
   h += '</div>';
-  h += '</div>';
 
-  setTimeout(function(){ generarTablaQty(); }, 50);
   return h;
 }
 
