@@ -2167,7 +2167,174 @@ function getTallasByMarca(marca){
 var _progFiltroMarca = '';
 var _progFiltroEstado = '';
 
+var _progTab = 'ejecucion'; // 'ejecucion' | 'planeacion'
+
 function renderProgramacion(){
+  var h = '';
+  h += '<div style="display:flex;gap:0;margin-bottom:20px;border-bottom:1px solid #1e2535;">';
+  h += '<button onclick="_progTab=\'ejecucion\';renderPage(\'programacion\')" style="padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;background:none;border:none;border-bottom:2px solid '+(_progTab==='ejecucion'?'#00d4ff':'transparent')+';color:'+(_progTab==='ejecucion'?'#00d4ff':'#475569')+';transition:all .2s;">Ejecución</button>';
+  h += '<button onclick="_progTab=\'planeacion\';renderPage(\'programacion\')" style="padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;background:none;border:none;border-bottom:2px solid '+(_progTab==='planeacion'?'#a855f7':'transparent')+';color:'+(_progTab==='planeacion'?'#a855f7':'#475569')+';transition:all .2s;">Planeación OPs</button>';
+  h += '</div>';
+  return _progTab === 'ejecucion' ? renderProgEjecucion() : renderProgPlaneacion();
+}
+
+function renderProgEjecucion(){
+  var h = '';
+
+  // OTs CORTE_POR_ALISTAR sin satélite — agrupadas por OP
+  var sinSatOts = DB.ots.filter(function(o){ return o.estado==='CORTE_POR_ALISTAR' && !o.satelite_id; });
+  if(sinSatOts.length){
+    var sinSatByOp = {};
+    sinSatOts.forEach(function(o){
+      var k = o.op_id || ('_ot_'+o.id);
+      (sinSatByOp[k] = sinSatByOp[k]||[]).push(o);
+    });
+    h += '<div class="card" style="margin-bottom:16px;padding:16px;border-color:rgba(251,191,36,.3);">';
+    h += '<div style="font-family:var(--bebas);font-size:16px;color:#fbbf24;margin-bottom:12px;">⚡ Corte por Alistar — Sin Satélite ('+sinSatOts.length+' OTs)</div>';
+    Object.keys(sinSatByOp).forEach(function(opId){
+      var opOts = sinSatByOp[opId];
+      var op = DB.ops.find(function(x){ return x.id===opId; });
+      var opNom = op ? (op.referencia||op.nombre||'OP-'+op.numero_op) : opOts[0].nombre;
+      var totalUds = opOts.reduce(function(s,o){ return s+(o.cantidad||0); },0);
+      h += '<div style="border:1px solid #1e2535;border-radius:10px;margin-bottom:8px;overflow:hidden;">';
+      h += '<div style="background:#1a2032;padding:10px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">';
+      h += '<span style="font-weight:700;font-size:13px;color:#fbbf24;">'+esc(opNom)+'</span>';
+      h += '<span style="font-size:11px;color:#64748b;">'+opOts.length+' OTs · '+fmtNum(totalUds)+' uds</span>';
+      h += '<div style="flex:1;"></div>';
+      h += '<select data-opid="'+opId+'" onchange="asignarSateliteOP(this.dataset.opid,this.value)" class="form-control" style="width:200px;padding:4px 8px;font-size:12px;">';
+      h += '<option value="">— Asignar satélite a toda la OP —</option>';
+      DB.satelites.filter(function(s){ return s.activo; }).forEach(function(s){
+        h += '<option value="'+s.id+'">'+s.nombre+'</option>';
+      });
+      h += '</select></div>';
+      opOts.forEach(function(ot){
+        h += '<div style="display:flex;align-items:center;gap:10px;padding:7px 14px;border-top:1px solid #1e2535;">';
+        h += '<span style="font-size:11px;font-weight:700;color:#fbbf24;min-width:80px;">OT-'+ot.numero_ot+'</span>';
+        h += '<span style="font-size:11px;color:#94a3b8;">'+esc(ot.color||'')+(ot.talla?' · '+ot.talla:'')+' · <b style="color:#e2e8f0;">'+ot.cantidad+' uds</b></span>';
+        h += '</div>';
+      });
+      h += '</div>';
+    });
+    h += '</div>';
+  }
+
+  // OTs activas agrupadas por satélite → OP → OTs
+  var bySat = {};
+  DB.ots.filter(function(o){ return o.estado!=='ENTREGADO' && o.satelite_id; }).forEach(function(o){
+    (bySat[o.satelite_id] = bySat[o.satelite_id]||[]).push(o);
+  });
+
+  var satKeys = Object.keys(bySat).sort(function(a,b){
+    var dA = Math.min.apply(null, bySat[a].map(function(o){ return diasRestantes(o.fecha_estimada_entrega)||999; }));
+    var dB = Math.min.apply(null, bySat[b].map(function(o){ return diasRestantes(o.fecha_estimada_entrega)||999; }));
+    return dA-dB;
+  });
+
+  satKeys.forEach(function(satId){
+    var ots = bySat[satId];
+    var satNom = getSatNombre(satId);
+    var urgentes = ots.filter(function(o){ var d=diasRestantes(o.fecha_estimada_entrega); return d!==null&&d<=5; }).length;
+    var udsTotales = ots.reduce(function(a,o){ return a+(o.cantidad||0); },0);
+
+    // Agrupar por OP
+    var byOp = {};
+    ots.forEach(function(o){
+      var k = o.op_id || ('_ot_'+o.id);
+      (byOp[k] = byOp[k]||[]).push(o);
+    });
+
+    h += '<div class="card" style="margin-bottom:12px;padding:0;overflow:hidden;">';
+    h += '<div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:#1a2032;border-bottom:1px solid #1e2535;flex-wrap:wrap;">';
+    h += '<span style="font-weight:700;font-size:15px;color:#e2e8f0;font-family:var(--bebas);letter-spacing:.5px;">'+satNom+'</span>';
+    var nOps = Object.keys(byOp).length;
+    h += '<span style="font-size:12px;color:#64748b;">'+nOps+' OP'+(nOps!==1?'s':'')+' · '+ots.length+' OTs · '+fmtNum(udsTotales)+' uds</span>';
+    if(urgentes) h += '<span style="background:rgba(236,72,153,.15);border:1px solid rgba(236,72,153,.3);color:#ec4899;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;">'+urgentes+' urgentes</span>';
+    h += '</div>';
+
+    Object.keys(byOp).forEach(function(opId){
+      var opOts = byOp[opId].sort(function(a,b){ return (a.talla||'').localeCompare(b.talla||''); });
+      var op = DB.ops.find(function(x){ return x.id===opId; });
+      var opNom = op ? (op.referencia||op.nombre||'OP-'+op.numero_op) : opOts[0].nombre;
+      var opColor = opOts[0].color||'';
+      var opTotalUds = opOts.reduce(function(s,o){ return s+(o.cantidad||0); },0);
+      var opMinFecha = opOts.map(function(o){ return o.fecha_estimada_entrega||''; }).filter(Boolean).sort()[0];
+      var diasMin = diasRestantes(opMinFecha);
+      var hayNovedad = opOts.some(function(o){ return o.estado==='NOVEDAD'; });
+      var opBg = hayNovedad?'rgba(236,72,153,.04)':'transparent';
+      var domId = 'opx-'+satId.replace(/[^a-z0-9]/gi,'_')+'-'+opId.replace(/[^a-z0-9]/gi,'_');
+
+      h += '<div style="border-bottom:1px solid #1e2535;background:'+opBg+';">';
+      h += '<div onclick="toggleOpRow(\''+domId+'\')" style="display:flex;align-items:center;gap:10px;padding:10px 16px;cursor:pointer;flex-wrap:wrap;">';
+      h += '<span id="'+domId+'-ico" style="color:#475569;font-size:11px;flex-shrink:0;">▶</span>';
+      h += '<span style="font-weight:700;font-size:13px;color:#e2e8f0;flex:1;">'+esc(opNom)+'</span>';
+      if(opColor) h += '<span style="font-size:11px;color:#64748b;">'+esc(opColor)+'</span>';
+      h += '<span style="font-size:11px;color:#475569;">'+opOts.length+' OT'+(opOts.length!==1?'s':'')+' · <b style="color:#00d4ff;">'+fmtNum(opTotalUds)+'</b> uds</span>';
+      if(opMinFecha) h += diasChip(diasMin);
+      if(hayNovedad) h += '<span style="font-size:10px;font-weight:700;color:#ec4899;padding:2px 8px;border-radius:10px;background:rgba(236,72,153,.1);">NOVEDAD</span>';
+      h += '</div>';
+
+      h += '<div id="'+domId+'" style="display:none;">';
+      h += '<table style="width:100%;border-collapse:collapse;font-size:12px;">';
+      h += '<thead><tr style="background:rgba(0,0,0,.2);">';
+      ['OT','Color','Talla','Enviadas','Estado','Entrega est.','Acción'].forEach(function(col,i){
+        var align = i>=3&&i<=5?'right':'left';
+        h += '<th style="padding:6px '+(i===0?'16px 6px 32px':'8px')+';text-align:'+align+';color:#334155;font-weight:600;">'+col+'</th>';
+      });
+      h += '</tr></thead><tbody>';
+      opOts.forEach(function(ot){
+        var dias = diasRestantes(ot.fecha_estimada_entrega);
+        var rowBg = ot.estado==='NOVEDAD'?'rgba(236,72,153,.04)':(dias!==null&&dias<0?'rgba(251,191,36,.03)':'transparent');
+        var estColor = {EN_CONFECCION:'#a855f7',ASIGNADO:'#00d4ff',CORTE_POR_ALISTAR:'#fbbf24',PENDIENTE_CORTAR:'#475569',NOVEDAD:'#ec4899',ENTREGADO_PARCIAL:'#f97316'}[ot.estado]||'#64748b';
+        h += '<tr style="border-top:1px solid rgba(255,255,255,.04);background:'+rowBg+';">';
+        h += '<td style="padding:7px 16px 7px 32px;font-weight:700;color:#00d4ff;">OT-'+ot.numero_ot+'</td>';
+        h += '<td style="padding:7px 8px;color:#94a3b8;">'+esc(ot.color||'')+'</td>';
+        h += '<td style="padding:7px 8px;text-align:center;color:#94a3b8;">'+esc(ot.talla||'')+'</td>';
+        h += '<td style="padding:7px 8px;text-align:right;font-weight:600;color:#e2e8f0;">'+ot.cantidad+'</td>';
+        h += '<td style="padding:7px 8px;"><span style="font-size:10px;color:'+estColor+';font-weight:600;">'+(ESTADO_LABELS[ot.estado]||ot.estado)+'</span></td>';
+        h += '<td style="padding:7px 8px;text-align:right;">'+diasChip(dias)+'</td>';
+        h += '<td style="padding:7px 12px 7px 8px;text-align:center;">';
+        if(ot.estado!=='ENTREGADO'){
+          h += '<button class="btn btn-success btn-sm" data-ot="'+ot.id+'" onclick="modalEntrega(this.dataset.ot)" style="font-size:11px;padding:3px 10px;white-space:nowrap;">✓ Entregar</button>';
+        } else {
+          h += '<span style="font-size:11px;color:#34d399;">✓ '+fmtNum(ot.unidades_entregadas||0)+' uds</span>';
+        }
+        h += '</td></tr>';
+      });
+      h += '</tbody></table></div></div>';
+    });
+    h += '</div>';
+  });
+
+  if(!satKeys.length && !sinSatOts.length){
+    h += '<div class="empty-state"><div class="icon">🎉</div><p>No hay órdenes activas en ejecución.</p></div>';
+  }
+  return h;
+}
+
+function toggleOpRow(id){
+  var el = document.getElementById(id);
+  var ico = document.getElementById(id+'-ico');
+  if(!el) return;
+  var open = el.style.display !== 'none';
+  el.style.display = open ? 'none' : '';
+  if(ico) ico.textContent = open ? '▶' : '▼';
+}
+
+function asignarSateliteOP(opId, satId){
+  if(!satId) return;
+  var assigned = 0;
+  DB.ots.filter(function(o){
+    var k = o.op_id || ('_ot_'+o.id);
+    return k===opId && o.estado==='CORTE_POR_ALISTAR' && !o.satelite_id;
+  }).forEach(function(ot){ ot.satelite_id=satId; ot.estado='ASIGNADO'; assigned++; });
+  if(!assigned){ toast('Sin OTs para asignar','error'); return; }
+  guardarArchivo('ots',{ots:DB.ots}).then(function(ok){
+    if(ok) toast(assigned+' OTs asignadas a '+getSatNombre(satId),'success');
+    renderPage('programacion');
+  });
+}
+
+function renderProgPlaneacion(){
   var marcas = getDisMarcas();
   var ops = DB.prog_ops || [];
   var filtered = ops.filter(function(o){
@@ -2175,8 +2342,6 @@ function renderProgramacion(){
   }).sort(function(a,b){ return (a.prioridad||99)-(b.prioridad||99); });
 
   var h = '';
-
-  // Filtros + botón
   h += '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:16px;">';
   h += '<select onchange="_progFiltroMarca=this.value;renderPage(\'programacion\')" class="form-control" style="width:160px;padding:6px 10px;">';
   h += '<option value="">Todas las marcas</option>';
@@ -2195,7 +2360,6 @@ function renderProgramacion(){
     return h;
   }
 
-  // Tabla
   h += '<div style="overflow-x:auto;">';
   h += '<table style="width:100%;border-collapse:collapse;font-size:12px;min-width:900px;">';
   h += '<thead><tr style="background:#0f1520;">';
@@ -2203,39 +2367,30 @@ function renderProgramacion(){
     h += '<th style="padding:8px 10px;text-align:left;color:#475569;font-weight:600;white-space:nowrap;">'+col+'</th>';
   });
   h += '</tr></thead><tbody>';
-
-  var lastRef = '';
   filtered.forEach(function(op){
     var tallas = getTallasByMarca(op.marca);
     var total = tallas.reduce(function(s,t){ return s+(parseInt(op['uds_'+t])||0); },0);
     var estColor = {NUEVO:'#00d4ff',REPROGRAMACION:'#fbbf24','EN PROCESO':'#a855f7',COMPLETADO:'#34d399'}[op.estado]||'#64748b';
-    var isNewRef = op.referencia !== lastRef;
-    lastRef = op.referencia;
     h += '<tr style="border-top:1px solid #1e2535;">';
-    h += '<td style="padding:7px 10px;"><span style="font-size:11px;font-weight:700;color:#e2e8f0;">'+op.prioridad+'</span></td>';
+    h += '<td style="padding:7px 10px;font-weight:700;color:#e2e8f0;">'+op.prioridad+'</td>';
     h += '<td style="padding:7px 10px;"><span style="font-size:10px;font-weight:700;color:'+estColor+';">'+op.estado+'</span></td>';
     h += '<td style="padding:7px 10px;color:#64748b;font-size:11px;">'+esc(op.marca||'')+'</td>';
     h += '<td style="padding:7px 10px;color:#64748b;font-size:11px;">'+esc(op.categoria||'')+'</td>';
     h += '<td style="padding:7px 10px;font-weight:600;color:#e2e8f0;">'+esc(op.referencia||'')+'</td>';
     h += '<td style="padding:7px 10px;color:#94a3b8;">'+esc(op.color||'')+'</td>';
-    // Tallas inline
     h += '<td style="padding:7px 10px;"><div style="display:flex;gap:4px;flex-wrap:nowrap;">';
     tallas.forEach(function(t){
-      var uds = parseInt(op['uds_'+t])||0;
-      if(!uds) return;
+      var uds = parseInt(op['uds_'+t])||0; if(!uds) return;
       h += '<span style="font-size:10px;background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.12);border-radius:4px;padding:1px 5px;color:#94a3b8;white-space:nowrap;">'+t+':<b style="color:#e2e8f0;">'+uds+'</b></span>';
     });
     h += '</div></td>';
     h += '<td style="padding:7px 10px;font-weight:700;color:#00d4ff;text-align:right;">'+total+'</td>';
     h += '<td style="padding:7px 10px;color:#64748b;text-align:right;">'+(op.kg||'—')+'</td>';
-    h += '<td style="padding:7px 10px;text-align:right;">';
-    h += '<button data-id="'+op.id+'" onclick="abrirFormProgOp(this.dataset.id)" style="background:none;border:none;cursor:pointer;color:#475569;font-size:12px;" title="Editar">✏</button>';
-    h += '</td>';
+    h += '<td style="padding:7px 10px;text-align:right;"><button data-id="'+op.id+'" onclick="abrirFormProgOp(this.dataset.id)" style="background:none;border:none;cursor:pointer;color:#475569;font-size:12px;">✏</button></td>';
     h += '</tr>';
   });
   h += '</tbody></table></div>';
 
-  // Resumen totales por marca
   h += '<div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">';
   marcas.forEach(function(m){
     var mOps = ops.filter(function(o){ return o.marca===m; });
@@ -2249,7 +2404,6 @@ function renderProgramacion(){
     h += '</div>';
   });
   h += '</div>';
-
   return h;
 }
 
@@ -2573,32 +2727,46 @@ function verSatEntregas(satId){
 function modalEntrega(otId){
   var ot = DB.ots.find(function(o){ return o.id===otId; });
   if(!ot) return;
-  var diasRestantes2 = diasRestantes(ot.fecha_estimada_entrega);
-  var body = '<div style="background:var(--card);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;">';
-  body += '<strong>OT-' + ot.numero_ot + '</strong> · ' + ot.nombre + ' · ' + ot.color + ' · ' + ot.talla + '<br>';
-  body += '<span style="color:var(--dim);">Satélite: ' + getSatNombre(ot.satelite_id) + ' · Enviadas: ' + ot.cantidad + ' uds · F. Est: ' + fmtDate(ot.fecha_estimada_entrega) + ' ' + diasChip(diasRestantes2) + '</span>';
+  var dias2 = diasRestantes(ot.fecha_estimada_entrega);
+
+  var body = '<div style="background:#1a2032;border-radius:10px;padding:12px 16px;margin-bottom:16px;">';
+  body += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;margin-bottom:4px;">OT-'+ot.numero_ot+' · '+esc(ot.nombre)+' · '+esc(ot.color||'')+' · '+esc(ot.talla||'')+'</div>';
+  body += '<div style="font-size:11px;color:#64748b;">Satélite: '+getSatNombre(ot.satelite_id)+' · F. Est: '+fmtDate(ot.fecha_estimada_entrega)+' '+diasChip(dias2)+'</div>';
   body += '</div>';
-  body += '<div class="form-row">';
-  body += '<div class="form-group"><label class="form-label">Unidades entregadas *</label><input class="form-control" type="number" id="ent-uds" min="0" max="' + ot.cantidad + '" value="' + ot.cantidad + '" oninput="calcCumplimiento()"></div>';
-  body += '<div class="form-group"><label class="form-label">Unidades con novedad</label><input class="form-control" type="number" id="ent-nov" min="0" value="0"></div>';
+
+  body += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:4px;">';
+  body += '<div class="form-group" style="margin:0;"><label class="form-label">Enviadas por el satélite</label>';
+  body += '<div style="padding:10px 14px;background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.2);border-radius:8px;font-size:22px;font-weight:700;color:#00d4ff;">'+ot.cantidad+' <span style="font-size:12px;color:#64748b;font-weight:400;">uds</span></div></div>';
+  body += '<div class="form-group" style="margin:0;"><label class="form-label">Unidades recibidas en planta *</label>';
+  body += '<input class="form-control" type="number" id="ent-uds" min="0" max="'+ot.cantidad+'" placeholder="0" oninput="calcDiferenciaEntrega('+ot.cantidad+')" style="font-size:20px;font-weight:700;text-align:center;height:50px;">';
+  body += '</div></div>';
+
+  body += '<div id="ent-diff-wrap" style="display:none;margin-bottom:12px;padding:10px 14px;border-radius:8px;background:rgba(236,72,153,.08);border:1px solid rgba(236,72,153,.3);">';
+  body += '<div style="font-size:12px;font-weight:700;color:#ec4899;">⚠ Diferencia detectada — se marcará como NOVEDAD</div>';
+  body += '<div style="font-size:11px;color:#94a3b8;margin-top:3px;">Las unidades faltantes quedarán como pendientes por llegar.</div>';
+  body += '<div id="ent-diff-detail" style="font-size:13px;font-weight:700;color:#ec4899;margin-top:6px;"></div>';
   body += '</div>';
-  body += '<div class="form-row"><div class="form-group"><label class="form-label">Fecha real de entrega *</label><input class="form-control" type="date" id="ent-fecha" value="' + hoy() + '" oninput="calcCumplimiento()"></div><div class="form-group"><label class="form-label">NT ingreso a planta</label><input class="form-control" id="ent-nt" placeholder="NT-XXXX"></div></div>';
-  body += '<div class="form-group" id="cumplimiento-wrap" style="display:flex;align-items:center;justify-content:space-between;">';
-  body += '<label class="form-label">¿Cumplió fecha?</label><input type="checkbox" class="toggle" id="ent-cumplió"></div>';
-  body += '<div class="form-group" id="motivo-wrap" style="display:none;"><label class="form-label">Motivo de incumplimiento</label><input class="form-control" id="ent-motivo"></div>';
-  body += '<div class="form-group"><label class="form-label">Notas</label><textarea class="form-control" id="ent-notas"></textarea></div>';
 
-  // Costo estimado
-  body += '<div id="costo-preview" style="background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.2);border-radius:8px;padding:10px 14px;font-size:12px;margin-top:4px;"></div>';
+  body += '<div class="form-row"><div class="form-group"><label class="form-label">Fecha real de entrega *</label><input class="form-control" type="date" id="ent-fecha" value="'+hoy()+'"></div><div class="form-group"><label class="form-label">NT ingreso a planta</label><input class="form-control" id="ent-nt" placeholder="NT-XXXX"></div></div>';
+  body += '<div class="form-group"><label class="form-label">Notas de calidad</label><textarea class="form-control" id="ent-notas" rows="2" placeholder="Observaciones de calidad, defectos, pendientes..."></textarea></div>';
 
-  var footer = '<button class="btn btn-primary" id="btn-conf-entrega" onclick="confirmarEntrega(\'' + otId + '\')"><span class="btn-text">✓ Confirmar entrega</span><span class="spinner"></span></button><button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>';
-  openModal('Registrar Entrega', body, footer);
+  var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" data-ot="'+otId+'" onclick="confirmarEntrega(this.dataset.ot)">✓ Confirmar entrega</button>';
+  openModal('Registrar Entrega · Calidad', body, footer);
+  setTimeout(function(){ var el=document.getElementById('ent-uds'); if(el) el.focus(); },100);
+}
 
-  // init
-  setTimeout(calcCumplimiento, 50);
-  document.getElementById('ent-cumplió').addEventListener('change', function(){
-    document.getElementById('motivo-wrap').style.display = this.checked ? 'none' : '';
-  });
+function calcDiferenciaEntrega(enviadas){
+  var uds = parseInt((document.getElementById('ent-uds')||{}).value)||0;
+  var wrap = document.getElementById('ent-diff-wrap');
+  var det = document.getElementById('ent-diff-detail');
+  if(!wrap) return;
+  if(uds < enviadas && uds > 0){
+    var pend = enviadas - uds;
+    wrap.style.display = '';
+    if(det) det.textContent = 'Recibidas: '+uds+' uds  ·  Pendientes: '+pend+' uds';
+  } else {
+    wrap.style.display = 'none';
+  }
 }
 
 function calcCumplimiento(){
@@ -2615,32 +2783,41 @@ async function confirmarEntrega(otId){
   var ot = DB.ots.find(function(o){ return o.id===otId; });
   if(!ot) return;
   var uds = parseInt((document.getElementById('ent-uds')||{}).value)||0;
-  var nov = parseInt((document.getElementById('ent-nov')||{}).value)||0;
   var fecha = (document.getElementById('ent-fecha')||{}).value;
-  var nt = (document.getElementById('ent-nt')||{}).value;
-  var cumplió = (document.getElementById('ent-cumplió')||{}).checked;
-  var motivo = (document.getElementById('ent-motivo')||{}).value || '';
-  var notas = (document.getElementById('ent-notas')||{}).value || '';
+  var nt = (document.getElementById('ent-nt')||{}).value||'';
+  var notas = (document.getElementById('ent-notas')||{}).value||'';
 
-  if(!uds || !fecha){ toast('Ingresa unidades y fecha', 'error'); return; }
+  if(!uds || !fecha){ toast('Ingresa unidades recibidas y fecha', 'error'); return; }
+  if(uds > ot.cantidad){ toast('No puede ser mayor a lo enviado ('+ot.cantidad+' uds)', 'error'); return; }
+
+  var pendientes = ot.cantidad - uds;
+  var esNovedad = pendientes > 0;
 
   ot.unidades_entregadas = uds;
-  ot.unidades_novedad = nov;
+  ot.unidades_novedad = pendientes;
   ot.fecha_entrega_real = fecha;
   ot.nt_ingreso_planta = nt;
-  ot.cumplió_fecha = cumplió;
-  ot.motivo_incumplimiento = motivo;
   ot.notas = notas;
   ot.total_costo_mo = uds * (ot.valor_mo||0);
+  // Si hay diferencia → NOVEDAD automático; si completo → ENTREGADO
+  ot.estado = esNovedad ? 'NOVEDAD' : 'ENTREGADO';
 
-  if(nov > 0) ot.estado = 'ENTREGADO_PARCIAL';
-  else ot.estado = 'ENTREGADO';
-
-  ot.historial.push({fecha: new Date().toISOString(), accion: 'Entrega registrada: ' + uds + ' uds' + (nov?' ('+nov+' novedad)':''), user: getUser()});
+  if(!ot.historial) ot.historial = [];
+  var accion = esNovedad
+    ? 'Entrega parcial: '+uds+' uds recibidas, '+pendientes+' pendientes → NOVEDAD'
+    : 'Entrega completa: '+uds+' uds recibidas → ENTREGADO';
+  ot.historial.push({fecha: new Date().toISOString(), accion: accion, user: getUser()});
 
   saveLocal(); updateNovBadge();
   var ok = await guardarArchivo('ots', {ots: DB.ots});
-  if(ok){ toast('Entrega registrada · ' + uds + ' uds · ' + fmtCop(ot.total_costo_mo||0) + ' MO', 'success'); closeModal(); renderPage('entregas'); }
+  if(ok){
+    var msg = esNovedad
+      ? 'Novedad registrada · '+uds+' recibidas · '+pendientes+' pendientes'
+      : 'Entrega completa · '+uds+' uds · '+fmtCop(ot.total_costo_mo||0)+' MO';
+    toast(msg, esNovedad?'error':'success');
+    closeModal();
+    renderPage(currentPage);
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
