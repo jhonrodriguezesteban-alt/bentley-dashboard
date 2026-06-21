@@ -4,10 +4,37 @@
       "id": "sat_00",
       "nombre": "SOFIA SANCHEZ",
       "activo": true,
-      "maquinas": [],
-      "personas": 0,
-      "especialidades": [],
-      "capacidad_semanal": 0,
+      "maquinas": [
+        {
+          "tipo": "PLANA",
+          "cantidad": 1
+        },
+        {
+          "tipo": "FILETE",
+          "cantidad": 1
+        },
+        {
+          "tipo": "COLLARIN",
+          "cantidad": 1
+        }
+      ],
+      "personas": 1,
+      "especialidades": [
+        "CAMISAS",
+        "CHAQUETAS",
+        "CAMISETAS",
+        "BUZOS",
+        "GABAN",
+        "CONJUNTOS",
+        "CHALECOS",
+        "PANTALONES",
+        "ABRIGOS",
+        "FALDA",
+        "BLUSAS",
+        "VESTIDOS",
+        "CAMISONES"
+      ],
+      "capacidad_semanal": 80,
       "telefono": "",
       "notas": "",
       "created_at": "2025-01-01"
