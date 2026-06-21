@@ -78,10 +78,20 @@
       "id": "sat_02",
       "nombre": "MELISSA MARTINEZ",
       "activo": true,
-      "maquinas": [],
-      "personas": 0,
-      "especialidades": [],
-      "capacidad_semanal": 0,
+      "maquinas": [
+        {
+          "tipo": "PLANA",
+          "cantidad": 2
+        }
+      ],
+      "personas": 2,
+      "especialidades": [
+        "CHAQUETAS",
+        "GABAN",
+        "CHALECOS",
+        "ABRIGOS"
+      ],
+      "capacidad_semanal": 100,
       "telefono": "",
       "notas": "",
       "created_at": "2025-01-01"
