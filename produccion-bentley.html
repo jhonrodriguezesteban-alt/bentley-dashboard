@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRODUCCION BENTLEY</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0f14;
+  --card: rgba(255,255,255,0.04);
+  --card-border: rgba(255,255,255,0.08);
+  --radius: 14px;
+  --cyan: #00d4ff;
+  --green: #34d399;
+  --red: #ff3b30;
+  --gold: #ffd60a;
+  --text: #e8f0fe;
+  --dim: rgba(255,255,255,0.45);
+  --sidebar-w: 200px;
+  --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  --bebas: 'Bebas Neue', sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;display:flex;}
+
+/* Sidebar */
+#sidebar{
+  width:var(--sidebar-w);min-width:var(--sidebar-w);height:100vh;position:fixed;top:0;left:0;
+  background:rgba(0,0,0,0.4);border-right:1px solid var(--card-border);
+  display:flex;flex-direction:column;z-index:200;transition:transform .3s;overflow:hidden;
+}
+#sidebar-logo{padding:20px 16px 12px;border-bottom:1px solid var(--card-border);}
+#sidebar-logo .brand{font-family:var(--bebas);font-size:22px;color:var(--cyan);letter-spacing:1px;line-height:1;}
+#sidebar-logo .sub{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:2px;margin-top:2px;}
+#sidebar nav{flex:1;padding:8px 0;overflow-y:auto;}
+.nav-item{
+  display:flex;align-items:center;gap:10px;padding:11px 16px;cursor:pointer;
+  font-size:13px;font-weight:500;color:var(--dim);transition:all .2s;border-left:3px solid transparent;
+  user-select:none;white-space:nowrap;
+}
+.nav-item:hover{color:var(--text);background:rgba(255,255,255,0.04);}
+.nav-item.active{color:var(--cyan);border-left-color:var(--cyan);background:rgba(0,212,255,0.06);}
+.nav-item .icon{font-size:16px;width:20px;text-align:center;flex-shrink:0;}
+#sidebar-footer{padding:12px 16px;border-top:1px solid var(--card-border);}
+.btn-settings{
+  display:flex;align-items:center;gap:8px;background:none;border:none;
+  color:var(--dim);cursor:pointer;font-size:12px;font-family:var(--font);
+  padding:6px 0;transition:color .2s;
+}
+.btn-settings:hover{color:var(--text);}
+
+/* Main */
+#main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;display:flex;flex-direction:column;}
+#topbar{
+  height:52px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;border-bottom:1px solid var(--card-border);
+  position:sticky;top:0;z-index:100;background:rgba(13,15,20,0.95);backdrop-filter:blur(10px);
+}
+#topbar-title{font-family:var(--bebas);font-size:20px;letter-spacing:1px;color:var(--text);}
+#topbar-right{display:flex;align-items:center;gap:12px;}
+.badge-user{
+  font-size:11px;color:var(--dim);background:var(--card);border:1px solid var(--card-border);
+  padding:4px 10px;border-radius:20px;
+}
+#page-content{padding:24px;flex:1;}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:20px;}
+.card-sm{padding:16px;}
+
+/* KPI grid */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin-bottom:24px;}
+.kpi-card{
+  background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);
+  padding:16px;display:flex;flex-direction:column;gap:6px;
+}
+.kpi-label{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.8px;}
+.kpi-val{font-family:var(--bebas);font-size:34px;color:var(--text);line-height:1;}
+.kpi-val.cyan{color:var(--cyan);}
+.kpi-val.green{color:var(--green);}
+.kpi-val.red{color:var(--red);}
+.kpi-val.gold{color:var(--gold);}
+.kpi-sub{font-size:11px;color:var(--dim);}
+
+/* Section title */
+.section-title{font-family:var(--bebas);font-size:18px;letter-spacing:1px;color:var(--text);margin-bottom:14px;}
+.section-title span{font-family:var(--font);font-size:13px;font-weight:400;color:var(--dim);margin-left:8px;letter-spacing:0;}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;
+  border:none;cursor:pointer;font-family:var(--font);font-size:13px;font-weight:600;
+  transition:all .2s;user-select:none;
+}
+.btn-primary{background:var(--cyan);color:#0d0f14;}
+.btn-primary:hover{background:#00bce8;}
+.btn-ghost{background:var(--card);border:1px solid var(--card-border);color:var(--text);}
+.btn-ghost:hover{background:rgba(255,255,255,0.08);}
+.btn-sm{padding:5px 10px;font-size:12px;border-radius:6px;}
+.btn-danger{background:rgba(255,59,48,.15);border:1px solid rgba(255,59,48,.3);color:var(--red);}
+.btn-danger:hover{background:rgba(255,59,48,.25);}
+.btn-success{background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.3);color:var(--green);}
+.btn-success:hover{background:rgba(52,211,153,.25);}
+.btn[disabled]{opacity:.4;cursor:not-allowed;}
+.spinner{display:none;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:currentColor;border-radius:50%;animation:spin .6s linear infinite;}
+.btn.loading .spinner{display:block;}
+.btn.loading .btn-text{opacity:.6;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* Estado badges */
+.estado{
+  display:inline-block;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600;
+  letter-spacing:.5px;text-transform:uppercase;white-space:nowrap;
+}
+.e-PENDIENTE_CORTAR{background:rgba(255,214,10,.15);color:var(--gold);border:1px solid rgba(255,214,10,.3);}
+.e-CORTE_POR_ALISTAR{background:rgba(255,159,28,.15);color:#ff9f1c;border:1px solid rgba(255,159,28,.3);}
+.e-ASIGNADO{background:rgba(0,212,255,.15);color:var(--cyan);border:1px solid rgba(0,212,255,.3);}
+.e-EN_CONFECCION{background:rgba(139,92,246,.15);color:#a78bfa;border:1px solid rgba(139,92,246,.3);}
+.e-ENTREGADO_PARCIAL{background:rgba(249,115,22,.15);color:#fb923c;border:1px solid rgba(249,115,22,.3);}
+.e-ENTREGADO{background:rgba(52,211,153,.15);color:var(--green);border:1px solid rgba(52,211,153,.3);}
+.e-NOVEDAD{background:rgba(255,59,48,.15);color:var(--red);border:1px solid rgba(255,59,48,.3);}
+.e-EN_PROCESO{background:rgba(0,212,255,.15);color:var(--cyan);border:1px solid rgba(0,212,255,.3);}
+.e-CERRADA{background:rgba(255,255,255,.08);color:var(--dim);border:1px solid var(--card-border);}
+
+/* Tables */
+.table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--card-border);}
+table{width:100%;border-collapse:collapse;}
+th{
+  background:rgba(255,255,255,0.04);color:var(--dim);font-size:11px;text-transform:uppercase;
+  letter-spacing:.7px;padding:10px 14px;text-align:left;white-space:nowrap;
+  border-bottom:1px solid var(--card-border);font-weight:600;
+}
+td{padding:10px 14px;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(255,255,255,0.025);}
+.text-right{text-align:right;}
+.text-center{text-align:center;}
+
+/* Drawer */
+#drawer-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:400;
+  backdrop-filter:blur(4px);
+}
+#drawer-overlay.open{display:block;}
+#drawer{
+  position:fixed;top:0;right:-440px;width:440px;height:100vh;
+  background:#13161f;border-left:1px solid var(--card-border);
+  z-index:401;transition:right .3s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;overflow:hidden;
+}
+#drawer.open{right:0;}
+#drawer-header{
+  padding:18px 20px;border-bottom:1px solid var(--card-border);
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+}
+#drawer-title{font-family:var(--bebas);font-size:18px;letter-spacing:1px;}
+#drawer-close{background:none;border:none;color:var(--dim);cursor:pointer;font-size:20px;padding:4px;}
+#drawer-close:hover{color:var(--text);}
+#drawer-body{flex:1;overflow-y:auto;padding:20px;}
+#drawer-footer{padding:16px 20px;border-top:1px solid var(--card-border);display:flex;gap:8px;flex-shrink:0;}
+
+/* Modal */
+#modal-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:500;
+  backdrop-filter:blur(6px);align-items:center;justify-content:center;
+}
+#modal-overlay.open{display:flex;}
+#modal{
+  background:#13161f;border:1px solid var(--card-border);border-radius:18px;
+  width:90%;max-width:520px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;
+}
+#modal-header{padding:18px 20px;border-bottom:1px solid var(--card-border);display:flex;align-items:center;justify-content:space-between;}
+#modal-title{font-family:var(--bebas);font-size:18px;letter-spacing:1px;}
+#modal-close{background:none;border:none;color:var(--dim);cursor:pointer;font-size:20px;padding:4px;}
+#modal-body{flex:1;overflow-y:auto;padding:20px;}
+#modal-footer{padding:16px 20px;border-top:1px solid var(--card-border);display:flex;gap:8px;justify-content:flex-end;}
+
+/* Forms */
+.form-group{margin-bottom:16px;}
+.form-label{font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;display:block;}
+.form-control{
+  width:100%;background:rgba(255,255,255,0.06);border:1px solid var(--card-border);
+  border-radius:8px;padding:9px 12px;color:var(--text);font-family:var(--font);font-size:13px;
+  transition:border-color .2s;outline:none;
+}
+.form-control:focus{border-color:var(--cyan);}
+.form-control::placeholder{color:var(--dim);}
+select.form-control option{background:#1a1e2a;color:var(--text);}
+textarea.form-control{resize:vertical;min-height:80px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.form-error{font-size:11px;color:var(--red);margin-top:4px;}
+.form-hint{font-size:11px;color:var(--dim);margin-top:4px;}
+
+/* Toggle */
+.toggle{
+  appearance:none;width:38px;height:20px;background:rgba(255,255,255,.15);
+  border-radius:20px;cursor:pointer;position:relative;transition:background .2s;
+  border:none;flex-shrink:0;
+}
+.toggle::after{
+  content:'';position:absolute;left:3px;top:3px;width:14px;height:14px;
+  background:#fff;border-radius:50%;transition:transform .2s;
+}
+.toggle:checked{background:var(--green);}
+.toggle:checked::after{transform:translateX(18px);}
+
+/* Tabs */
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--card-border);margin-bottom:16px;}
+.tab{
+  padding:8px 16px;font-size:12px;font-weight:600;color:var(--dim);cursor:pointer;
+  border-bottom:2px solid transparent;transition:all .2s;user-select:none;
+}
+.tab.active{color:var(--cyan);border-bottom-color:var(--cyan);}
+.tab:hover{color:var(--text);}
+
+/* Toast */
+#toast-container{position:fixed;top:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px;}
+.toast{
+  display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;
+  font-size:13px;font-weight:500;min-width:240px;max-width:360px;
+  background:#1e2130;border:1px solid var(--card-border);
+  animation:toastIn .3s ease;box-shadow:0 8px 32px rgba(0,0,0,.4);
+}
+.toast.success{border-color:rgba(52,211,153,.3);color:var(--green);}
+.toast.error{border-color:rgba(255,59,48,.3);color:var(--red);}
+.toast.info{border-color:rgba(0,212,255,.3);color:var(--cyan);}
+.toast.warning{border-color:rgba(255,214,10,.3);color:var(--gold);}
+@keyframes toastIn{from{transform:translateX(60px);opacity:0;}to{transform:none;opacity:1;}}
+
+/* Satellite cards */
+.sat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+.sat-card{
+  background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);
+  padding:16px;cursor:pointer;transition:all .2s;
+}
+.sat-card:hover{border-color:rgba(0,212,255,.3);background:rgba(0,212,255,.04);}
+.sat-card.inactive{opacity:.5;}
+.sat-name{font-weight:700;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.sat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.sat-dot.on{background:var(--green);}
+.sat-dot.off{background:var(--red);}
+.sat-meta{font-size:12px;color:var(--dim);line-height:1.8;}
+.sat-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;}
+.sat-tag{
+  background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);
+  color:var(--cyan);font-size:10px;padding:2px 7px;border-radius:10px;
+}
+
+/* Alert card */
+.alert-card{
+  background:rgba(255,59,48,.06);border:1px solid rgba(255,59,48,.2);
+  border-radius:10px;padding:12px 16px;margin-bottom:8px;
+}
+.alert-card.warning{background:rgba(255,214,10,.06);border-color:rgba(255,214,10,.2);}
+
+/* Progress bar */
+.progress{height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;}
+.progress-bar{height:100%;border-radius:2px;transition:width .5s;}
+
+/* Checkbox */
+.ck{width:16px;height:16px;accent-color:var(--cyan);cursor:pointer;}
+
+/* FAB */
+.fab{
+  position:fixed;bottom:28px;right:28px;z-index:300;
+  width:52px;height:52px;border-radius:50%;
+  background:var(--cyan);color:#0d0f14;border:none;cursor:pointer;
+  font-size:26px;font-weight:300;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(0,212,255,.4);transition:all .2s;
+}
+.fab:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(0,212,255,.5);}
+
+/* Qty table */
+.qty-table{width:100%;border-collapse:collapse;font-size:12px;}
+.qty-table th{background:rgba(255,255,255,.05);padding:6px 8px;color:var(--dim);}
+.qty-table td{padding:4px 4px;}
+.qty-input{
+  width:58px;text-align:center;background:rgba(255,255,255,.06);
+  border:1px solid var(--card-border);border-radius:6px;
+  color:var(--text);padding:4px;font-size:12px;font-family:var(--font);
+}
+.qty-input:focus{outline:none;border-color:var(--cyan);}
+
+/* Chart bars */
+.bar-wrap{display:flex;flex-direction:column;gap:8px;}
+.bar-row{display:flex;align-items:center;gap:10px;font-size:12px;}
+.bar-label{width:130px;color:var(--dim);text-align:right;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.bar-track{flex:1;height:8px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:4px;background:var(--cyan);}
+.bar-val{width:40px;color:var(--text);text-align:right;}
+
+/* Empty state */
+.empty-state{text-align:center;padding:60px 20px;color:var(--dim);}
+.empty-state .icon{font-size:48px;margin-bottom:12px;}
+.empty-state p{font-size:14px;}
+
+/* Separator */
+.sep{height:1px;background:var(--card-border);margin:16px 0;}
+
+/* Filter row */
+.filter-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;align-items:center;}
+.filter-row select,.filter-row input{
+  background:var(--card);border:1px solid var(--card-border);border-radius:8px;
+  color:var(--text);padding:7px 10px;font-size:12px;font-family:var(--font);outline:none;
+}
+.filter-row select:focus,.filter-row input:focus{border-color:var(--cyan);}
+
+/* Dias chip */
+.dias-chip{
+  display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:10px;font-size:11px;font-weight:600;
+}
+.dias-ok{background:rgba(52,211,153,.1);color:var(--green);}
+.dias-warn{background:rgba(255,214,10,.1);color:var(--gold);}
+.dias-late{background:rgba(255,59,48,.1);color:var(--red);}
+
+/* Inline edit */
+.editable{border-bottom:1px dashed var(--card-border);cursor:text;outline:none;transition:border-color .2s;}
+.editable:focus{border-bottom-color:var(--cyan);}
+
+/* Historial item */
+.hist-item{padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:12px;}
+.hist-item:last-child{border-bottom:none;}
+.hist-date{color:var(--dim);font-size:11px;}
+
+/* Mobile */
+@media(max-width:700px){
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.mob-open{transform:none;}
+  #main{margin-left:0;}
+  .kpi-grid{grid-template-columns:repeat(2,1fr);}
+  #drawer{width:100%;right:-100%;}
+  .form-row{grid-template-columns:1fr;}
+  .sat-grid{grid-template-columns:1fr;}
+}
+#mob-menu{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;padding:0 4px;}
+@media(max-width:700px){#mob-menu{display:block;}}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav id="sidebar">
+  <div id="sidebar-logo">
+    <div class="brand">BENTLEY</div>
+    <div class="sub">Producción</div>
+  </div>
+  <nav>
+    <div class="nav-item active" onclick="navTo('dashboard')" data-page="dashboard">
+      <span class="icon">⬡</span> Dashboard
+    </div>
+    <div class="nav-item" onclick="navTo('satelites')" data-page="satelites">
+      <span class="icon">🏭</span> Satélites
+    </div>
+    <div class="nav-item" onclick="navTo('nueva-op')" data-page="nueva-op">
+      <span class="icon">✚</span> Nueva OP
+    </div>
+    <div class="nav-item" onclick="navTo('activas')" data-page="activas">
+      <span class="icon">⚙</span> OTs Activas
+    </div>
+    <div class="nav-item" onclick="navTo('entregas')" data-page="entregas">
+      <span class="icon">📦</span> Entregas
+    </div>
+    <div class="nav-item" onclick="navTo('indicadores')" data-page="indicadores">
+      <span class="icon">📊</span> Indicadores
+    </div>
+    <div class="nav-item" onclick="navTo('novedades')" data-page="novedades">
+      <span class="icon">⚠</span> Novedades <span id="nov-badge" style="display:none;background:var(--red);color:#fff;border-radius:10px;font-size:10px;padding:1px 6px;margin-left:4px;"></span>
+    </div>
+    <div class="nav-item" onclick="navTo('historial')" data-page="historial">
+      <span class="icon">📋</span> Historial
+    </div>
+  </nav>
+  <div id="sidebar-footer">
+    <button class="btn-settings" onclick="openSettings()">⚙️ <span>Configuración</span></button>
+  </div>
+</nav>
+
+<!-- Main -->
+<div id="main">
+  <div id="topbar">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <button id="mob-menu" onclick="toggleSidebar()">☰</button>
+      <div id="topbar-title">DASHBOARD</div>
+    </div>
+    <div id="topbar-right">
+      <span class="badge-user" id="badge-user">Invitado</span>
+      <div id="sync-indicator" style="font-size:11px;color:var(--dim);">⬡ Local</div>
+    </div>
+  </div>
+  <div id="page-content"></div>
+</div>
+
+<!-- Drawer -->
+<div id="drawer-overlay" onclick="closeDrawer()"></div>
+<div id="drawer">
+  <div id="drawer-header">
+    <div id="drawer-title">Detalle</div>
+    <button id="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div id="drawer-body"></div>
+  <div id="drawer-footer"></div>
+</div>
+
+<!-- Modal -->
+<div id="modal-overlay">
+  <div id="modal">
+    <div id="modal-header">
+      <div id="modal-title">Modal</div>
+      <button id="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div id="modal-body"></div>
+    <div id="modal-footer"></div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div id="toast-container"></div>
+
+<!-- Settings Modal (special) -->
+<div id="settings-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:600;backdrop-filter:blur(6px);align-items:center;justify-content:center;">
+  <div style="background:#13161f;border:1px solid var(--card-border);border-radius:18px;width:90%;max-width:440px;padding:24px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+      <div style="font-family:var(--bebas);font-size:18px;letter-spacing:1px;">CONFIGURACIÓN</div>
+      <button onclick="closeSettings()" style="background:none;border:none;color:var(--dim);cursor:pointer;font-size:20px;">✕</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Tu nombre (usuario)</label>
+      <input id="cfg-user" class="form-control" placeholder="Ej: Jhon, Paola..." />
+    </div>
+    <div class="form-group">
+      <label class="form-label">GitHub Token</label>
+      <input id="cfg-token" class="form-control" type="password" placeholder="ghp_xxxxxxxxxxxx" />
+      <div class="form-hint">Necesario para guardar datos. Se almacena en localStorage.</div>
+    </div>
+    <div style="margin-top:4px;">
+      <button class="btn btn-primary" onclick="saveSettings()" style="width:100%;">Guardar configuración</button>
+    </div>
+    <div class="sep"></div>
+    <div style="font-size:12px;color:var(--dim);margin-bottom:8px;">Datos de la app:</div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn btn-ghost btn-sm" onclick="recargarDatos()">🔄 Recargar datos</button>
+      <button class="btn btn-danger btn-sm" onclick="limpiarDatosLocales()">🗑 Limpiar local</button>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+// ─── Token (obfuscated, XOR 57) ───────────────────────────────────────────────
+var _GHE = '';
+var GT = (function(){
+  // Pull from localStorage if user set it
+  var stored = localStorage.getItem('bentley_gh_token');
+  if (stored) return stored;
+  // Decode embedded token (empty by default, set via settings)
+  return _GHE ? _GHE.match(/.{2}/g).map(function(h){return String.fromCharCode(parseInt(h,16)^57);}).join('') : '';
+})();
+
+// ─── Constants ─────────────────────────────────────────────────────────────────
+var REPO = 'jhonrodriguezesteban-alt/bentley-dashboard';
+var FILES = { satelites: 'prod_satelites.json', ops: 'prod_ops.json', ots: 'prod_ots.json' };
+var BASE_URL = 'https://jhonrodriguezesteban-alt.github.io/bentley-dashboard/';
+
+var CATEGORIAS = ['CAMISAS','CHAQUETAS','CAMISETAS','BUZOS','GABAN','CONJUNTOS','CHALECOS','PANTALONES','ABRIGOS','FALDA','BLUSAS','VESTIDOS','CAMISONES'];
+var TALLAS_DEFAULT = ['T4','T6','T8','T10','T12','T14','T16'];
+var TALLAS_ALL = ['T2','T4','T6','T8','T10','T12','T14','T16'];
+var CORTADORES = ['CARVAJAL','JAVIER'];
+var ESTADOS = ['PENDIENTE_CORTAR','CORTE_POR_ALISTAR','ASIGNADO','EN_CONFECCION','ENTREGADO_PARCIAL','ENTREGADO','NOVEDAD'];
+var ESTADO_LABELS = {
+  PENDIENTE_CORTAR:'Pendiente Cortar', CORTE_POR_ALISTAR:'Corte Por Alistar',
+  ASIGNADO:'Asignado', EN_CONFECCION:'En Confección',
+  ENTREGADO_PARCIAL:'Entregado Parcial', ENTREGADO:'Entregado', NOVEDAD:'Novedad'
+};
+
+// ─── State ─────────────────────────────────────────────────────────────────────
+var DB = { satelites: [], ops: [], ots: [] };
+var currentPage = 'dashboard';
+var drawerCtx = null;
+var selectedOTs = new Set();
+
+// ─── UUID ──────────────────────────────────────────────────────────────────────
+function uid(){ return 'id_' + Date.now() + '_' + Math.random().toString(36).substr(2,9); }
+
+// ─── User session ──────────────────────────────────────────────────────────────
+function getUser(){ return localStorage.getItem('bentley_prod_user') || 'Invitado'; }
+function initUser(){
+  document.getElementById('badge-user').textContent = getUser();
+}
+
+// ─── Settings ──────────────────────────────────────────────────────────────────
+function openSettings(){
+  document.getElementById('cfg-user').value = getUser();
+  document.getElementById('cfg-token').value = localStorage.getItem('bentley_gh_token') || '';
+  document.getElementById('settings-overlay').style.display = 'flex';
+}
+function closeSettings(){ document.getElementById('settings-overlay').style.display = 'none'; }
+function saveSettings(){
+  var u = document.getElementById('cfg-user').value.trim();
+  var t = document.getElementById('cfg-token').value.trim();
+  if(u) localStorage.setItem('bentley_prod_user', u);
+  if(t){ localStorage.setItem('bentley_gh_token', t); GT = t; }
+  initUser();
+  closeSettings();
+  toast('Configuración guardada', 'success');
+}
+function limpiarDatosLocales(){
+  if(!confirm('¿Limpiar cache local? Los datos de GitHub se recargarán.')) return;
+  localStorage.removeItem('bentley_prod_db');
+  recargarDatos();
+}
+
+// ─── Toast ─────────────────────────────────────────────────────────────────────
+function toast(msg, type){
+  type = type || 'info';
+  var el = document.createElement('div');
+  el.className = 'toast ' + type;
+  var icons = {success:'✅',error:'❌',info:'ℹ️',warning:'⚠️'};
+  el.innerHTML = '<span>' + (icons[type]||'') + '</span><span>' + msg + '</span>';
+  document.getElementById('toast-container').appendChild(el);
+  setTimeout(function(){ el.style.animation = 'none'; el.style.opacity = '0'; el.style.transform = 'translateX(60px)'; el.style.transition = 'all .3s'; setTimeout(function(){ el.remove(); }, 300); }, 3000);
+}
+
+// ─── Drawer ────────────────────────────────────────────────────────────────────
+function openDrawer(title, bodyHtml, footerHtml){
+  document.getElementById('drawer-title').textContent = title;
+  document.getElementById('drawer-body').innerHTML = bodyHtml || '';
+  document.getElementById('drawer-footer').innerHTML = footerHtml || '';
+  document.getElementById('drawer-overlay').classList.add('open');
+  document.getElementById('drawer').classList.add('open');
+}
+function closeDrawer(){
+  document.getElementById('drawer-overlay').classList.remove('open');
+  document.getElementById('drawer').classList.remove('open');
+}
+
+// ─── Modal ─────────────────────────────────────────────────────────────────────
+function openModal(title, bodyHtml, footerHtml){
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-body').innerHTML = bodyHtml || '';
+  document.getElementById('modal-footer').innerHTML = footerHtml || '';
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal(){ document.getElementById('modal-overlay').classList.remove('open'); }
+
+// ─── GitHub API ────────────────────────────────────────────────────────────────
+async function guardarArchivo(key, data){
+  var tk = localStorage.getItem('bentley_gh_token') || GT;
+  if(!tk){ toast('Sin token GitHub — configura en ⚙️', 'error'); return false; }
+  var path = FILES[key];
+  try {
+    var getR = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + path, {
+      headers: { 'Authorization': 'token ' + tk, 'Cache-Control': 'no-cache' }
+    });
+    var sha = null;
+    if(getR.ok){ var cur = await getR.json(); sha = cur.sha || null; }
+    var content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+    var body = { message: 'Producción: actualizar ' + key, content: content };
+    if(sha) body.sha = sha;
+    var putR = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + path, {
+      method: 'PUT',
+      headers: { 'Authorization': 'token ' + tk, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if(putR.ok){
+      document.getElementById('sync-indicator').textContent = '✓ Sync ' + new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+      document.getElementById('sync-indicator').style.color = 'var(--green)';
+      return true;
+    } else {
+      var err = await putR.json();
+      toast('Error GitHub: ' + (err.message||''), 'error');
+      return false;
+    }
+  } catch(e){ toast('Error de red: ' + e.message, 'error'); return false; }
+}
+
+async function guardarTodo(){
+  var ok1 = await guardarArchivo('satelites', {satelites: DB.satelites});
+  var ok2 = await guardarArchivo('ops', {ops: DB.ops});
+  var ok3 = await guardarArchivo('ots', {ots: DB.ots});
+  return ok1 && ok2 && ok3;
+}
+
+// ─── Load Data ─────────────────────────────────────────────────────────────────
+async function cargarDatos(){
+  try {
+    var t = Date.now();
+    var [satR, opsR, otsR] = await Promise.all([
+      fetch(BASE_URL + 'prod_satelites.json?t=' + t),
+      fetch(BASE_URL + 'prod_ops.json?t=' + t),
+      fetch(BASE_URL + 'prod_ots.json?t=' + t)
+    ]);
+    if(satR.ok){ var d = await satR.json(); DB.satelites = d.satelites || []; }
+    if(opsR.ok){ var d2 = await opsR.json(); DB.ops = d2.ops || []; }
+    if(otsR.ok){ var d3 = await otsR.json(); DB.ots = d3.ots || []; }
+    if(DB.satelites.length === 0) seedSatelites();
+    saveLocal();
+    toast('Datos cargados de GitHub Pages', 'success');
+  } catch(e){
+    // fallback local
+    var local = localStorage.getItem('bentley_prod_db');
+    if(local){ var parsed = JSON.parse(local); DB = parsed; }
+    else { seedSatelites(); }
+    toast('Sin conexión — usando datos locales', 'warning');
+  }
+  updateNovBadge();
+  renderPage(currentPage);
+}
+
+async function recargarDatos(){ closeSettings(); await cargarDatos(); }
+
+function saveLocal(){ try{ localStorage.setItem('bentley_prod_db', JSON.stringify(DB)); }catch(e){} }
+
+function seedSatelites(){
+  var nombres = ['SOFIA SANCHEZ','JULIETH VERA','MELISSA MARTINEZ','ALEXANDRA FONSECA','MARTHA FLORES','SONIA VARGAS','ISABEL PARRA','MARCELA PEÑA','MARBI YANILI SALCEDO','MARIA ALIX MENDEZ','YURI VIVIANA PINILLA','MILENA OSORIO','MIRIAM PINTO','MARTHA QUIROGA','NATHALY BOSA','STELLA BUSTOS','VIVIANA AGUIRRE','NIEVES CRISTANCHO','YUDY CAROLINA CELIS QUINTERO','ROSALBA ROMERO TORRES','JEIMY CORTEZ'];
+  DB.satelites = nombres.map(function(n){ return {id: uid(), nombre: n, activo: true, maquinas: [], personas: 0, especialidades: [], capacidad_semanal: 0, telefono: '', notas: '', created_at: hoy()}; });
+}
+
+// ─── Utils ─────────────────────────────────────────────────────────────────────
+function hoy(){ return new Date().toISOString().split('T')[0]; }
+function fmtDate(d){ if(!d) return '—'; var p = d.split('-'); return p[2]+'/'+p[1]+'/'+p[0]; }
+function diasRestantes(fechaStr){
+  if(!fechaStr) return null;
+  var diff = (new Date(fechaStr) - new Date(hoy())) / 86400000;
+  return Math.round(diff);
+}
+function diasChip(dias){
+  if(dias === null) return '<span style="color:var(--dim);">—</span>';
+  if(dias > 5) return '<span class="dias-chip dias-ok">+' + dias + 'd</span>';
+  if(dias >= 0) return '<span class="dias-chip dias-warn">' + dias + 'd</span>';
+  return '<span class="dias-chip dias-late">' + Math.abs(dias) + 'd tarde</span>';
+}
+function badge(estado){ return '<span class="estado e-' + estado + '">' + (ESTADO_LABELS[estado]||estado) + '</span>'; }
+function fmtNum(n){ return (n||0).toLocaleString('es-CO'); }
+function fmtCop(n){ n=n||0; if(Math.abs(n)>=1e6) return '$'+(n/1e6).toFixed(1)+'M'; if(Math.abs(n)>=1e3) return '$'+(n/1e3).toFixed(0)+'K'; return '$'+n.toFixed(0); }
+
+function getSat(id){ return DB.satelites.find(function(s){ return s.id===id; }); }
+function getSatNombre(id){ var s = getSat(id); return s ? s.nombre : '—'; }
+function nextOTNum(){ return DB.ots.length > 0 ? Math.max.apply(null, DB.ots.map(function(o){return o.numero_ot||0;})) + 1 : 10001; }
+function nextOPNum(){ return DB.ops.length > 0 ? Math.max.apply(null, DB.ops.map(function(o){return o.numero||0;})) + 1 : 100; }
+
+function updateNovBadge(){
+  var n = DB.ots.filter(function(o){ return o.estado==='NOVEDAD' || (o.unidades_novedad||0)>0; }).length;
+  var el = document.getElementById('nov-badge');
+  if(n>0){ el.textContent = n; el.style.display='inline'; }
+  else el.style.display='none';
+}
+
+// ─── Navigation ────────────────────────────────────────────────────────────────
+function navTo(page){
+  currentPage = page;
+  document.querySelectorAll('.nav-item').forEach(function(el){ el.classList.toggle('active', el.dataset.page===page); });
+  var titles = {dashboard:'DASHBOARD',satelites:'SATÉLITES','nueva-op':'NUEVA ORDEN DE PRODUCCIÓN',activas:'ÓRDENES ACTIVAS',entregas:'REGISTRO DE ENTREGAS',indicadores:'INDICADORES',novedades:'NOVEDADES',historial:'HISTORIAL'};
+  document.getElementById('topbar-title').textContent = titles[page] || page.toUpperCase();
+  closeDrawer(); closeModal(); selectedOTs.clear();
+  renderPage(page);
+  // mobile: close sidebar
+  document.getElementById('sidebar').classList.remove('mob-open');
+}
+
+function toggleSidebar(){ document.getElementById('sidebar').classList.toggle('mob-open'); }
+
+function renderPage(page){
+  var el = document.getElementById('page-content');
+  if(page==='dashboard') el.innerHTML = renderDashboard();
+  else if(page==='satelites') el.innerHTML = renderSatelites();
+  else if(page==='nueva-op') el.innerHTML = renderNuevaOP();
+  else if(page==='activas') el.innerHTML = renderActivas();
+  else if(page==='entregas') el.innerHTML = renderEntregas();
+  else if(page==='indicadores') el.innerHTML = renderIndicadores();
+  else if(page==='novedades') el.innerHTML = renderNovedades();
+  else if(page==='historial') el.innerHTML = renderHistorial();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// DASHBOARD
+// ═══════════════════════════════════════════════════════════════════════════════
+function renderDashboard(){
+  var activas = DB.ots.filter(function(o){ return o.estado !== 'ENTREGADO'; });
+  var enConf = DB.ots.filter(function(o){ return o.estado === 'EN_CONFECCION'; });
+  var mesActual = hoy().substr(0,7);
+  var entregadasMes = DB.ots.filter(function(o){ return o.estado==='ENTREGADO' && (o.fecha_entrega_real||'').startsWith(mesActual); });
+  var udsEntregadas = entregadasMes.reduce(function(a,o){ return a+(o.unidades_entregadas||0); },0);
+  var conFecha = DB.ots.filter(function(o){ return o.fecha_estimada_entrega && o.fecha_entrega_real && o.estado==='ENTREGADO'; });
+  var onTime = conFecha.filter(function(o){ return o.cumplió_fecha; }).length;
+  var pct = conFecha.length ? Math.round(onTime/conFecha.length*100) : 0;
+  var satActivos = DB.satelites.filter(function(s){ return s.activo; }).length;
+  var novedades = DB.ots.filter(function(o){ return o.estado==='NOVEDAD' || (o.unidades_novedad||0)>0; }).length;
+  var udsConf = enConf.reduce(function(a,o){ return a+(o.cantidad||0); },0);
+
+  var alertas = DB.ots.filter(function(o){
+    if(o.estado==='ENTREGADO') return false;
+    var d = diasRestantes(o.fecha_estimada_entrega);
+    return d !== null && d <= 5;
+  }).sort(function(a,b){ return (diasRestantes(a.fecha_estimada_entrega)||0)-(diasRestantes(b.fecha_estimada_entrega)||0); });
+
+  // top satelites mes
+  var satMap = {};
+  DB.ots.filter(function(o){ return o.estado==='ENTREGADO' && (o.fecha_entrega_real||'').startsWith(mesActual) && o.satelite_id; }).forEach(function(o){
+    satMap[o.satelite_id] = (satMap[o.satelite_id]||0) + (o.unidades_entregadas||0);
+  });
+  var topSat = Object.keys(satMap).map(function(k){ return {id:k,uds:satMap[k]}; }).sort(function(a,b){ return b.uds-a.uds; }).slice(0,5);
+  var maxUds = topSat.length ? topSat[0].uds : 1;
+
+  // ultimas entregas
+  var ultimas = DB.ots.filter(function(o){ return o.estado==='ENTREGADO' && o.fecha_entrega_real; }).sort(function(a,b){ return b.fecha_entrega_real.localeCompare(a.fecha_entrega_real); }).slice(0,5);
+
+  var h = '';
+  h += '<div class="kpi-grid">';
+  h += kpiCard('OTs Activas', activas.length, 'cyan', 'Sin ENTREGADO');
+  h += kpiCard('Uds en Confección', fmtNum(udsConf), '', 'En satélites');
+  h += kpiCard('Uds entregadas (mes)', fmtNum(udsEntregadas), 'green', mesActual);
+  h += kpiCard('% Cumplimiento', pct + '%', pct>=80?'green':pct>=60?'gold':'red', conFecha.length + ' entregas c/fecha');
+  h += kpiCard('Satélites activos', satActivos, '', 'De ' + DB.satelites.length + ' total');
+  h += kpiCard('Novedades', novedades, novedades>0?'red':'', 'Pendientes');
+  h += '</div>';
+
+  // Alertas urgentes
+  if(alertas.length > 0){
+    h += '<div class="section-title">⚠ Alertas urgentes <span>' + alertas.length + ' OTs</span></div>';
+    alertas.slice(0,8).forEach(function(ot){
+      var d = diasRestantes(ot.fecha_estimada_entrega);
+      var cls = d < 0 ? '' : 'warning';
+      h += '<div class="alert-card ' + cls + '">';
+      h += '<div style="display:flex;align-items:center;justify-content:space-between;">';
+      h += '<div><strong>OT-' + ot.numero_ot + '</strong> · ' + ot.nombre + ' ' + ot.color + ' ' + ot.talla + ' (' + ot.cantidad + ' uds)';
+      h += ' <span style="color:var(--dim);font-size:12px;">— ' + getSatNombre(ot.satelite_id) + '</span></div>';
+      h += diasChip(d);
+      h += '</div></div>';
+    });
+  }
+
+  h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;">';
+
+  // Top satelites
+  h += '<div>';
+  h += '<div class="section-title">Top Satélites <span>mes actual · uds entregadas</span></div>';
+  if(topSat.length){
+    h += '<div class="bar-wrap">';
+    topSat.forEach(function(s){
+      h += '<div class="bar-row"><div class="bar-label">' + getSatNombre(s.id) + '</div><div class="bar-track"><div class="bar-fill" style="width:' + Math.round(s.uds/maxUds*100) + '%"></div></div><div class="bar-val">' + s.uds + '</div></div>';
+    });
+    h += '</div>';
+  } else { h += '<div style="color:var(--dim);font-size:13px;padding:20px 0;">Sin entregas este mes</div>'; }
+  h += '</div>';
+
+  // Ultimas entregas
+  h += '<div>';
+  h += '<div class="section-title">Últimas entregas</div>';
+  if(ultimas.length){
+    h += '<div class="table-wrap"><table><thead><tr><th>OT</th><th>Producto</th><th>Uds</th><th>Fecha</th></tr></thead><tbody>';
+    ultimas.forEach(function(ot){
+      h += '<tr><td>OT-' + ot.numero_ot + '</td><td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + ot.nombre + '</td><td>' + (ot.unidades_entregadas||0) + '</td><td>' + fmtDate(ot.fecha_entrega_real) + '</td></tr>';
+    });
+    h += '</tbody></table></div>';
+  } else { h += '<div style="color:var(--dim);font-size:13px;padding:20px 0;">Sin entregas registradas</div>'; }
+  h += '</div>';
+
+  h += '</div>';
+  return h;
+}
+
+function kpiCard(label, val, colorClass, sub){
+  return '<div class="kpi-card"><div class="kpi-label">' + label + '</div><div class="kpi-val ' + (colorClass||'') + '">' + val + '</div><div class="kpi-sub">' + (sub||'') + '</div></div>';
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SATÉLITES
+// ═══════════════════════════════════════════════════════════════════════════════
+function renderSatelites(){
+  var activos = DB.satelites.filter(function(s){ return s.activo; });
+  var inactivos = DB.satelites.filter(function(s){ return !s.activo; });
+  var all = activos.concat(inactivos);
+  var h = '<div class="section-title">Satélites <span>' + activos.length + ' activos</span></div>';
+  h += '<div class="sat-grid" id="sat-grid">';
+  all.forEach(function(sat){
+    var enConf = DB.ots.filter(function(o){ return o.satelite_id===sat.id && o.estado==='EN_CONFECCION'; }).reduce(function(a,o){ return a+(o.cantidad||0); },0);
+    var total = DB.ots.filter(function(o){ return o.satelite_id===sat.id && o.estado==='ENTREGADO'; });
+    var onTime = total.filter(function(o){ return o.cumplió_fecha; }).length;
+    var pct = total.length ? Math.round(onTime/total.length*100) : 0;
+    var lastDel = total.sort(function(a,b){ return (b.fecha_entrega_real||'').localeCompare(a.fecha_entrega_real||''); })[0];
+    h += '<div class="sat-card ' + (sat.activo?'':'inactive') + '" onclick="abrirSat(\'' + sat.id + '\')">';
+    h += '<div class="sat-name"><div class="sat-dot ' + (sat.activo?'on':'off') + '"></div>' + sat.nombre + '</div>';
+    h += '<div class="sat-meta">';
+    h += (sat.personas||0) + ' personas · ' + (sat.maquinas||[]).reduce(function(a,m){ return a+m.cantidad; },0) + ' máquinas<br>';
+    h += 'Carga actual: <strong>' + enConf + ' uds</strong><br>';
+    h += 'Cumplimiento: <strong>' + pct + '%</strong> (' + total.length + ' entregas)<br>';
+    if(lastDel) h += 'Última entrega: ' + fmtDate(lastDel.fecha_entrega_real);
+    h += '</div>';
+    if((sat.especialidades||[]).length){
+      h += '<div class="sat-tags">' + sat.especialidades.map(function(e){ return '<span class="sat-tag">' + e + '</span>'; }).join('') + '</div>';
+    }
+    h += '</div>';
+  });
+  h += '</div>';
+  h += '<button class="fab" onclick="nuevoSatelite()" title="Nuevo satélite">+</button>';
+  return h;
+}
+
+function abrirSat(id){
+  var sat = getSat(id);
+  if(!sat) return;
+  var enConf = DB.ots.filter(function(o){ return o.satelite_id===id && o.estado==='EN_CONFECCION'; });
+  var histOTs = DB.ots.filter(function(o){ return o.satelite_id===id; }).sort(function(a,b){ return (b.fecha_ot||'').localeCompare(a.fecha_ot||''); });
+
+  var body = '<div class="tabs"><div class="tab active" onclick="satTab(this,\'ficha\')">Ficha</div><div class="tab" onclick="satTab(this,\'historial\')">Historial (' + histOTs.length + ')</div></div>';
+
+  // Ficha tab
+  body += '<div id="sat-tab-ficha">';
+  body += '<div class="form-group"><label class="form-label">Nombre</label><input class="form-control" id="se-nombre" value="' + esc(sat.nombre) + '"></div>';
+  body += '<div class="form-group"><div style="display:flex;align-items:center;justify-content:space-between;"><label class="form-label">Activo</label><input type="checkbox" class="toggle" id="se-activo" ' + (sat.activo?'checked':'') + '></div></div>';
+  body += '<div class="form-row"><div class="form-group"><label class="form-label">Personas</label><input class="form-control" type="number" id="se-personas" value="' + (sat.personas||0) + '"></div><div class="form-group"><label class="form-label">Cap. semanal (uds)</label><input class="form-control" type="number" id="se-cap" value="' + (sat.capacidad_semanal||0) + '"></div></div>';
+  body += '<div class="form-group"><label class="form-label">Teléfono</label><input class="form-control" id="se-tel" value="' + esc(sat.telefono||'') + '"></div>';
+  body += '<div class="form-group"><label class="form-label">Especialidades</label><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">' + CATEGORIAS.map(function(c){ return '<label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer;"><input type="checkbox" class="se-esp" value="' + c + '" ' + (sat.especialidades&&sat.especialidades.indexOf(c)>-1?'checked':'') + '> ' + c + '</label>'; }).join('') + '</div></div>';
+  // Maquinas
+  body += '<div class="form-group"><label class="form-label">Máquinas <button class="btn btn-ghost btn-sm" onclick="addMaquina()" style="margin-left:8px;">+ Añadir</button></label>';
+  body += '<div id="maquinas-list">';
+  (sat.maquinas||[]).forEach(function(m, i){
+    body += '<div class="form-row" style="margin-bottom:6px;"><div><input class="form-control maq-tipo" placeholder="Tipo" value="' + esc(m.tipo) + '"></div><div><input class="form-control maq-cant" type="number" placeholder="Cant" value="' + m.cantidad + '"></div></div>';
+  });
+  body += '</div></div>';
+  body += '<div class="form-group"><label class="form-label">Notas</label><textarea class="form-control" id="se-notas">' + esc(sat.notas||'') + '</textarea></div>';
+
+  // Carga actual
+  if(enConf.length){
+    body += '<div class="sep"></div><div class="section-title" style="font-size:15px;">Carga actual</div>';
+    body += '<div class="table-wrap"><table><thead><tr><th>OT</th><th>Producto</th><th>Uds</th><th>Fecha Est.</th></tr></thead><tbody>';
+    enConf.forEach(function(ot){
+      body += '<tr><td>OT-' + ot.numero_ot + '</td><td>' + ot.nombre + ' ' + ot.color + ' ' + ot.talla + '</td><td>' + ot.cantidad + '</td><td>' + fmtDate(ot.fecha_estimada_entrega) + '</td></tr>';
+    });
+    body += '</tbody></table></div>';
+  }
+  body += '</div>'; // ficha tab
+
+  // Historial tab
+  body += '<div id="sat-tab-historial" style="display:none;">';
+  if(histOTs.length){
+    body += '<div class="table-wrap"><table><thead><tr><th>OT</th><th>Producto</th><th>Estado</th><th>Uds</th><th>Entregado</th></tr></thead><tbody>';
+    histOTs.slice(0,50).forEach(function(ot){
+      body += '<tr><td>OT-' + ot.numero_ot + '</td><td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + ot.nombre + '</td><td>' + badge(ot.estado) + '</td><td>' + (ot.unidades_entregadas||0) + '</td><td>' + fmtDate(ot.fecha_entrega_real) + '</td></tr>';
+    });
+    body += '</tbody></table></div>';
+  } else { body += '<div style="color:var(--dim);padding:20px 0;">Sin historial.</div>'; }
+  body += '</div>';
+
+  var footer = '<button class="btn btn-primary" onclick="guardarSat(\'' + id + '\')"><span class="btn-text">💾 Guardar</span><span class="spinner"></span></button><button class="btn btn-ghost" onclick="closeDrawer()">Cancelar</button>';
+  openDrawer(sat.nombre, body, footer);
+}
+
+function satTab(el, tab){
+  document.querySelectorAll('.tabs .tab').forEach(function(t){ t.classList.remove('active'); });
+  el.classList.add('active');
+  document.getElementById('sat-tab-ficha').style.display = tab==='ficha' ? '' : 'none';
+  document.getElementById('sat-tab-historial').style.display = tab==='historial' ? '' : 'none';
+}
+
+function addMaquina(){
+  var list = document.getElementById('maquinas-list');
+  var div = document.createElement('div');
+  div.className = 'form-row';
+  div.style.marginBottom = '6px';
+  div.innerHTML = '<div><input class="form-control maq-tipo" placeholder="Tipo (ej: Plana)"></div><div><input class="form-control maq-cant" type="number" placeholder="Cant" value="1"></div>';
+  list.appendChild(div);
+}
+
+async function guardarSat(id){
+  var sat = getSat(id);
+  if(!sat) return;
+  sat.nombre = document.getElementById('se-nombre').value.trim() || sat.nombre;
+  sat.activo = document.getElementById('se-activo').checked;
+  sat.personas = parseInt(document.getElementById('se-personas').value)||0;
+  sat.capacidad_semanal = parseInt(document.getElementById('se-cap').value)||0;
+  sat.telefono = document.getElementById('se-tel').value.trim();
+  sat.notas = document.getElementById('se-notas').value;
+  sat.especialidades = Array.from(document.querySelectorAll('.se-esp:checked')).map(function(c){ return c.value; });
+  var tipos = document.querySelectorAll('.maq-tipo');
+  var cants = document.querySelectorAll('.maq-cant');
+  sat.maquinas = [];
+  for(var i=0;i<tipos.length;i++){
+    var t = tipos[i].value.trim();
+    if(t) sat.maquinas.push({tipo:t, cantidad:parseInt(cants[i].value)||1});
+  }
+  setBtnLoading('guardar-sat-btn', true);
+  saveLocal();
+  var ok = await guardarArchivo('satelites', {satelites: DB.satelites});
+  if(ok){ toast('Satélite guardado', 'success'); closeDrawer(); renderPage('satelites'); }
+}
+
+function nuevoSatelite(){
+  var body = '<div class="form-group"><label class="form-label">Nombre del satélite *</label><input class="form-control" id="ns-nombre" placeholder="Ej: SOFIA SANCHEZ"></div>';
+  body += '<div class="form-row"><div class="form-group"><label class="form-label">Personas</label><input class="form-control" type="number" id="ns-personas" value="0"></div><div class="form-group"><label class="form-label">Cap. semanal</label><input class="form-control" type="number" id="ns-cap" value="0"></div></div>';
+  body += '<div class="form-group"><label class="form-label">Teléfono</label><input class="form-control" id="ns-tel"></div>';
+  body += '<div class="form-group"><label class="form-label">Especialidades</label><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">' + CATEGORIAS.map(function(c){ return '<label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer;"><input type="checkbox" class="ns-esp" value="' + c + '"> ' + c + '</label>'; }).join('') + '</div></div>';
+  var footer = '<button class="btn btn-primary" onclick="crearSatelite()">✚ Crear satélite</button><button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>';
+  openModal('Nuevo Satélite', body, footer);
+}
+
+async function crearSatelite(){
+  var nombre = document.getElementById('ns-nombre').value.trim().toUpperCase();
+  if(!nombre){ document.getElementById('ns-nombre').style.borderColor='var(--red)'; return; }
+  var sat = {
+    id: uid(), nombre: nombre, activo: true,
+    personas: parseInt(document.getElementById('ns-personas').value)||0,
+    capacidad_semanal: parseInt(document.getElementById('ns-cap').value)||0,
+    telefono: document.getElementById('ns-tel').value.trim(),
+    especialidades: Array.from(document.querySelectorAll('.ns-esp:checked')).map(function(c){ return c.value; }),
+    maquinas: [], notas: '', created_at: hoy()
+  };
+  DB.satelites.push(sat);
+  saveLocal();
+  var ok = await guardarArchivo('satelites', {satelites: DB.satelites});
+  if(ok){ toast('Satélite creado', 'success'); closeModal(); renderPage('satelites'); }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// NUEVA OP
+// ═══════════════════════════════════════════════════════════════════════════════
+function renderNuevaOP(){
+  var h = '<div class="card" style="max-width:720px;">';
+  h += '<div class="section-title">Crear Orden de Producción</div>';
+  h += '<div class="form-row">';
+  h += '<div class="form-group"><label class="form-label">Fecha OP *</label><input class="form-control" type="date" id="op-fecha" value="' + hoy() + '"></div>';
+  h += '<div class="form-group"><label class="form-label">Número OP</label><input class="form-control" type="number" id="op-num" value="' + nextOPNum() + '"></div>';
+  h += '</div>';
+  h += '<div class="form-row">';
+  h += '<div class="form-group"><label class="form-label">Cortador *</label><select class="form-control" id="op-cortador"><option value="">Seleccionar...</option>' + CORTADORES.map(function(c){ return '<option>' + c + '</option>'; }).join('') + '</select></div>';
+  h += '<div class="form-group"><label class="form-label">Categoría *</label><select class="form-control" id="op-cat" onchange="actualizarPreview()"><option value="">Seleccionar...</option>' + CATEGORIAS.map(function(c){ return '<option>' + c + '</option>'; }).join('') + '</select></div>';
+  h += '</div>';
+  h += '<div class="form-group"><label class="form-label">Nombre del producto *</label><input class="form-control" id="op-nombre" placeholder="Ej: CHAQUETA EXPLORER" oninput="actualizarPreview()"></div>';
+  h += '<div class="form-group"><label class="form-label">Referencia base</label><input class="form-control" id="op-ref" placeholder="Ej: 1234CH01"></div>';
+  h += '<div class="form-group"><label class="form-label">Valor M.O. por unidad (COP)</label><input class="form-control" type="number" id="op-vmo" placeholder="Ej: 1151" value="1151"></div>';
+
+  // Colores
+  h += '<div class="form-group"><label class="form-label">Colores * <button type="button" class="btn btn-ghost btn-sm" onclick="addColor()" style="margin-left:8px;">+ Color</button></label>';
+  h += '<div id="colores-list" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;min-height:32px;"></div>';
+  h += '<div style="display:flex;gap:6px;margin-top:8px;"><input class="form-control" id="color-input" placeholder="Ej: NEGRO" style="max-width:200px;" onkeydown="if(event.key===\'Enter\'){event.preventDefault();addColor();}"><button type="button" class="btn btn-ghost btn-sm" onclick="addColor()">Añadir</button></div></div>';
+
+  // Tallas
+  h += '<div class="form-group"><label class="form-label">Tallas</label><div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;">';
+  h += TALLAS_ALL.map(function(t){ return '<label style="display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer;"><input type="checkbox" class="ck op-talla" value="' + t + '" ' + (TALLAS_DEFAULT.indexOf(t)>-1?'checked':'') + ' onchange="generarTablaQty()"> ' + t + '</label>'; }).join('');
+  h += '</div></div>';
+
+  h += '<div class="sep"></div>';
+  h += '<div class="section-title" style="font-size:15px;">Cantidades por color × talla</div>';
+  h += '<div id="qty-table-wrap" style="overflow-x:auto;"></div>';
+
+  h += '<div class="sep"></div>';
+  h += '<div id="op-preview" style="background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.2);border-radius:10px;padding:14px;font-size:13px;display:none;">';
+  h += '</div>';
+
+  h += '<div style="margin-top:20px;display:flex;gap:10px;">';
+  h += '<button class="btn btn-primary" id="btn-crear-op" onclick="crearOP()"><span class="btn-text">✚ Crear OP y generar OTs</span><span class="spinner"></span></button>';
+  h += '</div>';
+  h += '</div>';
+
+  setTimeout(function(){ generarTablaQty(); }, 50);
+  return h;
+}
+
+var _colores = [];
+function addColor(){
+  var input = document.getElementById('color-input');
+  var v = (input ? input.value.trim().toUpperCase() : '');
+  if(!v) return;
+  if(_colores.indexOf(v)>-1){ toast('Color ya añadido','warning'); return; }
+  _colores.push(v);
+  input.value = '';
+  renderColoresTags();
+  generarTablaQty();
+}
+function removeColor(c){
+  _colores = _colores.filter(function(x){ return x!==c; });
+  renderColoresTags();
+  generarTablaQty();
+}
+function renderColoresTags(){
+  var el = document.getElementById('colores-list');
+  if(!el) return;
+  el.innerHTML = _colores.map(function(c){ return '<span style="background:rgba(255,255,255,.08);border:1px solid var(--card-border);border-radius:20px;padding:4px 10px;font-size:12px;display:flex;align-items:center;gap:6px;">' + c + ' <span onclick="removeColor(\'' + c + '\')" style="cursor:pointer;color:var(--red);">✕</span></span>'; }).join('');
+}
+
+function generarTablaQty(){
+  var wrap = document.getElementById('qty-table-wrap');
+  if(!wrap) return;
+  var tallas = Array.from(document.querySelectorAll('.op-talla:checked')).map(function(c){ return c.value; });
+  if(!_colores.length || !tallas.length){ wrap.innerHTML = '<div style="color:var(--dim);font-size:13px;padding:12px 0;">Añade colores y tallas para ver la tabla.</div>'; return; }
+  var h = '<table class="qty-table"><thead><tr><th>Color</th>' + tallas.map(function(t){ return '<th>' + t + '</th>'; }).join('') + '<th>Total</th></tr></thead><tbody>';
+  _colores.forEach(function(col){
+    h += '<tr><td style="font-weight:600;white-space:nowrap;padding:4px 8px;">' + col + '</td>';
+    tallas.forEach(function(t){
+      var key = 'qty_' + col + '_' + t;
+      var existing = document.querySelector('[data-key="' + key + '"]');
+      var val = existing ? existing.value : '0';
+      h += '<td><input class="qty-input" type="number" min="0" data-color="' + col + '" data-talla="' + t + '" data-key="' + key + '" value="' + val + '" oninput="actualizarPreview()"></td>';
+    });
+    h += '<td class="tot-' + col + '" style="font-weight:600;text-align:center;">0</td>';
+    h += '</tr>';
+  });
+  h += '</tbody></table>';
+  wrap.innerHTML = h;
+  actualizarPreview();
+}
+
+function actualizarPreview(){
+  // update row totals
+  _colores.forEach(function(col){
+    var inps = document.querySelectorAll('[data-color="' + col + '"]');
+    var tot = 0;
+    inps.forEach(function(i){ tot += parseInt(i.value)||0; });
+    var cell = document.querySelector('.tot-' + CSS.escape(col));
+    if(cell) cell.textContent = tot;
+  });
+  // count OTs
+  var totalOTs = 0;
+  var totalUds = 0;
+  document.querySelectorAll('.qty-input').forEach(function(inp){
+    var v = parseInt(inp.value)||0;
+    if(v > 0){ totalOTs++; totalUds += v; }
+  });
+  var prev = document.getElementById('op-preview');
+  if(!prev) return;
+  var nombre = (document.getElementById('op-nombre')||{}).value || '';
+  if(totalOTs > 0 && nombre){
+    prev.style.display = '';
+    prev.innerHTML = '📋 Se crearán <strong>' + totalOTs + ' órdenes de trabajo</strong> para <strong>' + nombre + '</strong> · Total: <strong>' + totalUds + ' unidades</strong>';
+  } else { prev.style.display = 'none'; }
+}
+
+async function crearOP(){
+  // Validations
+  var fecha = (document.getElementById('op-fecha')||{}).value;
+  var numOp = parseInt((document.getElementById('op-num')||{}).value)||nextOPNum();
+  var cortador = (document.getElementById('op-cortador')||{}).value;
+  var cat = (document.getElementById('op-cat')||{}).value;
+  var nombre = ((document.getElementById('op-nombre')||{}).value||'').trim().toUpperCase();
+  var ref = ((document.getElementById('op-ref')||{}).value||'').trim().toUpperCase();
+  var vmo = parseInt((document.getElementById('op-vmo')||{}).value)||0;
+  var tallas = Array.from(document.querySelectorAll('.op-talla:checked')).map(function(c){ return c.value; });
+
+  if(!fecha || !cortador || !cat || !nombre || !_colores.length){
+    toast('Completa todos los campos requeridos', 'error'); return;
+  }
+
+  // Build quantities
+  var cantidades = {};
+  var totalOTs = 0;
+  document.querySelectorAll('.qty-input').forEach(function(inp){
+    var v = parseInt(inp.value)||0;
+    if(v > 0){
+      cantidades[inp.dataset.color + '_' + inp.dataset.talla] = v;
+      totalOTs++;
+    }
+  });
+  if(totalOTs === 0){ toast('Ingresa cantidades para al menos una combinación', 'error'); return; }
+
+  var opId = 'OP-' + new Date().getFullYear() + '-' + String(numOp).padStart(3,'0');
+  var op = {
+    id: opId, numero: numOp, fecha_op: fecha, cortador: cortador,
+    categoria: cat, nombre_producto: nombre, colores: _colores.slice(), tallas: tallas,
+    cantidades: cantidades, op_effi: null, estado_op: 'EN_PROCESO',
+    created_at: hoy(), created_by: getUser()
+  };
+  DB.ops.push(op);
+
+  // Generate OTs
+  var otNum = nextOTNum();
+  var newOTs = [];
+  _colores.forEach(function(col){
+    tallas.forEach(function(talla){
+      var qty = cantidades[col + '_' + talla];
+      if(!qty) return;
+      var ot = {
+        id: uid(), numero_ot: otNum++, op_id: opId,
+        categoria: cat, nombre: nombre, referencia: ref + talla,
+        color: col, talla: talla, cantidad: qty, valor_mo: vmo,
+        fecha_ot: fecha, satelite_id: null,
+        fecha_entrega_corte_satelite: null, fecha_estimada_entrega: null,
+        fecha_entrega_real: null, unidades_entregadas: 0, unidades_novedad: 0,
+        estado: 'CORTE_POR_ALISTAR', nt_corte_satelite: null, nt_ingreso_planta: null,
+        op_effi: null, cumplió_fecha: null, motivo_incumplimiento: '', notas: '',
+        historial: [], created_at: hoy(), created_by: getUser()
+      };
+      newOTs.push(ot);
+    });
+  });
+  DB.ots = DB.ots.concat(newOTs);
+
+  setBtnLoading('btn-crear-op', true);
+  saveLocal();
+  var ok1 = await guardarArchivo('ops', {ops: DB.ops});
+  var ok2 = await guardarArchivo('ots', {ots: DB.ots});
+  setBtnLoading('btn-crear-op', false);
+  if(ok1 && ok2){
+    toast('OP creada con ' + newOTs.length + ' OTs', 'success');
+    _colores = [];
+    navTo('activas');
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ÓRDENES ACTIVAS
+// ═══════════════════════════════════════════════════════════════════════════════
+function renderActivas(){
+  var activas = DB.ots.filter(function(o){ return o.estado !== 'ENTREGADO'; });
+  var h = '';
+  h += '<div class="filter-row">';
+  h += '<select id="f-estado" onchange="filtrarActivas()"><option value="">Todos los estados</option>' + ESTADOS.filter(function(e){ return e!=='ENTREGADO'; }).map(function(e){ return '<option>' + e + '</option>'; }).join('') + '</select>';
+  h += '<select id="f-cat" onchange="filtrarActivas()"><option value="">Todas las categorías</option>' + CATEGORIAS.map(function(c){ return '<option>' + c + '</option>'; }).join('') + '</select>';
+  h += '<select id="f-sat" onchange="filtrarActivas()"><option value="">Todos los satélites</option>' + DB.satelites.map(function(s){ return '<option value="' + s.id + '">' + s.nombre + '</option>'; }).join('') + '</select>';
+  h += '<input id="f-buscar" placeholder="Buscar nombre..." oninput="filtrarActivas()" style="width:200px;">';
+  h += '<button class="btn btn-ghost btn-sm" onclick="deseleccionarTodo()">Deseleccionar</button>';
+  h += '<button class="btn btn-primary btn-sm" onclick="asignarMasivo()" id="btn-asignar-masivo" style="display:none;">Asignar seleccionadas</button>';
+  h += '</div>';
+  h += '<div id="activas-table"></div>';
+  setTimeout(filtrarActivas, 20);
+  return h;
+}
+
+function filtrarActivas(){
+  var fEstado = (document.getElementById('f-estado')||{}).value;
+  var fCat = (document.getElementById('f-cat')||{}).value;
+  var fSat = (document.getElementById('f-sat')||{}).value;
+  var fBuscar = ((document.getElementById('f-buscar')||{}).value||'').toLowerCase();
+
+  var activas = DB.ots.filter(function(o){
+    if(o.estado === 'ENTREGADO') return false;
+    if(fEstado && o.estado !== fEstado) return false;
+    if(fCat && o.categoria !== fCat) return false;
+    if(fSat && o.satelite_id !== fSat) return false;
+    if(fBuscar && !(o.nombre||'').toLowerCase().includes(fBuscar) && !(o.color||'').toLowerCase().includes(fBuscar)) return false;
+    return true;
+  });
+
+  var el = document.getElementById('activas-table');
+  if(!el) return;
+  if(!activas.length){ el.innerHTML = '<div class="empty-state"><div class="icon">✅</div><p>No hay órdenes activas con esos filtros.</p></div>'; return; }
+
+  var h = '<div class="table-wrap"><table id="tbl-activas"><thead><tr>';
+  h += '<th><input type="checkbox" class="ck" onclick="toggleTodosCK(this)"></th>';
+  h += '<th>OT #</th><th>OP</th><th>Producto</th><th>Color</th><th>Talla</th><th>Cant</th><th>Estado</th><th>Satélite</th><th>Fecha Est.</th><th>Días</th><th>Acciones</th></tr></thead><tbody>';
+  activas.forEach(function(ot){
+    var sel = selectedOTs.has(ot.id);
+    var dias = diasRestantes(ot.fecha_estimada_entrega);
+    h += '<tr>';
+    h += '<td><input type="checkbox" class="ck ck-ot" data-id="' + ot.id + '" ' + (sel?'checked':'') + ' onclick="toggleOT(this)"></td>';
+    h += '<td style="font-weight:700;color:var(--cyan);">OT-' + ot.numero_ot + '</td>';
+    h += '<td style="font-size:12px;color:var(--dim);">' + (ot.op_id||'—') + '</td>';
+    h += '<td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + ot.nombre + '</td>';
+    h += '<td>' + ot.color + '</td><td>' + ot.talla + '</td><td>' + ot.cantidad + '</td>';
+    h += '<td>' + badge(ot.estado) + '</td>';
+    h += '<td style="font-size:12px;">' + getSatNombre(ot.satelite_id) + '</td>';
+    h += '<td style="font-size:12px;">' + fmtDate(ot.fecha_estimada_entrega) + '</td>';
+    h += '<td>' + diasChip(dias) + '</td>';
+    h += '<td style="white-space:nowrap;">';
+    if(ot.estado === 'CORTE_POR_ALISTAR') h += '<button class="btn btn-primary btn-sm" onclick="modalAsignar(\'' + ot.id + '\')">Asignar</button> ';
+    h += '<button class="btn btn-ghost btn-sm" onclick="verOT(\'' + ot.id + '\')">Ver</button>';
+    h += '</td></tr>';
+  });
+  h += '</tbody></table></div>';
+  el.innerHTML = h;
+}
+
+function toggleOT(cb){
+  var id = cb.dataset.id;
+  if(cb.checked) selectedOTs.add(id); else selectedOTs.delete(id);
+  var btn = document.getElementById('btn-asignar-masivo');
+  if(btn) btn.style.display = selectedOTs.size > 0 ? '' : 'none';
+}
+function toggleTodosCK(masterCb){
+  document.querySelectorAll('.ck-ot').forEach(function(cb){ cb.checked = masterCb.checked; toggleOT(cb); });
+}
+function deseleccionarTodo(){
+  selectedOTs.clear();
+  document.querySelectorAll('.ck-ot').forEach(function(cb){ cb.checked = false; });
+  var btn = document.getElementById('btn-asignar-masivo');
+  if(btn) btn.style.display = 'none';
+}
+
+function modalAsignar(otId, isMasivo){
+  var ids = isMasivo ? Array.from(selectedOTs) : [otId];
+  var body = '<div class="form-group"><label class="form-label">Satélite *</label><select class="form-control" id="ma-sat">' + DB.satelites.filter(function(s){ return s.activo; }).map(function(s){ return '<option value="' + s.id + '">' + s.nombre + '</option>'; }).join('') + '</select></div>';
+  body += '<div class="form-row"><div class="form-group"><label class="form-label">Fecha entrega corte a satélite</label><input class="form-control" type="date" id="ma-fec" value="' + hoy() + '"></div><div class="form-group"><label class="form-label">Fecha estimada entrega *</label><input class="form-control" type="date" id="ma-fest"></div></div>';
+  body += '<div class="form-group"><label class="form-label">NT bodega corte</label><input class="form-control" id="ma-nt" placeholder="NT-XXXX"></div>';
+  body += '<div class="form-group"><label class="form-label">Notas</label><input class="form-control" id="ma-notas"></div>';
+  if(isMasivo) body += '<div style="color:var(--dim);font-size:12px;margin-top:8px;">Se asignarán ' + ids.length + ' OTs seleccionadas.</div>';
+  var footer = '<button class="btn btn-primary" onclick="confirmarAsignar(' + JSON.stringify(ids) + ')"><span class="btn-text">✓ Asignar</span><span class="spinner"></span></button><button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>';
+  openModal(isMasivo ? 'Asignar masivo' : 'Asignar OT', body, footer);
+}
+function asignarMasivo(){ modalAsignar(null, true); }
+
+async function confirmarAsignar(ids){
+  var satId = document.getElementById('ma-sat').value;
+  var fec = document.getElementById('ma-fec').value;
+  var fest = document.getElementById('ma-fest').value;
+  var nt = document.getElementById('ma-nt').value;
+  var notas = document.getElementById('ma-notas').value;
+  if(!satId || !fest){ toast('Selecciona satélite y fecha estimada', 'error'); return; }
+  var now = new Date().toISOString();
+  ids.forEach(function(id){
+    var ot = DB.ots.find(function(o){ return o.id===id; });
+    if(!ot) return;
+    ot.satelite_id = satId;
+    ot.fecha_entrega_corte_satelite = fec;
+    ot.fecha_estimada_entrega = fest;
+    ot.nt_corte_satelite = nt;
+    ot.notas = notas;
+    ot.estado = 'EN_CONFECCION';
+    ot.historial.push({fecha: now, accion: 'Asignado a ' + getSatNombre(satId), user: getUser()});
+  });
+  saveLocal(); selectedOTs.clear();
+  var ok = await guardarArchivo('ots', {ots: DB.ots});
+  if(ok){ toast('OTs asignadas correctamente', 'success'); closeModal(); renderPage('activas'); }
+}
+
+function verOT(id){
+  var ot = DB.ots.find(function(o){ return o.id===id; });
+  if(!ot) return;
+  var body = '';
+  body += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">';
+  var fields = [['OT#','OT-'+ot.numero_ot],['OP',ot.op_id||'—'],['Categoría',ot.categoria],['Nombre',ot.nombre],['Color',ot.color],['Talla',ot.talla],['Cantidad',ot.cantidad+' uds'],['Valor MO',fmtCop(ot.valor_mo)],['Estado',badge(ot.estado)],['Satélite',getSatNombre(ot.satelite_id)],['Fecha OT',fmtDate(ot.fecha_ot)],['F. Entrega Corte',fmtDate(ot.fecha_entrega_corte_satelite)],['F. Est. Entrega',fmtDate(ot.fecha_estimada_entrega)],['F. Real Entrega',fmtDate(ot.fecha_entrega_real)],['Uds Entregadas',(ot.unidades_entregadas||0)],['Uds Novedad',(ot.unidades_novedad||0)],['NT Corte',ot.nt_corte_satelite||'—'],['NT Ingreso',ot.nt_ingreso_planta||'—'],['Cumplió fecha',ot.cumplió_fecha===null?'—':ot.cumplió_fecha?'✅ Sí':'❌ No'],['Motivo',ot.motivo_incumplimiento||'—']];
+  fields.forEach(function(f){ body += '<div><div style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.7px;">' + f[0] + '</div><div style="font-size:13px;margin-top:2px;">' + f[1] + '</div></div>'; });
+  body += '</div>';
+  if(ot.notas){ body += '<div class="sep"></div><div style="font-size:12px;color:var(--dim);">Notas:</div><div style="font-size:13px;margin-top:4px;">' + ot.notas + '</div>'; }
+  // Historial
+  if(ot.historial && ot.historial.length){
+    body += '<div class="sep"></div><div class="section-title" style="font-size:14px;">Historial</div>';
+    ot.historial.slice().reverse().forEach(function(h){ body += '<div class="hist-item"><div>' + h.accion + '</div><div class="hist-date">' + new Date(h.fecha).toLocaleString('es-CO') + (h.user?' · '+h.user:'') + '</div></div>'; });
+  }
+  var footer = '';
+  if(ot.estado !== 'ENTREGADO' && ot.estado !== 'NOVEDAD'){
+    footer += '<button class="btn btn-primary btn-sm" onclick="closeDrawer();modalEntrega(\'' + ot.id + '\')">Registrar entrega</button> ';
+  }
+  footer += '<button class="btn btn-ghost btn-sm" onclick="closeDrawer()">Cerrar</button>';
+  openDrawer('OT-' + ot.numero_ot + ' · ' + ot.nombre, body, footer);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ENTREGAS
+// ═══════════════════════════════════════════════════════════════════════════════
+function renderEntregas(){
+  var enConf = DB.ots.filter(function(o){ return o.estado==='EN_CONFECCION' || o.estado==='ASIGNADO'; });
+  var h = '<div class="section-title">Registro de Entregas <span>' + enConf.length + ' OTs pendientes de entrega</span></div>';
+  if(!enConf.length){ return h + '<div class="empty-state"><div class="icon">✅</div><p>No hay órdenes en confección actualmente.</p></div>'; }
+
+  // Agrupar por satélite
+  var bySat = {};
+  enConf.forEach(function(ot){ (bySat[ot.satelite_id||'SIN_SATELITE'] = bySat[ot.satelite_id||'SIN_SATELITE']||[]).push(ot); });
+
+  Object.keys(bySat).forEach(function(satId){
+    var ots = bySat[satId];
+    var satNom = satId === 'SIN_SATELITE' ? 'Sin satélite asignado' : getSatNombre(satId);
+    h += '<div class="card" style="margin-bottom:16px;">';
+    h += '<div class="section-title" style="font-size:16px;margin-bottom:14px;">🏭 ' + satNom + ' <span>' + ots.length + ' OTs</span></div>';
+    h += '<div class="table-wrap"><table><thead><tr><th>OT</th><th>Producto</th><th>Color</th><th>Talla</th><th>Enviadas</th><th>F. Est.</th><th>Días</th><th>Acción</th></tr></thead><tbody>';
+    ots.forEach(function(ot){
+      var dias = diasRestantes(ot.fecha_estimada_entrega);
+      h += '<tr>';
+      h += '<td style="font-weight:700;color:var(--cyan);">OT-' + ot.numero_ot + '</td>';
+      h += '<td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + ot.nombre + '</td>';
+      h += '<td>' + ot.color + '</td><td>' + ot.talla + '</td>';
+      h += '<td>' + ot.cantidad + '</td>';
+      h += '<td>' + fmtDate(ot.fecha_estimada_entrega) + '</td>';
+      h += '<td>' + diasChip(dias) + '</td>';
+      h += '<td><button class="btn btn-success btn-sm" onclick="modalEntrega(\'' + ot.id + '\')">Registrar</button></td>';
+      h += '</tr>';
+    });
+    h += '</tbody></table></div></div>';
+  });
+  return h;
+}
+
+function modalEntrega(otId){
+  var ot = DB.ots.find(function(o){ return o.id===otId; });
+  if(!ot) return;
+  var diasRestantes2 = diasRestantes(ot.fecha_estimada_entrega);
+  var body = '<div style="background:var(--card);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;">';
+  body += '<strong>OT-' + ot.numero_ot + '</strong> · ' + ot.nombre + ' · ' + ot.color + ' · ' + ot.talla + '<br>';
+  body += '<span style="color:var(--dim);">Satélite: ' + getSatNombre(ot.satelite_id) + ' · Enviadas: ' + ot.cantidad + ' uds · F. Est: ' + fmtDate(ot.fecha_estimada_entrega) + ' ' + diasChip(diasRestantes2) + '</span>';
+  body += '</div>';
+  body += '<div class="form-row">';
+  body += '<div class="form-group"><label class="form-label">Unidades entregadas *</label><input class="form-control" type="number" id="ent-uds" min="0" max="' + ot.cantidad + '" value="' + ot.cantidad + '" oninput="calcCumplimiento()"></div>';
+  body += '<div class="form-group"><label class="form-label">Unidades con novedad</label><input class="form-control" type="number" id="ent-nov" min="0" value="0"></div>';
+  body += '</div>';
+  body += '<div class="form-row"><div class="form-group"><label class="form-label">Fecha real de entrega *</label><input class="form-control" type="date" id="ent-fecha" value="' + hoy() + '" oninput="calcCumplimiento()"></div><div class="form-group"><label class="form-label">NT ingreso a planta</label><input class="form-control" id="ent-nt" placeholder="NT-XXXX"></div></div>';
+  body += '<div class="form-group" id="cumplimiento-wrap" style="display:flex;align-items:center;justify-content:space-between;">';
+  body += '<label class="form-label">¿Cumplió fecha?</label><input type="checkbox" class="toggle" id="ent-cumplió"></div>';
+  body += '<div class="form-group" id="motivo-wrap" style="display:none;"><label class="form-label">Motivo de incumplimiento</label><input class="form-control" id="ent-motivo"></div>';
+  body += '<div class="form-group"><label class="form-label">Notas</label><textarea class="form-control" id="ent-notas"></textarea></div>';
+
+  // Costo estimado
+  body += '<div id="costo-preview" style="background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.2);border-radius:8px;padding:10px 14px;font-size:12px;margin-top:4px;"></div>';
+
+  var footer = '<button class="btn btn-primary" id="btn-conf-entrega" onclick="confirmarEntrega(\'' + otId + '\')"><span class="btn-text">✓ Confirmar entrega</span><span class="spinner"></span></button><button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>';
+  openModal('Registrar Entrega', body, footer);
+
+  // init
+  setTimeout(calcCumplimiento, 50);
+  document.getElementById('ent-cumplió').addEventListener('change', function(){
+    document.getElementById('motivo-wrap').style.display = this.checked ? 'none' : '';
+  });
+}
+
+function calcCumplimiento(){
+  var ot_fecha_est = drawerCtx; // not used, read from modal context
+  var fechaEnt = (document.getElementById('ent-fecha')||{}).value;
+  var uds = parseInt((document.getElementById('ent-uds')||{}).value)||0;
+  var vmo = 0;
+  // We don't easily have ot here, but update costo
+  var costo = document.getElementById('costo-preview');
+  if(costo) costo.innerHTML = '💰 Costo MO estimado: calculado al guardar';
+}
+
+async function confirmarEntrega(otId){
+  var ot = DB.ots.find(function(o){ return o.id===otId; });
+  if(!ot) return;
+  var uds = parseInt((document.getElementById('ent-uds')||{}).value)||0;
+  var nov = parseInt((document.getElementById('ent-nov')||{}).value)||0;
+  var fecha = (document.getElementById('ent-fecha')||{}).value;
+  var nt = (document.getElementById('ent-nt')||{}).value;
+  var cumplió = (document.getElementById('ent-cumplió')||{}).checked;
+  var motivo = (document.getElementById('ent-motivo')||{}).value || '';
+  var notas = (document.getElementById('ent-notas')||{}).value || '';
+
+  if(!uds || !fecha){ toast('Ingresa unidades y fecha', 'error'); return; }
+
+  ot.unidades_entregadas = uds;
+  ot.unidades_novedad = nov;
+  ot.fecha_entrega_real = fecha;
+  ot.nt_ingreso_planta = nt;
+  ot.cumplió_fecha = cumplió;
+  ot.motivo_incumplimiento = motivo;
+  ot.notas = notas;
+  ot.total_costo_mo = uds * (ot.valor_mo||0);
+
+  if(nov > 0) ot.estado = 'ENTREGADO_PARCIAL';
+  else ot.estado = 'ENTREGADO';
+
+  ot.historial.push({fecha: new Date().toISOString(), accion: 'Entrega registrada: ' + uds + ' uds' + (nov?' ('+nov+' novedad)':''), user: getUser()});
+
+  saveLocal(); updateNovBadge();
+  var ok = await guardarArchivo('ots', {ots: DB.ots});
+  if(ok){ toast('Entrega registrada · ' + uds + ' uds · ' + fmtCop(ot.total_costo_mo||0) + ' MO', 'success'); closeModal(); renderPage('entregas'); }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// INDICADORES
+// ═══════════════════════════════════════════════════════════════════════════════
+function renderIndicadores(){
+  var mesActual = hoy().substr(0,7);
+  var h = '<div class="filter-row">';
+  h += '<input type="month" id="ind-mes" value="' + mesActual + '" class="form-control" style="width:auto;" onchange="renderPage(\'indicadores\')">';
+  h += '</div>';
+
+  var mes = (document.getElementById('ind-mes')||{}).value || mesActual;
+  var otsDelMes = DB.ots.filter(function(o){ return (o.fecha_ot||'').startsWith(mes); });
+  var entregados = DB.ots.filter(function(o){ return o.estado==='ENTREGADO' && (o.fecha_entrega_real||'').startsWith(mes); });
+  var conFecha = entregados.filter(function(o){ return o.fecha_estimada_entrega; });
+  var onTime = conFecha.filter(function(o){ return o.cumplió_fecha; }).length;
+  var pct = conFecha.length ? Math.round(onTime/conFecha.length*100) : 0;
+  var totalCortado = otsDelMes.reduce(function(a,o){ return a+o.cantidad; },0);
+  var totalEnConf = DB.ots.filter(function(o){ return o.estado==='EN_CONFECCION'; }).reduce(function(a,o){ return a+o.cantidad; },0);
+  var totalEntregado = entregados.reduce(function(a,o){ return a+(o.unidades_entregadas||0); },0);
+  var totalMO = entregados.reduce(function(a,o){ return a+(o.total_costo_mo||0); },0);
+  // avg dias en confección
+  var diasList = entregados.filter(function(o){ return o.fecha_ot && o.fecha_entrega_real; }).map(function(o){ return (new Date(o.fecha_entrega_real)-new Date(o.fecha_ot))/86400000; });
+  var avgDias = diasList.length ? Math.round(diasList.reduce(function(a,b){ return a+b; },0)/diasList.length) : 0;
+
+  h += '<div class="kpi-grid">';
+  h += kpiCard('Cortado (mes)', fmtNum(totalCortado) + ' uds', '', mes);
+  h += kpiCard('En confección', fmtNum(totalEnConf) + ' uds', 'cyan', 'Actualmente');
+  h += kpiCard('Entregado (mes)', fmtNum(totalEntregado) + ' uds', 'green', mes);
+  h += kpiCard('% Cumplimiento', pct + '%', pct>=80?'green':pct>=60?'gold':'red', onTime + '/' + conFecha.length + ' on time');
+  h += kpiCard('Avg días confección', avgDias + 'd', '', 'Por OT entregada');
+  h += kpiCard('MO pagada (mes)', fmtCop(totalMO), 'gold', mes);
+  h += '</div>';
+
+  // Tabla por satélite
+  h += '<div class="section-title">Rendimiento por satélite <span>' + mes + '</span></div>';
+  var satPerf = {};
+  DB.satelites.forEach(function(s){ satPerf[s.id] = {nombre:s.nombre, asignado:0, entregado:0, onTime:0, late:0, dias:[]}; });
+  entregados.forEach(function(o){
+    if(!o.satelite_id || !satPerf[o.satelite_id]) return;
+    var sp = satPerf[o.satelite_id];
+    sp.entregado += (o.unidades_entregadas||0);
+    if(o.cumplió_fecha) sp.onTime++; else sp.late++;
+    if(o.fecha_ot && o.fecha_entrega_real) sp.dias.push((new Date(o.fecha_entrega_real)-new Date(o.fecha_ot))/86400000);
+  });
+  DB.ots.filter(function(o){ return (o.fecha_ot||'').startsWith(mes) && o.satelite_id; }).forEach(function(o){
+    if(satPerf[o.satelite_id]) satPerf[o.satelite_id].asignado += o.cantidad;
+  });
+
+  var rows = Object.values(satPerf).filter(function(sp){ return sp.asignado > 0 || sp.entregado > 0; }).sort(function(a,b){ return b.entregado-a.entregado; });
+  if(rows.length){
+    h += '<div class="table-wrap"><table><thead><tr><th>Satélite</th><th>Asignado</th><th>Entregado</th><th>On Time</th><th>Tarde</th><th>% Cumpl.</th><th>Avg días</th></tr></thead><tbody>';
+    rows.forEach(function(sp){
+      var total = sp.onTime + sp.late;
+      var pctSat = total ? Math.round(sp.onTime/total*100) : 0;
+      var avgD = sp.dias.length ? Math.round(sp.dias.reduce(function(a,b){ return a+b; },0)/sp.dias.length) : 0;
+      h += '<tr><td style="font-weight:600;">' + sp.nombre + '</td><td>' + sp.asignado + '</td><td>' + sp.entregado + '</td><td style="color:var(--green);">' + sp.onTime + '</td><td style="color:var(--red);">' + sp.late + '</td><td><strong style="color:' + (pctSat>=80?'var(--green)':pctSat>=60?'var(--gold)':'var(--red)') + '">' + pctSat + '%</strong></td><td>' + avgD + 'd</td></tr>';
+    });
+    h += '</tbody></table></div>';
+  } else { h += '<div style="color:var(--dim);font-size:13px;padding:20px 0;">Sin datos de satélites para este período.</div>'; }
+
+  // Top categorías
+  var catMap = {};
+  entregados.forEach(function(o){ catMap[o.categoria] = (catMap[o.categoria]||0) + (o.unidades_entregadas||0); });
+  var topCat = Object.entries(catMap).sort(function(a,b){ return b[1]-a[1]; });
+  if(topCat.length){
+    h += '<div class="section-title" style="margin-top:24px;">Top categorías <span>' + mes + '</span></div>';
+    var maxC = topCat[0][1];
+    h += '<div class="bar-wrap">';
+    topCat.slice(0,8).forEach(function(c){ h += '<div class="bar-row"><div class="bar-label">' + c[0] + '</div><div class="bar-track"><div class="bar-fill" style="width:' + Math.round(c[1]/maxC*100) + '%"></div></div><div class="bar-val">' + c[1] + '</div></div>'; });
+    h += '</div>';
+  }
+  return h;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// NOVEDADES
+// ═══════════════════════════════════════════════════════════════════════════════
+function renderNovedades(){
+  var novs = DB.ots.filter(function(o){ return o.estado==='NOVEDAD' || (o.unidades_novedad||0)>0; });
+  var h = '<div class="section-title">Novedades <span>' + novs.length + ' OTs</span></div>';
+  if(!novs.length){ return h + '<div class="empty-state"><div class="icon">✅</div><p>Sin novedades pendientes.</p></div>'; }
+  h += '<div class="table-wrap"><table><thead><tr><th>OT</th><th>Satélite</th><th>Producto</th><th>Color</th><th>Talla</th><th>Uds Novedad</th><th>Descripción</th><th>Estado</th><th>Acción</th></tr></thead><tbody>';
+  novs.forEach(function(ot){
+    h += '<tr><td style="font-weight:700;color:var(--cyan);">OT-' + ot.numero_ot + '</td>';
+    h += '<td style="font-size:12px;">' + getSatNombre(ot.satelite_id) + '</td>';
+    h += '<td>' + ot.nombre + '</td><td>' + ot.color + '</td><td>' + ot.talla + '</td>';
+    h += '<td style="color:var(--red);font-weight:700;">' + (ot.unidades_novedad||0) + '</td>';
+    h += '<td style="font-size:12px;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (ot.motivo_incumplimiento||'—') + '</td>';
+    h += '<td>' + badge(ot.estado) + '</td>';
+    h += '<td><button class="btn btn-success btn-sm" onclick="resolverNovedad(\'' + ot.id + '\')">Resolver</button></td></tr>';
+  });
+  h += '</tbody></table></div>';
+  return h;
+}
+
+async function resolverNovedad(id){
+  if(!confirm('¿Marcar esta novedad como resuelta?')) return;
+  var ot = DB.ots.find(function(o){ return o.id===id; });
+  if(!ot) return;
+  ot.estado = 'ENTREGADO';
+  ot.unidades_novedad = 0;
+  ot.historial.push({fecha: new Date().toISOString(), accion: 'Novedad resuelta', user: getUser()});
+  saveLocal(); updateNovBadge();
+  var ok = await guardarArchivo('ots', {ots: DB.ots});
+  if(ok){ toast('Novedad resuelta', 'success'); renderPage('novedades'); }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// HISTORIAL
+// ═══════════════════════════════════════════════════════════════════════════════
+function renderHistorial(){
+  var completados = DB.ots.filter(function(o){ return o.estado==='ENTREGADO'; }).sort(function(a,b){ return (b.fecha_entrega_real||'').localeCompare(a.fecha_entrega_real||''); });
+  var h = '<div class="filter-row"><input id="hist-buscar" class="form-control" placeholder="Buscar producto, color, satélite..." style="max-width:320px;" oninput="filtrarHistorial()"></div>';
+  h += '<div id="hist-table"></div>';
+  setTimeout(filtrarHistorial, 20);
+  return h;
+}
+
+function filtrarHistorial(){
+  var q = ((document.getElementById('hist-buscar')||{}).value||'').toLowerCase();
+  var completados = DB.ots.filter(function(o){ return o.estado==='ENTREGADO'; }).filter(function(o){
+    if(!q) return true;
+    return (o.nombre||'').toLowerCase().includes(q) || (o.color||'').toLowerCase().includes(q) || getSatNombre(o.satelite_id).toLowerCase().includes(q);
+  }).sort(function(a,b){ return (b.fecha_entrega_real||'').localeCompare(a.fecha_entrega_real||''); });
+
+  var el = document.getElementById('hist-table');
+  if(!el) return;
+  if(!completados.length){ el.innerHTML = '<div class="empty-state"><div class="icon">📋</div><p>Sin resultados.</p></div>'; return; }
+  var h = '<div class="table-wrap"><table><thead><tr><th>OT</th><th>OP</th><th>Producto</th><th>Color</th><th>Talla</th><th>Uds</th><th>MO Total</th><th>Satélite</th><th>F. Entrega</th><th>Cumplió</th></tr></thead><tbody>';
+  completados.slice(0,100).forEach(function(ot){
+    h += '<tr onclick="verOT(\'' + ot.id + '\')" style="cursor:pointer;">';
+    h += '<td style="font-weight:700;color:var(--cyan);">OT-' + ot.numero_ot + '</td>';
+    h += '<td style="font-size:11px;color:var(--dim);">' + (ot.op_id||'—') + '</td>';
+    h += '<td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + ot.nombre + '</td>';
+    h += '<td>' + ot.color + '</td><td>' + ot.talla + '</td>';
+    h += '<td>' + (ot.unidades_entregadas||0) + '</td>';
+    h += '<td>' + fmtCop(ot.total_costo_mo||0) + '</td>';
+    h += '<td style="font-size:12px;">' + getSatNombre(ot.satelite_id) + '</td>';
+    h += '<td>' + fmtDate(ot.fecha_entrega_real) + '</td>';
+    h += '<td>' + (ot.cumplió_fecha===null?'—':ot.cumplió_fecha?'✅':'❌') + '</td>';
+    h += '</tr>';
+  });
+  h += '</tbody></table></div>';
+  el.innerHTML = h;
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+function setBtnLoading(id, on){
+  var btn = document.getElementById(id);
+  if(!btn) return;
+  if(on){ btn.classList.add('loading'); btn.disabled = true; }
+  else { btn.classList.remove('loading'); btn.disabled = false; }
+}
+
+// CSS.escape polyfill
+if(!window.CSS || !window.CSS.escape){
+  window.CSS = window.CSS || {};
+  window.CSS.escape = function(s){ return s.replace(/[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g,'\\$&'); };
+}
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+initUser();
+// Try loading from local first for instant render
+var _localDB = localStorage.getItem('bentley_prod_db');
+if(_localDB){ try{ DB = JSON.parse(_localDB); if(DB.satelites.length===0) seedSatelites(); }catch(e){ seedSatelites(); } }
+else { seedSatelites(); }
+updateNovBadge();
+renderPage('dashboard');
+// Then load from GitHub Pages (async)
+cargarDatos();
+</script>
+</body>
+</html>
