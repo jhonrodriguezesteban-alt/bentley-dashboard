@@ -599,7 +599,8 @@ async function cargarDatos(){
     if(otsR.ok){ var d3 = await otsR.json(); DB.ots = d3.ots || []; }
     if(DB.satelites.length === 0) seedSatelites();
     saveLocal();
-    toast('Datos cargados de GitHub Pages', 'success');
+    var msg = 'Datos cargados: ' + DB.satelites.length + ' satélites, ' + DB.ops.length + ' OPs, ' + DB.ots.length + ' OTs';
+    toast(msg, 'success');
   } catch(e){
     // fallback local
     var local = localStorage.getItem('bentley_prod_db');
