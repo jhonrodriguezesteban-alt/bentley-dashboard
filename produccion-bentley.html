@@ -2078,13 +2078,13 @@ function renderDiseno(){
     h += '<div style="font-size:11px;font-weight:700;color:'+col.color+';text-transform:uppercase;letter-spacing:.5px;">'+col.label+'</div>';
     h += '<div style="font-size:11px;font-weight:700;color:'+col.color+';background:'+col.color+'22;border-radius:10px;padding:1px 7px;">'+items.length+'</div>';
     h += '</div>';
-    h += '<div style="background:#0d1117;border:1px solid '+col.color+'33;border-top:none;border-radius:0 0 10px 10px;padding:10px;min-height:100px;">';
+    h += '<div data-col="'+col.k+'" ondragover="event.preventDefault();this.style.background=\'rgba(255,255,255,.04)\'" ondragleave="this.style.background=\'\'" ondrop="dropDisenoKanban(event,this.dataset.col);this.style.background=\'\'" style="background:#0d1117;border:1px solid '+col.color+'33;border-top:none;border-radius:0 0 10px 10px;padding:10px;min-height:100px;transition:background .15s;">';
 
     items.forEach(function(d){
       var rc = DIS_RESP_COLORS[d.responsable]||'#94a3b8';
       var colIdx = DIS_KANBAN.findIndex(function(c){ return c.k===d.kanban_estado||c.k==='EN_DISENO_DIGITAL'; });
       var canBack = colIdx > 0, canFwd = colIdx < DIS_KANBAN.length-1;
-      h += '<div style="background:#13161f;border:1px solid #1e2535;border-left:3px solid '+rc+';border-radius:10px;padding:11px 12px;margin-bottom:8px;">';
+      h += '<div draggable="true" data-id="'+d.id+'" ondragstart="dragDisenoStart(event,this.dataset.id)" style="background:#13161f;border:1px solid #1e2535;border-left:3px solid '+rc+';border-radius:10px;padding:11px 12px;margin-bottom:8px;cursor:grab;">';
       // Header card
       h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">';
       h += '<span style="font-size:10px;font-weight:700;color:'+rc+';text-transform:uppercase;letter-spacing:.5px;">'+esc(d.responsable||'—')+'</span>';
@@ -2129,6 +2129,19 @@ function renderDiseno(){
 }
 
 function setDisFiltroMarca(m){ _disFiltroMarca=m; renderPage('diseno'); }
+
+function dragDisenoStart(event, id){
+  event.dataTransfer.setData('dis_id', id);
+  event.dataTransfer.effectAllowed = 'move';
+}
+function dropDisenoKanban(event, colKey){
+  event.preventDefault();
+  var id = event.dataTransfer.getData('dis_id');
+  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
+  if(!d || d.kanban_estado===colKey) return;
+  d.kanban_estado = colKey;
+  guardarDisenos(); renderPage('diseno');
+}
 
 function moverDisenoKanban(id, dir){
   var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
@@ -2997,7 +3010,10 @@ function renderIndicadores(){
 // NOVEDADES
 // ═══════════════════════════════════════════════════════════════════════════════
 function renderNovedades(){
-  var novs = DB.ots.filter(function(o){ return o.estado==='NOVEDAD' || (o.unidades_novedad||0)>0; });
+  var novs = DB.ots.filter(function(o){
+    var udsNov = o.cantidad - (o.unidades_entregadas||0);
+    return o.estado==='NOVEDAD' || (udsNov > 0 && o.estado !== 'ENTREGADO');
+  });
   var h = '<div class="section-title">Novedades <span>' + novs.length + ' OTs</span></div>';
   if(!novs.length){ return h + '<div class="empty-state"><div class="icon">✅</div><p>Sin novedades pendientes.</p></div>'; }
   h += '<div class="table-wrap"><table><thead><tr><th>OT</th><th>Satélite</th><th>Producto</th><th>Color</th><th>Talla</th><th>Uds Novedad</th><th>Descripción</th><th>Estado</th><th>Acción</th></tr></thead><tbody>';
@@ -3005,7 +3021,8 @@ function renderNovedades(){
     h += '<tr><td style="font-weight:700;color:var(--cyan);">OT-' + ot.numero_ot + '</td>';
     h += '<td style="font-size:12px;">' + getSatNombre(ot.satelite_id) + '</td>';
     h += '<td>' + ot.nombre + '</td><td>' + ot.color + '</td><td>' + ot.talla + '</td>';
-    h += '<td style="color:var(--red);font-weight:700;">' + (ot.unidades_novedad||0) + '</td>';
+    var udsNov = ot.cantidad - (ot.unidades_entregadas||0);
+    h += '<td style="color:var(--red);font-weight:700;">' + udsNov + '</td>';
     h += '<td style="font-size:12px;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (ot.motivo_incumplimiento||'—') + '</td>';
     h += '<td>' + badge(ot.estado) + '</td>';
     h += '<td><button class="btn btn-success btn-sm" onclick="resolverNovedad(\'' + ot.id + '\')">Resolver</button></td></tr>';
