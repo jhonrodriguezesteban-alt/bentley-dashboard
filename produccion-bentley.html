@@ -757,178 +757,200 @@ function verSateliteDesdeDB(satId){ navTo('satelites'); setTimeout(function(){ a
 function renderDashboard(){
   var mesActual = hoy().substr(0,7);
   var filtro = _dashFiltroMes;
+  var yearActual = hoy().substr(0,4);
 
-  // ── Datos base ──────────────────────────────────────────────────────────────
-  var activas = DB.ots.filter(function(o){ return o.estado !== 'ENTREGADO'; });
-  var enConf  = DB.ots.filter(function(o){ return o.estado === 'EN_CONFECCION'; });
+  var activas   = DB.ots.filter(function(o){ return o.estado !== 'ENTREGADO'; });
+  var enConf    = DB.ots.filter(function(o){ return o.estado === 'EN_CONFECCION'; });
+  var entOps    = DB.ops.filter(function(o){ return o.estado_op === 'EN_PROCESO'; }).length;
+  var udsConf   = enConf.reduce(function(a,o){ return a+(o.cantidad||0); },0);
+  var satActivos = DB.satelites.filter(function(s){ return s.activo; }).length;
+  var novedades = DB.ots.filter(function(o){ return o.estado==='NOVEDAD'||(o.unidades_novedad||0)>0; }).length;
 
   var entregadasFiltro = DB.ots.filter(function(o){
-    if(o.estado !== 'ENTREGADO') return false;
-    if(!filtro) return true;
-    return (o.fecha_entrega_real||'').startsWith(filtro);
+    if(o.estado!=='ENTREGADO') return false;
+    return !filtro || (o.fecha_entrega_real||'').startsWith(filtro);
   });
   var udsEntregadas = entregadasFiltro.reduce(function(a,o){ return a+(o.unidades_entregadas||0); },0);
 
-  var conFecha = DB.ots.filter(function(o){ return o.fecha_estimada_entrega && o.fecha_entrega_real && o.estado==='ENTREGADO'; });
-  var onTime = conFecha.filter(function(o){ return o.cumplió_fecha; }).length;
-  var pct = conFecha.length ? Math.round(onTime/conFecha.length*100) : 0;
-  var satActivos = DB.satelites.filter(function(s){ return s.activo; }).length;
-  var novedades = DB.ots.filter(function(o){ return o.estado==='NOVEDAD' || (o.unidades_novedad||0)>0; }).length;
-  var udsConf = enConf.reduce(function(a,o){ return a+(o.cantidad||0); },0);
+  // ── Color palette vibrante ─────────────────────────────────────────────────
+  var C_CYAN='#00d4ff', C_PURPLE='#a855f7', C_GREEN='#34d399', C_ORANGE='#f97316', C_PINK='#ec4899', C_GOLD='#fbbf24';
 
-  // ── Filter bar ──────────────────────────────────────────────────────────────
-  var meses = ['01','02','03','04','05','06','07','08','09','10','11','12'];
-  var nomMes = ['Ene','Feb','Mar','Apr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-  var yearActual = hoy().substr(0,4);
-  var h = '';
-  h += '<div class="mes-pills">';
+  // ── Pills de mes ────────────────────────────────────────────────────────────
+  var meses   = ['01','02','03','04','05','06','07','08','09','10','11','12'];
+  var nomMes  = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  var h = '<div class="mes-pills">';
   h += '<button onclick="setDashFiltro(\'\')" class="mes-pill' + (!filtro?' active':'') + '">Todo el año</button>';
-  meses.forEach(function(m, i){
-    var key = yearActual + '-' + m;
+  meses.forEach(function(m,i){
+    var key = yearActual+'-'+m;
     h += '<button data-mes="' + key + '" onclick="setDashFiltro(this.dataset.mes)" class="mes-pill' + (filtro===key?' active':'') + '">' + nomMes[i] + '</button>';
   });
   h += '</div>';
 
-  // ── KPI row ─────────────────────────────────────────────────────────────────
+  // ── KPIs (5 tarjetas, sin cumplimiento) ─────────────────────────────────────
+  function kpiV(label, val, color, sub, nav){
+    var click = nav ? 'onclick="navTo(\'' + nav + '\')" style="cursor:pointer;"' : '';
+    return '<div class="kpi-card" ' + click + '>' +
+      '<div class="kpi-label">' + label + '</div>' +
+      '<div class="kpi-val" style="color:' + color + ';">' + val + '</div>' +
+      '<div class="kpi-sub">' + sub + '</div>' +
+    '</div>';
+  }
   h += '<div class="kpi-grid">';
-  h += kpiCard('OTs en Proceso', activas.length, 'cyan', 'Sin ENTREGADO');
-  h += '<div class="kpi-card" style="cursor:pointer;" onclick="navTo(\'entregas\')">';
-  h += '<div class="kpi-label">Uds en Confección</div><div class="kpi-val">' + fmtNum(udsConf) + '</div><div class="kpi-sub">En satélites ↗</div></div>';
-  h += '<div class="kpi-card" style="cursor:pointer;">';
-  h += '<div class="kpi-label">Uds Entregadas</div><div class="kpi-val green">' + fmtNum(udsEntregadas) + '</div><div class="kpi-sub">' + (filtro||yearActual) + '</div></div>';
-  h += kpiCard('% Cumplimiento', pct + '%', pct>=80?'green':pct>=60?'gold':'red', conFecha.length + ' entregas c/fecha');
-  h += '<div class="kpi-card" style="cursor:pointer;" onclick="navTo(\'satelites\')">';
-  h += '<div class="kpi-label">Satélites activos</div><div class="kpi-val">' + satActivos + '</div><div class="kpi-sub">De ' + DB.satelites.length + ' total ↗</div></div>';
-  h += '<div class="kpi-card" style="cursor:pointer;" onclick="navTo(\'novedades\')">';
-  h += '<div class="kpi-label">Novedades activas</div><div class="kpi-val ' + (novedades>0?'red':'') + '">' + novedades + '</div><div class="kpi-sub">Pendientes ↗</div></div>';
+  h += kpiV('OTs en Proceso',    fmtNum(activas.length),      C_CYAN,   'Activas en producción', null);
+  h += kpiV('Uds en Confección', fmtNum(udsConf),             C_PURPLE, 'En talleres ahora ↗',   'entregas');
+  h += kpiV('Uds Entregadas',    fmtNum(udsEntregadas),       C_GREEN,  (filtro||yearActual)+' ↗', null);
+  h += kpiV('OPs en Proceso',    fmtNum(entOps),              C_ORANGE, 'Órdenes abiertas ↗',    'ops');
+  h += kpiV('Satélites Activos', fmtNum(satActivos),          '#e2e8f0','De '+DB.satelites.length+' total ↗','satelites');
+  h += kpiV('Novedades',         fmtNum(novedades),           novedades>0?C_PINK:'#64748b', 'Pendientes ↗','novedades');
   h += '</div>';
 
-  // ── SVG Bar chart "Entregas por mes" ────────────────────────────────────────
-  var PL=50,PR=20,PT=20,PB=40,W=700,H=200;
-  var mesesChart = ['2026-01','2026-02','2026-03','2026-04','2026-05','2026-06'];
-  var nomChart   = ['Ene','Feb','Mar','Abr','May','Jun'];
+  // ── Gráfica SVG de barras ───────────────────────────────────────────────────
+  var PL=52,PR=16,PT=28,PB=44,W=680,H=220;
+  var mesesChart = meses.slice(0,6).map(function(m){ return yearActual+'-'+m; });
+  var nomChart   = nomMes.slice(0,6);
   var dataChart  = mesesChart.map(function(m){
-    return DB.ots.filter(function(o){ return o.estado==='ENTREGADO' && (o.fecha_entrega_real||'').startsWith(m); }).reduce(function(a,o){ return a+(o.unidades_entregadas||0); },0);
+    return DB.ots.filter(function(o){ return o.estado==='ENTREGADO'&&(o.fecha_entrega_real||'').startsWith(m); })
+                 .reduce(function(a,o){ return a+(o.unidades_entregadas||0); },0);
   });
-  var maxChart = Math.max.apply(null, dataChart.concat([1]));
-  var barW = Math.floor((W - PL - PR) / mesesChart.length);
-  var barGap = Math.max(4, Math.floor(barW * 0.25));
+  var maxC = Math.max.apply(null, dataChart.concat([1]));
+  var nBars = mesesChart.length;
+  var slotW = (W-PL-PR)/nBars;
+  var bW    = Math.round(slotW*0.55);
+  var bGap  = (slotW-bW)/2;
 
-  h += '<div class="card" style="margin-top:20px;padding:16px;">';
-  h += '<div class="section-title" style="margin-bottom:8px;">Entregas por mes <span>uds entregadas · clic en barra para filtrar</span></div>';
-  h += '<svg viewBox="0 0 ' + W + ' ' + H + '" style="width:100%;max-width:' + W + 'px;display:block;">';
-  h += '<defs><linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--accent)"/><stop offset="100%" stop-color="#0891b2"/></linearGradient></defs>';
+  // paleta de colores por barra: gradiente visual de cyan → purple
+  var barColors = ['#00d4ff','#22c7f5','#4ab8ef','#7c3aed','#a855f7','#c084fc'];
+
+  h += '<div class="card" style="margin-top:18px;padding:20px 16px 14px;">';
+  h += '<div style="display:flex;align-items:baseline;gap:10px;margin-bottom:16px;">';
+  h += '<span style="font-family:var(--bebas);font-size:20px;letter-spacing:1px;">Entregas por Mes</span>';
+  h += '<span style="font-size:12px;color:#64748b;">unidades entregadas · toca una barra para filtrar</span>';
+  h += '</div>';
+  h += '<svg viewBox="0 0 ' + W + ' ' + H + '" style="width:100%;display:block;" xmlns="http://www.w3.org/2000/svg">';
+  h += '<defs>';
+  barColors.forEach(function(c,i){
+    // hex to slightly darker for bottom of gradient
+    h += '<linearGradient id="bg'+i+'" x1="0" y1="0" x2="0" y2="1">';
+    h += '<stop offset="0%" stop-color="' + c + '" stop-opacity="1"/>';
+    h += '<stop offset="100%" stop-color="' + c + '" stop-opacity="0.3"/>';
+    h += '</linearGradient>';
+  });
+  h += '</defs>';
   // Y gridlines
   for(var gi=0;gi<=4;gi++){
     var gy = PT + Math.round((H-PT-PB)*gi/4);
-    var gv = Math.round(maxChart*(4-gi)/4);
-    h += '<line x1="' + PL + '" y1="' + gy + '" x2="' + (W-PR) + '" y2="' + gy + '" stroke="var(--card-border)" stroke-width="1"/>';
-    h += '<text x="' + (PL-4) + '" y="' + (gy+4) + '" fill="var(--dim)" font-size="10" text-anchor="end">' + gv + '</text>';
+    var gv = Math.round(maxC*(4-gi)/4);
+    if(gi>0) h += '<line x1="'+PL+'" y1="'+gy+'" x2="'+(W-PR)+'" y2="'+gy+'" stroke="#1e2535" stroke-width="1" stroke-dasharray="4,4"/>';
+    h += '<text x="'+(PL-6)+'" y="'+(gy+4)+'" fill="#475569" font-size="11" text-anchor="end" font-family="system-ui">'+gv+'</text>';
   }
-  mesesChart.forEach(function(m, i){
-    var x0 = PL + i*barW + barGap/2;
-    var bw = barW - barGap;
-    var bh = dataChart[i] ? Math.max(4, Math.round((H-PT-PB)*dataChart[i]/maxChart)) : 2;
+  // Baseline
+  h += '<line x1="'+PL+'" y1="'+(H-PB)+'" x2="'+(W-PR)+'" y2="'+(H-PB)+'" stroke="#334155" stroke-width="1.5"/>';
+
+  mesesChart.forEach(function(m,i){
+    var x0 = PL + i*slotW + bGap;
+    var bh = dataChart[i] ? Math.max(6, Math.round((H-PT-PB)*dataChart[i]/maxC)) : 4;
     var by = H - PB - bh;
-    h += '<rect data-mes="' + m + '" x="' + x0 + '" y="' + by + '" width="' + bw + '" height="' + bh + '" fill="url(#barGrad)" rx="3" style="cursor:pointer;opacity:' + (filtro===m?'1':'0.8') + '" onclick="setDashFiltro(this.dataset.mes)"/>';
-    if(dataChart[i]>0){
-      h += '<text x="' + (x0+bw/2) + '" y="' + (by-4) + '" fill="var(--text)" font-size="10" text-anchor="middle">' + dataChart[i] + '</text>';
+    var isActive = filtro===m;
+    // Glow effect for active or hovered bar
+    if(isActive){
+      h += '<rect x="'+(x0-2)+'" y="'+(by-2)+'" width="'+(bW+4)+'" height="'+(bh+4)+'" rx="8" fill="'+barColors[i]+'" opacity="0.15"/>';
     }
-    h += '<text x="' + (x0+bw/2) + '" y="' + (H-PB+14) + '" fill="var(--dim)" font-size="11" text-anchor="middle">' + nomChart[i] + '</text>';
+    h += '<rect data-mes="' + m + '" onclick="setDashFiltro(this.dataset.mes)" x="'+x0+'" y="'+by+'" width="'+bW+'" height="'+bh+'" fill="url(#bg'+i+')" rx="6" style="cursor:pointer;" opacity="'+(isActive?'1':'0.82')+'"/>';
+    // Label encima
+    if(dataChart[i]>0){
+      h += '<text x="'+(x0+bW/2)+'" y="'+(by-8)+'" fill="'+barColors[i]+'" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui">'+dataChart[i]+'</text>';
+    }
+    // Label mes abajo
+    h += '<text x="'+(x0+bW/2)+'" y="'+(H-PB+20)+'" fill="'+(isActive?barColors[i]:'#94a3b8')+'" font-size="12" font-weight="'+(isActive?'700':'400')+'" text-anchor="middle" font-family="system-ui">'+nomChart[i]+'</text>';
   });
   h += '</svg></div>';
 
-  // ── Two-column grid ──────────────────────────────────────────────────────────
-  h += '<div class="two-col" style="margin-top:20px;">';
+  // ── Dos columnas ────────────────────────────────────────────────────────────
+  h += '<div class="two-col" style="margin-top:16px;">';
 
-  // LEFT — Top Satélites
+  // LEFT — Top Satélites con barras de colores
   var satMapTop = {};
   DB.ots.filter(function(o){
-    if(o.estado !== 'ENTREGADO' || !o.satelite_id) return false;
-    if(filtro) return (o.fecha_entrega_real||'').startsWith(filtro);
-    return true;
-  }).forEach(function(o){ satMapTop[o.satelite_id] = (satMapTop[o.satelite_id]||0) + (o.unidades_entregadas||0); });
-  var topSat = Object.keys(satMapTop).map(function(k){ return {id:k,uds:satMapTop[k]}; }).sort(function(a,b){ return b.uds-a.uds; }).slice(0,8);
-  var maxTopSat = topSat.length ? topSat[0].uds : 1;
+    if(o.estado!=='ENTREGADO'||!o.satelite_id) return false;
+    return !filtro || (o.fecha_entrega_real||'').startsWith(filtro);
+  }).forEach(function(o){ satMapTop[o.satelite_id]=(satMapTop[o.satelite_id]||0)+(o.unidades_entregadas||0); });
+  var topSat = Object.keys(satMapTop).map(function(k){ return {id:k,uds:satMapTop[k]}; })
+                                     .sort(function(a,b){ return b.uds-a.uds; }).slice(0,8);
+  var maxTS = topSat.length ? topSat[0].uds : 1;
+  var satBarColors = [C_CYAN,C_PURPLE,C_GREEN,C_ORANGE,C_PINK,C_GOLD,'#38bdf8','#a3e635'];
 
-  h += '<div class="card" style="padding:16px;">';
-  h += '<div class="section-title" style="margin-bottom:12px;">Top Satélites <span>' + (filtro||'todo el año') + '</span></div>';
+  h += '<div class="card" style="padding:18px 16px;">';
+  h += '<div style="font-family:var(--bebas);font-size:18px;letter-spacing:1px;margin-bottom:4px;">Top Satélites</div>';
+  h += '<div style="font-size:11px;color:#64748b;margin-bottom:14px;">'+( filtro||'todo el año' )+' · unidades entregadas</div>';
   if(topSat.length){
-    topSat.forEach(function(s){
-      var pct2 = Math.round(s.uds/maxTopSat*100);
-      h += '<div data-sat="' + s.id + '" onclick="verSateliteDesdeDB(this.dataset.sat)" style="display:flex;align-items:center;gap:8px;margin-bottom:8px;cursor:pointer;">';
-      h += '<div style="width:100px;font-size:12px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + getSatNombre(s.id) + '</div>';
-      h += '<div style="flex:1;background:var(--card-border);border-radius:4px;height:8px;"><div style="width:' + pct2 + '%;background:var(--accent);height:8px;border-radius:4px;"></div></div>';
-      h += '<div style="width:40px;text-align:right;font-size:12px;color:var(--dim);">' + s.uds + '</div>';
+    topSat.forEach(function(s,i){
+      var pctBar = Math.round(s.uds/maxTS*100);
+      var bc = satBarColors[i%satBarColors.length];
+      var nom = getSatNombre(s.id);
+      h += '<div data-sat="'+s.id+'" onclick="verSateliteDesdeDB(this.dataset.sat)" style="margin-bottom:10px;cursor:pointer;">';
+      h += '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">';
+      h += '<span style="font-size:12px;font-weight:600;color:#e2e8f0;">'+(i+1)+'. '+nom+'</span>';
+      h += '<span style="font-size:13px;font-weight:700;color:'+bc+';">'+fmtNum(s.uds)+'</span>';
       h += '</div>';
+      h += '<div style="height:7px;border-radius:6px;background:#1e2535;overflow:hidden;">';
+      h += '<div style="height:100%;width:'+pctBar+'%;border-radius:6px;background:linear-gradient(90deg,'+bc+','+bc+'88);transition:width .5s;"></div>';
+      h += '</div></div>';
     });
   } else {
-    h += '<div style="color:var(--dim);font-size:13px;padding:12px 0;">Sin entregas registradas</div>';
+    h += '<div style="color:#475569;font-size:13px;padding:20px 0;text-align:center;">Sin entregas registradas</div>';
   }
   h += '</div>';
 
-  // RIGHT — Estado de OTs (donut SVG)
-  var estadoMap = {'PENDIENTE_CORTAR':0,'CORTE_POR_ALISTAR':0,'EN_CONFECCION':0,'NOVEDAD':0};
-  var estadoLabels = {'PENDIENTE_CORTAR':'Pend. Cortar','CORTE_POR_ALISTAR':'Corte x Alistar','EN_CONFECCION':'En Confección','NOVEDAD':'Novedad'};
-  var estadoColors = {'PENDIENTE_CORTAR':'var(--dim)','CORTE_POR_ALISTAR':'#ffc800','EN_CONFECCION':'var(--accent)','NOVEDAD':'var(--red)'};
-  activas.forEach(function(o){ if(estadoMap.hasOwnProperty(o.estado)) estadoMap[o.estado]++; });
-  var totalActivas = activas.length || 1;
+  // RIGHT — Estado de OTs: visual de barras grandes (más legible que donut)
+  var eData = [
+    {k:'PENDIENTE_CORTAR', label:'Pendiente Cortar', color:'#475569',    bg:'rgba(71,85,105,.15)'},
+    {k:'CORTE_POR_ALISTAR',label:'Corte por Alistar',color:C_GOLD,       bg:'rgba(251,191,36,.12)'},
+    {k:'EN_CONFECCION',    label:'En Confección',    color:C_PURPLE,      bg:'rgba(168,85,247,.12)'},
+    {k:'ASIGNADO',         label:'Asignado',         color:C_CYAN,        bg:'rgba(0,212,255,.1)'},
+    {k:'NOVEDAD',          label:'Novedad',          color:C_PINK,        bg:'rgba(236,72,153,.12)'},
+  ];
+  var eMap = {};
+  eData.forEach(function(e){ eMap[e.k]=0; });
+  activas.forEach(function(o){ if(eMap.hasOwnProperty(o.estado)) eMap[o.estado]++; });
+  var totalAct = activas.length || 1;
 
-  h += '<div class="card" style="padding:16px;">';
-  h += '<div class="section-title" style="margin-bottom:12px;">Estado de OTs <span>activas</span></div>';
-  // Donut SVG
-  var cx2=80,cy2=80,r2=60,ir2=36;
-  h += '<div style="display:flex;align-items:center;gap:20px;">';
-  h += '<svg viewBox="0 0 160 160" style="width:140px;flex-shrink:0;">';
-  var startAngle = -Math.PI/2;
-  var keys2 = Object.keys(estadoMap);
-  keys2.forEach(function(k){
-    var count = estadoMap[k];
-    if(!count) return;
-    var angle = (count/totalActivas) * 2 * Math.PI;
-    var endAngle = startAngle + angle;
-    var x1=Math.round(cx2+r2*Math.cos(startAngle)*100)/100, y1=Math.round(cy2+r2*Math.sin(startAngle)*100)/100;
-    var x2=Math.round(cx2+r2*Math.cos(endAngle)*100)/100, y2=Math.round(cy2+r2*Math.sin(endAngle)*100)/100;
-    var ix1=Math.round(cx2+ir2*Math.cos(startAngle)*100)/100, iy1=Math.round(cy2+ir2*Math.sin(startAngle)*100)/100;
-    var ix2=Math.round(cx2+ir2*Math.cos(endAngle)*100)/100, iy2=Math.round(cy2+ir2*Math.sin(endAngle)*100)/100;
-    var large = angle > Math.PI ? 1 : 0;
-    h += '<path d="M ' + ix1 + ' ' + iy1 + ' L ' + x1 + ' ' + y1 + ' A ' + r2 + ' ' + r2 + ' 0 ' + large + ' 1 ' + x2 + ' ' + y2 + ' L ' + ix2 + ' ' + iy2 + ' A ' + ir2 + ' ' + ir2 + ' 0 ' + large + ' 0 ' + ix1 + ' ' + iy1 + ' Z" fill="' + estadoColors[k] + '" opacity="0.85"/>';
-    startAngle = endAngle;
-  });
-  h += '<text x="80" y="76" text-anchor="middle" fill="var(--text)" font-size="20" font-weight="700">' + activas.length + '</text>';
-  h += '<text x="80" y="92" text-anchor="middle" fill="var(--dim)" font-size="10">OTs</text>';
-  h += '</svg>';
-  h += '<div style="flex:1;">';
-  keys2.forEach(function(k){
-    if(!estadoMap[k]) return;
-    h += '<div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">';
-    h += '<div style="width:10px;height:10px;border-radius:2px;background:' + estadoColors[k] + ';flex-shrink:0;"></div>';
-    h += '<div style="font-size:12px;color:var(--text);flex:1;">' + estadoLabels[k] + '</div>';
-    h += '<div style="font-size:12px;color:var(--dim);font-weight:600;">' + estadoMap[k] + '</div>';
+  h += '<div class="card" style="padding:18px 16px;">';
+  h += '<div style="font-family:var(--bebas);font-size:18px;letter-spacing:1px;margin-bottom:4px;">Estado de OTs</div>';
+  h += '<div style="font-size:11px;color:#64748b;margin-bottom:16px;">'+activas.length+' órdenes activas</div>';
+  eData.forEach(function(e){
+    var cnt = eMap[e.k];
+    if(!cnt) return;
+    var pctE = Math.round(cnt/totalAct*100);
+    h += '<div style="margin-bottom:12px;">';
+    h += '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;">';
+    h += '<span style="font-size:12px;font-weight:600;color:#cbd5e1;">'+e.label+'</span>';
+    h += '<span style="font-size:14px;font-weight:700;color:'+e.color+';">'+cnt+'<span style="font-size:10px;font-weight:400;color:#64748b;margin-left:4px;">'+pctE+'%</span></span>';
     h += '</div>';
+    h += '<div style="height:10px;border-radius:8px;background:#1e2535;overflow:hidden;">';
+    h += '<div style="height:100%;width:'+pctE+'%;border-radius:8px;background:'+e.color+';opacity:0.85;transition:width .5s;"></div>';
+    h += '</div></div>';
   });
-  h += '</div></div></div>';
+  h += '</div>';
 
-  h += '</div>'; // end two-column grid
+  h += '</div>'; // fin two-col
 
   // ── Alertas urgentes ─────────────────────────────────────────────────────────
   var alertas = DB.ots.filter(function(o){
     if(o.estado==='ENTREGADO') return false;
     var d = diasRestantes(o.fecha_estimada_entrega);
-    return d !== null && d <= 5;
+    return d!==null && d<=5;
   }).sort(function(a,b){ return (diasRestantes(a.fecha_estimada_entrega)||0)-(diasRestantes(b.fecha_estimada_entrega)||0); });
 
-  if(alertas.length > 0){
-    h += '<div class="section-title" style="margin-top:20px;">Alertas urgentes <span>' + alertas.length + ' OTs</span></div>';
+  if(alertas.length>0){
+    h += '<div style="font-family:var(--bebas);font-size:18px;letter-spacing:1px;margin:20px 0 10px;">⚠ Alertas Urgentes <span style="font-family:var(--font);font-size:13px;font-weight:400;color:#64748b;letter-spacing:0;">'+alertas.length+' OTs</span></div>';
     alertas.slice(0,6).forEach(function(ot){
       var d = diasRestantes(ot.fecha_estimada_entrega);
-      var cls = d < 0 ? '' : 'warning';
-      h += '<div class="alert-card ' + cls + '" data-ot="' + ot.id + '" onclick="verOT(this.dataset.ot)" style="cursor:pointer;">';
-      h += '<div style="display:flex;align-items:center;justify-content:space-between;">';
-      h += '<div><strong>OT-' + ot.numero_ot + '</strong> · ' + ot.nombre + ' ' + ot.color + ' ' + ot.talla + ' (' + ot.cantidad + ' uds)';
-      h += ' <span style="color:var(--dim);font-size:12px;">— ' + getSatNombre(ot.satelite_id) + '</span></div>';
+      var bc = d<0?'rgba(236,72,153,.08)':'rgba(251,191,36,.06)';
+      var bl = d<0?'rgba(236,72,153,.3)':'rgba(251,191,36,.25)';
+      h += '<div data-ot="'+ot.id+'" onclick="verOT(this.dataset.ot)" style="background:'+bc+';border:1px solid '+bl+';border-radius:10px;padding:11px 14px;margin-bottom:7px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;">';
+      h += '<div style="font-size:13px;"><strong style="color:#e2e8f0;">OT-'+ot.numero_ot+'</strong> · '+ot.nombre+' '+ot.color+' '+ot.talla+' <span style="color:#94a3b8;">('+ot.cantidad+' uds) — '+getSatNombre(ot.satelite_id)+'</span></div>';
       h += diasChip(d);
-      h += '</div></div>';
+      h += '</div>';
     });
   }
 
