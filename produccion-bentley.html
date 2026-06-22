@@ -2291,8 +2291,8 @@ function renderDiseno(){
     catMap[cat].total++;
     var et = d.kanban_estado || 'EN_DISENO_DIGITAL';
     catMap[cat].etapas[et] = (catMap[cat].etapas[et]||0) + 1;
-    var gen = d.genero || '';
-    if(gen) catMap[cat].generos[gen] = (catMap[cat].generos[gen]||0) + 1;
+    var gen = d.genero || 'Unisex';
+    catMap[cat].generos[gen] = (catMap[cat].generos[gen]||0) + 1;
   });
   var cats = Object.keys(catMap).sort(function(a,b){ return catMap[b].total - catMap[a].total; });
   if(cats.length){
@@ -2305,7 +2305,7 @@ function renderDiseno(){
       EN_CONFECCION_MUESTRA:'Confec.', EN_REVISION_GERENCIA:'Revisión', EN_ESCALADO:'Escalado'
     };
     var GEN_COLOR = {
-      'Mixto':'#94a3b8','Niña':'#f472b6','Niño':'#38bdf8',
+      'Unisex':'#94a3b8','Mixto':'#94a3b8','Niña':'#f472b6','Niño':'#38bdf8',
       'Mujer':'#f472b6','Hombre':'#38bdf8','Femenino':'#f472b6','Masculino':'#38bdf8'
     };
     h += '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;">';
@@ -2326,8 +2326,6 @@ function renderDiseno(){
           h += '<span style="background:'+gc+'18;border:1px solid '+gc+'44;color:'+gc+';font-size:9px;font-weight:700;border-radius:10px;padding:1px 6px;">'+info.generos[g]+' '+esc(g)+'</span>';
         });
         h += '</div>';
-      } else {
-        h += '<div style="font-size:9px;color:#334155;margin-bottom:7px;">sin género asignado</div>';
       }
       // Mini barras por etapa
       var etKeys = Object.keys(info.etapas);
@@ -2380,7 +2378,9 @@ function renderDiseno(){
       h += '<div style="font-size:10px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;">';
       h += '<span style="width:5px;height:5px;border-radius:50%;background:'+rc+';flex-shrink:0;display:inline-block;"></span>';
       h += '<span>'+esc(d.categoria||'SIN CATEGORÍA')+'</span>';
-      if(d.genero){ h += '<span style="background:rgba(255,255,255,.06);border:1px solid #1e2535;border-radius:4px;padding:0px 5px;font-size:9px;color:#94a3b8;letter-spacing:.3px;">'+esc(d.genero)+'</span>'; }
+      var _gen = d.genero || 'Unisex';
+      var _gc = {Unisex:'#94a3b8',Mixto:'#94a3b8',Niña:'#f472b6',Niño:'#38bdf8',Mujer:'#f472b6',Hombre:'#38bdf8'}[_gen]||'#94a3b8';
+      h += '<span style="background:'+_gc+'18;border:1px solid '+_gc+'44;border-radius:4px;padding:0px 6px;font-size:9px;color:'+_gc+';font-weight:600;letter-spacing:.3px;">'+esc(_gen)+'</span>';
       h += '</div>';
 
       // Fila 3: nombre del diseño
@@ -2485,9 +2485,9 @@ function guardarNuevaMarca(){
 }
 
 var DIS_GENEROS = {
-  'Bentley Kids': ['Mixto','Niña','Niño'],
+  'Bentley Kids': ['Unisex','Niña','Niño'],
   'Prime':        ['Mujer','Hombre'],
-  '_default':     ['Mixto','Femenino','Masculino']
+  '_default':     ['Unisex','Femenino','Masculino']
 };
 function getGenerosParaMarca(marca){
   return DIS_GENEROS[marca] || DIS_GENEROS['_default'];
