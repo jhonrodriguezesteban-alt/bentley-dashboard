@@ -2348,7 +2348,12 @@ function renderDiseno(){
 
   DIS_KANBAN.forEach(function(col){
     var items = todosItems.filter(function(d){ return (d.kanban_estado||'EN_DISENO_DIGITAL')===col.k; })
-                          .sort(function(a,b){ return (a.prioridad||99)-(b.prioridad||99); });
+                          .sort(function(a,b){
+                            var pa=(a.prioridad||99), pb=(b.prioridad||99);
+                            if(pa!==pb) return pa-pb;
+                            // mismo priority: más reciente primero
+                            return (b._ts||b.fecha_creacion||'') > (a._ts||a.fecha_creacion||'') ? 1 : -1;
+                          });
     h += '<div style="flex-shrink:0;width:230px;">';
     // Columna header
     h += '<div style="background:'+col.bg+';border:1px solid '+col.color+'44;border-bottom:none;border-radius:10px 10px 0 0;padding:10px 13px;display:flex;align-items:center;justify-content:space-between;">';
@@ -2493,11 +2498,17 @@ function getGenerosParaMarca(marca){
   return DIS_GENEROS[marca] || DIS_GENEROS['_default'];
 }
 
+var _disPendienteFotos = []; // fotos seleccionadas antes de guardar
+
 function abrirFormDiseno(id){
   var d = id ? (DB.disenos||[]).find(function(x){ return x.id===id; }) : null;
   var marcas = getDisMarcas();
   var marcaActual = (d&&d.marca) || _disFiltroMarca || marcas[0];
   var generos = getGenerosParaMarca(marcaActual);
+  _disPendienteFotos = [];
+
+  // Pre-generar ID para nuevos diseños (necesario para subir fotos antes de guardar)
+  var preId = d ? d.id : uid();
 
   var body = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">';
   body += '<div class="form-group"><label class="form-label">Prioridad</label><select id="dis-prio" class="form-control">';
@@ -2523,11 +2534,29 @@ function abrirFormDiseno(id){
   DIS_KANBAN.forEach(function(c){ body += '<option value="'+c.k+'"'+((d&&(d.kanban_estado||'EN_DISENO_DIGITAL')===c.k)||((!d)&&c.k==='EN_DISENO_DIGITAL')?' selected':'')+'>'+c.label+'</option>'; });
   body += '</select></div>';
   body += '<div class="form-group"><label class="form-label">Nota / Pendiente</label><input id="dis-nota" class="form-control" value="'+esc(d?d.nota||d.estado||'':'')+'" placeholder="Ej: PDTE FOTO JUAN, POR REVISAR CAPOTA..."></div>';
+
+  // Sección de fotos
+  body += '<div style="border-top:1px solid #1e2535;padding-top:14px;margin-top:4px;">';
+  body += '<label class="form-label" style="margin-bottom:8px;">📷 Fotos de referencia</label>';
+  body += '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;" id="dis-fotos-preview">';
+  body += '<label style="display:flex;align-items:center;gap:6px;background:rgba(251,191,36,.08);border:1px dashed rgba(251,191,36,.4);border-radius:8px;padding:7px 12px;cursor:pointer;font-size:12px;color:#fbbf24;font-weight:600;">📷 Agregar foto<input type="file" accept="image/*" multiple style="display:none" onchange="seleccionarFotosForm(this.files)"></label>';
+  body += '<span id="dis-fotos-count" style="font-size:11px;color:#64748b;"></span>';
+  body += '</div></div>';
+
+  body += '<input type="hidden" id="dis-pre-id" value="'+preId+'">';
   if(d) body += '<input type="hidden" id="dis-edit-id" value="'+d.id+'">';
+
   var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>';
   if(d) footer += '<button class="btn btn-danger" data-id="'+d.id+'" onclick="eliminarDiseno(this.dataset.id)" style="margin-right:auto;">Eliminar</button>';
-  footer += '<button class="btn btn-primary" onclick="guardarDisenoForm()">Guardar</button>';
+  footer += '<button class="btn btn-primary" id="btn-guardar-diseno" onclick="guardarDisenoForm()">Guardar</button>';
   openModal(d?'Editar Diseño':'Nuevo Diseño', body, footer);
+}
+
+function seleccionarFotosForm(files){
+  if(!files||!files.length) return;
+  for(var i=0;i<files.length;i++) _disPendienteFotos.push(files[i]);
+  var countEl = document.getElementById('dis-fotos-count');
+  if(countEl) countEl.textContent = _disPendienteFotos.length + ' foto' + (_disPendienteFotos.length>1?'s':'') + ' lista' + (_disPendienteFotos.length>1?'s':'');
 }
 
 function actualizarGenerosForm(marca){
@@ -2538,7 +2567,7 @@ function actualizarGenerosForm(marca){
 }
 function editarDiseno(id){ abrirFormDiseno(id); }
 
-function guardarDisenoForm(){
+async function guardarDisenoForm(){
   var nombre = (document.getElementById('dis-nombre').value||'').trim();
   var marca = document.getElementById('dis-marca').value;
   var cat = document.getElementById('dis-cat').value;
@@ -2546,15 +2575,43 @@ function guardarDisenoForm(){
   var prio = parseInt(document.getElementById('dis-prio').value)||1;
   var kanban = document.getElementById('dis-kanban').value||'EN_DISENO_DIGITAL';
   var nota = (document.getElementById('dis-nota').value||'').trim();
-  var genero = (document.getElementById('dis-genero') ? document.getElementById('dis-genero').value : '') || '';
+  var genero = (document.getElementById('dis-genero') ? document.getElementById('dis-genero').value : '') || 'Unisex';
+  var preId = document.getElementById('dis-pre-id') ? document.getElementById('dis-pre-id').value : null;
   var editId = document.getElementById('dis-edit-id') ? document.getElementById('dis-edit-id').value : null;
   if(!nombre){ toast('La referencia es requerida','error'); return; }
   if(!DB.disenos) DB.disenos = [];
+
+  var btn = document.getElementById('btn-guardar-diseno');
+  if(btn){ btn.disabled=true; btn.textContent='Guardando...'; }
+
   if(editId){
     var ex = DB.disenos.find(function(d){ return d.id===editId; });
     if(ex){ ex.nombre=nombre; ex.marca=marca; ex.categoria=cat; ex.responsable=resp; ex.prioridad=prio; ex.kanban_estado=kanban; ex.nota=nota; ex.genero=genero; }
   } else {
-    DB.disenos.push({id:uid(),nombre:nombre,marca:marca,categoria:cat,responsable:resp,prioridad:prio,kanban_estado:kanban,nota:nota,genero:genero,fecha_creacion:hoy()});
+    var nuevoId = preId || uid();
+    // _ts negativo para que aparezca primero en el sort (más reciente)
+    DB.disenos.push({id:nuevoId,nombre:nombre,marca:marca,categoria:cat,responsable:resp,prioridad:prio,kanban_estado:kanban,nota:nota,genero:genero,fecha_creacion:hoy(),_ts:new Date().toISOString()});
+    // Subir fotos pendientes si las hay
+    if(_disPendienteFotos.length){
+      _fotosCtx = nuevoId;
+      var tk = GT || localStorage.getItem('bentley_gh_token') || '';
+      if(tk){
+        toast('Subiendo '+_disPendienteFotos.length+' foto'+(_disPendienteFotos.length>1?'s':'')+'...','info');
+        var dis = DB.disenos.find(function(d){ return d.id===nuevoId; });
+        if(!dis.imagenes) dis.imagenes = [];
+        for(var i=0;i<_disPendienteFotos.length;i++){
+          var file = _disPendienteFotos[i];
+          try {
+            var b64 = await new Promise(function(res,rej){ var r=new FileReader(); r.onload=function(e){res(e.target.result.split(',')[1]);}; r.onerror=rej; r.readAsDataURL(file); });
+            var ext = file.name.split('.').pop().toLowerCase()||'jpg';
+            var fname = 'disenos-imgs/'+nuevoId+'_'+Date.now()+'_'+i+'.'+ext;
+            var putR = await fetch('https://api.github.com/repos/'+REPO+'/contents/'+fname,{method:'PUT',headers:{'Authorization':'token '+tk,'Content-Type':'application/json'},body:JSON.stringify({message:'Foto diseño: '+nombre,content:b64})});
+            if(putR.ok) dis.imagenes.push({id:'img_'+Date.now()+'_'+i,url:RAW_URL+fname,tipo:'referencia',fecha:hoy(),nombre:file.name});
+          } catch(e){}
+        }
+        _disPendienteFotos = [];
+      }
+    }
   }
   closeModal(); guardarDisenos(); renderPage('diseno');
 }
