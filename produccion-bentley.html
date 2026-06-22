@@ -615,6 +615,9 @@ textarea.form-control{resize:vertical;min-height:80px;}
       <button class="btn btn-primary" onclick="saveSettings()" style="flex:1;">Guardar configuración</button>
       <button id="btn-activar-notif" class="btn btn-ghost" onclick="activarNotificacionesPush()" style="white-space:nowrap;" title="Activar notificaciones en este dispositivo">🔔 Activar notifs</button>
     </div>
+    <div style="margin-top:8px;">
+      <button class="btn btn-ghost" onclick="probarNotificacion()" style="width:100%;font-size:12px;">📤 Enviar notificación de prueba al equipo</button>
+    </div>
     <div class="sep"></div>
     <div style="font-size:12px;color:var(--dim);margin-bottom:8px;">Datos de la app:</div>
     <div style="display:flex;gap:8px;">
@@ -942,25 +945,39 @@ async function activarNotificacionesPush(){
 
 async function enviarNotifOS(titulo, cuerpo, urlDestino){
   var apiKey = localStorage.getItem('bentley_os_key') || '';
-  if(!apiKey) return; // solo quien tiene la clave envía (admin/Jhon)
+  if(!apiKey) return;
   try {
-    await fetch('https://onesignal.com/api/v1/notifications', {
+    var res = await fetch('https://onesignal.com/api/v1/notifications', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Key ' + apiKey
-      },
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Key ' + apiKey },
       body: JSON.stringify({
         app_id: OS_APP_ID,
         included_segments: ['All'],
         headings: { es: titulo, en: titulo },
         contents: { es: cuerpo, en: cuerpo },
         url: urlDestino || 'https://jhonrodriguezesteban-alt.github.io/bentley-dashboard/produccion-bentley.html',
-        chrome_web_icon: 'https://jhonrodriguezesteban-alt.github.io/bentley-dashboard/icon-192.png',
-        chrome_web_badge: 'https://jhonrodriguezesteban-alt.github.io/bentley-dashboard/icon-192.png'
+        chrome_web_icon: 'https://jhonrodriguezesteban-alt.github.io/bentley-dashboard/icon-192.png'
       })
     });
-  } catch(e){ console.log('OS push error:', e); }
+    var data = await res.json();
+    if(data.errors){ console.warn('OS errors:', data.errors); }
+    else { console.log('OS notif sent:', data.id, 'recipients:', data.recipients); }
+    return data;
+  } catch(e){ console.warn('OS push error:', e); }
+}
+
+async function probarNotificacion(){
+  var apiKey = localStorage.getItem('bentley_os_key') || '';
+  if(!apiKey){ toast('Primero guarda la OneSignal API Key en configuración','error'); return; }
+  toast('Enviando notificación de prueba...','info');
+  var data = await enviarNotifOS('🔔 Prueba Bentley', 'Si ves esto en tu celular, las notificaciones funcionan ✅');
+  if(data && data.id){
+    toast('Notif enviada · '+( data.recipients||0)+' destinatario(s)','success');
+  } else if(data && data.errors){
+    toast('Error: '+JSON.stringify(data.errors),'error');
+  } else {
+    toast('Sin respuesta del servidor','error');
+  }
 }
 
 // Verifica estado actual del permiso y actualiza botón
