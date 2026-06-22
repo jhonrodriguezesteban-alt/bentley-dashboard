@@ -2312,6 +2312,12 @@ function renderDiseno(){
   });
   var cats = Object.keys(catMap).sort(function(a,b){ return catMap[b].total - catMap[a].total; });
   if(cats.length){
+    // ── Totales generales ────────────────────────────────────────────────────
+    var totalGeneral = activosItems.length;
+    var genTotales = {};
+    activosItems.forEach(function(d){ var g=d.genero||'Unisex'; genTotales[g]=(genTotales[g]||0)+1; });
+    var etapaTotales = {};
+    activosItems.forEach(function(d){ var e=d.kanban_estado||'EN_DISENO_DIGITAL'; etapaTotales[e]=(etapaTotales[e]||0)+1; });
     var ETAPA_COLOR = {
       EN_DISENO_DIGITAL:'#a855f7', EN_CORTE_MUESTRA:'#f97316',
       EN_CONFECCION_MUESTRA:'#00d4ff', EN_REVISION_GERENCIA:'#fbbf24', EN_ESCALADO:'#34d399'
@@ -2325,6 +2331,36 @@ function renderDiseno(){
       'Mujer':'#f472b6','Hombre':'#38bdf8','Femenino':'#f472b6','Masculino':'#38bdf8'
     };
     h += '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;">';
+
+    // ── Tarjeta TOTAL ────────────────────────────────────────────────────────
+    h += '<div onclick="abrirModalCategoria(\'__TODOS__\')" style="background:linear-gradient(135deg,#0d1117 0%,#111827 100%);border:1px solid #3b82f644;border-radius:10px;padding:11px 14px;min-width:160px;flex:0 0 auto;cursor:pointer;transition:border-color .15s;" onmouseenter="this.style.borderColor=\'#3b82f6\'" onmouseleave="this.style.borderColor=\'#3b82f644\'">';
+    h += '<div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:2px;">';
+    h += '<div style="font-size:10px;font-weight:700;color:#3b82f6;text-transform:uppercase;letter-spacing:.5px;">TOTAL EN PROCESO</div>';
+    h += '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:26px;color:#e2e8f0;line-height:1;">'+totalGeneral+'</div>';
+    h += '</div>';
+    // Género pills resumen
+    var genTotKeys = Object.keys(genTotales).sort(function(a,b){ var o={'Unisex':0,'Mixto':0,'Niña':1,'Mujer':1,'Niño':2,'Hombre':2}; return (o[a]||0)-(o[b]||0); });
+    if(genTotKeys.length){
+      h += '<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:7px;">';
+      genTotKeys.forEach(function(g){
+        var gc=GEN_COLOR[g]||'#94a3b8';
+        h += '<span style="background:'+gc+'18;border:1px solid '+gc+'44;color:'+gc+';font-size:9px;font-weight:700;border-radius:10px;padding:1px 6px;">'+genTotales[g]+' '+esc(g)+'</span>';
+      });
+      h += '</div>';
+    }
+    // Mini barras etapa global
+    h += '<div style="display:flex;flex-direction:column;gap:3px;border-top:1px solid #1e2535;padding-top:6px;">';
+    Object.keys(etapaTotales).forEach(function(et){
+      var c=ETAPA_COLOR[et]||'#94a3b8';
+      var pct=Math.round((etapaTotales[et]/totalGeneral)*100);
+      h += '<div style="display:flex;align-items:center;gap:5px;">';
+      h += '<div style="flex:1;height:3px;background:#1e2535;border-radius:2px;overflow:hidden;"><div style="width:'+pct+'%;height:100%;background:'+c+';border-radius:2px;"></div></div>';
+      h += '<span style="font-size:9px;color:'+c+';white-space:nowrap;">'+etapaTotales[et]+' '+(ETAPA_SHORT[et]||et)+'</span>';
+      h += '</div>';
+    });
+    h += '</div>';
+    h += '</div>'; // fin tarjeta TOTAL
+
     cats.forEach(function(cat){
       var info = catMap[cat];
       h += '<div onclick="abrirModalCategoria(this.dataset.cat)" data-cat="'+esc(cat)+'" style="background:#0d1117;border:1px solid #1e2535;border-radius:10px;padding:11px 14px;min-width:140px;flex:0 0 auto;cursor:pointer;transition:border-color .15s;" onmouseenter="this.style.borderColor=\'#3b82f6\'" onmouseleave="this.style.borderColor=\'#1e2535\'">';
@@ -2833,14 +2869,19 @@ async function compartirImagenLightbox(){
 // ── Modal Categoría ──────────────────────────────────────────────────────────
 function abrirModalCategoria(cat){
   var GEN_ORDER = {'Unisex':0,'Mixto':0,'Niña':1,'Mujer':1,'Niño':2,'Hombre':2,'Femenino':1,'Masculino':2};
+  var esTodos = (cat === '__TODOS__');
   var todos = (DB.disenos||[]).filter(function(d){
     if(d.eliminado) return false;
     if(_disFiltroMarca && d.marca !== _disFiltroMarca) return false;
-    return (d.categoria||'Sin categoría') === cat;
+    if(!esTodos) return (d.categoria||'Sin categoría') === cat;
+    return d.kanban_estado !== 'LISTA_PRODUCCION';
   }).sort(function(a,b){
     var ga = GEN_ORDER[a.genero||'Unisex']||0;
     var gb = GEN_ORDER[b.genero||'Unisex']||0;
     if(ga!==gb) return ga-gb;
+    if(!esTodos) return (a.nombre||'').localeCompare(b.nombre||'');
+    var ca = a.categoria||'', cb = b.categoria||'';
+    if(ca!==cb) return ca.localeCompare(cb);
     return (a.nombre||'').localeCompare(b.nombre||'');
   });
   var GEN_COLOR = {
@@ -2856,7 +2897,7 @@ function abrirModalCategoria(cat){
     EN_CONFECCION_MUESTRA:'#00d4ff', EN_REVISION_GERENCIA:'#fbbf24', EN_ESCALADO:'#34d399'
   };
   var RESP_COLOR = {Carolina:'#f472b6',Isa:'#a78bfa',John:'#38bdf8',Juan:'#34d399'};
-  document.getElementById('modal-cat-titulo').textContent = cat + ' · ' + todos.length + ' en proceso';
+  document.getElementById('modal-cat-titulo').textContent = (esTodos ? 'TODOS EN PROCESO' : cat) + ' · ' + todos.length + (esTodos ? ' diseños' : ' en proceso');
   var b = '';
   if(!todos.length){
     b = '<div style="color:#475569;font-size:14px;padding:20px 0;">No hay diseños activos en esta categoría.</div>';
@@ -2881,6 +2922,10 @@ function abrirModalCategoria(cat){
         b += '</div>';
       }
       b += '<div style="padding:10px 11px;">';
+      // Categoría (solo en vista TODOS)
+      if(esTodos && d.categoria){
+        b += '<div style="font-size:9px;color:#3b82f6;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px;">'+esc(d.categoria)+'</div>';
+      }
       // Nombre
       b += '<div style="font-size:12px;font-weight:700;color:#e2e8f0;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(d.nombre||'Sin nombre')+'</div>';
       // Etapa badge
