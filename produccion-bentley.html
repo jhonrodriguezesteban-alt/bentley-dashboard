@@ -690,7 +690,8 @@ function doLogin(){
     applyModuleAccess(u);
     var lastPage = localStorage.getItem('bentley_last_page') || 'dashboard';
     navTo(lastPage);
-    if(!DB.ops.length) cargarDatos();
+    if(!DB.ops.length) cargarDatos().then(function(){ iniciarAutoSync(); });
+    else iniciarAutoSync();
   } else {
     err.style.display = 'block';
     document.getElementById('login-pass').value = '';
@@ -894,38 +895,92 @@ function closeModal(){ document.getElementById('modal-overlay').classList.remove
 
 // ─── GitHub API ────────────────────────────────────────────────────────────────
 var _saving = {};
+var _fileShas = {}; // SHA en caché por archivo para detectar cambios externos
+
 async function guardarArchivo(key, data){
-  if(_saving[key]){ return false; } // evitar doble guardado
+  if(_saving[key]){ return false; }
   _saving[key] = true;
   var tk = GT || localStorage.getItem('bentley_gh_token') || '';
   if(!tk){ toast('Sin token GitHub', 'error'); _saving[key]=false; return false; }
   var path = FILES[key];
-  try {
-    // Cache-Control NO se incluye: falla CORS preflight de GitHub API
-    var getR = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + path + '?t=' + Date.now(), {
-      headers: { 'Authorization': 'token ' + tk }
-    });
-    var sha = null;
-    if(getR.ok){ var cur = await getR.json(); sha = cur.sha || null; }
-    var content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
-    var body = { message: 'Produccion Bentley: actualizar ' + key, content: content };
-    if(sha) body.sha = sha;
-    var putR = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + path, {
-      method: 'PUT',
-      headers: { 'Authorization': 'token ' + tk, 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
-    _saving[key] = false;
-    if(putR.ok){
-      var si = document.getElementById('sync-indicator');
-      if(si){ si.textContent = '✓ Sync ' + new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}); si.style.color = 'var(--green)'; }
-      return true;
-    } else {
-      var err = await putR.json();
-      toast('Error GitHub ' + putR.status + ': ' + (err.message||''), 'error');
-      return false;
-    }
-  } catch(e){ _saving[key]=false; toast('Error de red: ' + e.message, 'error'); return false; }
+  var content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+
+  for(var attempt = 0; attempt < 3; attempt++){
+    try {
+      var getR = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + path + '?t=' + Date.now(), {
+        headers: { 'Authorization': 'token ' + tk }
+      });
+      var sha = null;
+      if(getR.ok){ var cur = await getR.json(); sha = cur.sha || null; _fileShas[key] = sha; }
+      var body = { message: 'Produccion Bentley: actualizar ' + key, content: content };
+      if(sha) body.sha = sha;
+      var putR = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + path, {
+        method: 'PUT',
+        headers: { 'Authorization': 'token ' + tk, 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      if(putR.ok){
+        var res = await putR.json();
+        if(res.content && res.content.sha) _fileShas[key] = res.content.sha;
+        _saving[key] = false;
+        var si = document.getElementById('sync-indicator');
+        if(si){ si.textContent = '✓ Sync ' + new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}); si.style.color = 'var(--green)'; }
+        return true;
+      } else if(putR.status === 409){
+        // SHA desactualizado — otro usuario guardó antes. Reintentamos con SHA fresco.
+        _fileShas[key] = null;
+        if(attempt < 2){ await new Promise(function(r){ setTimeout(r, 600 + attempt*400); }); continue; }
+        toast('Conflicto al guardar ' + key + ' — reintenta en un momento', 'warning');
+        _saving[key] = false; return false;
+      } else {
+        var err = await putR.json();
+        toast('Error GitHub ' + putR.status + ': ' + (err.message||''), 'error');
+        _saving[key] = false; return false;
+      }
+    } catch(e){ _saving[key]=false; toast('Error de red: ' + e.message, 'error'); return false; }
+  }
+  _saving[key] = false; return false;
+}
+
+// ─── Auto-sincronización silenciosa (30 s) ─────────────────────────────────────
+var _autoSyncInterval = null;
+async function _autoSyncTick(){
+  var tk = GT || localStorage.getItem('bentley_gh_token') || '';
+  var changed = false;
+  var keys = ['disenos','ots','ops','satelites','prog_ops','costos_mo'];
+  for(var i=0; i<keys.length; i++){
+    var key = keys[i];
+    if(_saving[key]) continue; // no interferir si hay un guardado en curso
+    try {
+      var r = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + FILES[key], {
+        headers: tk ? {'Authorization': 'token ' + tk} : {}
+      });
+      if(!r.ok) continue;
+      var fileData = await r.json();
+      if(_fileShas[key] && _fileShas[key] === fileData.sha) continue; // sin cambios
+      _fileShas[key] = fileData.sha;
+      var parsed = JSON.parse(decodeURIComponent(escape(atob(fileData.content.replace(/\n/g,'')))));
+      if(key==='disenos'){ DB.disenos = parsed.disenos||[]; DB.disenos_cfg = parsed.disenos_cfg||{}; }
+      else if(key==='ots'){ DB.ots = parsed.ots||[]; }
+      else if(key==='ops'){ DB.ops = parsed.ops||[]; }
+      else if(key==='satelites'){ DB.satelites = parsed.satelites||[]; }
+      else if(key==='prog_ops'){ DB.prog_ops = parsed.ops_plan||[]; }
+      else if(key==='costos_mo'){ DB.costos_mo = {precios:parsed.precios||[], pagos:parsed.pagos||[]}; }
+      changed = true;
+    } catch(e){ /* silencioso */ }
+  }
+  if(changed){
+    saveLocal();
+    updateNovBadge();
+    renderPage(currentPage);
+    var si = document.getElementById('sync-indicator');
+    if(si){ si.textContent = '↻ ' + new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}); si.style.color = 'var(--cyan)';
+      setTimeout(function(){ if(si) si.style.color=''; }, 2000); }
+  }
+}
+function iniciarAutoSync(){
+  if(_autoSyncInterval) clearInterval(_autoSyncInterval);
+  _autoSyncInterval = setInterval(_autoSyncTick, 30000);
 }
 
 async function guardarTodo(){
@@ -2233,28 +2288,42 @@ function renderDiseno(){
 
     items.forEach(function(d){
       var rc = DIS_RESP_COLORS[d.responsable]||'#94a3b8';
-      var colIdx = DIS_KANBAN.findIndex(function(c){ return c.k===d.kanban_estado||c.k==='EN_DISENO_DIGITAL'; });
-      var canBack = colIdx > 0, canFwd = colIdx < DIS_KANBAN.length-1;
-      h += '<div draggable="true" data-id="'+d.id+'" ondragstart="dragDisenoStart(event,this.dataset.id)" style="background:#13161f;border:1px solid #1e2535;border-left:3px solid '+rc+';border-radius:10px;padding:11px 12px;margin-bottom:8px;cursor:grab;">';
-      // Header card
-      h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">';
-      h += '<span style="font-size:10px;font-weight:700;color:'+rc+';text-transform:uppercase;letter-spacing:.5px;">'+esc(d.responsable||'—')+'</span>';
+      var curEstado = d.kanban_estado||'EN_DISENO_DIGITAL';
+      h += '<div draggable="true" data-id="'+d.id+'" ondragstart="dragDisenoStart(event,this.dataset.id)" style="background:#13161f;border:1px solid #1e2535;border-left:3px solid '+rc+';border-radius:10px;padding:11px 12px;margin-bottom:8px;">';
+
+      // Fila 1: responsable (select inline) + prioridad + editar
+      h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">';
+      h += '<select data-id="'+d.id+'" onchange="cambiarRespDiseno(this.dataset.id,this.value)" onclick="event.stopPropagation()" style="background:transparent;border:none;font-size:10px;font-weight:700;color:'+rc+';text-transform:uppercase;letter-spacing:.5px;cursor:pointer;padding:0;outline:none;max-width:110px;">';
+      DIS_RESPONSABLES.forEach(function(r){ h += '<option value="'+r+'"'+(d.responsable===r?' selected':'')+' style="background:#1a1e2a;color:#e2e8f0;">'+r+'</option>'; });
+      h += '</select>';
       h += '<div style="display:flex;gap:4px;align-items:center;">';
       h += '<span style="font-size:9px;color:#334155;background:rgba(0,0,0,.3);border-radius:4px;padding:1px 5px;">P'+d.prioridad+'</span>';
-      h += '<button data-id="'+d.id+'" onclick="abrirFormDiseno(this.dataset.id)" style="background:none;border:none;cursor:pointer;color:#334155;font-size:11px;padding:0;line-height:1;">✏</button>';
+      h += '<button data-id="'+d.id+'" onclick="abrirFormDiseno(this.dataset.id)" style="background:none;border:none;cursor:pointer;color:#475569;font-size:11px;padding:0;line-height:1;" title="Editar">✏</button>';
       h += '</div></div>';
-      h += '<div style="font-size:10px;color:#475569;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px;">'+esc(d.categoria||'')+'</div>';
-      h += '<div style="font-size:12px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:8px;">'+esc(d.nombre)+'</div>';
-      // Nota (estado detalle)
+
+      // Fila 2: categoría
+      h += '<div style="font-size:10px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;display:flex;align-items:center;gap:5px;">';
+      h += '<span style="width:5px;height:5px;border-radius:50%;background:'+rc+';flex-shrink:0;display:inline-block;"></span>';
+      h += esc(d.categoria||'SIN CATEGORÍA')+'</div>';
+
+      // Fila 3: nombre del diseño
+      h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:8px;">'+esc(d.nombre)+'</div>';
+
+      // Nota
       if(d.nota||d.estado){
         h += '<div style="font-size:10px;color:#64748b;font-style:italic;margin-bottom:8px;border-top:1px solid #1e2535;padding-top:5px;">'+esc(d.nota||d.estado)+'</div>';
       }
-      // Botones avanzar/retroceder
-      h += '<div style="display:flex;gap:5px;justify-content:flex-end;">';
-      if(canBack) h += '<button data-id="'+d.id+'" data-dir="-1" onclick="moverDisenoKanban(this.dataset.id,-1)" style="padding:2px 7px;border-radius:5px;font-size:10px;cursor:pointer;background:rgba(255,255,255,.04);border:1px solid #1e2535;color:#475569;">←</button>';
-      if(canFwd)  h += '<button data-id="'+d.id+'" data-dir="1" onclick="moverDisenoKanban(this.dataset.id,1)" style="padding:2px 9px;border-radius:5px;font-size:10px;cursor:pointer;background:'+col.color+'18;border:1px solid '+col.color+'44;color:'+col.color+';font-weight:600;">→</button>';
-      if(!canFwd) h += '<button data-id="'+d.id+'" onclick="moverDisenoAProduccion(this.dataset.id)" style="padding:2px 7px;border-radius:5px;font-size:10px;cursor:pointer;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);color:#34d399;font-weight:700;">✓ Lista</button>';
-      h += '</div></div>';
+
+      // Dropdown de estado kanban
+      h += '<div style="border-top:1px solid #1e2535;padding-top:8px;margin-top:2px;">';
+      h += '<select data-id="'+d.id+'" onchange="cambiarEstadoDiseno(this.dataset.id,this.value)" onclick="event.stopPropagation()" style="width:100%;background:#0d1117;border:1px solid #1e2535;border-radius:6px;color:#94a3b8;font-size:11px;padding:4px 7px;cursor:pointer;outline:none;">';
+      DIS_KANBAN.forEach(function(c){
+        h += '<option value="'+c.k+'"'+(curEstado===c.k?' selected':'')+' style="background:#1a1e2a;color:#e2e8f0;">'+c.label+'</option>';
+      });
+      h += '<option value="LISTA_PRODUCCION"'+(curEstado==='LISTA_PRODUCCION'?' selected':'')+' style="background:#1a1e2a;color:#34d399;">✓ Lista para Producción</option>';
+      h += '</select></div>';
+
+      h += '</div>';
     });
     if(!items.length) h += '<div style="text-align:center;padding:18px 0;color:#1e2535;font-size:11px;">Vacío</div>';
     h += '</div></div>';
@@ -2307,6 +2376,19 @@ function moverDisenoAProduccion(id){
   var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
   if(!d||!confirm('¿Mover "'+d.nombre+'" a Lista para Producción?')) return;
   d.kanban_estado = 'LISTA_PRODUCCION';
+  guardarDisenos(); renderPage('diseno');
+}
+function cambiarEstadoDiseno(id, nuevoEstado){
+  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
+  if(!d || d.kanban_estado === nuevoEstado) return;
+  if(nuevoEstado === 'LISTA_PRODUCCION' && !confirm('¿Mover "'+d.nombre+'" a Lista para Producción?')){ renderPage('diseno'); return; }
+  d.kanban_estado = nuevoEstado;
+  guardarDisenos(); renderPage('diseno');
+}
+function cambiarRespDiseno(id, nuevoResp){
+  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
+  if(!d || d.responsable === nuevoResp) return;
+  d.responsable = nuevoResp;
   guardarDisenos(); renderPage('diseno');
 }
 
@@ -3460,7 +3542,7 @@ renderPage(_initPage);
 // Auth check — shows login overlay if not authenticated
 if(checkAuth()){
   // Already logged in — async refresh from GitHub
-  cargarDatos();
+  cargarDatos().then(function(){ iniciarAutoSync(); });
 }
 // If not authenticated, cargarDatos() is called inside doLogin() after successful login
 </script>
