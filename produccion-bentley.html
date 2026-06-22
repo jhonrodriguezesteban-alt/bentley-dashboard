@@ -2526,9 +2526,16 @@ function abrirFormDiseno(id){
   generos.forEach(function(g){ body += '<option value="'+g+'"'+(d&&d.genero===g?' selected':'')+'>'+g+'</option>'; });
   body += '</select></div></div>';
 
-  body += '<div class="form-group"><label class="form-label">Categoría</label><select id="dis-cat" class="form-control">';
-  DIS_CATEGORIAS.forEach(function(c){ body += '<option value="'+c+'"'+(d&&d.categoria===c?' selected':'')+'>'+c+'</option>'; });
-  body += '</select></div>';
+  // Si la categoría guardada no está en la lista, mostrar "Otro" seleccionado con el valor en el campo libre
+  var catEnLista = d && DIS_CATEGORIAS.indexOf(d.categoria) >= 0;
+  var catEsOtro  = d && d.categoria && !catEnLista;
+  body += '<div class="form-group"><label class="form-label">Categoría</label>';
+  body += '<select id="dis-cat" class="form-control" onchange="toggleCatOtro(this.value)">';
+  DIS_CATEGORIAS.forEach(function(c){ body += '<option value="'+c+'"'+((d&&d.categoria===c&&catEnLista)?' selected':'')+'>'+c+'</option>'; });
+  body += '<option value="__otro__"'+(catEsOtro?' selected':'')+'>+ Nueva categoría...</option>';
+  body += '</select>';
+  body += '<input type="text" id="dis-cat-otro" class="form-control" placeholder="Escribe el nombre de la nueva categoría" style="margin-top:8px;display:'+(catEsOtro?'block':'none')+';" value="'+esc(catEsOtro?d.categoria:'')+'">';
+  body += '</div>';
   body += '<div class="form-group"><label class="form-label">Referencia / Nombre</label><input id="dis-nombre" class="form-control" value="'+esc(d?d.nombre:'')+'" placeholder="Nombre del diseño"></div>';
   body += '<div class="form-group"><label class="form-label">Etapa Kanban</label><select id="dis-kanban" class="form-control">';
   DIS_KANBAN.forEach(function(c){ body += '<option value="'+c.k+'"'+((d&&(d.kanban_estado||'EN_DISENO_DIGITAL')===c.k)||((!d)&&c.k==='EN_DISENO_DIGITAL')?' selected':'')+'>'+c.label+'</option>'; });
@@ -2559,6 +2566,18 @@ function seleccionarFotosForm(files){
   if(countEl) countEl.textContent = _disPendienteFotos.length + ' foto' + (_disPendienteFotos.length>1?'s':'') + ' lista' + (_disPendienteFotos.length>1?'s':'');
 }
 
+function toggleCatOtro(val){
+  var el = document.getElementById('dis-cat-otro');
+  if(!el) return;
+  if(val === '__otro__'){
+    el.style.display = 'block';
+    el.focus();
+  } else {
+    el.style.display = 'none';
+    el.value = '';
+  }
+}
+
 function actualizarGenerosForm(marca){
   var sel = document.getElementById('dis-genero');
   if(!sel) return;
@@ -2571,6 +2590,10 @@ async function guardarDisenoForm(){
   var nombre = (document.getElementById('dis-nombre').value||'').trim();
   var marca = document.getElementById('dis-marca').value;
   var cat = document.getElementById('dis-cat').value;
+  if(cat === '__otro__'){
+    cat = (document.getElementById('dis-cat-otro').value||'').trim();
+    if(!cat){ toast('Escribe el nombre de la nueva categoría','error'); return; }
+  }
   var resp = document.getElementById('dis-resp').value;
   var prio = parseInt(document.getElementById('dis-prio').value)||1;
   var kanban = document.getElementById('dis-kanban').value||'EN_DISENO_DIGITAL';
