@@ -2339,15 +2339,17 @@ function renderDiseno(){
       h += '<select data-id="'+d.id+'" onchange="cambiarRespDiseno(this.dataset.id,this.value)" onclick="event.stopPropagation()" style="background:transparent;border:none;font-size:10px;font-weight:700;color:'+rc+';text-transform:uppercase;letter-spacing:.5px;cursor:pointer;padding:0;outline:none;max-width:110px;">';
       DIS_RESPONSABLES.forEach(function(r){ h += '<option value="'+r+'"'+(d.responsable===r?' selected':'')+' style="background:#1a1e2a;color:#e2e8f0;">'+r+'</option>'; });
       h += '</select>';
-      h += '<div style="display:flex;gap:4px;align-items:center;">';
-      h += '<span style="font-size:9px;color:#334155;background:rgba(0,0,0,.3);border-radius:4px;padding:1px 5px;">P'+d.prioridad+'</span>';
-      h += '<button data-id="'+d.id+'" onclick="abrirFormDiseno(this.dataset.id)" style="background:none;border:none;cursor:pointer;color:#475569;font-size:11px;padding:0;line-height:1;" title="Editar">✏</button>';
+      h += '<div style="display:flex;gap:5px;align-items:center;">';
+      h += '<span style="font-size:9px;color:#64748b;background:rgba(255,255,255,.06);border:1px solid #1e2535;border-radius:4px;padding:1px 6px;">P'+d.prioridad+'</span>';
+      h += '<button data-id="'+d.id+'" onclick="abrirFormDiseno(this.dataset.id)" style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);border-radius:5px;cursor:pointer;color:#00d4ff;font-size:12px;padding:0;line-height:1;transition:all .15s;" onmouseover="this.style.background=\'rgba(0,212,255,.2)\'" onmouseout="this.style.background=\'rgba(0,212,255,.1)\'" title="Editar">✏</button>';
       h += '</div></div>';
 
-      // Fila 2: categoría
-      h += '<div style="font-size:10px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;display:flex;align-items:center;gap:5px;">';
+      // Fila 2: categoría + género
+      h += '<div style="font-size:10px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;">';
       h += '<span style="width:5px;height:5px;border-radius:50%;background:'+rc+';flex-shrink:0;display:inline-block;"></span>';
-      h += esc(d.categoria||'SIN CATEGORÍA')+'</div>';
+      h += '<span>'+esc(d.categoria||'SIN CATEGORÍA')+'</span>';
+      if(d.genero){ h += '<span style="background:rgba(255,255,255,.06);border:1px solid #1e2535;border-radius:4px;padding:0px 5px;font-size:9px;color:#94a3b8;letter-spacing:.3px;">'+esc(d.genero)+'</span>'; }
+      h += '</div>';
 
       // Fila 3: nombre del diseño
       h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:8px;">'+esc(d.nombre)+'</div>';
@@ -2450,9 +2452,21 @@ function guardarNuevaMarca(){
   closeModal(); guardarDisenos(); renderPage('diseno');
 }
 
+var DIS_GENEROS = {
+  'Bentley Kids': ['Mixto','Niña','Niño'],
+  'Prime':        ['Mujer','Hombre'],
+  '_default':     ['Mixto','Femenino','Masculino']
+};
+function getGenerosParaMarca(marca){
+  return DIS_GENEROS[marca] || DIS_GENEROS['_default'];
+}
+
 function abrirFormDiseno(id){
   var d = id ? (DB.disenos||[]).find(function(x){ return x.id===id; }) : null;
   var marcas = getDisMarcas();
+  var marcaActual = (d&&d.marca) || _disFiltroMarca || marcas[0];
+  var generos = getGenerosParaMarca(marcaActual);
+
   var body = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">';
   body += '<div class="form-group"><label class="form-label">Prioridad</label><select id="dis-prio" class="form-control">';
   [1,2,3,4,5,6].forEach(function(n){ body += '<option value="'+n+'"'+(d&&d.prioridad==n?' selected':'')+'>'+n+'</option>'; });
@@ -2460,13 +2474,18 @@ function abrirFormDiseno(id){
   body += '<div class="form-group"><label class="form-label">Responsable</label><select id="dis-resp" class="form-control">';
   DIS_RESPONSABLES.forEach(function(r){ body += '<option value="'+r+'"'+(d&&d.responsable===r?' selected':'')+'>'+r+'</option>'; });
   body += '</select></div></div>';
+
   body += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">';
-  body += '<div class="form-group"><label class="form-label">Marca</label><select id="dis-marca" class="form-control">';
-  marcas.forEach(function(m){ body += '<option value="'+esc(m)+'"'+(d&&d.marca===m?' selected':(!d&&m===_disFiltroMarca?' selected':''))+'>'+esc(m)+'</option>'; });
+  body += '<div class="form-group"><label class="form-label">Marca</label><select id="dis-marca" class="form-control" onchange="actualizarGenerosForm(this.value)">';
+  marcas.forEach(function(m){ body += '<option value="'+esc(m)+'"'+(m===marcaActual?' selected':'')+'>'+esc(m)+'</option>'; });
   body += '</select></div>';
+  body += '<div class="form-group"><label class="form-label">Género</label><select id="dis-genero" class="form-control">';
+  generos.forEach(function(g){ body += '<option value="'+g+'"'+(d&&d.genero===g?' selected':'')+'>'+g+'</option>'; });
+  body += '</select></div></div>';
+
   body += '<div class="form-group"><label class="form-label">Categoría</label><select id="dis-cat" class="form-control">';
   DIS_CATEGORIAS.forEach(function(c){ body += '<option value="'+c+'"'+(d&&d.categoria===c?' selected':'')+'>'+c+'</option>'; });
-  body += '</select></div></div>';
+  body += '</select></div>';
   body += '<div class="form-group"><label class="form-label">Referencia / Nombre</label><input id="dis-nombre" class="form-control" value="'+esc(d?d.nombre:'')+'" placeholder="Nombre del diseño"></div>';
   body += '<div class="form-group"><label class="form-label">Etapa Kanban</label><select id="dis-kanban" class="form-control">';
   DIS_KANBAN.forEach(function(c){ body += '<option value="'+c.k+'"'+((d&&(d.kanban_estado||'EN_DISENO_DIGITAL')===c.k)||((!d)&&c.k==='EN_DISENO_DIGITAL')?' selected':'')+'>'+c.label+'</option>'; });
@@ -2478,6 +2497,13 @@ function abrirFormDiseno(id){
   footer += '<button class="btn btn-primary" onclick="guardarDisenoForm()">Guardar</button>';
   openModal(d?'Editar Diseño':'Nuevo Diseño', body, footer);
 }
+
+function actualizarGenerosForm(marca){
+  var sel = document.getElementById('dis-genero');
+  if(!sel) return;
+  var generos = getGenerosParaMarca(marca);
+  sel.innerHTML = generos.map(function(g){ return '<option value="'+g+'">'+g+'</option>'; }).join('');
+}
 function editarDiseno(id){ abrirFormDiseno(id); }
 
 function guardarDisenoForm(){
@@ -2488,14 +2514,15 @@ function guardarDisenoForm(){
   var prio = parseInt(document.getElementById('dis-prio').value)||1;
   var kanban = document.getElementById('dis-kanban').value||'EN_DISENO_DIGITAL';
   var nota = (document.getElementById('dis-nota').value||'').trim();
+  var genero = (document.getElementById('dis-genero') ? document.getElementById('dis-genero').value : '') || '';
   var editId = document.getElementById('dis-edit-id') ? document.getElementById('dis-edit-id').value : null;
   if(!nombre){ toast('La referencia es requerida','error'); return; }
   if(!DB.disenos) DB.disenos = [];
   if(editId){
     var ex = DB.disenos.find(function(d){ return d.id===editId; });
-    if(ex){ ex.nombre=nombre; ex.marca=marca; ex.categoria=cat; ex.responsable=resp; ex.prioridad=prio; ex.kanban_estado=kanban; ex.nota=nota; }
+    if(ex){ ex.nombre=nombre; ex.marca=marca; ex.categoria=cat; ex.responsable=resp; ex.prioridad=prio; ex.kanban_estado=kanban; ex.nota=nota; ex.genero=genero; }
   } else {
-    DB.disenos.push({id:uid(),nombre:nombre,marca:marca,categoria:cat,responsable:resp,prioridad:prio,kanban_estado:kanban,nota:nota,fecha_creacion:hoy()});
+    DB.disenos.push({id:uid(),nombre:nombre,marca:marca,categoria:cat,responsable:resp,prioridad:prio,kanban_estado:kanban,nota:nota,genero:genero,fecha_creacion:hoy()});
   }
   closeModal(); guardarDisenos(); renderPage('diseno');
 }
