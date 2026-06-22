@@ -423,7 +423,7 @@ textarea.form-control{resize:vertical;min-height:80px;}
     await OneSignal.init({
       appId: 'b639d27a-1793-448e-b77a-cb2af75ec9aa',
       serviceWorkerParam: { scope: '/bentley-dashboard/' },
-      serviceWorkerPath: '/bentley-dashboard/OneSignalSDKWorker.js',
+      serviceWorkerPath: 'OneSignalSDKWorker.js',
       notificationClickHandlerMatch: 'origin',
       notificationClickHandlerAction: 'focus',
       welcomeNotification: { title:'Bentley Producción', message:'Notificaciones activadas ✅' },
@@ -441,6 +441,8 @@ textarea.form-control{resize:vertical;min-height:80px;}
         }
       }
     });
+    // Verificar estado tras init
+    setTimeout(_actualizarBtnNotif, 1500);
   });
 </script>
 </head>
@@ -931,16 +933,30 @@ var OS_APP_ID = 'b639d27a-1793-448e-b77a-cb2af75ec9aa';
 async function activarNotificacionesPush(){
   if(!window.OneSignal){ toast('SDK no cargado aún, espera un momento','warning'); return; }
   try {
+    // Método v16: optar explícitamente a push
     await OneSignal.Notifications.requestPermission();
+    // Forzar opt-in de suscripción
+    if(OneSignal.User && OneSignal.User.PushSubscription){
+      await OneSignal.User.PushSubscription.optIn();
+    }
     var granted = OneSignal.Notifications.permission;
-    if(granted){
-      toast('¡Notificaciones activadas en este dispositivo! 🔔','success');
+    var subId = OneSignal.User && OneSignal.User.PushSubscription && OneSignal.User.PushSubscription.id;
+    if(granted && subId){
+      localStorage.setItem('bentley_os_sub_id', subId);
+      toast('¡Notificaciones activadas! ID: '+subId.substring(0,8)+'...','success');
       var btn = document.getElementById('btn-activar-notif');
       if(btn){ btn.textContent='✅ Notifs activas'; btn.disabled=true; }
+    } else if(granted){
+      toast('Permiso concedido — suscripción registrando, espera unos segundos','info');
+      setTimeout(function(){
+        var id = OneSignal.User && OneSignal.User.PushSubscription && OneSignal.User.PushSubscription.id;
+        if(id){ toast('✅ Suscripción activa: '+id.substring(0,8)+'...','success'); }
+        else { toast('Permiso OK pero suscripción pendiente — intenta de nuevo','warning'); }
+      }, 3000);
     } else {
-      toast('Permiso denegado. Actívalo desde la configuración del navegador.','error');
+      toast('Permiso denegado. Ve a Ajustes → Safari → Notificaciones y actívalo.','error');
     }
-  } catch(e){ toast('Error activando notificaciones','error'); }
+  } catch(e){ toast('Error: '+e.message,'error'); console.error(e); }
 }
 
 async function enviarNotifOS(titulo, cuerpo, urlDestino){
