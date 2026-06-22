@@ -408,6 +408,34 @@ textarea.form-control{resize:vertical;min-height:80px;}
 #main.sidebar-collapsed{margin-left:60px;}
 #sidebar.collapsed .nav-item .icon{width:auto;font-size:18px;}
 </style>
+<!-- OneSignal Web Push SDK -->
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal){
+    await OneSignal.init({
+      appId: 'b639d27a-1793-448e-b77a-cb2af75ec9aa',
+      serviceWorkerParam: { scope: '/bentley-dashboard/' },
+      serviceWorkerPath: '/bentley-dashboard/OneSignalSDKWorker.js',
+      notificationClickHandlerMatch: 'origin',
+      notificationClickHandlerAction: 'focus',
+      welcomeNotification: { title:'Bentley Producción', message:'Notificaciones activadas ✅' },
+      promptOptions: {
+        slidedown: {
+          prompts: [{
+            type: 'push',
+            autoPrompt: false,
+            text: {
+              actionMessage: 'Activa las notificaciones para enterarte al instante cuando se creen diseños o se confirme producción.',
+              acceptButton: 'Activar',
+              cancelButton: 'Ahora no'
+            }
+          }]
+        }
+      }
+    });
+  });
+</script>
 </head>
 <body>
 
@@ -571,8 +599,14 @@ textarea.form-control{resize:vertical;min-height:80px;}
       <input id="cfg-token" class="form-control" type="password" placeholder="ghp_xxxxxxxxxxxx" />
       <div class="form-hint">Necesario para guardar datos. Se almacena en localStorage.</div>
     </div>
-    <div style="margin-top:4px;">
-      <button class="btn btn-primary" onclick="saveSettings()" style="width:100%;">Guardar configuración</button>
+    <div class="form-group">
+      <label class="form-label">OneSignal API Key <span style="color:#64748b;font-weight:400;">(notificaciones push)</span></label>
+      <input id="cfg-os-key" class="form-control" type="password" placeholder="os_v2_app_..." />
+      <div class="form-hint">Solo el admin necesita configurarla. Se almacena localmente.</div>
+    </div>
+    <div style="margin-top:4px;display:flex;gap:8px;">
+      <button class="btn btn-primary" onclick="saveSettings()" style="flex:1;">Guardar configuración</button>
+      <button id="btn-activar-notif" class="btn btn-ghost" onclick="activarNotificacionesPush()" style="white-space:nowrap;" title="Activar notificaciones en este dispositivo">🔔 Activar notifs</button>
     </div>
     <div class="sep"></div>
     <div style="font-size:12px;color:var(--dim);margin-bottom:8px;">Datos de la app:</div>
@@ -752,6 +786,8 @@ function initUser(){
 function openSettings(){
   document.getElementById('cfg-user').value = getUser();
   document.getElementById('cfg-token').value = localStorage.getItem('bentley_gh_token') || '';
+  document.getElementById('cfg-os-key').value = localStorage.getItem('bentley_os_key') || '';
+  _actualizarBtnNotif();
   var uid = getCurrentUserId();
   var adminSection = document.getElementById('admin-users-section');
   if(uid === 'jhon'){
@@ -873,10 +909,63 @@ function saveSettings(){
   var t = document.getElementById('cfg-token').value.trim();
   if(u) localStorage.setItem('bentley_prod_user', u);
   if(t){ localStorage.setItem('bentley_gh_token', t); GT = t; }
+  var osk = document.getElementById('cfg-os-key').value.trim();
+  if(osk) localStorage.setItem('bentley_os_key', osk);
   initUser();
   closeSettings();
   toast('Configuración guardada', 'success');
 }
+// ── Push Notifications (OneSignal) ──────────────────────────────────────────
+var OS_APP_ID = 'b639d27a-1793-448e-b77a-cb2af75ec9aa';
+
+async function activarNotificacionesPush(){
+  if(!window.OneSignal){ toast('SDK no cargado aún, espera un momento','warning'); return; }
+  try {
+    await OneSignal.Notifications.requestPermission();
+    var granted = OneSignal.Notifications.permission;
+    if(granted){
+      toast('¡Notificaciones activadas en este dispositivo! 🔔','success');
+      var btn = document.getElementById('btn-activar-notif');
+      if(btn){ btn.textContent='✅ Notifs activas'; btn.disabled=true; }
+    } else {
+      toast('Permiso denegado. Actívalo desde la configuración del navegador.','error');
+    }
+  } catch(e){ toast('Error activando notificaciones','error'); }
+}
+
+async function enviarNotifOS(titulo, cuerpo, urlDestino){
+  var apiKey = localStorage.getItem('bentley_os_key') || '';
+  if(!apiKey) return; // solo quien tiene la clave envía (admin/Jhon)
+  try {
+    await fetch('https://onesignal.com/api/v1/notifications', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Key ' + apiKey
+      },
+      body: JSON.stringify({
+        app_id: OS_APP_ID,
+        included_segments: ['All'],
+        headings: { es: titulo, en: titulo },
+        contents: { es: cuerpo, en: cuerpo },
+        url: urlDestino || 'https://jhonrodriguezesteban-alt.github.io/bentley-dashboard/produccion-bentley.html',
+        chrome_web_icon: 'https://jhonrodriguezesteban-alt.github.io/bentley-dashboard/icon-192.png',
+        chrome_web_badge: 'https://jhonrodriguezesteban-alt.github.io/bentley-dashboard/icon-192.png'
+      })
+    });
+  } catch(e){ console.log('OS push error:', e); }
+}
+
+// Verifica estado actual del permiso y actualiza botón
+function _actualizarBtnNotif(){
+  if(!window.OneSignal) return;
+  try {
+    var granted = OneSignal.Notifications && OneSignal.Notifications.permission;
+    var btn = document.getElementById('btn-activar-notif');
+    if(btn && granted){ btn.textContent='✅ Notifs activas'; btn.disabled=true; }
+  } catch(e){}
+}
+
 function limpiarDatosLocales(){
   if(!confirm('¿Limpiar cache local? Los datos de GitHub se recargarán.')) return;
   localStorage.removeItem('bentley_prod_db');
@@ -2517,6 +2606,12 @@ function cambiarEstadoDiseno(id, nuevoEstado){
   if(!d || d.kanban_estado === nuevoEstado) return;
   if(nuevoEstado === 'LISTA_PRODUCCION' && !confirm('¿Mover "'+d.nombre+'" a Lista para Producción?')){ renderPage('diseno'); return; }
   d.kanban_estado = nuevoEstado;
+  if(nuevoEstado === 'LISTA_PRODUCCION'){
+    enviarNotifOS(
+      '✅ Diseño listo para producción',
+      '"'+d.nombre+'" ('+d.categoria+' '+( d.genero||'') +') pasó a Lista para Producción · '+getUser()
+    );
+  }
   guardarDisenos(); renderPage('diseno');
 }
 function cambiarRespDiseno(id, nuevoResp){
@@ -2678,6 +2773,11 @@ async function guardarDisenoForm(){
     var nuevoId = preId || uid();
     // _ts negativo para que aparezca primero en el sort (más reciente)
     DB.disenos.push({id:nuevoId,nombre:nombre,marca:marca,categoria:cat,responsable:resp,prioridad:prio,kanban_estado:kanban,nota:nota,genero:genero,fecha_creacion:hoy(),_ts:new Date().toISOString()});
+    // Notificación push al equipo
+    enviarNotifOS(
+      '🎨 Nuevo diseño creado',
+      (resp||getUser())+' creó "'+nombre+'" · '+cat+' '+genero+' ('+marca+')'
+    );
     // Subir fotos pendientes si las hay
     if(_disPendienteFotos.length){
       _fotosCtx = nuevoId;
