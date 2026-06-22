@@ -584,6 +584,7 @@ var GT = (function(){
 var REPO = 'jhonrodriguezesteban-alt/bentley-dashboard';
 var FILES = { satelites: 'prod_satelites.json', ops: 'prod_ops.json', ots: 'prod_ots.json', disenos: 'prod_disenos.json', prog_ops: 'prod_prog_ops.json', costos_mo: 'prod_costos_mo.json' };
 var BASE_URL = 'https://jhonrodriguezesteban-alt.github.io/bentley-dashboard/';
+var RAW_URL = 'https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/';
 
 var CATALOGO = []; // cargado de prod_catalogo.json
 var CATEGORIAS = ['CAMISAS','CHAQUETAS','CAMISETAS','BUZOS','GABAN','CONJUNTOS','CHALECOS','PANTALONES','ABRIGOS','FALDA','BLUSAS','VESTIDOS','CAMISONES'];
@@ -1005,7 +1006,10 @@ async function cargarDatos(){
     if(otsR.ok){ var d3 = await otsR.json(); DB.ots = d3.ots || []; }
     if(catR.ok){ var d4 = await catR.json(); CATALOGO = d4.catalogo || []; }
     var disR = await fetch(BASE_URL + 'prod_disenos.json?t=' + t);
-    if(disR.ok){ var d5 = await disR.json(); DB.disenos = d5.disenos || []; DB.disenos_cfg = d5.disenos_cfg || {}; }
+    if(disR.ok){ var d5 = await disR.json(); DB.disenos = d5.disenos || []; DB.disenos_cfg = d5.disenos_cfg || {};
+      // Migrar URLs viejas de GitHub Pages a raw.githubusercontent para preview inmediato
+      DB.disenos.forEach(function(dis){ (dis.imagenes||[]).forEach(function(img){ if(img.url && img.url.indexOf(BASE_URL+'disenos-imgs/')===0){ img.url = RAW_URL+'disenos-imgs/'+img.url.split('disenos-imgs/')[1]; } }); });
+    }
     var progR = await fetch(BASE_URL + 'prod_prog_ops.json?t=' + t);
     if(progR.ok){ var d6 = await progR.json(); DB.prog_ops = d6.ops_plan || []; }
     var moR = await fetch(BASE_URL + 'prod_costos_mo.json?t=' + t);
@@ -2277,10 +2281,12 @@ function renderDiseno(){
   var catMap = {};
   activosItems.forEach(function(d){
     var cat = d.categoria || 'Sin Cat.';
-    if(!catMap[cat]) catMap[cat] = {total:0, etapas:{}};
+    if(!catMap[cat]) catMap[cat] = {total:0, etapas:{}, generos:{}};
     catMap[cat].total++;
     var et = d.kanban_estado || 'EN_DISENO_DIGITAL';
     catMap[cat].etapas[et] = (catMap[cat].etapas[et]||0) + 1;
+    var gen = d.genero || '';
+    if(gen) catMap[cat].generos[gen] = (catMap[cat].generos[gen]||0) + 1;
   });
   var cats = Object.keys(catMap).sort(function(a,b){ return catMap[b].total - catMap[a].total; });
   if(cats.length){
@@ -2292,22 +2298,40 @@ function renderDiseno(){
       EN_DISENO_DIGITAL:'Diseño', EN_CORTE_MUESTRA:'Corte',
       EN_CONFECCION_MUESTRA:'Confec.', EN_REVISION_GERENCIA:'Revisión', EN_ESCALADO:'Escalado'
     };
+    var GEN_COLOR = {
+      'Mixto':'#94a3b8','Niña':'#f472b6','Niño':'#38bdf8',
+      'Mujer':'#f472b6','Hombre':'#38bdf8','Femenino':'#f472b6','Masculino':'#38bdf8'
+    };
     h += '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;">';
     cats.forEach(function(cat){
       var info = catMap[cat];
-      h += '<div style="background:#0d1117;border:1px solid #1e2535;border-radius:10px;padding:11px 14px;min-width:130px;flex:0 0 auto;">';
-      h += '<div style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;">'+esc(cat)+'</div>';
-      h += '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:28px;color:#e2e8f0;line-height:1;">'+info.total+'</div>';
-      h += '<div style="font-size:9px;color:#334155;margin-bottom:7px;">'+(info.total===1?'producto':'productos')+' en proceso</div>';
+      h += '<div style="background:#0d1117;border:1px solid #1e2535;border-radius:10px;padding:11px 14px;min-width:140px;flex:0 0 auto;">';
+      // Título categoría + total
+      h += '<div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:2px;">';
+      h += '<div style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;">'+esc(cat)+'</div>';
+      h += '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:26px;color:#e2e8f0;line-height:1;">'+info.total+'</div>';
+      h += '</div>';
+      // Género pills
+      var genKeys = Object.keys(info.generos);
+      if(genKeys.length){
+        h += '<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:7px;">';
+        genKeys.sort().forEach(function(g){
+          var gc = GEN_COLOR[g]||'#94a3b8';
+          h += '<span style="background:'+gc+'18;border:1px solid '+gc+'44;color:'+gc+';font-size:9px;font-weight:700;border-radius:10px;padding:1px 6px;">'+info.generos[g]+' '+esc(g)+'</span>';
+        });
+        h += '</div>';
+      } else {
+        h += '<div style="font-size:9px;color:#334155;margin-bottom:7px;">sin género asignado</div>';
+      }
       // Mini barras por etapa
       var etKeys = Object.keys(info.etapas);
-      h += '<div style="display:flex;flex-direction:column;gap:3px;">';
+      h += '<div style="display:flex;flex-direction:column;gap:3px;border-top:1px solid #1e2535;padding-top:6px;">';
       etKeys.forEach(function(et){
         var c = ETAPA_COLOR[et]||'#94a3b8';
         var pct = Math.round((info.etapas[et]/info.total)*100);
         h += '<div style="display:flex;align-items:center;gap:5px;">';
         h += '<div style="flex:1;height:3px;background:#1e2535;border-radius:2px;overflow:hidden;"><div style="width:'+pct+'%;height:100%;background:'+c+';border-radius:2px;"></div></div>';
-        h += '<span style="font-size:9px;color:'+c+';min-width:40px;text-align:right;">'+info.etapas[et]+' '+(ETAPA_SHORT[et]||et)+'</span>';
+        h += '<span style="font-size:9px;color:'+c+';white-space:nowrap;">'+info.etapas[et]+' '+(ETAPA_SHORT[et]||et)+'</span>';
         h += '</div>';
       });
       h += '</div></div>';
@@ -2636,7 +2660,7 @@ async function subirFotosDiseno(files){
         body: JSON.stringify({message:'Foto diseño: '+d.nombre, content:b64})
       });
       if(putR.ok){
-        d.imagenes.push({id:'img_'+Date.now()+'_'+i, url:BASE_URL+fname, tipo:tipo, fecha:hoy(), nombre:file.name});
+        d.imagenes.push({id:'img_'+Date.now()+'_'+i, url:RAW_URL+fname, tipo:tipo, fecha:hoy(), nombre:file.name});
         subidas++;
       } else { errores++; }
     } catch(e){ errores++; }
