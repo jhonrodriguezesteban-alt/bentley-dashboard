@@ -2339,9 +2339,11 @@ function renderDiseno(){
       h += '<select data-id="'+d.id+'" onchange="cambiarRespDiseno(this.dataset.id,this.value)" onclick="event.stopPropagation()" style="background:transparent;border:none;font-size:10px;font-weight:700;color:'+rc+';text-transform:uppercase;letter-spacing:.5px;cursor:pointer;padding:0;outline:none;max-width:110px;">';
       DIS_RESPONSABLES.forEach(function(r){ h += '<option value="'+r+'"'+(d.responsable===r?' selected':'')+' style="background:#1a1e2a;color:#e2e8f0;">'+r+'</option>'; });
       h += '</select>';
+      var nFotos = (d.imagenes||[]).length;
       h += '<div style="display:flex;gap:5px;align-items:center;">';
       h += '<span style="font-size:9px;color:#64748b;background:rgba(255,255,255,.06);border:1px solid #1e2535;border-radius:4px;padding:1px 6px;">P'+d.prioridad+'</span>';
-      h += '<button data-id="'+d.id+'" onclick="abrirFormDiseno(this.dataset.id)" style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);border-radius:5px;cursor:pointer;color:#00d4ff;font-size:12px;padding:0;line-height:1;transition:all .15s;" onmouseover="this.style.background=\'rgba(0,212,255,.2)\'" onmouseout="this.style.background=\'rgba(0,212,255,.1)\'" title="Editar">✏</button>';
+      h += '<button data-id="'+d.id+'" onclick="abrirFotosDiseno(this.dataset.id)" style="position:relative;display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:5px;cursor:pointer;color:#fbbf24;font-size:12px;padding:0;line-height:1;" title="Fotos">📷'+(nFotos?'<span style="position:absolute;top:-4px;right:-4px;background:#fbbf24;color:#0d0f14;border-radius:8px;font-size:8px;font-weight:700;min-width:13px;height:13px;display:flex;align-items:center;justify-content:center;padding:0 2px;">'+nFotos+'</span>':'')+'</button>';
+      h += '<button data-id="'+d.id+'" onclick="abrirFormDiseno(this.dataset.id)" style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);border-radius:5px;cursor:pointer;color:#00d4ff;font-size:12px;padding:0;line-height:1;" title="Editar">✏</button>';
       h += '</div></div>';
 
       // Fila 2: categoría + género
@@ -2536,6 +2538,125 @@ async function guardarDisenos(){
   var data = {disenos:DB.disenos||[], disenos_cfg:DB.disenos_cfg||{marcas:getDisMarcas()}};
   var ok = await guardarArchivo('disenos', data);
   if(ok) toast('Diseños guardados','success');
+}
+
+// ─── Fotos de diseño ──────────────────────────────────────────────────────────
+var _fotosCtx = null; // {disenoId}
+
+function abrirFotosDiseno(id){
+  _fotosCtx = id;
+  _renderDrawerFotos();
+}
+
+function _renderDrawerFotos(){
+  var id = _fotosCtx;
+  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
+  if(!d) return;
+  var imgs = d.imagenes || [];
+  var refs  = imgs.filter(function(i){ return i.tipo==='referencia'; });
+  var muestras = imgs.filter(function(i){ return i.tipo==='muestra'; });
+
+  var h = '';
+
+  // Upload area
+  h += '<div style="border:2px dashed #1e2535;border-radius:10px;padding:16px;text-align:center;margin-bottom:20px;cursor:pointer;transition:border-color .2s;" onclick="document.getElementById(\'foto-input\').click()" onmouseover="this.style.borderColor=\'#fbbf24\'" onmouseout="this.style.borderColor=\'#1e2535\'">';
+  h += '<div style="font-size:28px;margin-bottom:6px;">📷</div>';
+  h += '<div style="font-size:13px;color:#64748b;">Click para adjuntar foto</div>';
+  h += '<div style="font-size:11px;color:#334155;margin-top:3px;">Referencia o muestra — JPG, PNG, WEBP</div>';
+  h += '</div>';
+  h += '<input type="file" id="foto-input" accept="image/*" multiple style="display:none" onchange="subirFotosDiseno(this.files)">';
+
+  // Selector de tipo
+  h += '<div style="display:flex;gap:8px;margin-bottom:20px;">';
+  h += '<div style="font-size:12px;color:#64748b;align-self:center;">Tipo al subir:</div>';
+  h += '<label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;"><input type="radio" name="foto-tipo" value="referencia" checked style="accent-color:#f97316;"> <span style="color:#f97316;font-weight:600;">Referencia</span></label>';
+  h += '<label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;"><input type="radio" name="foto-tipo" value="muestra" style="accent-color:#00d4ff;"> <span style="color:#00d4ff;font-weight:600;">Muestra</span></label>';
+  h += '</div>';
+
+  function gridFotos(lista, tipo, color, label){
+    if(!lista.length) return '<div style="font-size:11px;color:#334155;font-style:italic;margin-bottom:16px;">Sin '+label.toLowerCase()+'</div>';
+    var g = '<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px;">';
+    lista.forEach(function(img){
+      g += '<div style="position:relative;border-radius:8px;overflow:hidden;border:1px solid '+color+'44;background:#0d1117;">';
+      g += '<img src="'+img.url+'" style="width:100%;height:110px;object-fit:cover;display:block;" loading="lazy">';
+      g += '<div style="padding:5px 7px;display:flex;align-items:center;justify-content:space-between;">';
+      g += '<span style="font-size:9px;color:'+color+';font-weight:600;">'+label+'</span>';
+      g += '<span style="font-size:9px;color:#334155;">'+img.fecha+'</span>';
+      g += '</div>';
+      g += '<button data-iid="'+img.id+'" onclick="eliminarFotoDiseno(this.dataset.iid)" style="position:absolute;top:4px;right:4px;background:rgba(0,0,0,.7);border:none;border-radius:50%;width:20px;height:20px;color:#ff3b30;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;">×</button>';
+      g += '</div>';
+    });
+    g += '</div>';
+    return g;
+  }
+
+  if(refs.length || muestras.length){
+    if(refs.length){
+      h += '<div style="font-size:11px;font-weight:700;color:#f97316;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Referencias ('+refs.length+')</div>';
+      h += gridFotos(refs,'referencia','#f97316','Ref');
+    }
+    if(muestras.length){
+      h += '<div style="font-size:11px;font-weight:700;color:#00d4ff;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Muestras ('+muestras.length+')</div>';
+      h += gridFotos(muestras,'muestra','#00d4ff','Muestra');
+    }
+  } else {
+    h += '<div style="text-align:center;padding:20px 0;color:#334155;font-size:12px;">Sin fotos adjuntas aún</div>';
+  }
+
+  openDrawer('📷 ' + d.nombre, h, '');
+}
+
+async function subirFotosDiseno(files){
+  if(!files||!files.length) return;
+  var id = _fotosCtx;
+  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
+  if(!d) return;
+  var tipo = (document.querySelector('input[name="foto-tipo"]:checked')||{}).value || 'referencia';
+  var tk = GT || localStorage.getItem('bentley_gh_token') || '';
+  if(!tk){ toast('Sin token GitHub','error'); return; }
+
+  if(!d.imagenes) d.imagenes = [];
+  var total = files.length, subidas = 0, errores = 0;
+  toast('Subiendo '+total+' foto'+(total>1?'s':'')+'...','info');
+
+  for(var i=0; i<files.length; i++){
+    var file = files[i];
+    try {
+      var b64 = await new Promise(function(res,rej){
+        var r = new FileReader();
+        r.onload = function(e){ res(e.target.result.split(',')[1]); };
+        r.onerror = rej;
+        r.readAsDataURL(file);
+      });
+      var ext = file.name.split('.').pop().toLowerCase()||'jpg';
+      var fname = 'disenos-imgs/'+id+'_'+Date.now()+'_'+i+'.'+ext;
+      var putR = await fetch('https://api.github.com/repos/'+REPO+'/contents/'+fname,{
+        method:'PUT',
+        headers:{'Authorization':'token '+tk,'Content-Type':'application/json'},
+        body: JSON.stringify({message:'Foto diseño: '+d.nombre, content:b64})
+      });
+      if(putR.ok){
+        d.imagenes.push({id:'img_'+Date.now()+'_'+i, url:BASE_URL+fname, tipo:tipo, fecha:hoy(), nombre:file.name});
+        subidas++;
+      } else { errores++; }
+    } catch(e){ errores++; }
+  }
+
+  if(subidas) await guardarDisenos();
+  if(subidas) toast(subidas+' foto'+(subidas>1?'s':'')+' adjuntada'+(subidas>1?'s':''), 'success');
+  if(errores) toast(errores+' error'+(errores>1?'es':'')+ ' al subir','error');
+  _renderDrawerFotos();
+  renderPage(currentPage);
+}
+
+function eliminarFotoDiseno(imgId){
+  var id = _fotosCtx;
+  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
+  if(!d||!confirm('¿Eliminar esta foto?')) return;
+  d.imagenes = (d.imagenes||[]).filter(function(i){ return i.id!==imgId; });
+  guardarDisenos();
+  _renderDrawerFotos();
+  renderPage(currentPage);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
