@@ -2832,10 +2832,16 @@ async function compartirImagenLightbox(){
 
 // ── Modal Categoría ──────────────────────────────────────────────────────────
 function abrirModalCategoria(cat){
+  var GEN_ORDER = {'Unisex':0,'Mixto':0,'Niña':1,'Mujer':1,'Niño':2,'Hombre':2,'Femenino':1,'Masculino':2};
   var todos = (DB.disenos||[]).filter(function(d){
     if(d.eliminado) return false;
     if(_disFiltroMarca && d.marca !== _disFiltroMarca) return false;
     return (d.categoria||'Sin categoría') === cat;
+  }).sort(function(a,b){
+    var ga = GEN_ORDER[a.genero||'Unisex']||0;
+    var gb = GEN_ORDER[b.genero||'Unisex']||0;
+    if(ga!==gb) return ga-gb;
+    return (a.nombre||'').localeCompare(b.nombre||'');
   });
   var GEN_COLOR = {
     'Unisex':'#94a3b8','Mixto':'#94a3b8','Niña':'#f472b6','Niño':'#38bdf8',
