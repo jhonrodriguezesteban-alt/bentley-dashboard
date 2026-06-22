@@ -509,6 +509,17 @@ textarea.form-control{resize:vertical;min-height:80px;}
   <img id="lightbox-img" src="" style="max-width:92vw;max-height:90vh;object-fit:contain;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.8);" onclick="event.stopPropagation()">
 </div>
 
+<!-- Modal Categoría -->
+<div id="modal-categoria" onclick="cerrarModalCategoria()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9000;align-items:flex-start;justify-content:center;padding-top:40px;overflow-y:auto;">
+  <div onclick="event.stopPropagation()" style="background:#0d1117;border:1px solid #1e2535;border-radius:16px;width:92%;max-width:900px;max-height:82vh;display:flex;flex-direction:column;box-shadow:0 24px 80px rgba(0,0,0,.7);overflow:hidden;">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid #1e2535;flex-shrink:0;">
+      <div id="modal-cat-titulo" style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:#e2e8f0;letter-spacing:.5px;"></div>
+      <button onclick="cerrarModalCategoria()" style="background:rgba(255,255,255,.07);border:none;color:#94a3b8;font-size:20px;width:34px;height:34px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;">×</button>
+    </div>
+    <div id="modal-cat-body" style="padding:20px 22px;overflow-y:auto;display:flex;flex-wrap:wrap;gap:14px;"></div>
+  </div>
+</div>
+
 <!-- Login Overlay -->
 <div id="login-overlay" style="display:none;position:fixed;inset:0;background:#0a0d14;z-index:9999;align-items:center;justify-content:center;">
   <div style="background:#13161f;border:1px solid #1e2a3a;border-radius:22px;width:90%;max-width:400px;padding:44px 36px;box-shadow:0 32px 80px rgba(0,0,0,.6);">
@@ -2311,7 +2322,7 @@ function renderDiseno(){
     h += '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;">';
     cats.forEach(function(cat){
       var info = catMap[cat];
-      h += '<div style="background:#0d1117;border:1px solid #1e2535;border-radius:10px;padding:11px 14px;min-width:140px;flex:0 0 auto;">';
+      h += '<div onclick="abrirModalCategoria(this.dataset.cat)" data-cat="'+esc(cat)+'" style="background:#0d1117;border:1px solid #1e2535;border-radius:10px;padding:11px 14px;min-width:140px;flex:0 0 auto;cursor:pointer;transition:border-color .15s;" onmouseenter="this.style.borderColor=\'#3b82f6\'" onmouseleave="this.style.borderColor=\'#1e2535\'">';
       // Título categoría + total
       h += '<div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:2px;">';
       h += '<div style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;">'+esc(cat)+'</div>';
@@ -2771,6 +2782,81 @@ function cerrarLightbox(){
   document.removeEventListener('keydown', _lightboxKey);
 }
 function _lightboxKey(e){ if(e.key==='Escape') cerrarLightbox(); }
+
+// ── Modal Categoría ──────────────────────────────────────────────────────────
+function abrirModalCategoria(cat){
+  var todos = (DB.disenos||[]).filter(function(d){
+    if(d.eliminado) return false;
+    if(_disFiltroMarca && d.marca !== _disFiltroMarca) return false;
+    return (d.categoria||'Sin categoría') === cat;
+  });
+  var GEN_COLOR = {
+    'Unisex':'#94a3b8','Mixto':'#94a3b8','Niña':'#f472b6','Niño':'#38bdf8',
+    'Mujer':'#f472b6','Hombre':'#38bdf8','Femenino':'#f472b6','Masculino':'#38bdf8'
+  };
+  var ETAPA_LABEL = {
+    EN_DISENO_DIGITAL:'Diseño Digital', EN_CORTE_MUESTRA:'Corte Muestra',
+    EN_CONFECCION_MUESTRA:'Confección Muestra', EN_REVISION_GERENCIA:'Revisión Gerencia', EN_ESCALADO:'Escalado'
+  };
+  var ETAPA_COLOR = {
+    EN_DISENO_DIGITAL:'#a855f7', EN_CORTE_MUESTRA:'#f97316',
+    EN_CONFECCION_MUESTRA:'#00d4ff', EN_REVISION_GERENCIA:'#fbbf24', EN_ESCALADO:'#34d399'
+  };
+  var RESP_COLOR = {Carolina:'#f472b6',Isa:'#a78bfa',John:'#38bdf8',Juan:'#34d399'};
+  document.getElementById('modal-cat-titulo').textContent = cat + ' · ' + todos.length + ' en proceso';
+  var b = '';
+  if(!todos.length){
+    b = '<div style="color:#475569;font-size:14px;padding:20px 0;">No hay diseños activos en esta categoría.</div>';
+  } else {
+    todos.forEach(function(d){
+      var etapa = d.kanban_estado||'EN_DISENO_DIGITAL';
+      var ec = ETAPA_COLOR[etapa]||'#94a3b8';
+      var el = ETAPA_LABEL[etapa]||etapa;
+      var gen = d.genero||'Unisex';
+      var gc = GEN_COLOR[gen]||'#94a3b8';
+      var rc = RESP_COLOR[d.responsable]||'#64748b';
+      var thumb = (d.imagenes&&d.imagenes.length) ? d.imagenes[0].url : '';
+      b += '<div style="background:#0a0d14;border:1px solid #1e2535;border-radius:12px;width:180px;flex:0 0 180px;overflow:hidden;">';
+      // Thumbnail
+      if(thumb){
+        b += '<div style="height:110px;overflow:hidden;background:#111827;">';
+        b += '<img src="'+thumb+'" onclick="abrirLightbox(\''+thumb+'\')" style="width:100%;height:100%;object-fit:cover;cursor:zoom-in;" loading="lazy">';
+        b += '</div>';
+      } else {
+        b += '<div style="height:80px;background:#111827;display:flex;align-items:center;justify-content:center;">';
+        b += '<span style="font-size:28px;opacity:.25;">👕</span>';
+        b += '</div>';
+      }
+      b += '<div style="padding:10px 11px;">';
+      // Nombre
+      b += '<div style="font-size:12px;font-weight:700;color:#e2e8f0;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(d.nombre||'Sin nombre')+'</div>';
+      // Etapa badge
+      b += '<div style="display:inline-block;background:'+ec+'18;border:1px solid '+ec+'44;color:'+ec+';font-size:9px;font-weight:700;border-radius:8px;padding:2px 7px;margin-bottom:6px;">'+esc(el)+'</div>';
+      b += '<br>';
+      // Género + responsable
+      b += '<div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:2px;">';
+      b += '<span style="background:'+gc+'18;border:1px solid '+gc+'44;color:'+gc+';font-size:9px;font-weight:700;border-radius:8px;padding:1px 6px;">'+esc(gen)+'</span>';
+      if(d.responsable){
+        b += '<span style="background:'+rc+'22;border:1px solid '+rc+'44;color:'+rc+';font-size:9px;font-weight:700;border-radius:8px;padding:1px 6px;">'+esc(d.responsable)+'</span>';
+      }
+      b += '</div>';
+      // Fotos count
+      if(d.imagenes&&d.imagenes.length>0){
+        b += '<div style="margin-top:6px;font-size:9px;color:#475569;">📷 '+d.imagenes.length+' foto'+(d.imagenes.length>1?'s':'')+'</div>';
+      }
+      b += '</div></div>';
+    });
+  }
+  document.getElementById('modal-cat-body').innerHTML = b;
+  var overlay = document.getElementById('modal-categoria');
+  overlay.style.display = 'flex';
+  document.addEventListener('keydown', _modalCatKey);
+}
+function cerrarModalCategoria(){
+  document.getElementById('modal-categoria').style.display = 'none';
+  document.removeEventListener('keydown', _modalCatKey);
+}
+function _modalCatKey(e){ if(e.key==='Escape') cerrarModalCategoria(); }
 
 function eliminarFotoDiseno(imgId){
   var id = _fotosCtx;
