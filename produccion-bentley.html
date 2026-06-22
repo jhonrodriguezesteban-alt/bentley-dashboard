@@ -558,6 +558,15 @@ textarea.form-control{resize:vertical;min-height:80px;}
       <button class="btn btn-ghost btn-sm" onclick="recargarDatos()">🔄 Recargar datos</button>
       <button class="btn btn-danger btn-sm" onclick="limpiarDatosLocales()">🗑 Limpiar local</button>
     </div>
+    <!-- ADMIN ONLY -->
+    <div id="admin-users-section" style="display:none;">
+      <div class="sep"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <div style="font-size:12px;color:var(--cyan);font-weight:700;letter-spacing:.5px;">👤 GESTIÓN DE USUARIOS</div>
+        <button onclick="abrirFormUsuario(null)" style="background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);color:#00d4ff;border-radius:6px;font-size:11px;padding:4px 10px;cursor:pointer;">+ Nuevo usuario</button>
+      </div>
+      <div id="admin-users-list"></div>
+    </div>
   </div>
 </div>
 
@@ -614,13 +623,34 @@ var _NAMES = {
   'calidad':'Jefa de Calidad'
 };
 function _xd(h){ return h.match(/.{2}/g).map(function(x){ return String.fromCharCode(parseInt(x,16)^57); }).join(''); }
+function _xe(s){ return s.split('').map(function(c){ return (c.charCodeAt(0)^57).toString(16).padStart(2,'0'); }).join(''); }
+
+// Usuarios dinámicos: base hardcoded + overrides en localStorage
+function _getCfgUsers(){
+  try{ return JSON.parse(localStorage.getItem('bentley_users_cfg')||'{}'); }catch(e){ return {}; }
+}
+function _saveCfgUsers(obj){ localStorage.setItem('bentley_users_cfg', JSON.stringify(obj)); }
+
+// Devuelve hash XOR del usuario (hardcoded primero, luego overrides)
+function _getHash(u){ var cfg=_getCfgUsers(); return (cfg[u]&&cfg[u].hash)||_U[u]||null; }
+// Devuelve nombre display
+function _getName(u){ var cfg=_getCfgUsers(); return (cfg[u]&&cfg[u].name)||_NAMES[u]||u; }
+// Módulos permitidos para un usuario (jhon = todos)
+var ALL_MODULES = ['dashboard','satelites','ops','entregas','diseno','programacion','novedades','historial','costos_mo'];
+function _getModules(u){
+  if(u==='jhon') return ALL_MODULES.slice();
+  var cfg=_getCfgUsers();
+  return (cfg[u]&&cfg[u].modules)||ALL_MODULES.slice();
+}
+
 function _findUser(input){
   var s = input.trim().toLowerCase();
-  // buscar por clave exacta O por nombre completo (case-insensitive)
-  if(_U[s]) return s;
+  if(_getHash(s)) return s;
+  // buscar por nombre display en base + overrides
   var found = null;
-  Object.keys(_NAMES).forEach(function(k){
-    if(_NAMES[k].toLowerCase() === s) found = k;
+  var allKeys = Object.keys(_U).concat(Object.keys(_getCfgUsers()));
+  allKeys.forEach(function(k){
+    if(_getName(k).toLowerCase() === s) found = k;
   });
   return found;
 }
@@ -634,8 +664,9 @@ function checkAuth(){
   var s = localStorage.getItem('bentley_prod_auth') || sessionStorage.getItem('bentley_prod_auth');
   if(s){ try{
     var a = JSON.parse(s);
-    if(a && a.user && _U[a.user]){
-      document.getElementById('badge-user').textContent = _NAMES[a.user] || a.user;
+    if(a && a.user && _getHash(a.user)){
+      document.getElementById('badge-user').textContent = _getName(a.user);
+      applyModuleAccess(a.user);
       return true;
     }
   }catch(e){} }
@@ -649,12 +680,14 @@ function doLogin(){
   var err = document.getElementById('login-err');
   var remember = document.getElementById('login-remember') ? document.getElementById('login-remember').checked : true;
   var u = _findUser(rawUser);
-  if(u && _U[u] && _xd(_U[u]) === p){
+  var h = u ? _getHash(u) : null;
+  if(u && h && _xd(h) === p){
     var authData = JSON.stringify({user:u});
     if(remember){ localStorage.setItem('bentley_prod_auth', authData); }
     else { sessionStorage.setItem('bentley_prod_auth', authData); }
     document.getElementById('login-overlay').style.display = 'none';
-    document.getElementById('badge-user').textContent = _NAMES[u];
+    document.getElementById('badge-user').textContent = _getName(u);
+    applyModuleAccess(u);
     var lastPage = localStorage.getItem('bentley_last_page') || 'dashboard';
     navTo(lastPage);
     if(!DB.ops.length) cargarDatos();
@@ -679,8 +712,13 @@ function doLogout(){
 // ─── User session (legacy) ─────────────────────────────────────────────────────
 function getUser(){
   var s = localStorage.getItem('bentley_prod_auth');
-  if(s){ try{ var a=JSON.parse(s); return _NAMES[a.user]||a.user||'Invitado'; }catch(e){} }
+  if(s){ try{ var a=JSON.parse(s); return _getName(a.user)||'Invitado'; }catch(e){} }
   return 'Invitado';
+}
+function getCurrentUserId(){
+  var s = localStorage.getItem('bentley_prod_auth')||sessionStorage.getItem('bentley_prod_auth');
+  if(s){ try{ return JSON.parse(s).user||null; }catch(e){} }
+  return null;
 }
 function initUser(){
   document.getElementById('badge-user').textContent = getUser();
@@ -690,7 +728,120 @@ function initUser(){
 function openSettings(){
   document.getElementById('cfg-user').value = getUser();
   document.getElementById('cfg-token').value = localStorage.getItem('bentley_gh_token') || '';
+  var uid = getCurrentUserId();
+  var adminSection = document.getElementById('admin-users-section');
+  if(uid === 'jhon'){
+    adminSection.style.display = 'block';
+    renderAdminUsers();
+  } else {
+    adminSection.style.display = 'none';
+  }
   document.getElementById('settings-overlay').style.display = 'flex';
+}
+
+function applyModuleAccess(uid){
+  var allowed = _getModules(uid);
+  document.querySelectorAll('.nav-item[data-page]').forEach(function(el){
+    var page = el.getAttribute('data-page');
+    el.style.display = allowed.indexOf(page) >= 0 ? '' : 'none';
+  });
+}
+
+var ALL_MODULE_LABELS = {
+  dashboard:'Dashboard', satelites:'Satélites', ops:'OTs', entregas:'Entregas',
+  diseno:'Diseño', programacion:'Programación', novedades:'Novedades',
+  historial:'Historial', costos_mo:'Costos MO'
+};
+
+function renderAdminUsers(){
+  var cfg = _getCfgUsers();
+  var allUsers = Object.keys(_U).concat(Object.keys(cfg).filter(function(k){ return !_U[k]; }));
+  var el = document.getElementById('admin-users-list');
+  var html = '<table style="width:100%;border-collapse:collapse;font-size:13px;">';
+  html += '<thead><tr style="background:#111;color:#aaa;">';
+  html += '<th style="padding:6px 8px;text-align:left;">Usuario</th>';
+  html += '<th style="padding:6px 8px;text-align:left;">Nombre</th>';
+  html += '<th style="padding:6px 8px;text-align:left;">Módulos</th>';
+  html += '<th style="padding:6px 8px;text-align:center;">Acciones</th>';
+  html += '</tr></thead><tbody>';
+  allUsers.forEach(function(u){
+    var name = _getName(u);
+    var mods = _getModules(u);
+    var isBase = !!_U[u];
+    html += '<tr style="border-bottom:1px solid #222;">';
+    html += '<td style="padding:6px 8px;font-family:monospace;">' + u + (isBase ? ' <span style="color:#666;font-size:10px;">(base)</span>' : '') + '</td>';
+    html += '<td style="padding:6px 8px;">' + name + '</td>';
+    html += '<td style="padding:6px 8px;color:#888;font-size:11px;">' + mods.length + '/' + ALL_MODULES.length + '</td>';
+    html += '<td style="padding:6px 8px;text-align:center;">';
+    html += '<button onclick="abrirFormUsuario(\'' + u + '\')" style="background:#334;color:#adf;border:none;border-radius:4px;padding:3px 10px;cursor:pointer;font-size:12px;margin-right:4px;">Editar</button>';
+    if(!isBase){
+      html += '<button onclick="eliminarUsuario(\'' + u + '\')" style="background:#400;color:#faa;border:none;border-radius:4px;padding:3px 10px;cursor:pointer;font-size:12px;">Eliminar</button>';
+    }
+    html += '</td></tr>';
+  });
+  html += '</tbody></table>';
+  el.innerHTML = html;
+}
+
+function abrirFormUsuario(uid){
+  var isNew = !uid;
+  var name = uid ? _getName(uid) : '';
+  var mods = uid ? _getModules(uid) : ALL_MODULES.slice();
+  var modsHtml = ALL_MODULES.map(function(m){
+    var checked = mods.indexOf(m) >= 0 ? 'checked' : '';
+    return '<label style="display:inline-flex;align-items:center;gap:4px;margin:3px 8px 3px 0;font-size:13px;cursor:pointer;">' +
+      '<input type="checkbox" value="' + m + '" ' + checked + ' style="accent-color:#4af;"> ' + (ALL_MODULE_LABELS[m]||m) + '</label>';
+  }).join('');
+  var existingOverlay = document.getElementById('admin-user-modal');
+  if(existingOverlay) existingOverlay.remove();
+  var modal = document.createElement('div');
+  modal.id = 'admin-user-modal';
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;';
+  modal.innerHTML = '<div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:24px;width:420px;max-width:95vw;">' +
+    '<h3 style="margin:0 0 16px;color:#eee;">' + (isNew ? 'Nuevo usuario' : 'Editar: ' + uid) + '</h3>' +
+    (isNew ? '<div style="margin-bottom:12px;"><label style="color:#aaa;font-size:12px;">ID de usuario (sin espacios)</label>' +
+      '<input id="aum-uid" style="width:100%;background:#111;border:1px solid #333;border-radius:6px;color:#eee;padding:8px;margin-top:4px;box-sizing:border-box;" placeholder="ej: maria"></div>' : '') +
+    '<div style="margin-bottom:12px;"><label style="color:#aaa;font-size:12px;">Nombre para mostrar</label>' +
+    '<input id="aum-name" style="width:100%;background:#111;border:1px solid #333;border-radius:6px;color:#eee;padding:8px;margin-top:4px;box-sizing:border-box;" value="' + name + '"></div>' +
+    '<div style="margin-bottom:12px;"><label style="color:#aaa;font-size:12px;">' + (isNew ? 'Contraseña' : 'Nueva contraseña (dejar vacío = sin cambio)') + '</label>' +
+    '<input id="aum-pass" type="password" style="width:100%;background:#111;border:1px solid #333;border-radius:6px;color:#eee;padding:8px;margin-top:4px;box-sizing:border-box;" placeholder="••••••••"></div>' +
+    '<div style="margin-bottom:16px;"><label style="color:#aaa;font-size:12px;">Módulos habilitados</label>' +
+    '<div style="margin-top:8px;background:#111;border-radius:6px;padding:10px;">' + modsHtml + '</div></div>' +
+    '<div style="display:flex;gap:8px;justify-content:flex-end;">' +
+    '<button onclick="document.getElementById(\'admin-user-modal\').remove()" style="background:#333;color:#aaa;border:none;border-radius:6px;padding:8px 16px;cursor:pointer;">Cancelar</button>' +
+    '<button onclick="guardarFormUsuario(\'' + (uid||'') + '\',' + isNew + ')" style="background:#1a5;color:#fff;border:none;border-radius:6px;padding:8px 16px;cursor:pointer;font-weight:600;">Guardar</button>' +
+    '</div></div>';
+  document.body.appendChild(modal);
+}
+
+function guardarFormUsuario(uid, isNew){
+  var finalUid = isNew ? (document.getElementById('aum-uid').value||'').trim().toLowerCase() : uid;
+  var name = (document.getElementById('aum-name').value||'').trim();
+  var pass = document.getElementById('aum-pass').value||'';
+  var modChecks = document.querySelectorAll('#admin-user-modal input[type=checkbox]');
+  var mods = [];
+  modChecks.forEach(function(cb){ if(cb.checked) mods.push(cb.value); });
+  if(!finalUid){ toast('ID de usuario requerido','error'); return; }
+  if(!name){ toast('Nombre requerido','error'); return; }
+  if(isNew && !pass){ toast('Contraseña requerida para nuevo usuario','error'); return; }
+  var cfg = _getCfgUsers();
+  if(!cfg[finalUid]) cfg[finalUid] = {};
+  cfg[finalUid].name = name;
+  cfg[finalUid].modules = mods;
+  if(pass) cfg[finalUid].hash = _xe(pass);
+  _saveCfgUsers(cfg);
+  document.getElementById('admin-user-modal').remove();
+  renderAdminUsers();
+  toast('Usuario guardado','success');
+}
+
+function eliminarUsuario(uid){
+  if(!confirm('¿Eliminar usuario ' + uid + '?')) return;
+  var cfg = _getCfgUsers();
+  delete cfg[uid];
+  _saveCfgUsers(cfg);
+  renderAdminUsers();
+  toast('Usuario eliminado','success');
 }
 function closeSettings(){ document.getElementById('settings-overlay').style.display = 'none'; }
 function saveSettings(){
