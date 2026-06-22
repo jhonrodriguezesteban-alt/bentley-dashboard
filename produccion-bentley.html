@@ -2579,11 +2579,16 @@ function abrirFormDiseno(id){
   body += '</select></div></div>';
 
   // Si la categoría guardada no está en la lista, mostrar "Otro" seleccionado con el valor en el campo libre
-  var catEnLista = d && DIS_CATEGORIAS.indexOf(d.categoria) >= 0;
+  var catExtras = (DB.disenos_cfg && DB.disenos_cfg.categorias_extra) ? DB.disenos_cfg.categorias_extra : [];
+  var todasCats = DIS_CATEGORIAS.slice(0,-1).concat(catExtras).concat(['Otro']); // Otro siempre al final
+  var catEnLista = d && (todasCats.indexOf(d.categoria) >= 0 || catExtras.indexOf(d.categoria) >= 0);
   var catEsOtro  = d && d.categoria && !catEnLista;
   body += '<div class="form-group"><label class="form-label">Categoría</label>';
   body += '<select id="dis-cat" class="form-control" onchange="toggleCatOtro(this.value)">';
-  DIS_CATEGORIAS.forEach(function(c){ body += '<option value="'+c+'"'+((d&&d.categoria===c&&catEnLista)?' selected':'')+'>'+c+'</option>'; });
+  todasCats.forEach(function(c){
+    if(c==='Otro') return; // se agrega aparte
+    body += '<option value="'+c+'"'+((d&&d.categoria===c&&catEnLista)?' selected':'')+'>'+c+'</option>';
+  });
   body += '<option value="__otro__"'+(catEsOtro?' selected':'')+'>+ Nueva categoría...</option>';
   body += '</select>';
   body += '<input type="text" id="dis-cat-otro" class="form-control" placeholder="Escribe el nombre de la nueva categoría" style="margin-top:8px;display:'+(catEsOtro?'block':'none')+';" value="'+esc(catEsOtro?d.categoria:'')+'">';
@@ -2643,8 +2648,15 @@ async function guardarDisenoForm(){
   var marca = document.getElementById('dis-marca').value;
   var cat = document.getElementById('dis-cat').value;
   if(cat === '__otro__'){
-    cat = (document.getElementById('dis-cat-otro').value||'').trim();
+    cat = (document.getElementById('dis-cat-otro').value||'').trim().toUpperCase();
     if(!cat){ toast('Escribe el nombre de la nueva categoría','error'); return; }
+    // Guardar en cfg para que esté disponible la próxima vez
+    if(!DB.disenos_cfg) DB.disenos_cfg = {};
+    if(!DB.disenos_cfg.categorias_extra) DB.disenos_cfg.categorias_extra = [];
+    if(!DB.disenos_cfg.categorias_extra.includes(cat)){
+      DB.disenos_cfg.categorias_extra.push(cat);
+      DB.disenos_cfg.categorias_extra.sort();
+    }
   }
   var resp = document.getElementById('dis-resp').value;
   var prio = parseInt(document.getElementById('dis-prio').value)||1;
