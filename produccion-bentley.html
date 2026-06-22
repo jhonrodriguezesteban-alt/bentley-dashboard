@@ -503,6 +503,12 @@ textarea.form-control{resize:vertical;min-height:80px;}
 <!-- Toast container -->
 <div id="toast-container"></div>
 
+<!-- Lightbox -->
+<div id="lightbox-overlay" onclick="cerrarLightbox()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9998;align-items:center;justify-content:center;cursor:zoom-out;">
+  <button onclick="cerrarLightbox()" style="position:absolute;top:16px;right:20px;background:rgba(255,255,255,.1);border:none;color:#fff;font-size:24px;width:40px;height:40px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:1;">×</button>
+  <img id="lightbox-img" src="" style="max-width:92vw;max-height:90vh;object-fit:contain;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.8);" onclick="event.stopPropagation()">
+</div>
+
 <!-- Login Overlay -->
 <div id="login-overlay" style="display:none;position:fixed;inset:0;background:#0a0d14;z-index:9999;align-items:center;justify-content:center;">
   <div style="background:#13161f;border:1px solid #1e2a3a;border-radius:22px;width:90%;max-width:400px;padding:44px 36px;box-shadow:0 32px 80px rgba(0,0,0,.6);">
@@ -2602,7 +2608,7 @@ function _renderDrawerFotos(){
     var g = '<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px;">';
     lista.forEach(function(img){
       g += '<div style="position:relative;border-radius:8px;overflow:hidden;border:1px solid '+color+'44;background:#0d1117;">';
-      g += '<img src="'+img.url+'" style="width:100%;height:110px;object-fit:cover;display:block;" loading="lazy">';
+      g += '<img src="'+img.url+'" data-url="'+img.url+'" onclick="abrirLightbox(this.dataset.url)" style="width:100%;height:110px;object-fit:cover;display:block;cursor:zoom-in;" loading="lazy">';
       g += '<div style="padding:5px 7px;display:flex;align-items:center;justify-content:space-between;">';
       g += '<span style="font-size:9px;color:'+color+';font-weight:600;">'+label+'</span>';
       g += '<span style="font-size:9px;color:#334155;">'+img.fecha+'</span>';
@@ -2672,6 +2678,19 @@ async function subirFotosDiseno(files){
   _renderDrawerFotos();
   renderPage(currentPage);
 }
+
+function abrirLightbox(url){
+  var el = document.getElementById('lightbox-overlay');
+  document.getElementById('lightbox-img').src = url;
+  el.style.display = 'flex';
+  document.addEventListener('keydown', _lightboxKey);
+}
+function cerrarLightbox(){
+  document.getElementById('lightbox-overlay').style.display = 'none';
+  document.getElementById('lightbox-img').src = '';
+  document.removeEventListener('keydown', _lightboxKey);
+}
+function _lightboxKey(e){ if(e.key==='Escape') cerrarLightbox(); }
 
 function eliminarFotoDiseno(imgId){
   var id = _fotosCtx;
