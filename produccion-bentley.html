@@ -505,8 +505,13 @@ textarea.form-control{resize:vertical;min-height:80px;}
 
 <!-- Lightbox -->
 <div id="lightbox-overlay" onclick="cerrarLightbox()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9998;align-items:center;justify-content:center;cursor:zoom-out;">
-  <button onclick="cerrarLightbox()" style="position:absolute;top:16px;right:20px;background:rgba(255,255,255,.1);border:none;color:#fff;font-size:24px;width:40px;height:40px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:1;">×</button>
-  <img id="lightbox-img" src="" style="max-width:92vw;max-height:90vh;object-fit:contain;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.8);" onclick="event.stopPropagation()">
+  <!-- Barra superior -->
+  <div onclick="event.stopPropagation()" style="position:absolute;top:14px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;z-index:2;">
+    <button id="lb-btn-descargar" onclick="descargarImagenLightbox()" style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:12px;font-weight:700;border-radius:8px;padding:7px 14px;cursor:pointer;display:flex;align-items:center;gap:6px;letter-spacing:.3px;">⬇ Descargar</button>
+    <button id="lb-btn-compartir" onclick="compartirImagenLightbox()" style="background:rgba(37,211,102,.15);border:1px solid rgba(37,211,102,.35);color:#25d366;font-size:12px;font-weight:700;border-radius:8px;padding:7px 14px;cursor:pointer;display:flex;align-items:center;gap:6px;letter-spacing:.3px;">↗ Compartir</button>
+  </div>
+  <button onclick="cerrarLightbox()" style="position:absolute;top:14px;right:20px;background:rgba(255,255,255,.1);border:none;color:#fff;font-size:24px;width:40px;height:40px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;">×</button>
+  <img id="lightbox-img" src="" style="max-width:92vw;max-height:85vh;margin-top:30px;object-fit:contain;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.8);" onclick="event.stopPropagation()">
 </div>
 
 <!-- Modal Categoría -->
@@ -2705,6 +2710,7 @@ function _renderDrawerFotos(){
       g += '<span style="font-size:9px;color:#334155;">'+img.fecha+'</span>';
       g += '</div>';
       g += '<button data-iid="'+img.id+'" onclick="eliminarFotoDiseno(this.dataset.iid)" style="position:absolute;top:4px;right:4px;background:rgba(0,0,0,.7);border:none;border-radius:50%;width:20px;height:20px;color:#ff3b30;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;">×</button>';
+      g += '<a href="'+img.url+'" download target="_blank" onclick="event.stopPropagation()" title="Descargar" style="position:absolute;top:4px;left:4px;background:rgba(0,0,0,.7);border:none;border-radius:50%;width:20px;height:20px;color:#fff;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;text-decoration:none;">⬇</a>';
       g += '</div>';
     });
     g += '</div>';
@@ -2782,6 +2788,47 @@ function cerrarLightbox(){
   document.removeEventListener('keydown', _lightboxKey);
 }
 function _lightboxKey(e){ if(e.key==='Escape') cerrarLightbox(); }
+
+async function descargarImagenLightbox(){
+  var url = document.getElementById('lightbox-img').src;
+  if(!url) return;
+  try {
+    var resp = await fetch(url);
+    var blob = await resp.blob();
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    var ext = blob.type.includes('png') ? '.png' : blob.type.includes('webp') ? '.webp' : '.jpg';
+    a.download = 'bentley-diseno-' + Date.now() + ext;
+    a.click();
+    URL.revokeObjectURL(a.href);
+    toast('Imagen descargada ✓','success');
+  } catch(e){
+    // fallback: abrir en nueva pestaña
+    window.open(url, '_blank');
+  }
+}
+
+async function compartirImagenLightbox(){
+  var url = document.getElementById('lightbox-img').src;
+  if(!url) return;
+  if(navigator.share){
+    try {
+      var resp = await fetch(url);
+      var blob = await resp.blob();
+      var ext = blob.type.includes('png') ? '.png' : blob.type.includes('webp') ? '.webp' : '.jpg';
+      var file = new File([blob], 'bentley-diseno'+ext, {type: blob.type});
+      await navigator.share({ files: [file], title: 'Diseño Bentley' });
+      return;
+    } catch(e){ /* continuar con fallback */ }
+  }
+  // Fallback: copiar URL al portapapeles
+  try {
+    await navigator.clipboard.writeText(url);
+    toast('URL copiada — pégala en WhatsApp 📋','info');
+  } catch(e){
+    window.open(url, '_blank');
+  }
+}
 
 // ── Modal Categoría ──────────────────────────────────────────────────────────
 function abrirModalCategoria(cat){
