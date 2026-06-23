@@ -4501,11 +4501,11 @@ function renderSimulador(){
       h += '<span style="font-size:11px;color:'+(colUds>0?'#34d399':'#475569')+';font-weight:700;">'+colUds+' uds</span>';
       h += '<button data-did="'+d.id+'" data-ci="'+ci+'" onclick="simEliminarColor(this.dataset.did,parseInt(this.dataset.ci))" style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:16px;padding:0 2px;line-height:1;">×</button>';
       h += '</div>';
-      // Paleta de colores clicable
-      h += '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;">';
+      // Paleta de colores como lista de nombres
+      h += '<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;">';
       SIM_PALETTE.forEach(function(p){
         var sel = p.n === col.color;
-        h += '<button data-did="'+d.id+'" data-ci="'+ci+'" data-color="'+p.n+'" onclick="simSelColor(this.dataset.did,parseInt(this.dataset.ci),this.dataset.color)" title="'+p.n+'" style="width:26px;height:26px;border-radius:5px;border:'+(sel?'2px solid #00d4ff':'1px solid rgba(255,255,255,.12)')+';background:'+p.h+';cursor:pointer;padding:0;outline:none;box-shadow:'+(sel?'0 0 0 2px rgba(0,212,255,.35)':'none')+';" ></button>';
+        h += '<button data-did="'+d.id+'" data-ci="'+ci+'" data-color="'+p.n+'" onclick="simSelColor(this.dataset.did,parseInt(this.dataset.ci),this.dataset.color)" style="padding:3px 9px;border-radius:12px;font-size:11px;font-weight:600;cursor:pointer;border:'+(sel?'1px solid #00d4ff':'1px solid #1e2535')+';background:'+(sel?'rgba(0,212,255,.15)':'#13161f')+';color:'+(sel?'#00d4ff':'#94a3b8')+';white-space:nowrap;">'+p.n+'</button>';
       });
       h += '</div>';
       // Tallas
