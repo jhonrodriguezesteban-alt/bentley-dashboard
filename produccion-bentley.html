@@ -1422,8 +1422,9 @@ function startClock(){
 
 function renderPage(page){
   var el = document.getElementById('page-content');
-  // Limpiar FAB de diseño si navegamos a otra página
+  // Limpiar FABs si navegamos fuera de su módulo
   if(page !== 'diseno'){ var f=document.getElementById('fab-nuevo-diseno'); if(f) f.remove(); }
+  if(page !== 'ops'){ var fop=document.getElementById('fab-nueva-op'); if(fop) fop.remove(); }
   if(page==='dashboard') el.innerHTML = renderDashboard();
   else if(page==='satelites') el.innerHTML = renderSatelites();
   else if(page==='ops') el.innerHTML = _opDetalleId ? renderOPDetalle(_opDetalleId) : renderOPs();
@@ -1850,9 +1851,17 @@ var OP_KANBAN = [
   {k:'PENDIENTE_CORTAR',  label:'Pte. de Cortar',  color:'#fbbf24', bg:'rgba(251,191,36,.08)'},
   {k:'CORTE_POR_ALISTAR', label:'Corte p/ Alistar', color:'#f97316', bg:'rgba(249,115,22,.08)'},
   {k:'EN_CONFECCION',     label:'En Confección',    color:'#00d4ff', bg:'rgba(0,212,255,.08)'},
-  {k:'ALISTAMIENTO',      label:'Alistamiento',     color:'#a855f7', bg:'rgba(168,85,247,.08)'},
   {k:'NOVEDAD',           label:'Novedad',          color:'#ef4444', bg:'rgba(239,68,68,.08)'},
+  {k:'ALISTAMIENTO',      label:'Alistamiento',     color:'#a855f7', bg:'rgba(168,85,247,.08)'},
 ];
+
+// Formatear ID de OP: "OP-0011" → "OP-11", "OP-0008" → "OP-08"
+function fmtOpId(id){
+  var m = (id||'').match(/^(OP-|op-)0*(\d+)$/i);
+  if(!m) return id;
+  var n = parseInt(m[2]);
+  return 'OP-' + (n < 10 ? '0'+n : ''+n);
+}
 
 // Derivar estado Kanban de un sub-grupo (OP+color) a partir de sus OTs
 function _subgEstadoDerivado(otsColor){
@@ -1882,7 +1891,17 @@ function _setSubgEstado(opId, color, estado){
 }
 
 function renderOPs(){
-  // Limpiar FAB de diseño por si acaso
+  // FAB fijo "Nueva OP"
+  var fabOP = document.getElementById('fab-nueva-op');
+  if(!fabOP){
+    fabOP = document.createElement('button');
+    fabOP.id = 'fab-nueva-op';
+    fabOP.className = 'fab';
+    fabOP.title = 'Nueva OP';
+    fabOP.innerHTML = '+';
+    fabOP.onclick = function(){ mostrarFormNuevaOP(); };
+    document.body.appendChild(fabOP);
+  }
   var fDis = document.getElementById('fab-nuevo-diseno'); if(fDis) fDis.remove();
 
   var ops = DB.ops.filter(function(op){ return op.estado_op !== 'ARCHIVADO'; });
@@ -1892,11 +1911,12 @@ function renderOPs(){
   var otsXop = {};
   DB.ots.forEach(function(ot){ if(ot.op_id){ (otsXop[ot.op_id]=otsXop[ot.op_id]||[]).push(ot); } });
 
-  var subgs = []; // {op, color, otsColor, estado, uds, udsEnt, pct, sats}
+  // Para sub-numeración: índice de color dentro de la OP
+  var subgs = []; // {op, color, colorIdx, totalColores, otsColor, estado, uds, udsEnt, pct, sats}
   ops.forEach(function(op){
     var otsOp = otsXop[op.id] || [];
     var colores = op.colores && op.colores.length ? op.colores : ['—'];
-    colores.forEach(function(color){
+    colores.forEach(function(color, ci){
       var otsColor = color==='—' ? otsOp : otsOp.filter(function(o){ return (o.color||'').toUpperCase()===(color||'').toUpperCase(); });
       var manual = _getSubgEstado(op.id, color);
       var estado = manual || _subgEstadoDerivado(otsColor);
@@ -1905,7 +1925,7 @@ function renderOPs(){
       var pct = uds ? Math.round(udsEnt/uds*100) : 0;
       var satIds = {};
       otsColor.forEach(function(o){ if(o.satelite_id) satIds[o.satelite_id]=1; });
-      subgs.push({op:op, color:color, otsColor:otsColor, estado:estado, uds:uds, udsEnt:udsEnt, pct:pct, sats:Object.keys(satIds).length});
+      subgs.push({op:op, color:color, colorIdx:ci, totalColores:colores.length, otsColor:otsColor, estado:estado, uds:uds, udsEnt:udsEnt, pct:pct, sats:Object.keys(satIds).length});
     });
   });
 
@@ -1922,11 +1942,8 @@ function renderOPs(){
 
   var h = '';
 
-  // ── Barra superior ─────────────────────────────────────────────────────────
-  h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">';
-  h += '<div style="font-size:13px;color:#64748b;">' + ops.length + ' OPs activas · ' + subgs.length + ' sub-grupos</div>';
-  h += '<button class="btn btn-primary btn-sm" onclick="mostrarFormNuevaOP()">✚ Nueva OP</button>';
-  h += '</div>';
+  // ── Contador superior ────────────────────────────────────────────────────────
+  h += '<div style="font-size:13px;color:#64748b;margin-bottom:14px;">' + ops.length + ' OPs activas · ' + subgs.length + ' sub-grupos</div>';
 
   // ── Tarjetas resumen por categoría ─────────────────────────────────────────
   if(cats.length){
@@ -1938,8 +1955,6 @@ function renderOPs(){
     subgs.forEach(function(s){ estadoCounts[s.estado]=(estadoCounts[s.estado]||0)+1; });
 
     h += '<div style="display:flex;gap:10px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px;margin-bottom:18px;">';
-
-    // Tarjeta TOTAL
     h += '<div style="background:linear-gradient(135deg,#0d1117 0%,#111827 100%);border:1px solid #3b82f644;border-radius:10px;padding:11px 14px;min-width:160px;flex:0 0 auto;">';
     h += '<div style="font-size:10px;font-weight:700;color:#3b82f6;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;">PRODUCCIÓN ACTIVA</div>';
     h += '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:26px;color:#e2e8f0;line-height:1;margin-bottom:6px;">'+totalOps+'</div>';
@@ -1951,7 +1966,6 @@ function renderOPs(){
       h += '<div style="display:flex;align-items:center;gap:5px;margin-top:4px;"><span style="width:6px;height:6px;border-radius:50%;background:'+col.color+';flex-shrink:0;"></span><span style="font-size:10px;color:'+col.color+';">'+cnt+' '+col.label+'</span></div>';
     });
     h += '</div>';
-
     cats.forEach(function(cat){
       var info = catMap[cat];
       h += '<div style="background:#0d1117;border:1px solid #1e2535;border-radius:10px;padding:11px 14px;min-width:130px;flex:0 0 auto;">';
@@ -1964,7 +1978,7 @@ function renderOPs(){
   }
 
   if(!subgs.length){
-    h += '<div class="empty-state"><div style="font-size:40px;margin-bottom:12px;">🏭</div><div>No hay OPs activas</div><div style="color:var(--dim);font-size:13px;margin-top:6px;">Crea la primera OP con el botón de arriba</div></div>';
+    h += '<div class="empty-state"><div style="font-size:40px;margin-bottom:12px;">🏭</div><div>No hay OPs activas</div><div style="color:var(--dim);font-size:13px;margin-top:6px;">Usa el botón + para crear la primera OP</div></div>';
     return h;
   }
 
@@ -1975,13 +1989,11 @@ function renderOPs(){
     var colSubgs = subgs.filter(function(s){ return s.estado===col.k; })
       .sort(function(a,b){ return (a.op.id||'').localeCompare(b.op.id||''); });
 
-    h += '<div style="flex:1 1 200px;min-width:200px;max-width:300px;display:flex;flex-direction:column;">';
-    // Header columna
+    h += '<div style="flex:1 1 200px;min-width:210px;max-width:300px;display:flex;flex-direction:column;">';
     h += '<div style="background:'+col.bg+';border:1px solid '+col.color+'44;border-bottom:none;border-radius:10px 10px 0 0;padding:10px 13px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">';
     h += '<div style="font-size:11px;font-weight:700;color:'+col.color+';text-transform:uppercase;letter-spacing:.5px;">'+col.label+'</div>';
     h += '<div style="font-size:11px;font-weight:700;color:'+col.color+';background:'+col.color+'22;border-radius:10px;padding:1px 7px;">'+colSubgs.length+'</div>';
     h += '</div>';
-    // Cuerpo columna
     h += '<div style="background:#0d1117;border:1px solid '+col.color+'33;border-top:none;border-radius:0 0 10px 10px;padding:10px;min-height:100px;overflow-y:auto;overflow-x:hidden;max-height:calc(100vh - 310px);">';
 
     colSubgs.forEach(function(s){
@@ -1991,47 +2003,62 @@ function renderOPs(){
       var satNames = [];
       otsColor.forEach(function(o){ if(o.satelite_id){ var sn=getSatNombre(o.satelite_id); if(satNames.indexOf(sn)<0) satNames.push(sn); } });
 
+      // ID formateado + sub-número si hay múltiples colores
+      var baseId = fmtOpId(op.id);
+      var subLabel = s.totalColores > 1 ? baseId + '.' + (s.colorIdx+1) : baseId;
+
       h += '<div style="background:#13161f;border:1px solid #1e2535;border-left:3px solid '+col.color+';border-radius:10px;padding:11px 12px;margin-bottom:8px;">';
 
-      // Fila 1: OP número + botón detalle
+      // Fila 1: OP sub-número + botón detalle
       h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">';
       h += '<div style="display:flex;align-items:center;gap:6px;">';
-      h += '<span style="font-size:9px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.5px;">OP</span>';
-      h += '<span style="font-size:12px;font-weight:700;color:#00d4ff;">'+esc(op.id)+'</span>';
+      h += '<span style="font-size:12px;font-weight:700;color:#00d4ff;">'+esc(subLabel)+'</span>';
       if(novCount) h += '<span style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);border-radius:8px;font-size:9px;color:#ef4444;font-weight:700;padding:1px 5px;">'+novCount+' NOV</span>';
       h += '</div>';
-      h += '<button data-opid="'+op.id+'" onclick="verDetalleOP(this.dataset.opid)" style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);border-radius:5px;cursor:pointer;color:#00d4ff;font-size:11px;padding:0;" title="Ver detalle">↗</button>';
+      h += '<button data-opid="'+op.id+'" onclick="verDetalleOP(this.dataset.opid)" style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);border-radius:5px;cursor:pointer;color:#00d4ff;font-size:11px;padding:0;" title="Ver detalle OP">↗</button>';
       h += '</div>';
 
-      // Fila 2: Categoría + Color
+      // Categoría + Color
       h += '<div style="font-size:10px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">'+esc(op.categoria||'')+'</div>';
-      h += '<div style="font-size:10px;margin-bottom:4px;display:flex;align-items:center;gap:5px;">';
-      h += '<span style="width:8px;height:8px;border-radius:50%;background:#94a3b8;flex-shrink:0;display:inline-block;"></span>';
-      h += '<span style="font-size:10px;font-weight:700;color:#94a3b8;">'+esc(s.color)+'</span>';
+      h += '<div style="margin-bottom:4px;display:flex;align-items:center;gap:5px;">';
+      h += '<span style="width:7px;height:7px;border-radius:50%;background:#94a3b8;flex-shrink:0;display:inline-block;"></span>';
+      h += '<span style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;">'+esc(s.color)+'</span>';
       h += '</div>';
 
       // Nombre producto
       h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:8px;">'+esc(op.nombre_producto)+'</div>';
 
-      // Satélites involucrados
+      // Satélites asignados (badges)
       if(satNames.length){
         h += '<div style="margin-bottom:7px;display:flex;flex-wrap:wrap;gap:3px;">';
         satNames.slice(0,3).forEach(function(sn){
-          h += '<span style="background:rgba(148,163,184,.08);border:1px solid #1e2535;border-radius:5px;font-size:9px;color:#64748b;padding:1px 6px;">'+esc(sn.split(' ')[0])+'</span>';
+          h += '<span style="background:rgba(148,163,184,.1);border:1px solid #1e2535;border-radius:5px;font-size:9px;color:#64748b;padding:1px 6px;">'+esc(sn.split(' ')[0])+'</span>';
         });
         if(satNames.length>3) h += '<span style="font-size:9px;color:#475569;">+'+  (satNames.length-3)+'</span>';
         h += '</div>';
       }
 
-      // KPIs: OTs | Uds | %
-      h += '<div style="display:flex;gap:10px;margin-bottom:8px;">';
+      // KPIs
+      h += '<div style="display:flex;gap:8px;margin-bottom:8px;">';
       h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">OTs</div><div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+otsColor.length+'</div></div>';
       h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">UDS</div><div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+s.uds+'</div></div>';
       h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">ENTG.</div><div style="font-size:13px;font-weight:700;color:'+(s.pct>=100?'#34d399':s.pct>50?'#00d4ff':'#e2e8f0')+';">'+s.pct+'%</div></div>';
       h += '</div>';
-
-      // Barra progreso
       h += '<div style="height:3px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;margin-bottom:8px;"><div style="height:100%;width:'+s.pct+'%;background:'+(s.pct>=100?'#34d399':'#00d4ff')+';border-radius:4px;transition:width .4s;"></div></div>';
+
+      // Asignación de taller (visible en CORTE_POR_ALISTAR o siempre si hay OTs sin satélite)
+      if(col.k === 'CORTE_POR_ALISTAR'){
+        var otsInSat = otsColor.filter(function(o){ return !o.satelite_id; });
+        h += '<div style="margin-bottom:8px;background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.25);border-radius:8px;padding:7px 9px;">';
+        h += '<div style="font-size:9px;font-weight:700;color:#f97316;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;">Asignar taller → pasa a Confección</div>';
+        h += '<select data-opid="'+op.id+'" data-color="'+esc(s.color)+'" onchange="asignarTallerSubg(this.dataset.opid,this.dataset.color,this.value)" onclick="event.stopPropagation()" style="width:100%;background:#0d1117;border:1px solid #f97316aa;border-radius:6px;color:#e2e8f0;font-size:11px;padding:5px 7px;cursor:pointer;outline:none;">';
+        h += '<option value="" style="background:#1a1e2a;color:#64748b;">— Seleccionar taller —</option>';
+        DB.satelites.filter(function(sat){ return sat.activo; }).forEach(function(sat){
+          h += '<option value="'+sat.id+'" style="background:#1a1e2a;color:#e2e8f0;">'+esc(sat.nombre)+'</option>';
+        });
+        h += '</select>';
+        h += '</div>';
+      }
 
       // Selector de estado
       h += '<div style="border-top:1px solid #1e2535;padding-top:8px;">';
@@ -2083,6 +2110,29 @@ function cambiarEstadoSubg(opId, color, estado){
   _setSubgEstado(opId, color, estado);
   renderPage('ops');
   toast('Estado actualizado', 'success');
+}
+
+async function asignarTallerSubg(opId, color, satId){
+  if(!satId) return;
+  var otsColor = DB.ots.filter(function(o){
+    return o.op_id===opId && (color==='—' || (o.color||'').toUpperCase()===(color||'').toUpperCase());
+  });
+  if(!otsColor.length){ toast('No hay OTs en este sub-grupo','warning'); return; }
+  var now = new Date().toISOString();
+  var user = getUser();
+  var satNombre = getSatNombre(satId);
+  otsColor.forEach(function(ot){
+    ot.satelite_id = satId;
+    ot.estado = 'EN_CONFECCION';
+    ot.historial = ot.historial||[];
+    ot.historial.push({fecha:now, accion:'Asignado a '+satNombre+' → En Confección', user:user});
+  });
+  _setSubgEstado(opId, color, 'EN_CONFECCION');
+  saveLocal();
+  var ok = await guardarArchivo('ots', {ots: DB.ots});
+  var ok2 = await guardarArchivo('ops', {ops: DB.ops});
+  renderPage('ops');
+  toast('Asignado a '+satNombre+' · '+otsColor.length+' OTs → En Confección', 'success');
 }
 
 function mostrarFormNuevaOP(){
