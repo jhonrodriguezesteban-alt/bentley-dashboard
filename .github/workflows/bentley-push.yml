@@ -1,0 +1,31 @@
+name: Bentley Push Notifications
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'prod_disenos.json'
+      - 'prod_ots.json'
+      - 'prod_ops.json'
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run notify script
+        env:
+          ONESIGNAL_APP_ID: ${{ secrets.ONESIGNAL_APP_ID }}
+          ONESIGNAL_API_KEY: ${{ secrets.ONESIGNAL_API_KEY }}
+        run: python notify.py
