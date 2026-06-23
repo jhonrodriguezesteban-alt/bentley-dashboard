@@ -2863,12 +2863,18 @@ function renderOPDetalle(opId){
         h += '<select data-otid="'+ot.id+'" data-field="satelite_id" style="flex:1;background:rgba(255,200,0,.1);border:1px solid rgba(255,200,0,.4);border-radius:6px;color:var(--text);padding:3px 6px;font-size:11px;"><option value="">Sin asignar</option>'+satOpts.replace('value="'+ot.satelite_id+'"','value="'+ot.satelite_id+'" selected')+'</select>';
         h += '</div>';
       } else if(ot.estado === 'ENTREGADO'){
-        // Fila entregada — solo info, sin input
-        h += '<div style="padding:6px 14px;border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:8px;opacity:.6;">';
+        // Fila entregada — solo info, con fecha y días
+        var diasEnt = ot.fecha_entrega_real ? Math.round((new Date(hoy()) - new Date(ot.fecha_entrega_real)) / 86400000) : null;
+        var diasOp  = op.fecha_op ? Math.round((new Date(hoy()) - new Date(op.fecha_op)) / 86400000) : null;
+        h += '<div style="padding:6px 14px;border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:8px;opacity:.7;">';
         h += '<span style="font-size:11px;font-weight:600;color:#34d399;min-width:32px;">'+esc(ot.talla||'—')+'</span>';
         h += badge(ot.estado);
         h += '<span style="font-size:10px;color:var(--dim);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(getSatNombre(ot.satelite_id))+'</span>';
+        h += '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:1px;">';
         h += '<span style="font-size:11px;color:#34d399;font-weight:700;">'+(ot.unidades_entregadas||0)+' uds</span>';
+        if(diasEnt!==null) h += '<span style="font-size:9px;color:#64748b;" title="Entregado '+fmtDate(ot.fecha_entrega_real)+'">entregado hace '+diasEnt+'d</span>';
+        if(diasOp!==null)  h += '<span style="font-size:9px;color:#475569;" title="OP ingresó '+fmtDate(op.fecha_op)+'">OP ingresó hace '+diasOp+'d</span>';
+        h += '</div>';
         h += '</div>';
       } else {
         // Fila activa — input siempre visible
@@ -5552,8 +5558,8 @@ function renderSimulador(){
     }
   });
 
-  // Filtrar por marca (solo diseños; ops aparecen en todas las marcas)
-  var activeDis = activeItems.filter(function(it){ return it.tipo==='op' || it.marca===_simFiltroMarca; });
+  // Filtrar por marca (solo diseños; ops y catálogo aparecen en todas las marcas)
+  var activeDis = activeItems.filter(function(it){ return it.tipo==='op' || it.tipo==='catalogo' || it.marca===_simFiltroMarca; });
 
   var totalUds = 0;
   activeDis.forEach(function(it){
