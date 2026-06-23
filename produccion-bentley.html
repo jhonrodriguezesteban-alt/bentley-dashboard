@@ -607,6 +607,9 @@ textarea.form-control{resize:vertical;min-height:80px;}
     <div class="nav-item" onclick="navTo('ops')" data-page="ops">
       <span class="icon">📋</span><span class="nav-label"> Órdenes de Producción</span>
     </div>
+    <div class="nav-item" onclick="navTo('monitoreo')" data-page="monitoreo">
+      <span class="icon">🔍</span><span class="nav-label"> Monitoreo Producción</span>
+    </div>
     <div class="nav-item" onclick="navTo('entregas')" data-page="entregas">
       <span class="icon">📦</span><span class="nav-label"> Entregas</span>
     </div>
@@ -1613,7 +1616,7 @@ function navTo(page){
   localStorage.setItem('bentley_last_page', page);
   if(page !== 'ops') _opDetalleId = null;
   document.querySelectorAll('.nav-item').forEach(function(el){ el.classList.toggle('active', el.dataset.page===page); });
-  var titles = {dashboard:'DASHBOARD',satelites:'SATÉLITES',ops:'ÓRDENES DE PRODUCCIÓN',entregas:'REGISTRO DE ENTREGAS',diseno:'DISEÑO',programacion:'PROGRAMACIÓN DE TRABAJO',novedades:'NOVEDADES',historial:'HISTORIAL',simulador:'SIMULADOR DE PRODUCCIÓN',costos_mo:'COSTOS MO'};
+  var titles = {dashboard:'DASHBOARD',satelites:'SATÉLITES',ops:'ÓRDENES DE PRODUCCIÓN',monitoreo:'MONITOREO DE PRODUCCIÓN',entregas:'REGISTRO DE ENTREGAS',diseno:'DISEÑO',programacion:'PROGRAMACIÓN DE TRABAJO',novedades:'NOVEDADES',historial:'HISTORIAL',simulador:'SIMULADOR DE PRODUCCIÓN',costos_mo:'COSTOS MO'};
   document.getElementById('topbar-title').textContent = titles[page] || page.toUpperCase();
   closeDrawer(); closeModal(); selectedOTs.clear();
   renderPage(page);
@@ -1667,6 +1670,7 @@ function renderPage(page){
   else if(page==='historial') el.innerHTML = renderHistorial();
   else if(page==='costos_mo') el.innerHTML = renderCostosMO();
   else if(page==='simulador') el.innerHTML = renderSimulador();
+  else if(page==='monitoreo') el.innerHTML = renderMonitoreo();
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -6674,6 +6678,230 @@ renderPage(_initPage);
   }
 })();
 // If not authenticated, cargarDatos() is called inside doLogin() after successful login
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// MONITOREO DE PRODUCCIÓN — Pendiente por Cortar
+// ═══════════════════════════════════════════════════════════════════════════════
+var _monFiltroCorte = '';
+var _monFiltroCategoria = '';
+
+function renderMonitoreo(){
+  var TALLA_ORD = ['2','3M','6M','9M','12M','18M','24M','T2','T4','T6','T8','T10','T12','T14','T16','UNICA','ÚNICA'];
+  var ops = DB.ops.filter(function(op){ return op.estado_op !== 'ARCHIVADO' && op.estado_op !== 'PAGO_PENDIENTE'; });
+  var otsXop = {};
+  DB.ots.forEach(function(ot){ if(ot.op_id){ (otsXop[ot.op_id]=otsXop[ot.op_id]||[]).push(ot); } });
+
+  // Construir filas: una por (OP, referencia, color) en estado PENDIENTE_CORTAR
+  var rows = [];
+  ops.forEach(function(op){
+    var otsOp = otsXop[op.id] || [];
+    if(otsOp.length === 0){
+      // OP sin OTs aún — leer desde op.referencias o campos planos
+      var refs = op.referencias || [{nombre:op.nombre_producto||'—', cat:op.categoria||'—', colores:op.colores||[], tallas:op.tallas||[], cantidades:op.cantidades||{}}];
+      refs.forEach(function(ref){
+        (ref.colores||[]).forEach(function(color){
+          var tallasRow = {}, total = 0;
+          (ref.tallas||[]).forEach(function(talla){
+            var qty = (ref.cantidades||{})[color+'_'+talla]||0;
+            if(qty>0){ tallasRow[talla]=qty; total+=qty; }
+          });
+          if(total>0) rows.push({cat:ref.cat||op.categoria||'—', nombre:ref.nombre||op.nombre_producto||'—', color:color, tallas:tallasRow, total:total, opId:op.id, opNum:fmtOpId(op.id), cortador:op.cortador||'—', isAnioAnt:isOpAnioAnterior(op)});
+        });
+      });
+    } else {
+      // OP con OTs — solo las que están en PENDIENTE_CORTAR
+      var coloresVistos = {};
+      otsOp.forEach(function(ot){
+        if(ot.estado !== 'PENDIENTE_CORTAR') return;
+        var color = ot.color||'—';
+        var key = (ot.nombre||op.nombre_producto||'—')+'||'+color;
+        if(!coloresVistos[key]){
+          coloresVistos[key] = {cat:ot.categoria||op.categoria||'—', nombre:ot.nombre||op.nombre_producto||'—', color:color, tallas:{}, total:0, opId:op.id, opNum:fmtOpId(op.id), cortador:op.cortador||'—', isAnioAnt:isOpAnioAnterior(op)};
+          rows.push(coloresVistos[key]);
+        }
+        var r = coloresVistos[key];
+        r.tallas[ot.talla||'—'] = (r.tallas[ot.talla||'—']||0) + (ot.cantidad||0);
+        r.total += ot.cantidad||0;
+      });
+    }
+  });
+
+  // Aplicar filtros
+  if(_monFiltroCorte) rows = rows.filter(function(r){ return r.cortador === _monFiltroCorte; });
+  if(_monFiltroCategoria) rows = rows.filter(function(r){ return r.cat === _monFiltroCategoria; });
+
+  // Ordenar: categoría → referencia → color
+  rows.sort(function(a,b){ return (a.cat+a.nombre+a.color).localeCompare(b.cat+b.nombre+b.color,'es'); });
+
+  // Columnas de talla dinámicas
+  var tallasSet = {};
+  rows.forEach(function(r){ Object.keys(r.tallas).forEach(function(t){ tallasSet[t]=1; }); });
+  var tallasCols = Object.keys(tallasSet).sort(function(a,b){
+    var ia=TALLA_ORD.indexOf(a), ib=TALLA_ORD.indexOf(b);
+    if(ia<0&&ib<0) return a.localeCompare(b);
+    if(ia<0) return 1; if(ib<0) return -1; return ia-ib;
+  });
+
+  // Opciones para filtros
+  var cortadores = []; var categorias = [];
+  (DB.ops||[]).forEach(function(op){ if(op.cortador && cortadores.indexOf(op.cortador)<0) cortadores.push(op.cortador); });
+  rows.forEach(function(r){ if(categorias.indexOf(r.cat)<0) categorias.push(r.cat); });
+  cortadores.sort(); categorias.sort();
+
+  var totalUds = rows.reduce(function(a,r){ return a+r.total; },0);
+
+  var h = '';
+  // ── Cabecera + filtros ──
+  h += '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:18px;">';
+  h += '<div>';
+  h += '<div style="font-family:var(--bebas);font-size:26px;color:var(--text);">MONITOREO DE PRODUCCIÓN</div>';
+  h += '<div style="font-size:12px;color:#fbbf24;margin-top:2px;">Pendiente por Cortar — '+rows.length+' referencias · '+totalUds.toLocaleString('es-CO')+' uds</div>';
+  h += '</div>';
+  h += '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">';
+  h += '<select onchange="_monFiltroCategoria=this.value;renderPage(\'monitoreo\')" style="background:#0d1117;border:1px solid #1e2535;border-radius:6px;color:var(--text);padding:5px 10px;font-size:12px;cursor:pointer;">';
+  h += '<option value="">Todas las categorías</option>';
+  categorias.forEach(function(c){ h += '<option value="'+esc(c)+'"'+(_monFiltroCategoria===c?' selected':'')+'>'+esc(c)+'</option>'; });
+  h += '</select>';
+  h += '<select onchange="_monFiltroCorte=this.value;renderPage(\'monitoreo\')" style="background:#0d1117;border:1px solid #1e2535;border-radius:6px;color:var(--text);padding:5px 10px;font-size:12px;cursor:pointer;">';
+  h += '<option value="">Todos los cortadores</option>';
+  cortadores.forEach(function(c){ h += '<option value="'+esc(c)+'"'+(_monFiltroCorte===c?' selected':'')+'>'+esc(c)+'</option>'; });
+  h += '</select>';
+  h += '<button onclick="exportarMonitoreoCSV()" style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);color:#34d399;border-radius:6px;padding:6px 14px;cursor:pointer;font-size:12px;font-weight:600;">↓ Exportar CSV</button>';
+  h += '</div>';
+  h += '</div>';
+
+  if(!rows.length){
+    h += '<div style="text-align:center;padding:60px 20px;color:#475569;"><div style="font-size:32px;margin-bottom:8px;">✂️</div><div style="font-size:14px;">No hay referencias pendientes por cortar</div></div>';
+    return h;
+  }
+
+  // ── Tabla ──
+  h += '<div style="overflow-x:auto;border-radius:10px;border:1px solid #1e2535;">';
+  h += '<table style="width:100%;border-collapse:collapse;font-size:12px;">';
+
+  // Encabezado
+  h += '<thead>';
+  h += '<tr style="background:rgba(251,191,36,.12);border-bottom:2px solid rgba(251,191,36,.35);">';
+  h += '<th style="text-align:left;padding:10px 14px;color:#fbbf24;font-weight:700;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;">Categoría</th>';
+  h += '<th style="text-align:left;padding:10px 14px;color:#fbbf24;font-weight:700;text-transform:uppercase;letter-spacing:.5px;min-width:180px;">Referencia</th>';
+  h += '<th style="text-align:left;padding:10px 14px;color:#fbbf24;font-weight:700;text-transform:uppercase;letter-spacing:.5px;min-width:120px;">Color</th>';
+  tallasCols.forEach(function(t){
+    h += '<th style="text-align:center;padding:10px 8px;color:#fbbf24;font-weight:700;min-width:48px;">'+t+'</th>';
+  });
+  h += '<th style="text-align:center;padding:10px 10px;color:#fbbf24;font-weight:700;min-width:60px;border-left:1px solid rgba(251,191,36,.2);">TOTAL</th>';
+  h += '<th style="text-align:left;padding:10px 12px;color:#fbbf24;font-weight:700;min-width:110px;">OP</th>';
+  h += '<th style="text-align:left;padding:10px 12px;color:#fbbf24;font-weight:700;min-width:110px;">Cortador</th>';
+  h += '</tr>';
+  h += '</thead>';
+  h += '<tbody>';
+
+  var lastRefKey = null;
+  rows.forEach(function(r, i){
+    var refKey = r.cat+'||'+r.nombre;
+    var isNewRef = refKey !== lastRefKey;
+    lastRefKey = refKey;
+    var isEven = i%2===0;
+    var rowBg = isEven ? 'transparent' : 'rgba(255,255,255,.015)';
+
+    h += '<tr data-i="'+i+'" style="background:'+rowBg+';border-bottom:1px solid rgba(255,255,255,.04);" onmouseover="this.style.background=\'rgba(251,191,36,.05)\'" onmouseout="this.style.background=\''+rowBg+'\'">';
+
+    // Categoría — solo en primera fila del grupo referencia
+    if(isNewRef){
+      h += '<td style="padding:8px 14px;color:#94a3b8;font-size:11px;font-weight:700;text-transform:uppercase;vertical-align:top;">'+esc(r.cat)+'</td>';
+      h += '<td style="padding:8px 14px;color:#e2e8f0;font-weight:700;vertical-align:top;">';
+      h += esc(r.nombre);
+      if(r.isAnioAnt) h += ' <span style="font-size:9px;background:rgba(148,163,184,.1);border:1px solid rgba(148,163,184,.2);border-radius:3px;color:#64748b;padding:1px 4px;">2025</span>';
+      h += '</td>';
+    } else {
+      h += '<td style="padding:8px 14px;border-top:none;"></td>';
+      h += '<td style="padding:8px 14px;border-top:none;"></td>';
+    }
+
+    // Color
+    h += '<td style="padding:6px 14px;">';
+    h += '<span style="background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);border-radius:4px;padding:2px 9px;color:#e2e8f0;font-weight:600;font-size:11px;white-space:nowrap;">'+esc(r.color)+'</span>';
+    h += '</td>';
+
+    // Tallas
+    tallasCols.forEach(function(t){
+      var qty = r.tallas[t]||0;
+      h += '<td style="text-align:center;padding:6px 8px;color:'+(qty>0?'#e2e8f0':'rgba(255,255,255,.12)')+';font-weight:'+(qty>0?'700':'400')+';">'+(qty>0?qty:'·')+'</td>';
+    });
+
+    // Total
+    h += '<td style="text-align:center;padding:6px 10px;color:#fbbf24;font-weight:800;font-size:13px;border-left:1px solid rgba(255,255,255,.06);">'+r.total+'</td>';
+
+    // OP (clickable)
+    h += '<td style="padding:6px 12px;"><span data-opid="'+r.opId+'" onclick="navTo(\'ops\');setTimeout(function(){verDetalleOP(\''+r.opId+'\');},100)" style="color:var(--cyan);cursor:pointer;font-size:11px;font-weight:700;" onmouseover="this.style.textDecoration=\'underline\'" onmouseout="this.style.textDecoration=\'none\'">'+esc(r.opNum)+'</span></td>';
+
+    // Cortador
+    h += '<td style="padding:6px 12px;color:#64748b;font-size:11px;">'+esc(r.cortador)+'</td>';
+
+    h += '</tr>';
+  });
+
+  // Fila de totales
+  h += '<tr style="background:rgba(251,191,36,.08);border-top:2px solid rgba(251,191,36,.3);">';
+  h += '<td colspan="3" style="padding:10px 14px;color:#fbbf24;font-weight:700;font-size:12px;text-transform:uppercase;">TOTALES</td>';
+  tallasCols.forEach(function(t){
+    var tot = rows.reduce(function(a,r){ return a+(r.tallas[t]||0); },0);
+    h += '<td style="text-align:center;padding:10px 8px;color:#fbbf24;font-weight:800;">'+(tot||'·')+'</td>';
+  });
+  h += '<td style="text-align:center;padding:10px 10px;color:#fbbf24;font-weight:800;font-size:14px;border-left:1px solid rgba(251,191,36,.2);">'+totalUds+'</td>';
+  h += '<td colspan="2"></td>';
+  h += '</tr>';
+
+  h += '</tbody></table></div>';
+  return h;
+}
+
+function exportarMonitoreoCSV(){
+  var TALLA_ORD = ['2','3M','6M','9M','12M','18M','24M','T2','T4','T6','T8','T10','T12','T14','T16','UNICA','ÚNICA'];
+  var ops = DB.ops.filter(function(op){ return op.estado_op !== 'ARCHIVADO' && op.estado_op !== 'PAGO_PENDIENTE'; });
+  var otsXop = {};
+  DB.ots.forEach(function(ot){ if(ot.op_id){ (otsXop[ot.op_id]=otsXop[ot.op_id]||[]).push(ot); } });
+  var rows = [];
+  ops.forEach(function(op){
+    var otsOp = otsXop[op.id] || [];
+    if(otsOp.length === 0){
+      var refs = op.referencias || [{nombre:op.nombre_producto||'—', cat:op.categoria||'—', colores:op.colores||[], tallas:op.tallas||[], cantidades:op.cantidades||{}}];
+      refs.forEach(function(ref){
+        (ref.colores||[]).forEach(function(color){
+          var tallasRow = {}, total = 0;
+          (ref.tallas||[]).forEach(function(talla){ var qty=(ref.cantidades||{})[color+'_'+talla]||0; if(qty>0){ tallasRow[talla]=qty; total+=qty; } });
+          if(total>0) rows.push({cat:ref.cat||op.categoria||'—', nombre:ref.nombre||'—', color:color, tallas:tallasRow, total:total, opNum:fmtOpId(op.id), cortador:op.cortador||'—'});
+        });
+      });
+    } else {
+      var cv = {};
+      otsOp.forEach(function(ot){
+        if(ot.estado !== 'PENDIENTE_CORTAR') return;
+        var key=(ot.nombre||op.nombre_producto||'—')+'||'+(ot.color||'—');
+        if(!cv[key]) { cv[key]={cat:ot.categoria||op.categoria||'—', nombre:ot.nombre||op.nombre_producto||'—', color:ot.color||'—', tallas:{}, total:0, opNum:fmtOpId(op.id), cortador:op.cortador||'—'}; rows.push(cv[key]); }
+        cv[key].tallas[ot.talla||'—']=(cv[key].tallas[ot.talla||'—']||0)+(ot.cantidad||0); cv[key].total+=(ot.cantidad||0);
+      });
+    }
+  });
+  if(_monFiltroCorte) rows = rows.filter(function(r){ return r.cortador===_monFiltroCorte; });
+  if(_monFiltroCategoria) rows = rows.filter(function(r){ return r.cat===_monFiltroCategoria; });
+  rows.sort(function(a,b){ return (a.cat+a.nombre+a.color).localeCompare(b.cat+b.nombre+b.color,'es'); });
+  var tallasSet = {};
+  rows.forEach(function(r){ Object.keys(r.tallas).forEach(function(t){ tallasSet[t]=1; }); });
+  var tallasCols = Object.keys(tallasSet).sort(function(a,b){
+    var ia=TALLA_ORD.indexOf(a), ib=TALLA_ORD.indexOf(b);
+    if(ia<0&&ib<0) return a.localeCompare(b); if(ia<0) return 1; if(ib<0) return -1; return ia-ib;
+  });
+  var header = ['CATEGORÍA','REFERENCIA','COLOR'].concat(tallasCols).concat(['TOTAL','OP','CORTADOR']);
+  var lines = [header.join(',')];
+  rows.forEach(function(r){
+    var row = [r.cat, r.nombre, r.color].concat(tallasCols.map(function(t){ return r.tallas[t]||0; })).concat([r.total, r.opNum, r.cortador]);
+    lines.push(row.map(function(v){ return '"'+String(v).replace(/"/g,'""')+'"'; }).join(','));
+  });
+  var blob = new Blob(['﻿'+lines.join('\n')], {type:'text/csv;charset=utf-8;'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a'); a.href=url; a.download='monitoreo_produccion_'+hoy()+'.csv'; a.click();
+  URL.revokeObjectURL(url);
+}
 </script>
 </body>
 </html>
