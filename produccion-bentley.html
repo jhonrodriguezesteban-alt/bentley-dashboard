@@ -2500,6 +2500,9 @@ function renderOPs(){
   });
   var nArch = opsArchOrder.length;
 
+  // Auto-abrir si hay búsqueda activa y hay coincidencias en archivadas
+  if(_opBusqueda && nArch && !_archOpen) _archOpen = true;
+
   if(nArch){
     h += '<div style="margin-top:12px;background:#0d1117;border:1px solid rgba(52,211,153,.25);border-radius:10px;">';
     h += '<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;user-select:none;" onclick="toggleArchivadas()">';
@@ -2515,10 +2518,11 @@ function renderOPs(){
       opsArchOrder.forEach(function(opId){
         var op = opsArchMap[opId];
         var baseId = fmtOpId(op.id);
-        h += '<div data-search="'+esc(baseId+' '+op.nombre_producto).toUpperCase()+'" class="arch-row" style="display:flex;align-items:center;gap:10px;padding:6px 10px;background:#13161f;border-radius:7px;">';
+        h += '<div data-search="'+esc(baseId+' '+op.nombre_producto).toUpperCase()+'" data-opid="'+op.id+'" class="arch-row" onclick="verDetalleOP(this.dataset.opid)" style="display:flex;align-items:center;gap:10px;padding:6px 10px;background:#13161f;border-radius:7px;cursor:pointer;" onmouseover="this.style.background=\'#1a1e2a\'" onmouseout="this.style.background=\'#13161f\'">';
         h += '<span style="font-size:11px;font-weight:700;color:#00d4ff;flex-shrink:0;min-width:40px;">'+esc(baseId)+'</span>';
         h += '<span style="font-size:12px;color:#e2e8f0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(op.nombre_producto||'')+'</span>';
         h += '<span style="font-size:10px;color:#475569;flex-shrink:0;">'+esc(op.categoria||'')+'</span>';
+        h += '<span style="font-size:10px;color:#00d4ff44;">↗</span>';
         h += '</div>';
       });
       h += '</div></div>';
