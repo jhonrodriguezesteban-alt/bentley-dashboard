@@ -5450,10 +5450,11 @@ function simFiltrarDis(inp){
       if(!q && d.categoria!==catActual){ catActual=d.categoria; html += '<div style="padding:3px 14px 2px;font-size:9px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:1px;">'+esc(catActual||'SIN CATEGORÍA')+'</div>'; }
       var etColor = _ETAPA_COLOR_SIM[d.kanban_estado]||'#475569';
       var etShort = _ETAPA_SHORT_SIM[d.kanban_estado]||(d.kanban_estado==='LISTA_PRODUCCION'?'Lista Prod.':'');
+      var dpn = disPrioNorm(d.prioridad); var dpc = DIS_PRIO_CFG[dpn];
       html += '<div onmousedown="event.preventDefault();simAgregarDiseno(\''+d.id+'\')" style="padding:8px 14px;cursor:'+(yaEsta?'default':'pointer')+';border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;justify-content:space-between;gap:8px;'+(yaEsta?'opacity:.4;':'')+'background:transparent;" onmouseover="this.style.background=\'rgba(0,212,255,.06)\'" onmouseout="this.style.background=\'transparent\'">';
-      html += '<div style="min-width:0;flex:1;"><div style="font-size:13px;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(d.nombre)+'</div>';
+      html += '<div style="min-width:0;flex:1;display:flex;align-items:center;gap:7px;"><span style="font-size:9px;font-weight:800;color:'+dpc.color+';background:'+dpc.bg+';border:1px solid '+dpc.border+';border-radius:4px;padding:1px 5px;flex-shrink:0;">'+dpc.label+'</span><div style="min-width:0;"><div style="font-size:13px;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(d.nombre)+'</div>';
       if(etShort) html += '<div style="font-size:10px;color:'+etColor+';margin-top:1px;">'+etShort+'</div>';
-      html += '</div><span style="font-size:10px;font-weight:600;white-space:nowrap;color:'+(yaEsta?'#334155':'#00d4ff')+';flex-shrink:0;">'+(yaEsta?'✓':'+ agregar')+'</span></div>';
+      html += '</div></div><span style="font-size:10px;font-weight:600;white-space:nowrap;color:'+(yaEsta?'#334155':'#00d4ff')+';flex-shrink:0;">'+(yaEsta?'✓':'+ agregar')+'</span></div>';
     });
   }
 
@@ -5477,7 +5478,10 @@ function simFiltrarDis(inp){
   }
 
   // ── Sección 3: Catálogo de productos (costos_mo.precios) ─────────────────
-  var precios = ((DB.costos_mo && DB.costos_mo.precios) || []);
+  // Excluir del catálogo los que ya tienen OP activa (evitar duplicados)
+  var _nombresConOp = {};
+  opsActivas.forEach(function(op){ if(op.nombre_producto) _nombresConOp[(op.nombre_producto||'').toUpperCase()] = true; });
+  var precios = ((DB.costos_mo && DB.costos_mo.precios) || []).filter(function(p){ return !_nombresConOp[(p.nombre||'').toUpperCase()]; });
   var matchesCat = q ? precios.filter(function(p){ return (p.nombre||'').toUpperCase().indexOf(q)>=0 || (p.categoria||'').toUpperCase().indexOf(q)>=0; }) : precios;
   if(matchesCat.length){
     hasResults = true;
