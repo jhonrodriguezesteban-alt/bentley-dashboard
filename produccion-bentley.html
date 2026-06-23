@@ -2116,6 +2116,7 @@ function _setSubgEstado(opId, color, estado){
 
 var _opCatFiltro = null;
 var _opBusqueda = '';
+var _opModoEntrega = null; // opId cuando modo entrega masiva está activo
 function renderOPs(){
   // FAB fijo "Nueva OP"
   var fabOP = document.getElementById('fab-nueva-op');
@@ -2790,9 +2791,26 @@ function renderOPDetalle(opId){
   h += '</div></div></div>';
 
   // ── DERECHA: Detalle OTs con estado, satélite, acciones ─────────────────
+  var modoEnt = _opModoEntrega === op.id;
   h += '<div style="flex:1 1 340px;min-width:0;">';
   h += '<div class="card" style="padding:0;overflow:hidden;">';
-  h += '<div style="padding:10px 16px;background:rgba(255,255,255,.03);border-bottom:1px solid var(--card-border);font-size:11px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.8px;">Estado · Satélite · Acciones</div>';
+  h += '<div style="padding:8px 14px;background:rgba(255,255,255,.03);border-bottom:1px solid var(--card-border);display:flex;align-items:center;gap:8px;">';
+  h += '<span style="font-size:11px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.8px;flex:1;">Estado · Satélite · Acciones</span>';
+  if(!edit){
+    if(modoEnt){
+      h += '<button onclick="cancelarModoEntrega()" style="font-size:10px;padding:4px 10px;background:rgba(255,255,255,.06);border:1px solid var(--card-border);color:var(--dim);border-radius:6px;cursor:pointer;">✕ Cancelar</button>';
+    } else {
+      h += '<button data-opid="'+op.id+'" onclick="activarModoEntrega(this.dataset.opid)" style="font-size:10px;padding:4px 10px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);color:#34d399;border-radius:6px;cursor:pointer;font-weight:600;">📦 Registrar entregas</button>';
+    }
+  }
+  h += '</div>';
+  if(modoEnt){
+    h += '<div style="padding:10px 14px;background:rgba(52,211,153,.06);border-bottom:1px solid rgba(52,211,153,.2);display:flex;align-items:center;gap:10px;flex-wrap:wrap;">';
+    h += '<span style="font-size:11px;color:#34d399;font-weight:700;">Fecha de recepción:</span>';
+    h += '<input type="date" id="ent-masiva-fecha" value="'+hoy()+'" style="background:rgba(255,255,255,.08);border:1px solid rgba(52,211,153,.4);border-radius:6px;color:var(--text);padding:4px 8px;font-size:12px;">';
+    h += '<span style="font-size:10px;color:var(--dim);">Aplica a todas las filas</span>';
+    h += '</div>';
+  }
 
   var coloresOrdenados = Object.keys(gridMap).sort();
   coloresOrdenados.forEach(function(color){
@@ -2815,6 +2833,17 @@ function renderOPDetalle(opId){
         h += '<input type="number" min="0" data-otid="'+ot.id+'" data-field="cantidad" value="'+(ot.cantidad||0)+'" style="width:52px;text-align:center;background:rgba(255,200,0,.1);border:1px solid rgba(255,200,0,.4);border-radius:6px;color:var(--text);padding:3px 5px;font-size:12px;">';
         h += '<select data-otid="'+ot.id+'" data-field="satelite_id" style="flex:1;background:rgba(255,200,0,.1);border:1px solid rgba(255,200,0,.4);border-radius:6px;color:var(--text);padding:3px 6px;font-size:11px;"><option value="">Sin asignar</option>'+satOpts.replace('value="'+ot.satelite_id+'"','value="'+ot.satelite_id+'" selected')+'</select>';
         h += '</div>';
+      } else if(modoEnt && ot.estado !== 'ENTREGADO'){
+        var yaEnt = ot.unidades_entregadas || 0;
+        var entColor = ot.estado==='NOVEDAD' ? 'rgba(239,68,68,.12)' : 'rgba(255,255,255,.02)';
+        h += '<div style="padding:7px 14px;border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:8px;background:'+entColor+';">';
+        h += '<span style="font-size:12px;font-weight:700;color:var(--cyan);min-width:32px;">'+esc(ot.talla||'—')+'</span>';
+        h += '<span style="font-size:10px;color:var(--dim);min-width:28px;">/ '+ot.cantidad+'</span>';
+        h += badge(ot.estado);
+        h += '<span style="font-size:10px;color:var(--dim);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(getSatNombre(ot.satelite_id))+'</span>';
+        h += '<input type="number" min="0" max="'+ot.cantidad+'" placeholder="0" data-otid="'+ot.id+'" data-max="'+ot.cantidad+'" class="ent-masiva-uds" value="'+(yaEnt>0?yaEnt:'')+'" style="width:58px;text-align:center;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.4);border-radius:6px;color:var(--text);padding:4px 6px;font-size:13px;font-weight:700;" oninput="this.style.borderColor=this.value>0?\'#34d399\':\'rgba(52,211,153,.4)\'">';
+        h += '<span style="font-size:10px;color:var(--dim);">uds</span>';
+        h += '</div>';
       } else {
         h += '<div style="padding:7px 14px;border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:8px;flex-wrap:wrap;">';
         h += '<span style="font-size:11px;font-weight:600;color:var(--cyan);min-width:32px;">'+esc(ot.talla||'—')+'</span>';
@@ -2830,6 +2859,12 @@ function renderOPDetalle(opId){
   });
 
   h += '</div>';
+  if(modoEnt){
+    h += '<div style="padding:12px 14px;background:rgba(52,211,153,.06);border-top:1px solid rgba(52,211,153,.2);display:flex;gap:8px;align-items:center;">';
+    h += '<button data-opid="'+op.id+'" onclick="guardarEntregasMasivas(this.dataset.opid)" style="flex:1;background:rgba(52,211,153,.2);border:1px solid rgba(52,211,153,.5);color:#34d399;border-radius:8px;padding:10px 18px;cursor:pointer;font-size:13px;font-weight:700;">💾 Guardar entregas</button>';
+    h += '<button onclick="cancelarModoEntrega()" style="background:rgba(255,255,255,.06);border:1px solid var(--card-border);color:var(--dim);border-radius:8px;padding:10px 14px;cursor:pointer;font-size:13px;">Cancelar</button>';
+    h += '</div>';
+  }
   if(edit){
     h += '<div style="padding:12px 0;display:flex;gap:8px;">';
     h += '<button onclick="guardarEdicionOP()" id="btn-guardar-ed2" style="background:rgba(0,212,100,.15);border:1px solid rgba(0,212,100,.4);color:var(--green);border-radius:8px;padding:9px 18px;cursor:pointer;font-size:13px;font-weight:600;">💾 Guardar</button>';
@@ -5590,6 +5625,65 @@ function renderSimulador(){
 
 function setSimFiltroMarca(m){ _simFiltroMarca=m; renderPage('simulador'); }
 function setOpCatFiltro(cat){ _opCatFiltro = cat; renderPage('ops'); }
+
+function activarModoEntrega(opId){ _opModoEntrega = opId; renderPage('ops'); }
+function cancelarModoEntrega(){ _opModoEntrega = null; renderPage('ops'); }
+
+async function guardarEntregasMasivas(opId){
+  var fecha = (document.getElementById('ent-masiva-fecha')||{}).value;
+  if(!fecha){ toast('Selecciona una fecha de recepción', 'error'); return; }
+  var inputs = document.querySelectorAll('.ent-masiva-uds');
+  var pendientes = [];
+  inputs.forEach(function(inp){
+    var uds = parseInt(inp.value)||0;
+    if(uds > 0) pendientes.push({otId: inp.dataset.otid, uds: uds, max: parseInt(inp.dataset.max)||0});
+  });
+  if(!pendientes.length){ toast('Ingresa al menos una entrega', 'error'); return; }
+
+  var errores = [];
+  pendientes.forEach(function(p){
+    if(p.uds > p.max) errores.push('OT '+p.otId+': '+p.uds+' > '+p.max+' (máx)');
+  });
+  if(errores.length){ toast(errores[0], 'error'); return; }
+
+  var totalUds = 0, totalNov = 0;
+  pendientes.forEach(function(p){
+    var ot = DB.ots.find(function(o){ return o.id===p.otId; });
+    if(!ot) return;
+    var pendUds = p.max - p.uds;
+    ot.unidades_entregadas = p.uds;
+    ot.unidades_novedad = pendUds;
+    ot.fecha_entrega_real = fecha;
+    ot.total_costo_mo = p.uds * (ot.valor_mo||0);
+    ot.estado = pendUds > 0 ? 'NOVEDAD' : 'ENTREGADO';
+    if(!ot.historial) ot.historial = [];
+    ot.historial.push({fecha: new Date().toISOString(), accion: (pendUds>0?'Entrega parcial: '+p.uds+' uds, '+pendUds+' pendientes → NOVEDAD':'Entrega completa: '+p.uds+' uds → ENTREGADO'), user: getUser()});
+    // Pago costos MO
+    if(p.uds > 0){
+      var sat = DB.satelites.find(function(s){ return s.id===ot.satelite_id; });
+      var precios = (DB.costos_mo && DB.costos_mo.precios) || [];
+      var refNorm = (ot.nombre||ot.referencia||'').trim().toUpperCase();
+      var precioReg = precios.find(function(pr){ return (pr.nombre||'').trim().toUpperCase()===refNorm; });
+      var pxu = precioReg ? (precioReg.precio||0) : (ot.valor_mo||0);
+      if(pxu > 0){
+        if(!DB.costos_mo) DB.costos_mo = {precios:[], pagos:[]};
+        if(!DB.costos_mo.pagos) DB.costos_mo.pagos = [];
+        DB.costos_mo.pagos.push({id:uid(), ot_id:ot.id, satelite_id:ot.satelite_id, satelite_nombre:sat?sat.nombre:(ot.satelite_id||''), referencia:ot.nombre||ot.referencia||'', uds:p.uds, precio_mo:pxu, total:p.uds*pxu, estado:'PENDIENTE_PAGO', fecha:fecha});
+      }
+    }
+    totalUds += p.uds;
+    if(pendUds > 0) totalNov++;
+  });
+
+  guardarCostosMO();
+  saveLocal(); updateNovBadge();
+  var ok = await guardarArchivo('ots', {ots: DB.ots});
+  if(ok){
+    _opModoEntrega = null;
+    toast(totalUds+' uds registradas en '+pendientes.length+' OTs'+(totalNov?' · '+totalNov+' con novedad':''), totalNov?'error':'success');
+    renderPage('ops');
+  }
+}
 
 function simLlenarTodas(did, ci, qty){
   var sim = _getSimData(did);
