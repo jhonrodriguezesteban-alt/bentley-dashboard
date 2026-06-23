@@ -1845,55 +1845,244 @@ async function crearSatelite(){
 // ═══════════════════════════════════════════════════════════════════════════════
 // ÓRDENES DE PRODUCCIÓN (lista)
 // ═══════════════════════════════════════════════════════════════════════════════
+// ─── Producción Kanban ─────────────────────────────────────────────────────────
+var OP_KANBAN = [
+  {k:'PENDIENTE_CORTAR',  label:'Pte. de Cortar',  color:'#fbbf24', bg:'rgba(251,191,36,.08)'},
+  {k:'CORTE_POR_ALISTAR', label:'Corte p/ Alistar', color:'#f97316', bg:'rgba(249,115,22,.08)'},
+  {k:'EN_CONFECCION',     label:'En Confección',    color:'#00d4ff', bg:'rgba(0,212,255,.08)'},
+  {k:'ALISTAMIENTO',      label:'Alistamiento',     color:'#a855f7', bg:'rgba(168,85,247,.08)'},
+  {k:'NOVEDAD',           label:'Novedad',          color:'#ef4444', bg:'rgba(239,68,68,.08)'},
+];
+
+// Derivar estado Kanban de un sub-grupo (OP+color) a partir de sus OTs
+function _subgEstadoDerivado(otsColor){
+  if(!otsColor.length) return 'PENDIENTE_CORTAR';
+  if(otsColor.some(function(o){ return o.estado==='NOVEDAD'; })) return 'NOVEDAD';
+  if(otsColor.every(function(o){ return o.estado==='ENTREGADO'; })) return 'ARCHIVADO';
+  if(otsColor.some(function(o){ return o.estado==='EN_CONFECCION'; })) return 'EN_CONFECCION';
+  if(otsColor.some(function(o){ return o.estado==='CORTE_POR_ALISTAR'||o.estado==='ASIGNADO'; })) return 'CORTE_POR_ALISTAR';
+  return 'PENDIENTE_CORTAR';
+}
+
+// Obtener/guardar estado manual de un sub-grupo
+function _subgKey(opId, color){ return opId + '||' + color; }
+function _getSubgEstado(opId, color){
+  var op = DB.ops.find(function(o){ return o.id===opId; });
+  if(!op) return 'PENDIENTE_CORTAR';
+  var overrides = op.subg_estados || {};
+  return overrides[_subgKey(opId,color)] || null; // null = usar derivado
+}
+function _setSubgEstado(opId, color, estado){
+  var op = DB.ops.find(function(o){ return o.id===opId; });
+  if(!op) return;
+  if(!op.subg_estados) op.subg_estados = {};
+  op.subg_estados[_subgKey(opId,color)] = estado;
+  guardarArchivo('ops', {ops: DB.ops});
+  saveLocal();
+}
+
 function renderOPs(){
-  var ops = DB.ops.slice().reverse(); // más recientes primero... wait, en orden de creación
-  ops = DB.ops.slice(); // orden de creación
-  var h = '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">';
-  h += '<div style="font-size:13px;color:var(--dim);">' + ops.length + ' órdenes de producción</div>';
-  h += '<button class="btn btn-primary btn-sm" onclick="mostrarFormNuevaOP()">✚ Nueva OP</button>';
-  h += '</div>';
+  // Limpiar FAB de diseño por si acaso
+  var fDis = document.getElementById('fab-nuevo-diseno'); if(fDis) fDis.remove();
 
-  if(!ops.length){
-    h += '<div class="empty-state"><div style="font-size:40px;margin-bottom:12px;">📋</div><div>No hay órdenes de producción</div><div style="color:var(--dim);font-size:13px;margin-top:6px;">Crea la primera OP con el botón de arriba</div></div>';
-    return h;
-  }
+  var ops = DB.ops.filter(function(op){ return op.estado_op !== 'ARCHIVADO'; });
+  var opsArchivadas = DB.ops.filter(function(op){ return op.estado_op === 'ARCHIVADO'; });
 
-  // Agrupar OTs por OP
+  // Construir sub-grupos: una entrada por (op, color)
   var otsXop = {};
   DB.ots.forEach(function(ot){ if(ot.op_id){ (otsXop[ot.op_id]=otsXop[ot.op_id]||[]).push(ot); } });
 
-  h += '<div style="display:flex;flex-direction:column;gap:10px;">';
+  var subgs = []; // {op, color, otsColor, estado, uds, udsEnt, pct, sats}
   ops.forEach(function(op){
     var otsOp = otsXop[op.id] || [];
-    var udsTotal = otsOp.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
-    var udsEntregadas = otsOp.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+(o.unidades_entregadas||0); }, 0);
-    var enConf = otsOp.filter(function(o){ return o.estado==='EN_CONFECCION'; }).length;
-    var pct = udsTotal ? Math.round(udsEntregadas/udsTotal*100) : 0;
+    var colores = op.colores && op.colores.length ? op.colores : ['—'];
+    colores.forEach(function(color){
+      var otsColor = color==='—' ? otsOp : otsOp.filter(function(o){ return (o.color||'').toUpperCase()===(color||'').toUpperCase(); });
+      var manual = _getSubgEstado(op.id, color);
+      var estado = manual || _subgEstadoDerivado(otsColor);
+      var uds = otsColor.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
+      var udsEnt = otsColor.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+(o.unidades_entregadas||0); }, 0);
+      var pct = uds ? Math.round(udsEnt/uds*100) : 0;
+      var satIds = {};
+      otsColor.forEach(function(o){ if(o.satelite_id) satIds[o.satelite_id]=1; });
+      subgs.push({op:op, color:color, otsColor:otsColor, estado:estado, uds:uds, udsEnt:udsEnt, pct:pct, sats:Object.keys(satIds).length});
+    });
+  });
 
-    var estadoColor = {
-      'EN_PROCESO':'var(--accent)',
-      'COMPLETADO':'var(--green)',
-      'CON_NOVEDAD':'var(--red)'
-    }[op.estado_op] || 'var(--dim)';
+  // Resumen por categoría (tarjetas superiores)
+  var catMap = {};
+  ops.forEach(function(op){
+    var cat = op.categoria || 'Sin Cat.';
+    if(!catMap[cat]) catMap[cat] = {total:0, uds:0};
+    catMap[cat].total++;
+    var otsOp = otsXop[op.id] || [];
+    catMap[cat].uds += otsOp.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
+  });
+  var cats = Object.keys(catMap).sort(function(a,b){ return catMap[b].total-catMap[a].total; });
 
-    h += '<div class="card" style="padding:14px 16px;cursor:pointer;" onclick="verDetalleOP(\'' + op.id + '\')">';
-    h += '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">';
-    h += '<div style="flex-shrink:0;"><div style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;">OP</div><div style="font-size:16px;font-weight:700;color:var(--accent);">' + op.id + '</div></div>';
-    h += '<div style="flex:1;min-width:120px;"><div style="font-size:14px;font-weight:600;">' + op.nombre_producto + '</div><div style="font-size:11px;color:var(--dim);margin-top:1px;">' + op.categoria + (op.colores && op.colores.length ? ' · ' + op.colores.slice(0,3).join(', ') : '') + '</div></div>';
-    h += '<div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">';
-    h += '<div style="text-align:center;"><div style="font-size:10px;color:var(--dim);">UDS</div><div style="font-size:15px;font-weight:700;">' + udsTotal.toLocaleString('es-CO') + '</div></div>';
-    h += '<div style="text-align:center;"><div style="font-size:10px;color:var(--dim);">ENTREGADO</div><div style="font-size:15px;font-weight:700;color:var(--green);">' + pct + '%</div></div>';
-    h += '<div style="text-align:center;"><div style="font-size:10px;color:var(--dim);">CONF.</div><div style="font-size:15px;font-weight:700;">' + enConf + '</div></div>';
-    h += '<span style="background:' + estadoColor + '22;color:' + estadoColor + ';border:1px solid ' + estadoColor + '44;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:600;">' + (op.estado_op||'EN_PROCESO') + '</span>';
+  var h = '';
+
+  // ── Barra superior ─────────────────────────────────────────────────────────
+  h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">';
+  h += '<div style="font-size:13px;color:#64748b;">' + ops.length + ' OPs activas · ' + subgs.length + ' sub-grupos</div>';
+  h += '<button class="btn btn-primary btn-sm" onclick="mostrarFormNuevaOP()">✚ Nueva OP</button>';
+  h += '</div>';
+
+  // ── Tarjetas resumen por categoría ─────────────────────────────────────────
+  if(cats.length){
+    var totalOps = ops.length;
+    var totalUds = subgs.reduce(function(a,s){ return a+s.uds; }, 0);
+    var totalEnt = subgs.reduce(function(a,s){ return a+s.udsEnt; }, 0);
+    var pctGlobal = totalUds ? Math.round(totalEnt/totalUds*100) : 0;
+    var estadoCounts = {};
+    subgs.forEach(function(s){ estadoCounts[s.estado]=(estadoCounts[s.estado]||0)+1; });
+
+    h += '<div style="display:flex;gap:10px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px;margin-bottom:18px;">';
+
+    // Tarjeta TOTAL
+    h += '<div style="background:linear-gradient(135deg,#0d1117 0%,#111827 100%);border:1px solid #3b82f644;border-radius:10px;padding:11px 14px;min-width:160px;flex:0 0 auto;">';
+    h += '<div style="font-size:10px;font-weight:700;color:#3b82f6;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;">PRODUCCIÓN ACTIVA</div>';
+    h += '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:26px;color:#e2e8f0;line-height:1;margin-bottom:6px;">'+totalOps+'</div>';
+    h += '<div style="font-size:11px;color:#64748b;margin-bottom:6px;">'+totalUds.toLocaleString('es-CO')+' uds · '+pctGlobal+'% entregado</div>';
+    h += '<div style="height:3px;background:#1e2535;border-radius:2px;overflow:hidden;"><div style="width:'+pctGlobal+'%;height:100%;background:#3b82f6;border-radius:2px;"></div></div>';
+    OP_KANBAN.forEach(function(col){
+      var cnt = estadoCounts[col.k]||0;
+      if(!cnt) return;
+      h += '<div style="display:flex;align-items:center;gap:5px;margin-top:4px;"><span style="width:6px;height:6px;border-radius:50%;background:'+col.color+';flex-shrink:0;"></span><span style="font-size:10px;color:'+col.color+';">'+cnt+' '+col.label+'</span></div>';
+    });
     h += '</div>';
+
+    cats.forEach(function(cat){
+      var info = catMap[cat];
+      h += '<div style="background:#0d1117;border:1px solid #1e2535;border-radius:10px;padding:11px 14px;min-width:130px;flex:0 0 auto;">';
+      h += '<div style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;">'+esc(cat)+'</div>';
+      h += '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:24px;color:#e2e8f0;line-height:1;">'+info.total+'</div>';
+      h += '<div style="font-size:10px;color:#475569;margin-top:2px;">'+info.uds.toLocaleString('es-CO')+' uds</div>';
+      h += '</div>';
+    });
     h += '</div>';
-    // barra progreso
-    h += '<div style="margin-top:10px;height:4px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;"><div style="height:100%;width:' + pct + '%;background:var(--green);border-radius:4px;transition:width .4s;"></div></div>';
+  }
+
+  if(!subgs.length){
+    h += '<div class="empty-state"><div style="font-size:40px;margin-bottom:12px;">🏭</div><div>No hay OPs activas</div><div style="color:var(--dim);font-size:13px;margin-top:6px;">Crea la primera OP con el botón de arriba</div></div>';
+    return h;
+  }
+
+  // ── Kanban board ────────────────────────────────────────────────────────────
+  h += '<div style="display:flex;gap:10px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:16px;align-items:flex-start;min-height:0;width:100%;">';
+
+  OP_KANBAN.forEach(function(col){
+    var colSubgs = subgs.filter(function(s){ return s.estado===col.k; })
+      .sort(function(a,b){ return (a.op.id||'').localeCompare(b.op.id||''); });
+
+    h += '<div style="flex:1 1 200px;min-width:200px;max-width:300px;display:flex;flex-direction:column;">';
+    // Header columna
+    h += '<div style="background:'+col.bg+';border:1px solid '+col.color+'44;border-bottom:none;border-radius:10px 10px 0 0;padding:10px 13px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">';
+    h += '<div style="font-size:11px;font-weight:700;color:'+col.color+';text-transform:uppercase;letter-spacing:.5px;">'+col.label+'</div>';
+    h += '<div style="font-size:11px;font-weight:700;color:'+col.color+';background:'+col.color+'22;border-radius:10px;padding:1px 7px;">'+colSubgs.length+'</div>';
     h += '</div>';
+    // Cuerpo columna
+    h += '<div style="background:#0d1117;border:1px solid '+col.color+'33;border-top:none;border-radius:0 0 10px 10px;padding:10px;min-height:100px;overflow-y:auto;overflow-x:hidden;max-height:calc(100vh - 310px);">';
+
+    colSubgs.forEach(function(s){
+      var op = s.op;
+      var otsColor = s.otsColor;
+      var novCount = otsColor.filter(function(o){ return o.estado==='NOVEDAD'; }).length;
+      var satNames = [];
+      otsColor.forEach(function(o){ if(o.satelite_id){ var sn=getSatNombre(o.satelite_id); if(satNames.indexOf(sn)<0) satNames.push(sn); } });
+
+      h += '<div style="background:#13161f;border:1px solid #1e2535;border-left:3px solid '+col.color+';border-radius:10px;padding:11px 12px;margin-bottom:8px;">';
+
+      // Fila 1: OP número + botón detalle
+      h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">';
+      h += '<div style="display:flex;align-items:center;gap:6px;">';
+      h += '<span style="font-size:9px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.5px;">OP</span>';
+      h += '<span style="font-size:12px;font-weight:700;color:#00d4ff;">'+esc(op.id)+'</span>';
+      if(novCount) h += '<span style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);border-radius:8px;font-size:9px;color:#ef4444;font-weight:700;padding:1px 5px;">'+novCount+' NOV</span>';
+      h += '</div>';
+      h += '<button data-opid="'+op.id+'" onclick="verDetalleOP(this.dataset.opid)" style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);border-radius:5px;cursor:pointer;color:#00d4ff;font-size:11px;padding:0;" title="Ver detalle">↗</button>';
+      h += '</div>';
+
+      // Fila 2: Categoría + Color
+      h += '<div style="font-size:10px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">'+esc(op.categoria||'')+'</div>';
+      h += '<div style="font-size:10px;margin-bottom:4px;display:flex;align-items:center;gap:5px;">';
+      h += '<span style="width:8px;height:8px;border-radius:50%;background:#94a3b8;flex-shrink:0;display:inline-block;"></span>';
+      h += '<span style="font-size:10px;font-weight:700;color:#94a3b8;">'+esc(s.color)+'</span>';
+      h += '</div>';
+
+      // Nombre producto
+      h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:8px;">'+esc(op.nombre_producto)+'</div>';
+
+      // Satélites involucrados
+      if(satNames.length){
+        h += '<div style="margin-bottom:7px;display:flex;flex-wrap:wrap;gap:3px;">';
+        satNames.slice(0,3).forEach(function(sn){
+          h += '<span style="background:rgba(148,163,184,.08);border:1px solid #1e2535;border-radius:5px;font-size:9px;color:#64748b;padding:1px 6px;">'+esc(sn.split(' ')[0])+'</span>';
+        });
+        if(satNames.length>3) h += '<span style="font-size:9px;color:#475569;">+'+  (satNames.length-3)+'</span>';
+        h += '</div>';
+      }
+
+      // KPIs: OTs | Uds | %
+      h += '<div style="display:flex;gap:10px;margin-bottom:8px;">';
+      h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">OTs</div><div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+otsColor.length+'</div></div>';
+      h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">UDS</div><div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+s.uds+'</div></div>';
+      h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">ENTG.</div><div style="font-size:13px;font-weight:700;color:'+(s.pct>=100?'#34d399':s.pct>50?'#00d4ff':'#e2e8f0')+';">'+s.pct+'%</div></div>';
+      h += '</div>';
+
+      // Barra progreso
+      h += '<div style="height:3px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;margin-bottom:8px;"><div style="height:100%;width:'+s.pct+'%;background:'+(s.pct>=100?'#34d399':'#00d4ff')+';border-radius:4px;transition:width .4s;"></div></div>';
+
+      // Selector de estado
+      h += '<div style="border-top:1px solid #1e2535;padding-top:8px;">';
+      h += '<select data-opid="'+op.id+'" data-color="'+esc(s.color)+'" onchange="cambiarEstadoSubg(this.dataset.opid,this.dataset.color,this.value)" onclick="event.stopPropagation()" style="width:100%;background:#0d1117;border:1px solid #1e2535;border-radius:6px;color:#94a3b8;font-size:11px;padding:4px 7px;cursor:pointer;outline:none;">';
+      OP_KANBAN.forEach(function(c){
+        h += '<option value="'+c.k+'"'+(s.estado===c.k?' selected':'')+' style="background:#1a1e2a;color:#e2e8f0;">'+c.label+'</option>';
+      });
+      h += '<option value="ARCHIVADO"'+(s.estado==='ARCHIVADO'?' selected':'')+' style="background:#1a1e2a;color:#34d399;">✓ Archivar</option>';
+      h += '</select></div>';
+
+      h += '</div>';
+    });
+
+    if(!colSubgs.length) h += '<div style="text-align:center;padding:18px 0;color:#1e2535;font-size:11px;">Vacío</div>';
+    h += '</div></div>';
   });
   h += '</div>';
 
+  // ── OPs archivadas (colapsadas) ─────────────────────────────────────────────
+  var subgsArch = [];
+  opsArchivadas.forEach(function(op){
+    var otsOp = otsXop[op.id] || [];
+    var colores = op.colores && op.colores.length ? op.colores : ['—'];
+    colores.forEach(function(color){
+      subgsArch.push({op:op, color:color});
+    });
+  });
+  // También los sub-grupos marcados como ARCHIVADO dentro de OPs activas
+  subgs.filter(function(s){ return s.estado==='ARCHIVADO'; }).forEach(function(s){ subgsArch.push(s); });
+
+  if(subgsArch.length){
+    h += '<div class="card" style="margin-top:12px;padding:14px 16px;border-color:rgba(52,211,153,.3);">';
+    h += '<div style="font-family:var(--bebas);font-size:15px;color:#34d399;margin-bottom:10px;">✓ Archivadas ('+subgsArch.length+')</div>';
+    h += '<div style="display:flex;flex-wrap:wrap;gap:8px;">';
+    subgsArch.forEach(function(s){
+      h += '<div style="background:#0f1520;border:1px solid rgba(52,211,153,.2);border-radius:8px;padding:7px 12px;display:flex;align-items:center;gap:8px;">';
+      h += '<span style="font-size:11px;font-weight:700;color:#00d4ff;">'+esc(s.op.id)+'</span>';
+      h += '<span style="font-size:12px;color:#e2e8f0;">'+esc(s.op.nombre_producto)+'</span>';
+      h += '<span style="font-size:10px;color:#475569;">'+esc(s.color)+'</span>';
+      h += '</div>';
+    });
+    h += '</div></div>';
+  }
+
   return h;
+}
+
+function cambiarEstadoSubg(opId, color, estado){
+  _setSubgEstado(opId, color, estado);
+  renderPage('ops');
+  toast('Estado actualizado', 'success');
 }
 
 function mostrarFormNuevaOP(){
