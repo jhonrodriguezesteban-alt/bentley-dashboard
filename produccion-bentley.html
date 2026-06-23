@@ -3082,13 +3082,13 @@ function setEntFiltro(mes){ _entFiltroMes = mes; renderPage('entregas'); }
 var DIS_RESPONSABLES = ['Carolina','Isa','John','Juan'];
 var DIS_RESP_COLORS  = {Carolina:'#fbbf24',Isa:'#c084fc',John:'#34d399',Juan:'#38bdf8'};
 var DIS_MARCAS_DEFAULT = ['Bentley Kids','Prime','Maquilas'];
-var DIS_CATEGORIAS = ['Abrigos','Accesorios','Blusas','Buzos','Camisetas','Chalecos','Chaquetas','Conjuntos','Faldas','Overol','Pantalones','Tejido de Punto','Vestidos','Otro'];
+var DIS_CATEGORIAS = ['Abrigos','Accesorios','Blusas','Bodys','Buzos','Camisetas','Camisones','Chalecos','Chaquetas','Conjuntos','Faldas','Overol','Pantalonetas','Pantalones','Tejido de Punto','Vestidos','Otro'];
 var _disPrioFiltro = 0; // 0=todas, 1,2,3
 var _disBusqueda = '';
 var DIS_PRIO_CFG = {
-  1: {label:'P1', color:'#ef4444', bg:'rgba(239,68,68,.15)', border:'rgba(239,68,68,.5)'},
-  2: {label:'P2', color:'#fbbf24', bg:'rgba(251,191,36,.12)', border:'rgba(251,191,36,.45)'},
-  3: {label:'P3', color:'#64748b', bg:'rgba(100,116,139,.1)', border:'rgba(100,116,139,.3)'},
+  1: {label:'P1', color:'#ff4d4d', bg:'rgba(255,77,77,.18)', border:'rgba(255,77,77,.6)'},
+  2: {label:'P2', color:'#fbbf24', bg:'rgba(251,191,36,.18)', border:'rgba(251,191,36,.6)'},
+  3: {label:'P3', color:'#60a5fa', bg:'rgba(96,165,250,.15)', border:'rgba(96,165,250,.5)'},
 };
 function disPrioNorm(p){ var n=parseInt(p)||3; return n>=3?3:n<=1?1:2; }
 function setPrioDis(id, prio){
@@ -3542,6 +3542,9 @@ function abrirFormDiseno(id){
 
   // Si la categoría guardada no está en la lista, mostrar "Otro" seleccionado con el valor en el campo libre
   var catExtras = (DB.disenos_cfg && DB.disenos_cfg.categorias_extra) ? DB.disenos_cfg.categorias_extra : [];
+  // Deduplicar catExtras: quitar las que ya existen en DIS_CATEGORIAS (case-insensitive)
+  var _baseUpper = DIS_CATEGORIAS.map(function(c){ return c.toUpperCase(); });
+  catExtras = catExtras.filter(function(c){ return _baseUpper.indexOf(c.toUpperCase()) < 0; });
   var todasCats = DIS_CATEGORIAS.slice(0,-1).concat(catExtras).concat(['Otro']); // Otro siempre al final
   var catEnLista = d && (todasCats.indexOf(d.categoria) >= 0 || catExtras.indexOf(d.categoria) >= 0);
   var catEsOtro  = d && d.categoria && !catEnLista;
