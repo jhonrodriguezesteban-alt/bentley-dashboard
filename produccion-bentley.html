@@ -1009,26 +1009,61 @@ async function activarNotificacionesPush(){
       }
     }
 
-    // Opt-in directo a OneSignal
     toast('⏳ Registrando en servidor push...','info');
-    await OneSignal.User.PushSubscription.optIn();
     localStorage.setItem('bentley_notif_activa','1');
 
-    // Esperar token APNs hasta 15 segundos
+    // Intentar OneSignal con timeout de 5s
     var subId = null;
-    for(var t=0; t<15; t++){
-      await new Promise(function(res){ setTimeout(res, 1000); });
-      subId = OneSignal.User && OneSignal.User.PushSubscription && OneSignal.User.PushSubscription.id;
-      if(subId) break;
-    }
+    try {
+      await Promise.race([
+        OneSignal.User.PushSubscription.optIn(),
+        new Promise(function(_,rej){ setTimeout(function(){ rej(new Error('timeout')); }, 5000); })
+      ]);
+      // Esperar token hasta 10s más
+      for(var t=0; t<10; t++){
+        await new Promise(function(res){ setTimeout(res, 1000); });
+        subId = OneSignal.User && OneSignal.User.PushSubscription && OneSignal.User.PushSubscription.id;
+        if(subId) break;
+      }
+    } catch(e){ console.warn('optIn timeout/error:', e.message); }
 
     if(subId){
       localStorage.setItem('bentley_os_sub_id', subId);
       toast('✅ Push en background activo · ID: '+subId.slice(0,8)+'...','success');
       if(btn){ btn.textContent='✅ Push activo'; btn.disabled=false; }
-    } else {
-      toast('⚠️ Apple no entregó token tras 15s — reinstala la app e intenta de nuevo','warning');
-      if(btn){ btn.textContent='⚠️ Reintentar'; btn.disabled=false; }
+      return;
+    }
+
+    // Fallback: intentar con API nativa de Web Push directamente
+    toast('⏳ Intentando registro nativo Web Push...','info');
+    try {
+      var sw = await navigator.serviceWorker.ready;
+      // Obtener VAPID key de OneSignal
+      var vapidResp = await fetch('https://onesignal.com/api/v1/apps/b639d27a-1793-448e-b77a-cb2af75ec9aa');
+      var vapidData = await vapidResp.json();
+      var vapidKey = vapidData.vapid_public_key || '';
+      if(!vapidKey) throw new Error('Sin VAPID key');
+      function urlBase64ToUint8Array(base64String){
+        var padding = '='.repeat((4 - base64String.length % 4) % 4);
+        var base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+        var rawData = window.atob(base64);
+        var outputArray = new Uint8Array(rawData.length);
+        for(var i = 0; i < rawData.length; ++i) outputArray[i] = rawData.charCodeAt(i);
+        return outputArray;
+      }
+      var pushSub = await sw.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(vapidKey)
+      });
+      if(pushSub){
+        toast('✅ Web Push nativo registrado · Activo en background','success');
+        if(btn){ btn.textContent='✅ Push activo'; btn.disabled=false; }
+        console.log('Native push sub:', JSON.stringify(pushSub));
+      }
+    } catch(e2){
+      console.warn('Native push error:', e2);
+      toast('⚠️ '+e2.message+' — Las notifs solo funcionan con la app abierta','warning');
+      if(btn){ btn.textContent='⚠️ Solo cuando abierta'; btn.disabled=false; }
     }
   } catch(e){
     console.warn('OneSignal error:', e);
