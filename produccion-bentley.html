@@ -6831,6 +6831,8 @@ renderPage(_initPage);
 // ═══════════════════════════════════════════════════════════════════════════════
 var _monFiltroCorte = '';
 var _monFiltroCategoria = '';
+var _monCorteActivos = {};  // key: opId+'||'+color → true
+var _monCorteQtys    = {};  // key: opId+'||'+color+'||'+talla → qty confirmada
 
 function renderMonitoreo(){
   var TALLA_ORD = ['2','3M','6M','9M','12M','18M','24M','T2','T4','T6','T8','T10','T12','T14','T16','UNICA','ÚNICA'];
@@ -6838,12 +6840,10 @@ function renderMonitoreo(){
   var otsXop = {};
   DB.ots.forEach(function(ot){ if(ot.op_id){ (otsXop[ot.op_id]=otsXop[ot.op_id]||[]).push(ot); } });
 
-  // Construir filas: una por (OP, referencia, color) en estado PENDIENTE_CORTAR
   var rows = [];
   ops.forEach(function(op){
     var otsOp = otsXop[op.id] || [];
     if(otsOp.length === 0){
-      // OP sin OTs aún — leer desde op.referencias o campos planos
       var refs = op.referencias || [{nombre:op.nombre_producto||'—', cat:op.categoria||'—', colores:op.colores||[], tallas:op.tallas||[], cantidades:op.cantidades||{}}];
       refs.forEach(function(ref){
         (ref.colores||[]).forEach(function(color){
@@ -6852,18 +6852,17 @@ function renderMonitoreo(){
             var qty = (ref.cantidades||{})[color+'_'+talla]||0;
             if(qty>0){ tallasRow[talla]=qty; total+=qty; }
           });
-          if(total>0) rows.push({cat:ref.cat||op.categoria||'—', nombre:ref.nombre||op.nombre_producto||'—', color:color, tallas:tallasRow, total:total, opId:op.id, opNum:fmtOpId(op.id), cortador:op.cortador||'—', isAnioAnt:isOpAnioAnterior(op)});
+          if(total>0) rows.push({cat:ref.cat||op.categoria||'—', nombre:ref.nombre||op.nombre_producto||'—', color:color, tallas:tallasRow, total:total, opId:op.id, opNum:fmtOpId(op.id), cortador:op.cortador||'—', isAnioAnt:isOpAnioAnterior(op), hasOTs:false});
         });
       });
     } else {
-      // OP con OTs — solo las que están en PENDIENTE_CORTAR
       var coloresVistos = {};
       otsOp.forEach(function(ot){
         if(ot.estado !== 'PENDIENTE_CORTAR') return;
         var color = ot.color||'—';
         var key = (ot.nombre||op.nombre_producto||'—')+'||'+color;
         if(!coloresVistos[key]){
-          coloresVistos[key] = {cat:ot.categoria||op.categoria||'—', nombre:ot.nombre||op.nombre_producto||'—', color:color, tallas:{}, total:0, opId:op.id, opNum:fmtOpId(op.id), cortador:op.cortador||'—', isAnioAnt:isOpAnioAnterior(op)};
+          coloresVistos[key] = {cat:ot.categoria||op.categoria||'—', nombre:ot.nombre||op.nombre_producto||'—', color:color, tallas:{}, total:0, opId:op.id, opNum:fmtOpId(op.id), cortador:op.cortador||'—', isAnioAnt:isOpAnioAnterior(op), hasOTs:true};
           rows.push(coloresVistos[key]);
         }
         var r = coloresVistos[key];
@@ -6873,14 +6872,10 @@ function renderMonitoreo(){
     }
   });
 
-  // Aplicar filtros
   if(_monFiltroCorte) rows = rows.filter(function(r){ return r.cortador === _monFiltroCorte; });
   if(_monFiltroCategoria) rows = rows.filter(function(r){ return r.cat === _monFiltroCategoria; });
-
-  // Ordenar: categoría → referencia → color
   rows.sort(function(a,b){ return (a.cat+a.nombre+a.color).localeCompare(b.cat+b.nombre+b.color,'es'); });
 
-  // Columnas de talla dinámicas
   var tallasSet = {};
   rows.forEach(function(r){ Object.keys(r.tallas).forEach(function(t){ tallasSet[t]=1; }); });
   var tallasCols = Object.keys(tallasSet).sort(function(a,b){
@@ -6889,16 +6884,15 @@ function renderMonitoreo(){
     if(ia<0) return 1; if(ib<0) return -1; return ia-ib;
   });
 
-  // Opciones para filtros
   var cortadores = []; var categorias = [];
   (DB.ops||[]).forEach(function(op){ if(op.cortador && cortadores.indexOf(op.cortador)<0) cortadores.push(op.cortador); });
   rows.forEach(function(r){ if(categorias.indexOf(r.cat)<0) categorias.push(r.cat); });
   cortadores.sort(); categorias.sort();
 
   var totalUds = rows.reduce(function(a,r){ return a+r.total; },0);
+  var nActivos = Object.keys(_monCorteActivos).length;
 
   var h = '';
-  // ── Cabecera + filtros ──
   h += '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:18px;">';
   h += '<div>';
   h += '<div style="font-family:var(--bebas);font-size:26px;color:var(--text);">MONITOREO DE PRODUCCIÓN</div>';
@@ -6913,7 +6907,10 @@ function renderMonitoreo(){
   h += '<option value="">Todos los cortadores</option>';
   cortadores.forEach(function(c){ h += '<option value="'+esc(c)+'"'+(_monFiltroCorte===c?' selected':'')+'>'+esc(c)+'</option>'; });
   h += '</select>';
-  h += '<button onclick="exportarMonitoreoCSV()" style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);color:#34d399;border-radius:6px;padding:6px 14px;cursor:pointer;font-size:12px;font-weight:600;">↓ Exportar CSV</button>';
+  h += '<button onclick="exportarMonitoreoCSV()" style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);color:#34d399;border-radius:6px;padding:6px 14px;cursor:pointer;font-size:12px;font-weight:600;">↓ CSV</button>';
+  if(nActivos > 0){
+    h += '<button id="btnConfirmarCortes" onclick="monConfirmarCortes()" style="background:rgba(34,197,94,.18);border:1px solid rgba(34,197,94,.6);color:#22c55e;border-radius:6px;padding:7px 18px;cursor:pointer;font-size:13px;font-weight:800;box-shadow:0 0 12px rgba(34,197,94,.25);">✓ Confirmar Corte y OTs ('+nActivos+')</button>';
+  }
   h += '</div>';
   h += '</div>';
 
@@ -6922,69 +6919,55 @@ function renderMonitoreo(){
     return h;
   }
 
-  // ── Tabla ──
   h += '<div style="overflow-x:auto;border-radius:10px;border:1px solid #1e2535;">';
   h += '<table style="width:100%;border-collapse:collapse;font-size:12px;">';
-
-  // Encabezado
   h += '<thead>';
   h += '<tr style="background:rgba(251,191,36,.12);border-bottom:2px solid rgba(251,191,36,.35);">';
   h += '<th style="text-align:left;padding:10px 14px;color:#fbbf24;font-weight:700;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;">Categoría</th>';
   h += '<th style="text-align:left;padding:10px 14px;color:#fbbf24;font-weight:700;text-transform:uppercase;letter-spacing:.5px;min-width:180px;">Referencia</th>';
   h += '<th style="text-align:left;padding:10px 14px;color:#fbbf24;font-weight:700;text-transform:uppercase;letter-spacing:.5px;min-width:120px;">Color</th>';
   tallasCols.forEach(function(t){
-    h += '<th style="text-align:center;padding:10px 8px;color:#fbbf24;font-weight:700;min-width:48px;">'+t+'</th>';
+    h += '<th style="text-align:center;padding:10px 8px;color:#fbbf24;font-weight:700;min-width:54px;">'+t+'</th>';
   });
   h += '<th style="text-align:center;padding:10px 10px;color:#fbbf24;font-weight:700;min-width:60px;border-left:1px solid rgba(251,191,36,.2);">TOTAL</th>';
-  h += '<th style="text-align:left;padding:10px 12px;color:#fbbf24;font-weight:700;min-width:110px;">OP</th>';
-  h += '<th style="text-align:left;padding:10px 12px;color:#fbbf24;font-weight:700;min-width:110px;">Cortador</th>';
+  h += '<th style="text-align:left;padding:10px 12px;color:#fbbf24;font-weight:700;min-width:100px;">OP</th>';
+  h += '<th style="text-align:left;padding:10px 12px;color:#fbbf24;font-weight:700;min-width:100px;">Cortador</th>';
+  h += '<th style="text-align:center;padding:10px 10px;color:#fbbf24;font-weight:700;min-width:64px;">Corte</th>';
   h += '</tr>';
   h += '</thead>';
   h += '<tbody>';
 
-  // Pre-calcular rowspan por referencia y categoría
-  var refSpan = {}, catSpan = {};
-  rows.forEach(function(r){
-    var refKey = r.cat+'||'+r.nombre;
-    refSpan[refKey] = (refSpan[refKey]||0)+1;
-  });
-  // Calcular rowspan de categoría (cuántas filas seguidas comparten la misma cat)
+  // Pre-calcular rowspan
+  var refSpan = {};
+  rows.forEach(function(r){ var rk=r.cat+'||'+r.nombre; refSpan[rk]=(refSpan[rk]||0)+1; });
   var catSpanArr = [];
-  rows.forEach(function(r, i){
-    var prev = i>0 ? rows[i-1] : null;
-    if(!prev || prev.cat !== r.cat){
-      var span = 1;
-      for(var j=i+1; j<rows.length && rows[j].cat===r.cat; j++) span++;
-      catSpanArr[i] = span;
-    } else {
-      catSpanArr[i] = 0; // no renderizar
-    }
+  rows.forEach(function(r,i){
+    var prev=i>0?rows[i-1]:null;
+    if(!prev||prev.cat!==r.cat){ var sp=1; for(var j=i+1;j<rows.length&&rows[j].cat===r.cat;j++)sp++; catSpanArr[i]=sp; }
+    else catSpanArr[i]=0;
   });
 
   var refKeySeen = {};
-  var lastCat = null;
   rows.forEach(function(r, i){
     var refKey = r.cat+'||'+r.nombre;
     var isFirstOfRef = !refKeySeen[refKey];
     var isFirstOfCat = catSpanArr[i] > 0;
     if(isFirstOfRef) refKeySeen[refKey] = true;
 
+    var ck = r.opId+'||'+r.color;
+    var enCorte = !!_monCorteActivos[ck];
     var isEven = i%2===0;
-    var rowBg = isEven ? 'transparent' : 'rgba(255,255,255,.015)';
-    var hover = 'onmouseover="this.style.background=\'rgba(251,191,36,.05)\'" onmouseout="this.style.background=\''+rowBg+'\'"';
+    var rowBg = enCorte ? 'rgba(34,197,94,.06)' : (isEven ? 'transparent' : 'rgba(255,255,255,.015)');
+    var rowBd = enCorte ? '1px solid rgba(34,197,94,.18)' : '1px solid rgba(255,255,255,.04)';
+    var hoverAttr = enCorte ? '' : 'onmouseover="this.style.background=\'rgba(251,191,36,.05)\'" onmouseout="this.style.background=\''+rowBg+'\'"';
 
-    h += '<tr style="background:'+rowBg+';border-bottom:1px solid rgba(255,255,255,.04);" '+hover+'>';
+    h += '<tr style="background:'+rowBg+';border-bottom:'+rowBd+';" '+hoverAttr+'>';
 
-    // Categoría — con rowspan
     if(isFirstOfCat){
-      var cspan = catSpanArr[i];
-      h += '<td rowspan="'+cspan+'" style="padding:8px 14px;color:#94a3b8;font-size:11px;font-weight:700;text-transform:uppercase;vertical-align:middle;border-right:1px solid rgba(255,255,255,.04);">'+esc(r.cat)+'</td>';
+      h += '<td rowspan="'+catSpanArr[i]+'" style="padding:8px 14px;color:#94a3b8;font-size:11px;font-weight:700;text-transform:uppercase;vertical-align:middle;border-right:1px solid rgba(255,255,255,.04);">'+esc(r.cat)+'</td>';
     }
-
-    // Referencia — con rowspan
     if(isFirstOfRef){
-      var rspan = refSpan[refKey];
-      h += '<td rowspan="'+rspan+'" style="padding:8px 14px;color:#e2e8f0;font-weight:700;vertical-align:middle;border-right:1px solid rgba(255,255,255,.04);">';
+      h += '<td rowspan="'+refSpan[refKey]+'" style="padding:8px 14px;color:#e2e8f0;font-weight:700;vertical-align:middle;border-right:1px solid rgba(255,255,255,.04);">';
       h += esc(r.nombre);
       if(r.isAnioAnt) h += ' <span style="font-size:9px;background:rgba(148,163,184,.1);border:1px solid rgba(148,163,184,.2);border-radius:3px;color:#64748b;padding:1px 4px;">2025</span>';
       h += '</td>';
@@ -6995,25 +6978,45 @@ function renderMonitoreo(){
     h += '<span style="background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);border-radius:4px;padding:2px 9px;color:#e2e8f0;font-weight:600;font-size:11px;white-space:nowrap;">'+esc(r.color)+'</span>';
     h += '</td>';
 
-    // Tallas
+    // Tallas — inputs si enCorte, estático si no
     tallasCols.forEach(function(t){
-      var qty = r.tallas[t]||0;
-      h += '<td style="text-align:center;padding:6px 8px;color:'+(qty>0?'#e2e8f0':'rgba(255,255,255,.12)')+';font-weight:'+(qty>0?'700':'400')+';">'+(qty>0?qty:'·')+'</td>';
+      if(enCorte){
+        var qk = ck+'||'+t;
+        var val = (_monCorteQtys[qk]!==undefined) ? _monCorteQtys[qk] : (r.tallas[t]||0);
+        var hasProg = (r.tallas[t]||0)>0;
+        h += '<td style="text-align:center;padding:3px 4px;">';
+        h += '<input type="number" min="0" value="'+val+'" data-qk="'+esc(qk)+'" onchange="_monCorteQtys[this.dataset.qk]=+(this.value)||0" style="width:50px;text-align:center;background:'+(hasProg?'rgba(34,197,94,.1)':'rgba(255,255,255,.04)')+';border:1px solid '+(hasProg?'rgba(34,197,94,.5)':'rgba(255,255,255,.12)')+';border-radius:5px;color:#e2e8f0;font-size:12px;font-weight:700;padding:4px 2px;">';
+        h += '</td>';
+      } else {
+        var qty = r.tallas[t]||0;
+        h += '<td style="text-align:center;padding:6px 8px;color:'+(qty>0?'#e2e8f0':'rgba(255,255,255,.12)')+';font-weight:'+(qty>0?'700':'400')+';">'+(qty>0?qty:'·')+'</td>';
+      }
     });
 
     // Total
     h += '<td style="text-align:center;padding:6px 10px;color:#fbbf24;font-weight:800;font-size:13px;border-left:1px solid rgba(255,255,255,.06);">'+r.total+'</td>';
 
-    // OP (clickable)
+    // OP
     h += '<td style="padding:6px 12px;"><span data-opid="'+r.opId+'" onclick="navTo(\'ops\');setTimeout(function(){verDetalleOP(\''+r.opId+'\');},100)" style="color:var(--cyan);cursor:pointer;font-size:11px;font-weight:700;" onmouseover="this.style.textDecoration=\'underline\'" onmouseout="this.style.textDecoration=\'none\'">'+esc(r.opNum)+'</span></td>';
 
     // Cortador
     h += '<td style="padding:6px 12px;color:#64748b;font-size:11px;">'+esc(r.cortador)+'</td>';
 
+    // Botón corte
+    h += '<td style="text-align:center;padding:4px 8px;">';
+    if(!r.hasOTs){
+      h += '<span style="font-size:10px;color:#334155;" title="Crea OTs primero">Sin OTs</span>';
+    } else if(enCorte){
+      h += '<button data-opid="'+r.opId+'" data-col="'+esc(r.color)+'" onclick="monCancelarCorte(this.dataset.opid,this.dataset.col)" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#ef4444;border-radius:5px;padding:4px 9px;cursor:pointer;font-size:12px;font-weight:700;" title="Cancelar">✕</button>';
+    } else {
+      h += '<button data-opid="'+r.opId+'" data-col="'+esc(r.color)+'" onclick="monActivarCorte(this.dataset.opid,this.dataset.col)" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:#fbbf24;border-radius:5px;padding:4px 11px;cursor:pointer;font-size:14px;" title="Marcar cortado">✂</button>';
+    }
+    h += '</td>';
+
     h += '</tr>';
   });
 
-  // Fila de totales
+  // Fila totales
   h += '<tr style="background:rgba(251,191,36,.08);border-top:2px solid rgba(251,191,36,.3);">';
   h += '<td colspan="3" style="padding:10px 14px;color:#fbbf24;font-weight:700;font-size:12px;text-transform:uppercase;">TOTALES</td>';
   tallasCols.forEach(function(t){
@@ -7021,11 +7024,63 @@ function renderMonitoreo(){
     h += '<td style="text-align:center;padding:10px 8px;color:#fbbf24;font-weight:800;">'+(tot||'·')+'</td>';
   });
   h += '<td style="text-align:center;padding:10px 10px;color:#fbbf24;font-weight:800;font-size:14px;border-left:1px solid rgba(251,191,36,.2);">'+totalUds+'</td>';
-  h += '<td colspan="2"></td>';
+  h += '<td colspan="3"></td>';
   h += '</tr>';
 
   h += '</tbody></table></div>';
   return h;
+}
+
+function monActivarCorte(opId, color){
+  var k = opId+'||'+color;
+  _monCorteActivos[k] = true;
+  // Inicializar cantidades desde OTs actuales
+  DB.ots.forEach(function(ot){
+    if(ot.op_id===opId && ot.color===color && ot.estado==='PENDIENTE_CORTAR'){
+      var qk = k+'||'+(ot.talla||'—');
+      if(_monCorteQtys[qk]===undefined) _monCorteQtys[qk] = ot.cantidad||0;
+    }
+  });
+  renderPage('monitoreo');
+}
+
+function monCancelarCorte(opId, color){
+  var k = opId+'||'+color;
+  delete _monCorteActivos[k];
+  Object.keys(_monCorteQtys).forEach(function(qk){ if(qk.indexOf(k+'||')===0) delete _monCorteQtys[qk]; });
+  renderPage('monitoreo');
+}
+
+async function monConfirmarCortes(){
+  var keys = Object.keys(_monCorteActivos);
+  if(!keys.length) return;
+  var btn = document.getElementById('btnConfirmarCortes');
+  if(btn){ btn.disabled=true; btn.textContent='Guardando...'; }
+
+  var today = hoy();
+  keys.forEach(function(k){
+    var sep = k.indexOf('||');
+    var opId = k.substring(0,sep), color = k.substring(sep+2);
+    DB.ots.forEach(function(ot){
+      if(ot.op_id!==opId || ot.color!==color || ot.estado!=='PENDIENTE_CORTAR') return;
+      var qk = k+'||'+(ot.talla||'—');
+      if(_monCorteQtys[qk]!==undefined) ot.cantidad = +(_monCorteQtys[qk])||0;
+      ot.estado = 'CORTE_POR_ALISTAR';
+      if(!ot.fecha_corte) ot.fecha_corte = today;
+    });
+  });
+
+  saveLocal();
+  var ok = await guardarArchivo('ots', {ots: DB.ots});
+  if(ok){
+    _monCorteActivos = {};
+    _monCorteQtys = {};
+    toast('Corte confirmado — '+keys.length+' color(es) → Corte por Alistar', 'success');
+    renderPage('monitoreo');
+  } else {
+    if(btn){ btn.disabled=false; btn.textContent='Confirmar Corte y OTs ('+keys.length+')'; }
+    toast('Error al guardar en GitHub', 'error');
+  }
 }
 
 function exportarMonitoreoCSV(){
