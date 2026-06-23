@@ -108,6 +108,18 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .btn.loading .btn-text{opacity:.6;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
+/* ── Responsive móvil ─────────────────────────────────────────────────── */
+@media(max-width:768px){
+  .nav-item{ font-size:16px; padding:13px 18px; }
+  .nav-item .icon{ font-size:18px; }
+  .diseno-cat-row{ flex-wrap:nowrap !important; overflow-x:auto; -webkit-overflow-scrolling:touch; scroll-snap-type:x mandatory; padding-bottom:6px; }
+  .diseno-cat-row::-webkit-scrollbar{ height:3px; }
+  .diseno-cat-row::-webkit-scrollbar-thumb{ background:#1e2535; border-radius:3px; }
+  .dash-3col{ grid-template-columns:1fr !important; }
+  .dash-kpi-grid{ grid-template-columns:repeat(2,1fr) !important; }
+  .op-form-row-mob{ flex-direction:column !important; }
+}
+
 /* Estado badges */
 .estado{
   display:inline-block;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600;
@@ -1392,7 +1404,7 @@ function renderDashboard(){
     {label:'Novedades',         val:fmtNum(novCount),          color:novCount>0?C_PINK:'#475569', sub:'OTs con pendiente', nav:'novedades', spark:[]},
     {label:'Diseños Activos',   val:fmtNum((DB.disenos||[]).filter(function(d){ return d.kanban_estado!=='LISTA_PRODUCCION'; }).length), color:'#38bdf8', sub:'En proceso', nav:'diseno', spark:[]},
   ];
-  h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-bottom:20px;">';
+  h += '<div class="dash-kpi-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:20px;">';
   kpiDefs.forEach(function(k){
     var click = k.nav ? 'onclick="navTo(\''+k.nav+'\')" style="cursor:pointer;"' : 'style=""';
     h += '<div class="card" '+click+' style="padding:16px 18px;display:flex;flex-direction:column;gap:4px;border-top:3px solid '+k.color+'44;transition:border-color .2s;" onmouseenter="this.style.borderTopColor=\''+k.color+'\'" onmouseleave="this.style.borderTopColor=\''+k.color+'44\'">';
@@ -1461,7 +1473,7 @@ function renderDashboard(){
   h += '</svg></div>';
 
   // ── Fila 3 columnas ─────────────────────────────────────────────────────────
-  h += '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:16px;">';
+  h += '<div class="dash-3col" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:16px;">';
 
   // COL 1 — Top Satélites con barras estilo referencia
   var satMapTop={};
@@ -1598,17 +1610,9 @@ function renderSatelites(){
     var onTime = total.filter(function(o){ return o.cumplió_fecha; }).length;
     var pct = total.length ? Math.round(onTime/total.length*100) : 0;
     var lastDel = total.sort(function(a,b){ return (b.fecha_entrega_real||'').localeCompare(a.fecha_entrega_real||''); })[0];
-    h += '<div class="sat-card ' + (sat.activo?'':'inactive') + '" onclick="abrirSat(\'' + sat.id + '\')">';
+    h += '<div class="sat-card ' + (sat.activo?'':'inactive') + '" onclick="abrirSat(\'' + sat.id + '\')" title="Ver detalle">';
     h += '<div class="sat-name"><div class="sat-dot ' + (sat.activo?'on':'off') + '"></div>' + sat.nombre + '</div>';
-    h += '<div class="sat-meta">';
-    h += (sat.personas||0) + ' personas · ' + (sat.maquinas||[]).reduce(function(a,m){ return a+m.cantidad; },0) + ' máquinas<br>';
-    h += 'Carga actual: <strong>' + enConf + ' uds</strong><br>';
-    h += 'Cumplimiento: <strong>' + pct + '%</strong> (' + total.length + ' entregas)<br>';
-    if(lastDel) h += 'Última entrega: ' + fmtDate(lastDel.fecha_entrega_real);
-    h += '</div>';
-    if((sat.especialidades||[]).length){
-      h += '<div class="sat-tags">' + sat.especialidades.map(function(e){ return '<span class="sat-tag">' + e + '</span>'; }).join('') + '</div>';
-    }
+    h += '<div style="font-size:11px;color:#475569;margin-top:4px;">' + enConf + ' uds · ' + pct + '% cump.</div>';
     h += '</div>';
   });
   h += '</div>';
@@ -2046,11 +2050,11 @@ function renderNuevaOP(){
 
 function _buildFormNuevaOP(){
   var h = '';
-  h += '<div class="form-row">';
+  h += '<div class="form-row op-form-row-mob">';
   h += '<div class="form-group"><label class="form-label">Fecha OP *</label><input class="form-control" type="date" id="op-fecha" value="' + hoy() + '"></div>';
   h += '<div class="form-group"><label class="form-label">Número OP</label><input class="form-control" type="number" id="op-num" value="' + nextOPNum() + '"></div>';
   h += '</div>';
-  h += '<div class="form-row">';
+  h += '<div class="form-row op-form-row-mob">';
   h += '<div class="form-group"><label class="form-label">Cortador *</label><select class="form-control" id="op-cortador"><option value="">Seleccionar...</option>' + CORTADORES.map(function(c){ return '<option>' + c + '</option>'; }).join('') + '</select></div>';
   h += '<div class="form-group"><label class="form-label">Categoría *</label><select class="form-control" id="op-cat" onchange="actualizarPreview()"><option value="">Seleccionar...</option>' + CATEGORIAS.map(function(c){ return '<option>' + c + '</option>'; }).join('') + '</select></div>';
   h += '</div>';
@@ -2058,7 +2062,7 @@ function _buildFormNuevaOP(){
   // Campo nombre con autocompletado SKU
   h += '<div class="form-group" style="position:relative;">';
   h += '<label class="form-label">Nombre del producto * <span style="color:var(--dim);font-size:11px;">(busca en catálogo de ' + CATALOGO.length + ' referencias)</span></label>';
-  h += '<input class="form-control" id="op-nombre" placeholder="Ej: CHAQUETA EXPLORER" autocomplete="off" oninput="buscarEnCatalogo(this.value)" onblur="setTimeout(ocultarSugerencias,200)">';
+  h += '<input class="form-control" id="op-nombre" placeholder="Toca para ver catálogo…" autocomplete="off" oninput="buscarEnCatalogo(this.value)" onfocus="buscarEnCatalogo(this.value||\'\')" onblur="setTimeout(ocultarSugerencias,200)">';
   h += '<div id="sku-sugerencias" style="display:none;position:absolute;left:0;right:0;top:100%;z-index:200;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;max-height:200px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4);"></div>';
   h += '</div>';
 
@@ -2098,8 +2102,9 @@ function buscarEnCatalogo(val){
   var q = val.trim().toUpperCase();
   var box = document.getElementById('sku-sugerencias');
   if(!box) return;
-  if(!q || q.length < 2){ box.style.display='none'; return; }
-  var matches = CATALOGO.filter(function(r){ return r.ref.toUpperCase().indexOf(q) > -1; }).slice(0, 12);
+  var matches = q.length < 2
+    ? CATALOGO.slice(0, 20)
+    : CATALOGO.filter(function(r){ return r.ref.toUpperCase().indexOf(q) > -1; }).slice(0, 20);
   if(!matches.length){ box.style.display='none'; return; }
   box.innerHTML = matches.map(function(r){
     var colores = r.colores.map(function(c){ return c.n; }).join(', ');
@@ -2503,7 +2508,7 @@ function renderDiseno(){
       'Unisex':'#94a3b8','Mixto':'#94a3b8','Niña':'#f472b6','Niño':'#38bdf8',
       'Mujer':'#f472b6','Hombre':'#38bdf8','Femenino':'#f472b6','Masculino':'#38bdf8'
     };
-    h += '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;">';
+    h += '<div class="diseno-cat-row" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;">';
 
     // ── Tarjeta TOTAL ────────────────────────────────────────────────────────
     h += '<div onclick="abrirModalCategoria(\'__TODOS__\')" style="background:linear-gradient(135deg,#0d1117 0%,#111827 100%);border:1px solid #3b82f644;border-radius:10px;padding:11px 14px;min-width:160px;flex:0 0 auto;cursor:pointer;transition:border-color .15s;" onmouseenter="this.style.borderColor=\'#3b82f6\'" onmouseleave="this.style.borderColor=\'#3b82f644\'">';
