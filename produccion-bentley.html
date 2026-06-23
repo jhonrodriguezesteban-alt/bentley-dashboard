@@ -2634,22 +2634,36 @@ function crearOpDesdeDiseno(id){
     mostrarFormNuevaOP();
     // Pre-rellenar nombre y categoría desde el diseño
     setTimeout(function(){
-      var elNombre = document.getElementById('op-nombre');
-      var elCat = document.getElementById('op-cat');
-      if(elNombre){ elNombre.value = (d.nombre||'').toUpperCase(); }
+      if(!_opRefs.length) return;
+      var rid = _opRefs[0].rid;
+      var r = _opRefs[0];
+      var elNombre = document.getElementById('ref-nom-'+rid);
+      var elCat    = document.getElementById('ref-cat-'+rid);
+      if(elNombre && d.nombre){ elNombre.value = (d.nombre||'').toUpperCase(); r.nombre = (d.nombre||'').toUpperCase(); }
       if(elCat && d.categoria){
         var opts = Array.from(elCat.options);
-        var match = opts.find(function(o){ return o.value.toUpperCase() === (d.categoria||'').toUpperCase(); });
-        if(match){ elCat.value = match.value; actualizarPreview(); }
+        var match = opts.find(function(o){ return o.value.toUpperCase()===(d.categoria||'').toUpperCase(); });
+        if(match){ elCat.value = match.value; r.cat = match.value; }
       }
+      // Pre-rellenar desde catálogo de precios
+      var precios = (DB.costos_mo && DB.costos_mo.precios) || [];
+      var pEntry = precios.find(function(p){ return (p.nombre||'').toUpperCase()===(d.nombre||'').toUpperCase(); });
+      if(pEntry){
+        var elRef = document.getElementById('ref-ref-'+rid);
+        var elVmo = document.getElementById('ref-vmo-'+rid);
+        if(elRef && pEntry.codigo){ elRef.value = pEntry.codigo; r.ref = pEntry.codigo; }
+        if(elVmo && pEntry.precio){ elVmo.value = pEntry.precio; r.vmo = pEntry.precio; }
+        var catItem = CATALOGO.find(function(c){ return c.ref.toUpperCase()===(d.nombre||'').toUpperCase(); })||null;
+        if(catItem){ r.colores = catItem.colores.map(function(c){ return c.n; }); opRefRenderColorTags(rid); opRefGenTabla(rid); }
+      }
+      opRefPreviewUpdate();
     }, 120);
   }, 200);
 }
 
 function mostrarFormNuevaOP(){
-  _colores = [];
+  _opRefsInit();
   openModal('CREAR ORDEN DE PRODUCCIÓN', _buildFormNuevaOP(), '');
-  setTimeout(function(){ generarTablaQty(); }, 80);
 }
 function cerrarFormNuevaOP(){ closeModal(); }
 
@@ -2832,7 +2846,7 @@ function renderOPDetalle(opId){
   // Cabecera con fecha global
   h += '<div style="padding:8px 14px;background:rgba(255,255,255,.03);border-bottom:1px solid var(--card-border);">';
   h += '<div style="font-size:11px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.8px;margin-bottom:'+(edit?'0':'7px')+';">Estado · Satélite · Acciones</div>';
-  if(!edit){
+  if(!edit && otsOp.length > 0){
     h += '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">';
     h += '<span style="font-size:10px;color:#64748b;">Fecha recepción:</span>';
     h += '<input type="date" id="ent-masiva-fecha" value="'+hoy()+'" style="flex:1;background:#0d1117;border:1px solid #2d3348;border-radius:6px;color:var(--text);padding:3px 8px;font-size:12px;">';
@@ -2840,6 +2854,24 @@ function renderOPDetalle(opId){
     h += '</div>';
   }
   h += '</div>';
+
+  // Panel "sin OTs" cuando la OP es nueva
+  if(otsOp.length === 0 && !edit){
+    var _refs = op.referencias || [{nombre:op.nombre_producto, cat:op.categoria, colores:op.colores||[], tallas:op.tallas||[], cantidades:op.cantidades||{}}];
+    h += '<div style="padding:16px;">';
+    h += '<div style="text-align:center;padding:8px 0 14px;color:#64748b;font-size:13px;">📋 Sin OTs generadas — las OTs se crean al pasar a <strong style="color:#f97316;">Corte por Alistar</strong></div>';
+    _refs.forEach(function(r,i){
+      var totalUds = Object.values(r.cantidades||{}).reduce(function(a,v){ return a+(v||0); },0);
+      var nOTs = Object.keys(r.cantidades||{}).filter(function(k){ return (r.cantidades[k]||0)>0; }).length;
+      h += '<div style="background:#0a0e17;border:1px solid #1e2535;border-radius:8px;padding:10px;margin-bottom:8px;">';
+      if(_refs.length>1) h += '<div style="font-size:10px;font-weight:700;color:var(--cyan);margin-bottom:4px;text-transform:uppercase;">Ref '+(i+1)+'</div>';
+      h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+esc(r.nombre)+'</div>';
+      h += '<div style="font-size:11px;color:#64748b;margin-top:3px;">'+esc(r.cat||'—')+' · '+esc((r.colores||[]).join(', '))+' · '+nOTs+' OTs · '+totalUds+' uds</div>';
+      h += '</div>';
+    });
+    h += '<button data-opid="'+op.id+'" onclick="generarOTsParaOP(this.dataset.opid)" style="width:100%;padding:10px;background:rgba(249,115,22,.15);border:1px solid rgba(249,115,22,.4);color:#f97316;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700;margin-top:4px;">✚ Generar OTs → Pasar a Corte por Alistar</button>';
+    h += '</div>';
+  }
 
   var coloresOrdenados = Object.keys(gridMap).sort();
   coloresOrdenados.forEach(function(color){
@@ -3018,48 +3050,24 @@ function renderNuevaOP(){
 
 function _buildFormNuevaOP(){
   var h = '';
+  // Campos nivel OP
   h += '<div class="form-row op-form-row-mob">';
-  h += '<div class="form-group"><label class="form-label">Fecha OP *</label><input class="form-control" type="date" id="op-fecha" value="' + hoy() + '"></div>';
-  h += '<div class="form-group"><label class="form-label">Número OP</label><input class="form-control" type="number" id="op-num" value="' + nextOPNum() + '"></div>';
+  h += '<div class="form-group"><label class="form-label">Fecha OP *</label><input class="form-control" type="date" id="op-fecha" value="'+hoy()+'"></div>';
+  h += '<div class="form-group"><label class="form-label">Número OP</label><input class="form-control" type="number" id="op-num" value="'+nextOPNum()+'"></div>';
   h += '</div>';
-  h += '<div class="form-row op-form-row-mob">';
-  h += '<div class="form-group"><label class="form-label">Cortador *</label><select class="form-control" id="op-cortador"><option value="">Seleccionar...</option>' + CORTADORES.map(function(c){ return '<option>' + c + '</option>'; }).join('') + '</select></div>';
-  h += '<div class="form-group"><label class="form-label">Categoría *</label><select class="form-control" id="op-cat" onchange="actualizarPreview()"><option value="">Seleccionar...</option>' + CATEGORIAS.map(function(c){ return '<option>' + c + '</option>'; }).join('') + '</select></div>';
-  h += '</div>';
-
-  // Campo nombre con autocompletado SKU
-  h += '<div class="form-group" style="position:relative;">';
-  var nPrecios = ((DB.costos_mo&&DB.costos_mo.precios)||[]).length;
-  h += '<label class="form-label">Referencia a producir * <span style="color:var(--dim);font-size:11px;">(' + nPrecios + ' referencias en catálogo de precios)</span></label>';
-  h += '<input class="form-control" id="op-nombre" placeholder="Toca para ver catálogo…" autocomplete="off" oninput="buscarEnCatalogo(this.value)" onfocus="buscarEnCatalogo(this.value||\'\')" onblur="setTimeout(ocultarSugerencias,200)">';
-  h += '<div id="sku-sugerencias" style="display:none;position:absolute;left:0;right:0;top:100%;z-index:200;background:#161b27;border:1px solid #334155;border-radius:8px;max-height:240px;overflow-y:auto;box-shadow:0 12px 32px rgba(0,0,0,.7);margin-top:4px;"></div>';
-  h += '</div>';
-
-  h += '<div class="form-group"><label class="form-label">Referencia base (código)</label><input class="form-control" id="op-ref" placeholder="Ej: 1001" readonly style="background:rgba(255,255,255,.04);color:var(--dim);"></div>';
-  h += '<div class="form-group"><label class="form-label">Valor M.O. por unidad (COP)</label><input class="form-control" type="number" id="op-vmo" placeholder="Ej: 1151" value="1151"></div>';
-
-  // Colores
-  h += '<div class="form-group"><label class="form-label">Colores * <button type="button" class="btn btn-ghost btn-sm" onclick="addColor()" style="margin-left:8px;">+ Color manual</button></label>';
-  h += '<div id="colores-list" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;min-height:32px;"></div>';
-  h += '<div style="display:flex;gap:6px;margin-top:8px;"><input class="form-control" id="color-input" placeholder="Ej: NEGRO" style="max-width:200px;" onkeydown="if(event.key===\'Enter\'){event.preventDefault();addColor();}"><button type="button" class="btn btn-ghost btn-sm" onclick="addColor()">Añadir</button></div></div>';
-
-  // Tallas
-  h += '<div class="form-group"><label class="form-label">Tallas</label><div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;">';
-  h += TALLAS_ALL.map(function(t){ return '<label style="display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer;"><input type="checkbox" class="ck op-talla" value="' + t + '" ' + (TALLAS_DEFAULT.indexOf(t)>-1?'checked':'') + ' onchange="generarTablaQty()"> ' + t + '</label>'; }).join('');
-  h += '</div></div>';
-
+  h += '<div class="form-group"><label class="form-label">Cortador *</label><select class="form-control" id="op-cortador"><option value="">Seleccionar...</option>'+CORTADORES.map(function(c){ return '<option>'+c+'</option>'; }).join('')+'</select></div>';
   h += '<div class="sep"></div>';
-  h += '<div class="section-title" style="font-size:15px;">Cantidades por color × talla</div>';
-  h += '<div id="qty-table-wrap" style="overflow-x:auto;"></div>';
-
-  h += '<div class="sep"></div>';
-  h += '<div id="op-preview" style="background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.2);border-radius:10px;padding:14px;font-size:13px;display:none;"></div>';
-
-  h += '<div style="margin-top:20px;display:flex;gap:10px;">';
-  h += '<button class="btn btn-primary" id="btn-crear-op" onclick="crearOP()"><span class="btn-text">✚ Crear OP y generar OTs</span><span class="spinner"></span></button>';
+  // Bloques de referencia
+  h += '<div id="op-refs-container">';
+  _opRefs.forEach(function(r,i){ h += _buildRefBlock(r,i,_opRefs.length); });
+  h += '</div>';
+  h += '<button type="button" onclick="opRefAdd()" style="width:100%;padding:8px;border-radius:8px;background:rgba(0,212,255,.04);border:1px dashed rgba(0,212,255,.25);color:var(--cyan);font-size:12px;font-weight:600;cursor:pointer;margin-bottom:16px;">+ Agregar otra referencia</button>';
+  // Preview y botones
+  h += '<div id="op-preview" style="background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.2);border-radius:10px;padding:14px;font-size:13px;display:none;margin-bottom:16px;"></div>';
+  h += '<div style="display:flex;gap:10px;">';
+  h += '<button class="btn btn-primary" id="btn-crear-op" onclick="crearOP()"><span class="btn-text">✚ Crear orden de producción</span><span class="spinner"></span></button>';
   h += '<button type="button" class="btn btn-ghost" onclick="cerrarFormNuevaOP()">Cancelar</button>';
   h += '</div>';
-
   return h;
 }
 
@@ -3194,72 +3202,60 @@ function actualizarPreview(){
 }
 
 async function crearOP(){
-  // Validations
-  var fecha = (document.getElementById('op-fecha')||{}).value;
-  var numOp = parseInt((document.getElementById('op-num')||{}).value)||nextOPNum();
+  var fecha    = (document.getElementById('op-fecha')||{}).value;
+  var numOp    = parseInt((document.getElementById('op-num')||{}).value)||nextOPNum();
   var cortador = (document.getElementById('op-cortador')||{}).value;
-  var cat = (document.getElementById('op-cat')||{}).value;
-  var nombre = ((document.getElementById('op-nombre')||{}).value||'').trim().toUpperCase();
-  var ref = ((document.getElementById('op-ref')||{}).value||'').trim().toUpperCase();
-  var vmo = parseInt((document.getElementById('op-vmo')||{}).value)||0;
-  var tallas = Array.from(document.querySelectorAll('.op-talla:checked')).map(function(c){ return c.value; });
+  if(!fecha || !cortador){ toast('Completa fecha y cortador', 'error'); return; }
 
-  if(!fecha || !cortador || !cat || !nombre || !_colores.length){
-    toast('Completa todos los campos requeridos', 'error'); return;
+  // Leer datos de cada bloque de referencia desde DOM
+  var refs = _opRefs.map(function(r){
+    var cat    = (document.getElementById('ref-cat-'+r.rid)||{}).value || r.cat;
+    var nombre = ((document.getElementById('ref-nom-'+r.rid)||{}).value||'').trim().toUpperCase() || r.nombre;
+    var ref    = ((document.getElementById('ref-ref-'+r.rid)||{}).value||'').trim() || r.ref;
+    var vmo    = parseInt((document.getElementById('ref-vmo-'+r.rid)||{}).value)||r.vmo||0;
+    var tallas = Array.from(document.querySelectorAll('.ref-talla-'+r.rid+':checked')).map(function(c){ return c.value; });
+    var cantidades = {};
+    var totalUds = 0;
+    document.querySelectorAll('.opref-qty-inp[data-rid="'+r.rid+'"]').forEach(function(inp){
+      var v = parseInt(inp.value)||0;
+      if(v>0){ cantidades[inp.dataset.color+'_'+inp.dataset.talla]=v; totalUds+=v; }
+    });
+    return {nombre:nombre, ref:ref, cat:cat, vmo:vmo, colores:r.colores.slice(), tallas:tallas, cantidades:cantidades, totalUds:totalUds};
+  });
+
+  // Validar cada referencia
+  for(var i=0; i<refs.length; i++){
+    var r = refs[i];
+    if(!r.cat || !r.nombre || !r.colores.length){
+      toast('Referencia '+(i+1)+': categoría, nombre y colores son requeridos', 'error'); return;
+    }
+    if(r.totalUds === 0){
+      toast('Referencia '+(i+1)+': ingresa cantidades para al menos una combinación', 'error'); return;
+    }
   }
 
-  // Build quantities
-  var cantidades = {};
-  var totalOTs = 0;
-  document.querySelectorAll('.qty-input').forEach(function(inp){
-    var v = parseInt(inp.value)||0;
-    if(v > 0){
-      cantidades[inp.dataset.color + '_' + inp.dataset.talla] = v;
-      totalOTs++;
-    }
-  });
-  if(totalOTs === 0){ toast('Ingresa cantidades para al menos una combinación', 'error'); return; }
+  // Colores globales de la OP (unión de todas las referencias)
+  var allColores = [];
+  refs.forEach(function(r){ r.colores.forEach(function(c){ if(allColores.indexOf(c)<0) allColores.push(c); }); });
 
-  var opId = 'OP-' + new Date().getFullYear() + '-' + String(numOp).padStart(3,'0');
+  var opId = 'OP-'+new Date().getFullYear()+'-'+String(numOp).padStart(3,'0');
   var op = {
     id: opId, numero: numOp, fecha_op: fecha, cortador: cortador,
-    categoria: cat, nombre_producto: nombre, colores: _colores.slice(), tallas: tallas,
-    cantidades: cantidades, op_effi: null, estado_op: 'EN_PROCESO',
+    categoria: refs[0].cat,
+    nombre_producto: refs.length>1 ? refs.map(function(r){ return r.nombre; }).join(' + ') : refs[0].nombre,
+    colores: allColores, tallas: refs[0].tallas, cantidades: refs[0].cantidades,
+    referencias: refs,
+    op_effi: null, estado_op: 'EN_PROCESO',
     created_at: hoy(), created_by: getUser()
   };
   DB.ops.push(op);
 
-  // Generate OTs
-  var otNum = nextOTNum();
-  var newOTs = [];
-  _colores.forEach(function(col){
-    tallas.forEach(function(talla){
-      var qty = cantidades[col + '_' + talla];
-      if(!qty) return;
-      var ot = {
-        id: uid(), numero_ot: otNum++, op_id: opId,
-        categoria: cat, nombre: nombre, referencia: ref + talla,
-        color: col, talla: talla, cantidad: qty, valor_mo: vmo,
-        fecha_ot: fecha, satelite_id: null,
-        fecha_entrega_corte_satelite: null, fecha_estimada_entrega: null,
-        fecha_entrega_real: null, unidades_entregadas: 0, unidades_novedad: 0,
-        estado: 'CORTE_POR_ALISTAR', nt_corte_satelite: null, nt_ingreso_planta: null,
-        op_effi: null, cumplió_fecha: null, motivo_incumplimiento: '', notas: '',
-        historial: [], created_at: hoy(), created_by: getUser()
-      };
-      newOTs.push(ot);
-    });
-  });
-  DB.ots = DB.ots.concat(newOTs);
-
   setBtnLoading('btn-crear-op', true);
   saveLocal();
   var ok1 = await guardarArchivo('ops', {ops: DB.ops});
-  var ok2 = await guardarArchivo('ots', {ots: DB.ots});
   setBtnLoading('btn-crear-op', false);
-  if(ok1 && ok2){
-    toast('OP creada con ' + newOTs.length + ' OTs', 'success');
-    // Archivar diseño de origen si aplica
+  if(ok1){
+    toast('OP '+fmtOpId(opId)+' creada — genera OTs cuando pase a Corte por Alistar', 'success');
     if(_opDesdeDisenoId){
       var disOrigen = (DB.disenos||[]).find(function(x){ return x.id===_opDesdeDisenoId; });
       if(disOrigen){
@@ -3270,9 +3266,216 @@ async function crearOP(){
       }
       _opDesdeDisenoId = null;
     }
-    _colores = [];
     cerrarFormNuevaOP();
     navTo('ops');
+  }
+}
+
+// ─── Multi-referencia: estado y helpers ─────────────────────────────────────
+var _opRefs = [];
+function _opRefNew(){ return {rid:uid(), nombre:'', ref:'', cat:'', vmo:1151, colores:[], tallas:TALLAS_DEFAULT.slice(), cantidades:{}}; }
+function _opRefsInit(){ _opRefs = [_opRefNew()]; }
+
+function _buildRefBlock(r, idx, total){
+  var h = '';
+  h += '<div id="refblock-'+r.rid+'" style="background:#0d1117;border:1px solid #1e2535;border-radius:10px;padding:14px;margin-bottom:10px;">';
+  h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">';
+  h += '<span style="font-size:11px;font-weight:800;color:var(--cyan);text-transform:uppercase;letter-spacing:1px;">Referencia '+(idx+1)+'</span>';
+  if(total>1) h += '<button type="button" data-rid="'+r.rid+'" onclick="opRefRemove(this.dataset.rid)" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#ef4444;border-radius:5px;padding:2px 8px;font-size:11px;cursor:pointer;">× Quitar</button>';
+  h += '</div>';
+  h += '<div class="form-row op-form-row-mob">';
+  h += '<div class="form-group"><label class="form-label">Categoría *</label><select class="form-control" id="ref-cat-'+r.rid+'" onchange="opRefPreviewUpdate()"><option value="">Seleccionar...</option>'+CATEGORIAS.map(function(c){ return '<option'+(r.cat===c?' selected':'')+'>'+esc(c)+'</option>'; }).join('')+'</select></div>';
+  h += '<div class="form-group" style="position:relative;"><label class="form-label">Referencia a producir *</label>';
+  h += '<input class="form-control" id="ref-nom-'+r.rid+'" value="'+esc(r.nombre)+'" placeholder="Buscar en catálogo…" autocomplete="off" oninput="opRefNombreInput(\''+r.rid+'\',this.value)" onfocus="opRefNombreInput(\''+r.rid+'\',this.value||\'\')" onblur="setTimeout(function(){opRefOcultarSug(\''+r.rid+'\');},200)">';
+  h += '<div id="ref-sug-'+r.rid+'" style="display:none;position:absolute;left:0;right:0;top:100%;z-index:200;background:#161b27;border:1px solid #334155;border-radius:8px;max-height:220px;overflow-y:auto;box-shadow:0 12px 32px rgba(0,0,0,.7);margin-top:4px;"></div>';
+  h += '</div></div>';
+  h += '<div class="form-row op-form-row-mob">';
+  h += '<div class="form-group"><label class="form-label">Ref. base (código)</label><input class="form-control" id="ref-ref-'+r.rid+'" value="'+esc(r.ref||'')+'" readonly style="background:rgba(255,255,255,.04);color:var(--dim);"></div>';
+  h += '<div class="form-group"><label class="form-label">Valor M.O./unidad (COP)</label><input class="form-control" type="number" id="ref-vmo-'+r.rid+'" value="'+(r.vmo||1151)+'" oninput="opRefPreviewUpdate()"></div>';
+  h += '</div>';
+  h += '<div class="form-group"><label class="form-label">Colores * <button type="button" class="btn btn-ghost btn-sm" data-rid="'+r.rid+'" onclick="opRefColorAdd(this.dataset.rid)" style="margin-left:8px;">+ Color manual</button></label>';
+  h += '<div id="ref-col-list-'+r.rid+'" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;min-height:32px;">';
+  r.colores.forEach(function(c){ h += '<span style="background:rgba(255,255,255,.08);border:1px solid var(--card-border);border-radius:20px;padding:4px 10px;font-size:12px;display:flex;align-items:center;gap:6px;">'+esc(c)+' <span data-rid="'+r.rid+'" data-col="'+esc(c)+'" onclick="opRefColorRemove(this.dataset.rid,this.dataset.col)" style="cursor:pointer;color:var(--red);">✕</span></span>'; });
+  h += '</div>';
+  h += '<div style="display:flex;gap:6px;margin-top:8px;"><input class="form-control" id="ref-col-inp-'+r.rid+'" placeholder="Ej: NEGRO" style="max-width:200px;" onkeydown="if(event.key===\'Enter\'){event.preventDefault();opRefColorAdd(\''+r.rid+'\');}"><button type="button" class="btn btn-ghost btn-sm" data-rid="'+r.rid+'" onclick="opRefColorAdd(this.dataset.rid)">Añadir</button></div>';
+  h += '</div>';
+  h += '<div class="form-group"><label class="form-label">Tallas</label><div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;">';
+  TALLAS_ALL.forEach(function(t){
+    h += '<label style="display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer;"><input type="checkbox" class="ck ref-talla-'+r.rid+'" value="'+t+'" '+(r.tallas.indexOf(t)>-1?'checked':'')+' data-rid="'+r.rid+'" onchange="opRefTallaChange(this.dataset.rid)"> '+t+'</label>';
+  });
+  h += '</div></div>';
+  h += '<div class="sep"></div>';
+  h += '<div class="section-title" style="font-size:13px;">Cantidades por color × talla</div>';
+  h += '<div id="ref-qty-'+r.rid+'" style="overflow-x:auto;">'+_buildRefQtyTable(r)+'</div>';
+  h += '</div>';
+  return h;
+}
+
+function _buildRefQtyTable(r){
+  if(!r.colores.length || !r.tallas.length) return '<div style="color:var(--dim);font-size:13px;padding:8px 0;">Añade colores y tallas para ver la tabla.</div>';
+  var h = '<table class="qty-table"><thead><tr><th>Color</th>';
+  r.tallas.forEach(function(t){ h += '<th>'+t+'</th>'; });
+  h += '<th>Total</th></tr></thead><tbody>';
+  r.colores.forEach(function(col, ci){
+    h += '<tr><td style="font-weight:600;white-space:nowrap;padding:4px 8px;">'+esc(col)+'</td>';
+    r.tallas.forEach(function(t){
+      var val = (r.cantidades||{})[col+'_'+t]||'';
+      h += '<td><input class="qty-input opref-qty-inp" type="number" min="0" data-rid="'+r.rid+'" data-color="'+esc(col)+'" data-talla="'+t+'" value="'+(val||'')+'" placeholder="0" oninput="opRefQtyInput(this)"></td>';
+    });
+    var rowTot = r.tallas.reduce(function(a,t){ return a+(parseInt((r.cantidades||{})[col+'_'+t]||0)); },0);
+    h += '<td id="ref-rtot-'+r.rid+'-'+ci+'" style="font-weight:600;text-align:center;">'+rowTot+'</td></tr>';
+  });
+  h += '</tbody></table>';
+  return h;
+}
+
+function opRefAdd(){
+  var r = _opRefNew();
+  _opRefs.push(r);
+  var cont = document.getElementById('op-refs-container');
+  if(cont) cont.innerHTML = _opRefs.map(function(x,i){ return _buildRefBlock(x,i,_opRefs.length); }).join('');
+  opRefPreviewUpdate();
+}
+
+function opRefRemove(rid){
+  if(_opRefs.length<=1){ toast('Debe haber al menos una referencia','warning'); return; }
+  _opRefs = _opRefs.filter(function(x){ return x.rid!==rid; });
+  var cont = document.getElementById('op-refs-container');
+  if(cont) cont.innerHTML = _opRefs.map(function(x,i){ return _buildRefBlock(x,i,_opRefs.length); }).join('');
+  opRefPreviewUpdate();
+}
+
+function opRefNombreInput(rid, val){
+  var r = _opRefs.find(function(x){ return x.rid===rid; });
+  if(r) r.nombre = (val||'').trim().toUpperCase();
+  var q = (val||'').trim().toUpperCase();
+  var box = document.getElementById('ref-sug-'+rid);
+  if(!box) return;
+  var precios = (DB.costos_mo && DB.costos_mo.precios) || [];
+  var matches = q.length<2 ? precios.slice(0,24) : precios.filter(function(p){ return (p.nombre||'').toUpperCase().indexOf(q)>-1; }).slice(0,24);
+  if(!matches.length){ box.style.display='none'; opRefPreviewUpdate(); return; }
+  box.innerHTML = matches.map(function(p){
+    var precioFmt = p.precio ? '$'+p.precio.toLocaleString('es-CO') : 'Sin precio';
+    var catItem = CATALOGO.find(function(c){ return c.ref.toUpperCase()===(p.nombre||'').toUpperCase(); })||null;
+    var colStr = catItem ? catItem.colores.map(function(c){ return c.n; }).join(', ') : '';
+    return '<div style="padding:9px 12px;cursor:pointer;border-bottom:1px solid #1e2535;background:#161b27;" data-rid="'+rid+'" data-nombre="'+esc(p.nombre)+'" data-precio="'+(p.precio||0)+'" data-cod="'+esc(p.codigo||'')+'" onmousedown="opRefSelCatalogo(this)" onmouseenter="this.style.background=\'#1e2a3a\'" onmouseleave="this.style.background=\'#161b27\'">'
+      +'<div style="display:flex;justify-content:space-between;"><div style="font-size:13px;font-weight:600;color:#e2e8f0;">'+esc(p.nombre)+'</div><div style="font-size:12px;color:#34d399;">'+precioFmt+'</div></div>'
+      +(colStr?'<div style="font-size:10px;color:#64748b;margin-top:1px;">'+esc(colStr)+'</div>':'')
+      +'</div>';
+  }).join('');
+  box.style.display='block';
+  opRefPreviewUpdate();
+}
+
+function opRefSelCatalogo(el){
+  var rid = el.dataset.rid, nombre = el.dataset.nombre;
+  var precio = parseFloat(el.dataset.precio)||0, cod = el.dataset.cod;
+  var r = _opRefs.find(function(x){ return x.rid===rid; });
+  if(!r) return;
+  r.nombre=nombre; r.ref=cod; if(precio) r.vmo=precio;
+  var catItem = CATALOGO.find(function(c){ return c.ref.toUpperCase()===(nombre||'').toUpperCase(); })||null;
+  if(catItem) r.colores = catItem.colores.map(function(c){ return c.n; });
+  var elNom=document.getElementById('ref-nom-'+rid), elRef=document.getElementById('ref-ref-'+rid), elVmo=document.getElementById('ref-vmo-'+rid);
+  if(elNom) elNom.value=nombre;
+  if(elRef && cod) elRef.value=cod;
+  if(elVmo && precio) elVmo.value=precio;
+  opRefOcultarSug(rid);
+  opRefRenderColorTags(rid);
+  opRefGenTabla(rid);
+  opRefPreviewUpdate();
+}
+
+function opRefOcultarSug(rid){ var b=document.getElementById('ref-sug-'+rid); if(b) b.style.display='none'; }
+
+function opRefColorAdd(rid){
+  var r=_opRefs.find(function(x){ return x.rid===rid; }); if(!r) return;
+  var inp=document.getElementById('ref-col-inp-'+rid);
+  var v=(inp?inp.value.trim().toUpperCase():''); if(!v) return;
+  if(r.colores.indexOf(v)>-1){ toast('Color ya añadido','warning'); return; }
+  r.colores.push(v); if(inp) inp.value='';
+  opRefRenderColorTags(rid); opRefGenTabla(rid);
+}
+
+function opRefColorRemove(rid, color){
+  var r=_opRefs.find(function(x){ return x.rid===rid; }); if(!r) return;
+  r.colores=r.colores.filter(function(c){ return c!==color; });
+  Object.keys(r.cantidades).forEach(function(k){ if(k.indexOf(color+'_')===0) delete r.cantidades[k]; });
+  opRefRenderColorTags(rid); opRefGenTabla(rid);
+}
+
+function opRefRenderColorTags(rid){
+  var r=_opRefs.find(function(x){ return x.rid===rid; }); if(!r) return;
+  var el=document.getElementById('ref-col-list-'+rid); if(!el) return;
+  el.innerHTML=r.colores.map(function(c){
+    return '<span style="background:rgba(255,255,255,.08);border:1px solid var(--card-border);border-radius:20px;padding:4px 10px;font-size:12px;display:flex;align-items:center;gap:6px;">'+esc(c)+' <span data-rid="'+rid+'" data-col="'+esc(c)+'" onclick="opRefColorRemove(this.dataset.rid,this.dataset.col)" style="cursor:pointer;color:var(--red);">✕</span></span>';
+  }).join('');
+}
+
+function opRefTallaChange(rid){
+  var r=_opRefs.find(function(x){ return x.rid===rid; }); if(!r) return;
+  r.tallas=Array.from(document.querySelectorAll('.ref-talla-'+rid+':checked')).map(function(c){ return c.value; });
+  opRefGenTabla(rid);
+}
+
+function opRefGenTabla(rid){
+  var r=_opRefs.find(function(x){ return x.rid===rid; }); if(!r) return;
+  document.querySelectorAll('.opref-qty-inp[data-rid="'+rid+'"]').forEach(function(inp){
+    var v=parseInt(inp.value)||0;
+    if(v>0) r.cantidades[inp.dataset.color+'_'+inp.dataset.talla]=v;
+    else delete r.cantidades[inp.dataset.color+'_'+inp.dataset.talla];
+  });
+  var wrap=document.getElementById('ref-qty-'+rid);
+  if(wrap) wrap.innerHTML=_buildRefQtyTable(r);
+  opRefPreviewUpdate();
+}
+
+function opRefQtyInput(el){
+  var rid=el.dataset.rid;
+  var r=_opRefs.find(function(x){ return x.rid===rid; }); if(!r) return;
+  var v=parseInt(el.value)||0, key=el.dataset.color+'_'+el.dataset.talla;
+  if(v>0) r.cantidades[key]=v; else delete r.cantidades[key];
+  var ci=r.colores.indexOf(el.dataset.color);
+  if(ci>=0){
+    var cell=document.getElementById('ref-rtot-'+rid+'-'+ci);
+    if(cell){ var rowTot=r.tallas.reduce(function(a,t){ return a+(parseInt((r.cantidades||{})[el.dataset.color+'_'+t]||0)); },0); cell.textContent=rowTot; }
+  }
+  opRefPreviewUpdate();
+}
+
+function opRefPreviewUpdate(){
+  var totalOTs=0, totalUds=0;
+  _opRefs.forEach(function(r){
+    r.tallas.forEach(function(t){ r.colores.forEach(function(c){ var v=parseInt((r.cantidades||{})[c+'_'+t]||0); if(v>0){ totalOTs++; totalUds+=v; } }); });
+  });
+  var prev=document.getElementById('op-preview'); if(!prev) return;
+  var nombres=_opRefs.filter(function(r){ return r.nombre; }).map(function(r){ return r.nombre; });
+  if(totalOTs>0 && nombres.length){
+    prev.style.display='';
+    prev.innerHTML='📋 Se crearán <strong>'+totalOTs+' órdenes de trabajo</strong> para <strong>'+nombres.join(' + ')+'</strong> · Total: <strong>'+totalUds+' unidades</strong>';
+  } else { prev.style.display='none'; }
+}
+
+async function generarOTsParaOP(opId){
+  var op=DB.ops.find(function(o){ return o.id===opId; });
+  if(!op){ toast('OP no encontrada','error'); return; }
+  if(DB.ots.filter(function(o){ return o.op_id===opId; }).length>0){ toast('Esta OP ya tiene OTs generadas','warning'); return; }
+  var refs = op.referencias || [{nombre:op.nombre_producto, ref:'', cat:op.categoria, vmo:0, colores:op.colores||[], tallas:op.tallas||[], cantidades:op.cantidades||{}}];
+  var otNum=nextOTNum(), newOTs=[];
+  refs.forEach(function(ref){
+    (ref.colores||[]).forEach(function(col){
+      (ref.tallas||[]).forEach(function(talla){
+        var qty=(ref.cantidades||{})[col+'_'+talla]; if(!qty) return;
+        newOTs.push({id:uid(), numero_ot:otNum++, op_id:opId, categoria:ref.cat, nombre:ref.nombre, referencia:(ref.ref||'')+talla, color:col, talla:talla, cantidad:qty, valor_mo:ref.vmo||0, fecha_ot:op.fecha_op||hoy(), satelite_id:null, fecha_entrega_corte_satelite:null, fecha_estimada_entrega:null, fecha_entrega_real:null, unidades_entregadas:0, unidades_novedad:0, estado:'CORTE_POR_ALISTAR', nt_corte_satelite:null, nt_ingreso_planta:null, op_effi:null, cumplió_fecha:null, motivo_incumplimiento:'', notas:'', historial:[], created_at:hoy(), created_by:getUser()});
+      });
+    });
+  });
+  if(!newOTs.length){ toast('No hay cantidades definidas en la OP','error'); return; }
+  DB.ots=DB.ots.concat(newOTs);
+  saveLocal();
+  var ok=await guardarArchivo('ots',{ots:DB.ots});
+  if(ok){
+    toast(newOTs.length+' OTs generadas → Corte por Alistar','success');
+    document.getElementById('page-content').innerHTML=renderOPDetalle(opId);
   }
 }
 
