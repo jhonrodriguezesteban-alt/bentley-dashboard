@@ -1591,7 +1591,14 @@ function fmtCop(n){ n=n||0; if(Math.abs(n)>=1e6) return '$'+(n/1e6).toFixed(1)+'
 function getSat(id){ return DB.satelites.find(function(s){ return s.id===id; }); }
 function getSatNombre(id){ var s = getSat(id); return s ? s.nombre : '—'; }
 function nextOTNum(){ return DB.ots.length > 0 ? Math.max.apply(null, DB.ots.map(function(o){return o.numero_ot||0;})) + 1 : 10001; }
-function nextOPNum(){ return DB.ops.length > 0 ? Math.max.apply(null, DB.ops.map(function(o){return o.numero||0;})) + 1 : 100; }
+function isOpAnioAnterior(op){
+  // OPs migradas de años anteriores: numero >= 100 y sin año explícito en el ID
+  return (op.numero||0) >= 100 && !/OP-20\d\d-/.test(op.id||'');
+}
+function nextOPNum(){
+  var opsAnioActual = DB.ops.filter(function(o){ return !isOpAnioAnterior(o); });
+  return opsAnioActual.length > 0 ? Math.max.apply(null, opsAnioActual.map(function(o){ return o.numero||0; })) + 1 : 1;
+}
 
 function updateNovBadge(){
   var n = DB.ots.filter(function(o){ return o.estado==='NOVEDAD'; }).length;
@@ -2341,6 +2348,7 @@ function renderOPs(){
         h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">';
         h += '<div style="display:flex;align-items:center;gap:6px;">';
         h += '<span style="font-size:12px;font-weight:700;color:#00d4ff;">'+esc(baseId)+'</span>';
+        if(isOpAnioAnterior(op)) h += '<span style="background:rgba(148,163,184,.12);border:1px solid rgba(148,163,184,.25);border-radius:5px;font-size:8px;color:#64748b;font-weight:700;padding:1px 5px;text-transform:uppercase;">AÑO ANT.</span>';
         if(novTotal) h += '<span style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);border-radius:8px;font-size:9px;color:#ef4444;font-weight:700;padding:1px 5px;">'+novTotal+' NOV</span>';
         h += '</div>';
         h += '<button data-opid="'+op.id+'" onclick="verDetalleOP(this.dataset.opid)" style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);border-radius:5px;cursor:pointer;color:#00d4ff;font-size:11px;padding:0;" title="Ver detalle OP">↗</button>';
@@ -2430,6 +2438,7 @@ function renderOPs(){
       h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">';
       h += '<div style="display:flex;align-items:center;gap:6px;">';
       h += '<span style="font-size:12px;font-weight:700;color:#00d4ff;">'+esc(subLabel)+'</span>';
+      if(isOpAnioAnterior(op)) h += '<span style="background:rgba(148,163,184,.12);border:1px solid rgba(148,163,184,.25);border-radius:5px;font-size:8px;color:#64748b;font-weight:700;padding:1px 5px;text-transform:uppercase;">AÑO ANT.</span>';
       if(novCount) h += '<span style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);border-radius:8px;font-size:9px;color:#ef4444;font-weight:700;padding:1px 5px;">'+novCount+' NOV</span>';
       h += '</div>';
       h += '<button data-opid="'+op.id+'" onclick="verDetalleOP(this.dataset.opid)" style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);border-radius:5px;cursor:pointer;color:#00d4ff;font-size:11px;padding:0;" title="Ver detalle OP">↗</button>';
@@ -5472,6 +5481,7 @@ function filtrarHistorial(){
 // COSTOS MANO DE OBRA
 // ═══════════════════════════════════════════════════════════════════════════════
 var _moTab = 'pendientes';
+var _moCatSearch = '';
 
 async function guardarCostosMO(){
   var data = {precios: (DB.costos_mo&&DB.costos_mo.precios)||[], pagos: (DB.costos_mo&&DB.costos_mo.pagos)||[]};
@@ -5968,14 +5978,8 @@ function simFiltrarDis(inp){
     });
   }
 
-  // ── Sección 2 eliminada: OPs ya no aparecen en el buscador del simulador ──
-
-  // ── Sección 3: Catálogo de productos (costos_mo.precios) ─────────────────
-  // Excluir del catálogo los que ya tienen OP activa (evitar duplicados)
-  var opsActivas = (DB.ops||[]).filter(function(op){ return op.estado_op !== 'ARCHIVADO'; });
-  var _nombresConOp = {};
-  opsActivas.forEach(function(op){ if(op.nombre_producto) _nombresConOp[(op.nombre_producto||'').toUpperCase()] = true; });
-  var precios = ((DB.costos_mo && DB.costos_mo.precios) || []).filter(function(p){ return !_nombresConOp[(p.nombre||'').toUpperCase()]; });
+  // ── Sección 3: Catálogo completo de productos (costos_mo.precios) ────────
+  var precios = (DB.costos_mo && DB.costos_mo.precios) || [];
   var matchesCat = q ? precios.filter(function(p){ return (p.nombre||'').toUpperCase().indexOf(q)>=0 || (p.categoria||'').toUpperCase().indexOf(q)>=0; }) : precios;
   if(matchesCat.length){
     hasResults = true;
@@ -6192,17 +6196,22 @@ function renderCostosMO(){
     }
   } else {
     // Catálogo de precios
-    h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">';
-    h += '<div style="font-size:12px;color:#64748b;">'+precios.length+' referencias en catálogo</div>';
+    h += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;">';
+    h += '<div style="position:relative;flex:1;min-width:200px;">';
+    h += '<input id="mo-cat-search" type="text" value="'+esc(_moCatSearch)+'" placeholder="🔍 Buscar referencia..." oninput="var _p=this.selectionStart;_moCatSearch=this.value;renderPage(\'costos_mo\');var _el=document.getElementById(\'mo-cat-search\');if(_el){_el.focus();try{_el.setSelectionRange(_p,_p);}catch(e){}}" style="width:100%;background:#0d1117;border:1px solid #1e2535;border-radius:20px;color:#e2e8f0;font-size:12px;padding:5px 32px 5px 14px;outline:none;box-sizing:border-box;">';
+    if(_moCatSearch) h += '<button onclick="_moCatSearch=\'\';renderPage(\'costos_mo\')" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:#475569;cursor:pointer;font-size:14px;padding:0;line-height:1;">×</button>';
+    h += '</div>';
     h += '<button class="btn btn-primary" onclick="abrirFormPrecio(null)">+ Agregar precio</button>';
     h += '</div>';
-    if(!precios.length){
-      h += '<div class="empty-state"><div class="icon">📋</div><p>Sin precios registrados — agrega referencias del catálogo de producción</p></div>';
+    var preciosFiltrados = _moCatSearch ? precios.filter(function(p){ var q=_moCatSearch.toUpperCase(); return (p.nombre||'').toUpperCase().indexOf(q)>=0||(p.codigo||'').toUpperCase().indexOf(q)>=0; }) : precios;
+    h += '<div style="font-size:11px;color:#64748b;margin-bottom:8px;">'+preciosFiltrados.length+(preciosFiltrados.length!==precios.length?' de '+precios.length:'')+' referencias</div>';
+    if(!preciosFiltrados.length){
+      h += '<div class="empty-state"><div class="icon">📋</div><p>'+(precios.length?'Sin resultados para "'+esc(_moCatSearch)+'"':'Sin precios registrados')+'</p></div>';
       return h;
     }
     h += '<div class="card"><table style="width:100%;border-collapse:collapse;">';
     h += '<thead><tr style="border-bottom:1px solid #1e2535;"><th style="padding:10px 14px;text-align:left;font-size:11px;color:#64748b;width:70px;">Código</th><th style="padding:10px 14px;text-align:left;font-size:11px;color:#64748b;">Referencia</th><th style="padding:10px 14px;text-align:right;font-size:11px;color:#64748b;">Precio MO</th><th style="padding:10px 14px;text-align:center;font-size:11px;color:#64748b;">Acciones</th></tr></thead><tbody>';
-    precios.forEach(function(p){
+    preciosFiltrados.forEach(function(p){
       h += '<tr style="border-bottom:1px solid rgba(30,37,53,.5);">';
       h += '<td style="padding:10px 14px;font-size:12px;font-weight:700;color:#475569;font-family:monospace;">'+esc(p.codigo||'—')+'</td>';
       h += '<td style="padding:10px 14px;font-size:13px;color:#e2e8f0;">'+esc(p.nombre)+'</td>';
