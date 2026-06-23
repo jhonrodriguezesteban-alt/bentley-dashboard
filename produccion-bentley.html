@@ -2114,6 +2114,7 @@ function _setSubgEstado(opId, color, estado){
   saveLocal();
 }
 
+var _opBusqueda = '';
 function renderOPs(){
   // FAB fijo "Nueva OP"
   var fabOP = document.getElementById('fab-nueva-op');
@@ -2166,8 +2167,13 @@ function renderOPs(){
 
   var h = '';
 
-  // ── Contador superior ────────────────────────────────────────────────────────
-  h += '<div style="font-size:13px;color:#64748b;margin-bottom:14px;">' + ops.length + ' OPs activas · ' + subgs.length + ' sub-grupos</div>';
+  // ── Contador superior + buscador ─────────────────────────────────────────────
+  h += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;">';
+  h += '<span style="font-size:13px;color:#64748b;">' + ops.length + ' OPs activas · ' + subgs.length + ' sub-grupos</span>';
+  h += '<div style="position:relative;flex:1;min-width:200px;max-width:360px;">';
+  h += '<input id="op-search-input" type="text" value="'+esc(_opBusqueda)+'" oninput="var _q=this.value,_p=this.selectionStart;_opBusqueda=_q;renderPage(\'ops\');var _el=document.getElementById(\'op-search-input\');if(_el){_el.focus();try{_el.setSelectionRange(_p,_p);}catch(e){}}" placeholder="🔍 Buscar OP o referencia..." style="width:100%;background:#0d1117;border:1px solid #1e2535;border-radius:20px;color:#e2e8f0;font-size:12px;padding:5px 32px 5px 14px;outline:none;box-sizing:border-box;">';
+  if(_opBusqueda) h += '<button onclick="_opBusqueda=\'\';renderPage(\'ops\')" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:#475569;cursor:pointer;font-size:14px;padding:0;line-height:1;">×</button>';
+  h += '</div></div>';
 
   // ── Tarjetas resumen por categoría ─────────────────────────────────────────
   if(cats.length){
@@ -2204,6 +2210,22 @@ function renderOPs(){
   if(!subgs.length){
     h += '<div class="empty-state"><div style="font-size:40px;margin-bottom:12px;">🏭</div><div>No hay OPs activas</div><div style="color:var(--dim);font-size:13px;margin-top:6px;">Usa el botón + para crear la primera OP</div></div>';
     return h;
+  }
+
+  // Filtrar por búsqueda
+  if(_opBusqueda){
+    var _q = _opBusqueda.toUpperCase();
+    subgs = subgs.filter(function(s){
+      return (s.op.nombre_producto||'').toUpperCase().indexOf(_q)>=0
+          || (fmtOpId(s.op.id)||'').toUpperCase().indexOf(_q)>=0
+          || (s.op.id||'').toUpperCase().indexOf(_q)>=0
+          || (s.op.categoria||'').toUpperCase().indexOf(_q)>=0
+          || (s.color||'').toUpperCase().indexOf(_q)>=0;
+    });
+    if(!subgs.length){
+      h += '<div style="text-align:center;padding:40px 20px;color:#475569;"><div style="font-size:28px;margin-bottom:8px;">🔍</div><div style="font-size:14px;">Sin resultados para "'+esc(_opBusqueda)+'"</div></div>';
+      return h;
+    }
   }
 
   // ── Kanban board ────────────────────────────────────────────────────────────
