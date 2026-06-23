@@ -3450,14 +3450,34 @@ function opRefNombreInput(rid, val){
   var box = document.getElementById('ref-sug-'+rid);
   if(!box) return;
   var precios = (DB.costos_mo && DB.costos_mo.precios) || [];
-  var matches = q.length<2 ? precios.slice(0,24) : precios.filter(function(p){ return (p.nombre||'').toUpperCase().indexOf(q)>-1; }).slice(0,24);
+
+  // Merge: precios del catálogo + refs de OPs existentes sin precio
+  var precioNombres = {};
+  precios.forEach(function(p){ precioNombres[(p.nombre||'').toUpperCase()]=true; });
+  var refsDeOps = [];
+  var nombresVistos = {};
+  DB.ops.forEach(function(op){
+    var refs = op.referencias ? op.referencias : [{nombre:op.nombre_producto||'', cat:op.categoria||''}];
+    refs.forEach(function(ref){
+      var n = (ref.nombre||'').trim().toUpperCase();
+      if(n && !precioNombres[n] && !nombresVistos[n]){
+        nombresVistos[n]=true;
+        refsDeOps.push({nombre:n, precio:0, codigo:'', cat:ref.cat||op.categoria||''});
+      }
+    });
+  });
+  var fuente = precios.concat(refsDeOps);
+
+  var matches = q.length<2 ? fuente.slice(0,28) : fuente.filter(function(p){ return (p.nombre||'').toUpperCase().indexOf(q)>-1; }).slice(0,28);
   if(!matches.length){ box.style.display='none'; opRefPreviewUpdate(); return; }
   box.innerHTML = matches.map(function(p){
-    var precioFmt = p.precio ? '$'+p.precio.toLocaleString('es-CO') : 'Sin precio';
+    var precioFmt = p.precio ? '$'+p.precio.toLocaleString('es-CO') : '<span style="color:#64748b;">Sin precio MO</span>';
     var catItem = CATALOGO.find(function(c){ return c.ref.toUpperCase()===(p.nombre||'').toUpperCase(); })||null;
     var colStr = catItem ? catItem.colores.map(function(c){ return c.n; }).join(', ') : '';
+    var isDeOp = !p.precio && !p.codigo;
     return '<div style="padding:9px 12px;cursor:pointer;border-bottom:1px solid #1e2535;background:#161b27;" data-rid="'+rid+'" data-nombre="'+esc(p.nombre)+'" data-precio="'+(p.precio||0)+'" data-cod="'+esc(p.codigo||'')+'" onmousedown="opRefSelCatalogo(this)" onmouseenter="this.style.background=\'#1e2a3a\'" onmouseleave="this.style.background=\'#161b27\'">'
-      +'<div style="display:flex;justify-content:space-between;"><div style="font-size:13px;font-weight:600;color:#e2e8f0;">'+esc(p.nombre)+'</div><div style="font-size:12px;color:#34d399;">'+precioFmt+'</div></div>'
+      +'<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;"><div style="font-size:13px;font-weight:600;color:#e2e8f0;">'+esc(p.nombre)+'</div><div style="font-size:11px;">'+precioFmt+'</div></div>'
+      +(isDeOp?'<div style="font-size:10px;color:#f97316;margin-top:2px;">↺ de producción anterior</div>':'')
       +(colStr?'<div style="font-size:10px;color:#64748b;margin-top:1px;">'+esc(colStr)+'</div>':'')
       +'</div>';
   }).join('');
