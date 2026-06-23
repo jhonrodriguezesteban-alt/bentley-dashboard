@@ -834,7 +834,7 @@ var GT = (function(){
 
 // ─── Constants ─────────────────────────────────────────────────────────────────
 var REPO = 'jhonrodriguezesteban-alt/bentley-dashboard';
-var FILES = { satelites: 'prod_satelites.json', ops: 'prod_ops.json', ots: 'prod_ots.json', disenos: 'prod_disenos.json', prog_ops: 'prod_prog_ops.json', costos_mo: 'prod_costos_mo.json', usuarios: 'prod_usuarios.json' };
+var FILES = { satelites: 'prod_satelites.json', ops: 'prod_ops.json', ots: 'prod_ots.json', disenos: 'prod_disenos.json', prog_ops: 'prod_prog_ops.json', costos_mo: 'prod_costos_mo.json', usuarios: 'prod_usuarios.json', sim: 'prod_simulador.json' };
 var BASE_URL = 'https://jhonrodriguezesteban-alt.github.io/bentley-dashboard/';
 var RAW_URL = 'https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/';
 
@@ -851,7 +851,7 @@ var ESTADO_LABELS = {
 };
 
 // ─── State ─────────────────────────────────────────────────────────────────────
-var DB = { satelites: [], ops: [], ots: [], disenos: [], prog_ops: [], disenos_cfg: {}, costos_mo: {precios:[], pagos:[]} };
+var DB = { satelites: [], ops: [], ots: [], disenos: [], prog_ops: [], disenos_cfg: {}, costos_mo: {precios:[], pagos:[]}, sim: {active:[], data:{}} };
 var currentPage = 'dashboard';
 var _opDetalleId = null;
 var _opEditMode = false;
@@ -1387,7 +1387,7 @@ var _autoSyncInterval = null;
 async function _autoSyncTick(){
   var tk = GT || localStorage.getItem('bentley_gh_token') || '';
   var changed = false;
-  var keys = ['disenos','ots','ops','satelites','prog_ops','costos_mo'];
+  var keys = ['disenos','ots','ops','satelites','prog_ops','costos_mo','sim'];
   for(var i=0; i<keys.length; i++){
     var key = keys[i];
     if(_saving[key]) continue; // no interferir si hay un guardado en curso
@@ -1407,6 +1407,7 @@ async function _autoSyncTick(){
       else if(key==='satelites'){ DB.satelites = parsed.satelites||[]; }
       else if(key==='prog_ops'){ DB.prog_ops = parsed.ops_plan||[]; }
       else if(key==='costos_mo'){ DB.costos_mo = {precios:parsed.precios||[], pagos:parsed.pagos||[]}; }
+      else if(key==='sim'){ DB.sim = {active:parsed.active||[], data:parsed.data||{}}; _simActive=DB.sim.active; _simData=DB.sim.data; }
       // Detectar diseños nuevos y notificar
       if(key==='disenos' && prevDisenos !== null && prevDisenos.length > 0){
         (DB.disenos||[]).forEach(function(d){
@@ -1438,9 +1439,49 @@ async function _autoSyncTick(){
       setTimeout(function(){ if(si) si.style.color=''; }, 2000); }
   }
 }
+var _fastSyncInterval = null;
+var _fastSyncSha = null;
+async function _fastSyncTick(){
+  var tk = GT || localStorage.getItem('bentley_gh_token') || '';
+  if(!tk) return; // solo con token para no quemar rate limit
+  if(_saving['disenos']) return;
+  try {
+    var r = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + FILES['disenos'], {
+      headers: {'Authorization': 'token ' + tk}
+    });
+    if(!r.ok) return;
+    var fileData = await r.json();
+    if(_fastSyncSha && _fastSyncSha === fileData.sha) return; // sin cambios
+    var isFirst = !_fastSyncSha;
+    _fastSyncSha = fileData.sha;
+    if(isFirst) return; // primera carga: solo guardar sha, no procesar
+    var parsed = JSON.parse(decodeURIComponent(escape(atob(fileData.content.replace(/\n/g,'')))));
+    var prevPrios = {};
+    (DB.disenos||[]).forEach(function(d){ prevPrios[d.id] = d.prioridad; });
+    DB.disenos = parsed.disenos || [];
+    DB.disenos_cfg = parsed.disenos_cfg || {};
+    // Detectar cambios de prioridad para notificar
+    var prioNames = {1:'P1 🔴', 2:'P2 🟡', 3:'P3 ⚪'};
+    (DB.disenos||[]).forEach(function(d){
+      if(!d.eliminado && prevPrios[d.id] !== undefined && prevPrios[d.id] !== d.prioridad){
+        var pn = prioNames[disPrioNorm(d.prioridad)] || 'P'+d.prioridad;
+        _notifNativa('📌 Prioridad actualizada', '"'+d.nombre+'" → '+pn+' ('+( d.responsable||'equipo')+')');
+      }
+    });
+    _fileShas['disenos'] = fileData.sha;
+    saveLocal();
+    if(currentPage === 'diseno') renderPage('diseno');
+    var si = document.getElementById('sync-indicator');
+    if(si){ si.textContent = '↻ ' + new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}); si.style.color = 'var(--cyan)';
+      setTimeout(function(){ if(si) si.style.color=''; }, 2000); }
+  } catch(e){ /* silencioso */ }
+}
 function iniciarAutoSync(){
   if(_autoSyncInterval) clearInterval(_autoSyncInterval);
   _autoSyncInterval = setInterval(_autoSyncTick, 30000);
+  if(_fastSyncInterval) clearInterval(_fastSyncInterval);
+  _fastSyncSha = null; // reset para recalibrar sha inicial
+  _fastSyncInterval = setInterval(_fastSyncTick, 3000);
 }
 
 async function guardarTodo(){
@@ -1464,17 +1505,44 @@ async function cargarDatos(){
     if(opsR.ok){ var d2 = await opsR.json(); DB.ops = d2.ops || []; }
     if(otsR.ok){ var d3 = await otsR.json(); DB.ots = d3.ots || []; }
     if(catR.ok){ var d4 = await catR.json(); CATALOGO = d4.catalogo || []; }
-    var disR = await fetch(BASE_URL + 'prod_disenos.json?t=' + t);
-    if(disR.ok){ var d5 = await disR.json(); DB.disenos = d5.disenos || []; DB.disenos_cfg = d5.disenos_cfg || {};
-      // Migrar URLs viejas de GitHub Pages a raw.githubusercontent para preview inmediato
-      DB.disenos.forEach(function(dis){ (dis.imagenes||[]).forEach(function(img){ if(img.url && img.url.indexOf(BASE_URL+'disenos-imgs/')===0){ img.url = RAW_URL+'disenos-imgs/'+img.url.split('disenos-imgs/')[1]; } }); });
+    // Diseños: cargar desde API GitHub (siempre fresco) si hay token, sino desde Pages
+    var tk = GT || localStorage.getItem('bentley_gh_token') || '';
+    var disLoaded = false;
+    if(tk){
+      try {
+        var disApiR = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + FILES['disenos'], {
+          headers: {'Authorization': 'token ' + tk, 'Cache-Control': 'no-cache'}
+        });
+        if(disApiR.ok){
+          var disApiData = await disApiR.json();
+          _fileShas['disenos'] = disApiData.sha;
+          _fastSyncSha = disApiData.sha;
+          var d5 = JSON.parse(decodeURIComponent(escape(atob(disApiData.content.replace(/\n/g,'')))));
+          DB.disenos = d5.disenos || []; DB.disenos_cfg = d5.disenos_cfg || {};
+          disLoaded = true;
+        }
+      } catch(e){}
     }
+    if(!disLoaded){
+      // Sin token: preferir localStorage sobre Pages (localStorage es más reciente)
+      var localDB = localStorage.getItem('bentley_prod_db');
+      if(localDB){ try { var lp = JSON.parse(localDB); if(lp.disenos && lp.disenos.length){ DB.disenos = lp.disenos; DB.disenos_cfg = lp.disenos_cfg||{}; disLoaded = true; } } catch(e){} }
+    }
+    if(!disLoaded){
+      var disR = await fetch(BASE_URL + 'prod_disenos.json?t=' + t);
+      if(disR.ok){ var d5b = await disR.json(); DB.disenos = d5b.disenos || []; DB.disenos_cfg = d5b.disenos_cfg || {}; }
+    }
+    // Migrar URLs viejas de GitHub Pages a raw.githubusercontent para preview inmediato
+    DB.disenos.forEach(function(dis){ (dis.imagenes||[]).forEach(function(img){ if(img.url && img.url.indexOf(BASE_URL+'disenos-imgs/')===0){ img.url = RAW_URL+'disenos-imgs/'+img.url.split('disenos-imgs/')[1]; } }); });
     var progR = await fetch(BASE_URL + 'prod_prog_ops.json?t=' + t);
     if(progR.ok){ var d6 = await progR.json(); DB.prog_ops = d6.ops_plan || []; }
     var moR = await fetch(BASE_URL + 'prod_costos_mo.json?t=' + t);
     if(moR.ok){ var d7 = await moR.json(); DB.costos_mo = {precios: d7.precios||[], pagos: d7.pagos||[]}; }
     var usrR = await fetch(BASE_URL + 'prod_usuarios.json?t=' + t);
     if(usrR.ok){ var d8 = await usrR.json(); _mergeRemoteUsers(d8.usuarios||{}); }
+    var simR = await fetch(BASE_URL + 'prod_simulador.json?t=' + t);
+    if(simR.ok){ var d9 = await simR.json(); DB.sim={active:d9.active||[],data:d9.data||{}}; _simActive=DB.sim.active; _simData=DB.sim.data; }
+    else { var lsRaw=localStorage.getItem('bentley_sim_data'); if(lsRaw){ try{ var lsP=JSON.parse(lsRaw); DB.sim={active:lsP.active||[],data:lsP.data||lsP}; _simActive=DB.sim.active; _simData=DB.sim.data; }catch(e){} } }
     if(DB.satelites.length === 0) seedSatelites();
     saveLocal();
     var msg = 'Datos cargados: ' + DB.ops.length + ' OPs, ' + DB.ots.length + ' OTs, ' + CATALOGO.length + ' refs SKU';
@@ -2149,20 +2217,96 @@ function renderOPs(){
     h += '</div>';
     h += '<div style="background:#0d1117;border:1px solid '+col.color+'33;border-top:none;border-radius:0 0 10px 10px;padding:10px;min-height:100px;overflow-y:auto;overflow-x:hidden;max-height:calc(100vh - 310px);">';
 
+    // En Pte. de Cortar y Corte p/ Alistar: una tarjeta consolidada por OP
+    var esColumnaConsolidada = col.k === 'PENDIENTE_CORTAR' || col.k === 'CORTE_POR_ALISTAR';
+    if(esColumnaConsolidada){
+      var opGroupMap = {};
+      var opGroupOrder = [];
+      colSubgs.forEach(function(s){
+        if(!opGroupMap[s.op.id]){ opGroupMap[s.op.id]=[]; opGroupOrder.push(s.op.id); }
+        opGroupMap[s.op.id].push(s);
+      });
+      opGroupOrder.forEach(function(opId){
+        var grp = opGroupMap[opId];
+        var op = grp[0].op;
+        var baseId = fmtOpId(op.id);
+        var totalUds = grp.reduce(function(a,s){ return a+s.uds; },0);
+        var totalOts = grp.reduce(function(a,s){ return a+s.otsColor.length; },0);
+        var totalEnt = grp.reduce(function(a,s){ return a+s.udsEnt; },0);
+        var pctTotal = totalUds ? Math.round(totalEnt/totalUds*100) : 0;
+        var novTotal = grp.reduce(function(a,s){ return a+s.otsColor.filter(function(o){ return o.estado==='NOVEDAD'; }).length; },0);
+        var estadoConsolidado = grp[0].estado;
+
+        h += '<div style="background:#13161f;border:1px solid #1e2535;border-left:3px solid '+col.color+';border-radius:10px;padding:11px 12px;margin-bottom:8px;">';
+
+        h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">';
+        h += '<div style="display:flex;align-items:center;gap:6px;">';
+        h += '<span style="font-size:12px;font-weight:700;color:#00d4ff;">'+esc(baseId)+'</span>';
+        if(novTotal) h += '<span style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);border-radius:8px;font-size:9px;color:#ef4444;font-weight:700;padding:1px 5px;">'+novTotal+' NOV</span>';
+        h += '</div>';
+        h += '<button data-opid="'+op.id+'" onclick="verDetalleOP(this.dataset.opid)" style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);border-radius:5px;cursor:pointer;color:#00d4ff;font-size:11px;padding:0;" title="Ver detalle OP">↗</button>';
+        h += '</div>';
+
+        h += '<div style="font-size:10px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">'+esc(op.categoria||'')+'</div>';
+        h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:8px;">'+esc(op.nombre_producto)+'</div>';
+
+        h += '<div style="display:flex;gap:8px;margin-bottom:8px;">';
+        h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">OTs</div><div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+totalOts+'</div></div>';
+        h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">UDS</div><div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+totalUds+'</div></div>';
+        h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">ENTG.</div><div style="font-size:13px;font-weight:700;color:'+(pctTotal>=100?'#34d399':pctTotal>50?'#00d4ff':'#e2e8f0')+';">'+pctTotal+'%</div></div>';
+        h += '</div>';
+        h += '<div style="height:3px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;margin-bottom:8px;"><div style="height:100%;width:'+pctTotal+'%;background:'+(pctTotal>=100?'#34d399':'#00d4ff')+';border-radius:4px;transition:width .4s;"></div></div>';
+
+        if(grp.length > 1){
+          h += '<div style="margin-bottom:8px;display:flex;flex-wrap:wrap;gap:3px;">';
+          grp.forEach(function(s){
+            h += '<span style="background:rgba(148,163,184,.08);border:1px solid #1e2535;border-radius:5px;font-size:9px;color:#94a3b8;padding:1px 6px;text-transform:uppercase;">'+esc(s.color)+'</span>';
+          });
+          h += '</div>';
+        }
+
+        if(col.k === 'CORTE_POR_ALISTAR'){
+          h += '<div style="margin-bottom:8px;background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.25);border-radius:8px;padding:7px 9px;">';
+          h += '<div style="font-size:9px;font-weight:700;color:#f97316;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">Asignar cortador por color → pasa a Confección</div>';
+          grp.forEach(function(s){
+            h += '<div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;">';
+            h += '<span style="font-size:9px;font-weight:700;color:#94a3b8;text-transform:uppercase;min-width:50px;flex-shrink:0;">'+esc(s.color)+'</span>';
+            h += '<select data-opid="'+op.id+'" data-color="'+esc(s.color)+'" onchange="asignarTallerSubg(this.dataset.opid,this.dataset.color,this.value)" onclick="event.stopPropagation()" style="flex:1;min-width:0;background:#0d1117;border:1px solid #f97316aa;border-radius:6px;color:#e2e8f0;font-size:10px;padding:4px 6px;cursor:pointer;outline:none;">';
+            h += '<option value="" style="background:#1a1e2a;color:#64748b;">— Cortador —</option>';
+            CORTADORES.forEach(function(c){
+              h += '<option value="'+esc(c)+'" style="background:#1a1e2a;color:#e2e8f0;">'+esc(c)+'</option>';
+            });
+            h += '</select></div>';
+          });
+          h += '</div>';
+        }
+
+        h += '<div style="border-top:1px solid #1e2535;padding-top:8px;">';
+        h += '<select data-opid="'+op.id+'" onchange="cambiarEstadoOPAll(this.dataset.opid,this.value)" onclick="event.stopPropagation()" style="width:100%;background:#0d1117;border:1px solid #1e2535;border-radius:6px;color:#94a3b8;font-size:11px;padding:4px 7px;cursor:pointer;outline:none;">';
+        OP_KANBAN.forEach(function(c){
+          h += '<option value="'+c.k+'"'+(estadoConsolidado===c.k?' selected':'')+' style="background:#1a1e2a;color:#e2e8f0;">'+c.label+'</option>';
+        });
+        h += '<option value="ARCHIVADO" style="background:#1a1e2a;color:#34d399;">✓ Archivar</option>';
+        h += '</select></div>';
+
+        h += '</div>';
+      });
+    } else {
     colSubgs.forEach(function(s){
       var op = s.op;
       var otsColor = s.otsColor;
       var novCount = otsColor.filter(function(o){ return o.estado==='NOVEDAD'; }).length;
       var satNames = [];
-      otsColor.forEach(function(o){ if(o.satelite_id){ var sn=getSatNombre(o.satelite_id); if(satNames.indexOf(sn)<0) satNames.push(sn); } });
+      otsColor.forEach(function(o){
+        var sn = o.cortador || (o.satelite_id ? getSatNombre(o.satelite_id) : null);
+        if(sn && satNames.indexOf(sn)<0) satNames.push(sn);
+      });
 
-      // ID formateado + sub-número si hay múltiples colores
       var baseId = fmtOpId(op.id);
       var subLabel = s.totalColores > 1 ? baseId + '.' + (s.colorIdx+1) : baseId;
 
       h += '<div style="background:#13161f;border:1px solid #1e2535;border-left:3px solid '+col.color+';border-radius:10px;padding:11px 12px;margin-bottom:8px;">';
 
-      // Fila 1: OP sub-número + botón detalle
       h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">';
       h += '<div style="display:flex;align-items:center;gap:6px;">';
       h += '<span style="font-size:12px;font-weight:700;color:#00d4ff;">'+esc(subLabel)+'</span>';
@@ -2171,27 +2315,23 @@ function renderOPs(){
       h += '<button data-opid="'+op.id+'" onclick="verDetalleOP(this.dataset.opid)" style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);border-radius:5px;cursor:pointer;color:#00d4ff;font-size:11px;padding:0;" title="Ver detalle OP">↗</button>';
       h += '</div>';
 
-      // Categoría + Color
       h += '<div style="font-size:10px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">'+esc(op.categoria||'')+'</div>';
       h += '<div style="margin-bottom:4px;display:flex;align-items:center;gap:5px;">';
       h += '<span style="width:7px;height:7px;border-radius:50%;background:#94a3b8;flex-shrink:0;display:inline-block;"></span>';
       h += '<span style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;">'+esc(s.color)+'</span>';
       h += '</div>';
 
-      // Nombre producto
       h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:8px;">'+esc(op.nombre_producto)+'</div>';
 
-      // Satélites asignados (badges)
       if(satNames.length){
         h += '<div style="margin-bottom:7px;display:flex;flex-wrap:wrap;gap:3px;">';
         satNames.slice(0,3).forEach(function(sn){
           h += '<span style="background:rgba(148,163,184,.1);border:1px solid #1e2535;border-radius:5px;font-size:9px;color:#64748b;padding:1px 6px;">'+esc(sn.split(' ')[0])+'</span>';
         });
-        if(satNames.length>3) h += '<span style="font-size:9px;color:#475569;">+'+  (satNames.length-3)+'</span>';
+        if(satNames.length>3) h += '<span style="font-size:9px;color:#475569;">+'+(satNames.length-3)+'</span>';
         h += '</div>';
       }
 
-      // KPIs
       h += '<div style="display:flex;gap:8px;margin-bottom:8px;">';
       h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">OTs</div><div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+otsColor.length+'</div></div>';
       h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">UDS</div><div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+s.uds+'</div></div>';
@@ -2199,21 +2339,6 @@ function renderOPs(){
       h += '</div>';
       h += '<div style="height:3px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;margin-bottom:8px;"><div style="height:100%;width:'+s.pct+'%;background:'+(s.pct>=100?'#34d399':'#00d4ff')+';border-radius:4px;transition:width .4s;"></div></div>';
 
-      // Asignación de taller (visible en CORTE_POR_ALISTAR o siempre si hay OTs sin satélite)
-      if(col.k === 'CORTE_POR_ALISTAR'){
-        var otsInSat = otsColor.filter(function(o){ return !o.satelite_id; });
-        h += '<div style="margin-bottom:8px;background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.25);border-radius:8px;padding:7px 9px;">';
-        h += '<div style="font-size:9px;font-weight:700;color:#f97316;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;">Asignar taller → pasa a Confección</div>';
-        h += '<select data-opid="'+op.id+'" data-color="'+esc(s.color)+'" onchange="asignarTallerSubg(this.dataset.opid,this.dataset.color,this.value)" onclick="event.stopPropagation()" style="width:100%;background:#0d1117;border:1px solid #f97316aa;border-radius:6px;color:#e2e8f0;font-size:11px;padding:5px 7px;cursor:pointer;outline:none;">';
-        h += '<option value="" style="background:#1a1e2a;color:#64748b;">— Seleccionar taller —</option>';
-        DB.satelites.filter(function(sat){ return sat.activo; }).forEach(function(sat){
-          h += '<option value="'+sat.id+'" style="background:#1a1e2a;color:#e2e8f0;">'+esc(sat.nombre)+'</option>';
-        });
-        h += '</select>';
-        h += '</div>';
-      }
-
-      // Selector de estado
       h += '<div style="border-top:1px solid #1e2535;padding-top:8px;">';
       h += '<select data-opid="'+op.id+'" data-color="'+esc(s.color)+'" onchange="cambiarEstadoSubg(this.dataset.opid,this.dataset.color,this.value)" onclick="event.stopPropagation()" style="width:100%;background:#0d1117;border:1px solid #1e2535;border-radius:6px;color:#94a3b8;font-size:11px;padding:4px 7px;cursor:pointer;outline:none;">';
       OP_KANBAN.forEach(function(c){
@@ -2224,6 +2349,7 @@ function renderOPs(){
 
       h += '</div>';
     });
+    }
 
     if(!colSubgs.length) h += '<div style="text-align:center;padding:18px 0;color:#1e2535;font-size:11px;">Vacío</div>';
     h += '</div></div>';
@@ -2264,28 +2390,40 @@ function cambiarEstadoSubg(opId, color, estado){
   renderPage('ops');
   toast('Estado actualizado', 'success');
 }
+function cambiarEstadoOPAll(opId, estado){
+  var op = DB.ops.find(function(o){ return o.id===opId; });
+  if(!op) return;
+  var colores = op.colores && op.colores.length ? op.colores : ['—'];
+  colores.forEach(function(color){ _setSubgEstado(opId, color, estado); });
+  renderPage('ops');
+  toast('Estado actualizado', 'success');
+}
 
-async function asignarTallerSubg(opId, color, satId){
-  if(!satId) return;
+var CORTADORES = ['Corte Carbajal', 'Corte con proveedor'];
+
+async function asignarTallerSubg(opId, color, valor){
+  if(!valor) return;
   var otsColor = DB.ots.filter(function(o){
     return o.op_id===opId && (color==='—' || (o.color||'').toUpperCase()===(color||'').toUpperCase());
   });
   if(!otsColor.length){ toast('No hay OTs en este sub-grupo','warning'); return; }
   var now = new Date().toISOString();
   var user = getUser();
-  var satNombre = getSatNombre(satId);
+  var esCortador = CORTADORES.indexOf(valor) >= 0;
+  var nombre = esCortador ? valor : getSatNombre(valor);
   otsColor.forEach(function(ot){
-    ot.satelite_id = satId;
+    if(esCortador){ ot.cortador = valor; delete ot.satelite_id; }
+    else { ot.satelite_id = valor; delete ot.cortador; }
     ot.estado = 'EN_CONFECCION';
     ot.historial = ot.historial||[];
-    ot.historial.push({fecha:now, accion:'Asignado a '+satNombre+' → En Confección', user:user});
+    ot.historial.push({fecha:now, accion:'Asignado a '+nombre+' → En Confección', user:user});
   });
   _setSubgEstado(opId, color, 'EN_CONFECCION');
   saveLocal();
   var ok = await guardarArchivo('ots', {ots: DB.ots});
   var ok2 = await guardarArchivo('ops', {ops: DB.ops});
   renderPage('ops');
-  toast('Asignado a '+satNombre+' · '+otsColor.length+' OTs → En Confección', 'success');
+  toast('Asignado a '+nombre+' · '+otsColor.length+' OTs → En Confección', 'success');
 }
 
 function mostrarFormNuevaOP(){
@@ -2956,7 +3094,9 @@ function setPrioDis(id, prio){
   var d=(DB.disenos||[]).find(function(x){return x.id===id;});
   if(!d) return;
   d.prioridad = prio;
-  guardarArchivo('disenos',{disenos:DB.disenos,disenos_cfg:DB.disenos_cfg}).then(function(){ saveLocal(); renderPage('diseno'); });
+  saveLocal();
+  guardarArchivo('disenos',{disenos:DB.disenos,disenos_cfg:DB.disenos_cfg}).then(function(ok){ if(!ok) saveLocal(); });
+  renderPage('diseno');
 }
 function cicloPrioDis(id){
   var d=(DB.disenos||[]).find(function(x){return x.id===id;});
@@ -3195,7 +3335,7 @@ function renderDiseno(){
 
       // Dropdown de estado kanban + M² al lado
       h += '<div style="border-top:1px solid #1e2535;padding-top:8px;margin-top:2px;display:flex;gap:5px;align-items:center;">';
-      h += '<select data-id="'+d.id+'" onchange="cambiarEstadoDiseno(this.dataset.id,this.value)" onclick="event.stopPropagation()" style="flex:1;background:#0d1117;border:1px solid #1e2535;border-radius:6px;color:#94a3b8;font-size:11px;padding:4px 7px;cursor:pointer;outline:none;">';
+      h += '<select data-id="'+d.id+'" onchange="cambiarEstadoDiseno(this.dataset.id,this.value)" onclick="event.stopPropagation()" style="flex:1;min-width:0;background:#0d1117;border:1px solid #1e2535;border-radius:6px;color:#94a3b8;font-size:11px;padding:4px 7px;cursor:pointer;outline:none;">';
       DIS_KANBAN.forEach(function(c){
         h += '<option value="'+c.k+'"'+(curEstado===c.k?' selected':'')+' style="background:#1a1e2a;color:#e2e8f0;">'+c.label+'</option>';
       });
@@ -3288,13 +3428,13 @@ function cambiarEstadoDiseno(id, nuevoEstado){
       '"'+d.nombre+'" ('+d.categoria+' '+( d.genero||'') +') pasó a Lista para Producción · '+getUser()
     );
   }
-  guardarDisenos(); renderPage('diseno');
+  saveLocal(); guardarDisenos(); renderPage('diseno');
 }
 function cambiarRespDiseno(id, nuevoResp){
   var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
   if(!d || d.responsable === nuevoResp) return;
   d.responsable = nuevoResp;
-  guardarDisenos(); renderPage('diseno');
+  saveLocal(); guardarDisenos(); renderPage('diseno');
 }
 
 function cambiarProveedorDiseno(id, val){
@@ -4858,12 +4998,23 @@ var _simActive = []; // IDs de diseños añadidos al simulador
 
 function _getSimData(id){ return _simData[id] || {colores:[]}; }
 function _setSimData(id, val){ _simData[id] = val; _saveSimStorage(); }
-function _saveSimStorage(){ localStorage.setItem('bentley_sim_data', JSON.stringify({data:_simData,active:_simActive})); }
+function _saveSimStorage(){
+  DB.sim = {active:_simActive, data:_simData};
+  saveLocal();
+  guardarArchivo('sim', {active:_simActive, data:_simData});
+}
 function _loadSimData(){
+  // Preferir DB.sim (cargado desde GitHub) sobre localStorage legacy
+  if(DB.sim && (DB.sim.active||[]).length > 0){
+    _simActive = DB.sim.active||[];
+    _simData   = DB.sim.data||{};
+    return;
+  }
   try{
     var raw = JSON.parse(localStorage.getItem('bentley_sim_data')||'{}');
     if(raw.data){ _simData=raw.data; _simActive=raw.active||[]; }
     else{ _simData=raw; _simActive=[]; }
+    DB.sim = {active:_simActive, data:_simData};
   }catch(e){ _simData={}; _simActive=[]; }
 }
 
@@ -4880,15 +5031,25 @@ function renderSimulador(){
   var marcas = getDisMarcas();
   if(!_simFiltroMarca || !marcas.includes(_simFiltroMarca)) _simFiltroMarca = marcas[0];
 
-  var todosDis = (DB.disenos||[]).filter(function(d){
-    return d.marca===_simFiltroMarca && d.kanban_estado!=='LISTA_PRODUCCION';
-  }).sort(function(a,b){ return (a.nombre||'').localeCompare(b.nombre||''); });
+  // Construir lista de items activos: diseños + OPs
+  var activeItems = []; // {key, nombre, categoria, genero, kanban_estado, tipo, marca}
+  _simActive.forEach(function(key){
+    if(key.indexOf('op:')=== 0){
+      var opId = key.slice(3);
+      var op = (DB.ops||[]).find(function(o){ return o.id===opId; });
+      if(op) activeItems.push({key:key, nombre:op.nombre_producto||'Sin nombre', categoria:op.categoria||'', genero:'', kanban_estado:'OP_ACTIVA', tipo:'op', marca:'', op:op});
+    } else {
+      var d = (DB.disenos||[]).find(function(x){ return x.id===key; });
+      if(d) activeItems.push({key:key, nombre:d.nombre, categoria:d.categoria||'', genero:d.genero||'', kanban_estado:d.kanban_estado, tipo:'diseno', marca:d.marca, dis:d});
+    }
+  });
 
-  var activeDis = todosDis.filter(function(d){ return _simActive.indexOf(d.id)>=0; });
+  // Filtrar por marca (solo diseños; ops aparecen en todas las marcas)
+  var activeDis = activeItems.filter(function(it){ return it.tipo==='op' || it.marca===_simFiltroMarca; });
 
   var totalUds = 0;
-  activeDis.forEach(function(d){
-    _getSimData(d.id).colores.forEach(function(c){ Object.values(c.tallas||{}).forEach(function(q){ totalUds+=(parseInt(q)||0); }); });
+  activeDis.forEach(function(it){
+    _getSimData(it.key).colores.forEach(function(c){ Object.values(c.tallas||{}).forEach(function(q){ totalUds+=(parseInt(q)||0); }); });
   });
 
   var h = '';
@@ -4904,7 +5065,7 @@ function renderSimulador(){
 
   // Barra resumen + buscador de diseño
   h += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;padding:14px 18px;background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.2);border-radius:12px;flex-wrap:wrap;">';
-  h += '<div><div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.8px;">Diseños en simulación</div><div style="font-family:var(--bebas);font-size:32px;color:var(--cyan);" id="sim-cnt-dis">'+activeDis.length+'</div></div>';
+  h += '<div><div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.8px;">Productos en simulación</div><div style="font-family:var(--bebas);font-size:32px;color:var(--cyan);" id="sim-cnt-dis">'+activeDis.length+'</div></div>';
   h += '<div style="width:1px;height:40px;background:#1e2535;flex-shrink:0;"></div>';
   h += '<div><div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.8px;">Total unidades</div><div style="font-family:var(--bebas);font-size:32px;color:var(--green);" id="sim-total-uds">'+totalUds.toLocaleString()+'</div></div>';
   h += '<div style="flex:1;min-width:200px;position:relative;">';
@@ -4919,57 +5080,59 @@ function renderSimulador(){
     return h;
   }
 
-  // Tarjetas de diseños activos
+  // Tarjetas activas (diseños + OPs)
   h += '<div style="display:flex;flex-direction:column;gap:12px;">';
-  activeDis.forEach(function(d){
-    var sim = _getSimData(d.id);
+  activeDis.forEach(function(it){
+    var simKey = it.key;
+    // Escapar la key para usar en data-did (reemplazar : por __colon__ para atributos HTML)
+    var safeKey = simKey.replace(/:/g,'__c__');
+    var sim = _getSimData(simKey);
     var disUds = 0;
     sim.colores.forEach(function(c){ Object.values(c.tallas||{}).forEach(function(q){ disUds+=(parseInt(q)||0); }); });
-    var etColor = _ETAPA_COLOR_SIM[d.kanban_estado]||'#94a3b8';
-    var etShort = _ETAPA_SHORT_SIM[d.kanban_estado]||d.kanban_estado;
-    var _gc = {Unisex:'#94a3b8',Mixto:'#94a3b8',Niña:'#f472b6',Niño:'#38bdf8',Mujer:'#f472b6',Hombre:'#38bdf8'}[d.genero||'Unisex']||'#94a3b8';
 
-    h += '<div style="background:#13161f;border:1px solid #1e2535;border-left:3px solid '+etColor+';border-radius:12px;padding:14px 16px;">';
-    // Header
+    var esOp = it.tipo === 'op';
+    var accentColor = esOp ? '#f97316' : (_ETAPA_COLOR_SIM[it.kanban_estado]||'#94a3b8');
+    var etShort = esOp ? (fmtOpId(it.op.id)+' · Prod. Activa') : (_ETAPA_SHORT_SIM[it.kanban_estado]||it.kanban_estado);
+    var _gc = {Unisex:'#94a3b8',Mixto:'#94a3b8',Niña:'#f472b6',Niño:'#38bdf8',Mujer:'#f472b6',Hombre:'#38bdf8'}[it.genero||'Unisex']||'#94a3b8';
+
+    h += '<div style="background:#13161f;border:1px solid #1e2535;border-left:3px solid '+accentColor+';border-radius:12px;padding:14px 16px;">';
     h += '<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:8px;">';
     h += '<div style="flex:1;min-width:0;">';
-    h += '<div style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:4px;">'+esc(d.nombre)+'</div>';
+    h += '<div style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:4px;">'+esc(it.nombre)+'</div>';
     h += '<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">';
-    h += '<span style="font-size:10px;color:'+etColor+';background:'+etColor+'18;border:1px solid '+etColor+'33;border-radius:4px;padding:1px 6px;">'+etShort+'</span>';
-    h += '<span style="font-size:10px;color:'+_gc+';background:'+_gc+'18;border:1px solid '+_gc+'44;border-radius:4px;padding:1px 6px;">'+(d.genero||'Unisex')+'</span>';
-    if(d.categoria) h += '<span style="font-size:10px;color:#64748b;">'+esc(d.categoria)+'</span>';
+    h += '<span style="font-size:10px;color:'+accentColor+';background:'+accentColor+'18;border:1px solid '+accentColor+'33;border-radius:4px;padding:1px 6px;">'+etShort+'</span>';
+    if(!esOp && it.genero) h += '<span style="font-size:10px;color:'+_gc+';background:'+_gc+'18;border:1px solid '+_gc+'44;border-radius:4px;padding:1px 6px;">'+esc(it.genero)+'</span>';
+    if(it.categoria) h += '<span style="font-size:10px;color:#64748b;">'+esc(it.categoria)+'</span>';
     h += '</div></div>';
     h += '<div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">';
-    h += '<div style="text-align:right;"><div style="font-family:var(--bebas);font-size:26px;color:'+(disUds>0?'var(--green)':'#475569')+';" id="sim-dis-uds-'+d.id+'">'+disUds+'</div><div style="font-size:9px;color:#64748b;">UDS</div></div>';
-    h += '<button data-did="'+d.id+'" onclick="simQuitarDiseno(this.dataset.did)" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:6px;color:#ef4444;cursor:pointer;font-size:11px;padding:4px 8px;white-space:nowrap;">Quitar</button>';
+    h += '<div style="text-align:right;"><div style="font-family:var(--bebas);font-size:26px;color:'+(disUds>0?'var(--green)':'#475569')+';" id="sim-dis-uds-'+safeKey+'">'+disUds+'</div><div style="font-size:9px;color:#64748b;">UDS</div></div>';
+    h += '<button data-did="'+simKey+'" onclick="simQuitarDiseno(this.dataset.did)" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:6px;color:#ef4444;cursor:pointer;font-size:11px;padding:4px 8px;white-space:nowrap;">Quitar</button>';
     h += '</div></div>';
 
     // Filas de colores
     sim.colores.forEach(function(col, ci){
       var colUds = Object.values(col.tallas||{}).reduce(function(s,q){ return s+(parseInt(q)||0); },0);
-      h += '<div style="background:#0d1117;border:1px solid #1e2535;border-radius:8px;padding:10px;margin-bottom:8px;" id="sim-col-'+d.id+'-'+ci+'">';
+      h += '<div style="background:#0d1117;border:1px solid #1e2535;border-radius:8px;padding:10px;margin-bottom:8px;" id="sim-col-'+safeKey+'-'+ci+'">';
       h += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">';
-      // Autocomplete color
       h += '<div style="position:relative;width:200px;flex-shrink:0;">';
-      h += '<input data-did="'+d.id+'" data-ci="'+ci+'" value="'+esc(col.color||'')+'" placeholder="Color..." autocomplete="off" oninput="simColorInput(this)" onblur="simColorBlur(this)" style="width:100%;background:#13161f;border:1px solid '+(col.color?'#00d4ff':'#334155')+';border-radius:8px;color:'+(col.color?'#00d4ff':'#94a3b8')+';font-size:12px;font-weight:700;padding:6px 10px;outline:none;box-sizing:border-box;">';
-      h += '<div id="sim-ac-'+d.id+'-'+ci+'" style="display:none;position:absolute;top:100%;left:0;right:0;z-index:100;background:#1a1e2a;border:1px solid #334155;border-radius:8px;max-height:180px;overflow-y:auto;margin-top:2px;"></div>';
+      h += '<input data-did="'+simKey+'" data-ci="'+ci+'" value="'+esc(col.color||'')+'" placeholder="Color..." autocomplete="off" oninput="simColorInput(this)" onblur="simColorBlur(this)" style="width:100%;background:#13161f;border:1px solid '+(col.color?'#00d4ff':'#334155')+';border-radius:8px;color:'+(col.color?'#00d4ff':'#94a3b8')+';font-size:12px;font-weight:700;padding:6px 10px;outline:none;box-sizing:border-box;">';
+      h += '<div id="sim-ac-'+safeKey+'-'+ci+'" style="display:none;position:absolute;top:100%;left:0;right:0;z-index:100;background:#1a1e2a;border:1px solid #334155;border-radius:8px;max-height:180px;overflow-y:auto;margin-top:2px;"></div>';
       h += '</div>';
-      h += '<span style="font-size:11px;color:'+(colUds>0?'#34d399':'#475569')+';font-weight:700;white-space:nowrap;" id="sim-col-uds-'+d.id+'-'+ci+'">'+colUds+' uds</span>';
-      h += '<button data-did="'+d.id+'" data-ci="'+ci+'" onclick="simEliminarColor(this.dataset.did,parseInt(this.dataset.ci))" style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:16px;padding:0 2px;line-height:1;">×</button>';
+      h += '<span style="font-size:11px;color:'+(colUds>0?'#34d399':'#475569')+';font-weight:700;white-space:nowrap;" id="sim-col-uds-'+safeKey+'-'+ci+'">'+colUds+' uds</span>';
+      h += '<button data-did="'+simKey+'" data-ci="'+ci+'" onclick="simEliminarColor(this.dataset.did,parseInt(this.dataset.ci))" style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:16px;padding:0 2px;line-height:1;">×</button>';
       h += '</div>';
-      // Tallas
       h += '<div style="display:flex;flex-wrap:wrap;gap:6px;">';
       TALLAS_DEFAULT.forEach(function(t){
         var qty = col.tallas[t]||'';
         h += '<div style="display:flex;flex-direction:column;align-items:center;gap:2px;">';
         h += '<span style="font-size:9px;color:#64748b;font-weight:600;">'+t+'</span>';
-        h += '<input type="number" min="0" data-did="'+d.id+'" data-ci="'+ci+'" data-talla="'+t+'" onchange="simCambiarQty(this)" value="'+(qty||'')+'" placeholder="0" style="width:38px;text-align:center;background:#13161f;border:1px solid #1e2535;border-radius:6px;color:#e2e8f0;font-size:12px;font-weight:600;padding:4px 2px;">';
+        h += '<input type="number" min="0" data-did="'+simKey+'" data-ci="'+ci+'" data-talla="'+t+'" onchange="simCambiarQty(this)" value="'+(qty||'')+'" placeholder="0" style="width:38px;text-align:center;background:#13161f;border:1px solid #1e2535;border-radius:6px;color:#e2e8f0;font-size:12px;font-weight:600;padding:4px 2px;">';
         h += '</div>';
       });
       h += '</div></div>';
     });
 
-    h += '<button data-did="'+d.id+'" onclick="simAgregarColor(this.dataset.did)" style="width:100%;padding:8px;border-radius:8px;background:rgba(0,212,255,.06);border:1px dashed rgba(0,212,255,.3);color:#00d4ff;font-size:12px;font-weight:600;cursor:pointer;">+ Agregar color</button>';
+    h += '<button data-did="'+simKey+'" onclick="simAgregarColor(this.dataset.did)" style="width:100%;padding:8px;border-radius:8px;background:rgba(0,212,255,.06);border:1px dashed rgba(0,212,255,.3);color:#00d4ff;font-size:12px;font-weight:600;cursor:pointer;">+ Agregar color</button>';
     h += '</div>';
   });
   h += '</div>';
@@ -4982,26 +5145,49 @@ function simFiltrarDis(inp){
   var q = inp.value.trim().toUpperCase();
   var dd = document.getElementById('sim-dis-dropdown');
   if(!dd) return;
-  var marcaDis = (DB.disenos||[]).filter(function(d){ return d.marca===_simFiltroMarca && d.kanban_estado!=='LISTA_PRODUCCION'; })
+  var html = '';
+  var hasResults = false;
+
+  // ── Sección 1: Diseños en proceso ─────────────────────────────────────────
+  var marcaDis = (DB.disenos||[]).filter(function(d){ return d.marca===_simFiltroMarca && !d.eliminado; })
     .sort(function(a,b){ return (a.categoria||'').localeCompare(b.categoria||'')||(a.nombre||'').localeCompare(b.nombre||''); });
-  var matches = q ? marcaDis.filter(function(d){ return d.nombre.toUpperCase().indexOf(q)>=0||(d.categoria||'').toUpperCase().indexOf(q)>=0; }) : marcaDis;
-  if(!matches.length){ dd.innerHTML='<div style="padding:12px 16px;color:#475569;font-size:13px;">Sin resultados</div>'; dd.style.display='block'; return; }
-  var html=''; var catActual=null;
-  matches.forEach(function(d){
-    var yaEsta = _simActive.indexOf(d.id)>=0;
-    if(!q && d.categoria!==catActual){
-      catActual=d.categoria;
-      html += '<div style="padding:5px 14px 3px;font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:1px;background:#0d1117;position:sticky;top:0;">'+esc(catActual||'SIN CATEGORÍA')+'</div>';
-    }
-    var etColor = _ETAPA_COLOR_SIM[d.kanban_estado]||'#475569';
-    var etShort = _ETAPA_SHORT_SIM[d.kanban_estado]||'';
-    html += '<div onmousedown="event.preventDefault();simAgregarDiseno(\''+d.id+'\')" style="padding:9px 14px;cursor:'+(yaEsta?'default':'pointer')+';border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;justify-content:space-between;gap:8px;'+(yaEsta?'opacity:.4;':'')+'background:transparent;" onmouseover="this.style.background=\'rgba(0,212,255,.06)\'" onmouseout="this.style.background=\'transparent\'">';
-    html += '<div style="min-width:0;flex:1;"><div style="font-size:13px;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(d.nombre)+'</div>';
-    if(etShort) html += '<div style="font-size:10px;color:'+etColor+';margin-top:1px;">'+etShort+'</div>';
-    html += '</div>';
-    html += '<span style="font-size:10px;font-weight:600;white-space:nowrap;color:'+(yaEsta?'#334155':'#00d4ff')+';flex-shrink:0;">'+(yaEsta?'✓':'+ agregar')+'</span>';
-    html += '</div>';
-  });
+  var matchesDis = q ? marcaDis.filter(function(d){ return d.nombre.toUpperCase().indexOf(q)>=0||(d.categoria||'').toUpperCase().indexOf(q)>=0; }) : marcaDis;
+  if(matchesDis.length){
+    hasResults = true;
+    html += '<div style="padding:5px 14px 3px;font-size:10px;font-weight:700;color:#00d4ff;text-transform:uppercase;letter-spacing:1px;background:#0d1117;position:sticky;top:0;">Diseños en proceso</div>';
+    var catActual = null;
+    matchesDis.forEach(function(d){
+      var yaEsta = _simActive.indexOf(d.id)>=0;
+      if(!q && d.categoria!==catActual){ catActual=d.categoria; html += '<div style="padding:3px 14px 2px;font-size:9px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:1px;">'+esc(catActual||'SIN CATEGORÍA')+'</div>'; }
+      var etColor = _ETAPA_COLOR_SIM[d.kanban_estado]||'#475569';
+      var etShort = _ETAPA_SHORT_SIM[d.kanban_estado]||(d.kanban_estado==='LISTA_PRODUCCION'?'Lista Prod.':'');
+      html += '<div onmousedown="event.preventDefault();simAgregarDiseno(\''+d.id+'\')" style="padding:8px 14px;cursor:'+(yaEsta?'default':'pointer')+';border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;justify-content:space-between;gap:8px;'+(yaEsta?'opacity:.4;':'')+'background:transparent;" onmouseover="this.style.background=\'rgba(0,212,255,.06)\'" onmouseout="this.style.background=\'transparent\'">';
+      html += '<div style="min-width:0;flex:1;"><div style="font-size:13px;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(d.nombre)+'</div>';
+      if(etShort) html += '<div style="font-size:10px;color:'+etColor+';margin-top:1px;">'+etShort+'</div>';
+      html += '</div><span style="font-size:10px;font-weight:600;white-space:nowrap;color:'+(yaEsta?'#334155':'#00d4ff')+';flex-shrink:0;">'+(yaEsta?'✓':'+ agregar')+'</span></div>';
+    });
+  }
+
+  // ── Sección 2: Productos activos (OPs) ───────────────────────────────────
+  var opsActivas = (DB.ops||[]).filter(function(op){ return op.estado_op !== 'ARCHIVADO'; })
+    .sort(function(a,b){ return (a.categoria||'').localeCompare(b.categoria||'')||(a.nombre_producto||'').localeCompare(b.nombre_producto||''); });
+  var matchesOps = q ? opsActivas.filter(function(op){ return (op.nombre_producto||'').toUpperCase().indexOf(q)>=0||(op.categoria||'').toUpperCase().indexOf(q)>=0; }) : opsActivas;
+  if(matchesOps.length){
+    hasResults = true;
+    html += '<div style="padding:5px 14px 3px;font-size:10px;font-weight:700;color:#f97316;text-transform:uppercase;letter-spacing:1px;background:#0d1117;position:sticky;top:0;">Productos activos en producción</div>';
+    var catOp = null;
+    matchesOps.forEach(function(op){
+      var simKey = 'op:'+op.id;
+      var yaEsta = _simActive.indexOf(simKey)>=0;
+      if(!q && op.categoria!==catOp){ catOp=op.categoria; html += '<div style="padding:3px 14px 2px;font-size:9px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:1px;">'+esc(catOp||'SIN CATEGORÍA')+'</div>'; }
+      html += '<div onmousedown="event.preventDefault();simAgregarDiseno(\''+simKey+'\')" style="padding:8px 14px;cursor:'+(yaEsta?'default':'pointer')+';border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;justify-content:space-between;gap:8px;'+(yaEsta?'opacity:.4;':'')+'background:transparent;" onmouseover="this.style.background=\'rgba(249,115,22,.06)\'" onmouseout="this.style.background=\'transparent\'">';
+      html += '<div style="min-width:0;flex:1;"><div style="font-size:13px;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(op.nombre_producto||'Sin nombre')+'</div>';
+      html += '<div style="font-size:10px;color:#f97316;margin-top:1px;">'+esc(fmtOpId(op.id))+' · '+(op.categoria||'')+'</div>';
+      html += '</div><span style="font-size:10px;font-weight:600;white-space:nowrap;color:'+(yaEsta?'#334155':'#f97316')+';flex-shrink:0;">'+(yaEsta?'✓':'+ agregar')+'</span></div>';
+    });
+  }
+
+  if(!hasResults){ dd.innerHTML='<div style="padding:12px 16px;color:#475569;font-size:13px;">Sin resultados</div>'; dd.style.display='block'; return; }
   dd.innerHTML=html; dd.style.display='block';
 }
 
@@ -5083,26 +5269,29 @@ function simSelColor(did, ci, colorName){
 
 function simCambiarQty(inp){
   var did = inp.dataset.did, ci = parseInt(inp.dataset.ci), talla = inp.dataset.talla;
+  var safeKey = did.replace(/:/g,'__c__');
   var sim = _getSimData(did);
   if(!sim.colores[ci]) return;
   var qty = parseInt(inp.value)||0;
   if(qty>0) sim.colores[ci].tallas[talla]=qty; else delete sim.colores[ci].tallas[talla];
   _setSimData(did, sim);
   var colUds = Object.values(sim.colores[ci].tallas||{}).reduce(function(s,q){ return s+(parseInt(q)||0); },0);
-  var sp = document.getElementById('sim-col-uds-'+did+'-'+ci);
+  var sp = document.getElementById('sim-col-uds-'+safeKey+'-'+ci);
   if(sp){ sp.textContent=colUds+' uds'; sp.style.color=colUds>0?'#34d399':'#475569'; }
   var totalUds=0;
   _simActive.forEach(function(id){ _getSimData(id).colores.forEach(function(c){ Object.values(c.tallas||{}).forEach(function(q){ totalUds+=(parseInt(q)||0); }); }); });
   var tel=document.getElementById('sim-total-uds'); if(tel) tel.textContent=totalUds.toLocaleString();
   var disUds=0;
   _getSimData(did).colores.forEach(function(c){ Object.values(c.tallas||{}).forEach(function(q){ disUds+=(parseInt(q)||0); }); });
-  var del=document.getElementById('sim-dis-uds-'+did); if(del){ del.textContent=disUds; del.style.color=disUds>0?'var(--green)':'#475569'; }
+  var del=document.getElementById('sim-dis-uds-'+safeKey); if(del){ del.textContent=disUds; del.style.color=disUds>0?'var(--green)':'#475569'; }
 }
 
 function limpiarSimulador(){
-  if(!confirm('¿Quitar todos los diseños del simulador?')) return;
+  if(!confirm('¿Quitar todos los productos del simulador?')) return;
   _simData={}; _simActive=[];
-  localStorage.removeItem('bentley_sim_data');
+  DB.sim={active:[],data:{}};
+  saveLocal();
+  guardarArchivo('sim', {active:[], data:{}});
   renderPage('simulador');
 }
 
