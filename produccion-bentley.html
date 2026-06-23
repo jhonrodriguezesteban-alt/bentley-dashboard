@@ -2890,8 +2890,51 @@ function abrirFormDiseno(id){
 function seleccionarFotosForm(files){
   if(!files||!files.length) return;
   for(var i=0;i<files.length;i++) _disPendienteFotos.push(files[i]);
+  _renderFotosFormPreview();
+}
+
+function _renderFotosFormPreview(){
+  var preview = document.getElementById('dis-fotos-preview');
+  if(!preview) return;
+  // Limpiar miniaturas anteriores (mantener el botón Agregar y el span count)
+  var thumbs = preview.querySelectorAll('.foto-thumb-form');
+  thumbs.forEach(function(t){ t.parentNode.removeChild(t); });
   var countEl = document.getElementById('dis-fotos-count');
-  if(countEl) countEl.textContent = _disPendienteFotos.length + ' foto' + (_disPendienteFotos.length>1?'s':'') + ' lista' + (_disPendienteFotos.length>1?'s':'');
+
+  _disPendienteFotos.forEach(function(file, idx){
+    var reader = new FileReader();
+    reader.onload = function(e){
+      var wrap = document.createElement('div');
+      wrap.className = 'foto-thumb-form';
+      wrap.style.cssText = 'position:relative;flex-shrink:0;';
+      var img = document.createElement('img');
+      img.src = e.target.result;
+      img.style.cssText = 'width:72px;height:72px;object-fit:cover;border-radius:8px;border:1px solid #1e2535;display:block;';
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = '✕';
+      btn.title = 'Eliminar foto';
+      btn.dataset.idx = idx;
+      btn.style.cssText = 'position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:#ef4444;border:none;color:#fff;font-size:10px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;line-height:1;';
+      btn.onclick = function(){ _eliminarFotoFormIdx(parseInt(this.dataset.idx)); };
+      wrap.appendChild(img);
+      wrap.appendChild(btn);
+      // Insertar antes del botón "Agregar foto" (primer hijo)
+      preview.insertBefore(wrap, preview.firstChild);
+    };
+    reader.readAsDataURL(file);
+  });
+
+  if(countEl){
+    countEl.textContent = _disPendienteFotos.length
+      ? _disPendienteFotos.length + ' foto' + (_disPendienteFotos.length>1?'s':'') + ' lista' + (_disPendienteFotos.length>1?'s':'')
+      : '';
+  }
+}
+
+function _eliminarFotoFormIdx(idx){
+  _disPendienteFotos.splice(idx, 1);
+  _renderFotosFormPreview();
 }
 
 function toggleCatOtro(val){
