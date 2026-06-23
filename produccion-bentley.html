@@ -3721,10 +3721,23 @@ function abrirFormDiseno(id){
   body += '<input type="hidden" id="dis-pre-id" value="'+preId+'">';
   if(d) body += '<input type="hidden" id="dis-edit-id" value="'+d.id+'">';
 
-  var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>';
+  var footer = '<button class="btn btn-ghost" onclick="cancelarFormDiseno()">Cancelar</button>';
   if(d) footer += '<button class="btn btn-danger" data-id="'+d.id+'" onclick="eliminarDiseno(this.dataset.id)" style="margin-right:auto;">Eliminar</button>';
   footer += '<button class="btn btn-primary" id="btn-guardar-diseno" onclick="guardarDisenoForm()">Guardar</button>';
   openModal(d?'Editar Diseño':'Nuevo Diseño', body, footer);
+  var mcBtn = document.getElementById('modal-close');
+  if(mcBtn) mcBtn.onclick = function(){ cancelarFormDiseno(); };
+}
+
+function cancelarFormDiseno(){
+  closeModal();
+  if(_modalCatReturn){
+    var catRet = _modalCatReturn;
+    _modalCatReturn = null;
+    setTimeout(function(){ abrirModalCategoria(catRet); }, 80);
+  } else {
+    renderPage('diseno');
+  }
 }
 
 function seleccionarFotosForm(files){
