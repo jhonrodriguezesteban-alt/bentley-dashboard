@@ -108,13 +108,19 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .btn.loading .btn-text{opacity:.6;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
+/* ── Scrollbar fino para columnas kanban y fila de tarjetas ───────────── */
+.diseno-cat-row::-webkit-scrollbar,
+.kanban-col-body::-webkit-scrollbar{ height:4px; width:4px; }
+.diseno-cat-row::-webkit-scrollbar-thumb,
+.kanban-col-body::-webkit-scrollbar-thumb{ background:#1e2535; border-radius:4px; }
+.diseno-cat-row::-webkit-scrollbar-track,
+.kanban-col-body::-webkit-scrollbar-track{ background:transparent; }
+
 /* ── Responsive móvil ─────────────────────────────────────────────────── */
 @media(max-width:768px){
   .nav-item{ font-size:16px; padding:13px 18px; }
   .nav-item .icon{ font-size:18px; }
-  .diseno-cat-row{ flex-wrap:nowrap !important; overflow-x:auto; -webkit-overflow-scrolling:touch; scroll-snap-type:x mandatory; padding-bottom:6px; }
-  .diseno-cat-row::-webkit-scrollbar{ height:3px; }
-  .diseno-cat-row::-webkit-scrollbar-thumb{ background:#1e2535; border-radius:3px; }
+  .diseno-cat-row{ flex-wrap:nowrap !important; }
   .dash-3col{ grid-template-columns:1fr !important; }
   .dash-kpi-grid{ grid-template-columns:repeat(2,1fr) !important; }
   .op-form-row-mob{ flex-direction:column !important; }
@@ -2523,7 +2529,7 @@ function renderDiseno(){
       'Unisex':'#94a3b8','Mixto':'#94a3b8','Niña':'#f472b6','Niño':'#38bdf8',
       'Mujer':'#f472b6','Hombre':'#38bdf8','Femenino':'#f472b6','Masculino':'#38bdf8'
     };
-    h += '<div class="diseno-cat-row" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;">';
+    h += '<div class="diseno-cat-row" style="display:flex;gap:10px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px;margin-bottom:18px;">';
 
     // ── Tarjeta TOTAL ────────────────────────────────────────────────────────
     h += '<div onclick="abrirModalCategoria(\'__TODOS__\')" style="background:linear-gradient(135deg,#0d1117 0%,#111827 100%);border:1px solid #3b82f644;border-radius:10px;padding:11px 14px;min-width:160px;flex:0 0 auto;cursor:pointer;transition:border-color .15s;" onmouseenter="this.style.borderColor=\'#3b82f6\'" onmouseleave="this.style.borderColor=\'#3b82f644\'">';
@@ -2589,7 +2595,7 @@ function renderDiseno(){
   }
 
   // ── Kanban board horizontal ──────────────────────────────────────────────────
-  h += '<div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:16px;align-items:flex-start;">';
+  h += '<div style="display:flex;gap:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:16px;align-items:flex-start;min-height:0;">';
 
   DIS_KANBAN.forEach(function(col){
     var items = todosItems.filter(function(d){ return (d.kanban_estado||'EN_DISENO_DIGITAL')===col.k; })
@@ -2599,13 +2605,13 @@ function renderDiseno(){
                             // mismo priority: más reciente primero
                             return (b._ts||b.fecha_creacion||'') > (a._ts||a.fecha_creacion||'') ? 1 : -1;
                           });
-    h += '<div style="flex-shrink:0;width:230px;">';
+    h += '<div style="flex:1 1 220px;min-width:220px;max-width:340px;display:flex;flex-direction:column;">';
     // Columna header
-    h += '<div style="background:'+col.bg+';border:1px solid '+col.color+'44;border-bottom:none;border-radius:10px 10px 0 0;padding:10px 13px;display:flex;align-items:center;justify-content:space-between;">';
+    h += '<div style="background:'+col.bg+';border:1px solid '+col.color+'44;border-bottom:none;border-radius:10px 10px 0 0;padding:10px 13px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">';
     h += '<div style="font-size:11px;font-weight:700;color:'+col.color+';text-transform:uppercase;letter-spacing:.5px;">'+col.label+'</div>';
     h += '<div style="font-size:11px;font-weight:700;color:'+col.color+';background:'+col.color+'22;border-radius:10px;padding:1px 7px;">'+items.length+'</div>';
     h += '</div>';
-    h += '<div data-col="'+col.k+'" ondragover="event.preventDefault();this.style.background=\'rgba(255,255,255,.04)\'" ondragleave="this.style.background=\'\'" ondrop="dropDisenoKanban(event,this.dataset.col);this.style.background=\'\'" style="background:#0d1117;border:1px solid '+col.color+'33;border-top:none;border-radius:0 0 10px 10px;padding:10px;min-height:100px;transition:background .15s;">';
+    h += '<div class="kanban-col-body" data-col="'+col.k+'" ondragover="event.preventDefault();this.style.background=\'rgba(255,255,255,.04)\'" ondragleave="this.style.background=\'\'" ondrop="dropDisenoKanban(event,this.dataset.col);this.style.background=\'\'" style="background:#0d1117;border:1px solid '+col.color+'33;border-top:none;border-radius:0 0 10px 10px;padding:10px;min-height:100px;transition:background .15s;overflow-y:auto;overflow-x:hidden;max-height:calc(100vh - 310px);">';
 
     items.forEach(function(d){
       var rc = DIS_RESP_COLORS[d.responsable]||'#94a3b8';
