@@ -4378,10 +4378,18 @@ async function guardarCostosMO(){
 // ═══════════════════════════════════════════════════════════════════════════════
 var _simFiltroMarca = null;
 var _simData = {}; // { [disenoId]: { colores: [{color, tallas: {T:qty,...}}] } }
+var _simActive = []; // IDs de diseños añadidos al simulador
 
 function _getSimData(id){ return _simData[id] || {colores:[]}; }
-function _setSimData(id, val){ _simData[id] = val; localStorage.setItem('bentley_sim_data', JSON.stringify(_simData)); }
-function _loadSimData(){ try{ _simData = JSON.parse(localStorage.getItem('bentley_sim_data')||'{}'); }catch(e){ _simData={}; } }
+function _setSimData(id, val){ _simData[id] = val; _saveSimStorage(); }
+function _saveSimStorage(){ localStorage.setItem('bentley_sim_data', JSON.stringify({data:_simData,active:_simActive})); }
+function _loadSimData(){
+  try{
+    var raw = JSON.parse(localStorage.getItem('bentley_sim_data')||'{}');
+    if(raw.data){ _simData=raw.data; _simActive=raw.active||[]; }
+    else{ _simData=raw; _simActive=[]; }
+  }catch(e){ _simData={}; _simActive=[]; }
+}
 
 var SIM_PALETTE = ["AMARILLO","AVENA","AZUL","AZUL BEBE","AZUL OSC","AZUL OSCURO","AZUL ORTENCIA","AZUL REY","BEIGE","BLANCO","CAFÉ","CAMEL","CAMUFLADO AZUL","CAMUFLADO GRIS","CAMUFLADO GRIS CLARO","CAMUFLADO VERDE","CURUBA","DORADO","FUCSIA","GRIS","GRIS CLARO","GRIS MEDIO","GRIS OSCURO","GUAYABA","LILA","MARFIL","MORA LECHE","MOSTAZA","MULTICOLOR","NARANJA","NEGRO","PALO ROSA","PEACH","PLATA","ROJO","ROSA","ROSA CLARO","ROSA OSCURO","ROSADO","SALMON","TERRACOTA","TORNASOL","VERDE","VERDE LIMA","VERDE LIMON","VERDE MANZANA","VERDE MENTA","VERDE MILITAR","VERDE OLIVA","VERDE PINO","VINOTINTO"];
 
@@ -4396,10 +4404,16 @@ function renderSimulador(){
   var marcas = getDisMarcas();
   if(!_simFiltroMarca || !marcas.includes(_simFiltroMarca)) _simFiltroMarca = marcas[0];
 
-  // Diseños en proceso (excluye LISTA_PRODUCCION)
-  var disenos = (DB.disenos||[]).filter(function(d){
-    return d.marca === _simFiltroMarca && d.kanban_estado !== 'LISTA_PRODUCCION';
-  }).sort(function(a,b){ return (a.categoria||'').localeCompare(b.categoria||'') || (a.nombre||'').localeCompare(b.nombre||''); });
+  var todosDis = (DB.disenos||[]).filter(function(d){
+    return d.marca===_simFiltroMarca && d.kanban_estado!=='LISTA_PRODUCCION';
+  }).sort(function(a,b){ return (a.nombre||'').localeCompare(b.nombre||''); });
+
+  var activeDis = todosDis.filter(function(d){ return _simActive.indexOf(d.id)>=0; });
+
+  var totalUds = 0;
+  activeDis.forEach(function(d){
+    _getSimData(d.id).colores.forEach(function(c){ Object.values(c.tallas||{}).forEach(function(q){ totalUds+=(parseInt(q)||0); }); });
+  });
 
   var h = '';
 
@@ -4407,81 +4421,70 @@ function renderSimulador(){
   h += '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:16px;">';
   marcas.forEach(function(m){
     var active = m===_simFiltroMarca;
-    var cnt = (DB.disenos||[]).filter(function(d){ return d.marca===m && d.kanban_estado!=='LISTA_PRODUCCION'; }).length;
-    h += '<button onclick="setSimFiltroMarca(\''+esc(m)+'\')" style="padding:7px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid '+(active?'#00d4ff':'#1e2535')+';background:'+(active?'rgba(0,212,255,.12)':'#0f1520')+';color:'+(active?'#00d4ff':'#64748b')+';">'+esc(m)+' <span style="font-size:11px;opacity:.7;">('+cnt+')</span></button>';
+    var cnt = _simActive.filter(function(id){ var d=(DB.disenos||[]).find(function(x){return x.id===id;}); return d&&d.marca===m; }).length;
+    h += '<button onclick="setSimFiltroMarca(this.dataset.m)" data-m="'+esc(m)+'" style="padding:7px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid '+(active?'#00d4ff':'#1e2535')+';background:'+(active?'rgba(0,212,255,.12)':'#0f1520')+';color:'+(active?'#00d4ff':'#64748b')+';">'+esc(m)+(cnt?' <span style="font-size:11px;opacity:.7;">('+cnt+')</span>':'')+'</button>';
   });
   h += '</div>';
 
-  if(!disenos.length){
-    h += '<div class="empty-state"><div class="icon">🧮</div><p>Sin diseños en proceso para '+esc(_simFiltroMarca)+'</p></div>';
+  // Barra resumen + buscador de diseño
+  h += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;padding:14px 18px;background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.2);border-radius:12px;flex-wrap:wrap;">';
+  h += '<div><div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.8px;">Diseños en simulación</div><div style="font-family:var(--bebas);font-size:32px;color:var(--cyan);" id="sim-cnt-dis">'+activeDis.length+'</div></div>';
+  h += '<div style="width:1px;height:40px;background:#1e2535;flex-shrink:0;"></div>';
+  h += '<div><div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.8px;">Total unidades</div><div style="font-family:var(--bebas);font-size:32px;color:var(--green);" id="sim-total-uds">'+totalUds.toLocaleString()+'</div></div>';
+  h += '<div style="flex:1;min-width:200px;position:relative;">';
+  h += '<input id="sim-search-dis" oninput="simFiltrarDis(this)" placeholder="Buscar y agregar diseño..." autocomplete="off" style="width:100%;background:#0d1117;border:1px solid #334155;border-radius:8px;color:#e2e8f0;font-size:13px;padding:8px 12px;outline:none;box-sizing:border-box;">';
+  h += '<div id="sim-dis-dropdown" style="display:none;position:absolute;top:100%;left:0;right:0;z-index:200;background:#1a1e2a;border:1px solid #334155;border-radius:8px;max-height:220px;overflow-y:auto;margin-top:4px;"></div>';
+  h += '</div>';
+  if(activeDis.length){ h += '<button onclick="limpiarSimulador()" style="padding:6px 14px;border-radius:8px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#ef4444;font-size:12px;cursor:pointer;white-space:nowrap;">🗑 Limpiar</button>'; }
+  h += '</div>';
+
+  if(!activeDis.length){
+    h += '<div style="text-align:center;padding:40px 20px;color:#475569;"><div style="font-size:32px;margin-bottom:8px;">🧮</div><div style="font-size:14px;">Busca y agrega diseños para simular producción</div></div>';
     return h;
   }
 
-  // Resumen total
-  var totalUds = 0;
-  disenos.forEach(function(d){
-    var sim = _getSimData(d.id);
-    sim.colores.forEach(function(c){ Object.values(c.tallas||{}).forEach(function(q){ totalUds += (parseInt(q)||0); }); });
-  });
-
-  h += '<div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;padding:14px 18px;background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.2);border-radius:12px;">';
-  h += '<div><div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.8px;">Diseños en proceso</div><div style="font-family:var(--bebas);font-size:32px;color:var(--cyan);">'+disenos.length+'</div></div>';
-  h += '<div style="width:1px;height:40px;background:#1e2535;"></div>';
-  h += '<div><div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.8px;">Total unidades simuladas</div><div style="font-family:var(--bebas);font-size:32px;color:var(--green);">'+totalUds.toLocaleString()+'</div></div>';
-  h += '<div style="flex:1;"></div>';
-  h += '<button onclick="limpiarSimulador()" style="padding:6px 14px;border-radius:8px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#ef4444;font-size:12px;cursor:pointer;">🗑 Limpiar todo</button>';
-  h += '</div>';
-
-  // Grid de diseños
+  // Tarjetas de diseños activos
   h += '<div style="display:flex;flex-direction:column;gap:12px;">';
-  var catActual = null;
-  disenos.forEach(function(d){
-    if(d.categoria !== catActual){
-      catActual = d.categoria;
-      h += '<div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;padding:8px 0 4px;border-bottom:1px solid #1e2535;margin-top:8px;">'+esc(catActual||'SIN CATEGORÍA')+'</div>';
-    }
+  activeDis.forEach(function(d){
     var sim = _getSimData(d.id);
     var disUds = 0;
-    sim.colores.forEach(function(c){ Object.values(c.tallas||{}).forEach(function(q){ disUds += (parseInt(q)||0); }); });
-    var rc = DIS_RESP_COLORS[d.responsable]||'#94a3b8';
+    sim.colores.forEach(function(c){ Object.values(c.tallas||{}).forEach(function(q){ disUds+=(parseInt(q)||0); }); });
     var etColor = _ETAPA_COLOR_SIM[d.kanban_estado]||'#94a3b8';
     var etShort = _ETAPA_SHORT_SIM[d.kanban_estado]||d.kanban_estado;
+    var _gc = {Unisex:'#94a3b8',Mixto:'#94a3b8',Niña:'#f472b6',Niño:'#38bdf8',Mujer:'#f472b6',Hombre:'#38bdf8'}[d.genero||'Unisex']||'#94a3b8';
 
-    h += '<div style="background:#13161f;border:1px solid #1e2535;border-left:3px solid '+rc+';border-radius:12px;padding:14px 16px;">';
-
-    // Header diseño
-    h += '<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;gap:8px;">';
+    h += '<div style="background:#13161f;border:1px solid #1e2535;border-left:3px solid '+etColor+';border-radius:12px;padding:14px 16px;">';
+    // Header
+    h += '<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:8px;">';
     h += '<div style="flex:1;min-width:0;">';
-    h += '<div style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(d.nombre)+'</div>';
+    h += '<div style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:4px;">'+esc(d.nombre)+'</div>';
     h += '<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">';
     h += '<span style="font-size:10px;color:'+etColor+';background:'+etColor+'18;border:1px solid '+etColor+'33;border-radius:4px;padding:1px 6px;">'+etShort+'</span>';
-    var _gc = {Unisex:'#94a3b8',Mixto:'#94a3b8',Niña:'#f472b6',Niño:'#38bdf8',Mujer:'#f472b6',Hombre:'#38bdf8'}[d.genero||'Unisex']||'#94a3b8';
     h += '<span style="font-size:10px;color:'+_gc+';background:'+_gc+'18;border:1px solid '+_gc+'44;border-radius:4px;padding:1px 6px;">'+(d.genero||'Unisex')+'</span>';
+    if(d.categoria) h += '<span style="font-size:10px;color:#64748b;">'+esc(d.categoria)+'</span>';
     h += '</div></div>';
-    h += '<div style="text-align:right;flex-shrink:0;">';
-    h += '<div style="font-family:var(--bebas);font-size:28px;color:'+(disUds>0?'var(--green)':'#475569')+';">'+disUds+'</div>';
-    h += '<div style="font-size:9px;color:#64748b;">UDS</div>';
+    h += '<div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">';
+    h += '<div style="text-align:right;"><div style="font-family:var(--bebas);font-size:26px;color:'+(disUds>0?'var(--green)':'#475569')+';" id="sim-dis-uds-'+d.id+'">'+disUds+'</div><div style="font-size:9px;color:#64748b;">UDS</div></div>';
+    h += '<button data-did="'+d.id+'" onclick="simQuitarDiseno(this.dataset.did)" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:6px;color:#ef4444;cursor:pointer;font-size:11px;padding:4px 8px;white-space:nowrap;">Quitar</button>';
     h += '</div></div>';
 
-    // Colores existentes
+    // Filas de colores
     sim.colores.forEach(function(col, ci){
       var colUds = Object.values(col.tallas||{}).reduce(function(s,q){ return s+(parseInt(q)||0); },0);
       h += '<div style="background:#0d1117;border:1px solid #1e2535;border-radius:8px;padding:10px;margin-bottom:8px;" id="sim-col-'+d.id+'-'+ci+'">';
-      // Header fila color: dropdown + uds + borrar
       h += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">';
-      var listId = 'sim-pal-'+d.id+'-'+ci;
-      h += '<datalist id="'+listId+'">';
-      SIM_PALETTE.forEach(function(p){ h += '<option value="'+p+'">'; });
-      h += '</datalist>';
-      h += '<input list="'+listId+'" data-did="'+d.id+'" data-ci="'+ci+'" value="'+esc(col.color||'')+'" placeholder="Escribe o elige color..." onchange="simSelColor(this.dataset.did,parseInt(this.dataset.ci),this.value.trim().toUpperCase())" style="width:220px;flex-shrink:0;background:#13161f;border:1px solid '+(col.color?'#00d4ff':'#1e2535')+';border-radius:8px;color:'+(col.color?'#00d4ff':'#94a3b8')+';font-size:12px;font-weight:700;padding:6px 10px;outline:none;">';
-      h += '<span style="font-size:11px;color:'+(colUds>0?'#34d399':'#475569')+';font-weight:700;white-space:nowrap;">'+colUds+' uds</span>';
+      // Autocomplete color
+      h += '<div style="position:relative;width:200px;flex-shrink:0;">';
+      h += '<input data-did="'+d.id+'" data-ci="'+ci+'" value="'+esc(col.color||'')+'" placeholder="Color..." autocomplete="off" oninput="simColorInput(this)" onblur="simColorBlur(this)" style="width:100%;background:#13161f;border:1px solid '+(col.color?'#00d4ff':'#334155')+';border-radius:8px;color:'+(col.color?'#00d4ff':'#94a3b8')+';font-size:12px;font-weight:700;padding:6px 10px;outline:none;box-sizing:border-box;">';
+      h += '<div id="sim-ac-'+d.id+'-'+ci+'" style="display:none;position:absolute;top:100%;left:0;right:0;z-index:100;background:#1a1e2a;border:1px solid #334155;border-radius:8px;max-height:180px;overflow-y:auto;margin-top:2px;"></div>';
+      h += '</div>';
+      h += '<span style="font-size:11px;color:'+(colUds>0?'#34d399':'#475569')+';font-weight:700;white-space:nowrap;" id="sim-col-uds-'+d.id+'-'+ci+'">'+colUds+' uds</span>';
       h += '<button data-did="'+d.id+'" data-ci="'+ci+'" onclick="simEliminarColor(this.dataset.did,parseInt(this.dataset.ci))" style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:16px;padding:0 2px;line-height:1;">×</button>';
       h += '</div>';
       // Tallas
-      var tallas = TALLAS_DEFAULT;
       h += '<div style="display:flex;flex-wrap:wrap;gap:6px;">';
-      tallas.forEach(function(t){
-        var qty = col.tallas[t] || '';
+      TALLAS_DEFAULT.forEach(function(t){
+        var qty = col.tallas[t]||'';
         h += '<div style="display:flex;flex-direction:column;align-items:center;gap:2px;">';
         h += '<span style="font-size:9px;color:#64748b;font-weight:600;">'+t+'</span>';
         h += '<input type="number" min="0" data-did="'+d.id+'" data-ci="'+ci+'" data-talla="'+t+'" onchange="simCambiarQty(this)" value="'+(qty||'')+'" placeholder="0" style="width:38px;text-align:center;background:#13161f;border:1px solid #1e2535;border-radius:6px;color:#e2e8f0;font-size:12px;font-weight:600;padding:4px 2px;">';
@@ -4490,7 +4493,6 @@ function renderSimulador(){
       h += '</div></div>';
     });
 
-    // Botón agregar color
     h += '<button data-did="'+d.id+'" onclick="simAgregarColor(this.dataset.did)" style="width:100%;padding:8px;border-radius:8px;background:rgba(0,212,255,.06);border:1px dashed rgba(0,212,255,.3);color:#00d4ff;font-size:12px;font-weight:600;cursor:pointer;">+ Agregar color</button>';
     h += '</div>';
   });
@@ -4499,6 +4501,42 @@ function renderSimulador(){
 }
 
 function setSimFiltroMarca(m){ _simFiltroMarca=m; renderPage('simulador'); }
+
+function simFiltrarDis(inp){
+  var q = inp.value.trim().toUpperCase();
+  var dd = document.getElementById('sim-dis-dropdown');
+  if(!dd) return;
+  if(!q){ dd.style.display='none'; return; }
+  var marcaDis = (DB.disenos||[]).filter(function(d){ return d.marca===_simFiltroMarca && d.kanban_estado!=='LISTA_PRODUCCION'; });
+  var matches = marcaDis.filter(function(d){ return d.nombre.toUpperCase().indexOf(q)>=0; }).slice(0,12);
+  if(!matches.length){ dd.style.display='none'; return; }
+  var html='';
+  matches.forEach(function(d){
+    var yaEsta = _simActive.indexOf(d.id)>=0;
+    html += '<div onclick="simAgregarDiseno(\''+d.id+'\')" style="padding:8px 12px;cursor:'+(yaEsta?'default':'pointer')+';color:'+(yaEsta?'#475569':'#e2e8f0')+';font-size:13px;border-bottom:1px solid #1e2535;display:flex;align-items:center;justify-content:space-between;" onmousedown="event.preventDefault()">';
+    html += '<span>'+esc(d.nombre)+'</span>';
+    html += '<span style="font-size:10px;color:'+(yaEsta?'#475569':'#00d4ff')+';">'+(yaEsta?'ya agregado':'+ agregar')+'</span>';
+    html += '</div>';
+  });
+  dd.innerHTML = html;
+  dd.style.display = 'block';
+}
+
+function simAgregarDiseno(id){
+  if(_simActive.indexOf(id)<0) _simActive.push(id);
+  _saveSimStorage();
+  var inp = document.getElementById('sim-search-dis');
+  if(inp) inp.value='';
+  var dd = document.getElementById('sim-dis-dropdown');
+  if(dd) dd.style.display='none';
+  renderPage('simulador');
+}
+
+function simQuitarDiseno(id){
+  _simActive = _simActive.filter(function(x){ return x!==id; });
+  _saveSimStorage();
+  renderPage('simulador');
+}
 
 function simAgregarColor(did){
   var sim = _getSimData(did);
@@ -4510,6 +4548,45 @@ function simAgregarColor(did){
 function simEliminarColor(did, ci){
   var sim = _getSimData(did);
   sim.colores.splice(ci, 1);
+  _setSimData(did, sim);
+  renderPage('simulador');
+}
+
+function simColorInput(inp){
+  var did = inp.dataset.did, ci = inp.dataset.ci;
+  var q = inp.value.trim().toUpperCase();
+  var acId = 'sim-ac-'+did+'-'+ci;
+  var dd = document.getElementById(acId);
+  if(!dd) return;
+  var matches = q ? SIM_PALETTE.filter(function(p){ return p.indexOf(q)>=0; }) : SIM_PALETTE;
+  if(!matches.length){ dd.style.display='none'; return; }
+  var html='';
+  matches.forEach(function(p){
+    html += '<div data-did="'+did+'" data-ci="'+ci+'" data-color="'+p+'" onmousedown="simSelColorAC(event,this)" style="padding:7px 12px;cursor:pointer;color:#e2e8f0;font-size:12px;font-weight:600;border-bottom:1px solid #1e2535;">'+p+'</div>';
+  });
+  dd.innerHTML=html; dd.style.display='block';
+}
+
+function simColorBlur(inp){
+  var did = inp.dataset.did, ci = inp.dataset.ci;
+  var dd = document.getElementById('sim-ac-'+did+'-'+ci);
+  setTimeout(function(){ if(dd) dd.style.display='none'; }, 150);
+  var val = inp.value.trim().toUpperCase();
+  if(val){
+    var sim = _getSimData(did);
+    if(sim.colores[ci] && sim.colores[ci].color !== val){
+      sim.colores[ci].color = val;
+      _setSimData(did, sim);
+      renderPage('simulador');
+    }
+  }
+}
+
+function simSelColorAC(ev, el){
+  ev.preventDefault();
+  var did = el.dataset.did, ci = parseInt(el.dataset.ci), color = el.dataset.color;
+  var sim = _getSimData(did);
+  if(sim.colores[ci]) sim.colores[ci].color = color;
   _setSimData(did, sim);
   renderPage('simulador');
 }
@@ -4526,33 +4603,22 @@ function simCambiarQty(inp){
   var sim = _getSimData(did);
   if(!sim.colores[ci]) return;
   var qty = parseInt(inp.value)||0;
-  if(qty > 0) sim.colores[ci].tallas[talla] = qty;
-  else delete sim.colores[ci].tallas[talla];
+  if(qty>0) sim.colores[ci].tallas[talla]=qty; else delete sim.colores[ci].tallas[talla];
   _setSimData(did, sim);
-  // Actualizar contador sin re-render
   var colUds = Object.values(sim.colores[ci].tallas||{}).reduce(function(s,q){ return s+(parseInt(q)||0); },0);
-  var wrap = document.getElementById('sim-col-'+did+'-'+ci);
-  if(wrap){ var sp = wrap.querySelector('span[style*="color"]'); if(sp){ sp.textContent=colUds+' uds'; sp.style.color=colUds>0?'#34d399':'#475569'; } }
-  // Actualizar total del diseño (re-render liviano del total)
-  _updateSimTotal();
-}
-
-function _updateSimTotal(){
-  _loadSimData();
-  var marcas = getDisMarcas();
-  var disenos = (DB.disenos||[]).filter(function(d){ return d.marca===_simFiltroMarca && d.kanban_estado!=='LISTA_PRODUCCION'; });
-  var totalUds = 0;
-  disenos.forEach(function(d){
-    var sim = _getSimData(d.id);
-    sim.colores.forEach(function(c){ Object.values(c.tallas||{}).forEach(function(q){ totalUds += (parseInt(q)||0); }); });
-  });
-  var el = document.querySelector('[style*="font-size:32px"][style*="green"]');
-  if(el) el.textContent = totalUds.toLocaleString();
+  var sp = document.getElementById('sim-col-uds-'+did+'-'+ci);
+  if(sp){ sp.textContent=colUds+' uds'; sp.style.color=colUds>0?'#34d399':'#475569'; }
+  var totalUds=0;
+  _simActive.forEach(function(id){ _getSimData(id).colores.forEach(function(c){ Object.values(c.tallas||{}).forEach(function(q){ totalUds+=(parseInt(q)||0); }); }); });
+  var tel=document.getElementById('sim-total-uds'); if(tel) tel.textContent=totalUds.toLocaleString();
+  var disUds=0;
+  _getSimData(did).colores.forEach(function(c){ Object.values(c.tallas||{}).forEach(function(q){ disUds+=(parseInt(q)||0); }); });
+  var del=document.getElementById('sim-dis-uds-'+did); if(del){ del.textContent=disUds; del.style.color=disUds>0?'var(--green)':'#475569'; }
 }
 
 function limpiarSimulador(){
-  if(!confirm('¿Limpiar todas las cantidades del simulador?')) return;
-  _simData = {};
+  if(!confirm('¿Quitar todos los diseños del simulador?')) return;
+  _simData={}; _simActive=[];
   localStorage.removeItem('bentley_sim_data');
   renderPage('simulador');
 }
