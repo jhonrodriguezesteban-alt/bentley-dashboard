@@ -4292,9 +4292,7 @@ function renderIndicadores(){
 // NOVEDADES
 // ═══════════════════════════════════════════════════════════════════════════════
 function renderNovedades(){
-  var novs = DB.ots.filter(function(o){
-    return o.estado==='NOVEDAD' || (o.unidades_novedad||0) > 0;
-  });
+  var novs = DB.ots.filter(function(o){ return o.estado==='NOVEDAD'; });
   var h = '<div class="section-title">Novedades <span>' + novs.length + ' OTs</span></div>';
   if(!novs.length){ return h + '<div class="empty-state"><div class="icon">✅</div><p>Sin novedades pendientes.</p></div>'; }
   h += '<div class="table-wrap"><table><thead><tr><th>OT</th><th>Satélite</th><th>Producto</th><th>Color</th><th>Talla</th><th>Uds Novedad</th><th>Descripción</th><th>Estado</th><th>Acción</th></tr></thead><tbody>';
