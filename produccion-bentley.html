@@ -2426,6 +2426,29 @@ async function asignarTallerSubg(opId, color, valor){
   toast('Asignado a '+nombre+' · '+otsColor.length+' OTs → En Confección', 'success');
 }
 
+var _opDesdeDisenoId = null;
+
+function crearOpDesdeDiseno(id){
+  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
+  if(!d) return;
+  _opDesdeDisenoId = id;
+  navTo('ops');
+  setTimeout(function(){
+    mostrarFormNuevaOP();
+    // Pre-rellenar nombre y categoría desde el diseño
+    setTimeout(function(){
+      var elNombre = document.getElementById('op-nombre');
+      var elCat = document.getElementById('op-cat');
+      if(elNombre){ elNombre.value = (d.nombre||'').toUpperCase(); }
+      if(elCat && d.categoria){
+        var opts = Array.from(elCat.options);
+        var match = opts.find(function(o){ return o.value.toUpperCase() === (d.categoria||'').toUpperCase(); });
+        if(match){ elCat.value = match.value; actualizarPreview(); }
+      }
+    }, 120);
+  }, 200);
+}
+
 function mostrarFormNuevaOP(){
   _colores = [];
   openModal('CREAR ORDEN DE PRODUCCIÓN', _buildFormNuevaOP(), '');
@@ -2925,6 +2948,17 @@ async function crearOP(){
   setBtnLoading('btn-crear-op', false);
   if(ok1 && ok2){
     toast('OP creada con ' + newOTs.length + ' OTs', 'success');
+    // Archivar diseño de origen si aplica
+    if(_opDesdeDisenoId){
+      var disOrigen = (DB.disenos||[]).find(function(x){ return x.id===_opDesdeDisenoId; });
+      if(disOrigen){
+        disOrigen.eliminado = true;
+        disOrigen._op_origen = opId;
+        guardarArchivo('disenos', {disenos: DB.disenos, disenos_cfg: DB.disenos_cfg});
+        saveLocal();
+      }
+      _opDesdeDisenoId = null;
+    }
     _colores = [];
     cerrarFormNuevaOP();
     navTo('ops');
@@ -3114,6 +3148,7 @@ var DIS_KANBAN = [
   {k:'EN_CONFECCION_MUESTRA',label:'Confección Muestra', color:'#00d4ff', bg:'rgba(0,212,255,.08)'},
   {k:'EN_REVISION_GERENCIA', label:'Revisión Gerencia',  color:'#fbbf24', bg:'rgba(251,191,36,.08)'},
   {k:'EN_ESCALADO',          label:'Escalado Tallas',    color:'#34d399', bg:'rgba(52,211,153,.08)'},
+  {k:'LISTA_PRODUCCION',     label:'Lista para Producción', color:'#10b981', bg:'rgba(16,185,129,.08)'},
 ];
 
 var DIS_PROVEEDORES_DEFAULT = ['FENIO','TEJIDOS MARILUZ','JEANS TAI-PAN','JEANS FLOYD'];
@@ -3294,6 +3329,36 @@ function renderDiseno(){
     items.forEach(function(d){
       var rc = DIS_RESP_COLORS[d.responsable]||'#94a3b8';
       var curEstado = d.kanban_estado||'EN_DISENO_DIGITAL';
+
+      // ── Tarjeta simplificada para LISTA_PRODUCCION ───────────────────────────
+      if(col.k === 'LISTA_PRODUCCION'){
+        var thumb = (d.imagenes&&d.imagenes.length) ? d.imagenes[0].url : '';
+        h += '<div draggable="true" data-id="'+d.id+'" ondragstart="dragDisenoStart(event,this.dataset.id)" style="background:#0c1a13;border:1px solid rgba(16,185,129,.3);border-left:3px solid #10b981;border-radius:10px;overflow:hidden;margin-bottom:8px;">';
+        if(thumb){
+          h += '<div style="height:80px;overflow:hidden;background:#111827;">';
+          h += '<img src="'+thumb+'" style="width:100%;height:100%;object-fit:cover;" loading="lazy">';
+          h += '</div>';
+        }
+        h += '<div style="padding:9px 11px;">';
+        // Categoría
+        h += '<div style="font-size:9px;font-weight:700;color:#10b981;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;">'+esc(d.categoria||'')+'</div>';
+        // Nombre
+        h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:8px;">'+esc(d.nombre)+'</div>';
+        // Botón crear OP
+        h += '<button data-id="'+d.id+'" onclick="crearOpDesdeDiseno(this.dataset.id)" style="width:100%;background:linear-gradient(135deg,#059669,#10b981);border:none;border-radius:7px;color:#fff;font-size:12px;font-weight:700;padding:8px 0;cursor:pointer;letter-spacing:.5px;">✚ Crear Orden de Producción</button>';
+        // Botones secundarios
+        h += '<div style="display:flex;gap:4px;margin-top:6px;justify-content:space-between;align-items:center;">';
+        h += '<select data-id="'+d.id+'" onchange="cambiarEstadoDiseno(this.dataset.id,this.value)" onclick="event.stopPropagation()" style="flex:1;min-width:0;background:#0d1117;border:1px solid #1e2535;border-radius:6px;color:#475569;font-size:10px;padding:3px 6px;cursor:pointer;outline:none;">';
+        DIS_KANBAN.forEach(function(c){ h += '<option value="'+c.k+'"'+(curEstado===c.k?' selected':'')+' style="background:#1a1e2a;color:#e2e8f0;">'+c.label+'</option>'; });
+        h += '</select>';
+        var nCom2=(d.comentarios||[]).length;
+        h += '<button data-id="'+d.id+'" onclick="event.stopPropagation();abrirComentariosDiseno(this.dataset.id)" style="position:relative;display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.3);border-radius:5px;cursor:pointer;color:#818cf8;font-size:12px;padding:0;line-height:1;flex-shrink:0;" title="Comentarios">💬'+(nCom2?'<span style="position:absolute;top:-4px;right:-4px;background:#6366f1;color:#fff;border-radius:8px;font-size:8px;font-weight:700;min-width:13px;height:13px;display:flex;align-items:center;justify-content:center;padding:0 2px;">'+nCom2+'</span>':'')+'</button>';
+        h += '</div>';
+        h += '</div></div>';
+        return;
+      }
+
+      // ── Tarjeta normal ───────────────────────────────────────────────────────
       h += '<div draggable="true" data-id="'+d.id+'" ondragstart="dragDisenoStart(event,this.dataset.id)" style="background:#13161f;border:1px solid #1e2535;border-left:3px solid '+rc+';border-radius:10px;padding:11px 12px;margin-bottom:8px;">';
 
       // Fila 1: responsable (select inline) + prioridad + editar
@@ -3320,7 +3385,7 @@ function renderDiseno(){
       h += '<span style="background:'+_gc+'18;border:1px solid '+_gc+'44;border-radius:4px;padding:0px 6px;font-size:9px;color:'+_gc+';font-weight:600;letter-spacing:.3px;">'+esc(_gen)+'</span>';
       h += '</div>';
 
-      // Proveedor: badge si tiene uno asignado, o selector inline si está en CON_PROVEEDOR
+      // Proveedor
       if(curEstado === 'CON_PROVEEDOR'){
         var provs = getDisProveedores();
         h += '<div style="margin-bottom:6px;">';
@@ -3333,7 +3398,7 @@ function renderDiseno(){
         h += '<div style="margin-bottom:6px;"><span style="background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.35);border-radius:5px;padding:2px 7px;font-size:10px;color:#fb923c;font-weight:600;">🏭 '+esc(d.proveedor)+'</span></div>';
       }
 
-      // Fila 3: nombre del diseño
+      // Nombre del diseño
       h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:8px;">'+esc(d.nombre)+'</div>';
 
       // Nota
@@ -3341,13 +3406,12 @@ function renderDiseno(){
         h += '<div style="font-size:10px;color:#64748b;font-style:italic;margin-bottom:8px;border-top:1px solid #1e2535;padding-top:5px;">'+esc(d.nota||d.estado)+'</div>';
       }
 
-      // Dropdown de estado kanban + M² al lado
+      // Dropdown estado + M²
       h += '<div style="border-top:1px solid #1e2535;padding-top:8px;margin-top:2px;display:flex;gap:5px;align-items:center;">';
       h += '<select data-id="'+d.id+'" onchange="cambiarEstadoDiseno(this.dataset.id,this.value)" onclick="event.stopPropagation()" style="flex:1;min-width:0;background:#0d1117;border:1px solid #1e2535;border-radius:6px;color:#94a3b8;font-size:11px;padding:4px 7px;cursor:pointer;outline:none;">';
       DIS_KANBAN.forEach(function(c){
         h += '<option value="'+c.k+'"'+(curEstado===c.k?' selected':'')+' style="background:#1a1e2a;color:#e2e8f0;">'+c.label+'</option>';
       });
-      h += '<option value="LISTA_PRODUCCION"'+(curEstado==='LISTA_PRODUCCION'?' selected':'')+' style="background:#1a1e2a;color:#34d399;">✓ Lista para Producción</option>';
       h += '</select>';
       h += '<button data-id="'+d.id+'" onclick="crearMiniMe(this.dataset.id)" style="display:flex;align-items:center;justify-content:center;width:26px;height:26px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);border-radius:5px;cursor:pointer;color:#34d399;font-size:9px;font-weight:800;padding:0;line-height:1;flex-shrink:0;" title="Crear Mini Me (duplicar a otra marca)">M²</button>';
       h += '</div>';
@@ -3358,22 +3422,6 @@ function renderDiseno(){
     h += '</div></div>';
   });
   h += '</div>';
-
-  // Listos para producción
-  var listos = todosItems.filter(function(d){ return d.kanban_estado==='LISTA_PRODUCCION'; });
-  if(listos.length){
-    h += '<div class="card" style="margin-top:12px;padding:14px 16px;border-color:rgba(52,211,153,.3);">';
-    h += '<div style="font-family:var(--bebas);font-size:15px;color:#34d399;margin-bottom:10px;">✓ Listos para Producción ('+listos.length+')</div>';
-    h += '<div style="display:flex;flex-wrap:wrap;gap:8px;">';
-    listos.forEach(function(d){
-      h += '<div style="background:#0f1520;border:1px solid rgba(52,211,153,.2);border-radius:8px;padding:7px 12px;display:flex;align-items:center;gap:8px;">';
-      h += '<span style="font-size:12px;color:#e2e8f0;">'+esc(d.nombre)+'</span>';
-      h += '<span style="font-size:10px;color:#475569;">'+esc(d.marca)+'</span>';
-      h += '<button data-id="'+d.id+'" onclick="eliminarDiseno(this.dataset.id)" style="background:none;border:none;cursor:pointer;color:#334155;font-size:11px;">🗑</button>';
-      h += '</div>';
-    });
-    h += '</div></div>';
-  }
   return h;
 }
 
