@@ -2792,6 +2792,26 @@ var DIS_RESPONSABLES = ['Carolina','Isa','John','Juan'];
 var DIS_RESP_COLORS  = {Carolina:'#fbbf24',Isa:'#c084fc',John:'#34d399',Juan:'#38bdf8'};
 var DIS_MARCAS_DEFAULT = ['Bentley Kids','Prime','Maquilas'];
 var DIS_CATEGORIAS = ['Abrigos','Accesorios','Blusas','Buzos','Camisetas','Chalecos','Chaquetas','Conjuntos','Faldas','Overol','Pantalones','Tejido de Punto','Vestidos','Otro'];
+var _disPrioFiltro = 0; // 0=todas, 1,2,3
+var DIS_PRIO_CFG = {
+  1: {label:'P1', color:'#ef4444', bg:'rgba(239,68,68,.15)', border:'rgba(239,68,68,.5)'},
+  2: {label:'P2', color:'#fbbf24', bg:'rgba(251,191,36,.12)', border:'rgba(251,191,36,.45)'},
+  3: {label:'P3', color:'#64748b', bg:'rgba(100,116,139,.1)', border:'rgba(100,116,139,.3)'},
+};
+function disPrioNorm(p){ var n=parseInt(p)||3; return n>=3?3:n<=1?1:2; }
+function setPrioDis(id, prio){
+  var d=(DB.disenos||[]).find(function(x){return x.id===id;});
+  if(!d) return;
+  d.prioridad = prio;
+  guardarArchivo('disenos',{disenos:DB.disenos,disenos_cfg:DB.disenos_cfg}).then(function(){ saveLocal(); renderPage('diseno'); });
+}
+function cicloPrioDis(id){
+  var d=(DB.disenos||[]).find(function(x){return x.id===id;});
+  if(!d) return;
+  var cur = disPrioNorm(d.prioridad);
+  setPrioDis(id, cur>=3?1:cur+1);
+}
+function setDisPrioFiltro(p){ _disPrioFiltro=p; renderPage('diseno'); }
 var _disFiltroMarca = 'Bentley Kids';
 var DIS_KANBAN = [
   {k:'CON_PROVEEDOR',        label:'Con Proveedor',      color:'#fb923c', bg:'rgba(251,146,60,.08)'},
@@ -2938,17 +2958,32 @@ function renderDiseno(){
     h += '</div>';
   }
 
+  // ── Filtro prioridad ────────────────────────────────────────────────────────
+  h += '<div style="display:flex;align-items:center;gap:6px;margin-bottom:14px;flex-wrap:wrap;">';
+  h += '<span style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.5px;margin-right:2px;">Prioridad:</span>';
+  [{v:0,label:'Todas'},{v:1,label:'P1'},{v:2,label:'P2'},{v:3,label:'P3'}].forEach(function(p){
+    var active = _disPrioFiltro===p.v;
+    var pc = p.v ? DIS_PRIO_CFG[p.v] : null;
+    var bcolor = active ? (pc?pc.color:'#00d4ff') : '#1e2535';
+    var bgcolor = active ? (pc?pc.bg:'rgba(0,212,255,.1)') : 'transparent';
+    var tcolor = active ? (pc?pc.color:'#00d4ff') : '#64748b';
+    h += '<button onclick="setDisPrioFiltro('+p.v+')" style="padding:4px 12px;border-radius:16px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid '+bcolor+';background:'+bgcolor+';color:'+tcolor+';transition:all .15s;">'+p.label+'</button>';
+  });
+  h += '</div>';
+
   // ── Kanban board horizontal ──────────────────────────────────────────────────
   h += '<div style="display:flex;gap:10px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:16px;align-items:flex-start;min-height:0;width:100%;">';
 
   DIS_KANBAN.forEach(function(col){
-    var items = todosItems.filter(function(d){ return (d.kanban_estado||'EN_DISENO_DIGITAL')===col.k; })
-                          .sort(function(a,b){
-                            var pa=(a.prioridad||99), pb=(b.prioridad||99);
-                            if(pa!==pb) return pa-pb;
-                            // mismo priority: más reciente primero
-                            return (b._ts||b.fecha_creacion||'') > (a._ts||a.fecha_creacion||'') ? 1 : -1;
-                          });
+    var items = todosItems.filter(function(d){
+      if((d.kanban_estado||'EN_DISENO_DIGITAL')!==col.k) return false;
+      if(_disPrioFiltro) return disPrioNorm(d.prioridad)===_disPrioFiltro;
+      return true;
+    }).sort(function(a,b){
+      var pa=disPrioNorm(a.prioridad), pb=disPrioNorm(b.prioridad);
+      if(pa!==pb) return pa-pb;
+      return (b._ts||b.fecha_creacion||'') > (a._ts||a.fecha_creacion||'') ? 1 : -1;
+    });
     h += '<div style="flex:1 1 200px;min-width:200px;max-width:320px;display:flex;flex-direction:column;">';
     // Columna header
     h += '<div style="background:'+col.bg+';border:1px solid '+col.color+'44;border-bottom:none;border-radius:10px 10px 0 0;padding:10px 13px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">';
@@ -2969,10 +3004,11 @@ function renderDiseno(){
       h += '</select>';
       var nFotos = (d.imagenes||[]).length;
       h += '<div style="display:flex;gap:5px;align-items:center;">';
-      h += '<span style="font-size:9px;color:#64748b;background:rgba(255,255,255,.06);border:1px solid #1e2535;border-radius:4px;padding:1px 6px;">P'+d.prioridad+'</span>';
-      h += '<button data-id="'+d.id+'" onclick="abrirFotosDiseno(this.dataset.id)" style="position:relative;display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:5px;cursor:pointer;color:#fbbf24;font-size:12px;padding:0;line-height:1;" title="Fotos">📷'+(nFotos?'<span style="position:absolute;top:-4px;right:-4px;background:#fbbf24;color:#0d0f14;border-radius:8px;font-size:8px;font-weight:700;min-width:13px;height:13px;display:flex;align-items:center;justify-content:center;padding:0 2px;">'+nFotos+'</span>':'')+'</button>';
-      h += '<button data-id="'+d.id+'" onclick="abrirFormDiseno(this.dataset.id)" style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);border-radius:5px;cursor:pointer;color:#00d4ff;font-size:12px;padding:0;line-height:1;" title="Editar">✏</button>';
-      h += '<button data-id="'+d.id+'" onclick="crearMiniMe(this.dataset.id)" style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);border-radius:5px;cursor:pointer;color:#34d399;font-size:10px;font-weight:700;padding:0;line-height:1;" title="Crear Mini Me (duplicar a otra marca)">M²</button>';
+      var pn=disPrioNorm(d.prioridad); var pc=DIS_PRIO_CFG[pn];
+      h += '<button data-id="'+d.id+'" onclick="event.stopPropagation();cicloPrioDis(this.dataset.id)" title="Cambiar prioridad (clic para ciclar)" style="font-size:9px;font-weight:800;color:'+pc.color+';background:'+pc.bg+';border:1px solid '+pc.border+';border-radius:4px;padding:2px 6px;cursor:pointer;line-height:1;flex-shrink:0;">'+pc.label+'</button>';
+      h += '<button data-id="'+d.id+'" onclick="abrirFotosDiseno(this.dataset.id)" style="position:relative;display:flex;align-items:center;justify-content:center;width:20px;height:20px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:5px;cursor:pointer;color:#fbbf24;font-size:11px;padding:0;line-height:1;flex-shrink:0;" title="Fotos">📷'+(nFotos?'<span style="position:absolute;top:-4px;right:-4px;background:#fbbf24;color:#0d0f14;border-radius:8px;font-size:8px;font-weight:700;min-width:13px;height:13px;display:flex;align-items:center;justify-content:center;padding:0 2px;">'+nFotos+'</span>':'')+'</button>';
+      h += '<button data-id="'+d.id+'" onclick="abrirFormDiseno(this.dataset.id)" style="display:flex;align-items:center;justify-content:center;width:20px;height:20px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);border-radius:5px;cursor:pointer;color:#00d4ff;font-size:11px;padding:0;line-height:1;flex-shrink:0;" title="Editar">✏</button>';
+      h += '<button data-id="'+d.id+'" onclick="crearMiniMe(this.dataset.id)" style="display:flex;align-items:center;justify-content:center;width:20px;height:20px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);border-radius:5px;cursor:pointer;color:#34d399;font-size:9px;font-weight:800;padding:0;line-height:1;flex-shrink:0;" title="Crear Mini Me">M²</button>';
       h += '</div></div>';
 
       // Fila 2: categoría + género
@@ -3073,7 +3109,25 @@ function cambiarEstadoDiseno(id, nuevoEstado){
   var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
   if(!d || d.kanban_estado === nuevoEstado) return;
   if(nuevoEstado === 'LISTA_PRODUCCION' && !confirm('¿Mover "'+d.nombre+'" a Lista para Producción?')){ renderPage('diseno'); return; }
+  var oldEstado = d.kanban_estado;
   d.kanban_estado = nuevoEstado;
+  // Auto-promoción: al llegar a LISTA_PRODUCCION, promover P2→P1 y P3→P2 de la misma categoría
+  if(nuevoEstado === 'LISTA_PRODUCCION'){
+    var cat = d.categoria;
+    var activos = (DB.disenos||[]).filter(function(x){ return x.id!==d.id && x.marca===d.marca && x.categoria===cat && x.kanban_estado!=='LISTA_PRODUCCION'; });
+    var p2s = activos.filter(function(x){ return disPrioNorm(x.prioridad)===2; });
+    var p3s = activos.filter(function(x){ return disPrioNorm(x.prioridad)===3; });
+    if(disPrioNorm(d.prioridad)===1 && p2s.length){
+      // promover el primer P2 a P1
+      p2s.sort(function(a,b){ return (b._ts||b.fecha_creacion||'')>(a._ts||a.fecha_creacion||'')?1:-1; });
+      p2s[0].prioridad = 1;
+      toast('Auto-promoción: '+esc(p2s[0].nombre)+' → P1','success');
+      if(p3s.length){
+        p3s.sort(function(a,b){ return (b._ts||b.fecha_creacion||'')>(a._ts||a.fecha_creacion||'')?1:-1; });
+        p3s[0].prioridad = 2;
+      }
+    }
+  }
   if(nuevoEstado === 'LISTA_PRODUCCION'){
     enviarNotifOS(
       '✅ Diseño listo para producción',
@@ -3172,7 +3226,7 @@ function abrirFormDiseno(id){
 
   var body = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">';
   body += '<div class="form-group"><label class="form-label">Prioridad</label><select id="dis-prio" class="form-control">';
-  [1,2,3,4,5,6].forEach(function(n){ body += '<option value="'+n+'"'+(d&&d.prioridad==n?' selected':'')+'>'+n+'</option>'; });
+  [1,2,3].forEach(function(n){ body += '<option value="'+n+'"'+(d&&disPrioNorm(d.prioridad)==n?' selected':'')+'>'+n+'</option>'; });
   body += '</select></div>';
   body += '<div class="form-group"><label class="form-label">Responsable</label><select id="dis-resp" class="form-control">';
   DIS_RESPONSABLES.forEach(function(r){ body += '<option value="'+r+'"'+(d&&d.responsable===r?' selected':'')+'>'+r.toUpperCase()+'</option>'; });
@@ -3745,6 +3799,16 @@ function abrirModalCategoria(cat){
       if(d.imagenes&&d.imagenes.length>0){
         b += '<div style="margin-top:6px;font-size:9px;color:#475569;">📷 '+d.imagenes.length+' foto'+(d.imagenes.length>1?'s':'')+'</div>';
       }
+      // Prioridad clicable en modal
+      var mpn=disPrioNorm(d.prioridad); var mpc=DIS_PRIO_CFG[mpn];
+      b += '<div style="margin-top:7px;border-top:1px solid #1e2535;padding-top:6px;display:flex;align-items:center;gap:5px;">';
+      b += '<span style="font-size:9px;color:#475569;">Prioridad:</span>';
+      [1,2,3].forEach(function(pv){
+        var c2=DIS_PRIO_CFG[pv];
+        var isSel=mpn===pv;
+        b += '<button data-id="'+d.id+'" data-pv="'+pv+'" onclick="event.stopPropagation();setPrioDis(this.dataset.id,parseInt(this.dataset.pv));abrirModalCategoria(document.getElementById(\'modal-cat-titulo\').textContent.split(\'·\')[0].trim()===\'TODOS EN PROCESO\'?\'__TODOS__\':document.getElementById(\'modal-cat-titulo\').textContent.split(\'·\')[0].trim().toLowerCase())" style="font-size:9px;font-weight:800;color:'+c2.color+';background:'+(isSel?c2.bg:'transparent')+';border:1px solid '+(isSel?c2.border:'#1e2535')+';border-radius:4px;padding:2px 6px;cursor:pointer;">'+c2.label+'</button>';
+      });
+      b += '</div>';
       b += '</div></div>';
     });
     b += '</div>'; // cierra último grupo
