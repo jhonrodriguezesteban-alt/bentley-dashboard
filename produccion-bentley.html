@@ -2073,7 +2073,7 @@ async function crearSatelite(){
 // ─── Producción Kanban ─────────────────────────────────────────────────────────
 var OP_KANBAN = [
   {k:'PENDIENTE_CORTAR',  label:'Pte. de Cortar',  color:'#fbbf24', bg:'rgba(251,191,36,.08)'},
-  {k:'CORTE_POR_ALISTAR', label:'Corte p/ Alistar', color:'#f97316', bg:'rgba(249,115,22,.08)'},
+  {k:'CORTE_POR_ALISTAR', label:'Corte por Alistar (asig.)', color:'#f97316', bg:'rgba(249,115,22,.08)'},
   {k:'EN_CONFECCION',     label:'En Confección',    color:'#00d4ff', bg:'rgba(0,212,255,.08)'},
   {k:'NOVEDAD',           label:'Novedad',          color:'#ef4444', bg:'rgba(239,68,68,.08)'},
   {k:'ALISTAMIENTO',      label:'Alistamiento',     color:'#a855f7', bg:'rgba(168,85,247,.08)'},
@@ -2131,7 +2131,7 @@ function renderOPs(){
   }
   var fDis = document.getElementById('fab-nuevo-diseno'); if(fDis) fDis.remove();
 
-  var ops = DB.ops.filter(function(op){ return op.estado_op !== 'ARCHIVADO'; });
+  var ops = DB.ops.filter(function(op){ return op.estado_op !== 'ARCHIVADO' && op.estado_op !== 'PAGO_PENDIENTE'; });
   var opsArchivadas = DB.ops.filter(function(op){ return op.estado_op === 'ARCHIVADO'; });
 
   // Construir sub-grupos: una entrada por (op, color)
@@ -2189,24 +2189,43 @@ function renderOPs(){
     subgs.forEach(function(s){ estadoCounts[s.estado]=(estadoCounts[s.estado]||0)+1; });
 
     h += '<div style="display:flex;gap:10px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px;margin-bottom:18px;">';
-    h += '<div style="background:linear-gradient(135deg,#0d1117 0%,#111827 100%);border:1px solid #3b82f644;border-radius:10px;padding:11px 14px;min-width:160px;flex:0 0 auto;">';
-    h += '<div style="font-size:10px;font-weight:700;color:#3b82f6;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;">PRODUCCIÓN ACTIVA</div>';
-    h += '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:26px;color:#e2e8f0;line-height:1;margin-bottom:6px;">'+totalOps+'</div>';
-    h += '<div style="font-size:11px;color:#64748b;margin-bottom:6px;">'+totalUds.toLocaleString('es-CO')+' uds · '+pctGlobal+'% entregado</div>';
-    h += '<div style="height:3px;background:#1e2535;border-radius:2px;overflow:hidden;"><div style="width:'+pctGlobal+'%;height:100%;background:#3b82f6;border-radius:2px;"></div></div>';
+
+    // Tarjeta "Producción Activa" — clickable
+    h += '<div onclick="mostrarDetalleProduccionActiva()" style="background:linear-gradient(135deg,#0a1628 0%,#0d1829 100%);border:1px solid #3b82f666;border-radius:12px;padding:14px 16px;min-width:175px;flex:0 0 auto;cursor:pointer;" onmouseover="this.style.borderColor=\'#3b82f6\'" onmouseout="this.style.borderColor=\'#3b82f666\'">';
+    h += '<div style="font-size:9px;font-weight:700;color:#3b82f6;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;">Producción Activa</div>';
+    h += '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:52px;color:#e2e8f0;line-height:1;margin-bottom:2px;">'+totalOps+'</div>';
+    h += '<div style="font-size:10px;color:#64748b;margin-bottom:8px;">'+totalUds.toLocaleString('es-CO')+' uds · '+pctGlobal+'% entregado</div>';
+    h += '<div style="height:3px;background:#1e2535;border-radius:2px;overflow:hidden;margin-bottom:8px;"><div style="width:'+pctGlobal+'%;height:100%;background:#3b82f6;border-radius:2px;"></div></div>';
     OP_KANBAN.forEach(function(col){
       var cnt = estadoCounts[col.k]||0;
       if(!cnt) return;
-      h += '<div style="display:flex;align-items:center;gap:5px;margin-top:4px;"><span style="width:6px;height:6px;border-radius:50%;background:'+col.color+';flex-shrink:0;"></span><span style="font-size:10px;color:'+col.color+';">'+cnt+' '+col.label+'</span></div>';
+      h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:3px;">';
+      h += '<span style="display:flex;align-items:center;gap:5px;"><span style="width:6px;height:6px;border-radius:50%;background:'+col.color+';flex-shrink:0;"></span><span style="font-size:10px;color:#94a3b8;">'+col.label+'</span></span>';
+      h += '<span style="font-size:11px;font-weight:700;color:'+col.color+';">'+cnt+'</span>';
+      h += '</div>';
     });
+    h += '<div style="margin-top:8px;font-size:9px;color:#3b82f644;text-align:right;">clic para detalle →</div>';
     h += '</div>';
+
+    // Tarjetas por categoría
     cats.forEach(function(cat){
       var info = catMap[cat];
       var isActive = _opCatFiltro === cat;
-      h += '<div onclick="setOpCatFiltro(\''+cat.replace(/\'/g,"\\'")+'\')" style="background:'+(isActive?'rgba(0,212,255,.12)':'#0d1117')+';border:1px solid '+(isActive?'#00d4ff44':'#1e2535')+';border-radius:10px;padding:11px 14px;min-width:130px;flex:0 0 auto;cursor:pointer;transition:border-color .2s;" onmouseover="this.style.borderColor=\'#00d4ff44\'" onmouseout="this.style.borderColor=\''+(isActive?'#00d4ff44':'#1e2535')+'\'">';
-      h += '<div style="font-size:10px;font-weight:700;color:'+(isActive?'#00d4ff':'#64748b')+';text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;">'+esc(cat)+'</div>';
-      h += '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:24px;color:#e2e8f0;line-height:1;">'+info.total+'</div>';
-      h += '<div style="font-size:10px;color:#475569;margin-top:2px;">'+info.uds.toLocaleString('es-CO')+' uds activas</div>';
+      // contar sub-grupos por estado para esta categoría
+      var catEstados = {};
+      subgs.forEach(function(s){ if((s.op.categoria||'Sin Cat.')===cat && s.pct<100) catEstados[s.estado]=(catEstados[s.estado]||0)+1; });
+      h += '<div onclick="setOpCatFiltro(\''+cat.replace(/\'/g,"\\'")+'\')" style="background:'+(isActive?'rgba(0,212,255,.1)':'#0d1117')+';border:1px solid '+(isActive?'#00d4ff66':'#1e2535')+';border-radius:12px;padding:14px 16px;min-width:145px;flex:0 0 auto;cursor:pointer;transition:all .2s;" onmouseover="this.style.borderColor=\'#00d4ff44\'" onmouseout="this.style.borderColor=\''+(isActive?'#00d4ff66':'#1e2535')+'\'">';
+      h += '<div style="font-size:9px;font-weight:700;color:'+(isActive?'#00d4ff':'#475569')+';text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;">'+esc(cat)+'</div>';
+      h += '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:52px;color:'+(isActive?'#00d4ff':'#e2e8f0')+';line-height:1;margin-bottom:2px;">'+info.total+'</div>';
+      h += '<div style="font-size:10px;color:#475569;margin-bottom:8px;">'+info.uds.toLocaleString('es-CO')+' uds</div>';
+      OP_KANBAN.forEach(function(col){
+        var cnt = catEstados[col.k]||0;
+        if(!cnt) return;
+        h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:2px;">';
+        h += '<span style="font-size:9px;color:#475569;">'+col.label.split(' ')[0]+'</span>';
+        h += '<span style="font-size:10px;font-weight:700;color:'+col.color+';">'+cnt+'</span>';
+        h += '</div>';
+      });
       h += '</div>';
     });
     h += '</div>';
@@ -2441,6 +2460,9 @@ function renderOPs(){
       h += '<div style="height:3px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;margin-bottom:8px;"><div style="height:100%;width:'+s.pct+'%;background:'+(s.pct>=100?'#34d399':'#00d4ff')+';border-radius:4px;transition:width .4s;"></div></div>';
 
       h += '<div style="border-top:1px solid #1e2535;padding-top:8px;">';
+      if(col.k === 'ALISTAMIENTO'){
+        h += '<button data-opid="'+op.id+'" data-color="'+esc(s.color)+'" onclick="pasarOPAPago(this.dataset.opid,this.dataset.color)" style="width:100%;background:rgba(168,85,247,.2);border:1px solid rgba(168,85,247,.5);color:#a855f7;border-radius:6px;padding:6px;cursor:pointer;font-size:11px;font-weight:700;margin-bottom:6px;">💳 Pasar a Pago</button>';
+      }
       h += '<select data-opid="'+op.id+'" data-color="'+esc(s.color)+'" onchange="cambiarEstadoSubg(this.dataset.opid,this.dataset.color,this.value)" onclick="event.stopPropagation()" style="width:100%;background:#0d1117;border:1px solid #1e2535;border-radius:6px;color:#94a3b8;font-size:11px;padding:4px 7px;cursor:pointer;outline:none;">';
       OP_KANBAN.forEach(function(c){
         h += '<option value="'+c.k+'"'+(s.estado===c.k?' selected':'')+' style="background:#1a1e2a;color:#e2e8f0;">'+c.label+'</option>';
@@ -5634,6 +5656,122 @@ function renderSimulador(){
 
 function setSimFiltroMarca(m){ _simFiltroMarca=m; renderPage('simulador'); }
 function setOpCatFiltro(cat){ _opCatFiltro = cat; renderPage('ops'); }
+
+function mostrarDetalleProduccionActiva(){
+  var ops = DB.ops.filter(function(op){ return op.estado_op !== 'ARCHIVADO' && op.estado_op !== 'PAGO_PENDIENTE'; });
+  var otsXop = {};
+  DB.ots.forEach(function(ot){ if(!otsXop[ot.op_id]) otsXop[ot.op_id]=[]; otsXop[ot.op_id].push(ot); });
+
+  // Sub-grupos por estado
+  var byEstado = {};
+  OP_KANBAN.forEach(function(col){ byEstado[col.k] = []; });
+
+  // Por categoría
+  var byCat = {};
+
+  ops.forEach(function(op){
+    var otsOp = otsXop[op.id]||[];
+    var colores = {};
+    otsOp.forEach(function(ot){ if(ot.color) colores[ot.color]=1; });
+    Object.keys(colores).forEach(function(color){
+      var otsColor = otsOp.filter(function(o){ return o.color===color; });
+      var estado = otsColor.every(function(o){ return o.estado==='ENTREGADO'; }) ? 'ARCHIVADO'
+        : otsColor.some(function(o){ return o.estado==='ALISTAMIENTO'; }) ? 'ALISTAMIENTO'
+        : otsColor.some(function(o){ return o.estado==='NOVEDAD'; }) ? 'NOVEDAD'
+        : otsColor.some(function(o){ return o.estado==='EN_CONFECCION'||o.estado==='ASIGNADO'; }) ? 'EN_CONFECCION'
+        : otsColor.some(function(o){ return o.estado==='CORTE_POR_ALISTAR'; }) ? 'CORTE_POR_ALISTAR'
+        : 'PENDIENTE_CORTAR';
+      if(estado === 'ARCHIVADO') return;
+      var uds = otsColor.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
+      var udsEnt = otsColor.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+(o.unidades_entregadas||0); }, 0);
+      if(byEstado[estado]) byEstado[estado].push({op:op, color:color, uds:uds, udsEnt:udsEnt});
+      var cat = op.categoria || 'Sin Cat.';
+      if(!byCat[cat]) byCat[cat] = {};
+      if(!byCat[cat][estado]) byCat[cat][estado] = 0;
+      byCat[cat][estado]++;
+    });
+  });
+
+  var h = '<div style="display:flex;gap:20px;flex-wrap:wrap;">';
+
+  // Por estado
+  h += '<div style="flex:1;min-width:220px;">';
+  h += '<div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px;">Por estado</div>';
+  OP_KANBAN.forEach(function(col){
+    var items = byEstado[col.k]||[];
+    if(!items.length) return;
+    var totalUds = items.reduce(function(a,i){ return a+i.uds; }, 0);
+    h += '<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:'+col.bg+';border:1px solid '+col.color+'33;border-radius:8px;margin-bottom:6px;">';
+    h += '<span style="width:8px;height:8px;border-radius:50%;background:'+col.color+';flex-shrink:0;"></span>';
+    h += '<span style="font-size:12px;color:#94a3b8;flex:1;">'+col.label+'</span>';
+    h += '<span style="font-size:22px;font-family:\'Bebas Neue\',sans-serif;color:'+col.color+';">'+items.length+'</span>';
+    h += '<span style="font-size:10px;color:#475569;">'+totalUds.toLocaleString('es-CO')+' uds</span>';
+    h += '</div>';
+  });
+  h += '</div>';
+
+  // Por categoría
+  h += '<div style="flex:1;min-width:220px;">';
+  h += '<div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px;">Por categoría</div>';
+  var cats = Object.keys(byCat).sort(function(a,b){
+    var ta = Object.values(byCat[a]).reduce(function(x,v){ return x+v; },0);
+    var tb = Object.values(byCat[b]).reduce(function(x,v){ return x+v; },0);
+    return tb-ta;
+  });
+  cats.forEach(function(cat){
+    var total = Object.values(byCat[cat]).reduce(function(a,v){ return a+v; }, 0);
+    h += '<div style="padding:8px 12px;background:rgba(255,255,255,.02);border:1px solid #1e2535;border-radius:8px;margin-bottom:6px;">';
+    h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">';
+    h += '<span style="font-size:12px;font-weight:700;color:#e2e8f0;">'+esc(cat)+'</span>';
+    h += '<span style="font-size:20px;font-family:\'Bebas Neue\',sans-serif;color:#e2e8f0;">'+total+'</span>';
+    h += '</div>';
+    h += '<div style="display:flex;gap:6px;flex-wrap:wrap;">';
+    OP_KANBAN.forEach(function(col){
+      var cnt = byCat[cat][col.k]||0;
+      if(!cnt) return;
+      h += '<span style="font-size:9px;font-weight:700;color:'+col.color+';background:'+col.color+'18;border:1px solid '+col.color+'33;border-radius:4px;padding:1px 6px;">'+col.label.split(' ')[0]+' '+cnt+'</span>';
+    });
+    h += '</div></div>';
+  });
+  h += '</div>';
+  h += '</div>';
+
+  openDrawer('Producción Activa · Detalle', h, '');
+}
+
+async function pasarOPAPago(opId, color){
+  var op = DB.ops.find(function(o){ return o.id===opId; });
+  if(!op) return;
+  if(!confirm('¿Pasar '+fmtOpId(opId)+(color?' · '+color:'')+' a Pago? Aparecerá en el módulo de Costos MO para gestión.')) return;
+  // Marcar sub-grupo como PAGO_PENDIENTE a nivel OT
+  var otsOp = DB.ots.filter(function(o){ return o.op_id===opId && (!color || o.color===color); });
+  otsOp.forEach(function(ot){
+    if(ot.estado === 'ALISTAMIENTO'){
+      ot.estado = 'PAGO_PENDIENTE';
+      if(!ot.historial) ot.historial=[];
+      ot.historial.push({fecha: new Date().toISOString(), accion: 'Pasado a Pago desde Alistamiento', user: getUser()});
+      // Crear registro de pago si hay valor MO
+      var sat = DB.satelites.find(function(s){ return s.id===ot.satelite_id; });
+      var precios = (DB.costos_mo&&DB.costos_mo.precios)||[];
+      var refNorm = (ot.nombre||ot.referencia||'').trim().toUpperCase();
+      var precioReg = precios.find(function(p){ return (p.nombre||'').trim().toUpperCase()===refNorm; });
+      var pxu = precioReg ? (precioReg.precio||0) : (ot.valor_mo||0);
+      if(pxu > 0 && (ot.unidades_entregadas||0) > 0){
+        if(!DB.costos_mo) DB.costos_mo = {precios:[], pagos:[]};
+        if(!DB.costos_mo.pagos) DB.costos_mo.pagos = [];
+        // Solo agregar si no existe ya un pago para esta OT
+        var yaExiste = DB.costos_mo.pagos.some(function(p){ return p.ot_id===ot.id; });
+        if(!yaExiste){
+          DB.costos_mo.pagos.push({id:uid(), ot_id:ot.id, satelite_id:ot.satelite_id, satelite_nombre:sat?sat.nombre:(ot.satelite_id||''), referencia:ot.nombre||ot.referencia||'', uds:ot.unidades_entregadas, precio_mo:pxu, total:(ot.unidades_entregadas)*pxu, estado:'PENDIENTE_PAGO', fecha:ot.fecha_entrega_real||new Date().toISOString().slice(0,10)});
+        }
+      }
+    }
+  });
+  guardarCostosMO();
+  saveLocal(); updateNovBadge();
+  var ok = await guardarArchivo('ots', {ots: DB.ots});
+  if(ok){ toast(fmtOpId(opId)+' pasado a Pago · Ver en Costos MO', 'success'); renderPage('ops'); }
+}
 
 function activarModoEntrega(opId){ _opModoEntrega = opId; renderPage('ops'); }
 function cancelarModoEntrega(){ _opModoEntrega = null; renderPage('ops'); }
