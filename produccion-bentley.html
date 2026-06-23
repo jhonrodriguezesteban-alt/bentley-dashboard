@@ -2266,18 +2266,39 @@ function renderOPs(){
         }
 
         if(col.k === 'CORTE_POR_ALISTAR'){
+          var ctx = _satAsigCtx[op.id] || {};
+          var opColores = op.colores && op.colores.length ? op.colores : ['—'];
           h += '<div style="margin-bottom:8px;background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.25);border-radius:8px;padding:7px 9px;">';
-          h += '<div style="font-size:9px;font-weight:700;color:#f97316;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">Asignar cortador por color → pasa a Confección</div>';
-          grp.forEach(function(s){
-            h += '<div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;">';
-            h += '<span style="font-size:9px;font-weight:700;color:#94a3b8;text-transform:uppercase;min-width:50px;flex-shrink:0;">'+esc(s.color)+'</span>';
-            h += '<select data-opid="'+op.id+'" data-color="'+esc(s.color)+'" onchange="asignarTallerSubg(this.dataset.opid,this.dataset.color,this.value)" onclick="event.stopPropagation()" style="flex:1;min-width:0;background:#0d1117;border:1px solid #f97316aa;border-radius:6px;color:#e2e8f0;font-size:10px;padding:4px 6px;cursor:pointer;outline:none;">';
-            h += '<option value="" style="background:#1a1e2a;color:#64748b;">— Cortador —</option>';
-            CORTADORES.forEach(function(c){
-              h += '<option value="'+esc(c)+'" style="background:#1a1e2a;color:#e2e8f0;">'+esc(c)+'</option>';
-            });
-            h += '</select></div>';
+          h += '<div style="font-size:9px;font-weight:700;color:#f97316;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">Asignar Satélite → pasa a Confección</div>';
+          // Paso 1: seleccionar satélite
+          h += '<select data-opid="'+op.id+'" onchange="_satAsigCtx[this.dataset.opid]=Object.assign({},_satAsigCtx[this.dataset.opid]||{},{sat:this.value,scope:\'all\',colores:[]});renderPage(\'ops\')" onclick="event.stopPropagation()" style="width:100%;background:#0d1117;border:1px solid #f97316aa;border-radius:6px;color:#e2e8f0;font-size:11px;padding:5px 7px;cursor:pointer;outline:none;margin-bottom:6px;">';
+          h += '<option value="" style="background:#1a1e2a;color:#64748b;">— Seleccionar Satélite —</option>';
+          (DB.satelites||[]).forEach(function(sat){
+            h += '<option value="'+sat.id+'"'+(ctx.sat===sat.id?' selected':'')+' style="background:#1a1e2a;color:#e2e8f0;">'+esc(sat.nombre)+'</option>';
           });
+          CORTADORES.forEach(function(c){
+            h += '<option value="__cut__'+esc(c)+'"'+(ctx.sat==='__cut__'+c?' selected':'')+' style="background:#1a1e2a;color:#94a3b8;">'+esc(c)+'</option>';
+          });
+          h += '</select>';
+          // Paso 2: alcance (solo si hay satélite y más de 1 color)
+          if(ctx.sat && opColores.length > 1){
+            h += '<div style="display:flex;gap:10px;margin-bottom:6px;">';
+            h += '<label style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:11px;color:#e2e8f0;"><input type="radio" name="sscope-'+op.id+'" value="all" '+((ctx.scope||'all')==='all'?'checked':'')+' onchange="_satAsigCtx[\''+op.id+'\'].scope=\'all\'" style="accent-color:#f97316;"> Toda la OP</label>';
+            h += '<label style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:11px;color:#e2e8f0;"><input type="radio" name="sscope-'+op.id+'" value="specific" '+(ctx.scope==='specific'?'checked':'')+' onchange="_satAsigCtx[\''+op.id+'\'].scope=\'specific\';renderPage(\'ops\')" style="accent-color:#f97316;"> Colores específicos</label>';
+            h += '</div>';
+            if(ctx.scope === 'specific'){
+              h += '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px;">';
+              opColores.forEach(function(color){
+                var chk = (ctx.colores||[]).indexOf(color)>=0;
+                h += '<label style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:10px;background:rgba(255,255,255,.05);border:1px solid #1e2535;border-radius:5px;padding:2px 8px;color:#e2e8f0;">';
+                h += '<input type="checkbox" value="'+esc(color)+'" '+(chk?'checked':'')+' onchange="var _c=(_satAsigCtx[\''+op.id+'\']=_satAsigCtx[\''+op.id+'\'||{}]);if(!_c.colores)_c.colores=[];if(this.checked&&_c.colores.indexOf(this.value)<0)_c.colores.push(this.value);else _c.colores=_c.colores.filter(function(x){return x!==this.value;}.bind(this));" style="accent-color:#f97316;">'+esc(color)+'</label>';
+              });
+              h += '</div>';
+            }
+          }
+          if(ctx.sat){
+            h += '<button data-opid="'+op.id+'" onclick="event.stopPropagation();_confirmarAsigSat(this.dataset.opid)" style="width:100%;background:#f97316;border:none;border-radius:6px;color:#fff;font-size:11px;font-weight:700;padding:6px 0;cursor:pointer;margin-top:2px;">Confirmar asignación</button>';
+          }
           h += '</div>';
         }
 
@@ -2357,29 +2378,41 @@ function renderOPs(){
   h += '</div>';
 
   // ── OPs archivadas (colapsadas) ─────────────────────────────────────────────
-  var subgsArch = [];
+  // Consolidar por OP (no por color)
+  var opsArchMap = {};
+  var opsArchOrder = [];
   opsArchivadas.forEach(function(op){
-    var otsOp = otsXop[op.id] || [];
-    var colores = op.colores && op.colores.length ? op.colores : ['—'];
-    colores.forEach(function(color){
-      subgsArch.push({op:op, color:color});
-    });
+    if(!opsArchMap[op.id]){ opsArchMap[op.id]=op; opsArchOrder.push(op.id); }
   });
-  // También los sub-grupos marcados como ARCHIVADO dentro de OPs activas
-  subgs.filter(function(s){ return s.estado==='ARCHIVADO'; }).forEach(function(s){ subgsArch.push(s); });
+  subgs.filter(function(s){ return s.estado==='ARCHIVADO'; }).forEach(function(s){
+    if(!opsArchMap[s.op.id]){ opsArchMap[s.op.id]=s.op; opsArchOrder.push(s.op.id); }
+  });
+  var nArch = opsArchOrder.length;
 
-  if(subgsArch.length){
-    h += '<div class="card" style="margin-top:12px;padding:14px 16px;border-color:rgba(52,211,153,.3);">';
-    h += '<div style="font-family:var(--bebas);font-size:15px;color:#34d399;margin-bottom:10px;">✓ Archivadas ('+subgsArch.length+')</div>';
-    h += '<div style="display:flex;flex-wrap:wrap;gap:8px;">';
-    subgsArch.forEach(function(s){
-      h += '<div style="background:#0f1520;border:1px solid rgba(52,211,153,.2);border-radius:8px;padding:7px 12px;display:flex;align-items:center;gap:8px;">';
-      h += '<span style="font-size:11px;font-weight:700;color:#00d4ff;">'+esc(s.op.id)+'</span>';
-      h += '<span style="font-size:12px;color:#e2e8f0;">'+esc(s.op.nombre_producto)+'</span>';
-      h += '<span style="font-size:10px;color:#475569;">'+esc(s.color)+'</span>';
-      h += '</div>';
-    });
-    h += '</div></div>';
+  if(nArch){
+    h += '<div style="margin-top:12px;background:#0d1117;border:1px solid rgba(52,211,153,.25);border-radius:10px;">';
+    h += '<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;user-select:none;" onclick="toggleArchivadas()">';
+    h += '<span style="font-size:13px;font-weight:700;color:#34d399;">✓ Archivadas</span>';
+    h += '<span style="background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);border-radius:10px;font-size:11px;font-weight:700;color:#34d399;padding:1px 9px;">'+nArch+' OPs</span>';
+    h += '<div style="flex:1;"></div>';
+    h += '<span style="color:#34d399;font-size:13px;">'+(_archOpen?'▲':'▼')+'</span>';
+    h += '</div>';
+    if(_archOpen){
+      h += '<div style="padding:0 12px 12px;">';
+      h += '<input id="arch-search" type="text" placeholder="Buscar OP-01 o nombre..." oninput="filtrarArchivadas(this.value)" style="width:100%;background:#1a1e2a;border:1px solid #1e2535;border-radius:8px;color:#e2e8f0;font-size:12px;padding:6px 12px;outline:none;box-sizing:border-box;margin-bottom:8px;">';
+      h += '<div id="arch-list" style="display:flex;flex-direction:column;gap:3px;">';
+      opsArchOrder.forEach(function(opId){
+        var op = opsArchMap[opId];
+        var baseId = fmtOpId(op.id);
+        h += '<div data-search="'+esc(baseId+' '+op.nombre_producto).toUpperCase()+'" class="arch-row" style="display:flex;align-items:center;gap:10px;padding:6px 10px;background:#13161f;border-radius:7px;">';
+        h += '<span style="font-size:11px;font-weight:700;color:#00d4ff;flex-shrink:0;min-width:40px;">'+esc(baseId)+'</span>';
+        h += '<span style="font-size:12px;color:#e2e8f0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(op.nombre_producto||'')+'</span>';
+        h += '<span style="font-size:10px;color:#475569;flex-shrink:0;">'+esc(op.categoria||'')+'</span>';
+        h += '</div>';
+      });
+      h += '</div></div>';
+    }
+    h += '</div>';
   }
 
   return h;
@@ -2397,6 +2430,15 @@ function cambiarEstadoOPAll(opId, estado){
   colores.forEach(function(color){ _setSubgEstado(opId, color, estado); });
   renderPage('ops');
   toast('Estado actualizado', 'success');
+}
+
+var _archOpen = false;
+function toggleArchivadas(){ _archOpen = !_archOpen; renderPage('ops'); }
+function filtrarArchivadas(q){
+  q = (q||'').trim().toUpperCase();
+  document.querySelectorAll('.arch-row').forEach(function(row){
+    row.style.display = (!q || (row.dataset.search||'').indexOf(q)>=0) ? '' : 'none';
+  });
 }
 
 var CORTADORES = ['Corte Carbajal', 'Corte con proveedor'];
@@ -2424,6 +2466,46 @@ async function asignarTallerSubg(opId, color, valor){
   var ok2 = await guardarArchivo('ops', {ops: DB.ops});
   renderPage('ops');
   toast('Asignado a '+nombre+' · '+otsColor.length+' OTs → En Confección', 'success');
+}
+
+var _satAsigCtx = {};
+
+async function _confirmarAsigSat(opId){
+  var ctx = _satAsigCtx[opId];
+  if(!ctx || !ctx.sat) return;
+  var op = DB.ops.find(function(o){ return o.id===opId; });
+  if(!op) return;
+
+  var opColores = op.colores && op.colores.length ? op.colores : ['—'];
+  var targetColores = (ctx.scope==='specific' && ctx.colores && ctx.colores.length) ? ctx.colores : opColores;
+
+  var isCortador = ctx.sat.indexOf('__cut__') === 0;
+  var realVal = isCortador ? ctx.sat.replace('__cut__','') : ctx.sat;
+
+  // Batch-assign all target colors
+  var otsXop = {};
+  DB.ots.forEach(function(ot){ if(ot.op_id){ (otsXop[ot.op_id]=otsXop[ot.op_id]||[]).push(ot); } });
+
+  targetColores.forEach(function(color){
+    var otsColor = DB.ots.filter(function(o){
+      return o.op_id===opId && (color==='—' || (o.color||'').toUpperCase()===(color||'').toUpperCase());
+    });
+    otsColor.forEach(function(ot){
+      if(isCortador){ ot.cortador = realVal; delete ot.satelite_id; }
+      else { ot.satelite_id = realVal; delete ot.cortador; }
+      ot.estado = 'EN_CONFECCION';
+      ot.historial = ot.historial||[];
+      ot.historial.push({fecha: new Date().toISOString().slice(0,10), accion: 'Asignado a '+(isCortador?realVal:getSatNombre(realVal)), user: getUser()});
+    });
+    _setSubgEstado(opId, color, 'EN_CONFECCION');
+  });
+
+  delete _satAsigCtx[opId];
+  saveLocal();
+  var ok1 = await guardarArchivo('ops', {ops: DB.ops});
+  var ok2 = await guardarArchivo('ots', {ots: DB.ots});
+  if(ok1 && ok2) toast('Asignación confirmada', 'success');
+  renderPage('ops');
 }
 
 var _opDesdeDisenoId = null;
