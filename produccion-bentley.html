@@ -2061,7 +2061,8 @@ function _buildFormNuevaOP(){
 
   // Campo nombre con autocompletado SKU
   h += '<div class="form-group" style="position:relative;">';
-  h += '<label class="form-label">Nombre del producto * <span style="color:var(--dim);font-size:11px;">(busca en catálogo de ' + CATALOGO.length + ' referencias)</span></label>';
+  var nPrecios = ((DB.costos_mo&&DB.costos_mo.precios)||[]).length;
+  h += '<label class="form-label">Referencia a producir * <span style="color:var(--dim);font-size:11px;">(' + nPrecios + ' referencias en catálogo de precios)</span></label>';
   h += '<input class="form-control" id="op-nombre" placeholder="Toca para ver catálogo…" autocomplete="off" oninput="buscarEnCatalogo(this.value)" onfocus="buscarEnCatalogo(this.value||\'\')" onblur="setTimeout(ocultarSugerencias,200)">';
   h += '<div id="sku-sugerencias" style="display:none;position:absolute;left:0;right:0;top:100%;z-index:200;background:#161b27;border:1px solid #334155;border-radius:8px;max-height:240px;overflow-y:auto;box-shadow:0 12px 32px rgba(0,0,0,.7);margin-top:4px;"></div>';
   h += '</div>';
@@ -2094,46 +2095,52 @@ function _buildFormNuevaOP(){
   return h;
 }
 
-// ─── Catálogo SKU autocompletado ────────────────────────────────────────────
+// ─── Catálogo de precios autocompletado (fuente: DB.costos_mo.precios) ─────────
 var _catItemSeleccionado = null;
 
 function buscarEnCatalogo(val){
   actualizarPreview();
-  var q = val.trim().toUpperCase();
+  var q = (val||'').trim().toUpperCase();
   var box = document.getElementById('sku-sugerencias');
   if(!box) return;
+  var precios = (DB.costos_mo && DB.costos_mo.precios) || [];
   var matches = q.length < 2
-    ? CATALOGO.slice(0, 20)
-    : CATALOGO.filter(function(r){ return r.ref.toUpperCase().indexOf(q) > -1; }).slice(0, 20);
+    ? precios.slice(0, 24)
+    : precios.filter(function(r){ return (r.nombre||'').toUpperCase().indexOf(q) > -1; }).slice(0, 24);
   if(!matches.length){ box.style.display='none'; return; }
   box.innerHTML = matches.map(function(r){
-    var colores = r.colores.map(function(c){ return c.n; }).join(', ');
-    var tallas = r.colores.length ? r.colores[0].tallas.map(function(t){ return t.t; }).join(' ') : '';
+    // Cross-reference CATALOGO for colores/tallas
+    var skuItem = CATALOGO.find(function(c){ return c.ref.toUpperCase()===(r.nombre||'').toUpperCase(); }) || null;
+    var coloresStr = skuItem ? skuItem.colores.map(function(c){ return c.n; }).join(', ') : '';
+    var tallasStr  = skuItem && skuItem.colores.length ? skuItem.colores[0].tallas.map(function(t){ return t.t; }).join(' ') : '';
+    var precioFmt  = r.precio ? '$' + r.precio.toLocaleString('es-CO') : 'Sin precio';
     return '<div style="padding:10px 14px;cursor:pointer;border-bottom:1px solid #1e2535;background:#161b27;transition:background .15s;" ' +
-      'data-ref="' + r.ref + '" data-cod="' + r.cod + '" data-cat="' + r.cat + '" ' +
+      'data-nombre="' + esc(r.nombre) + '" data-precio="' + (r.precio||0) + '" data-cod="' + esc(r.codigo||'') + '" ' +
       'onmousedown="seleccionarDelCatalogo(this)" onmouseenter="this.style.background=\'#1e2a3a\'" onmouseleave="this.style.background=\'#161b27\'">' +
-      '<div style="font-size:13px;font-weight:600;color:#e2e8f0;">' + r.ref + '</div>' +
-      '<div style="font-size:11px;color:#64748b;margin-top:2px;">Cód: ' + r.cod + ' · ' + colores + '</div>' +
-      '<div style="font-size:10px;color:#475569;margin-top:1px;">' + tallas + '</div>' +
+      '<div style="display:flex;justify-content:space-between;align-items:baseline;">' +
+      '<div style="font-size:13px;font-weight:600;color:#e2e8f0;">' + esc(r.nombre) + '</div>' +
+      '<div style="font-size:12px;font-weight:700;color:#34d399;flex-shrink:0;margin-left:12px;">' + precioFmt + '</div>' +
+      '</div>' +
+      (coloresStr ? '<div style="font-size:11px;color:#64748b;margin-top:2px;">' + coloresStr + '</div>' : '') +
+      (tallasStr  ? '<div style="font-size:10px;color:#475569;margin-top:1px;">' + tallasStr + '</div>' : '') +
       '</div>';
   }).join('');
   box.style.display = 'block';
 }
 
 function seleccionarDelCatalogo(el){
-  var ref = el.dataset.ref;
-  var cod = el.dataset.cod;
-  var cat = el.dataset.cat;
+  var nombre  = el.dataset.nombre;
+  var precio  = parseFloat(el.dataset.precio)||0;
+  var cod     = el.dataset.cod;
   var inpNombre = document.getElementById('op-nombre');
-  var inpRef = document.getElementById('op-ref');
-  var selCat = document.getElementById('op-cat');
-  if(inpNombre) inpNombre.value = ref;
-  if(inpRef) inpRef.value = cod;
+  var inpRef    = document.getElementById('op-ref');
+  var inpVmo    = document.getElementById('op-vmo');
+  if(inpNombre) inpNombre.value = nombre;
+  if(inpRef && cod) inpRef.value = cod;
+  if(inpVmo && precio) inpVmo.value = precio;
 
-  // Buscar el item completo en el catálogo
-  _catItemSeleccionado = CATALOGO.find(function(r){ return r.ref === ref; }) || null;
-
-  // Auto-cargar colores del catálogo
+  // Cross-reference CATALOGO for colores/tallas
+  _catItemSeleccionado = CATALOGO.find(function(r){ return r.ref.toUpperCase()===(nombre||'').toUpperCase(); }) || null;
   if(_catItemSeleccionado){
     _colores = _catItemSeleccionado.colores.map(function(c){ return c.n; });
     renderColoresTags();
@@ -4172,10 +4179,13 @@ function renderCostosMO(){
   var pendientes = pagos.filter(function(p){ return p.estado==='PENDIENTE_PAGO'; });
   var totalPend  = pendientes.reduce(function(a,p){ return a+p.total; }, 0);
 
+  var sinPrecio = _getPendientesSinPrecio();
+
   var h = '';
   // Tabs
-  h += '<div style="display:flex;gap:0;border-bottom:1px solid #1e2535;margin-bottom:20px;">';
+  h += '<div style="display:flex;gap:0;border-bottom:1px solid #1e2535;margin-bottom:20px;flex-wrap:wrap;">';
   h += '<button onclick="_moTab=\'pendientes\';renderPage(\'costos_mo\')" style="padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;background:none;border:none;border-bottom:2px solid '+(_moTab==='pendientes'?'#f97316':'transparent')+';color:'+(_moTab==='pendientes'?'#f97316':'#475569')+';">💸 Pendientes de pago <span style="background:#f97316;color:#fff;border-radius:10px;font-size:10px;padding:1px 6px;margin-left:4px;">'+pendientes.length+'</span></button>';
+  h += '<button onclick="_moTab=\'sinprecio\';renderPage(\'costos_mo\')" style="padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;background:none;border:none;border-bottom:2px solid '+(_moTab==='sinprecio'?'#a855f7':'transparent')+';color:'+(_moTab==='sinprecio'?'#a855f7':'#475569')+';">⏳ Sin precio asignado'+(sinPrecio.length?'<span style="background:#a855f7;color:#fff;border-radius:10px;font-size:10px;padding:1px 6px;margin-left:4px;">'+sinPrecio.length+'</span>':'')+'</button>';
   h += '<button onclick="_moTab=\'catalogo\';renderPage(\'costos_mo\')" style="padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;background:none;border:none;border-bottom:2px solid '+(_moTab==='catalogo'?'#00d4ff':'transparent')+';color:'+(_moTab==='catalogo'?'#00d4ff':'#475569')+';">📋 Catálogo de Precios</button>';
   h += '</div>';
 
@@ -4231,6 +4241,28 @@ function renderCostosMO(){
       });
       h += '</div></div>';
     });
+  } else if(_moTab==='sinprecio'){
+    // ── Productos pendientes por asignar precio ───────────────────────────────
+    h += '<div style="margin-bottom:16px;">';
+    h += '<div style="font-size:13px;color:#94a3b8;margin-bottom:4px;">Diseños que llegaron a <strong style="color:#34d399;">Lista para Producción</strong> pero aún no tienen precio de M.O. en el catálogo.</div>';
+    h += '<div style="font-size:11px;color:#475569;">Asígnales un precio y quedarán disponibles al crear órdenes de producción.</div>';
+    h += '</div>';
+    if(!sinPrecio.length){
+      h += '<div class="empty-state"><div class="icon">✅</div><p>Todos los diseños listos tienen precio asignado.</p></div>';
+    } else {
+      h += '<div class="card"><table style="width:100%;border-collapse:collapse;">';
+      h += '<thead><tr style="border-bottom:1px solid #1e2535;"><th style="padding:10px 14px;text-align:left;font-size:11px;color:#64748b;">Diseño / Referencia</th><th style="padding:10px 14px;text-align:left;font-size:11px;color:#64748b;">Marca</th><th style="padding:10px 14px;text-align:left;font-size:11px;color:#64748b;">Categoría</th><th style="padding:10px 14px;text-align:center;font-size:11px;color:#64748b;">Acción</th></tr></thead><tbody>';
+      sinPrecio.forEach(function(d){
+        h += '<tr style="border-bottom:1px solid rgba(30,37,53,.5);">';
+        h += '<td style="padding:10px 14px;"><div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+esc(d.nombre)+'</div></td>';
+        h += '<td style="padding:10px 14px;font-size:12px;color:#94a3b8;">'+esc(d.marca||'—')+'</td>';
+        h += '<td style="padding:10px 14px;font-size:12px;color:#94a3b8;">'+esc(d.categoria||'—')+'</td>';
+        h += '<td style="padding:10px 14px;text-align:center;">';
+        h += '<button data-nombre="'+esc(d.nombre)+'" onclick="asignarPrecioDesde(this.dataset.nombre)" class="btn btn-sm" style="background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.35);color:#a855f7;font-weight:600;">💲 Asignar precio</button>';
+        h += '</td></tr>';
+      });
+      h += '</tbody></table></div>';
+    }
   } else {
     // Catálogo de precios
     h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">';
@@ -4318,15 +4350,29 @@ function pagarTodos(){
   toast('Todos los pagos registrados','success');
 }
 
-function abrirFormPrecio(id){
+function _getPendientesSinPrecio(){
+  var disenos = (DB.disenos||[]).filter(function(d){ return d.kanban_estado==='LISTA_PRODUCCION'; });
+  var precios  = (DB.costos_mo&&DB.costos_mo.precios)||[];
+  return disenos.filter(function(d){
+    var nom = (d.nombre||'').trim().toUpperCase();
+    return !precios.some(function(p){ return (p.nombre||'').trim().toUpperCase()===nom; });
+  });
+}
+
+function asignarPrecioDesde(nombre){
+  abrirFormPrecio(null, nombre);
+}
+
+function abrirFormPrecio(id, preNombre){
   var p = id ? ((DB.costos_mo&&DB.costos_mo.precios)||[]).find(function(x){ return x.id===id; }) : null;
-  var body = '<div class="form-group"><label class="form-label">Referencia / Nombre</label><input id="mo-nombre" class="form-control" value="'+esc(p?p.nombre:'')+'" placeholder="Ej: CHAQUETA CAPOTA..."></div>';
-  body += '<div class="form-group"><label class="form-label">Precio MO (COP)</label><input id="mo-precio" type="number" class="form-control" value="'+(p?p.precio||0:0)+'" placeholder="0"></div>';
+  var valNombre = p ? p.nombre : (preNombre||'');
+  var body = '<div class="form-group"><label class="form-label">Referencia / Nombre</label><input id="mo-nombre" class="form-control" value="'+esc(valNombre)+'" placeholder="Ej: CHAQUETA CAPOTA..." '+(preNombre&&!p?'readonly style="background:rgba(255,255,255,.04);color:var(--text);"':'')+' ></div>';
+  body += '<div class="form-group"><label class="form-label">Precio M.O. por unidad (COP)</label><input id="mo-precio" type="number" class="form-control" value="'+(p?p.precio||0:0)+'" placeholder="0" autofocus></div>';
   if(p) body += '<input type="hidden" id="mo-edit-id" value="'+p.id+'">';
   var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>';
   if(p) footer += '<button class="btn btn-danger" data-id="'+p.id+'" onclick="eliminarPrecio(this.dataset.id)" style="margin-right:auto;">Eliminar</button>';
   footer += '<button class="btn btn-primary" onclick="guardarFormPrecio()">Guardar</button>';
-  openModal(p?'Editar precio':'Nuevo precio', body, footer);
+  openModal(p?'Editar precio':'Asignar precio', body, footer);
 }
 function guardarFormPrecio(){
   var nom = (document.getElementById('mo-nombre').value||'').trim();
@@ -4341,6 +4387,7 @@ function guardarFormPrecio(){
   } else {
     DB.costos_mo.precios.push({id:uid(), nombre:nom, precio:precio});
   }
+  _moTab = 'catalogo';
   closeModal(); guardarCostosMO(); renderPage('costos_mo');
 }
 function eliminarPrecio(id){
