@@ -681,7 +681,7 @@ var GT = (function(){
 
 // ─── Constants ─────────────────────────────────────────────────────────────────
 var REPO = 'jhonrodriguezesteban-alt/bentley-dashboard';
-var FILES = { satelites: 'prod_satelites.json', ops: 'prod_ops.json', ots: 'prod_ots.json', disenos: 'prod_disenos.json', prog_ops: 'prod_prog_ops.json', costos_mo: 'prod_costos_mo.json' };
+var FILES = { satelites: 'prod_satelites.json', ops: 'prod_ops.json', ots: 'prod_ots.json', disenos: 'prod_disenos.json', prog_ops: 'prod_prog_ops.json', costos_mo: 'prod_costos_mo.json', usuarios: 'prod_usuarios.json' };
 var BASE_URL = 'https://jhonrodriguezesteban-alt.github.io/bentley-dashboard/';
 var RAW_URL = 'https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/';
 
@@ -730,6 +730,18 @@ function _getCfgUsers(){
   try{ return JSON.parse(localStorage.getItem('bentley_users_cfg')||'{}'); }catch(e){ return {}; }
 }
 function _saveCfgUsers(obj){ localStorage.setItem('bentley_users_cfg', JSON.stringify(obj)); }
+function _mergeRemoteUsers(remoteUsers){
+  // Mezcla los usuarios del servidor con los locales. El servidor es la fuente de verdad.
+  var local = _getCfgUsers();
+  // Incorporar todos los del servidor
+  Object.keys(remoteUsers).forEach(function(k){ local[k] = remoteUsers[k]; });
+  _saveCfgUsers(local);
+}
+async function _guardarUsuariosGH(){
+  var cfg = _getCfgUsers();
+  var ok = await guardarArchivo('usuarios', {usuarios: cfg});
+  return ok;
+}
 
 // Devuelve hash XOR del usuario (hardcoded primero, luego overrides)
 function _getHash(u){ var cfg=_getCfgUsers(); return (cfg[u]&&cfg[u].hash)||_U[u]||null; }
@@ -935,7 +947,11 @@ function guardarFormUsuario(uid, isNew){
   _saveCfgUsers(cfg);
   document.getElementById('admin-user-modal').remove();
   renderAdminUsers();
-  toast('Usuario guardado','success');
+  toast('Usuario guardado — sincronizando...','success');
+  _guardarUsuariosGH().then(function(ok){
+    if(ok) toast('Usuario disponible en todos los dispositivos','success');
+    else toast('Guardado local OK, pero falló sync GitHub','warning');
+  });
 }
 
 function eliminarUsuario(uid){
@@ -944,7 +960,10 @@ function eliminarUsuario(uid){
   delete cfg[uid];
   _saveCfgUsers(cfg);
   renderAdminUsers();
-  toast('Usuario eliminado','success');
+  toast('Usuario eliminado — sincronizando...','success');
+  _guardarUsuariosGH().then(function(ok){
+    if(!ok) toast('Eliminado local OK, pero falló sync GitHub','warning');
+  });
 }
 function closeSettings(){ document.getElementById('settings-overlay').style.display = 'none'; }
 function saveSettings(){
@@ -1301,6 +1320,8 @@ async function cargarDatos(){
     if(progR.ok){ var d6 = await progR.json(); DB.prog_ops = d6.ops_plan || []; }
     var moR = await fetch(BASE_URL + 'prod_costos_mo.json?t=' + t);
     if(moR.ok){ var d7 = await moR.json(); DB.costos_mo = {precios: d7.precios||[], pagos: d7.pagos||[]}; }
+    var usrR = await fetch(BASE_URL + 'prod_usuarios.json?t=' + t);
+    if(usrR.ok){ var d8 = await usrR.json(); _mergeRemoteUsers(d8.usuarios||{}); }
     if(DB.satelites.length === 0) seedSatelites();
     saveLocal();
     var msg = 'Datos cargados: ' + DB.ops.length + ' OPs, ' + DB.ots.length + ' OTs, ' + CATALOGO.length + ' refs SKU';
@@ -4882,11 +4903,17 @@ if(_sc==='1'){ var _sb=document.getElementById('sidebar'); var _mn=document.getE
 var _initPage = localStorage.getItem('bentley_last_page') || 'dashboard';
 currentPage = _initPage;
 renderPage(_initPage);
-// Auth check — shows login overlay if not authenticated
-if(checkAuth()){
-  // Already logged in — async refresh from GitHub
-  cargarDatos().then(function(){ iniciarAutoSync(); });
-}
+// Pre-carga usuarios desde GitHub antes de mostrar el login,
+// así los usuarios creados en otro dispositivo ya están disponibles.
+(async function(){
+  try {
+    var r = await fetch(BASE_URL + 'prod_usuarios.json?t=' + Date.now());
+    if(r.ok){ var d = await r.json(); _mergeRemoteUsers(d.usuarios||{}); }
+  } catch(e){}
+  if(checkAuth()){
+    cargarDatos().then(function(){ iniciarAutoSync(); });
+  }
+})();
 // If not authenticated, cargarDatos() is called inside doLogin() after successful login
 </script>
 </body>
