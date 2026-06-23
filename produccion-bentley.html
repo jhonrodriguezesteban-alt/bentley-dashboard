@@ -3299,7 +3299,7 @@ function renderDiseno(){
     h += '<button onclick="setDisPrioFiltro('+p.v+')" style="padding:4px 12px;border-radius:16px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid '+bcolor+';background:'+bgcolor+';color:'+tcolor+';transition:all .15s;">'+p.label+'</button>';
   });
   h += '<div style="flex:1;min-width:160px;max-width:280px;position:relative;margin-left:8px;">';
-  h += '<input id="dis-search-input" type="text" value="'+esc(_disBusqueda)+'" oninput="_disBusqueda=this.value;renderPage(\'diseno\')" placeholder="🔍 Buscar diseño..." style="width:100%;background:#0d1117;border:1px solid #1e2535;border-radius:20px;color:#e2e8f0;font-size:12px;padding:5px 14px 5px 14px;outline:none;box-sizing:border-box;">';
+  h += '<input id="dis-search-input" type="text" value="'+esc(_disBusqueda)+'" oninput="var _q=this.value,_p=this.selectionStart;_disBusqueda=_q;renderPage(\'diseno\');var _el=document.getElementById(\'dis-search-input\');if(_el){_el.focus();try{_el.setSelectionRange(_p,_p);}catch(e){}}" placeholder="🔍 Buscar diseño..." style="width:100%;background:#0d1117;border:1px solid #1e2535;border-radius:20px;color:#e2e8f0;font-size:12px;padding:5px 14px 5px 14px;outline:none;box-sizing:border-box;">';
   if(_disBusqueda) h += '<button onclick="_disBusqueda=\'\';renderPage(\'diseno\')" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:#64748b;cursor:pointer;font-size:14px;padding:0;line-height:1;">×</button>';
   h += '</div>';
   h += '</div>';
@@ -3818,7 +3818,15 @@ async function guardarDisenoForm(){
       }
     }
   }
-  closeModal(); guardarDisenos(); renderPage('diseno');
+  closeModal();
+  guardarDisenos();
+  if(_modalCatReturn){
+    var catRet = _modalCatReturn;
+    _modalCatReturn = null;
+    setTimeout(function(){ abrirModalCategoria(catRet); }, 80);
+  } else {
+    renderPage('diseno');
+  }
 }
 function eliminarDiseno(id){
   var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
@@ -3834,6 +3842,7 @@ async function guardarDisenos(){
 
 // ─── Fotos de diseño ──────────────────────────────────────────────────────────
 var _fotosCtx = null; // {disenoId}
+var _modalCatReturn = null;
 
 function abrirFotosDiseno(id){
   _fotosCtx = id;
@@ -4151,11 +4160,11 @@ function abrirModalCategoria(cat){
     if(!esTodos) return (d.categoria||'Sin categoría') === cat;
     return d.kanban_estado !== 'LISTA_PRODUCCION';
   }).sort(function(a,b){
-    // Primero por prioridad (P1 arriba), luego categoría → género → nombre
-    var pa = disPrioNorm(a.prioridad), pb = disPrioNorm(b.prioridad);
-    if(pa!==pb) return pa-pb;
+    // Agrupar por categoría, dentro de cada grupo ordenar P1→P2→P3
     var ca = (a.categoria||'').toUpperCase(), cb = (b.categoria||'').toUpperCase();
     if(esTodos && ca!==cb) return ca.localeCompare(cb);
+    var pa = disPrioNorm(a.prioridad), pb = disPrioNorm(b.prioridad);
+    if(pa!==pb) return pa-pb;
     var ga = GEN_ORDER[a.genero||'Unisex']||0, gb = GEN_ORDER[b.genero||'Unisex']||0;
     if(ga!==gb) return ga-gb;
     return (a.nombre||'').toUpperCase().localeCompare((b.nombre||'').toUpperCase());
@@ -4266,6 +4275,9 @@ function abrirModalCategoria(cat){
 }
 
 function abrirDesdeModal(id){
+  var tituloEl = document.getElementById('modal-cat-titulo');
+  var titulo = tituloEl ? tituloEl.textContent : '';
+  _modalCatReturn = titulo.split('·')[0].trim() === 'TODOS EN PROCESO' ? '__TODOS__' : titulo.split('·')[0].trim().toLowerCase();
   cerrarModalCategoria();
   setTimeout(function(){ abrirFormDiseno(id); }, 120);
 }
@@ -5188,6 +5200,11 @@ function renderSimulador(){
       var opId = key.slice(3);
       var op = (DB.ops||[]).find(function(o){ return o.id===opId; });
       if(op) activeItems.push({key:key, nombre:op.nombre_producto||'Sin nombre', categoria:op.categoria||'', genero:'', kanban_estado:'OP_ACTIVA', tipo:'op', marca:'', op:op});
+    } else if(key.indexOf('cat:')=== 0){
+      var catNombre = decodeURIComponent(key.slice(4));
+      var precios = ((DB.costos_mo && DB.costos_mo.precios) || []);
+      var pEntry = precios.find(function(p){ return (p.nombre||'')=== catNombre; });
+      activeItems.push({key:key, nombre:catNombre, categoria:(pEntry&&pEntry.categoria)||'', genero:'', kanban_estado:'CATALOGO', tipo:'catalogo', marca:''});
     } else {
       var d = (DB.disenos||[]).find(function(x){ return x.id===key; });
       if(d) activeItems.push({key:key, nombre:d.nombre, categoria:d.categoria||'', genero:d.genero||'', kanban_estado:d.kanban_estado, tipo:'diseno', marca:d.marca, dis:d});
@@ -5241,8 +5258,9 @@ function renderSimulador(){
     sim.colores.forEach(function(c){ Object.values(c.tallas||{}).forEach(function(q){ disUds+=(parseInt(q)||0); }); });
 
     var esOp = it.tipo === 'op';
-    var accentColor = esOp ? '#f97316' : (_ETAPA_COLOR_SIM[it.kanban_estado]||'#94a3b8');
-    var etShort = esOp ? (fmtOpId(it.op.id)+' · Prod. Activa') : (_ETAPA_SHORT_SIM[it.kanban_estado]||it.kanban_estado);
+    var esCat = it.tipo === 'catalogo';
+    var accentColor = esCat ? '#a855f7' : (esOp ? '#f97316' : (_ETAPA_COLOR_SIM[it.kanban_estado]||'#94a3b8'));
+    var etShort = esCat ? ('Catálogo' + (it.categoria ? ' · '+it.categoria : '')) : (esOp ? (fmtOpId(it.op.id)+' · Prod. Activa') : (_ETAPA_SHORT_SIM[it.kanban_estado]||it.kanban_estado));
     var _gc = {Unisex:'#94a3b8',Mixto:'#94a3b8',Niña:'#f472b6',Niño:'#38bdf8',Mujer:'#f472b6',Hombre:'#38bdf8'}[it.genero||'Unisex']||'#94a3b8';
 
     h += '<div style="background:#13161f;border:1px solid #1e2535;border-left:3px solid '+accentColor+';border-radius:12px;padding:14px 16px;">';
@@ -5334,6 +5352,24 @@ function simFiltrarDis(inp){
       html += '<div style="min-width:0;flex:1;"><div style="font-size:13px;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(op.nombre_producto||'Sin nombre')+'</div>';
       html += '<div style="font-size:10px;color:#f97316;margin-top:1px;">'+esc(fmtOpId(op.id))+' · '+(op.categoria||'')+'</div>';
       html += '</div><span style="font-size:10px;font-weight:600;white-space:nowrap;color:'+(yaEsta?'#334155':'#f97316')+';flex-shrink:0;">'+(yaEsta?'✓':'+ agregar')+'</span></div>';
+    });
+  }
+
+  // ── Sección 3: Catálogo de productos (costos_mo.precios) ─────────────────
+  var precios = ((DB.costos_mo && DB.costos_mo.precios) || []);
+  var matchesCat = q ? precios.filter(function(p){ return (p.nombre||'').toUpperCase().indexOf(q)>=0 || (p.categoria||'').toUpperCase().indexOf(q)>=0; }) : precios;
+  if(matchesCat.length){
+    hasResults = true;
+    html += '<div style="padding:5px 14px 3px;font-size:10px;font-weight:700;color:#a855f7;text-transform:uppercase;letter-spacing:1px;background:#0d1117;position:sticky;top:0;">Catálogo de productos</div>';
+    var catPC = null;
+    matchesCat.forEach(function(p){
+      var simKey = 'cat:'+encodeURIComponent(p.nombre||'');
+      var yaEsta = _simActive.indexOf(simKey)>=0;
+      if(!q && (p.categoria||'')!==catPC){ catPC=p.categoria||''; html += '<div style="padding:3px 14px 2px;font-size:9px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:1px;">'+esc(catPC||'SIN CATEGORÍA')+'</div>'; }
+      html += '<div onmousedown="event.preventDefault();simAgregarDiseno(\''+simKey.replace(/\'/g,'\\\'')+'\')" style="padding:8px 14px;cursor:'+(yaEsta?'default':'pointer')+';border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;justify-content:space-between;gap:8px;'+(yaEsta?'opacity:.4;':'')+'background:transparent;" onmouseover="this.style.background=\'rgba(168,85,247,.06)\'" onmouseout="this.style.background=\'transparent\'">';
+      html += '<div style="min-width:0;flex:1;"><div style="font-size:13px;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(p.nombre||'')+'</div>';
+      if(p.categoria) html += '<div style="font-size:10px;color:#a855f7;margin-top:1px;">'+esc(p.categoria)+'</div>';
+      html += '</div><span style="font-size:10px;font-weight:600;white-space:nowrap;color:'+(yaEsta?'#334155':'#a855f7')+';flex-shrink:0;">'+(yaEsta?'✓':'+ agregar')+'</span></div>';
     });
   }
 
