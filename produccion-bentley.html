@@ -2813,26 +2813,20 @@ function renderOPDetalle(opId){
   h += '</div></div></div>';
 
   // ── DERECHA: Detalle OTs con estado, satélite, acciones ─────────────────
-  var modoEnt = _opModoEntrega === op.id;
-  h += '<div style="flex:1 1 340px;min-width:0;">';
-  h += '<div class="card" style="padding:0;overflow:hidden;">';
-  h += '<div style="padding:8px 14px;background:rgba(255,255,255,.03);border-bottom:1px solid var(--card-border);display:flex;align-items:center;gap:8px;">';
-  h += '<span style="font-size:11px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.8px;flex:1;">Estado · Satélite · Acciones</span>';
+  h += '<div style="flex:1 1 340px;min-width:0;display:flex;flex-direction:column;">';
+  h += '<div class="card" style="padding:0;overflow:hidden;display:flex;flex-direction:column;flex:1;">';
+
+  // Cabecera con fecha global
+  h += '<div style="padding:8px 14px;background:rgba(255,255,255,.03);border-bottom:1px solid var(--card-border);">';
+  h += '<div style="font-size:11px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.8px;margin-bottom:'+(edit?'0':'7px')+';">Estado · Satélite · Acciones</div>';
   if(!edit){
-    if(modoEnt){
-      h += '<button onclick="cancelarModoEntrega()" style="font-size:10px;padding:4px 10px;background:rgba(255,255,255,.06);border:1px solid var(--card-border);color:var(--dim);border-radius:6px;cursor:pointer;">✕ Cancelar</button>';
-    } else {
-      h += '<button data-opid="'+op.id+'" onclick="activarModoEntrega(this.dataset.opid)" style="font-size:10px;padding:4px 10px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);color:#34d399;border-radius:6px;cursor:pointer;font-weight:600;">📦 Registrar entregas</button>';
-    }
-  }
-  h += '</div>';
-  if(modoEnt){
-    h += '<div style="padding:10px 14px;background:rgba(52,211,153,.06);border-bottom:1px solid rgba(52,211,153,.2);display:flex;align-items:center;gap:10px;flex-wrap:wrap;">';
-    h += '<span style="font-size:11px;color:#34d399;font-weight:700;">Fecha de recepción:</span>';
-    h += '<input type="date" id="ent-masiva-fecha" value="'+hoy()+'" style="background:rgba(255,255,255,.08);border:1px solid rgba(52,211,153,.4);border-radius:6px;color:var(--text);padding:4px 8px;font-size:12px;">';
-    h += '<span style="font-size:10px;color:var(--dim);">Aplica a todas las filas</span>';
+    h += '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">';
+    h += '<span style="font-size:10px;color:#64748b;">Fecha recepción:</span>';
+    h += '<input type="date" id="ent-masiva-fecha" value="'+hoy()+'" style="flex:1;background:#0d1117;border:1px solid #2d3348;border-radius:6px;color:var(--text);padding:3px 8px;font-size:12px;">';
+    h += '<button data-opid="'+op.id+'" onclick="guardarEntregasMasivas(this.dataset.opid)" style="background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.4);color:#34d399;border-radius:6px;padding:4px 12px;cursor:pointer;font-size:11px;font-weight:700;white-space:nowrap;">💾 Guardar todas</button>';
     h += '</div>';
   }
+  h += '</div>';
 
   var coloresOrdenados = Object.keys(gridMap).sort();
   coloresOrdenados.forEach(function(color){
@@ -2842,7 +2836,7 @@ function renderOPDetalle(opId){
     var pctC = udsC ? Math.round(udsEC/udsC*100) : 0;
 
     h += '<div style="border-bottom:1px solid var(--card-border);">';
-    h += '<div style="padding:8px 14px;background:rgba(255,255,255,.02);display:flex;align-items:center;gap:8px;">';
+    h += '<div style="padding:6px 14px;background:rgba(255,255,255,.02);display:flex;align-items:center;gap:8px;">';
     h += '<span style="font-size:12px;font-weight:700;color:#e2e8f0;flex:1;">'+esc(color)+'</span>';
     h += '<span style="font-size:10px;color:var(--green);">'+pctC+'% entregado</span>';
     h += '</div>';
@@ -2855,34 +2849,34 @@ function renderOPDetalle(opId){
         h += '<input type="number" min="0" data-otid="'+ot.id+'" data-field="cantidad" value="'+(ot.cantidad||0)+'" style="width:52px;text-align:center;background:rgba(255,200,0,.1);border:1px solid rgba(255,200,0,.4);border-radius:6px;color:var(--text);padding:3px 5px;font-size:12px;">';
         h += '<select data-otid="'+ot.id+'" data-field="satelite_id" style="flex:1;background:rgba(255,200,0,.1);border:1px solid rgba(255,200,0,.4);border-radius:6px;color:var(--text);padding:3px 6px;font-size:11px;"><option value="">Sin asignar</option>'+satOpts.replace('value="'+ot.satelite_id+'"','value="'+ot.satelite_id+'" selected')+'</select>';
         h += '</div>';
-      } else if(modoEnt && ot.estado !== 'ENTREGADO'){
-        var yaEnt = ot.unidades_entregadas || 0;
-        var entColor = ot.estado==='NOVEDAD' ? 'rgba(239,68,68,.12)' : 'rgba(255,255,255,.02)';
-        h += '<div style="padding:7px 14px;border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:8px;background:'+entColor+';">';
-        h += '<span style="font-size:12px;font-weight:700;color:var(--cyan);min-width:32px;">'+esc(ot.talla||'—')+'</span>';
-        h += '<span style="font-size:10px;color:var(--dim);min-width:28px;">/ '+ot.cantidad+'</span>';
+      } else if(ot.estado === 'ENTREGADO'){
+        // Fila entregada — solo info, sin input
+        h += '<div style="padding:6px 14px;border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:8px;opacity:.6;">';
+        h += '<span style="font-size:11px;font-weight:600;color:#34d399;min-width:32px;">'+esc(ot.talla||'—')+'</span>';
         h += badge(ot.estado);
         h += '<span style="font-size:10px;color:var(--dim);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(getSatNombre(ot.satelite_id))+'</span>';
-        h += '<input type="number" min="0" max="'+ot.cantidad+'" placeholder="0" data-otid="'+ot.id+'" data-max="'+ot.cantidad+'" class="ent-masiva-uds" value="'+(yaEnt>0?yaEnt:'')+'" style="width:58px;text-align:center;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.4);border-radius:6px;color:var(--text);padding:4px 6px;font-size:13px;font-weight:700;" oninput="this.style.borderColor=this.value>0?\'#34d399\':\'rgba(52,211,153,.4)\'">';
-        h += '<span style="font-size:10px;color:var(--dim);">uds</span>';
+        h += '<span style="font-size:11px;color:#34d399;font-weight:700;">'+(ot.unidades_entregadas||0)+' uds</span>';
         h += '</div>';
       } else {
+        // Fila activa — input siempre visible
         var esPendCorte = ot.estado==='PENDIENTE_CORTAR'||ot.estado==='CORTE_POR_ALISTAR';
         var esConfeccion = ot.estado==='EN_CONFECCION'||ot.estado==='ASIGNADO'||ot.estado==='NOVEDAD';
-        h += '<div style="padding:7px 14px;border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:8px;flex-wrap:wrap;">';
-        h += '<span style="font-size:11px;font-weight:600;color:var(--cyan);min-width:32px;">'+esc(ot.talla||'—')+'</span>';
+        var yaEnt = ot.unidades_entregadas || 0;
+        var rowBg = ot.estado==='NOVEDAD' ? 'rgba(239,68,68,.06)' : 'transparent';
+        h += '<div style="padding:6px 14px;border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:6px;background:'+rowBg+';">';
+        h += '<span style="font-size:12px;font-weight:700;color:var(--cyan);min-width:30px;">'+esc(ot.talla||'—')+'</span>';
         h += badge(ot.estado);
+        // Satélite
         if(esPendCorte){
-          h += '<select data-otid="'+ot.id+'" onchange="cambiarSateliteOT(this.dataset.otid,this.value)" style="flex:1;min-width:0;background:#0d1117;border:1px solid #2d3348;border-radius:6px;color:var(--text);padding:3px 6px;font-size:11px;cursor:pointer;"><option value="">Sin asignar</option>'+satOpts.replace('value="'+ot.satelite_id+'"','value="'+ot.satelite_id+'" selected')+'</select>';
+          h += '<select data-otid="'+ot.id+'" onchange="cambiarSateliteOT(this.dataset.otid,this.value)" style="flex:1;min-width:0;background:#0d1117;border:1px solid #2d3348;border-radius:5px;color:var(--text);padding:2px 5px;font-size:10px;cursor:pointer;"><option value="">Sin asignar</option>'+satOpts.replace('value="'+ot.satelite_id+'"','value="'+ot.satelite_id+'" selected')+'</select>';
         } else {
-          h += '<span style="font-size:11px;color:var(--dim);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(getSatNombre(ot.satelite_id))+'</span>';
-          if(esConfeccion){
-            h += '<button data-otid="'+ot.id+'" onclick="modalReprogramarSatelite(this.dataset.otid)" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:#fbbf24;border-radius:5px;padding:3px 7px;cursor:pointer;font-size:10px;white-space:nowrap;" title="Reprogramar con otro taller">↺</button>';
-          }
+          h += '<span style="font-size:10px;color:var(--dim);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(getSatNombre(ot.satelite_id))+'</span>';
+          if(esConfeccion) h += '<button data-otid="'+ot.id+'" onclick="modalReprogramarSatelite(this.dataset.otid)" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:#fbbf24;border-radius:4px;padding:2px 5px;cursor:pointer;font-size:9px;" title="Reprogramar taller">↺</button>';
         }
-        h += '<span style="font-size:11px;color:var(--green);min-width:22px;text-align:right;">'+(ot.unidades_entregadas||0)+'</span>';
-        h += diasChip(dias);
-        h += '<button data-otid="'+ot.id+'" onclick="abrirOT(this.dataset.otid)" style="background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.25);color:var(--accent);border-radius:5px;padding:3px 8px;cursor:pointer;font-size:10px;white-space:nowrap;">Ver</button>';
+        // Input entrega inline + botón confirmar
+        h += '<input type="number" id="ent-'+ot.id+'" min="0" max="'+ot.cantidad+'" placeholder="0" data-otid="'+ot.id+'" data-max="'+ot.cantidad+'" class="ent-masiva-uds" value="'+(yaEnt>0?yaEnt:'')+'" style="width:50px;text-align:center;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.3);border-radius:5px;color:var(--text);padding:3px 4px;font-size:12px;font-weight:700;" oninput="this.style.borderColor=this.value>0?\'#34d399\':\'rgba(52,211,153,.3)\'">';
+        h += '<span style="font-size:9px;color:#475569;">/ '+ot.cantidad+'</span>';
+        h += '<button data-otid="'+ot.id+'" onclick="confirmarEntregaInline(this.dataset.otid)" style="background:rgba(52,211,153,.2);border:1px solid rgba(52,211,153,.5);color:#34d399;border-radius:5px;padding:3px 8px;cursor:pointer;font-size:11px;font-weight:700;white-space:nowrap;">✓</button>';
         h += '</div>';
       }
     });
@@ -2890,12 +2884,6 @@ function renderOPDetalle(opId){
   });
 
   h += '</div>';
-  if(modoEnt){
-    h += '<div style="padding:12px 14px;background:rgba(52,211,153,.06);border-top:1px solid rgba(52,211,153,.2);display:flex;gap:8px;align-items:center;">';
-    h += '<button data-opid="'+op.id+'" onclick="guardarEntregasMasivas(this.dataset.opid)" style="flex:1;background:rgba(52,211,153,.2);border:1px solid rgba(52,211,153,.5);color:#34d399;border-radius:8px;padding:10px 18px;cursor:pointer;font-size:13px;font-weight:700;">💾 Guardar entregas</button>';
-    h += '<button onclick="cancelarModoEntrega()" style="background:rgba(255,255,255,.06);border:1px solid var(--card-border);color:var(--dim);border-radius:8px;padding:10px 14px;cursor:pointer;font-size:13px;">Cancelar</button>';
-    h += '</div>';
-  }
   if(edit){
     h += '<div style="padding:12px 0;display:flex;gap:8px;">';
     h += '<button onclick="guardarEdicionOP()" id="btn-guardar-ed2" style="background:rgba(0,212,100,.15);border:1px solid rgba(0,212,100,.4);color:var(--green);border-radius:8px;padding:9px 18px;cursor:pointer;font-size:13px;font-weight:600;">💾 Guardar</button>';
@@ -3398,11 +3386,7 @@ function verOT(id){
     body += '<div class="sep"></div><div class="section-title" style="font-size:14px;">Historial</div>';
     ot.historial.slice().reverse().forEach(function(h){ body += '<div class="hist-item"><div>' + h.accion + '</div><div class="hist-date">' + new Date(h.fecha).toLocaleString('es-CO') + (h.user?' · '+h.user:'') + '</div></div>'; });
   }
-  var footer = '';
-  if(ot.estado !== 'ENTREGADO' && ot.estado !== 'NOVEDAD'){
-    footer += '<button class="btn btn-primary btn-sm" onclick="closeDrawer();modalEntrega(\'' + ot.id + '\')">Registrar entrega</button> ';
-  }
-  footer += '<button class="btn btn-ghost btn-sm" onclick="closeDrawer()">Cerrar</button>';
+  var footer = '<button class="btn btn-ghost btn-sm" onclick="closeDrawer()">Cerrar</button>';
   openDrawer('OT-' + ot.numero_ot + ' · ' + ot.nombre, body, footer);
 }
 
@@ -5775,6 +5759,44 @@ async function pasarOPAPago(opId, color){
 
 function activarModoEntrega(opId){ _opModoEntrega = opId; renderPage('ops'); }
 function cancelarModoEntrega(){ _opModoEntrega = null; renderPage('ops'); }
+
+async function confirmarEntregaInline(otId){
+  var ot = DB.ots.find(function(o){ return o.id===otId; });
+  if(!ot) return;
+  var inp = document.getElementById('ent-'+otId);
+  var uds = inp ? (parseInt(inp.value)||0) : 0;
+  var fecha = (document.getElementById('ent-masiva-fecha')||{}).value || hoy();
+  if(!uds){ toast('Ingresa las unidades recibidas', 'error'); if(inp) inp.focus(); return; }
+  if(uds > ot.cantidad){ toast('No puede ser mayor a lo programado ('+ot.cantidad+' uds)', 'error'); return; }
+  var pendientes = ot.cantidad - uds;
+  ot.unidades_entregadas = uds;
+  ot.unidades_novedad = pendientes;
+  ot.fecha_entrega_real = fecha;
+  ot.total_costo_mo = uds * (ot.valor_mo||0);
+  ot.estado = pendientes > 0 ? 'NOVEDAD' : 'ENTREGADO';
+  if(!ot.historial) ot.historial = [];
+  ot.historial.push({fecha: new Date().toISOString(), accion: pendientes > 0 ? 'Entrega parcial: '+uds+' uds, '+pendientes+' pendientes → NOVEDAD' : 'Entrega completa: '+uds+' uds → ENTREGADO', user: getUser()});
+  // Pago costos MO
+  if(uds > 0){
+    var sat = DB.satelites.find(function(s){ return s.id===ot.satelite_id; });
+    var precios = (DB.costos_mo && DB.costos_mo.precios) || [];
+    var refNorm = (ot.nombre||ot.referencia||'').trim().toUpperCase();
+    var precioReg = precios.find(function(p){ return (p.nombre||'').trim().toUpperCase()===refNorm; });
+    var pxu = precioReg ? (precioReg.precio||0) : (ot.valor_mo||0);
+    if(pxu > 0){
+      if(!DB.costos_mo) DB.costos_mo = {precios:[], pagos:[]};
+      if(!DB.costos_mo.pagos) DB.costos_mo.pagos = [];
+      DB.costos_mo.pagos.push({id:uid(), ot_id:ot.id, satelite_id:ot.satelite_id, satelite_nombre:sat?sat.nombre:(ot.satelite_id||''), referencia:ot.nombre||ot.referencia||'', uds:uds, precio_mo:pxu, total:uds*pxu, estado:'PENDIENTE_PAGO', fecha:fecha});
+      guardarCostosMO();
+    }
+  }
+  saveLocal(); updateNovBadge();
+  var ok = await guardarArchivo('ots', {ots: DB.ots});
+  if(ok){
+    toast(pendientes > 0 ? ot.talla+': '+uds+' recibidas · '+pendientes+' novedad' : ot.talla+': '+uds+' uds entregadas ✓', pendientes > 0 ? 'error' : 'success');
+    renderPage('ops');
+  }
+}
 
 async function cambiarSateliteOT(otId, nuevoSatId){
   var ot = DB.ots.find(function(o){ return o.id===otId; });
