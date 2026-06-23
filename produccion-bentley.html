@@ -63,7 +63,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
   font-size:11px;color:var(--dim);background:var(--card);border:1px solid var(--card-border);
   padding:4px 10px;border-radius:20px;
 }
-#page-content{padding:24px;flex:1;min-width:0;overflow-x:hidden;}
+#page-content{padding:24px;flex:1;min-width:0;overflow-x:clip;}
 
 /* Cards */
 .card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:20px;}
@@ -2685,7 +2685,7 @@ function renderDiseno(){
                             // mismo priority: más reciente primero
                             return (b._ts||b.fecha_creacion||'') > (a._ts||a.fecha_creacion||'') ? 1 : -1;
                           });
-    h += '<div style="flex:0 0 260px;width:260px;min-width:0;display:flex;flex-direction:column;">';
+    h += '<div style="flex:1 1 200px;min-width:200px;max-width:320px;display:flex;flex-direction:column;">';
     // Columna header
     h += '<div style="background:'+col.bg+';border:1px solid '+col.color+'44;border-bottom:none;border-radius:10px 10px 0 0;padding:10px 13px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">';
     h += '<div style="font-size:11px;font-weight:700;color:'+col.color+';text-transform:uppercase;letter-spacing:.5px;">'+col.label+'</div>';
@@ -2708,6 +2708,7 @@ function renderDiseno(){
       h += '<span style="font-size:9px;color:#64748b;background:rgba(255,255,255,.06);border:1px solid #1e2535;border-radius:4px;padding:1px 6px;">P'+d.prioridad+'</span>';
       h += '<button data-id="'+d.id+'" onclick="abrirFotosDiseno(this.dataset.id)" style="position:relative;display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:5px;cursor:pointer;color:#fbbf24;font-size:12px;padding:0;line-height:1;" title="Fotos">📷'+(nFotos?'<span style="position:absolute;top:-4px;right:-4px;background:#fbbf24;color:#0d0f14;border-radius:8px;font-size:8px;font-weight:700;min-width:13px;height:13px;display:flex;align-items:center;justify-content:center;padding:0 2px;">'+nFotos+'</span>':'')+'</button>';
       h += '<button data-id="'+d.id+'" onclick="abrirFormDiseno(this.dataset.id)" style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);border-radius:5px;cursor:pointer;color:#00d4ff;font-size:12px;padding:0;line-height:1;" title="Editar">✏</button>';
+      h += '<button data-id="'+d.id+'" onclick="crearMiniMe(this.dataset.id)" style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);border-radius:5px;cursor:pointer;color:#34d399;font-size:10px;font-weight:700;padding:0;line-height:1;" title="Crear Mini Me (duplicar a otra marca)">M²</button>';
       h += '</div></div>';
 
       // Fila 2: categoría + género
@@ -3043,8 +3044,46 @@ function actualizarGenerosForm(marca){
 }
 function editarDiseno(id){ abrirFormDiseno(id); }
 
+function crearMiniMe(id){
+  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
+  if(!d) return;
+  var marcas = getDisMarcas();
+  var otherMarcas = marcas.filter(function(m){ return m !== d.marca; });
+  if(!otherMarcas.length){ toast('Solo existe una marca — crea otra marca primero','error'); return; }
+
+  // Si solo hay una marca destino, usar esa directamente
+  var marcaDest = otherMarcas.length === 1 ? otherMarcas[0] : null;
+
+  var body = '<div style="margin-bottom:12px;color:#94a3b8;font-size:13px;">Duplicar <strong style="color:#e2e8f0;">'+esc(d.nombre)+'</strong> ('+esc(d.marca)+') a:</div>';
+  body += '<div style="display:flex;flex-direction:column;gap:8px;">';
+  otherMarcas.forEach(function(m){
+    body += '<button onclick="confirmarMiniMe(\''+esc(id)+'\',\''+esc(m)+'\')" style="padding:12px;border-radius:10px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);color:#34d399;font-size:14px;font-weight:600;cursor:pointer;text-align:left;">→ '+esc(m)+'</button>';
+  });
+  body += '</div>';
+  openModal('Mini Me — Duplicar diseño', body, '');
+}
+
+function confirmarMiniMe(id, marcaDest){
+  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
+  if(!d) return;
+  var copia = Object.assign({}, d, {
+    id: uid(),
+    marca: marcaDest,
+    fecha_creacion: hoy(),
+    _ts: new Date().toISOString(),
+    kanban_estado: d.kanban_estado === 'LISTA_PRODUCCION' ? 'EN_DISENO_DIGITAL' : d.kanban_estado
+  });
+  DB.disenos.push(copia);
+  guardarDisenos();
+  // Cerrar modal y navegar a la marca destino
+  document.querySelectorAll('.modal-overlay').forEach(function(m){ m.remove(); });
+  _disFiltroMarca = marcaDest;
+  renderPage('diseno');
+  toast('✅ Mini Me creado en '+marcaDest,'success');
+}
+
 async function guardarDisenoForm(){
-  var nombre = (document.getElementById('dis-nombre').value||'').trim();
+  var nombre = (document.getElementById('dis-nombre').value||'').trim().toUpperCase();
   var marca = document.getElementById('dis-marca').value;
   var cat = document.getElementById('dis-cat').value;
   if(cat === '__otro__'){
@@ -3061,7 +3100,7 @@ async function guardarDisenoForm(){
   var resp = document.getElementById('dis-resp').value;
   var prio = parseInt(document.getElementById('dis-prio').value)||1;
   var kanban = document.getElementById('dis-kanban').value||'EN_DISENO_DIGITAL';
-  var nota = (document.getElementById('dis-nota').value||'').trim();
+  var nota = (document.getElementById('dis-nota').value||'').trim().toUpperCase();
   var genero = (document.getElementById('dis-genero') ? document.getElementById('dis-genero').value : '') || 'Unisex';
   var provSel = document.getElementById('dis-proveedor') ? document.getElementById('dis-proveedor').value : '';
   if(provSel === '__nuevo__') provSel = '';
