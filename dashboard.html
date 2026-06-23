@@ -8864,8 +8864,7 @@ function progExportCSV(){
     var csv = row.dataset.csv || '';
     if(csv) rows.push(csv);
   });
-  var blob = new Blob(['﻿'+rows.join('
-')], {type:'text/csv;charset=utf-8;'});
+  var blob = new Blob(['﻿'+rows.join('\n')], {type:'text/csv;charset=utf-8;'});
   var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
   a.download = 'programacion_produccion.csv'; a.click();
 }
