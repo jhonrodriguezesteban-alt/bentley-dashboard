@@ -983,51 +983,47 @@ async function activarNotificacionesPush(){
   var btn = document.getElementById('btn-activar-notif');
   if(btn){ btn.textContent='⏳ Registrando...'; btn.disabled=true; }
 
-  // 1. Permiso nativo iOS
-  var granted = await pedirPermisoNativo();
-  if(!granted){
-    toast('Permiso denegado. En iPhone: Ajustes → notificaciones de la app → Activar','error');
+  if(!window.OneSignal){
+    toast('⚠️ OneSignal SDK no cargó aún — espera 5s y reintenta','warning');
     if(btn){ btn.textContent='🔔 Activar notifs'; btn.disabled=false; }
     return;
   }
 
-  localStorage.setItem('bentley_notif_activa','1');
-
-  // 2. Registrar en OneSignal (necesario para push en background)
-  var osOk = false;
-  if(window.OneSignal){
-    try {
-      await OneSignal.Notifications.requestPermission();
-      if(OneSignal.User && OneSignal.User.PushSubscription){
-        await OneSignal.User.PushSubscription.optIn();
-        // iOS tarda varios segundos en entregar el token APNs — reintentar hasta 10s
-        var subId = null;
-        for(var t=0; t<10; t++){
-          await new Promise(function(res){ setTimeout(res, 1000); });
-          subId = OneSignal.User.PushSubscription.id;
-          if(subId) break;
-        }
-        console.log('OneSignal sub ID:', subId);
-        if(subId){
-          osOk = true;
-          localStorage.setItem('bentley_os_sub_id', subId);
-          toast('✅ Push registrado · ID: '+subId.slice(0,8)+'...','success');
-        } else {
-          toast('⚠️ OneSignal: sin token tras 10s — intenta desde Safari primero','warning');
-        }
-      }
-    } catch(e){
-      console.warn('OneSignal error:', e);
-      toast('⚠️ OneSignal error: '+e.message,'warning');
+  try {
+    // Dejar que OneSignal maneje el permiso nativo + registro en un solo flujo
+    var permGranted = await OneSignal.Notifications.requestPermission();
+    if(!permGranted){
+      toast('Permiso denegado. Ve a Ajustes del iPhone → notificaciones → activa la app','error');
+      if(btn){ btn.textContent='🔔 Activar notifs'; btn.disabled=false; }
+      return;
     }
-  } else {
-    toast('⚠️ OneSignal SDK no cargó — sin push en background','warning');
-  }
 
-  if(!osOk){
-    toast('🔔 Notif local OK · Para push en background: abre desde Safari, activa, luego reinstala','info');
+    // Opt-in explícito
+    await OneSignal.User.PushSubscription.optIn();
+    localStorage.setItem('bentley_notif_activa','1');
+
+    // Esperar token APNs hasta 15 segundos
+    var subId = null;
+    for(var t=0; t<15; t++){
+      await new Promise(function(res){ setTimeout(res, 1000); });
+      subId = OneSignal.User && OneSignal.User.PushSubscription && OneSignal.User.PushSubscription.id;
+      if(subId) break;
+      if(t===4) toast('⏳ Esperando token de Apple (puede tardar hasta 15s)...','info');
+    }
+
+    if(subId){
+      localStorage.setItem('bentley_os_sub_id', subId);
+      toast('✅ Push en background activo · ID: '+subId.slice(0,8)+'...','success');
+      if(btn){ btn.textContent='✅ Push activo'; btn.disabled=false; }
+    } else {
+      toast('⚠️ Apple no entregó token. Intenta: cerrar app → reabrir → reintentar','warning');
+      if(btn){ btn.textContent='⚠️ Reintentar'; btn.disabled=false; }
+    }
+  } catch(e){
+    console.warn('OneSignal error:', e);
+    toast('⚠️ Error: '+e.message,'warning');
+    if(btn){ btn.textContent='🔔 Activar notifs'; btn.disabled=false; }
   }
-  if(btn){ btn.textContent = osOk ? '✅ Push activo' : '⚠️ Solo local'; btn.disabled=false; }
 }
 
 async function enviarNotifOS(titulo, cuerpo, urlDestino){
