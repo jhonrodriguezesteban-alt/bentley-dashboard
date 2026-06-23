@@ -4383,6 +4383,33 @@ function _getSimData(id){ return _simData[id] || {colores:[]}; }
 function _setSimData(id, val){ _simData[id] = val; localStorage.setItem('bentley_sim_data', JSON.stringify(_simData)); }
 function _loadSimData(){ try{ _simData = JSON.parse(localStorage.getItem('bentley_sim_data')||'{}'); }catch(e){ _simData={}; } }
 
+var SIM_PALETTE = [
+  {n:'NEGRO',      h:'#0a0a0a'},
+  {n:'BLANCO',     h:'#f8f8f8'},
+  {n:'GRIS CLARO', h:'#c0c0c0'},
+  {n:'GRIS OSCURO',h:'#505050'},
+  {n:'AZUL MARINO',h:'#1a2a5e'},
+  {n:'AZUL CIELO', h:'#5ab4e5'},
+  {n:'TURQUESA',   h:'#1ab5b5'},
+  {n:'PETRÓLEO',   h:'#1b4d5c'},
+  {n:'VERDE',      h:'#2e8b57'},
+  {n:'MENTA',      h:'#98d4a3'},
+  {n:'AMARILLO',   h:'#f5c842'},
+  {n:'MOSTAZA',    h:'#c9922a'},
+  {n:'NARANJA',    h:'#f07020'},
+  {n:'CORAL',      h:'#f4705a'},
+  {n:'ROJO',       h:'#cc2020'},
+  {n:'VINOTINTO',  h:'#7b1828'},
+  {n:'ROSADO',     h:'#f4a0c0'},
+  {n:'FUCSIA',     h:'#e03080'},
+  {n:'MORADO',     h:'#7c3aed'},
+  {n:'LILA',       h:'#c4a0e8'},
+  {n:'BEIGE',      h:'#e8d5b0'},
+  {n:'CAMEL',      h:'#c09060'},
+  {n:'CAFÉ',       h:'#7b4d28'},
+  {n:'MULTICOLOR', h:'linear-gradient(135deg,#f00,#ff0,#0f0,#00f,#f0f)'}
+];
+
 var TALLAS_DEFAULT = ['2','4','6','8','10','12','14','16'];
 var TALLAS_BEBE    = ['3M','6M','9M','12M','18M','24M'];
 
@@ -4464,11 +4491,22 @@ function renderSimulador(){
     // Colores existentes
     sim.colores.forEach(function(col, ci){
       var colUds = Object.values(col.tallas||{}).reduce(function(s,q){ return s+(parseInt(q)||0); },0);
+      var palEntry = SIM_PALETTE.find(function(p){ return p.n===col.color; });
+      var swatchBg = palEntry ? palEntry.h : '#2d3748';
       h += '<div style="background:#0d1117;border:1px solid #1e2535;border-radius:8px;padding:10px;margin-bottom:8px;" id="sim-col-'+d.id+'-'+ci+'">';
+      // Header fila color: swatch seleccionado + nombre + uds + borrar
       h += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">';
-      h += '<input data-did="'+d.id+'" data-ci="'+ci+'" onchange="simCambiarColor(this)" value="'+esc(col.color||'')+'" placeholder="COLOR" style="flex:1;background:transparent;border:none;border-bottom:1px solid #1e2535;color:#e2e8f0;font-size:12px;font-weight:700;text-transform:uppercase;padding:2px 0;outline:none;">';
+      h += '<div style="width:22px;height:22px;border-radius:5px;flex-shrink:0;border:2px solid rgba(255,255,255,.15);background:'+swatchBg+';"></div>';
+      h += '<span style="flex:1;font-size:12px;font-weight:700;color:#e2e8f0;">'+(col.color||'<span style="color:#475569;">— elige color —</span>')+'</span>';
       h += '<span style="font-size:11px;color:'+(colUds>0?'#34d399':'#475569')+';font-weight:700;">'+colUds+' uds</span>';
-      h += '<button data-did="'+d.id+'" data-ci="'+ci+'" onclick="simEliminarColor(this.dataset.did,parseInt(this.dataset.ci))" style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:14px;padding:0 2px;line-height:1;">×</button>';
+      h += '<button data-did="'+d.id+'" data-ci="'+ci+'" onclick="simEliminarColor(this.dataset.did,parseInt(this.dataset.ci))" style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:16px;padding:0 2px;line-height:1;">×</button>';
+      h += '</div>';
+      // Paleta de colores clicable
+      h += '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;">';
+      SIM_PALETTE.forEach(function(p){
+        var sel = p.n === col.color;
+        h += '<button data-did="'+d.id+'" data-ci="'+ci+'" data-color="'+p.n+'" onclick="simSelColor(this.dataset.did,parseInt(this.dataset.ci),this.dataset.color)" title="'+p.n+'" style="width:26px;height:26px;border-radius:5px;border:'+(sel?'2px solid #00d4ff':'1px solid rgba(255,255,255,.12)')+';background:'+p.h+';cursor:pointer;padding:0;outline:none;box-shadow:'+(sel?'0 0 0 2px rgba(0,212,255,.35)':'none')+';" ></button>';
+      });
       h += '</div>';
       // Tallas
       var tallas = TALLAS_DEFAULT;
@@ -4507,11 +4545,11 @@ function simEliminarColor(did, ci){
   renderPage('simulador');
 }
 
-function simCambiarColor(inp){
-  var did = inp.dataset.did, ci = parseInt(inp.dataset.ci);
+function simSelColor(did, ci, colorName){
   var sim = _getSimData(did);
-  if(sim.colores[ci]) sim.colores[ci].color = inp.value.trim().toUpperCase();
+  if(sim.colores[ci]) sim.colores[ci].color = colorName;
   _setSimData(did, sim);
+  renderPage('simulador');
 }
 
 function simCambiarQty(inp){
