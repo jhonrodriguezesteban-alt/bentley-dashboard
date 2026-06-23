@@ -7,6 +7,7 @@ on:
       - 'prod_disenos.json'
       - 'prod_ots.json'
       - 'prod_ops.json'
+  workflow_dispatch:
 
 jobs:
   notify:
