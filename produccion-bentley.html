@@ -198,7 +198,9 @@ tr:hover td{background:rgba(255,255,255,0.025);}
 }
 .form-control:focus{border-color:var(--cyan);}
 .form-control::placeholder{color:var(--dim);}
-select.form-control option{background:#1a1e2a;color:var(--text);}
+select.form-control,select.form-control option{text-transform:uppercase;background:#1a1e2a;color:var(--text);}
+input.form-control{text-transform:uppercase;}
+input.form-control::placeholder{text-transform:none;}
 textarea.form-control{resize:vertical;min-height:80px;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .form-error{font-size:11px;color:var(--red);margin-top:4px;}
@@ -2451,15 +2453,15 @@ var DIS_MARCAS_DEFAULT = ['Bentley Kids','Prime','Maquilas'];
 var DIS_CATEGORIAS = ['Chaquetas','Abrigos','Conjuntos','Pantalones','Buzos','Chalecos','Camisetas','Vestidos','Tejido de Punto','Overol','Accesorios','Otro'];
 var _disFiltroMarca = 'Bentley Kids';
 var DIS_KANBAN = [
+  {k:'CON_PROVEEDOR',        label:'Con Proveedor',      color:'#fb923c', bg:'rgba(251,146,60,.08)'},
   {k:'EN_DISENO_DIGITAL',    label:'Diseño Digital',     color:'#a855f7', bg:'rgba(168,85,247,.08)'},
   {k:'EN_CORTE_MUESTRA',     label:'Corte de Muestra',   color:'#f97316', bg:'rgba(249,115,22,.08)'},
   {k:'EN_CONFECCION_MUESTRA',label:'Confección Muestra', color:'#00d4ff', bg:'rgba(0,212,255,.08)'},
   {k:'EN_REVISION_GERENCIA', label:'Revisión Gerencia',  color:'#fbbf24', bg:'rgba(251,191,36,.08)'},
-  {k:'CON_PROVEEDOR',        label:'Con Proveedor',      color:'#fb923c', bg:'rgba(251,146,60,.08)'},
   {k:'EN_ESCALADO',          label:'Escalado Tallas',    color:'#34d399', bg:'rgba(52,211,153,.08)'},
 ];
 
-var DIS_PROVEEDORES_DEFAULT = ['Peño','Tejidos Mariluz','Ginnes Floyd','Ginnes Taipan'];
+var DIS_PROVEEDORES_DEFAULT = ['FENIO','TEJIDOS MARILUZ','JEANS TAI-PAN','JEANS FLOYD'];
 function getDisProveedores(){ return (DB.disenos_cfg && DB.disenos_cfg.proveedores) ? DB.disenos_cfg.proveedores : DIS_PROVEEDORES_DEFAULT.slice(); }
 
 function getDisMarcas(){ return (DB.disenos_cfg && DB.disenos_cfg.marcas) ? DB.disenos_cfg.marcas : DIS_MARCAS_DEFAULT; }
@@ -2769,7 +2771,7 @@ function abrirNuevoProveedorForm(){
 
 var _proveedorCb = null;
 function guardarNuevoProveedor(){
-  var nom = (document.getElementById('dis-nuevo-prov').value||'').trim();
+  var nom = (document.getElementById('dis-nuevo-prov').value||'').trim().toUpperCase();
   if(!nom){ toast('Ingresa un nombre','error'); return; }
   if(!DB.disenos_cfg) DB.disenos_cfg = {};
   if(!DB.disenos_cfg.proveedores) DB.disenos_cfg.proveedores = getDisProveedores();
@@ -2822,15 +2824,15 @@ function abrirFormDiseno(id){
   [1,2,3,4,5,6].forEach(function(n){ body += '<option value="'+n+'"'+(d&&d.prioridad==n?' selected':'')+'>'+n+'</option>'; });
   body += '</select></div>';
   body += '<div class="form-group"><label class="form-label">Responsable</label><select id="dis-resp" class="form-control">';
-  DIS_RESPONSABLES.forEach(function(r){ body += '<option value="'+r+'"'+(d&&d.responsable===r?' selected':'')+'>'+r+'</option>'; });
+  DIS_RESPONSABLES.forEach(function(r){ body += '<option value="'+r+'"'+(d&&d.responsable===r?' selected':'')+'>'+r.toUpperCase()+'</option>'; });
   body += '</select></div></div>';
 
   body += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">';
   body += '<div class="form-group"><label class="form-label">Marca</label><select id="dis-marca" class="form-control" onchange="actualizarGenerosForm(this.value)">';
-  marcas.forEach(function(m){ body += '<option value="'+esc(m)+'"'+(m===marcaActual?' selected':'')+'>'+esc(m)+'</option>'; });
+  marcas.forEach(function(m){ body += '<option value="'+esc(m)+'"'+(m===marcaActual?' selected':'')+'>'+esc(m).toUpperCase()+'</option>'; });
   body += '</select></div>';
   body += '<div class="form-group"><label class="form-label">Género</label><select id="dis-genero" class="form-control">';
-  generos.forEach(function(g){ body += '<option value="'+g+'"'+(d&&d.genero===g?' selected':'')+'>'+g+'</option>'; });
+  generos.forEach(function(g){ body += '<option value="'+g+'"'+(d&&d.genero===g?' selected':'')+'>'+g.toUpperCase()+'</option>'; });
   body += '</select></div></div>';
 
   // Si la categoría guardada no está en la lista, mostrar "Otro" seleccionado con el valor en el campo libre
@@ -2842,15 +2844,15 @@ function abrirFormDiseno(id){
   body += '<select id="dis-cat" class="form-control" onchange="toggleCatOtro(this.value)">';
   todasCats.forEach(function(c){
     if(c==='Otro') return; // se agrega aparte
-    body += '<option value="'+c+'"'+((d&&d.categoria===c&&catEnLista)?' selected':'')+'>'+c+'</option>';
+    body += '<option value="'+c+'"'+((d&&d.categoria===c&&catEnLista)?' selected':'')+'>'+c.toUpperCase()+'</option>';
   });
-  body += '<option value="__otro__"'+(catEsOtro?' selected':'')+'>+ Nueva categoría...</option>';
+  body += '<option value="__otro__"'+(catEsOtro?' selected':'')+'>+ NUEVA CATEGORÍA...</option>';
   body += '</select>';
   body += '<input type="text" id="dis-cat-otro" class="form-control" placeholder="Escribe el nombre de la nueva categoría" style="margin-top:8px;display:'+(catEsOtro?'block':'none')+';" value="'+esc(catEsOtro?d.categoria:'')+'">';
   body += '</div>';
   body += '<div class="form-group"><label class="form-label">Referencia / Nombre</label><input id="dis-nombre" class="form-control" value="'+esc(d?d.nombre:'')+'" placeholder="Nombre del diseño"></div>';
   body += '<div class="form-group"><label class="form-label">Etapa Kanban</label><select id="dis-kanban" class="form-control">';
-  DIS_KANBAN.forEach(function(c){ body += '<option value="'+c.k+'"'+((d&&(d.kanban_estado||'EN_DISENO_DIGITAL')===c.k)||((!d)&&c.k==='EN_DISENO_DIGITAL')?' selected':'')+'>'+c.label+'</option>'; });
+  DIS_KANBAN.forEach(function(c){ body += '<option value="'+c.k+'"'+((d&&(d.kanban_estado||'EN_DISENO_DIGITAL')===c.k)||((!d)&&c.k==='EN_DISENO_DIGITAL')?' selected':'')+'>'+c.label.toUpperCase()+'</option>'; });
   body += '</select></div>';
 
   // Proveedor
