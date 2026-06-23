@@ -2322,7 +2322,12 @@ function renderOPs(){
 
   OP_KANBAN.forEach(function(col){
     var colSubgs = subgs.filter(function(s){ return s.estado===col.k; })
-      .sort(function(a,b){ return (a.op.id||'').localeCompare(b.op.id||''); });
+      .sort(function(a,b){
+        // Más recientes arriba: comparar por created_at desc, luego por número desc
+        var ca=(a.op.created_at||a.op.fecha_op||''), cb=(b.op.created_at||b.op.fecha_op||'');
+        if(ca!==cb) return cb.localeCompare(ca);
+        return (b.op.numero||0)-(a.op.numero||0);
+      });
 
     h += '<div style="flex:1 1 200px;min-width:210px;max-width:300px;display:flex;flex-direction:column;">';
     h += '<div style="background:'+col.bg+';border:1px solid '+col.color+'44;border-bottom:none;border-radius:10px 10px 0 0;padding:10px 13px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">';
