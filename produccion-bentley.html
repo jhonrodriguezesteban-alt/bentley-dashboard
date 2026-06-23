@@ -6942,26 +6942,52 @@ function renderMonitoreo(){
   h += '</thead>';
   h += '<tbody>';
 
-  var lastRefKey = null;
+  // Pre-calcular rowspan por referencia y categoría
+  var refSpan = {}, catSpan = {};
+  rows.forEach(function(r){
+    var refKey = r.cat+'||'+r.nombre;
+    refSpan[refKey] = (refSpan[refKey]||0)+1;
+  });
+  // Calcular rowspan de categoría (cuántas filas seguidas comparten la misma cat)
+  var catSpanArr = [];
+  rows.forEach(function(r, i){
+    var prev = i>0 ? rows[i-1] : null;
+    if(!prev || prev.cat !== r.cat){
+      var span = 1;
+      for(var j=i+1; j<rows.length && rows[j].cat===r.cat; j++) span++;
+      catSpanArr[i] = span;
+    } else {
+      catSpanArr[i] = 0; // no renderizar
+    }
+  });
+
+  var refKeySeen = {};
+  var lastCat = null;
   rows.forEach(function(r, i){
     var refKey = r.cat+'||'+r.nombre;
-    var isNewRef = refKey !== lastRefKey;
-    lastRefKey = refKey;
+    var isFirstOfRef = !refKeySeen[refKey];
+    var isFirstOfCat = catSpanArr[i] > 0;
+    if(isFirstOfRef) refKeySeen[refKey] = true;
+
     var isEven = i%2===0;
     var rowBg = isEven ? 'transparent' : 'rgba(255,255,255,.015)';
+    var hover = 'onmouseover="this.style.background=\'rgba(251,191,36,.05)\'" onmouseout="this.style.background=\''+rowBg+'\'"';
 
-    h += '<tr data-i="'+i+'" style="background:'+rowBg+';border-bottom:1px solid rgba(255,255,255,.04);" onmouseover="this.style.background=\'rgba(251,191,36,.05)\'" onmouseout="this.style.background=\''+rowBg+'\'">';
+    h += '<tr style="background:'+rowBg+';border-bottom:1px solid rgba(255,255,255,.04);" '+hover+'>';
 
-    // Categoría — solo en primera fila del grupo referencia
-    if(isNewRef){
-      h += '<td style="padding:8px 14px;color:#94a3b8;font-size:11px;font-weight:700;text-transform:uppercase;vertical-align:top;">'+esc(r.cat)+'</td>';
-      h += '<td style="padding:8px 14px;color:#e2e8f0;font-weight:700;vertical-align:top;">';
+    // Categoría — con rowspan
+    if(isFirstOfCat){
+      var cspan = catSpanArr[i];
+      h += '<td rowspan="'+cspan+'" style="padding:8px 14px;color:#94a3b8;font-size:11px;font-weight:700;text-transform:uppercase;vertical-align:middle;border-right:1px solid rgba(255,255,255,.04);">'+esc(r.cat)+'</td>';
+    }
+
+    // Referencia — con rowspan
+    if(isFirstOfRef){
+      var rspan = refSpan[refKey];
+      h += '<td rowspan="'+rspan+'" style="padding:8px 14px;color:#e2e8f0;font-weight:700;vertical-align:middle;border-right:1px solid rgba(255,255,255,.04);">';
       h += esc(r.nombre);
       if(r.isAnioAnt) h += ' <span style="font-size:9px;background:rgba(148,163,184,.1);border:1px solid rgba(148,163,184,.2);border-radius:3px;color:#64748b;padding:1px 4px;">2025</span>';
       h += '</td>';
-    } else {
-      h += '<td style="padding:8px 14px;border-top:none;"></td>';
-      h += '<td style="padding:8px 14px;border-top:none;"></td>';
     }
 
     // Color
