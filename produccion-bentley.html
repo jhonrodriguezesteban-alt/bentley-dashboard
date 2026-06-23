@@ -525,6 +525,9 @@ textarea.form-control{resize:vertical;min-height:80px;}
 #sidebar.collapsed #sidebar-logo{justify-content:center;}
 #main.sidebar-collapsed{margin-left:60px;}
 #sidebar.collapsed .nav-item .icon{width:auto;font-size:18px;}
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button { -webkit-appearance:none; margin:0; }
+    input[type=number] { -moz-appearance:textfield; }
 </style>
 <!-- PWA Manifest -->
 <link rel="manifest" href="/bentley-dashboard/manifest.json">
@@ -5287,8 +5290,8 @@ function _saveSimStorage(){
   guardarArchivo('sim', {active:_simActive, data:_simData});
 }
 function _loadSimData(){
-  // Preferir DB.sim (cargado desde GitHub) sobre localStorage legacy
-  if(DB.sim && (DB.sim.active||[]).length > 0){
+  // Preferir DB.sim sobre localStorage legacy (sin condicionar en length para evitar restaurar items borrados)
+  if(DB.sim){
     _simActive = DB.sim.active||[];
     _simData   = DB.sim.data||{};
     return;
@@ -5410,12 +5413,16 @@ function renderSimulador(){
       h += '<span style="font-size:11px;color:'+(colUds>0?'#34d399':'#475569')+';font-weight:700;white-space:nowrap;" id="sim-col-uds-'+safeKey+'-'+ci+'">'+colUds+' uds</span>';
       h += '<button data-did="'+simKey+'" data-ci="'+ci+'" onclick="simEliminarColor(this.dataset.did,parseInt(this.dataset.ci))" style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:16px;padding:0 2px;line-height:1;">×</button>';
       h += '</div>';
+      h += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">';
+      h += '<span style="font-size:10px;color:#475569;">Llenar todas:</span>';
+      h += '<input type="number" min="0" placeholder="Cant." data-did="'+simKey+'" data-ci="'+ci+'" oninput="simLlenarTodas(this.dataset.did,parseInt(this.dataset.ci),parseInt(this.value)||0)" style="width:52px;text-align:center;background:#13161f;border:1px solid #334155;border-radius:6px;color:#00d4ff;font-size:12px;font-weight:700;padding:4px 6px;-webkit-appearance:none;-moz-appearance:textfield;">';
+      h += '</div>';
       h += '<div style="display:flex;flex-wrap:wrap;gap:6px;">';
       TALLAS_DEFAULT.forEach(function(t){
         var qty = col.tallas[t]||'';
         h += '<div style="display:flex;flex-direction:column;align-items:center;gap:2px;">';
         h += '<span style="font-size:9px;color:#64748b;font-weight:600;">'+t+'</span>';
-        h += '<input type="number" min="0" data-did="'+simKey+'" data-ci="'+ci+'" data-talla="'+t+'" onchange="simCambiarQty(this)" value="'+(qty||'')+'" placeholder="0" style="width:38px;text-align:center;background:#13161f;border:1px solid #1e2535;border-radius:6px;color:#e2e8f0;font-size:12px;font-weight:600;padding:4px 2px;">';
+        h += '<input type="number" min="0" data-did="'+simKey+'" data-ci="'+ci+'" data-talla="'+t+'" onchange="simCambiarQty(this)" value="'+(qty||'')+'" placeholder="0" style="width:38px;text-align:center;background:#13161f;border:1px solid #1e2535;border-radius:6px;color:#e2e8f0;font-size:12px;font-weight:600;padding:4px 2px;-webkit-appearance:none;-moz-appearance:textfield;">';
         h += '</div>';
       });
       h += '</div></div>';
@@ -5429,6 +5436,31 @@ function renderSimulador(){
 }
 
 function setSimFiltroMarca(m){ _simFiltroMarca=m; renderPage('simulador'); }
+
+function simLlenarTodas(did, ci, qty){
+  var sim = _getSimData(did);
+  if(!sim.colores[ci]) return;
+  TALLAS_DEFAULT.forEach(function(t){ sim.colores[ci].tallas[t] = qty > 0 ? qty : 0; });
+  _setSimData(did, sim);
+  // Actualizar inputs sin re-render completo
+  var safeKey = did.replace(/:/g,'__c__');
+  TALLAS_DEFAULT.forEach(function(t){
+    var inp = document.querySelector('input[data-did="'+did+'"][data-ci="'+ci+'"][data-talla="'+t+'"]');
+    if(inp){ inp.value = qty > 0 ? qty : ''; }
+  });
+  // Actualizar contadores
+  var colUds = qty > 0 ? qty * TALLAS_DEFAULT.length : 0;
+  var colEl = document.getElementById('sim-col-uds-'+safeKey+'-'+ci);
+  if(colEl) colEl.textContent = colUds + ' uds';
+  colEl && (colEl.style.color = colUds > 0 ? '#34d399' : '#475569');
+  var totalUds = 0;
+  var allSim = _simActive.map(function(k){ return _getSimData(k); });
+  allSim.forEach(function(s){ s.colores.forEach(function(c){ Object.values(c.tallas||{}).forEach(function(q){ totalUds+=(parseInt(q)||0); }); }); });
+  var disUdsEl = document.getElementById('sim-dis-uds-'+safeKey);
+  if(disUdsEl){ var dUds=0; sim.colores.forEach(function(c){ Object.values(c.tallas||{}).forEach(function(q){dUds+=(parseInt(q)||0);}); }); disUdsEl.textContent=dUds; disUdsEl.style.color=dUds>0?'var(--green)':'#475569'; }
+  var totEl = document.getElementById('sim-total-uds');
+  if(totEl){ totEl.textContent = totalUds.toLocaleString(); }
+}
 
 function simFiltrarDis(inp){
   var q = inp.value.trim().toUpperCase();
