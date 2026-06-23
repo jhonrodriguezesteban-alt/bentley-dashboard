@@ -5490,27 +5490,11 @@ function simFiltrarDis(inp){
     });
   }
 
-  // ── Sección 2: Productos activos (OPs) ───────────────────────────────────
-  var opsActivas = (DB.ops||[]).filter(function(op){ return op.estado_op !== 'ARCHIVADO'; })
-    .sort(function(a,b){ return (a.categoria||'').localeCompare(b.categoria||'')||(a.nombre_producto||'').localeCompare(b.nombre_producto||''); });
-  var matchesOps = q ? opsActivas.filter(function(op){ return (op.nombre_producto||'').toUpperCase().indexOf(q)>=0||(op.categoria||'').toUpperCase().indexOf(q)>=0; }) : opsActivas;
-  if(matchesOps.length){
-    hasResults = true;
-    html += '<div style="padding:5px 14px 3px;font-size:10px;font-weight:700;color:#f97316;text-transform:uppercase;letter-spacing:1px;background:#0d1117;position:sticky;top:0;">Productos activos en producción</div>';
-    var catOp = null;
-    matchesOps.forEach(function(op){
-      var simKey = 'op:'+op.id;
-      var yaEsta = _simActive.indexOf(simKey)>=0;
-      if(!q && op.categoria!==catOp){ catOp=op.categoria; html += '<div style="padding:3px 14px 2px;font-size:9px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:1px;">'+esc(catOp||'SIN CATEGORÍA')+'</div>'; }
-      html += '<div onmousedown="event.preventDefault();simAgregarDiseno(\''+simKey+'\')" style="padding:8px 14px;cursor:'+(yaEsta?'default':'pointer')+';border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;justify-content:space-between;gap:8px;'+(yaEsta?'opacity:.4;':'')+'background:transparent;" onmouseover="this.style.background=\'rgba(249,115,22,.06)\'" onmouseout="this.style.background=\'transparent\'">';
-      html += '<div style="min-width:0;flex:1;"><div style="font-size:13px;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(op.nombre_producto||'Sin nombre')+'</div>';
-      html += '<div style="font-size:10px;color:#f97316;margin-top:1px;">'+esc(fmtOpId(op.id))+' · '+(op.categoria||'')+'</div>';
-      html += '</div><span style="font-size:10px;font-weight:600;white-space:nowrap;color:'+(yaEsta?'#334155':'#f97316')+';flex-shrink:0;">'+(yaEsta?'✓':'+ agregar')+'</span></div>';
-    });
-  }
+  // ── Sección 2 eliminada: OPs ya no aparecen en el buscador del simulador ──
 
   // ── Sección 3: Catálogo de productos (costos_mo.precios) ─────────────────
   // Excluir del catálogo los que ya tienen OP activa (evitar duplicados)
+  var opsActivas = (DB.ops||[]).filter(function(op){ return op.estado_op !== 'ARCHIVADO'; });
   var _nombresConOp = {};
   opsActivas.forEach(function(op){ if(op.nombre_producto) _nombresConOp[(op.nombre_producto||'').toUpperCase()] = true; });
   var precios = ((DB.costos_mo && DB.costos_mo.precios) || []).filter(function(p){ return !_nombresConOp[(p.nombre||'').toUpperCase()]; });
