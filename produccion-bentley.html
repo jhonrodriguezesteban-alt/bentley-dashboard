@@ -2088,6 +2088,10 @@ var OP_KANBAN = [
 
 // Formatear ID de OP: "OP-0011" → "OP-11", "OP-0008" → "OP-08"
 function fmtOpId(id){
+  // Formato OP-YYYY-NNN (ej: OP-2026-072) → mostrar solo OP-NN sin el año
+  var mYear = (id||'').match(/^(OP-|op-)20\d\d-0*(\d+)$/i);
+  if(mYear){ var ny=parseInt(mYear[2]); return 'OP-'+(ny<10?'0'+ny:''+ny); }
+  // Formato OP-NNN (OPs antiguas 2025)
   var m = (id||'').match(/^(OP-|op-)0*(\d+)$/i);
   if(!m) return id;
   var n = parseInt(m[2]);
