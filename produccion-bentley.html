@@ -3227,32 +3227,33 @@ function abrirModalCategoria(cat){
     if(!esTodos) return (d.categoria||'Sin categoría') === cat;
     return d.kanban_estado !== 'LISTA_PRODUCCION';
   }).sort(function(a,b){
-    var ga = GEN_ORDER[a.genero||'Unisex']||0;
-    var gb = GEN_ORDER[b.genero||'Unisex']||0;
+    // TODOS: agrupar por categoría → género → nombre
+    // Por categoría: género → nombre
+    var ca = (a.categoria||'').toUpperCase(), cb = (b.categoria||'').toUpperCase();
+    if(esTodos && ca!==cb) return ca.localeCompare(cb);
+    var ga = GEN_ORDER[a.genero||'Unisex']||0, gb = GEN_ORDER[b.genero||'Unisex']||0;
     if(ga!==gb) return ga-gb;
-    if(!esTodos) return (a.nombre||'').localeCompare(b.nombre||'');
-    var ca = a.categoria||'', cb = b.categoria||'';
-    if(ca!==cb) return ca.localeCompare(cb);
-    return (a.nombre||'').localeCompare(b.nombre||'');
+    return (a.nombre||'').toUpperCase().localeCompare((b.nombre||'').toUpperCase());
   });
   var GEN_COLOR = {
     'Unisex':'#94a3b8','Mixto':'#94a3b8','Niña':'#f472b6','Niño':'#38bdf8',
     'Mujer':'#f472b6','Hombre':'#38bdf8','Femenino':'#f472b6','Masculino':'#38bdf8'
   };
   var ETAPA_LABEL = {
-    EN_DISENO_DIGITAL:'Diseño Digital', EN_CORTE_MUESTRA:'Corte Muestra',
+    CON_PROVEEDOR:'Con Proveedor', EN_DISENO_DIGITAL:'Diseño Digital', EN_CORTE_MUESTRA:'Corte Muestra',
     EN_CONFECCION_MUESTRA:'Confección Muestra', EN_REVISION_GERENCIA:'Revisión Gerencia', EN_ESCALADO:'Escalado'
   };
   var ETAPA_COLOR = {
-    EN_DISENO_DIGITAL:'#a855f7', EN_CORTE_MUESTRA:'#f97316',
+    CON_PROVEEDOR:'#fb923c', EN_DISENO_DIGITAL:'#a855f7', EN_CORTE_MUESTRA:'#f97316',
     EN_CONFECCION_MUESTRA:'#00d4ff', EN_REVISION_GERENCIA:'#fbbf24', EN_ESCALADO:'#34d399'
   };
   var RESP_COLOR = {Carolina:'#f472b6',Isa:'#a78bfa',John:'#38bdf8',Juan:'#34d399'};
-  document.getElementById('modal-cat-titulo').textContent = (esTodos ? 'TODOS EN PROCESO' : cat) + ' · ' + todos.length + (esTodos ? ' diseños' : ' en proceso');
+  document.getElementById('modal-cat-titulo').textContent = (esTodos ? 'TODOS EN PROCESO' : cat.toUpperCase()) + ' · ' + todos.length + (esTodos ? ' diseños' : ' en proceso');
   var b = '';
   if(!todos.length){
     b = '<div style="color:#475569;font-size:14px;padding:20px 0;">No hay diseños activos en esta categoría.</div>';
   } else {
+    var _lastGroupKey = null;
     todos.forEach(function(d){
       var etapa = d.kanban_estado||'EN_DISENO_DIGITAL';
       var ec = ETAPA_COLOR[etapa]||'#94a3b8';
@@ -3261,17 +3262,35 @@ function abrirModalCategoria(cat){
       var gc = GEN_COLOR[gen]||'#94a3b8';
       var rc = RESP_COLOR[d.responsable]||'#64748b';
       var thumb = (d.imagenes&&d.imagenes.length) ? d.imagenes[0].url : '';
-      b += '<div style="background:#0a0d14;border:1px solid #1e2535;border-radius:12px;width:180px;flex:0 0 180px;overflow:hidden;">';
+
+      // ── Encabezado de grupo ─────────────────────────────────────────────────
+      var groupKey = esTodos ? (d.categoria||'SIN CATEGORÍA') : gen;
+      if(groupKey !== _lastGroupKey){
+        _lastGroupKey = groupKey;
+        var groupColor = esTodos ? '#3b82f6' : (GEN_COLOR[gen]||'#94a3b8');
+        var groupLabel = esTodos ? (d.categoria||'SIN CATEGORÍA').toUpperCase() : gen.toUpperCase();
+        b += '</div>'; // cierra el flex anterior si no es el primero
+        b += '<div style="width:100%;margin:14px 0 8px;display:flex;align-items:center;gap:10px;">';
+        b += '<span style="font-size:11px;font-weight:800;color:'+groupColor+';text-transform:uppercase;letter-spacing:1px;">'+groupLabel+'</span>';
+        b += '<div style="flex:1;height:1px;background:'+groupColor+'33;"></div>';
+        b += '</div>';
+        b += '<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;">';
+      }
+
+      // ── Tarjeta ─────────────────────────────────────────────────────────────
+      b += '<div data-id="'+d.id+'" onclick="abrirDesdeModal(this.dataset.id)" style="background:#0a0d14;border:1px solid #1e2535;border-radius:12px;width:180px;flex:0 0 180px;overflow:hidden;cursor:pointer;transition:border-color .15s;" onmouseenter="this.style.borderColor=\'#3b82f688\'" onmouseleave="this.style.borderColor=\'#1e2535\'">';
       // Thumbnail
       if(thumb){
         var allImgUrls = (d.imagenes||[]).map(function(i){return i.url;});
         var allImgJson = JSON.stringify(allImgUrls).replace(/"/g,'&quot;');
-        b += '<div style="height:110px;overflow:hidden;background:#111827;">';
-        b += '<img src="'+thumb+'" data-url="'+thumb+'" data-urls="'+allImgJson+'" onclick="abrirLightbox(this.dataset.url,JSON.parse(this.dataset.urls))" style="width:100%;height:100%;object-fit:cover;cursor:zoom-in;" loading="lazy">';
+        b += '<div style="height:110px;overflow:hidden;background:#111827;position:relative;">';
+        b += '<img src="'+thumb+'" data-url="'+thumb+'" data-urls="'+allImgJson+'" onclick="event.stopPropagation();abrirLightbox(this.dataset.url,JSON.parse(this.dataset.urls))" style="width:100%;height:100%;object-fit:cover;cursor:zoom-in;" loading="lazy">';
+        b += '<div style="position:absolute;top:6px;right:6px;background:rgba(0,0,0,.5);border-radius:5px;padding:2px 5px;font-size:9px;color:#94a3b8;">✏ editar</div>';
         b += '</div>';
       } else {
-        b += '<div style="height:80px;background:#111827;display:flex;align-items:center;justify-content:center;">';
+        b += '<div style="height:80px;background:#111827;display:flex;align-items:center;justify-content:center;position:relative;">';
         b += '<span style="font-size:28px;opacity:.25;">👕</span>';
+        b += '<div style="position:absolute;top:6px;right:6px;background:rgba(0,0,0,.5);border-radius:5px;padding:2px 5px;font-size:9px;color:#94a3b8;">✏ editar</div>';
         b += '</div>';
       }
       b += '<div style="padding:10px 11px;">';
@@ -3280,28 +3299,35 @@ function abrirModalCategoria(cat){
         b += '<div style="font-size:9px;color:#3b82f6;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px;">'+esc(d.categoria)+'</div>';
       }
       // Nombre
-      b += '<div style="font-size:12px;font-weight:700;color:#e2e8f0;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(d.nombre||'Sin nombre')+'</div>';
+      b += '<div style="font-size:12px;font-weight:700;color:#e2e8f0;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="'+esc(d.nombre||'')+'">'+esc((d.nombre||'Sin nombre').toUpperCase())+'</div>';
       // Etapa badge
-      b += '<div style="display:inline-block;background:'+ec+'18;border:1px solid '+ec+'44;color:'+ec+';font-size:9px;font-weight:700;border-radius:8px;padding:2px 7px;margin-bottom:6px;">'+esc(el)+'</div>';
+      b += '<div style="display:inline-block;background:'+ec+'18;border:1px solid '+ec+'44;color:'+ec+';font-size:9px;font-weight:700;border-radius:8px;padding:2px 7px;margin-bottom:6px;">'+esc(el.toUpperCase())+'</div>';
       b += '<br>';
       // Género + responsable
       b += '<div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:2px;">';
-      b += '<span style="background:'+gc+'18;border:1px solid '+gc+'44;color:'+gc+';font-size:9px;font-weight:700;border-radius:8px;padding:1px 6px;">'+esc(gen)+'</span>';
+      b += '<span style="background:'+gc+'18;border:1px solid '+gc+'44;color:'+gc+';font-size:9px;font-weight:700;border-radius:8px;padding:1px 6px;">'+esc(gen.toUpperCase())+'</span>';
       if(d.responsable){
-        b += '<span style="background:'+rc+'22;border:1px solid '+rc+'44;color:'+rc+';font-size:9px;font-weight:700;border-radius:8px;padding:1px 6px;">'+esc(d.responsable)+'</span>';
+        b += '<span style="background:'+rc+'22;border:1px solid '+rc+'44;color:'+rc+';font-size:9px;font-weight:700;border-radius:8px;padding:1px 6px;">'+esc(d.responsable.toUpperCase())+'</span>';
       }
       b += '</div>';
-      // Fotos count
       if(d.imagenes&&d.imagenes.length>0){
         b += '<div style="margin-top:6px;font-size:9px;color:#475569;">📷 '+d.imagenes.length+' foto'+(d.imagenes.length>1?'s':'')+'</div>';
       }
       b += '</div></div>';
     });
+    b += '</div>'; // cierra último grupo
   }
+  // Envolver todo en un contenedor que maneje la apertura correcta del primer grupo
+  b = b.replace(/^<\/div>/, '');
   document.getElementById('modal-cat-body').innerHTML = b;
   var overlay = document.getElementById('modal-categoria');
   overlay.style.display = 'flex';
   document.addEventListener('keydown', _modalCatKey);
+}
+
+function abrirDesdeModal(id){
+  cerrarModalCategoria();
+  setTimeout(function(){ abrirFormDiseno(id); }, 120);
 }
 function cerrarModalCategoria(){
   document.getElementById('modal-categoria').style.display = 'none';
