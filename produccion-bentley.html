@@ -4432,8 +4432,8 @@ function renderSimulador(){
   h += '<div style="width:1px;height:40px;background:#1e2535;flex-shrink:0;"></div>';
   h += '<div><div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.8px;">Total unidades</div><div style="font-family:var(--bebas);font-size:32px;color:var(--green);" id="sim-total-uds">'+totalUds.toLocaleString()+'</div></div>';
   h += '<div style="flex:1;min-width:200px;position:relative;">';
-  h += '<input id="sim-search-dis" oninput="simFiltrarDis(this)" placeholder="Buscar y agregar diseño..." autocomplete="off" style="width:100%;background:#0d1117;border:1px solid #334155;border-radius:8px;color:#e2e8f0;font-size:13px;padding:8px 12px;outline:none;box-sizing:border-box;">';
-  h += '<div id="sim-dis-dropdown" style="display:none;position:absolute;top:100%;left:0;right:0;z-index:200;background:#1a1e2a;border:1px solid #334155;border-radius:8px;max-height:220px;overflow-y:auto;margin-top:4px;"></div>';
+  h += '<input id="sim-search-dis" oninput="simFiltrarDis(this)" onfocus="simFiltrarDis(this)" onblur="setTimeout(function(){var d=document.getElementById(\'sim-dis-dropdown\');if(d)d.style.display=\'none\';},200)" placeholder="🔍  Buscar diseño..." autocomplete="off" style="width:100%;background:#0d1117;border:1px solid #334155;border-radius:8px;color:#e2e8f0;font-size:13px;padding:9px 14px;outline:none;box-sizing:border-box;">';
+  h += '<div id="sim-dis-dropdown" style="display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:200;background:#13161f;border:1px solid #334155;border-radius:10px;max-height:280px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.5);"></div>';
   h += '</div>';
   if(activeDis.length){ h += '<button onclick="limpiarSimulador()" style="padding:6px 14px;border-radius:8px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#ef4444;font-size:12px;cursor:pointer;white-space:nowrap;">🗑 Limpiar</button>'; }
   h += '</div>';
@@ -4506,20 +4506,27 @@ function simFiltrarDis(inp){
   var q = inp.value.trim().toUpperCase();
   var dd = document.getElementById('sim-dis-dropdown');
   if(!dd) return;
-  if(!q){ dd.style.display='none'; return; }
-  var marcaDis = (DB.disenos||[]).filter(function(d){ return d.marca===_simFiltroMarca && d.kanban_estado!=='LISTA_PRODUCCION'; });
-  var matches = marcaDis.filter(function(d){ return d.nombre.toUpperCase().indexOf(q)>=0; }).slice(0,12);
-  if(!matches.length){ dd.style.display='none'; return; }
-  var html='';
+  var marcaDis = (DB.disenos||[]).filter(function(d){ return d.marca===_simFiltroMarca && d.kanban_estado!=='LISTA_PRODUCCION'; })
+    .sort(function(a,b){ return (a.categoria||'').localeCompare(b.categoria||'')||(a.nombre||'').localeCompare(b.nombre||''); });
+  var matches = q ? marcaDis.filter(function(d){ return d.nombre.toUpperCase().indexOf(q)>=0||(d.categoria||'').toUpperCase().indexOf(q)>=0; }) : marcaDis;
+  if(!matches.length){ dd.innerHTML='<div style="padding:12px 16px;color:#475569;font-size:13px;">Sin resultados</div>'; dd.style.display='block'; return; }
+  var html=''; var catActual=null;
   matches.forEach(function(d){
     var yaEsta = _simActive.indexOf(d.id)>=0;
-    html += '<div onclick="simAgregarDiseno(\''+d.id+'\')" style="padding:8px 12px;cursor:'+(yaEsta?'default':'pointer')+';color:'+(yaEsta?'#475569':'#e2e8f0')+';font-size:13px;border-bottom:1px solid #1e2535;display:flex;align-items:center;justify-content:space-between;" onmousedown="event.preventDefault()">';
-    html += '<span>'+esc(d.nombre)+'</span>';
-    html += '<span style="font-size:10px;color:'+(yaEsta?'#475569':'#00d4ff')+';">'+(yaEsta?'ya agregado':'+ agregar')+'</span>';
+    if(!q && d.categoria!==catActual){
+      catActual=d.categoria;
+      html += '<div style="padding:5px 14px 3px;font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:1px;background:#0d1117;position:sticky;top:0;">'+esc(catActual||'SIN CATEGORÍA')+'</div>';
+    }
+    var etColor = _ETAPA_COLOR_SIM[d.kanban_estado]||'#475569';
+    var etShort = _ETAPA_SHORT_SIM[d.kanban_estado]||'';
+    html += '<div onmousedown="event.preventDefault();simAgregarDiseno(\''+d.id+'\')" style="padding:9px 14px;cursor:'+(yaEsta?'default':'pointer')+';border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;justify-content:space-between;gap:8px;'+(yaEsta?'opacity:.4;':'')+'background:transparent;" onmouseover="this.style.background=\'rgba(0,212,255,.06)\'" onmouseout="this.style.background=\'transparent\'">';
+    html += '<div style="min-width:0;flex:1;"><div style="font-size:13px;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(d.nombre)+'</div>';
+    if(etShort) html += '<div style="font-size:10px;color:'+etColor+';margin-top:1px;">'+etShort+'</div>';
+    html += '</div>';
+    html += '<span style="font-size:10px;font-weight:600;white-space:nowrap;color:'+(yaEsta?'#334155':'#00d4ff')+';flex-shrink:0;">'+(yaEsta?'✓':'+ agregar')+'</span>';
     html += '</div>';
   });
-  dd.innerHTML = html;
-  dd.style.display = 'block';
+  dd.innerHTML=html; dd.style.display='block';
 }
 
 function simAgregarDiseno(id){
