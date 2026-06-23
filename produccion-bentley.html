@@ -2889,18 +2889,30 @@ function renderOPDetalle(opId){
     var pctC = udsC ? Math.round(udsEC/udsC*100) : 0;
 
     h += '<div style="border-bottom:1px solid var(--card-border);">';
-    h += '<div style="padding:6px 14px;background:rgba(255,255,255,.02);display:flex;align-items:center;gap:8px;">';
-    h += '<span style="font-size:12px;font-weight:700;color:#e2e8f0;flex:1;">'+esc(color)+'</span>';
+    var satColorId = null;
+    otsC.forEach(function(o){ if(o.satelite_id && !satColorId) satColorId=o.satelite_id; });
+    var tieneCorteActive = otsC.some(function(o){ return o.estado==='PENDIENTE_CORTAR'||o.estado==='CORTE_POR_ALISTAR'; });
+    var tieneConfeccion = otsC.some(function(o){ return o.estado==='EN_CONFECCION'||o.estado==='ASIGNADO'||o.estado==='NOVEDAD'; });
+    h += '<div style="padding:6px 14px;background:rgba(255,255,255,.02);display:flex;align-items:center;gap:8px;flex-wrap:wrap;">';
+    h += '<span style="font-size:12px;font-weight:700;color:#e2e8f0;min-width:70px;">'+esc(color)+'</span>';
+    if(edit){
+      h += '<select data-color="'+esc(color)+'" data-field="sat-color" style="flex:1;background:rgba(255,200,0,.1);border:1px solid rgba(255,200,0,.4);border-radius:6px;color:var(--text);padding:3px 6px;font-size:11px;"><option value="">Sin asignar</option>'+satOpts.replace('value="'+(satColorId||'')+'"','value="'+(satColorId||'')+'" selected')+'</select>';
+    } else if(tieneCorteActive){
+      h += '<select data-opid="'+op.id+'" data-color="'+esc(color)+'" onchange="cambiarSateliteColor(this.dataset.opid,this.dataset.color,this.value)" style="flex:1;min-width:0;background:#0d1117;border:1px solid #2d3348;border-radius:5px;color:var(--text);padding:2px 5px;font-size:11px;cursor:pointer;"><option value="">Sin asignar</option>'+satOpts.replace('value="'+(satColorId||'')+'"','value="'+(satColorId||'')+'" selected')+'</select>';
+    } else {
+      h += '<span style="font-size:11px;color:var(--dim);flex:1;">'+esc(getSatNombre(satColorId))+'</span>';
+      if(tieneConfeccion) h += '<button data-opid="'+op.id+'" data-color="'+esc(color)+'" onclick="modalReprogramarSateliteColor(this.dataset.opid,this.dataset.color)" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:#fbbf24;border-radius:4px;padding:2px 5px;cursor:pointer;font-size:9px;" title="Reprogramar taller">↺</button>';
+    }
     h += '<span style="font-size:10px;color:var(--green);">'+pctC+'% entregado</span>';
     h += '</div>';
 
     otsC.forEach(function(ot){
       var dias = diasRestantes(ot.fecha_estimada_entrega);
       if(edit){
-        h += '<div style="padding:8px 14px;border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:8px;flex-wrap:wrap;">';
+        h += '<div style="padding:8px 14px;border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:8px;">';
         h += '<span style="font-size:11px;color:var(--dim);min-width:28px;">'+esc(ot.talla||'—')+'</span>';
-        h += '<input type="number" min="0" data-otid="'+ot.id+'" data-field="cantidad" value="'+(ot.cantidad||0)+'" style="width:52px;text-align:center;background:rgba(255,200,0,.1);border:1px solid rgba(255,200,0,.4);border-radius:6px;color:var(--text);padding:3px 5px;font-size:12px;">';
-        h += '<select data-otid="'+ot.id+'" data-field="satelite_id" style="flex:1;background:rgba(255,200,0,.1);border:1px solid rgba(255,200,0,.4);border-radius:6px;color:var(--text);padding:3px 6px;font-size:11px;"><option value="">Sin asignar</option>'+satOpts.replace('value="'+ot.satelite_id+'"','value="'+ot.satelite_id+'" selected')+'</select>';
+        h += '<input type="number" min="0" data-otid="'+ot.id+'" data-field="cantidad" value="'+(ot.cantidad||0)+'" style="width:60px;text-align:center;background:rgba(255,200,0,.1);border:1px solid rgba(255,200,0,.4);border-radius:6px;color:var(--text);padding:3px 5px;font-size:12px;">';
+        h += '<span style="font-size:10px;color:#475569;">uds</span>';
         h += '</div>';
       } else if(ot.estado === 'ENTREGADO'){
         // Fila entregada — solo info, con fecha y días
@@ -2925,13 +2937,7 @@ function renderOPDetalle(opId){
         h += '<div style="padding:6px 14px;border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:6px;background:'+rowBg+';">';
         h += '<span style="font-size:12px;font-weight:700;color:var(--cyan);min-width:30px;">'+esc(ot.talla||'—')+'</span>';
         h += badge(ot.estado);
-        // Satélite
-        if(esPendCorte){
-          h += '<select data-otid="'+ot.id+'" onchange="cambiarSateliteOT(this.dataset.otid,this.value)" style="flex:1;min-width:0;background:#0d1117;border:1px solid #2d3348;border-radius:5px;color:var(--text);padding:2px 5px;font-size:10px;cursor:pointer;"><option value="">Sin asignar</option>'+satOpts.replace('value="'+ot.satelite_id+'"','value="'+ot.satelite_id+'" selected')+'</select>';
-        } else {
-          h += '<span style="font-size:10px;color:var(--dim);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(getSatNombre(ot.satelite_id))+'</span>';
-          if(esConfeccion) h += '<button data-otid="'+ot.id+'" onclick="modalReprogramarSatelite(this.dataset.otid)" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:#fbbf24;border-radius:4px;padding:2px 5px;cursor:pointer;font-size:9px;" title="Reprogramar taller">↺</button>';
-        }
+        h += '<span style="flex:1;"></span>';
         // Input entrega inline + botón confirmar
         h += '<input type="number" id="ent-'+ot.id+'" min="0" max="'+ot.cantidad+'" placeholder="0" data-otid="'+ot.id+'" data-max="'+ot.cantidad+'" class="ent-masiva-uds" value="'+(yaEnt>0?yaEnt:'')+'" style="width:50px;text-align:center;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.3);border-radius:5px;color:var(--text);padding:3px 4px;font-size:12px;font-weight:700;" oninput="this.style.borderColor=this.value>0?\'#34d399\':\'rgba(52,211,153,.3)\'">';
         h += '<span style="font-size:9px;color:#475569;">/ '+ot.cantidad+'</span>';
@@ -3023,15 +3029,17 @@ function cancelarEdicionOP(){
 async function guardarEdicionOP(){
   // Recoger todos los cambios de cantidad y satélite
   var cantInputs = document.querySelectorAll('[data-field="cantidad"]');
-  var satSelects = document.querySelectorAll('[data-field="satelite_id"]');
+  var satColorSels = document.querySelectorAll('[data-field="sat-color"]');
   var cambios = 0;
   cantInputs.forEach(function(inp){
     var ot = DB.ots.find(function(o){ return o.id===inp.dataset.otid; });
     if(ot){ var nv = parseInt(inp.value)||0; if(nv!==ot.cantidad){ ot.cantidad=nv; cambios++; } }
   });
-  satSelects.forEach(function(sel){
-    var ot = DB.ots.find(function(o){ return o.id===sel.dataset.otid; });
-    if(ot){ var nv=sel.value||null; if(nv!==ot.satelite_id){ ot.satelite_id=nv; cambios++; } }
+  satColorSels.forEach(function(sel){
+    var color = sel.dataset.color; var nv = sel.value||null;
+    DB.ots.filter(function(o){ return o.op_id===_opDetalleId && o.color===color; }).forEach(function(ot){
+      if(nv!==ot.satelite_id){ ot.satelite_id=nv; cambios++; }
+    });
   });
 
   if(!cambios){ toast('Sin cambios', 'warning'); cancelarEdicionOP(); return; }
@@ -6109,6 +6117,41 @@ async function confirmarEntregaInline(otId){
     toast(pendientes > 0 ? ot.talla+': '+uds+' recibidas · '+pendientes+' novedad' : ot.talla+': '+uds+' uds entregadas ✓', pendientes > 0 ? 'error' : 'success');
     renderPage('ops');
   }
+}
+
+async function cambiarSateliteColor(opId, color, nuevoSatId){
+  var otsColor = DB.ots.filter(function(o){ return o.op_id===opId && o.color===color; });
+  if(!otsColor.length) return;
+  var satNombre = getSatNombre(nuevoSatId);
+  otsColor.forEach(function(ot){
+    ot.satelite_id = nuevoSatId || null;
+    if(!ot.historial) ot.historial = [];
+    ot.historial.push({fecha: new Date().toISOString(), accion: 'Taller asignado: '+satNombre, user: getUser()});
+  });
+  saveLocal();
+  var ok = await guardarArchivo('ots', {ots: DB.ots});
+  if(ok){ toast('Taller asignado: '+satNombre+' ('+otsColor.length+' OTs)', 'success'); renderPage('ops'); }
+}
+
+function modalReprogramarSateliteColor(opId, color){
+  var otsColor = DB.ots.filter(function(o){ return o.op_id===opId && o.color===color && (o.estado==='EN_CONFECCION'||o.estado==='ASIGNADO'||o.estado==='NOVEDAD'); });
+  if(!otsColor.length) return;
+  var satActual = getSatNombre(otsColor[0].satelite_id);
+  var satOpts2 = DB.satelites.filter(function(s){ return s.activo; }).map(function(s){ return '<option value="'+s.id+'">'+s.nombre+'</option>'; }).join('');
+  var body = '<div style="background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.3);border-radius:8px;padding:12px 14px;margin-bottom:16px;">';
+  body += '<div style="font-size:12px;font-weight:700;color:#fbbf24;margin-bottom:4px;">⚠️ Reprogramar taller para '+esc(color)+'</div>';
+  body += '<div style="font-size:12px;color:#94a3b8;">Taller actual: <strong style="color:#e2e8f0;">'+esc(satActual)+'</strong> · '+otsColor.length+' OTs</div>';
+  body += '</div>';
+  body += '<label style="font-size:11px;color:var(--dim);display:block;margin-bottom:5px;">Nuevo taller</label>';
+  body += '<select id="rp-color-sat" style="width:100%;background:#0d1117;border:1px solid #2d3348;border-radius:8px;color:var(--text);padding:8px 12px;font-size:13px;"><option value="">Sin asignar</option>'+satOpts2+'</select>';
+  var footer = '<button onclick="confirmarReprogramarColor(\''+opId+'\',\''+esc(color)+'\')" style="background:rgba(249,115,22,.15);border:1px solid rgba(249,115,22,.4);color:#f97316;border-radius:8px;padding:8px 18px;cursor:pointer;font-size:13px;font-weight:700;">Confirmar</button><button onclick="closeModal()" style="background:rgba(255,255,255,.06);border:1px solid var(--card-border);color:var(--dim);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px;margin-left:8px;">Cancelar</button>';
+  openModal('REPROGRAMAR TALLER', body, footer);
+}
+
+async function confirmarReprogramarColor(opId, color){
+  var nuevoSatId = document.getElementById('rp-color-sat').value;
+  closeModal();
+  await cambiarSateliteColor(opId, color, nuevoSatId);
 }
 
 async function cambiarSateliteOT(otId, nuevoSatId){
