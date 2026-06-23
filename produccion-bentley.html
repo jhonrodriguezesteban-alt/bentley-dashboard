@@ -3306,6 +3306,8 @@ function renderDiseno(){
       var pn=disPrioNorm(d.prioridad); var pc=DIS_PRIO_CFG[pn];
       h += '<button data-id="'+d.id+'" onclick="event.stopPropagation();cicloPrioDis(this.dataset.id)" title="Cambiar prioridad" style="font-size:9px;font-weight:800;color:'+pc.color+';background:'+pc.bg+';border:1px solid '+pc.border+';border-radius:4px;padding:2px 7px;cursor:pointer;line-height:1;flex-shrink:0;">'+pc.label+'</button>';
       h += '<button data-id="'+d.id+'" onclick="abrirFotosDiseno(this.dataset.id)" style="position:relative;display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:5px;cursor:pointer;color:#fbbf24;font-size:12px;padding:0;line-height:1;flex-shrink:0;" title="Fotos">📷'+(nFotos?'<span style="position:absolute;top:-4px;right:-4px;background:#fbbf24;color:#0d0f14;border-radius:8px;font-size:8px;font-weight:700;min-width:13px;height:13px;display:flex;align-items:center;justify-content:center;padding:0 2px;">'+nFotos+'</span>':'')+'</button>';
+      var nComents = (d.comentarios||[]).length;
+      h += '<button data-id="'+d.id+'" onclick="event.stopPropagation();abrirComentariosDiseno(this.dataset.id)" style="position:relative;display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.3);border-radius:5px;cursor:pointer;color:#818cf8;font-size:12px;padding:0;line-height:1;flex-shrink:0;" title="Comentarios">💬'+(nComents?'<span style="position:absolute;top:-4px;right:-4px;background:#6366f1;color:#fff;border-radius:8px;font-size:8px;font-weight:700;min-width:13px;height:13px;display:flex;align-items:center;justify-content:center;padding:0 2px;">'+nComents+'</span>':'')+'</button>';
       h += '<button data-id="'+d.id+'" onclick="abrirFormDiseno(this.dataset.id)" style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);border-radius:5px;cursor:pointer;color:#00d4ff;font-size:12px;padding:0;line-height:1;flex-shrink:0;" title="Editar">✏</button>';
       h += '</div></div>';
 
@@ -3893,6 +3895,91 @@ async function subirFotosDiseno(files){
   renderPage(currentPage);
 }
 
+// ── Comentarios de Diseño ────────────────────────────────────────────────────
+var _comentCtx = null;
+
+function abrirComentariosDiseno(id){
+  _comentCtx = id;
+  _renderDrawerComentarios();
+}
+
+function _renderDrawerComentarios(){
+  var id = _comentCtx;
+  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
+  if(!d) return;
+  var comentarios = (d.comentarios||[]).slice().reverse(); // más recientes primero
+
+  var h = '';
+
+  // Input para nuevo comentario
+  h += '<div style="background:#0d1117;border:1px solid #1e2535;border-radius:10px;padding:12px;margin-bottom:18px;">';
+  h += '<textarea id="coment-input" placeholder="Escribe un comentario..." style="width:100%;background:transparent;border:none;outline:none;color:#e2e8f0;font-size:13px;resize:none;min-height:70px;font-family:inherit;box-sizing:border-box;"></textarea>';
+  h += '<div style="display:flex;justify-content:flex-end;margin-top:6px;">';
+  h += '<button onclick="agregarComentarioDiseno()" style="background:#6366f1;border:none;border-radius:7px;color:#fff;font-size:12px;font-weight:700;padding:6px 18px;cursor:pointer;">Publicar</button>';
+  h += '</div></div>';
+
+  // Historial
+  if(!comentarios.length){
+    h += '<div style="text-align:center;padding:24px 0;color:#334155;font-size:12px;">Sin comentarios aún</div>';
+  } else {
+    var AVATAR_COLORS = {Carolina:'#f472b6',Isa:'#a78bfa',John:'#38bdf8',Juan:'#34d399'};
+    comentarios.forEach(function(c){
+      var ac = AVATAR_COLORS[c.autor] || '#64748b';
+      var inicial = (c.autor||'?')[0].toUpperCase();
+      h += '<div style="display:flex;gap:10px;margin-bottom:14px;align-items:flex-start;">';
+      h += '<div style="flex-shrink:0;width:30px;height:30px;border-radius:50%;background:'+ac+'22;border:1px solid '+ac+'55;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:'+ac+';">'+inicial+'</div>';
+      h += '<div style="flex:1;min-width:0;">';
+      h += '<div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px;">';
+      h += '<span style="font-size:12px;font-weight:700;color:'+ac+';">'+esc(c.autor||'')+'</span>';
+      h += '<span style="font-size:10px;color:#334155;">'+esc(c.fecha||'')+(c.hora?' · '+esc(c.hora):'')+'</span>';
+      h += '</div>';
+      h += '<div style="background:#0d1117;border:1px solid #1e2535;border-radius:0 8px 8px 8px;padding:8px 11px;font-size:12px;color:#cbd5e1;line-height:1.5;white-space:pre-wrap;">'+esc(c.texto||'')+'</div>';
+      if(c.autor === getUser()) {
+        h += '<button data-cid="'+c.id+'" onclick="eliminarComentarioDiseno(this.dataset.cid)" style="background:none;border:none;cursor:pointer;color:#334155;font-size:10px;margin-top:3px;padding:0;">✕ Eliminar</button>';
+      }
+      h += '</div></div>';
+    });
+  }
+
+  openDrawer('💬 ' + d.nombre, h, '');
+  // Focus en textarea
+  setTimeout(function(){ var el=document.getElementById('coment-input'); if(el) el.focus(); }, 80);
+}
+
+function agregarComentarioDiseno(){
+  var id = _comentCtx;
+  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
+  if(!d) return;
+  var el = document.getElementById('coment-input');
+  var texto = (el ? el.value : '').trim();
+  if(!texto) return;
+  if(!d.comentarios) d.comentarios = [];
+  var ahora = new Date();
+  var hora = ahora.getHours().toString().padStart(2,'0')+':'+ahora.getMinutes().toString().padStart(2,'0');
+  d.comentarios.push({
+    id: 'c_'+Date.now(),
+    texto: texto,
+    autor: getUser() || 'Desconocido',
+    fecha: hoy(),
+    hora: hora
+  });
+  if(el) el.value = '';
+  guardarDisenos();
+  renderPage(currentPage);
+  _renderDrawerComentarios();
+  toast('Comentario publicado','success');
+}
+
+function eliminarComentarioDiseno(cid){
+  var id = _comentCtx;
+  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
+  if(!d) return;
+  d.comentarios = (d.comentarios||[]).filter(function(c){ return c.id!==cid; });
+  guardarDisenos();
+  renderPage(currentPage);
+  _renderDrawerComentarios();
+}
+
 var _lbUrls = [];   // lista de URLs de la galería actual
 var _lbIdx  = 0;    // índice actual
 var _lbTouchX = null; // para swipe
@@ -4016,8 +4103,9 @@ function abrirModalCategoria(cat){
     if(!esTodos) return (d.categoria||'Sin categoría') === cat;
     return d.kanban_estado !== 'LISTA_PRODUCCION';
   }).sort(function(a,b){
-    // TODOS: agrupar por categoría → género → nombre
-    // Por categoría: género → nombre
+    // Primero por prioridad (P1 arriba), luego categoría → género → nombre
+    var pa = disPrioNorm(a.prioridad), pb = disPrioNorm(b.prioridad);
+    if(pa!==pb) return pa-pb;
     var ca = (a.categoria||'').toUpperCase(), cb = (b.categoria||'').toUpperCase();
     if(esTodos && ca!==cb) return ca.localeCompare(cb);
     var ga = GEN_ORDER[a.genero||'Unisex']||0, gb = GEN_ORDER[b.genero||'Unisex']||0;
@@ -4111,6 +4199,11 @@ function abrirModalCategoria(cat){
         var isSel=mpn===pv;
         b += '<button data-id="'+d.id+'" data-pv="'+pv+'" onclick="event.stopPropagation();setPrioDis(this.dataset.id,parseInt(this.dataset.pv));abrirModalCategoria(document.getElementById(\'modal-cat-titulo\').textContent.split(\'·\')[0].trim()===\'TODOS EN PROCESO\'?\'__TODOS__\':document.getElementById(\'modal-cat-titulo\').textContent.split(\'·\')[0].trim().toLowerCase())" style="font-size:9px;font-weight:800;color:'+c2.color+';background:'+(isSel?c2.bg:'transparent')+';border:1px solid '+(isSel?c2.border:'#1e2535')+';border-radius:4px;padding:2px 6px;cursor:pointer;">'+c2.label+'</button>';
       });
+      b += '</div>';
+      // Botón comentarios en modal
+      var nCom=(d.comentarios||[]).length;
+      b += '<div style="margin-top:5px;">';
+      b += '<button data-did="'+d.id+'" onclick="event.stopPropagation();cerrarModalCategoria();setTimeout(function(){abrirComentariosDiseno(this.dataset.did);}.bind(this),80)" style="display:inline-flex;align-items:center;gap:5px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.3);border-radius:6px;color:#818cf8;font-size:10px;font-weight:600;padding:3px 9px;cursor:pointer;">💬 '+(nCom?nCom+' comentario'+(nCom>1?'s':''):'Comentar')+'</button>';
       b += '</div>';
       b += '</div></div>';
     });
