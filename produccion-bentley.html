@@ -3108,7 +3108,7 @@ function _buildFormEditarOP(op){
   h += '</div>';
   h += '<button type="button" onclick="opRefAdd()" style="width:100%;padding:8px;border-radius:8px;background:rgba(0,212,255,.04);border:1px dashed rgba(0,212,255,.25);color:var(--cyan);font-size:12px;font-weight:600;cursor:pointer;margin-bottom:16px;">+ Agregar otra referencia</button>';
   if(hasOTs){
-    h += '<div style="background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.3);border-radius:8px;padding:10px 14px;font-size:12px;color:#fbbf24;margin-bottom:14px;">⚠ Esta OP ya tiene OTs generadas. Cambios en colores/tallas actualizan la OP pero no modifican OTs existentes.</div>';
+    h += '<div style="background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.3);border-radius:8px;padding:10px 14px;font-size:12px;color:#fbbf24;margin-bottom:14px;">⚠ OTs ya generadas: se actualizan cantidades de colores existentes y se crean OTs nuevas para colores nuevos.</div>';
   }
   h += '<div id="op-preview" style="background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.2);border-radius:10px;padding:14px;font-size:13px;display:none;margin-bottom:16px;"></div>';
   h += '<div style="display:flex;gap:10px;">';
@@ -3147,12 +3147,49 @@ async function guardarEdicionOPRefs(opId){
   op.categoria=refs[0].cat;
   op.nombre_producto=refs.length>1 ? refs.map(function(r){ return r.nombre; }).join(' + ') : refs[0].nombre;
   op.updated_at=hoy();
+
+  // ── Sincronizar OTs existentes y crear OTs para colores nuevos ───────────
+  var otsExistentes = DB.ots.filter(function(o){ return o.op_id===opId; });
+  var otNumMax = DB.ots.reduce(function(a,o){ return Math.max(a,o.numero_ot||0); },0);
+  var otsNuevas = [];
+  refs.forEach(function(ref){
+    (ref.colores||[]).forEach(function(color){
+      (ref.tallas||[]).forEach(function(talla){
+        var qty = (ref.cantidades||{})[color+'_'+talla]||0;
+        if(qty<=0) return;
+        // Buscar OT existente para este color+talla
+        var otExist = otsExistentes.find(function(o){ return o.color===color && o.talla===talla; });
+        if(otExist){
+          // Actualizar cantidad solo si no está entregada
+          if(otExist.estado!=='ENTREGADO'){ otExist.cantidad=qty; }
+        } else {
+          // OT nueva para color nuevo
+          otsNuevas.push({
+            id:uid(), numero_ot:++otNumMax, op_id:opId,
+            categoria:ref.cat, nombre:ref.nombre, referencia:(ref.ref||'')+talla,
+            color:color, talla:talla, cantidad:qty, valor_mo:ref.vmo||0,
+            fecha_ot:op.fecha_op||hoy(), satelite_id:null,
+            fecha_entrega_corte_satelite:null, fecha_estimada_entrega:null,
+            fecha_entrega_real:null, unidades_entregadas:0, unidades_novedad:0,
+            estado:'PENDIENTE_CORTAR', nt_corte_satelite:null, nt_ingreso_planta:null,
+            op_effi:null, cumplió_fecha:null, motivo_incumplimiento:'', notas:'',
+            historial:[], created_at:hoy(), created_by:getUser()
+          });
+        }
+      });
+    });
+  });
+  if(otsNuevas.length) DB.ots = DB.ots.concat(otsNuevas);
+
   setBtnLoading('btn-crear-op',true);
   saveLocal();
-  var ok=await guardarArchivo('ops',{ops:DB.ops});
+  var ok1=await guardarArchivo('ops',{ops:DB.ops});
+  var ok2=(otsNuevas.length||otsExistentes.length) ? await guardarArchivo('ots',{ots:DB.ots}) : true;
   setBtnLoading('btn-crear-op',false);
-  if(ok){
-    toast('OP actualizada','success');
+  if(ok1&&ok2){
+    var msg = 'OP actualizada';
+    if(otsNuevas.length) msg += ' · '+otsNuevas.length+' OTs nuevas generadas';
+    toast(msg,'success');
     closeModal();
     document.getElementById('page-content').innerHTML=renderOPDetalle(opId);
   }
