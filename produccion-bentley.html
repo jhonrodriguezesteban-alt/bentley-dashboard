@@ -3084,6 +3084,7 @@ var DIS_RESP_COLORS  = {Carolina:'#fbbf24',Isa:'#c084fc',John:'#34d399',Juan:'#3
 var DIS_MARCAS_DEFAULT = ['Bentley Kids','Prime','Maquilas'];
 var DIS_CATEGORIAS = ['Abrigos','Accesorios','Blusas','Buzos','Camisetas','Chalecos','Chaquetas','Conjuntos','Faldas','Overol','Pantalones','Tejido de Punto','Vestidos','Otro'];
 var _disPrioFiltro = 0; // 0=todas, 1,2,3
+var _disBusqueda = '';
 var DIS_PRIO_CFG = {
   1: {label:'P1', color:'#ef4444', bg:'rgba(239,68,68,.15)', border:'rgba(239,68,68,.5)'},
   2: {label:'P2', color:'#fbbf24', bg:'rgba(251,191,36,.12)', border:'rgba(251,191,36,.45)'},
@@ -3251,8 +3252,8 @@ function renderDiseno(){
     h += '</div>';
   }
 
-  // ── Filtro prioridad ────────────────────────────────────────────────────────
-  h += '<div style="display:flex;align-items:center;gap:6px;margin-bottom:14px;flex-wrap:wrap;">';
+  // ── Filtros: prioridad + buscador ────────────────────────────────────────────
+  h += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;">';
   h += '<span style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.5px;margin-right:2px;">Prioridad:</span>';
   [{v:0,label:'Todas'},{v:1,label:'P1'},{v:2,label:'P2'},{v:3,label:'P3'}].forEach(function(p){
     var active = _disPrioFiltro===p.v;
@@ -3262,6 +3263,10 @@ function renderDiseno(){
     var tcolor = active ? (pc?pc.color:'#00d4ff') : '#64748b';
     h += '<button onclick="setDisPrioFiltro('+p.v+')" style="padding:4px 12px;border-radius:16px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid '+bcolor+';background:'+bgcolor+';color:'+tcolor+';transition:all .15s;">'+p.label+'</button>';
   });
+  h += '<div style="flex:1;min-width:160px;max-width:280px;position:relative;margin-left:8px;">';
+  h += '<input id="dis-search-input" type="text" value="'+esc(_disBusqueda)+'" oninput="_disBusqueda=this.value;renderPage(\'diseno\')" placeholder="🔍 Buscar diseño..." style="width:100%;background:#0d1117;border:1px solid #1e2535;border-radius:20px;color:#e2e8f0;font-size:12px;padding:5px 14px 5px 14px;outline:none;box-sizing:border-box;">';
+  if(_disBusqueda) h += '<button onclick="_disBusqueda=\'\';renderPage(\'diseno\')" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:#64748b;cursor:pointer;font-size:14px;padding:0;line-height:1;">×</button>';
+  h += '</div>';
   h += '</div>';
 
   // ── Kanban board horizontal ──────────────────────────────────────────────────
@@ -3270,7 +3275,8 @@ function renderDiseno(){
   DIS_KANBAN.forEach(function(col){
     var items = todosItems.filter(function(d){
       if((d.kanban_estado||'EN_DISENO_DIGITAL')!==col.k) return false;
-      if(_disPrioFiltro) return disPrioNorm(d.prioridad)===_disPrioFiltro;
+      if(_disPrioFiltro && disPrioNorm(d.prioridad)!==_disPrioFiltro) return false;
+      if(_disBusqueda){ var q=_disBusqueda.toUpperCase(); if((d.nombre||'').toUpperCase().indexOf(q)<0 && (d.categoria||'').toUpperCase().indexOf(q)<0) return false; }
       return true;
     }).sort(function(a,b){
       var pa=disPrioNorm(a.prioridad), pb=disPrioNorm(b.prioridad);
