@@ -3216,10 +3216,29 @@ function setPrioDis(id, prio){
   renderPage('diseno');
 }
 function cicloPrioDis(id){
-  var d=(DB.disenos||[]).find(function(x){return x.id===id;});
-  if(!d) return;
-  var cur = disPrioNorm(d.prioridad);
-  setPrioDis(id, cur>=3?1:cur+1);
+  // Mostrar popover de selección en lugar de ciclar automáticamente
+  var existing = document.getElementById('prio-popover');
+  if(existing){ existing.remove(); if(existing.dataset.did===id) return; }
+  var btn = document.querySelector('[data-id="'+id+'"][onclick*="cicloPrioDis"]');
+  if(!btn) return;
+  var pop = document.createElement('div');
+  pop.id = 'prio-popover';
+  pop.dataset.did = id;
+  pop.style.cssText = 'position:fixed;z-index:9999;background:#1a1e2a;border:1px solid #2d3348;border-radius:8px;padding:6px;display:flex;gap:5px;box-shadow:0 4px 20px rgba(0,0,0,.6);';
+  [1,2,3].forEach(function(n){
+    var pc = DIS_PRIO_CFG[n];
+    var b = document.createElement('button');
+    b.textContent = pc.label;
+    b.style.cssText = 'font-size:11px;font-weight:800;color:'+pc.color+';background:'+pc.bg+';border:1px solid '+pc.border+';border-radius:5px;padding:4px 12px;cursor:pointer;';
+    b.onclick = function(e){ e.stopPropagation(); pop.remove(); setPrioDis(id, n); };
+    pop.appendChild(b);
+  });
+  var rect = btn.getBoundingClientRect();
+  pop.style.top = (rect.bottom + 4) + 'px';
+  pop.style.left = rect.left + 'px';
+  document.body.appendChild(pop);
+  var dismiss = function(e){ if(!pop.contains(e.target)){ pop.remove(); document.removeEventListener('click',dismiss); } };
+  setTimeout(function(){ document.addEventListener('click', dismiss); }, 10);
 }
 function setDisPrioFiltro(p){ _disPrioFiltro=p; renderPage('diseno'); }
 var _disFiltroMarca = 'Bentley Kids';
