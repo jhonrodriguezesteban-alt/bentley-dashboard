@@ -2448,8 +2448,12 @@ var DIS_KANBAN = [
   {k:'EN_CORTE_MUESTRA',     label:'Corte de Muestra',   color:'#f97316', bg:'rgba(249,115,22,.08)'},
   {k:'EN_CONFECCION_MUESTRA',label:'Confección Muestra', color:'#00d4ff', bg:'rgba(0,212,255,.08)'},
   {k:'EN_REVISION_GERENCIA', label:'Revisión Gerencia',  color:'#fbbf24', bg:'rgba(251,191,36,.08)'},
+  {k:'CON_PROVEEDOR',        label:'Con Proveedor',      color:'#fb923c', bg:'rgba(251,146,60,.08)'},
   {k:'EN_ESCALADO',          label:'Escalado Tallas',    color:'#34d399', bg:'rgba(52,211,153,.08)'},
 ];
+
+var DIS_PROVEEDORES_DEFAULT = ['Peño','Tejidos Mariluz','Ginnes Floyd','Ginnes Taipan'];
+function getDisProveedores(){ return (DB.disenos_cfg && DB.disenos_cfg.proveedores) ? DB.disenos_cfg.proveedores : DIS_PROVEEDORES_DEFAULT.slice(); }
 
 function getDisMarcas(){ return (DB.disenos_cfg && DB.disenos_cfg.marcas) ? DB.disenos_cfg.marcas : DIS_MARCAS_DEFAULT; }
 
@@ -2498,11 +2502,13 @@ function renderDiseno(){
     activosItems.forEach(function(d){ var e=d.kanban_estado||'EN_DISENO_DIGITAL'; etapaTotales[e]=(etapaTotales[e]||0)+1; });
     var ETAPA_COLOR = {
       EN_DISENO_DIGITAL:'#a855f7', EN_CORTE_MUESTRA:'#f97316',
-      EN_CONFECCION_MUESTRA:'#00d4ff', EN_REVISION_GERENCIA:'#fbbf24', EN_ESCALADO:'#34d399'
+      EN_CONFECCION_MUESTRA:'#00d4ff', EN_REVISION_GERENCIA:'#fbbf24',
+      CON_PROVEEDOR:'#fb923c', EN_ESCALADO:'#34d399'
     };
     var ETAPA_SHORT = {
       EN_DISENO_DIGITAL:'Diseño', EN_CORTE_MUESTRA:'Corte',
-      EN_CONFECCION_MUESTRA:'Confec.', EN_REVISION_GERENCIA:'Revisión', EN_ESCALADO:'Escalado'
+      EN_CONFECCION_MUESTRA:'Confec.', EN_REVISION_GERENCIA:'Revisión',
+      CON_PROVEEDOR:'Proveedor', EN_ESCALADO:'Escalado'
     };
     var GEN_COLOR = {
       'Unisex':'#94a3b8','Mixto':'#94a3b8','Niña':'#f472b6','Niño':'#38bdf8',
@@ -2618,6 +2624,19 @@ function renderDiseno(){
       h += '<span style="background:'+_gc+'18;border:1px solid '+_gc+'44;border-radius:4px;padding:0px 6px;font-size:9px;color:'+_gc+';font-weight:600;letter-spacing:.3px;">'+esc(_gen)+'</span>';
       h += '</div>';
 
+      // Proveedor: badge si tiene uno asignado, o selector inline si está en CON_PROVEEDOR
+      if(curEstado === 'CON_PROVEEDOR'){
+        var provs = getDisProveedores();
+        h += '<div style="margin-bottom:6px;">';
+        h += '<select data-id="'+d.id+'" onchange="cambiarProveedorDiseno(this.dataset.id,this.value)" onclick="event.stopPropagation()" style="width:100%;background:#1a1008;border:1px solid #fb923c55;border-radius:6px;color:#fb923c;font-size:11px;font-weight:600;padding:4px 7px;cursor:pointer;outline:none;">';
+        h += '<option value="" style="background:#1a1e2a;color:#64748b;">'+(d.proveedor?'— Quitar proveedor':'— Seleccionar proveedor —')+'</option>';
+        provs.forEach(function(p){ h += '<option value="'+esc(p)+'"'+(d.proveedor===p?' selected':'')+' style="background:#1a1e2a;color:#e2e8f0;">'+esc(p)+'</option>'; });
+        h += '<option value="__nuevo__" style="background:#1a1e2a;color:#fb923c;">+ Nuevo proveedor...</option>';
+        h += '</select></div>';
+      } else if(d.proveedor){
+        h += '<div style="margin-bottom:6px;"><span style="background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.35);border-radius:5px;padding:2px 7px;font-size:10px;color:#fb923c;font-weight:600;">🏭 '+esc(d.proveedor)+'</span></div>';
+      }
+
       // Fila 3: nombre del diseño
       h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:8px;">'+esc(d.nombre)+'</div>';
 
@@ -2710,6 +2729,51 @@ function cambiarRespDiseno(id, nuevoResp){
   guardarDisenos(); renderPage('diseno');
 }
 
+function cambiarProveedorDiseno(id, val){
+  if(val === '__nuevo__'){
+    abrirNuevoProveedor(function(nombre){ cambiarProveedorDiseno(id, nombre); });
+    return;
+  }
+  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
+  if(!d) return;
+  d.proveedor = val || null;
+  guardarDisenos(); renderPage('diseno');
+}
+
+function abrirNuevoProveedor(cb){
+  var body = '<div class="form-group"><label class="form-label">Nombre del proveedor</label><input id="dis-nuevo-prov" class="form-control" placeholder="Ej: Tejidos La Rosa..."></div>';
+  var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" onclick="guardarNuevoProveedor()">Crear</button>';
+  _proveedorCb = cb || null;
+  openModal('Nuevo Proveedor', body, footer);
+}
+function abrirNuevoProveedorForm(){
+  // Variant called from inside the design form — after saving, update the select without closing the form
+  abrirNuevoProveedor(function(nombre){
+    var sel = document.getElementById('dis-proveedor');
+    if(sel){
+      var opt = document.createElement('option');
+      opt.value = nombre; opt.textContent = nombre; opt.selected = true;
+      // Insert before the last option ("+ Nuevo proveedor...")
+      sel.insertBefore(opt, sel.options[sel.options.length-1]);
+    }
+    renderPage('diseno');
+  });
+}
+
+var _proveedorCb = null;
+function guardarNuevoProveedor(){
+  var nom = (document.getElementById('dis-nuevo-prov').value||'').trim();
+  if(!nom){ toast('Ingresa un nombre','error'); return; }
+  if(!DB.disenos_cfg) DB.disenos_cfg = {};
+  if(!DB.disenos_cfg.proveedores) DB.disenos_cfg.proveedores = getDisProveedores();
+  if(DB.disenos_cfg.proveedores.includes(nom)){ toast('Ya existe','error'); return; }
+  DB.disenos_cfg.proveedores.push(nom);
+  DB.disenos_cfg.proveedores.sort();
+  closeModal();
+  guardarDisenos();
+  if(_proveedorCb){ _proveedorCb(nom); _proveedorCb=null; } else { renderPage('diseno'); }
+}
+
 function abrirNuevaMarca(){
   var body = '<div class="form-group"><label class="form-label">Nombre de la nueva marca</label><input id="dis-nueva-marca" class="form-control" placeholder="Ej: Terceros, Dama BK..."></div>';
   var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" onclick="guardarNuevaMarca()">Crear</button>';
@@ -2781,6 +2845,20 @@ function abrirFormDiseno(id){
   body += '<div class="form-group"><label class="form-label">Etapa Kanban</label><select id="dis-kanban" class="form-control">';
   DIS_KANBAN.forEach(function(c){ body += '<option value="'+c.k+'"'+((d&&(d.kanban_estado||'EN_DISENO_DIGITAL')===c.k)||((!d)&&c.k==='EN_DISENO_DIGITAL')?' selected':'')+'>'+c.label+'</option>'; });
   body += '</select></div>';
+
+  // Proveedor
+  var proveedores = getDisProveedores();
+  var provActual = d ? (d.proveedor||'') : '';
+  body += '<div class="form-group"><label class="form-label">Proveedor <span style="color:var(--dim);font-size:11px;">(opcional)</span></label>';
+  body += '<div style="display:flex;gap:8px;">';
+  body += '<select id="dis-proveedor" class="form-control" onchange="if(this.value===\'__nuevo__\'){this.value=\'\';abrirNuevoProveedorForm();}">';
+  body += '<option value="">— Sin proveedor —</option>';
+  proveedores.forEach(function(p){ body += '<option value="'+esc(p)+'"'+(provActual===p?' selected':'')+'>'+esc(p)+'</option>'; });
+  body += '<option value="__nuevo__">+ Nuevo proveedor...</option>';
+  body += '</select>';
+  body += '<button type="button" class="btn btn-ghost btn-sm" onclick="abrirNuevoProveedorForm()" title="Crear proveedor" style="flex-shrink:0;">+ Nuevo</button>';
+  body += '</div></div>';
+
   body += '<div class="form-group"><label class="form-label">Nota / Pendiente</label><input id="dis-nota" class="form-control" value="'+esc(d?d.nota||d.estado||'':'')+'" placeholder="Ej: PDTE FOTO JUAN, POR REVISAR CAPOTA..."></div>';
 
   // Sección de fotos
@@ -2847,6 +2925,9 @@ async function guardarDisenoForm(){
   var kanban = document.getElementById('dis-kanban').value||'EN_DISENO_DIGITAL';
   var nota = (document.getElementById('dis-nota').value||'').trim();
   var genero = (document.getElementById('dis-genero') ? document.getElementById('dis-genero').value : '') || 'Unisex';
+  var provSel = document.getElementById('dis-proveedor') ? document.getElementById('dis-proveedor').value : '';
+  if(provSel === '__nuevo__') provSel = '';
+  var proveedor = provSel || null;
   var preId = document.getElementById('dis-pre-id') ? document.getElementById('dis-pre-id').value : null;
   var editId = document.getElementById('dis-edit-id') ? document.getElementById('dis-edit-id').value : null;
   if(!nombre){ toast('La referencia es requerida','error'); return; }
@@ -2857,11 +2938,11 @@ async function guardarDisenoForm(){
 
   if(editId){
     var ex = DB.disenos.find(function(d){ return d.id===editId; });
-    if(ex){ ex.nombre=nombre; ex.marca=marca; ex.categoria=cat; ex.responsable=resp; ex.prioridad=prio; ex.kanban_estado=kanban; ex.nota=nota; ex.genero=genero; }
+    if(ex){ ex.nombre=nombre; ex.marca=marca; ex.categoria=cat; ex.responsable=resp; ex.prioridad=prio; ex.kanban_estado=kanban; ex.nota=nota; ex.genero=genero; ex.proveedor=proveedor||null; }
   } else {
     var nuevoId = preId || uid();
     // _ts negativo para que aparezca primero en el sort (más reciente)
-    DB.disenos.push({id:nuevoId,nombre:nombre,marca:marca,categoria:cat,responsable:resp,prioridad:prio,kanban_estado:kanban,nota:nota,genero:genero,fecha_creacion:hoy(),_ts:new Date().toISOString()});
+    DB.disenos.push({id:nuevoId,nombre:nombre,marca:marca,categoria:cat,responsable:resp,prioridad:prio,kanban_estado:kanban,nota:nota,genero:genero,proveedor:proveedor||null,fecha_creacion:hoy(),_ts:new Date().toISOString()});
     // Notificación push al equipo
     enviarNotifOS(
       '🎨 Nuevo diseño creado',
