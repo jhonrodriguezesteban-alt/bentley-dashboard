@@ -2063,7 +2063,7 @@ function _buildFormNuevaOP(){
   h += '<div class="form-group" style="position:relative;">';
   h += '<label class="form-label">Nombre del producto * <span style="color:var(--dim);font-size:11px;">(busca en catálogo de ' + CATALOGO.length + ' referencias)</span></label>';
   h += '<input class="form-control" id="op-nombre" placeholder="Toca para ver catálogo…" autocomplete="off" oninput="buscarEnCatalogo(this.value)" onfocus="buscarEnCatalogo(this.value||\'\')" onblur="setTimeout(ocultarSugerencias,200)">';
-  h += '<div id="sku-sugerencias" style="display:none;position:absolute;left:0;right:0;top:100%;z-index:200;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;max-height:200px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4);"></div>';
+  h += '<div id="sku-sugerencias" style="display:none;position:absolute;left:0;right:0;top:100%;z-index:200;background:#161b27;border:1px solid #334155;border-radius:8px;max-height:240px;overflow-y:auto;box-shadow:0 12px 32px rgba(0,0,0,.7);margin-top:4px;"></div>';
   h += '</div>';
 
   h += '<div class="form-group"><label class="form-label">Referencia base (código)</label><input class="form-control" id="op-ref" placeholder="Ej: 1001" readonly style="background:rgba(255,255,255,.04);color:var(--dim);"></div>';
@@ -2109,12 +2109,12 @@ function buscarEnCatalogo(val){
   box.innerHTML = matches.map(function(r){
     var colores = r.colores.map(function(c){ return c.n; }).join(', ');
     var tallas = r.colores.length ? r.colores[0].tallas.map(function(t){ return t.t; }).join(' ') : '';
-    return '<div style="padding:10px 14px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.06);" ' +
+    return '<div style="padding:10px 14px;cursor:pointer;border-bottom:1px solid #1e2535;background:#161b27;transition:background .15s;" ' +
       'data-ref="' + r.ref + '" data-cod="' + r.cod + '" data-cat="' + r.cat + '" ' +
-      'onmousedown="seleccionarDelCatalogo(this)">' +
-      '<div style="font-size:13px;font-weight:600;">' + r.ref + '</div>' +
-      '<div style="font-size:11px;color:var(--dim);margin-top:2px;">Cód: ' + r.cod + ' · ' + colores + '</div>' +
-      '<div style="font-size:10px;color:var(--dim);margin-top:1px;">' + tallas + '</div>' +
+      'onmousedown="seleccionarDelCatalogo(this)" onmouseenter="this.style.background=\'#1e2a3a\'" onmouseleave="this.style.background=\'#161b27\'">' +
+      '<div style="font-size:13px;font-weight:600;color:#e2e8f0;">' + r.ref + '</div>' +
+      '<div style="font-size:11px;color:#64748b;margin-top:2px;">Cód: ' + r.cod + ' · ' + colores + '</div>' +
+      '<div style="font-size:10px;color:#475569;margin-top:1px;">' + tallas + '</div>' +
       '</div>';
   }).join('');
   box.style.display = 'block';
@@ -4005,8 +4005,7 @@ function renderIndicadores(){
 // ═══════════════════════════════════════════════════════════════════════════════
 function renderNovedades(){
   var novs = DB.ots.filter(function(o){
-    var udsNov = o.cantidad - (o.unidades_entregadas||0);
-    return o.estado==='NOVEDAD' || (udsNov > 0 && o.estado !== 'ENTREGADO');
+    return o.estado==='NOVEDAD' || (o.unidades_novedad||0) > 0;
   });
   var h = '<div class="section-title">Novedades <span>' + novs.length + ' OTs</span></div>';
   if(!novs.length){ return h + '<div class="empty-state"><div class="icon">✅</div><p>Sin novedades pendientes.</p></div>'; }
