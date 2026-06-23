@@ -2676,7 +2676,7 @@ function renderOPDetalle(opId){
       var dias = diasRestantes(ot.fecha_estimada_entrega);
       var rowBg = idx%2===0 ? '' : 'background:rgba(255,255,255,.015);';
       h += '<tr style="border-top:1px solid rgba(255,255,255,.04);' + rowBg + '">';
-      h += '<td style="padding:10px 12px;font-weight:700;color:var(--cyan);white-space:nowrap;">OT-' + ot.numero_ot + '</td>';
+      h += '<td style="padding:10px 12px;font-weight:700;color:'+(ot.numero_ot?'var(--cyan)':'#334155')+';white-space:nowrap;">'+(ot.numero_ot?'OT-'+ot.numero_ot:'—')+'</td>';
       h += '<td style="padding:10px 12px;font-weight:600;">' + (ot.talla||'—') + '</td>';
       // Cantidad — editable en modo edición
       if(edit){
