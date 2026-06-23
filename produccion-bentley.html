@@ -3072,6 +3072,25 @@ function modalEditarOP(opId){
     r0.colores=(op.colores||[]).slice(); r0.tallas=(op.tallas||[]).slice();
     r0.cantidades=Object.assign({},op.cantidades||{});
   }
+  // Si cantidades está vacío, reconstruir desde OTs existentes
+  var otsOp = DB.ots.filter(function(o){ return o.op_id===opId; });
+  if(otsOp.length){
+    _opRefs.forEach(function(r){
+      var hayQty = Object.keys(r.cantidades).some(function(k){ return (r.cantidades[k]||0)>0; });
+      if(!hayQty){
+        otsOp.forEach(function(ot){
+          // Si solo hay 1 ref, asignar todo; si hay varias, cruzar por nombre
+          var match = _opRefs.length===1 || (ot.nombre||'').toUpperCase()===(r.nombre||'').toUpperCase();
+          if(!match) return;
+          var key = (ot.color||'')+'_'+(ot.talla||'');
+          r.cantidades[key] = (r.cantidades[key]||0) + (ot.cantidad||0);
+          // Asegurar que color y talla estén en las listas
+          if(ot.color && r.colores.indexOf(ot.color)<0) r.colores.push(ot.color);
+          if(ot.talla && r.tallas.indexOf(ot.talla)<0) r.tallas.push(ot.talla);
+        });
+      }
+    });
+  }
   openModal('EDITAR ORDEN DE PRODUCCIÓN', _buildFormEditarOP(op), '');
 }
 
