@@ -4,8 +4,106 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PRODUCCION BENTLEY</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@600;700&family=Orbitron:wght@900&display=swap" rel="stylesheet">
 <style>
+/* ── Logo Bentley Producción ────────────────────────────────────────────────── */
+@keyframes bp-scan {
+  0%   { top: -4px; opacity: 0; }
+  5%   { opacity: 0.5; }
+  95%  { opacity: 0.5; }
+  100% { top: calc(100% + 4px); opacity: 0; }
+}
+@keyframes bp-draw-hex {
+  from { stroke-dashoffset: 500; }
+  to   { stroke-dashoffset: 0; }
+}
+@keyframes bp-glow {
+  0%, 100% { filter: drop-shadow(0 0 10px #00d4ff77); }
+  50%       { filter: drop-shadow(0 0 28px #00d4ffcc) drop-shadow(0 0 50px #00d4ff33); }
+}
+@keyframes bp-flicker {
+  0%,89%,91%,95%,100% { opacity: 1; }
+  90%  { opacity: 0.3; }
+  93%  { opacity: 0.8; }
+  94%  { opacity: 0.3; }
+}
+@keyframes bp-dot {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.15; }
+}
+@keyframes bp-bracket {
+  from { opacity: 0; transform: scale(0.7); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.bp-logo {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 36px 52px;
+  background: linear-gradient(160deg, #0e1520 0%, #080c12 100%);
+  border: 1px solid #00d4ff22;
+  border-radius: 16px;
+  overflow: hidden;
+  font-family: 'Rajdhani', sans-serif;
+  margin-bottom: 32px;
+}
+.bp-scanline {
+  position: absolute;
+  left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(to bottom, transparent, #00d4ff55, transparent);
+  animation: bp-scan 5s ease-in-out infinite;
+  pointer-events: none;
+}
+.bp-corner { position: absolute; width: 20px; height: 20px; animation: bp-bracket 0.5s ease both; }
+.bp-corner.tl { top:12px; left:12px;  border-top:2px solid #00d4ff; border-left:2px solid #00d4ff;  animation-delay:.1s; }
+.bp-corner.tr { top:12px; right:12px; border-top:2px solid #00d4ff; border-right:2px solid #00d4ff; animation-delay:.2s; }
+.bp-corner.bl { bottom:12px; left:12px;  border-bottom:2px solid #00d4ff; border-left:2px solid #00d4ff;  animation-delay:.3s; }
+.bp-corner.br { bottom:12px; right:12px; border-bottom:2px solid #00d4ff; border-right:2px solid #00d4ff; animation-delay:.4s; }
+.bp-hex-svg { animation: bp-glow 3.5s ease-in-out infinite; margin-bottom: 16px; }
+.bp-hex-outer { stroke-dasharray: 500; animation: bp-draw-hex 1.6s cubic-bezier(.4,0,.2,1) forwards; }
+.bp-dot-v { animation: bp-dot 2.5s ease-in-out infinite; }
+.bp-wordmark {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 48px;
+  color: #ffffff;
+  letter-spacing: 12px;
+  text-indent: 12px;
+  line-height: 1;
+  text-align: center;
+  animation: bp-flicker 8s 4s ease-in-out infinite;
+}
+.bp-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  width: 100%;
+}
+.bp-divider-line { flex: 1; height: 1px; }
+.bp-divider-line.l { background: linear-gradient(to right, transparent, #00d4ff88); }
+.bp-divider-line.r { background: linear-gradient(to left,  transparent, #00d4ff88); }
+.bp-sub {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 11px;
+  letter-spacing: 6px;
+  color: #00d4ff;
+  text-transform: uppercase;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.bp-tag {
+  margin-top: 12px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: #ffffff22;
+  text-transform: uppercase;
+}
+/* Versión compacta para sidebar */
+.bp-hex-mini { animation: bp-glow 3.5s ease-in-out infinite; flex-shrink: 0; }
+
 :root {
   --bg: #0d0f14;
   --card: rgba(255,255,255,0.04);
@@ -472,6 +570,25 @@ textarea.form-control{resize:vertical;min-height:80px;}
 <nav id="sidebar">
   <div id="sidebar-logo" style="display:flex;align-items:center;gap:10px;">
     <button id="hamburger-btn" onclick="toggleSidebarCollapse()" style="background:none;border:none;cursor:pointer;color:var(--cyan);font-size:20px;padding:0;flex-shrink:0;line-height:1;" title="Colapsar menú">☰</button>
+    <svg class="bp-hex-mini" width="32" height="37" viewBox="0 0 160 182" style="flex-shrink:0;">
+      <defs>
+        <linearGradient id="bp-cian-nav" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#00d4ff"/>
+          <stop offset="100%" stop-color="#0077bb"/>
+        </linearGradient>
+        <radialGradient id="bp-hexbg-nav" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" stop-color="#00d4ff" stop-opacity="0.10"/>
+          <stop offset="100%" stop-color="#00d4ff" stop-opacity="0.02"/>
+        </radialGradient>
+        <clipPath id="bp-hexclip-nav">
+          <polygon points="80,6 152,46 152,136 80,176 8,136 8,46"/>
+        </clipPath>
+      </defs>
+      <polygon points="80,6 152,46 152,136 80,176 8,136 8,46" fill="url(#bp-hexbg-nav)" stroke="#00d4ff" stroke-width="2.5"/>
+      <g clip-path="url(#bp-hexclip-nav)">
+        <text x="80" y="120" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="86" font-weight="900" fill="url(#bp-cian-nav)">B</text>
+      </g>
+    </svg>
     <div>
       <div class="brand">BENTLEY</div>
       <div class="sub">Producción</div>
@@ -596,9 +713,45 @@ textarea.form-control{resize:vertical;min-height:80px;}
 <!-- Login Overlay -->
 <div id="login-overlay" style="display:none;position:fixed;inset:0;background:#0a0d14;z-index:9999;align-items:center;justify-content:center;">
   <div style="background:#13161f;border:1px solid #1e2a3a;border-radius:22px;width:90%;max-width:400px;padding:44px 36px;box-shadow:0 32px 80px rgba(0,0,0,.6);">
-    <div style="text-align:center;margin-bottom:36px;">
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:44px;letter-spacing:5px;color:#00d4ff;line-height:1;">BENTLEY</div>
-      <div style="font-size:11px;color:#475569;letter-spacing:3px;margin-top:4px;text-transform:uppercase;">Producción · Control de Planta</div>
+    <div style="text-align:center;display:flex;flex-direction:column;align-items:center;">
+      <div class="bp-logo">
+        <div class="bp-scanline"></div>
+        <div class="bp-corner tl"></div><div class="bp-corner tr"></div>
+        <div class="bp-corner bl"></div><div class="bp-corner br"></div>
+        <svg class="bp-hex-svg" width="100" height="114" viewBox="0 0 160 182">
+          <defs>
+            <linearGradient id="bp-cian" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#00d4ff"/>
+              <stop offset="100%" stop-color="#0077bb"/>
+            </linearGradient>
+            <radialGradient id="bp-hexbg" cx="50%" cy="40%" r="60%">
+              <stop offset="0%" stop-color="#00d4ff" stop-opacity="0.10"/>
+              <stop offset="100%" stop-color="#00d4ff" stop-opacity="0.02"/>
+            </radialGradient>
+            <clipPath id="bp-hexclip">
+              <polygon points="80,6 152,46 152,136 80,176 8,136 8,46"/>
+            </clipPath>
+          </defs>
+          <polygon class="bp-hex-outer" points="80,6 152,46 152,136 80,176 8,136 8,46" fill="url(#bp-hexbg)" stroke="#00d4ff" stroke-width="2"/>
+          <polygon points="80,18 142,54 142,128 80,164 18,128 18,54" fill="none" stroke="#00d4ff" stroke-width="0.7" stroke-opacity="0.3"/>
+          <g clip-path="url(#bp-hexclip)">
+            <text x="80" y="120" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="86" font-weight="900" fill="url(#bp-cian)">B</text>
+          </g>
+          <circle class="bp-dot-v" cx="80"  cy="6"   r="3" fill="#00d4ff" style="animation-delay:0s"/>
+          <circle class="bp-dot-v" cx="152" cy="46"  r="3" fill="#00d4ff" style="animation-delay:.4s"/>
+          <circle class="bp-dot-v" cx="152" cy="136" r="3" fill="#00d4ff" style="animation-delay:.8s"/>
+          <circle class="bp-dot-v" cx="80"  cy="176" r="3" fill="#00d4ff" style="animation-delay:1.2s"/>
+          <circle class="bp-dot-v" cx="8"   cy="136" r="3" fill="#00d4ff" style="animation-delay:1.6s"/>
+          <circle class="bp-dot-v" cx="8"   cy="46"  r="3" fill="#00d4ff" style="animation-delay:2.0s"/>
+        </svg>
+        <div class="bp-wordmark">BENTLEY</div>
+        <div class="bp-divider">
+          <div class="bp-divider-line l"></div>
+          <span class="bp-sub">PRODUCCIÓN</span>
+          <div class="bp-divider-line r"></div>
+        </div>
+        <div class="bp-tag">Control de Planta · Grupo Bentley SAS</div>
+      </div>
     </div>
     <div class="form-group">
       <label class="form-label">Usuario</label>
