@@ -4469,12 +4469,11 @@ function renderSimulador(){
       h += '<div style="background:#0d1117;border:1px solid #1e2535;border-radius:8px;padding:10px;margin-bottom:8px;" id="sim-col-'+d.id+'-'+ci+'">';
       // Header fila color: dropdown + uds + borrar
       h += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">';
-      h += '<select data-did="'+d.id+'" data-ci="'+ci+'" onchange="simSelColor(this.dataset.did,parseInt(this.dataset.ci),this.value)" style="width:200px;flex-shrink:0;background:#13161f;border:1px solid '+(col.color?'#00d4ff':'#1e2535')+';border-radius:8px;color:'+(col.color?'#00d4ff':'#475569')+';font-size:12px;font-weight:700;padding:6px 10px;cursor:pointer;outline:none;">';
-      h += '<option value="">— elige color —</option>';
-      SIM_PALETTE.forEach(function(p){
-        h += '<option value="'+p+'"'+(p===col.color?' selected':'')+'>'+p+'</option>';
-      });
-      h += '</select>';
+      var listId = 'sim-pal-'+d.id+'-'+ci;
+      h += '<datalist id="'+listId+'">';
+      SIM_PALETTE.forEach(function(p){ h += '<option value="'+p+'">'; });
+      h += '</datalist>';
+      h += '<input list="'+listId+'" data-did="'+d.id+'" data-ci="'+ci+'" value="'+esc(col.color||'')+'" placeholder="Escribe o elige color..." onchange="simSelColor(this.dataset.did,parseInt(this.dataset.ci),this.value.trim().toUpperCase())" style="width:220px;flex-shrink:0;background:#13161f;border:1px solid '+(col.color?'#00d4ff':'#1e2535')+';border-radius:8px;color:'+(col.color?'#00d4ff':'#94a3b8')+';font-size:12px;font-weight:700;padding:6px 10px;outline:none;">';
       h += '<span style="font-size:11px;color:'+(colUds>0?'#34d399':'#475569')+';font-weight:700;white-space:nowrap;">'+colUds+' uds</span>';
       h += '<button data-did="'+d.id+'" data-ci="'+ci+'" onclick="simEliminarColor(this.dataset.did,parseInt(this.dataset.ci))" style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:16px;padding:0 2px;line-height:1;">×</button>';
       h += '</div>';
