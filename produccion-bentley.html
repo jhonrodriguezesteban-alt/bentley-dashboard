@@ -3003,12 +3003,11 @@ function renderDiseno(){
       DIS_RESPONSABLES.forEach(function(r){ h += '<option value="'+r+'"'+(d.responsable===r?' selected':'')+' style="background:#1a1e2a;color:#e2e8f0;">'+r+'</option>'; });
       h += '</select>';
       var nFotos = (d.imagenes||[]).length;
-      h += '<div style="display:flex;gap:5px;align-items:center;">';
+      h += '<div style="display:flex;gap:4px;align-items:center;">';
       var pn=disPrioNorm(d.prioridad); var pc=DIS_PRIO_CFG[pn];
-      h += '<button data-id="'+d.id+'" onclick="event.stopPropagation();cicloPrioDis(this.dataset.id)" title="Cambiar prioridad (clic para ciclar)" style="font-size:9px;font-weight:800;color:'+pc.color+';background:'+pc.bg+';border:1px solid '+pc.border+';border-radius:4px;padding:2px 6px;cursor:pointer;line-height:1;flex-shrink:0;">'+pc.label+'</button>';
-      h += '<button data-id="'+d.id+'" onclick="abrirFotosDiseno(this.dataset.id)" style="position:relative;display:flex;align-items:center;justify-content:center;width:20px;height:20px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:5px;cursor:pointer;color:#fbbf24;font-size:11px;padding:0;line-height:1;flex-shrink:0;" title="Fotos">📷'+(nFotos?'<span style="position:absolute;top:-4px;right:-4px;background:#fbbf24;color:#0d0f14;border-radius:8px;font-size:8px;font-weight:700;min-width:13px;height:13px;display:flex;align-items:center;justify-content:center;padding:0 2px;">'+nFotos+'</span>':'')+'</button>';
-      h += '<button data-id="'+d.id+'" onclick="abrirFormDiseno(this.dataset.id)" style="display:flex;align-items:center;justify-content:center;width:20px;height:20px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);border-radius:5px;cursor:pointer;color:#00d4ff;font-size:11px;padding:0;line-height:1;flex-shrink:0;" title="Editar">✏</button>';
-      h += '<button data-id="'+d.id+'" onclick="crearMiniMe(this.dataset.id)" style="display:flex;align-items:center;justify-content:center;width:20px;height:20px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);border-radius:5px;cursor:pointer;color:#34d399;font-size:9px;font-weight:800;padding:0;line-height:1;flex-shrink:0;" title="Crear Mini Me">M²</button>';
+      h += '<button data-id="'+d.id+'" onclick="event.stopPropagation();cicloPrioDis(this.dataset.id)" title="Cambiar prioridad" style="font-size:9px;font-weight:800;color:'+pc.color+';background:'+pc.bg+';border:1px solid '+pc.border+';border-radius:4px;padding:2px 7px;cursor:pointer;line-height:1;flex-shrink:0;">'+pc.label+'</button>';
+      h += '<button data-id="'+d.id+'" onclick="abrirFotosDiseno(this.dataset.id)" style="position:relative;display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:5px;cursor:pointer;color:#fbbf24;font-size:12px;padding:0;line-height:1;flex-shrink:0;" title="Fotos">📷'+(nFotos?'<span style="position:absolute;top:-4px;right:-4px;background:#fbbf24;color:#0d0f14;border-radius:8px;font-size:8px;font-weight:700;min-width:13px;height:13px;display:flex;align-items:center;justify-content:center;padding:0 2px;">'+nFotos+'</span>':'')+'</button>';
+      h += '<button data-id="'+d.id+'" onclick="abrirFormDiseno(this.dataset.id)" style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);border-radius:5px;cursor:pointer;color:#00d4ff;font-size:12px;padding:0;line-height:1;flex-shrink:0;" title="Editar">✏</button>';
       h += '</div></div>';
 
       // Fila 2: categoría + género
@@ -3041,14 +3040,16 @@ function renderDiseno(){
         h += '<div style="font-size:10px;color:#64748b;font-style:italic;margin-bottom:8px;border-top:1px solid #1e2535;padding-top:5px;">'+esc(d.nota||d.estado)+'</div>';
       }
 
-      // Dropdown de estado kanban
-      h += '<div style="border-top:1px solid #1e2535;padding-top:8px;margin-top:2px;">';
-      h += '<select data-id="'+d.id+'" onchange="cambiarEstadoDiseno(this.dataset.id,this.value)" onclick="event.stopPropagation()" style="width:100%;background:#0d1117;border:1px solid #1e2535;border-radius:6px;color:#94a3b8;font-size:11px;padding:4px 7px;cursor:pointer;outline:none;">';
+      // Dropdown de estado kanban + M² al lado
+      h += '<div style="border-top:1px solid #1e2535;padding-top:8px;margin-top:2px;display:flex;gap:5px;align-items:center;">';
+      h += '<select data-id="'+d.id+'" onchange="cambiarEstadoDiseno(this.dataset.id,this.value)" onclick="event.stopPropagation()" style="flex:1;background:#0d1117;border:1px solid #1e2535;border-radius:6px;color:#94a3b8;font-size:11px;padding:4px 7px;cursor:pointer;outline:none;">';
       DIS_KANBAN.forEach(function(c){
         h += '<option value="'+c.k+'"'+(curEstado===c.k?' selected':'')+' style="background:#1a1e2a;color:#e2e8f0;">'+c.label+'</option>';
       });
       h += '<option value="LISTA_PRODUCCION"'+(curEstado==='LISTA_PRODUCCION'?' selected':'')+' style="background:#1a1e2a;color:#34d399;">✓ Lista para Producción</option>';
-      h += '</select></div>';
+      h += '</select>';
+      h += '<button data-id="'+d.id+'" onclick="crearMiniMe(this.dataset.id)" style="display:flex;align-items:center;justify-content:center;width:26px;height:26px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);border-radius:5px;cursor:pointer;color:#34d399;font-size:9px;font-weight:800;padding:0;line-height:1;flex-shrink:0;" title="Crear Mini Me (duplicar a otra marca)">M²</button>';
+      h += '</div>';
 
       h += '</div>';
     });
