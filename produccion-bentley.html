@@ -990,15 +990,27 @@ async function activarNotificacionesPush(){
   }
 
   try {
-    // Dejar que OneSignal maneje el permiso nativo + registro en un solo flujo
-    var permGranted = await OneSignal.Notifications.requestPermission();
-    if(!permGranted){
+    // En iOS el permiso ya fue concedido — saltamos requestPermission() que bloquea
+    // y vamos directo al optIn()
+    var nativePerm = (typeof Notification !== 'undefined') ? Notification.permission : 'default';
+    if(nativePerm === 'denied'){
       toast('Permiso denegado. Ve a Ajustes del iPhone → notificaciones → activa la app','error');
       if(btn){ btn.textContent='🔔 Activar notifs'; btn.disabled=false; }
       return;
     }
 
-    // Opt-in explícito
+    // Si no está concedido aún, pedirlo nativamente (sin pasar por OneSignal)
+    if(nativePerm !== 'granted'){
+      var p = await Notification.requestPermission();
+      if(p !== 'granted'){
+        toast('Permiso denegado por iOS','error');
+        if(btn){ btn.textContent='🔔 Activar notifs'; btn.disabled=false; }
+        return;
+      }
+    }
+
+    // Opt-in directo a OneSignal
+    toast('⏳ Registrando en servidor push...','info');
     await OneSignal.User.PushSubscription.optIn();
     localStorage.setItem('bentley_notif_activa','1');
 
@@ -1008,7 +1020,6 @@ async function activarNotificacionesPush(){
       await new Promise(function(res){ setTimeout(res, 1000); });
       subId = OneSignal.User && OneSignal.User.PushSubscription && OneSignal.User.PushSubscription.id;
       if(subId) break;
-      if(t===4) toast('⏳ Esperando token de Apple (puede tardar hasta 15s)...','info');
     }
 
     if(subId){
@@ -1016,7 +1027,7 @@ async function activarNotificacionesPush(){
       toast('✅ Push en background activo · ID: '+subId.slice(0,8)+'...','success');
       if(btn){ btn.textContent='✅ Push activo'; btn.disabled=false; }
     } else {
-      toast('⚠️ Apple no entregó token. Intenta: cerrar app → reabrir → reintentar','warning');
+      toast('⚠️ Apple no entregó token tras 15s — reinstala la app e intenta de nuevo','warning');
       if(btn){ btn.textContent='⚠️ Reintentar'; btn.disabled=false; }
     }
   } catch(e){
