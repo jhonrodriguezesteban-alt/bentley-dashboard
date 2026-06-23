@@ -2114,6 +2114,7 @@ function _setSubgEstado(opId, color, estado){
   saveLocal();
 }
 
+var _opCatFiltro = null;
 var _opBusqueda = '';
 function renderOPs(){
   // FAB fijo "Nueva OP"
@@ -2154,15 +2155,17 @@ function renderOPs(){
     });
   });
 
-  // Resumen por categoría (tarjetas superiores)
+  // Resumen por categoría (tarjetas superiores) — solo sub-grupos NO entregados
   var catMap = {};
-  ops.forEach(function(op){
-    var cat = op.categoria || 'Sin Cat.';
+  subgs.forEach(function(s){
+    if(s.pct === 100 && s.uds > 0) return; // excluir sub-grupos 100% entregados
+    var cat = s.op.categoria || 'Sin Cat.';
     if(!catMap[cat]) catMap[cat] = {total:0, uds:0};
-    catMap[cat].total++;
-    var otsOp = otsXop[op.id] || [];
-    catMap[cat].uds += otsOp.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
+    if(!catMap[cat]['_ops']) catMap[cat]['_ops'] = {};
+    catMap[cat]['_ops'][s.op.id] = 1;
+    catMap[cat].uds += s.uds;
   });
+  Object.keys(catMap).forEach(function(cat){ catMap[cat].total = Object.keys(catMap[cat]['_ops']).length; });
   var cats = Object.keys(catMap).sort(function(a,b){ return catMap[b].total-catMap[a].total; });
 
   var h = '';
@@ -2198,10 +2201,11 @@ function renderOPs(){
     h += '</div>';
     cats.forEach(function(cat){
       var info = catMap[cat];
-      h += '<div style="background:#0d1117;border:1px solid #1e2535;border-radius:10px;padding:11px 14px;min-width:130px;flex:0 0 auto;">';
-      h += '<div style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;">'+esc(cat)+'</div>';
+      var isActive = _opCatFiltro === cat;
+      h += '<div onclick="setOpCatFiltro(\''+cat.replace(/\'/g,"\\'")+'\')" style="background:'+(isActive?'rgba(0,212,255,.12)':'#0d1117')+';border:1px solid '+(isActive?'#00d4ff44':'#1e2535')+';border-radius:10px;padding:11px 14px;min-width:130px;flex:0 0 auto;cursor:pointer;transition:border-color .2s;" onmouseover="this.style.borderColor=\'#00d4ff44\'" onmouseout="this.style.borderColor=\''+(isActive?'#00d4ff44':'#1e2535')+'\'">';
+      h += '<div style="font-size:10px;font-weight:700;color:'+(isActive?'#00d4ff':'#64748b')+';text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;">'+esc(cat)+'</div>';
       h += '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:24px;color:#e2e8f0;line-height:1;">'+info.total+'</div>';
-      h += '<div style="font-size:10px;color:#475569;margin-top:2px;">'+info.uds.toLocaleString('es-CO')+' uds</div>';
+      h += '<div style="font-size:10px;color:#475569;margin-top:2px;">'+info.uds.toLocaleString('es-CO')+' uds activas</div>';
       h += '</div>';
     });
     h += '</div>';
@@ -2226,6 +2230,56 @@ function renderOPs(){
       h += '<div style="text-align:center;padding:40px 20px;color:#475569;"><div style="font-size:28px;margin-bottom:8px;">🔍</div><div style="font-size:14px;">Sin resultados para "'+esc(_opBusqueda)+'"</div></div>';
       return h;
     }
+  }
+
+  // ── Vista por categoría (si _opCatFiltro activo) ────────────────────────
+  if(_opCatFiltro){
+    var catSubgs = subgs.filter(function(s){ return (s.op.categoria||'Sin Cat.') === _opCatFiltro; });
+    h += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">';
+    h += '<button onclick="setOpCatFiltro(null)" style="background:rgba(255,255,255,.06);border:1px solid #1e2535;border-radius:8px;color:#94a3b8;padding:6px 14px;cursor:pointer;font-size:12px;">← Todas las OPs</button>';
+    h += '<span style="font-size:15px;font-weight:700;color:#e2e8f0;text-transform:uppercase;letter-spacing:.5px;">'+esc(_opCatFiltro)+'</span>';
+    h += '<span style="font-size:12px;color:#64748b;">'+catSubgs.length+' sub-grupos</span>';
+    h += '</div>';
+
+    OP_KANBAN.forEach(function(col){
+      var colSubgsCat = catSubgs.filter(function(s){ return s.estado===col.k; })
+        .sort(function(a,b){ return (a.op.id||'').localeCompare(b.op.id||''); });
+      if(!colSubgsCat.length) return;
+
+      h += '<div style="margin-bottom:20px;">';
+      h += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;padding:8px 14px;background:'+col.bg+';border:1px solid '+col.color+'44;border-radius:10px;">';
+      h += '<span style="font-size:12px;font-weight:700;color:'+col.color+';text-transform:uppercase;letter-spacing:.5px;">'+col.label+'</span>';
+      h += '<span style="font-size:12px;font-weight:700;color:'+col.color+';background:'+col.color+'22;border-radius:10px;padding:1px 8px;">'+colSubgsCat.length+'</span>';
+      h += '</div>';
+
+      h += '<div style="display:flex;flex-wrap:wrap;gap:10px;">';
+      colSubgsCat.forEach(function(s){
+        var op = s.op;
+        var otsColor = s.otsColor;
+        var novCount = otsColor.filter(function(o){ return o.estado==='NOVEDAD'; }).length;
+        var satNames = [];
+        otsColor.forEach(function(o){ var sn = o.cortador || (o.satelite_id ? getSatNombre(o.satelite_id) : null); if(sn && satNames.indexOf(sn)<0) satNames.push(sn); });
+        var baseId = fmtOpId(op.id);
+        var subLabel = s.totalColores > 1 ? baseId + '.' + (s.colorIdx+1) : baseId;
+
+        h += '<div data-opid="'+op.id+'" onclick="verDetalleOP(this.dataset.opid)" style="background:#13161f;border:1px solid #1e2535;border-left:3px solid '+col.color+';border-radius:10px;padding:11px 14px;width:220px;cursor:pointer;transition:border-color .2s;" onmouseover="this.style.borderColor=\''+col.color+'\'" onmouseout="this.style.borderColor=\'#1e2535\'">';
+        h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">';
+        h += '<span style="font-size:12px;font-weight:700;color:#00d4ff;">'+esc(subLabel)+'</span>';
+        if(novCount) h += '<span style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);border-radius:8px;font-size:9px;color:#ef4444;font-weight:700;padding:1px 5px;">'+novCount+' NOV</span>';
+        h += '</div>';
+        if(s.totalColores > 1) h += '<div style="font-size:10px;color:#94a3b8;font-weight:700;text-transform:uppercase;margin-bottom:3px;">'+esc(s.color)+'</div>';
+        h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:8px;">'+esc(op.nombre_producto)+'</div>';
+        if(satNames.length) h += '<div style="font-size:10px;color:#64748b;margin-bottom:6px;">'+satNames.slice(0,2).map(function(x){return esc(x.split(\' \')[0]);}).join(\' · \')+(satNames.length>2?\'...\':\'\')+'</div>';
+        h += '<div style="display:flex;gap:8px;margin-bottom:6px;">';
+        h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">UDS</div><div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+s.uds+'</div></div>';
+        h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">ENTG.</div><div style="font-size:13px;font-weight:700;color:'+(s.pct>=100?'#34d399':s.pct>50?'#00d4ff':'#e2e8f0')+';">'+s.pct+'%</div></div>';
+        h += '</div>';
+        h += '<div style="height:3px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;"><div style="height:100%;width:'+s.pct+'%;background:'+(s.pct>=100?'#34d399':'#00d4ff')+';border-radius:4px;"></div></div>';
+        h += '</div>';
+      });
+      h += '</div></div>';
+    });
+    return h;
   }
 
   // ── Kanban board ────────────────────────────────────────────────────────────
@@ -2273,7 +2327,7 @@ function renderOPs(){
         h += '</div>';
 
         h += '<div style="font-size:10px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">'+esc(op.categoria||'')+'</div>';
-        h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:8px;">'+esc(op.nombre_producto)+'</div>';
+        h += '<div data-opid="'+op.id+'" onclick="verDetalleOP(this.dataset.opid)" style="font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:8px;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px;">'+esc(op.nombre_producto)+'</div>';
 
         h += '<div style="display:flex;gap:8px;margin-bottom:8px;">';
         h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">OTs</div><div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+totalOts+'</div></div>';
@@ -2367,7 +2421,7 @@ function renderOPs(){
       h += '<span style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;">'+esc(s.color)+'</span>';
       h += '</div>';
 
-      h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:8px;">'+esc(op.nombre_producto)+'</div>';
+      h += '<div data-opid="'+op.id+'" onclick="verDetalleOP(this.dataset.opid)" style="font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:8px;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px;">'+esc(op.nombre_producto)+'</div>';
 
       if(satNames.length){
         h += '<div style="margin-bottom:7px;display:flex;flex-wrap:wrap;gap:3px;">';
@@ -5535,6 +5589,7 @@ function renderSimulador(){
 }
 
 function setSimFiltroMarca(m){ _simFiltroMarca=m; renderPage('simulador'); }
+function setOpCatFiltro(cat){ _opCatFiltro = cat; renderPage('ops'); }
 
 function simLlenarTodas(did, ci, qty){
   var sim = _getSimData(did);
