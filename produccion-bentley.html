@@ -4394,7 +4394,7 @@ function renderDiseno(){
       var tc = TELA_CFG[telaEst]||TELA_CFG.sin_tela;
       h += '<div style="margin-bottom:8px;">';
       h += '<div style="display:flex;align-items:center;gap:6px;">';
-      h += '<button data-disid="'+d.id+'" data-next="'+tc.next+'" onclick="event.stopPropagation();setTelaDis(this.dataset.disid,this.dataset.next)" title="Clic para cambiar estado de tela" style="padding:3px 10px;border-radius:10px;font-size:10px;font-weight:700;cursor:pointer;border:1px solid '+tc.border+';background:'+tc.bg+';color:'+tc.color+';transition:all .15s;">'+tc.label+'</button>';
+      h += '<button data-disid="'+d.id+'" onclick="event.stopPropagation();abrirTelaPopover(this.dataset.disid,this)" title="Clic para cambiar estado de tela" style="padding:3px 10px;border-radius:10px;font-size:10px;font-weight:700;cursor:pointer;border:1px solid '+tc.border+';background:'+tc.bg+';color:'+tc.color+';transition:all .15s;">'+tc.label+'</button>';
       if(telaEst==='asignada'||telaEst==='pte_llegar'){
         h += '<input data-disid="'+d.id+'" type="text" value="'+esc(d.tela_nota||'')+'" onchange="setTelaNotaDis(this.dataset.disid,this.value)" onclick="event.stopPropagation()" placeholder="Ref. de tela..." style="flex:1;min-width:0;background:#0d1117;border:1px solid '+(telaEst==='asignada'?'rgba(52,211,153,.3)':'rgba(251,146,60,.3)')+';border-radius:6px;color:#e2e8f0;font-size:11px;padding:3px 8px;outline:none;">';
       }
@@ -4502,6 +4502,34 @@ function setTelaNotaDis(id, nota){
   if(!d) return;
   d.tela_nota = nota;
   saveLocal(); guardarDisenos();
+}
+function abrirTelaPopover(id, btn){
+  var existing = document.getElementById('tela-popover');
+  if(existing){ existing.remove(); if(existing.dataset.did===id) return; }
+  var TELA_CFG = {
+    sin_tela:   {label:'❌ Sin tela',        color:'#f87171', bg:'rgba(248,113,113,.15)', border:'rgba(248,113,113,.4)'},
+    en_busqueda:{label:'🔍 En búsqueda',     color:'#fbbf24', bg:'rgba(251,191,36,.15)',  border:'rgba(251,191,36,.4)'},
+    pte_llegar: {label:'📦 Pte. por llegar', color:'#fb923c', bg:'rgba(251,146,60,.15)',  border:'rgba(251,146,60,.4)'},
+    asignada:   {label:'🧵 Asignada',        color:'#34d399', bg:'rgba(52,211,153,.15)',  border:'rgba(52,211,153,.4)'},
+  };
+  var pop = document.createElement('div');
+  pop.id = 'tela-popover';
+  pop.dataset.did = id;
+  pop.style.cssText = 'position:fixed;z-index:9999;background:#1a1e2a;border:1px solid #2d3348;border-radius:10px;padding:7px;display:flex;flex-direction:column;gap:5px;box-shadow:0 4px 20px rgba(0,0,0,.7);min-width:160px;';
+  Object.keys(TELA_CFG).forEach(function(k){
+    var tc = TELA_CFG[k];
+    var b = document.createElement('button');
+    b.textContent = tc.label;
+    b.style.cssText = 'font-size:11px;font-weight:700;color:'+tc.color+';background:'+tc.bg+';border:1px solid '+tc.border+';border-radius:6px;padding:5px 12px;cursor:pointer;text-align:left;';
+    b.onclick = function(e){ e.stopPropagation(); pop.remove(); setTelaDis(id, k); };
+    pop.appendChild(b);
+  });
+  var rect = btn.getBoundingClientRect();
+  pop.style.top = (rect.bottom + 4) + 'px';
+  pop.style.left = rect.left + 'px';
+  document.body.appendChild(pop);
+  var dismiss = function(e){ if(!pop.contains(e.target)){ pop.remove(); document.removeEventListener('click', dismiss); } };
+  setTimeout(function(){ document.addEventListener('click', dismiss); }, 10);
 }
 
 function cambiarProveedorDiseno(id, val){
