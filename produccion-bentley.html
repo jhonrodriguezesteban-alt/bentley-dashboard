@@ -4076,6 +4076,7 @@ function cicloPrioDis(id){
 function setDisPrioFiltro(p){ _disPrioFiltro=p; renderPage('diseno'); }
 var _disFiltroMarca = 'Bentley Kids';
 var _disRespFiltro = '';
+var _disTelaFiltro = '';
 var DIS_KANBAN = [
   {k:'CON_PROVEEDOR',        label:'Con Proveedor',      color:'#fb923c', bg:'rgba(251,146,60,.08)'},
   {k:'EN_DISENO_DIGITAL',    label:'Diseño Digital',     color:'#a855f7', bg:'rgba(168,85,247,.08)'},
@@ -4222,42 +4223,58 @@ function renderDiseno(){
     h += '</div>';
   }
 
-  // ── Filtros: buscador + prioridad + responsable (una sola fila) ──────────────
-  h += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;">';
+  // ── Filtros: buscador | [Prioridad bubble] | [Responsable bubble] | [Tela bubble] ──
+  h += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;">';
 
   // Buscador
-  h += '<div style="position:relative;width:180px;flex-shrink:0;">';
+  h += '<div style="position:relative;width:160px;flex-shrink:0;">';
   h += '<input id="dis-search-input" type="text" value="'+esc(_disBusqueda)+'" oninput="var _q=this.value,_p=this.selectionStart;_disBusqueda=_q;renderPage(\'diseno\');var _el=document.getElementById(\'dis-search-input\');if(_el){_el.focus();try{_el.setSelectionRange(_p,_p);}catch(e){}}" placeholder="🔍 Buscar..." style="width:100%;background:#0d1117;border:1px solid #1e2535;border-radius:20px;color:#e2e8f0;font-size:12px;padding:5px 28px 5px 12px;outline:none;box-sizing:border-box;">';
   if(_disBusqueda) h += '<button onclick="_disBusqueda=\'\';renderPage(\'diseno\')" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:#64748b;cursor:pointer;font-size:14px;padding:0;line-height:1;">×</button>';
   h += '</div>';
 
-  // Separador visual
-  h += '<div style="width:1px;height:22px;background:#1e2535;flex-shrink:0;"></div>';
-
-  // Prioridad
-  h += '<span style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.5px;flex-shrink:0;">Prioridad:</span>';
+  // ── Burbuja Prioridad ──
+  h += '<div style="display:flex;align-items:center;gap:5px;background:#0f1520;border:1px solid #1e2535;border-radius:20px;padding:4px 10px;flex-shrink:0;">';
+  h += '<span style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.5px;">Prioridad</span>';
+  h += '<div style="width:1px;height:14px;background:#1e2535;"></div>';
   [{v:0,label:'Todas'},{v:1,label:'P1'},{v:2,label:'P2'},{v:3,label:'P3'}].forEach(function(p){
     var active = _disPrioFiltro===p.v;
     var pc = p.v ? DIS_PRIO_CFG[p.v] : null;
-    h += '<button onclick="setDisPrioFiltro('+p.v+')" style="padding:4px 11px;border-radius:16px;font-size:11px;font-weight:700;cursor:pointer;flex-shrink:0;border:1px solid '+(active?(pc?pc.color:'#00d4ff'):'#1e2535')+';background:'+(active?(pc?pc.bg:'rgba(0,212,255,.1)'):'transparent')+';color:'+(active?(pc?pc.color:'#00d4ff'):'#64748b')+';transition:all .15s;">'+p.label+'</button>';
+    h += '<button onclick="setDisPrioFiltro('+p.v+')" style="padding:2px 9px;border-radius:12px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid '+(active?(pc?pc.color:'#00d4ff'):'transparent')+';background:'+(active?(pc?pc.bg:'rgba(0,212,255,.1)'):'transparent')+';color:'+(active?(pc?pc.color:'#00d4ff'):'#475569')+';transition:all .15s;">'+p.label+'</button>';
   });
+  h += '</div>';
 
-  // Separador visual
-  h += '<div style="width:1px;height:22px;background:#1e2535;flex-shrink:0;"></div>';
-
-  // Responsable
-  h += '<span style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.5px;flex-shrink:0;">Resp.:</span>';
+  // ── Burbuja Responsable ──
   var DIS_RESPS = [
     {v:'',         label:'Todos',    color:'#64748b', bg:'rgba(100,116,139,.12)'},
-    {v:'John',     label:'John',     color:'#00d4ff', bg:'rgba(0,212,255,.12)'},
-    {v:'Isa',      label:'Isa',      color:'#f472b6', bg:'rgba(244,114,182,.12)'},
-    {v:'Carolina', label:'Carolina', color:'#a855f7', bg:'rgba(168,85,247,.12)'},
-    {v:'Juan',     label:'Juan',     color:'#fbbf24', bg:'rgba(251,191,36,.12)'},
+    {v:'John',     label:'John',     color:DIS_RESP_COLORS['John'],     bg:DIS_RESP_COLORS['John']+'22'},
+    {v:'Isa',      label:'Isa',      color:DIS_RESP_COLORS['Isa'],      bg:DIS_RESP_COLORS['Isa']+'22'},
+    {v:'Carolina', label:'Carolina', color:DIS_RESP_COLORS['Carolina'], bg:DIS_RESP_COLORS['Carolina']+'22'},
+    {v:'Juan',     label:'Juan',     color:DIS_RESP_COLORS['Juan'],     bg:DIS_RESP_COLORS['Juan']+'22'},
   ];
+  h += '<div style="display:flex;align-items:center;gap:5px;background:#0f1520;border:1px solid #1e2535;border-radius:20px;padding:4px 10px;flex-shrink:0;">';
+  h += '<span style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.5px;">Responsable</span>';
+  h += '<div style="width:1px;height:14px;background:#1e2535;"></div>';
   DIS_RESPS.forEach(function(r){
     var active = _disRespFiltro === r.v;
-    h += '<button data-resp="'+esc(r.v)+'" onclick="_disRespFiltro=this.dataset.resp;renderPage(\'diseno\')" style="padding:4px 11px;border-radius:16px;font-size:11px;font-weight:700;cursor:pointer;flex-shrink:0;transition:all .15s;border:1px solid '+(active?r.color:'#1e2535')+';background:'+(active?r.bg:'transparent')+';color:'+(active?r.color:'#64748b')+';">'+r.label+'</button>';
+    h += '<button data-resp="'+esc(r.v)+'" onclick="_disRespFiltro=this.dataset.resp;renderPage(\'diseno\')" style="padding:2px 9px;border-radius:12px;font-size:11px;font-weight:700;cursor:pointer;transition:all .15s;border:1px solid '+(active?r.color:'transparent')+';background:'+(active?r.bg:'transparent')+';color:'+(active?r.color:'#475569')+';">'+r.label+'</button>';
   });
+  h += '</div>';
+
+  // ── Burbuja Tela ──
+  var DIS_TELAS = [
+    {v:'',           label:'Todas',       color:'#64748b', bg:'rgba(100,116,139,.12)'},
+    {v:'asignada',   label:'✅ Asignada', color:'#34d399', bg:'rgba(52,211,153,.12)'},
+    {v:'en_busqueda',label:'🔍 En búsqueda',color:'#fbbf24',bg:'rgba(251,191,36,.12)'},
+    {v:'sin_tela',   label:'❌ Sin tela', color:'#f87171', bg:'rgba(248,113,113,.12)'},
+  ];
+  h += '<div style="display:flex;align-items:center;gap:5px;background:#0f1520;border:1px solid #1e2535;border-radius:20px;padding:4px 10px;flex-shrink:0;">';
+  h += '<span style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.5px;">Tela</span>';
+  h += '<div style="width:1px;height:14px;background:#1e2535;"></div>';
+  DIS_TELAS.forEach(function(t){
+    var active = _disTelaFiltro === t.v;
+    h += '<button data-tela="'+t.v+'" onclick="_disTelaFiltro=this.dataset.tela;renderPage(\'diseno\')" style="padding:2px 9px;border-radius:12px;font-size:11px;font-weight:700;cursor:pointer;transition:all .15s;border:1px solid '+(active?t.color:'transparent')+';background:'+(active?t.bg:'transparent')+';color:'+(active?t.color:'#475569')+';">'+t.label+'</button>';
+  });
+  h += '</div>';
 
   h += '</div>';
 
@@ -4269,6 +4286,7 @@ function renderDiseno(){
       if((d.kanban_estado||'EN_DISENO_DIGITAL')!==col.k) return false;
       if(_disPrioFiltro && disPrioNorm(d.prioridad)!==_disPrioFiltro) return false;
       if(_disRespFiltro && (d.responsable||'').toLowerCase()!==_disRespFiltro.toLowerCase()) return false;
+      if(_disTelaFiltro){ var te=d.tela_estado||'sin_tela'; if(te!==_disTelaFiltro) return false; }
       if(_disBusqueda){ var q=_disBusqueda.toUpperCase(); if((d.nombre||'').toUpperCase().indexOf(q)<0 && (d.categoria||'').toUpperCase().indexOf(q)<0) return false; }
       return true;
     }).sort(function(a,b){
@@ -4362,6 +4380,30 @@ function renderDiseno(){
         h += '<div style="font-size:10px;color:#64748b;font-style:italic;margin-bottom:8px;border-top:1px solid #1e2535;padding-top:5px;">'+esc(d.nota||d.estado)+'</div>';
       }
 
+      // ── Tela status ──────────────────────────────────────────────────────────
+      var telaEst = d.tela_estado||'sin_tela';
+      var TELA_CFG = {
+        asignada:   {label:'🧵 Asignada',      color:'#34d399', bg:'rgba(52,211,153,.12)',  border:'rgba(52,211,153,.35)'},
+        en_busqueda:{label:'🔍 En búsqueda',   color:'#fbbf24', bg:'rgba(251,191,36,.12)',  border:'rgba(251,191,36,.35)'},
+        pte_llegar: {label:'📦 Pte. por llegar',color:'#fb923c',bg:'rgba(251,146,60,.12)',  border:'rgba(251,146,60,.35)'},
+        sin_tela:   {label:'❌ Sin tela',       color:'#f87171', bg:'rgba(248,113,113,.12)', border:'rgba(248,113,113,.35)'},
+      };
+      var tc = TELA_CFG[telaEst]||TELA_CFG.sin_tela;
+      h += '<div style="margin-bottom:8px;">';
+      h += '<div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap;">';
+      // Pills de estado — la activa resaltada, las otras apagadas
+      ['sin_tela','en_busqueda','pte_llegar','asignada'].forEach(function(tk){
+        var tcc = TELA_CFG[tk];
+        var isActive = telaEst===tk;
+        h += '<button data-disid="'+d.id+'" data-tela="'+tk+'" onclick="event.stopPropagation();setTelaDis(this.dataset.disid,this.dataset.tela)" style="padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;cursor:pointer;border:1px solid '+(isActive?tcc.border:'#1e2535')+';background:'+(isActive?tcc.bg:'transparent')+';color:'+(isActive?tcc.color:'#334155')+';transition:all .15s;">'+tcc.label+'</button>';
+      });
+      h += '</div>';
+      // Nota de tela (solo si asignada o pte_llegar)
+      if(telaEst==='asignada'||telaEst==='pte_llegar'){
+        h += '<input data-disid="'+d.id+'" type="text" value="'+esc(d.tela_nota||'')+'" onchange="setTelaNotaDis(this.dataset.disid,this.value)" onclick="event.stopPropagation()" placeholder="Nombre o ref. de tela..." style="margin-top:4px;width:100%;background:#0d1117;border:1px solid '+(telaEst==='asignada'?'rgba(52,211,153,.3)':'rgba(251,146,60,.3)')+';border-radius:6px;color:#e2e8f0;font-size:11px;padding:4px 8px;outline:none;box-sizing:border-box;">';
+      }
+      h += '</div>';
+
       // Dropdown estado + M² + 💬
       var nComents = (d.comentarios||[]).length;
       h += '<div style="border-top:1px solid #1e2535;padding-top:8px;margin-top:2px;display:flex;gap:5px;align-items:center;">';
@@ -4449,6 +4491,20 @@ function cambiarRespDiseno(id, nuevoResp){
   if(!d || d.responsable === nuevoResp) return;
   d.responsable = nuevoResp;
   saveLocal(); guardarDisenos(); renderPage('diseno');
+}
+
+function setTelaDis(id, estado){
+  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
+  if(!d) return;
+  d.tela_estado = estado;
+  if(estado==='sin_tela'||estado==='en_busqueda') d.tela_nota = '';
+  saveLocal(); guardarDisenos(); renderPage('diseno');
+}
+function setTelaNotaDis(id, nota){
+  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
+  if(!d) return;
+  d.tela_nota = nota;
+  saveLocal(); guardarDisenos();
 }
 
 function cambiarProveedorDiseno(id, val){
