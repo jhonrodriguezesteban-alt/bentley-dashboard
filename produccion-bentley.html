@@ -619,14 +619,11 @@ textarea.form-control{resize:vertical;min-height:80px;}
     <div class="nav-item" onclick="navTo('diseno')" data-page="diseno">
       <span class="icon">🎨</span><span class="nav-label"> Diseño</span>
     </div>
-    <div class="nav-item" onclick="navTo('programacion')" data-page="programacion">
-      <span class="icon">📅</span><span class="nav-label"> Programación</span>
+    <div class="nav-item" onclick="navTo('logistica')" data-page="logistica">
+      <span class="icon">🚚</span><span class="nav-label"> Logística</span>
     </div>
     <div class="nav-item" onclick="navTo('novedades')" data-page="novedades">
       <span class="icon">⚠</span><span class="nav-label"> Novedades</span> <span id="nov-badge" style="display:none;background:var(--red);color:#fff;border-radius:10px;font-size:10px;padding:1px 6px;margin-left:4px;"></span>
-    </div>
-    <div class="nav-item" onclick="navTo('historial')" data-page="historial">
-      <span class="icon">📋</span><span class="nav-label"> Historial</span>
     </div>
     <div class="nav-item" onclick="navTo('costos_mo')" data-page="costos_mo">
       <span class="icon">💰</span><span class="nav-label"> Costos MO</span>
@@ -843,7 +840,7 @@ var GT = (function(){
 
 // ─── Constants ─────────────────────────────────────────────────────────────────
 var REPO = 'jhonrodriguezesteban-alt/bentley-dashboard';
-var FILES = { satelites: 'prod_satelites.json', ops: 'prod_ops.json', ots: 'prod_ots.json', disenos: 'prod_disenos.json', prog_ops: 'prod_prog_ops.json', costos_mo: 'prod_costos_mo.json', usuarios: 'prod_usuarios.json', sim: 'prod_simulador.json' };
+var FILES = { satelites: 'prod_satelites.json', ops: 'prod_ops.json', ots: 'prod_ots.json', disenos: 'prod_disenos.json', prog_ops: 'prod_prog_ops.json', costos_mo: 'prod_costos_mo.json', usuarios: 'prod_usuarios.json', sim: 'prod_simulador.json', logistica: 'prod_logistica.json' };
 var BASE_URL = 'https://jhonrodriguezesteban-alt.github.io/bentley-dashboard/';
 var RAW_URL = 'https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/';
 
@@ -861,7 +858,7 @@ var ESTADO_LABELS = {
 };
 
 // ─── State ─────────────────────────────────────────────────────────────────────
-var DB = { satelites: [], ops: [], ots: [], disenos: [], prog_ops: [], disenos_cfg: {}, costos_mo: {precios:[], pagos:[]}, sim: {active:[], data:{}} };
+var DB = { satelites: [], ops: [], ots: [], disenos: [], prog_ops: [], disenos_cfg: {}, costos_mo: {precios:[], pagos:[]}, sim: {active:[], data:{}}, logistica: {tareas:[]} };
 var currentPage = 'dashboard';
 var _opDetalleId = null;
 var _opEditMode = false;
@@ -911,7 +908,7 @@ function _getHash(u){ var cfg=_getCfgUsers(); return (cfg[u]&&cfg[u].hash)||_U[u
 // Devuelve nombre display
 function _getName(u){ var cfg=_getCfgUsers(); return (cfg[u]&&cfg[u].name)||_NAMES[u]||u; }
 // Módulos permitidos para un usuario (jhon = todos)
-var ALL_MODULES = ['dashboard','satelites','ops','monitoreo','entregas','diseno','programacion','novedades','historial','simulador','costos_mo'];
+var ALL_MODULES = ['dashboard','satelites','ops','monitoreo','entregas','diseno','logistica','novedades','simulador','costos_mo'];
 function _getModules(u){
   if(u==='jhon') return ALL_MODULES.slice();
   var cfg=_getCfgUsers();
@@ -1027,8 +1024,8 @@ function applyModuleAccess(uid){
 
 var ALL_MODULE_LABELS = {
   dashboard:'Dashboard', satelites:'Satélites', ops:'OTs', entregas:'Entregas',
-  diseno:'Diseño', programacion:'Programación', novedades:'Novedades',
-  historial:'Historial', simulador:'Simulador', costos_mo:'Costos MO'
+  diseno:'Diseño', logistica:'Logística', novedades:'Novedades',
+  simulador:'Simulador', costos_mo:'Costos MO'
 };
 
 function renderAdminUsers(){
@@ -1556,6 +1553,8 @@ async function cargarDatos(){
     var simR = await fetch(BASE_URL + 'prod_simulador.json?t=' + t);
     if(simR.ok){ var d9 = await simR.json(); DB.sim={active:d9.active||[],data:d9.data||{}}; _simActive=DB.sim.active; _simData=DB.sim.data; }
     else { var lsRaw=localStorage.getItem('bentley_sim_data'); if(lsRaw){ try{ var lsP=JSON.parse(lsRaw); DB.sim={active:lsP.active||[],data:lsP.data||lsP}; _simActive=DB.sim.active; _simData=DB.sim.data; }catch(e){} } }
+    var logR = await fetch(BASE_URL + 'prod_logistica.json?t=' + t);
+    if(logR.ok){ var d10 = await logR.json(); DB.logistica = {tareas: d10.tareas||[]}; }
     if(DB.satelites.length === 0) seedSatelites();
     saveLocal();
     var msg = 'Datos cargados: ' + DB.ops.length + ' OPs, ' + DB.ots.length + ' OTs, ' + CATALOGO.length + ' refs SKU';
@@ -1623,7 +1622,7 @@ function navTo(page){
   localStorage.setItem('bentley_last_page', page);
   if(page !== 'ops') _opDetalleId = null;
   document.querySelectorAll('.nav-item').forEach(function(el){ el.classList.toggle('active', el.dataset.page===page); });
-  var titles = {dashboard:'⬡ DASHBOARD',satelites:'🏭 SATÉLITES',ops:'📋 ÓRDENES DE PRODUCCIÓN',monitoreo:'🔍 MONITOREO DE PRODUCCIÓN',entregas:'📦 ENTREGAS',diseno:'🎨 DISEÑO',programacion:'📅 PROGRAMACIÓN DE TRABAJO',novedades:'⚠ NOVEDADES',historial:'📋 HISTORIAL',simulador:'🧮 SIMULADOR DE PRODUCCIÓN',costos_mo:'💰 COSTOS MO'};
+  var titles = {dashboard:'⬡ DASHBOARD',satelites:'🏭 SATÉLITES',ops:'📋 ÓRDENES DE PRODUCCIÓN',monitoreo:'🔍 MONITOREO DE PRODUCCIÓN',entregas:'📦 ENTREGAS',diseno:'🎨 DISEÑO',logistica:'🚚 LOGÍSTICA',novedades:'⚠ NOVEDADES',simulador:'🧮 SIMULADOR DE PRODUCCIÓN',costos_mo:'💰 COSTOS MO'};
   document.getElementById('topbar-title').innerHTML = titles[page] || page.toUpperCase();
   closeDrawer(); closeModal(); selectedOTs.clear();
   renderPage(page);
@@ -1672,9 +1671,8 @@ function renderPage(page){
   else if(page==='entregas') el.innerHTML = renderEntregas();
   else if(page==='indicadores') el.innerHTML = renderIndicadores();
   else if(page==='diseno') el.innerHTML = renderDiseno();
-  else if(page==='programacion') el.innerHTML = renderProgramacion();
+  else if(page==='logistica') el.innerHTML = renderLogistica();
   else if(page==='novedades') el.innerHTML = renderNovedades();
-  else if(page==='historial') el.innerHTML = renderHistorial();
   else if(page==='costos_mo') el.innerHTML = renderCostosMO();
   else if(page==='simulador') el.innerHTML = renderSimulador();
   else if(page==='monitoreo') el.innerHTML = renderMonitoreo();
@@ -5340,6 +5338,219 @@ var PROG_CATEGORIAS = ['Chaquetas','Abrigos','Conjuntos','Pantalones','Buzos','C
 
 function getTallasByMarca(marca){
   return (marca||'').toLowerCase().includes('prime') ? TALLAS_PRIME : TALLAS_BK;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ─── Logística ────────────────────────────────────────────────────────────────
+var _logFecha = '';
+var _logDragId = null;
+
+var LOG_TIPOS = {
+  envio_corte:    {label:'✂ Envío Corte',    color:'#f97316', bg:'rgba(249,115,22,.15)',  border:'rgba(249,115,22,.4)'},
+  recoger_insumos:{label:'📦 Insumos',        color:'#38bdf8', bg:'rgba(56,189,248,.15)',  border:'rgba(56,189,248,.4)'},
+  materia_prima:  {label:'🧵 Mat. Prima',     color:'#a855f7', bg:'rgba(168,85,247,.15)',  border:'rgba(168,85,247,.4)'},
+  mercancia:      {label:'🏪 Mercancía',      color:'#00d4ff', bg:'rgba(0,212,255,.15)',   border:'rgba(0,212,255,.4)'},
+  taller:         {label:'🏭 Taller',         color:'#fbbf24', bg:'rgba(251,191,36,.15)',  border:'rgba(251,191,36,.4)'},
+  diligencia:     {label:'📋 Diligencia',     color:'#94a3b8', bg:'rgba(148,163,184,.15)', border:'rgba(148,163,184,.4)'},
+};
+
+function _logGuardar(){
+  return guardarArchivo('logistica', {tareas: DB.logistica.tareas});
+}
+
+function renderLogistica(){
+  if(!_logFecha) _logFecha = hoy();
+  var tareas = DB.logistica.tareas || [];
+
+  var h = '';
+
+  // ── Cabecera: navegación de fecha + botón nueva tarea ─────────────────────
+  h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">';
+  h += '<div style="display:flex;align-items:center;gap:10px;">';
+  var prevD = new Date(_logFecha); prevD.setDate(prevD.getDate()-1); var prevStr = prevD.toISOString().slice(0,10);
+  var nextD = new Date(_logFecha); nextD.setDate(nextD.getDate()+1); var nextStr = nextD.toISOString().slice(0,10);
+  h += '<button data-f="'+prevStr+'" onclick="_logFecha=this.dataset.f;renderPage(\'logistica\')" style="background:#0f1520;border:1px solid #1e2535;border-radius:8px;color:#94a3b8;padding:6px 12px;cursor:pointer;font-size:14px;">‹</button>';
+  var dias=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'], meses=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  var fd = new Date(_logFecha+'T12:00:00');
+  var esHoy = _logFecha === hoy();
+  h += '<div style="text-align:center;">';
+  h += '<div style="font-size:18px;font-weight:700;color:#e2e8f0;">'+dias[fd.getDay()]+' '+fd.getDate()+' '+meses[fd.getMonth()]+' '+fd.getFullYear()+'</div>';
+  if(esHoy) h += '<div style="font-size:11px;color:#34d399;font-weight:700;">HOY</div>';
+  h += '</div>';
+  h += '<button data-f="'+nextStr+'" onclick="_logFecha=this.dataset.f;renderPage(\'logistica\')" style="background:#0f1520;border:1px solid #1e2535;border-radius:8px;color:#94a3b8;padding:6px 12px;cursor:pointer;font-size:14px;">›</button>';
+  if(!esHoy) h += '<button data-f="'+hoy()+'" onclick="_logFecha=this.dataset.f;renderPage(\'logistica\')" style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);border-radius:8px;color:#34d399;padding:5px 12px;cursor:pointer;font-size:12px;font-weight:700;">Hoy</button>';
+  h += '</div>';
+  h += '<button onclick="abrirFormLogistica(null)" style="background:rgba(249,115,22,.15);border:1px solid rgba(249,115,22,.4);border-radius:8px;color:#f97316;padding:8px 16px;cursor:pointer;font-size:13px;font-weight:700;">+ Nueva tarea</button>';
+  h += '</div>';
+
+  // ── Tira de 7 días ───────────────────────────────────────────────────────
+  h += '<div style="display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:16px;-webkit-overflow-scrolling:touch;">';
+  for(var di=-3; di<=3; di++){
+    var dd = new Date(fd); dd.setDate(fd.getDate()+di);
+    var ds = dd.toISOString().slice(0,10);
+    var dIsHoy = ds === hoy();
+    var dActive = ds === _logFecha;
+    var cnt = tareas.filter(function(t){ return t.fecha===ds && t.estado!=='reprogramado'; }).length;
+    h += '<button data-f="'+ds+'" onclick="_logFecha=this.dataset.f;renderPage(\'logistica\')" style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 12px;border-radius:10px;cursor:pointer;border:1px solid '+(dActive?'#f97316':dIsHoy?'rgba(52,211,153,.4)':'#1e2535')+';background:'+(dActive?'rgba(249,115,22,.15)':dIsHoy?'rgba(52,211,153,.06)':'#0f1520')+';min-width:52px;">';
+    h += '<span style="font-size:10px;font-weight:700;color:'+(dActive?'#f97316':dIsHoy?'#34d399':'#475569')+';text-transform:uppercase;">'+dias[dd.getDay()]+'</span>';
+    h += '<span style="font-size:16px;font-weight:700;color:'+(dActive?'#f97316':dIsHoy?'#34d399':'#94a3b8')+';">'+dd.getDate()+'</span>';
+    if(cnt) h += '<span style="background:'+(dActive?'#f97316':'#475569')+';color:#fff;border-radius:8px;font-size:9px;font-weight:700;padding:0 5px;min-width:16px;text-align:center;">'+cnt+'</span>';
+    h += '</button>';
+  }
+  h += '</div>';
+
+  // ── Lista de tareas del día ───────────────────────────────────────────────
+  var tareasDelDia = tareas.filter(function(t){ return t.fecha===_logFecha && t.estado!=='reprogramado'; })
+    .sort(function(a,b){ return (a.orden||0)-(b.orden||0); });
+
+  if(!tareasDelDia.length){
+    h += '<div class="empty-state"><div class="icon">🚚</div><p>Sin tareas para este día.<br><span style="font-size:12px;color:#475569;">Usa "+ Nueva tarea" para agregar una ruta.</span></p></div>';
+    return h;
+  }
+
+  // Contadores resumen
+  var nDone = tareasDelDia.filter(function(t){ return t.estado==='completado'; }).length;
+  h += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">';
+  h += '<span style="font-size:13px;color:#64748b;">'+tareasDelDia.length+' tareas</span>';
+  h += '<span style="font-size:13px;color:#34d399;font-weight:700;">'+nDone+' completadas</span>';
+  h += '<div style="flex:1;background:#1e2535;border-radius:4px;height:6px;overflow:hidden;"><div style="height:100%;background:linear-gradient(90deg,#34d399,#10b981);border-radius:4px;transition:width .4s;width:'+(tareasDelDia.length?Math.round(nDone/tareasDelDia.length*100):0)+'%;"></div></div>';
+  h += '</div>';
+
+  h += '<div id="log-lista">';
+  tareasDelDia.forEach(function(t, idx){
+    var tc = LOG_TIPOS[t.tipo] || LOG_TIPOS.diligencia;
+    var done = t.estado === 'completado';
+    h += '<div data-tid="'+t.id+'" style="display:flex;align-items:center;gap:10px;background:'+(done?'rgba(52,211,153,.04)':'#13161f')+';border:1px solid '+(done?'rgba(52,211,153,.2)':'#1e2535')+';border-left:3px solid '+(done?'#34d399':tc.color)+';border-radius:10px;padding:12px 14px;margin-bottom:8px;opacity:'+(done?'.7':'1')+';transition:all .2s;" draggable="true" ondragstart="_logDragId=this.dataset.tid;this.style.opacity=\'.4\'" ondragend="this.style.opacity=\'\'" ondragover="event.preventDefault()" ondrop="_logDrop(event,this.dataset.tid)">';
+
+    // Orden badge
+    h += '<div style="font-size:11px;font-weight:700;color:#475569;min-width:20px;text-align:center;">'+(idx+1)+'</div>';
+
+    // Tipo badge
+    h += '<span style="padding:2px 8px;border-radius:8px;font-size:10px;font-weight:700;white-space:nowrap;background:'+tc.bg+';border:1px solid '+tc.border+';color:'+tc.color+';">'+tc.label+'</span>';
+
+    // Info
+    h += '<div style="flex:1;min-width:0;">';
+    h += '<div style="font-size:13px;font-weight:700;color:'+(done?'#64748b':'#e2e8f0')+';'+(done?'text-decoration:line-through;':'')+' white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(t.descripcion)+'</div>';
+    if(t.destino) h += '<div style="font-size:11px;color:#475569;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">📍 '+esc(t.destino)+'</div>';
+    if(t.nota && done) h += '<div style="font-size:10px;color:#34d399;margin-top:2px;">✓ '+esc(t.nota)+'</div>';
+    h += '</div>';
+
+    // Hora
+    if(t.hora) h += '<div style="font-size:12px;font-weight:700;color:#475569;flex-shrink:0;">'+esc(t.hora)+'</div>';
+
+    // Botón completar
+    h += '<button data-tid="'+t.id+'" onclick="toggleLogCompletado(this.dataset.tid)" title="'+(done?'Desmarcar':'Marcar completado')+'" style="display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;cursor:pointer;flex-shrink:0;border:2px solid '+(done?'#34d399':'#1e2535')+';background:'+(done?'rgba(52,211,153,.15)':'transparent')+';color:'+(done?'#34d399':'#475569')+';font-size:14px;transition:all .2s;">'+(done?'✓':'○')+'</button>';
+
+    // Menú acciones
+    h += '<div style="display:flex;gap:4px;flex-shrink:0;">';
+    h += '<button data-tid="'+t.id+'" onclick="abrirFormLogistica(this.dataset.tid)" title="Editar" style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);border-radius:6px;cursor:pointer;color:#00d4ff;font-size:12px;">✏</button>';
+    h += '<button data-tid="'+t.id+'" onclick="reprogramarLogTarea(this.dataset.tid)" title="Reprogramar" style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);border-radius:6px;cursor:pointer;color:#fbbf24;font-size:12px;">📅</button>';
+    h += '<button data-tid="'+t.id+'" onclick="eliminarLogTarea(this.dataset.tid)" title="Eliminar" style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:6px;cursor:pointer;color:#ef4444;font-size:12px;">🗑</button>';
+    h += '</div>';
+
+    h += '</div>';
+  });
+  h += '</div>';
+
+  return h;
+}
+
+function _logDrop(event, targetId){
+  event.preventDefault();
+  if(!_logDragId || _logDragId===targetId) return;
+  var tareas = DB.logistica.tareas;
+  var src = tareas.find(function(t){ return t.id===_logDragId; });
+  var tgt = tareas.find(function(t){ return t.id===targetId; });
+  if(!src||!tgt) return;
+  var tmp = src.orden; src.orden = tgt.orden; tgt.orden = tmp;
+  saveLocal(); _logGuardar();
+  renderPage('logistica');
+}
+
+function toggleLogCompletado(id){
+  var t = (DB.logistica.tareas||[]).find(function(x){ return x.id===id; });
+  if(!t) return;
+  t.estado = t.estado==='completado' ? 'pendiente' : 'completado';
+  saveLocal(); _logGuardar();
+  renderPage('logistica');
+}
+
+function reprogramarLogTarea(id){
+  var t = (DB.logistica.tareas||[]).find(function(x){ return x.id===id; });
+  if(!t) return;
+  var body = '<div class="form-group"><label class="form-label">Nueva fecha</label><input id="log-reprogram-fecha" type="date" class="form-control" value="'+t.fecha+'"></div>';
+  var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>';
+  footer += '<button data-tid="'+id+'" class="btn btn-primary" style="background:#fbbf24;border-color:#fbbf24;color:#000;" onclick="confirmarReprogramarLog(this.dataset.tid)">Reprogramar</button>';
+  openModal('Reprogramar tarea', body, footer);
+}
+
+function confirmarReprogramarLog(id){
+  var nuevaFecha = (document.getElementById('log-reprogram-fecha')||{}).value;
+  if(!nuevaFecha){ toast('Selecciona una fecha','error'); return; }
+  var t = (DB.logistica.tareas||[]).find(function(x){ return x.id===id; });
+  if(!t) return;
+  t.fecha = nuevaFecha;
+  t.estado = 'pendiente';
+  saveLocal(); _logGuardar();
+  closeModal();
+  toast('Tarea reprogramada al '+nuevaFecha,'success');
+  renderPage('logistica');
+}
+
+function eliminarLogTarea(id){
+  if(!confirm('¿Eliminar esta tarea logística?')) return;
+  DB.logistica.tareas = (DB.logistica.tareas||[]).filter(function(t){ return t.id!==id; });
+  saveLocal(); _logGuardar();
+  renderPage('logistica');
+}
+
+function abrirFormLogistica(id){
+  var t = id ? (DB.logistica.tareas||[]).find(function(x){ return x.id===id; }) : null;
+  var isNew = !t;
+  if(isNew){
+    var maxOrd = (DB.logistica.tareas||[]).filter(function(x){ return x.fecha===_logFecha; }).reduce(function(a,x){ return Math.max(a,x.orden||0); }, 0);
+    t = {id:'LG-'+Date.now(), tipo:'diligencia', descripcion:'', destino:'', fecha:_logFecha, hora:'', orden:maxOrd+1, estado:'pendiente', nota:'', created_by:getUser()};
+  }
+  var tipoOpts = Object.keys(LOG_TIPOS).map(function(k){ return '<option value="'+k+'"'+(t.tipo===k?' selected':'')+' style="background:#1a1e2a;">'+LOG_TIPOS[k].label+'</option>'; }).join('');
+  var body = '';
+  body += '<div class="form-group"><label class="form-label">Tipo de tarea</label><select id="log-tipo" class="form-control">'+tipoOpts+'</select></div>';
+  body += '<div class="form-group"><label class="form-label">Descripción</label><input id="log-desc" type="text" class="form-control" value="'+esc(t.descripcion||'')+'" placeholder="Ej: Llevar corte OP-52 TORERO PILI"></div>';
+  body += '<div class="form-group"><label class="form-label">Destino / Dirección</label><input id="log-dest" type="text" class="form-control" value="'+esc(t.destino||'')+'" placeholder="Ej: Cra 15 #45-20 Taller Los Pinos"></div>';
+  body += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">';
+  body += '<div class="form-group"><label class="form-label">Fecha</label><input id="log-fecha-inp" type="date" class="form-control" value="'+t.fecha+'"></div>';
+  body += '<div class="form-group"><label class="form-label">Hora aprox.</label><input id="log-hora" type="time" class="form-control" value="'+(t.hora||'')+'"></div>';
+  body += '</div>';
+  body += '<div class="form-group"><label class="form-label">Nota interna</label><input id="log-nota" type="text" class="form-control" value="'+esc(t.nota||'')+'" placeholder="Observación para el conductor..."></div>';
+  body += '<input type="hidden" id="log-edit-id" value="'+(isNew?'__new__':id)+'">';
+  body += '<input type="hidden" id="log-edit-orden" value="'+(t.orden||1)+'">';
+  var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>';
+  footer += '<button class="btn btn-primary" onclick="guardarFormLogistica()">'+( isNew?'Crear tarea':'Guardar cambios')+'</button>';
+  openModal(isNew?'Nueva tarea logística':'Editar tarea', body, footer);
+  setTimeout(function(){ var el=document.getElementById('log-desc'); if(el) el.focus(); }, 100);
+}
+
+function guardarFormLogistica(){
+  var id = (document.getElementById('log-edit-id')||{}).value;
+  var tipo = (document.getElementById('log-tipo')||{}).value;
+  var desc = ((document.getElementById('log-desc')||{}).value||'').trim();
+  var dest = ((document.getElementById('log-dest')||{}).value||'').trim();
+  var fecha = (document.getElementById('log-fecha-inp')||{}).value;
+  var hora = (document.getElementById('log-hora')||{}).value||'';
+  var nota = ((document.getElementById('log-nota')||{}).value||'').trim();
+  var orden = parseInt((document.getElementById('log-edit-orden')||{}).value)||1;
+  if(!desc){ toast('Ingresa una descripción','error'); return; }
+  if(!fecha){ toast('Selecciona una fecha','error'); return; }
+  if(id==='__new__'){
+    DB.logistica.tareas.push({id:'LG-'+Date.now(), tipo:tipo, descripcion:desc, destino:dest, fecha:fecha, hora:hora, orden:orden, estado:'pendiente', nota:nota, created_by:getUser()});
+  } else {
+    var t = (DB.logistica.tareas||[]).find(function(x){ return x.id===id; });
+    if(t){ t.tipo=tipo; t.descripcion=desc; t.destino=dest; t.fecha=fecha; t.hora=hora; t.nota=nota; }
+  }
+  _logFecha = fecha;
+  saveLocal(); _logGuardar();
+  closeModal();
+  renderPage('logistica');
+  toast(id==='__new__'?'Tarea creada':'Tarea actualizada','success');
 }
 
 var _progFiltroMarca = '';
