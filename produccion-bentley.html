@@ -229,6 +229,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
   display:inline-block;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600;
   letter-spacing:.5px;text-transform:uppercase;white-space:nowrap;
 }
+.e-POR_REVISAR{background:rgba(99,102,241,.15);color:#818cf8;border:1px solid rgba(99,102,241,.3);}
 .e-PENDIENTE_CORTAR{background:rgba(255,214,10,.15);color:var(--gold);border:1px solid rgba(255,214,10,.3);}
 .e-CORTE_POR_ALISTAR{background:rgba(255,159,28,.15);color:#ff9f1c;border:1px solid rgba(255,159,28,.3);}
 .e-ASIGNADO{background:rgba(0,212,255,.15);color:var(--cyan);border:1px solid rgba(0,212,255,.3);}
@@ -851,8 +852,9 @@ var CATEGORIAS = ['CAMISAS','CHAQUETAS','CAMISETAS','BUZOS','GABAN','CONJUNTOS',
 var TALLAS_DEFAULT = ['T4','T6','T8','T10','T12','T14','T16'];
 var TALLAS_ALL = ['T2','T4','T6','T8','T10','T12','T14','T16'];
 var CORTADORES = ['CARVAJAL','JAVIER'];
-var ESTADOS = ['PENDIENTE_CORTAR','CORTE_POR_ALISTAR','ASIGNADO','EN_CONFECCION','ENTREGADO_PARCIAL','ENTREGADO','NOVEDAD'];
+var ESTADOS = ['POR_REVISAR','PENDIENTE_CORTAR','CORTE_POR_ALISTAR','ASIGNADO','EN_CONFECCION','ENTREGADO_PARCIAL','ENTREGADO','NOVEDAD'];
 var ESTADO_LABELS = {
+  POR_REVISAR:'Nueva por revisar',
   PENDIENTE_CORTAR:'Pendiente Cortar', CORTE_POR_ALISTAR:'Corte Por Alistar',
   ASIGNADO:'Asignado', EN_CONFECCION:'En Confección',
   ENTREGADO_PARCIAL:'Entregado Parcial', ENTREGADO:'Entregado', NOVEDAD:'Novedad'
@@ -1709,7 +1711,7 @@ function _getDashMetricData(mk){
   });
   if(mk==='cortes') return ms.map(function(m){
     return DB.ots.filter(function(o){
-      if(o.estado==='PENDIENTE_CORTAR') return false;
+      if(o.estado==='PENDIENTE_CORTAR'||o.estado==='POR_REVISAR') return false;
       return (o.fecha_corte||o.fecha_ot||'').startsWith(m);
     }).reduce(function(a,o){return a+(o.cantidad||0);},0);
   });
@@ -2240,6 +2242,7 @@ async function crearSatelite(){
 // ═══════════════════════════════════════════════════════════════════════════════
 // ─── Producción Kanban ─────────────────────────────────────────────────────────
 var OP_KANBAN = [
+  {k:'POR_REVISAR',       label:'Nueva: Por revisar', color:'#6366f1', bg:'rgba(99,102,241,.08)'},
   {k:'PENDIENTE_CORTAR',  label:'Pte. de Cortar',  color:'#fbbf24', bg:'rgba(251,191,36,.08)'},
   {k:'CORTE_POR_ALISTAR', label:'Corte por Alistar (asig.)', color:'#f97316', bg:'rgba(249,115,22,.08)'},
   {k:'EN_CONFECCION',     label:'En Confección',    color:'#00d4ff', bg:'rgba(0,212,255,.08)'},
@@ -2261,7 +2264,8 @@ function fmtOpId(id){
 
 // Derivar estado Kanban de un sub-grupo (OP+color) a partir de sus OTs
 function _subgEstadoDerivado(otsColor){
-  if(!otsColor.length) return 'PENDIENTE_CORTAR';
+  if(!otsColor.length) return 'POR_REVISAR';
+  if(otsColor.every(function(o){ return o.estado==='POR_REVISAR'; })) return 'POR_REVISAR';
   if(otsColor.some(function(o){ return o.estado==='NOVEDAD'; })) return 'NOVEDAD';
   if(otsColor.every(function(o){ return o.estado==='ENTREGADO'; })) return 'ARCHIVADO';
   if(otsColor.some(function(o){ return o.estado==='EN_CONFECCION'; })) return 'EN_CONFECCION';
@@ -2282,6 +2286,15 @@ function _setSubgEstado(opId, color, estado){
   if(!op) return;
   if(!op.subg_estados) op.subg_estados = {};
   op.subg_estados[_subgKey(opId,color)] = estado;
+  // Al aprobar a Pendiente de Cortar, liberar OTs que estaban retenidas en POR_REVISAR
+  if(estado === 'PENDIENTE_CORTAR'){
+    DB.ots.forEach(function(ot){
+      if(ot.op_id===opId && (ot.color||'').toUpperCase()===(color||'').toUpperCase() && ot.estado==='POR_REVISAR'){
+        ot.estado = 'PENDIENTE_CORTAR';
+      }
+    });
+    guardarArchivo('ots', {ots: DB.ots});
+  }
   guardarArchivo('ops', {ops: DB.ops});
   saveLocal();
 }
@@ -2868,7 +2881,7 @@ function renderOPDetalle(opId){
   var udsTotal    = otsOp.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
   var otsEnt      = otsOp.filter(function(o){ return o.estado==='ENTREGADO'; });
   var otsConf     = otsOp.filter(function(o){ return o.estado==='EN_CONFECCION'; });
-  var otsPCorte   = otsOp.filter(function(o){ return o.estado==='PENDIENTE_CORTAR'||o.estado==='CORTE_POR_ALISTAR'; });
+  var otsPCorte   = otsOp.filter(function(o){ return o.estado==='POR_REVISAR'||o.estado==='PENDIENTE_CORTAR'||o.estado==='CORTE_POR_ALISTAR'; });
   var otsNov      = otsOp.filter(function(o){ return o.estado==='NOVEDAD'||(o.unidades_novedad||0)>0; });
   var udsEnt      = otsEnt.reduce(function(a,o){ return a+(o.unidades_entregadas||0); }, 0);
   var udsConf     = otsConf.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
@@ -2920,7 +2933,7 @@ function renderOPDetalle(opId){
   h += '<div style="height:100%;width:' + pct + '%;background:var(--green);border-radius:6px;transition:width .4s;"></div></div>';
 
   // ── Build color×talla grid ───────────────────────────────────────────────
-  var ESTADO_ORDER = ['PENDIENTE_CORTAR','CORTE_POR_ALISTAR','ASIGNADO','EN_CONFECCION','ENTREGADO_PARCIAL','NOVEDAD','ENTREGADO'];
+  var ESTADO_ORDER = ['POR_REVISAR','PENDIENTE_CORTAR','CORTE_POR_ALISTAR','ASIGNADO','EN_CONFECCION','ENTREGADO_PARCIAL','NOVEDAD','ENTREGADO'];
   var satOpts = DB.satelites.filter(function(s){ return s.activo; }).map(function(s){ return '<option value="' + s.id + '">' + s.nombre + '</option>'; }).join('');
 
   // Collect unique tallas and colors (desde OTs + colores planeados de op.referencias)
@@ -3076,7 +3089,7 @@ function renderOPDetalle(opId){
     h += '<div style="border-bottom:1px solid var(--card-border);">';
     var satColorId = null;
     otsC.forEach(function(o){ if(o.satelite_id && !satColorId) satColorId=o.satelite_id; });
-    var tieneCorteActive = otsC.some(function(o){ return o.estado==='PENDIENTE_CORTAR'||o.estado==='CORTE_POR_ALISTAR'; });
+    var tieneCorteActive = otsC.some(function(o){ return o.estado==='POR_REVISAR'||o.estado==='PENDIENTE_CORTAR'||o.estado==='CORTE_POR_ALISTAR'; });
     var tieneConfeccion = otsC.some(function(o){ return o.estado==='EN_CONFECCION'||o.estado==='ASIGNADO'||o.estado==='NOVEDAD'; });
     h += '<div style="padding:6px 14px;background:rgba(255,255,255,.02);display:flex;align-items:center;gap:8px;flex-wrap:wrap;">';
     h += '<span style="font-size:12px;font-weight:700;color:#e2e8f0;min-width:70px;">'+esc(color)+'</span>';
@@ -3173,7 +3186,7 @@ function mostrarKPIDetalle(opId, filtro){
     lista = otsOp.filter(function(o){ return o.estado==='EN_CONFECCION'; });
     titulo = 'En Confección';
   } else if(filtro==='CORTE'){
-    lista = otsOp.filter(function(o){ return o.estado==='PENDIENTE_CORTAR'||o.estado==='CORTE_POR_ALISTAR'; });
+    lista = otsOp.filter(function(o){ return o.estado==='POR_REVISAR'||o.estado==='PENDIENTE_CORTAR'||o.estado==='CORTE_POR_ALISTAR'; });
     titulo = 'Pendiente de Corte';
   } else if(filtro==='NOVEDAD'){
     lista = otsOp.filter(function(o){ return o.estado==='NOVEDAD'||(o.unidades_novedad||0)>0; });
@@ -3371,7 +3384,7 @@ async function guardarEdicionOPRefs(opId){
             fecha_ot:op.fecha_op||hoy(), satelite_id:null,
             fecha_entrega_corte_satelite:null, fecha_estimada_entrega:null,
             fecha_entrega_real:null, unidades_entregadas:0, unidades_novedad:0,
-            estado:'PENDIENTE_CORTAR', nt_corte_satelite:null, nt_ingreso_planta:null,
+            estado:'POR_REVISAR', nt_corte_satelite:null, nt_ingreso_planta:null,
             op_effi:null, cumplió_fecha:null, motivo_incumplimiento:'', notas:'',
             historial:[], created_at:hoy(), created_by:getUser()
           });
@@ -3392,7 +3405,7 @@ async function guardarEdicionOPRefs(opId){
   });
   DB.ots = DB.ots.filter(function(ot){
     if(ot.op_id !== opId) return true;
-    if(ot.estado !== 'PENDIENTE_CORTAR') return true;
+    if(ot.estado !== 'PENDIENTE_CORTAR' && ot.estado !== 'POR_REVISAR') return true;
     return !!combValidas[(ot.color||'')+'_'+(ot.talla||'')];
   });
 
@@ -6279,6 +6292,7 @@ function mostrarDetalleProduccionActiva(){
         : otsColor.some(function(o){ return o.estado==='NOVEDAD'; }) ? 'NOVEDAD'
         : otsColor.some(function(o){ return o.estado==='EN_CONFECCION'||o.estado==='ASIGNADO'; }) ? 'EN_CONFECCION'
         : otsColor.some(function(o){ return o.estado==='CORTE_POR_ALISTAR'; }) ? 'CORTE_POR_ALISTAR'
+        : otsColor.every(function(o){ return o.estado==='POR_REVISAR'; }) ? 'POR_REVISAR'
         : 'PENDIENTE_CORTAR';
       if(estado === 'ARCHIVADO') return;
       var uds = otsColor.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
