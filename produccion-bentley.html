@@ -155,11 +155,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
   padding:0 24px;border-bottom:1px solid var(--card-border);
   position:sticky;top:0;z-index:100;background:rgba(13,15,20,0.95);backdrop-filter:blur(10px);
 }
-#topbar-title{font-family:var(--bebas);font-size:20px;letter-spacing:1px;color:var(--text);}
+#topbar-title{font-family:var(--bebas);font-size:26px;letter-spacing:1.5px;color:var(--text);}
 #topbar-right{display:flex;align-items:center;gap:12px;}
 .badge-user{
-  font-size:11px;color:var(--dim);background:var(--card);border:1px solid var(--card-border);
-  padding:4px 10px;border-radius:20px;
+  font-size:13px;font-weight:700;color:#34d399;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.35);
+  padding:5px 12px;border-radius:20px;
 }
 #page-content{padding:24px;flex:1;min-width:0;overflow-x:clip;}
 
@@ -652,9 +652,9 @@ textarea.form-control{resize:vertical;min-height:80px;}
       <div id="topbar-title">DASHBOARD</div>
     </div>
     <div id="topbar-right">
-      <div id="topbar-clock" style="font-size:12px;color:#64748b;text-align:right;line-height:1.4;">
-        <div id="clock-time" style="font-weight:700;color:#94a3b8;font-size:14px;"></div>
-        <div id="clock-date" style="font-size:10px;color:#475569;"></div>
+      <div id="topbar-clock" style="font-size:12px;text-align:right;line-height:1.3;">
+        <div id="clock-time" style="font-weight:700;color:#4ade80;font-size:17px;letter-spacing:1px;text-shadow:0 0 8px rgba(74,222,128,.5);"></div>
+        <div id="clock-date" style="font-size:10px;color:#34d399;"></div>
       </div>
       <span class="badge-user" id="badge-user">Invitado</span>
       <div id="sync-indicator" style="font-size:11px;color:var(--dim);">⬡ Local</div>
@@ -1623,8 +1623,8 @@ function navTo(page){
   localStorage.setItem('bentley_last_page', page);
   if(page !== 'ops') _opDetalleId = null;
   document.querySelectorAll('.nav-item').forEach(function(el){ el.classList.toggle('active', el.dataset.page===page); });
-  var titles = {dashboard:'DASHBOARD',satelites:'SATÉLITES',ops:'ÓRDENES DE PRODUCCIÓN',monitoreo:'MONITOREO DE PRODUCCIÓN',entregas:'REGISTRO DE ENTREGAS',diseno:'DISEÑO',programacion:'PROGRAMACIÓN DE TRABAJO',novedades:'NOVEDADES',historial:'HISTORIAL',simulador:'SIMULADOR DE PRODUCCIÓN',costos_mo:'COSTOS MO'};
-  document.getElementById('topbar-title').textContent = titles[page] || page.toUpperCase();
+  var titles = {dashboard:'⬡ DASHBOARD',satelites:'🏭 SATÉLITES',ops:'📋 ÓRDENES DE PRODUCCIÓN',monitoreo:'🔍 MONITOREO DE PRODUCCIÓN',entregas:'📦 ENTREGAS',diseno:'🎨 DISEÑO',programacion:'📅 PROGRAMACIÓN DE TRABAJO',novedades:'⚠ NOVEDADES',historial:'📋 HISTORIAL',simulador:'🧮 SIMULADOR DE PRODUCCIÓN',costos_mo:'💰 COSTOS MO'};
+  document.getElementById('topbar-title').innerHTML = titles[page] || page.toUpperCase();
   closeDrawer(); closeModal(); selectedOTs.clear();
   renderPage(page);
   document.getElementById('sidebar').classList.remove('mob-open');
@@ -2855,7 +2855,7 @@ function verDetalleOP(opId){
   currentPage = 'ops';
   document.querySelectorAll('.nav-item').forEach(function(el){ el.classList.toggle('active', el.dataset.page==='ops'); });
   var op = DB.ops.find(function(o){ return o.id === opId; });
-  document.getElementById('topbar-title').textContent = op ? op.id + ' — ' + op.nombre_producto : 'DETALLE OP';
+  document.getElementById('topbar-title').innerHTML = op ? '📋 ' + op.id + ' — ' + op.nombre_producto : '📋 DETALLE OP';
   closeDrawer(); closeModal();
   document.getElementById('page-content').innerHTML = renderOPDetalle(opId);
 }
@@ -2864,7 +2864,7 @@ function abrirOT(id){ verOT(id); }
 
 function volverAOPs(){
   _opDetalleId = null;
-  document.getElementById('topbar-title').textContent = 'ÓRDENES DE PRODUCCIÓN';
+  document.getElementById('topbar-title').innerHTML = '📋 ÓRDENES DE PRODUCCIÓN';
   document.getElementById('page-content').innerHTML = renderOPs();
 }
 
