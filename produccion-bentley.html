@@ -229,7 +229,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
   display:inline-block;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600;
   letter-spacing:.5px;text-transform:uppercase;white-space:nowrap;
 }
-.e-POR_REVISAR{background:rgba(99,102,241,.15);color:#818cf8;border:1px solid rgba(99,102,241,.3);}
+.e-POR_REVISAR{background:rgba(34,197,94,.15);color:#4ade80;border:1px solid rgba(34,197,94,.3);}
 .e-PENDIENTE_CORTAR{background:rgba(255,214,10,.15);color:var(--gold);border:1px solid rgba(255,214,10,.3);}
 .e-CORTE_POR_ALISTAR{background:rgba(255,159,28,.15);color:#ff9f1c;border:1px solid rgba(255,159,28,.3);}
 .e-ASIGNADO{background:rgba(0,212,255,.15);color:var(--cyan);border:1px solid rgba(0,212,255,.3);}
@@ -854,7 +854,7 @@ var TALLAS_ALL = ['T2','T4','T6','T8','T10','T12','T14','T16'];
 var CORTADORES = ['CARVAJAL','JAVIER'];
 var ESTADOS = ['POR_REVISAR','PENDIENTE_CORTAR','CORTE_POR_ALISTAR','ASIGNADO','EN_CONFECCION','ENTREGADO_PARCIAL','ENTREGADO','NOVEDAD'];
 var ESTADO_LABELS = {
-  POR_REVISAR:'Nueva por revisar',
+  POR_REVISAR:'Nuevas programaciones',
   PENDIENTE_CORTAR:'Pendiente Cortar', CORTE_POR_ALISTAR:'Corte Por Alistar',
   ASIGNADO:'Asignado', EN_CONFECCION:'En Confección',
   ENTREGADO_PARCIAL:'Entregado Parcial', ENTREGADO:'Entregado', NOVEDAD:'Novedad'
@@ -2242,7 +2242,7 @@ async function crearSatelite(){
 // ═══════════════════════════════════════════════════════════════════════════════
 // ─── Producción Kanban ─────────────────────────────────────────────────────────
 var OP_KANBAN = [
-  {k:'POR_REVISAR',       label:'Nueva: Por revisar', color:'#6366f1', bg:'rgba(99,102,241,.08)'},
+  {k:'POR_REVISAR',       label:'Nuevas programaciones', color:'#22c55e', bg:'rgba(34,197,94,.08)'},
   {k:'PENDIENTE_CORTAR',  label:'Pte. de Cortar',  color:'#fbbf24', bg:'rgba(251,191,36,.08)'},
   {k:'CORTE_POR_ALISTAR', label:'Corte por Alistar (asig.)', color:'#f97316', bg:'rgba(249,115,22,.08)'},
   {k:'EN_CONFECCION',     label:'En Confección',    color:'#00d4ff', bg:'rgba(0,212,255,.08)'},
