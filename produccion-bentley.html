@@ -1677,7 +1677,21 @@ function renderPage(page){
 // DASHBOARD
 // ═══════════════════════════════════════════════════════════════════════════════
 var _dashFiltroMes = '';
+var _dashMetrica = 'entregas'; // 'entregas' | 'cortes' | 'sats' | 'ops'
+var _dashTouchX = null;
 function setDashFiltro(mes){ _dashFiltroMes = mes; renderPage('dashboard'); }
+function setDashMetrica(m){ _dashMetrica = m; renderPage('dashboard'); }
+function dashChartTouchStart(e){ _dashTouchX = e.touches[0].clientX; }
+function dashChartTouchEnd(e){
+  if(_dashTouchX===null) return;
+  var dx = e.changedTouches[0].clientX - _dashTouchX;
+  _dashTouchX = null;
+  if(Math.abs(dx)<40) return;
+  var order=['entregas','cortes','sats','ops'];
+  var idx=order.indexOf(_dashMetrica);
+  _dashMetrica = dx<0 ? order[(idx+1)%order.length] : order[(idx-1+order.length)%order.length];
+  renderPage('dashboard');
+}
 function verSateliteDesdeDB(satId){ navTo('satelites'); setTimeout(function(){ abrirSat(satId); }, 100); }
 
 function sparkline(vals, color){
@@ -1758,18 +1772,55 @@ function renderDashboard(){
   });
   h += '</div>';
 
-  // ── Gráfica área suave — Entregas por mes ──────────────────────────────────
-  var PL=50,PR=20,PT=30,PB=46,W=800,H=200;
+  // ── Datos por métrica ──────────────────────────────────────────────────────
   var mesesChart = meses.map(function(m){ return yearActual+'-'+m; });
-  var dataChart  = mesesChart.map(function(m){
-    return DB.ots.filter(function(o){ return o.estado==='ENTREGADO'&&(o.fecha_entrega_real||'').startsWith(m); })
-                 .reduce(function(a,o){ return a+(o.unidades_entregadas||0); },0);
-  });
+  var allMetricas = {
+    entregas: {
+      label:'Entregas', unit:'uds', color:'#00d4ff',
+      title:'Uds Entregadas por Mes', sub:'Unidades confirmadas entregadas a planta',
+      data: mesesChart.map(function(m){
+        return DB.ots.filter(function(o){ return o.estado==='ENTREGADO'&&(o.fecha_entrega_real||'').startsWith(m); })
+                     .reduce(function(a,o){ return a+(o.unidades_entregadas||0); },0);
+      })
+    },
+    cortes: {
+      label:'Cortadas', unit:'uds', color:'#fbbf24',
+      title:'Uds Cortadas por Mes', sub:'Unidades que pasaron a Corte por Alistar',
+      data: mesesChart.map(function(m){
+        return DB.ots.filter(function(o){
+          if(o.estado==='PENDIENTE_CORTAR') return false;
+          var ref = o.fecha_corte || o.fecha_ot || '';
+          return ref.startsWith(m);
+        }).reduce(function(a,o){ return a+(o.cantidad||0); },0);
+      })
+    },
+    sats: {
+      label:'Satélites', unit:'sat', color:'#a855f7',
+      title:'Satélites Activos por Mes', sub:'Talleres distintos con OTs activas',
+      data: mesesChart.map(function(m){
+        var ids={};
+        DB.ots.forEach(function(o){
+          if(o.satelite_id && (o.fecha_ot||'').startsWith(m)) ids[o.satelite_id]=1;
+        });
+        return Object.keys(ids).length;
+      })
+    },
+    ops: {
+      label:'OPs', unit:'ops', color:'#34d399',
+      title:'Órdenes de Producción por Mes', sub:'OPs creadas en el mes',
+      data: mesesChart.map(function(m){
+        return DB.ops.filter(function(o){ return (o.fecha_op||'').startsWith(m); }).length;
+      })
+    }
+  };
+
+  var metActiva = allMetricas[_dashMetrica] || allMetricas.entregas;
+  var dataChart = metActiva.data;
+  var PL=50,PR=20,PT=30,PB=46,W=800,H=200;
   var maxC = Math.max.apply(null,dataChart.concat([1]));
   var n=mesesChart.length, slotW=(W-PL-PR)/n, pts=[];
   dataChart.forEach(function(v,i){ pts.push({x:PL+i*slotW+slotW/2, y:PT+(H-PT-PB)*(1-v/maxC)}); });
 
-  // Smooth curve using cubic bezier
   function smoothPath(points){
     if(!points.length) return '';
     var d='M'+points[0].x.toFixed(1)+','+points[0].y.toFixed(1);
@@ -1782,35 +1833,76 @@ function renderDashboard(){
   }
   var linePath = smoothPath(pts);
   var areaPath = linePath+' L'+(W-PR).toFixed(1)+','+(H-PB)+' L'+PL+','+(H-PB)+' Z';
-
-  h += '<div class="card" style="padding:20px 16px 14px;margin-bottom:16px;">';
-  h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">';
-  h += '<div><div style="font-family:var(--bebas);font-size:20px;letter-spacing:1px;">Entregas por Mes</div>';
-  h += '<div style="font-size:11px;color:#64748b;margin-top:1px;">Unidades entregadas '+(filtro||yearActual)+' · toca un mes para filtrar</div></div>';
+  var mc = metActiva.color;
   var totalAnio = dataChart.reduce(function(a,b){ return a+b; },0);
-  h += '<div style="text-align:right;"><div style="font-size:24px;font-weight:800;color:#00d4ff;font-family:var(--bebas);">'+fmtNum(totalAnio)+'</div><div style="font-size:10px;color:#64748b;">Total '+yearActual+'</div></div>';
+
+  // ── Card gráfica con tabs y swipe ─────────────────────────────────────────
+  h += '<div class="card" style="padding:16px 16px 14px;margin-bottom:16px;">';
+
+  // Fila superior: tabs izquierda + total derecha
+  h += '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap;">';
+
+  // Tabs de métricas
+  h += '<div style="display:flex;gap:6px;flex-wrap:wrap;">';
+  var metOrder = ['entregas','cortes','sats','ops'];
+  var _metBg = {entregas:'rgba(0,212,255,.18)',cortes:'rgba(251,191,36,.18)',sats:'rgba(168,85,247,.18)',ops:'rgba(52,211,153,.18)'};
+  metOrder.forEach(function(mk){
+    var mc2 = allMetricas[mk].color, isAct = _dashMetrica===mk;
+    h += '<button data-mk="'+mk+'" onclick="setDashMetrica(this.dataset.mk)" style="'
+      +'background:'+(isAct?_metBg[mk]:'rgba(255,255,255,.04)')+';'
+      +'border:1px solid '+(isAct?mc2:'rgba(255,255,255,.1)')+';'
+      +'color:'+(isAct?mc2:'#64748b')+';'
+      +'border-radius:20px;padding:5px 14px;cursor:pointer;font-size:12px;font-weight:'+(isAct?'700':'500')+';'
+      +'transition:all .2s;white-space:nowrap;">'
+      +allMetricas[mk].label+'</button>';
+  });
   h += '</div>';
+
+  // Total + título
+  h += '<div style="text-align:right;flex-shrink:0;">';
+  h += '<div style="font-size:26px;font-weight:800;color:'+mc+';font-family:var(--bebas);line-height:1;">'+fmtNum(totalAnio)+'</div>';
+  h += '<div style="font-size:10px;color:#64748b;">'+metActiva.unit+' · '+(filtro||yearActual)+'</div>';
+  h += '</div>';
+  h += '</div>';
+
+  // Subtítulo
+  h += '<div style="font-size:11px;color:#64748b;margin-bottom:10px;">'+metActiva.sub+' · <span style="color:#94a3b8;">desliza izquierda/derecha para cambiar métrica</span></div>';
+
+  // SVG con swipe
+  h += '<div ontouchstart="dashChartTouchStart(event)" ontouchend="dashChartTouchEnd(event)" style="touch-action:pan-y;user-select:none;">';
   h += '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block;overflow:visible;" xmlns="http://www.w3.org/2000/svg">';
   h += '<defs>';
-  h += '<linearGradient id="area-grad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00d4ff" stop-opacity="0.35"/><stop offset="70%" stop-color="#a855f7" stop-opacity="0.08"/><stop offset="100%" stop-color="#a855f7" stop-opacity="0"/></linearGradient>';
+  h += '<linearGradient id="area-grad" x1="0" y1="0" x2="0" y2="1">';
+  h += '<stop offset="0%" stop-color="'+mc+'" stop-opacity="0.32"/>';
+  h += '<stop offset="75%" stop-color="'+mc+'" stop-opacity="0.04"/>';
+  h += '<stop offset="100%" stop-color="'+mc+'" stop-opacity="0"/>';
+  h += '</linearGradient>';
   h += '</defs>';
-  // Grid
   for(var gi=0;gi<=4;gi++){
     var gy=PT+Math.round((H-PT-PB)*gi/4), gv=Math.round(maxC*(4-gi)/4);
     h += '<line x1="'+PL+'" y1="'+gy+'" x2="'+(W-PR)+'" y2="'+gy+'" stroke="#1e2535" stroke-width="1" stroke-dasharray="3,6"/>';
     h += '<text x="'+(PL-6)+'" y="'+(gy+4)+'" fill="#334155" font-size="10" text-anchor="end" font-family="system-ui">'+fmtNum(gv)+'</text>';
   }
   h += '<path d="'+areaPath+'" fill="url(#area-grad)"/>';
-  h += '<path d="'+linePath+'" fill="none" stroke="url(#area-grad)" stroke="none"/>';
-  h += '<path d="'+linePath+'" fill="none" stroke="#00d4ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
-  // Dots + labels
+  h += '<path d="'+linePath+'" fill="none" stroke="'+mc+'" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
   pts.forEach(function(p,i){
-    var m=mesesChart[i], isActive=filtro===m, v=dataChart[i];
-    h += '<circle data-mes="'+m+'" onclick="setDashFiltro(this.dataset.mes)" cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="'+(isActive?7:5)+'" fill="'+(isActive?'#00d4ff':'#0d1117')+'" stroke="'+(v>0?'#00d4ff':'#334155')+'" stroke-width="2" style="cursor:pointer;"/>';
-    if(v>0) h += '<text x="'+p.x.toFixed(1)+'" y="'+(p.y-14)+'" fill="'+(isActive?'#00d4ff':'#94a3b8')+'" font-size="'+(isActive?'13':'11')+'" font-weight="'+(isActive?'700':'500')+'" text-anchor="middle" font-family="system-ui">'+fmtNum(v)+'</text>';
-    h += '<text x="'+p.x.toFixed(1)+'" y="'+(H-PB+18)+'" fill="'+(isActive?'#00d4ff':'#475569')+'" font-size="11" font-weight="'+(isActive?'700':'400')+'" text-anchor="middle" font-family="system-ui">'+nomMes[i]+'</text>';
+    var mes2=mesesChart[i], isActive=filtro===mes2, v=dataChart[i];
+    h += '<circle data-mes="'+mes2+'" onclick="setDashFiltro(this.dataset.mes)" cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="'+(isActive?7:5)+'" fill="'+(isActive?mc:'#0d1117')+'" stroke="'+(v>0?mc:'#334155')+'" stroke-width="2" style="cursor:pointer;"/>';
+    if(v>0) h += '<text x="'+p.x.toFixed(1)+'" y="'+(p.y-14)+'" fill="'+(isActive?mc:'#94a3b8')+'" font-size="'+(isActive?'13':'11')+'" font-weight="'+(isActive?'700':'500')+'" text-anchor="middle" font-family="system-ui">'+fmtNum(v)+'</text>';
+    h += '<text x="'+p.x.toFixed(1)+'" y="'+(H-PB+18)+'" fill="'+(isActive?mc:'#475569')+'" font-size="11" font-weight="'+(isActive?'700':'400')+'" text-anchor="middle" font-family="system-ui">'+nomMes[i]+'</text>';
   });
-  h += '</svg></div>';
+  h += '</svg>';
+
+  // Indicador de swipe (puntitos de paginación, estilo mobile)
+  h += '<div style="display:flex;justify-content:center;gap:6px;padding:8px 0 2px;">';
+  metOrder.forEach(function(mk){
+    var isAct=_dashMetrica===mk, mc3=allMetricas[mk].color;
+    h += '<div data-mk="'+mk+'" onclick="setDashMetrica(this.dataset.mk)" style="width:'+(isAct?'20px':'7px')+';height:7px;border-radius:4px;background:'+(isAct?mc3:'#1e2535')+';transition:all .3s;cursor:pointer;"></div>';
+  });
+  h += '</div>';
+
+  h += '</div>'; // swipe wrapper
+  h += '</div>'; // card
 
   // ── Fila 3 columnas ─────────────────────────────────────────────────────────
   h += '<div class="dash-3col" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:16px;">';
