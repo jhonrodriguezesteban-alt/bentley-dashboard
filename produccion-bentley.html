@@ -285,7 +285,9 @@ tr:hover td{background:rgba(255,255,255,0.025);}
 #modal{
   background:#13161f;border:1px solid var(--card-border);border-radius:18px;
   width:90%;max-width:520px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;
+  transition:max-width .25s ease;
 }
+#modal.modal-wide{ max-width:860px; }
 #modal-header{padding:18px 20px;border-bottom:1px solid var(--card-border);display:flex;align-items:center;justify-content:space-between;}
 #modal-title{font-family:var(--bebas);font-size:18px;letter-spacing:1px;}
 #modal-close{background:none;border:none;color:var(--dim);cursor:pointer;font-size:20px;padding:4px;}
@@ -1331,10 +1333,13 @@ function closeDrawer(){
 }
 
 // ─── Modal ─────────────────────────────────────────────────────────────────────
-function openModal(title, bodyHtml, footerHtml){
+function openModal(title, bodyHtml, footerHtml, opts){
+  var wide = opts && opts.wide;
   document.getElementById('modal-title').textContent = title;
   document.getElementById('modal-body').innerHTML = bodyHtml || '';
   document.getElementById('modal-footer').innerHTML = footerHtml || '';
+  var m = document.getElementById('modal');
+  m.classList.toggle('modal-wide', !!wide);
   document.getElementById('modal-overlay').classList.add('open');
 }
 function closeModal(){ document.getElementById('modal-overlay').classList.remove('open'); }
@@ -2828,7 +2833,7 @@ function crearOpDesdeDiseno(id){
 
 function mostrarFormNuevaOP(){
   _opRefsInit();
-  openModal('CREAR ORDEN DE PRODUCCIÓN', _buildFormNuevaOP(), '');
+  openModal('CREAR ORDEN DE PRODUCCIÓN', _buildFormNuevaOP(), '', {wide:true});
 }
 function cerrarFormNuevaOP(){ closeModal(); }
 
@@ -3286,7 +3291,7 @@ function modalEditarOP(opId){
       }
     });
   }
-  openModal('EDITAR ORDEN DE PRODUCCIÓN', _buildFormEditarOP(op), '');
+  openModal('EDITAR ORDEN DE PRODUCCIÓN', _buildFormEditarOP(op), '', {wide:true});
 }
 
 function _buildFormEditarOP(op){
