@@ -4285,7 +4285,12 @@ function renderDiseno(){
     var items = todosItems.filter(function(d){
       if((d.kanban_estado||'EN_DISENO_DIGITAL')!==col.k) return false;
       if(_disPrioFiltro && disPrioNorm(d.prioridad)!==_disPrioFiltro) return false;
-      if(_disRespFiltro && (d.responsable||'').toLowerCase()!==_disRespFiltro.toLowerCase()) return false;
+      if(_disRespFiltro){
+        var telaProblema = (d.tela_estado||'sin_tela')==='sin_tela' || d.tela_estado==='en_busqueda';
+        var esDeEste = (d.responsable||'').toLowerCase()===_disRespFiltro.toLowerCase();
+        var esBuscadorTela = (_disRespFiltro==='John'||_disRespFiltro==='Juan') && telaProblema;
+        if(!esDeEste && !esBuscadorTela) return false;
+      }
       if(_disTelaFiltro){ var te=d.tela_estado||'sin_tela'; if(te!==_disTelaFiltro) return false; }
       if(_disBusqueda){ var q=_disBusqueda.toUpperCase(); if((d.nombre||'').toUpperCase().indexOf(q)<0 && (d.categoria||'').toUpperCase().indexOf(q)<0) return false; }
       return true;
@@ -4380,28 +4385,22 @@ function renderDiseno(){
         h += '<div style="font-size:10px;color:#64748b;font-style:italic;margin-bottom:8px;border-top:1px solid #1e2535;padding-top:5px;">'+esc(d.nota||d.estado)+'</div>';
       }
 
-      // ── Tela status ──────────────────────────────────────────────────────────
+      // ── Tela status (badge cíclico único) ────────────────────────────────────
       var telaEst = d.tela_estado||'sin_tela';
       var TELA_CFG = {
-        asignada:   {label:'🧵 Asignada',      color:'#34d399', bg:'rgba(52,211,153,.12)',  border:'rgba(52,211,153,.35)'},
-        en_busqueda:{label:'🔍 En búsqueda',   color:'#fbbf24', bg:'rgba(251,191,36,.12)',  border:'rgba(251,191,36,.35)'},
-        pte_llegar: {label:'📦 Pte. por llegar',color:'#fb923c',bg:'rgba(251,146,60,.12)',  border:'rgba(251,146,60,.35)'},
-        sin_tela:   {label:'❌ Sin tela',       color:'#f87171', bg:'rgba(248,113,113,.12)', border:'rgba(248,113,113,.35)'},
+        sin_tela:   {label:'❌ Sin tela',        color:'#f87171', bg:'rgba(248,113,113,.15)', border:'rgba(248,113,113,.4)',  next:'en_busqueda'},
+        en_busqueda:{label:'🔍 En búsqueda',     color:'#fbbf24', bg:'rgba(251,191,36,.15)',  border:'rgba(251,191,36,.4)',   next:'pte_llegar'},
+        pte_llegar: {label:'📦 Pte. por llegar', color:'#fb923c', bg:'rgba(251,146,60,.15)',  border:'rgba(251,146,60,.4)',   next:'asignada'},
+        asignada:   {label:'🧵 Asignada',        color:'#34d399', bg:'rgba(52,211,153,.15)',  border:'rgba(52,211,153,.4)',   next:'sin_tela'},
       };
       var tc = TELA_CFG[telaEst]||TELA_CFG.sin_tela;
       h += '<div style="margin-bottom:8px;">';
-      h += '<div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap;">';
-      // Pills de estado — la activa resaltada, las otras apagadas
-      ['sin_tela','en_busqueda','pte_llegar','asignada'].forEach(function(tk){
-        var tcc = TELA_CFG[tk];
-        var isActive = telaEst===tk;
-        h += '<button data-disid="'+d.id+'" data-tela="'+tk+'" onclick="event.stopPropagation();setTelaDis(this.dataset.disid,this.dataset.tela)" style="padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;cursor:pointer;border:1px solid '+(isActive?tcc.border:'#1e2535')+';background:'+(isActive?tcc.bg:'transparent')+';color:'+(isActive?tcc.color:'#334155')+';transition:all .15s;">'+tcc.label+'</button>';
-      });
-      h += '</div>';
-      // Nota de tela (solo si asignada o pte_llegar)
+      h += '<div style="display:flex;align-items:center;gap:6px;">';
+      h += '<button data-disid="'+d.id+'" data-next="'+tc.next+'" onclick="event.stopPropagation();setTelaDis(this.dataset.disid,this.dataset.next)" title="Clic para cambiar estado de tela" style="padding:3px 10px;border-radius:10px;font-size:10px;font-weight:700;cursor:pointer;border:1px solid '+tc.border+';background:'+tc.bg+';color:'+tc.color+';transition:all .15s;">'+tc.label+'</button>';
       if(telaEst==='asignada'||telaEst==='pte_llegar'){
-        h += '<input data-disid="'+d.id+'" type="text" value="'+esc(d.tela_nota||'')+'" onchange="setTelaNotaDis(this.dataset.disid,this.value)" onclick="event.stopPropagation()" placeholder="Nombre o ref. de tela..." style="margin-top:4px;width:100%;background:#0d1117;border:1px solid '+(telaEst==='asignada'?'rgba(52,211,153,.3)':'rgba(251,146,60,.3)')+';border-radius:6px;color:#e2e8f0;font-size:11px;padding:4px 8px;outline:none;box-sizing:border-box;">';
+        h += '<input data-disid="'+d.id+'" type="text" value="'+esc(d.tela_nota||'')+'" onchange="setTelaNotaDis(this.dataset.disid,this.value)" onclick="event.stopPropagation()" placeholder="Ref. de tela..." style="flex:1;min-width:0;background:#0d1117;border:1px solid '+(telaEst==='asignada'?'rgba(52,211,153,.3)':'rgba(251,146,60,.3)')+';border-radius:6px;color:#e2e8f0;font-size:11px;padding:3px 8px;outline:none;">';
       }
+      h += '</div>';
       h += '</div>';
 
       // Dropdown estado + M² + 💬
