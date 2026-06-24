@@ -4222,43 +4222,42 @@ function renderDiseno(){
     h += '</div>';
   }
 
-  // ── Filtros: prioridad + responsable + buscador ──────────────────────────────
-  h += '<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;">';
+  // ── Filtros: buscador + prioridad + responsable (una sola fila) ──────────────
+  h += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;">';
 
-  // Fila 1: prioridad
-  h += '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">';
-  h += '<span style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.5px;min-width:60px;">Prioridad:</span>';
+  // Buscador
+  h += '<div style="position:relative;width:180px;flex-shrink:0;">';
+  h += '<input id="dis-search-input" type="text" value="'+esc(_disBusqueda)+'" oninput="var _q=this.value,_p=this.selectionStart;_disBusqueda=_q;renderPage(\'diseno\');var _el=document.getElementById(\'dis-search-input\');if(_el){_el.focus();try{_el.setSelectionRange(_p,_p);}catch(e){}}" placeholder="🔍 Buscar..." style="width:100%;background:#0d1117;border:1px solid #1e2535;border-radius:20px;color:#e2e8f0;font-size:12px;padding:5px 28px 5px 12px;outline:none;box-sizing:border-box;">';
+  if(_disBusqueda) h += '<button onclick="_disBusqueda=\'\';renderPage(\'diseno\')" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:#64748b;cursor:pointer;font-size:14px;padding:0;line-height:1;">×</button>';
+  h += '</div>';
+
+  // Separador visual
+  h += '<div style="width:1px;height:22px;background:#1e2535;flex-shrink:0;"></div>';
+
+  // Prioridad
+  h += '<span style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.5px;flex-shrink:0;">Prioridad:</span>';
   [{v:0,label:'Todas'},{v:1,label:'P1'},{v:2,label:'P2'},{v:3,label:'P3'}].forEach(function(p){
     var active = _disPrioFiltro===p.v;
     var pc = p.v ? DIS_PRIO_CFG[p.v] : null;
-    var bcolor = active ? (pc?pc.color:'#00d4ff') : '#1e2535';
-    var bgcolor = active ? (pc?pc.bg:'rgba(0,212,255,.1)') : 'transparent';
-    var tcolor = active ? (pc?pc.color:'#00d4ff') : '#64748b';
-    h += '<button onclick="setDisPrioFiltro('+p.v+')" style="padding:4px 12px;border-radius:16px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid '+bcolor+';background:'+bgcolor+';color:'+tcolor+';transition:all .15s;">'+p.label+'</button>';
+    h += '<button onclick="setDisPrioFiltro('+p.v+')" style="padding:4px 11px;border-radius:16px;font-size:11px;font-weight:700;cursor:pointer;flex-shrink:0;border:1px solid '+(active?(pc?pc.color:'#00d4ff'):'#1e2535')+';background:'+(active?(pc?pc.bg:'rgba(0,212,255,.1)'):'transparent')+';color:'+(active?(pc?pc.color:'#00d4ff'):'#64748b')+';transition:all .15s;">'+p.label+'</button>';
   });
-  h += '</div>';
 
-  // Fila 2: responsable
+  // Separador visual
+  h += '<div style="width:1px;height:22px;background:#1e2535;flex-shrink:0;"></div>';
+
+  // Responsable
+  h += '<span style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.5px;flex-shrink:0;">Resp.:</span>';
   var DIS_RESPS = [
-    {v:'',       label:'Todos',    color:'#64748b', bg:'rgba(100,116,139,.12)'},
-    {v:'Jhon',   label:'Jhon',     color:'#00d4ff', bg:'rgba(0,212,255,.12)'},
-    {v:'Isa',    label:'Isa',      color:'#f472b6', bg:'rgba(244,114,182,.12)'},
-    {v:'Carolina',label:'Carolina',color:'#a855f7', bg:'rgba(168,85,247,.12)'},
-    {v:'Juan',   label:'Juan',     color:'#fbbf24', bg:'rgba(251,191,36,.12)'},
+    {v:'',         label:'Todos',    color:'#64748b', bg:'rgba(100,116,139,.12)'},
+    {v:'John',     label:'John',     color:'#00d4ff', bg:'rgba(0,212,255,.12)'},
+    {v:'Isa',      label:'Isa',      color:'#f472b6', bg:'rgba(244,114,182,.12)'},
+    {v:'Carolina', label:'Carolina', color:'#a855f7', bg:'rgba(168,85,247,.12)'},
+    {v:'Juan',     label:'Juan',     color:'#fbbf24', bg:'rgba(251,191,36,.12)'},
   ];
-  h += '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">';
-  h += '<span style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.5px;min-width:60px;">Responsable:</span>';
   DIS_RESPS.forEach(function(r){
     var active = _disRespFiltro === r.v;
-    h += '<button data-resp="'+esc(r.v)+'" onclick="_disRespFiltro=this.dataset.resp;renderPage(\'diseno\')" style="padding:4px 13px;border-radius:16px;font-size:11px;font-weight:700;cursor:pointer;transition:all .15s;border:1px solid '+(active?r.color:'#1e2535')+';background:'+(active?r.bg:'transparent')+';color:'+(active?r.color:'#64748b')+';">'+r.label+'</button>';
+    h += '<button data-resp="'+esc(r.v)+'" onclick="_disRespFiltro=this.dataset.resp;renderPage(\'diseno\')" style="padding:4px 11px;border-radius:16px;font-size:11px;font-weight:700;cursor:pointer;flex-shrink:0;transition:all .15s;border:1px solid '+(active?r.color:'#1e2535')+';background:'+(active?r.bg:'transparent')+';color:'+(active?r.color:'#64748b')+';">'+r.label+'</button>';
   });
-  h += '</div>';
-
-  // Fila 3: buscador
-  h += '<div style="position:relative;max-width:320px;">';
-  h += '<input id="dis-search-input" type="text" value="'+esc(_disBusqueda)+'" oninput="var _q=this.value,_p=this.selectionStart;_disBusqueda=_q;renderPage(\'diseno\');var _el=document.getElementById(\'dis-search-input\');if(_el){_el.focus();try{_el.setSelectionRange(_p,_p);}catch(e){}}" placeholder="🔍 Buscar diseño..." style="width:100%;background:#0d1117;border:1px solid #1e2535;border-radius:20px;color:#e2e8f0;font-size:12px;padding:5px 32px 5px 14px;outline:none;box-sizing:border-box;">';
-  if(_disBusqueda) h += '<button onclick="_disBusqueda=\'\';renderPage(\'diseno\')" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:#64748b;cursor:pointer;font-size:14px;padding:0;line-height:1;">×</button>';
-  h += '</div>';
 
   h += '</div>';
 
