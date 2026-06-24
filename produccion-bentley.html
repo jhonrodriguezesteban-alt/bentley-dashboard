@@ -1677,20 +1677,134 @@ function renderPage(page){
 // DASHBOARD
 // ═══════════════════════════════════════════════════════════════════════════════
 var _dashFiltroMes = '';
-var _dashMetrica = 'entregas'; // 'entregas' | 'cortes' | 'sats' | 'ops'
+var _dashMetrica = 'entregas';
 var _dashTouchX = null;
+var _dashAnimFrame = null;
+var _dashCurrentPts = [];
+
 function setDashFiltro(mes){ _dashFiltroMes = mes; renderPage('dashboard'); }
-function setDashMetrica(m){ _dashMetrica = m; renderPage('dashboard'); }
-function dashChartTouchStart(e){ _dashTouchX = e.touches[0].clientX; }
+
+function _smoothPath(points){
+  if(!points.length) return '';
+  var d='M'+points[0].x.toFixed(1)+','+points[0].y.toFixed(1);
+  for(var i=1;i<points.length;i++){
+    var cp1x=points[i-1].x+(points[i].x-points[i-1].x)*0.4,cp1y=points[i-1].y;
+    var cp2x=points[i].x-(points[i].x-points[i-1].x)*0.4,cp2y=points[i].y;
+    d+=' C'+cp1x.toFixed(1)+','+cp1y.toFixed(1)+' '+cp2x.toFixed(1)+','+cp2y.toFixed(1)+' '+points[i].x.toFixed(1)+','+points[i].y.toFixed(1);
+  }
+  return d;
+}
+
+function _getDashMetricData(mk){
+  var yr=hoy().substr(0,4);
+  var ms=['01','02','03','04','05','06','07','08','09','10','11','12'].map(function(m){return yr+'-'+m;});
+  if(mk==='entregas') return ms.map(function(m){
+    return DB.ots.filter(function(o){return o.estado==='ENTREGADO'&&(o.fecha_entrega_real||'').startsWith(m);})
+                 .reduce(function(a,o){return a+(o.unidades_entregadas||0);},0);
+  });
+  if(mk==='cortes') return ms.map(function(m){
+    return DB.ots.filter(function(o){
+      if(o.estado==='PENDIENTE_CORTAR') return false;
+      return (o.fecha_corte||o.fecha_ot||'').startsWith(m);
+    }).reduce(function(a,o){return a+(o.cantidad||0);},0);
+  });
+  if(mk==='sats') return ms.map(function(m){
+    var ids={};
+    DB.ots.forEach(function(o){if(o.satelite_id&&(o.fecha_ot||'').startsWith(m))ids[o.satelite_id]=1;});
+    return Object.keys(ids).length;
+  });
+  return ms.map(function(m){return DB.ops.filter(function(o){return(o.fecha_op||'').startsWith(m);}).length;});
+}
+
+var _METCOLORS = {entregas:'#00d4ff',cortes:'#fbbf24',sats:'#a855f7',ops:'#34d399'};
+var _METBG     = {entregas:'rgba(0,212,255,.18)',cortes:'rgba(251,191,36,.18)',sats:'rgba(168,85,247,.18)',ops:'rgba(52,211,153,.18)'};
+var _METSUBS   = {entregas:'Unidades confirmadas entregadas a planta',cortes:'Unidades que pasaron a Corte por Alistar',sats:'Talleres distintos con OTs activas',ops:'Órdenes de producción creadas en el mes'};
+var _METUNITS  = {entregas:'uds',cortes:'uds',sats:'sat',ops:'ops'};
+
+function setDashMetrica(m){
+  if(_dashMetrica===m) return;
+  _dashMetrica = m;
+  var PL=50,PR=20,PT=30,PB=46,W=800,H=200;
+  var newData = _getDashMetricData(m);
+  var newColor = _METCOLORS[m]||'#00d4ff';
+  var maxC = Math.max.apply(null,newData.concat([1]));
+  var slotW=(W-PL-PR)/12;
+  var targetPts = newData.map(function(v,i){return {x:PL+i*slotW+slotW/2,y:PT+(H-PT-PB)*(1-v/maxC)};});
+
+  // ── Actualizar tabs ──
+  document.querySelectorAll('[data-mk]').forEach(function(el){
+    var mk2=el.dataset.mk; if(!mk2||!_METCOLORS[mk2]) return;
+    var isAct=mk2===m, mc=_METCOLORS[mk2];
+    el.style.background   = isAct?_METBG[mk2]:'rgba(255,255,255,.04)';
+    el.style.borderColor  = isAct?mc:'rgba(255,255,255,.1)';
+    el.style.color        = isAct?mc:'#64748b';
+    el.style.fontWeight   = isAct?'700':'500';
+  });
+
+  // ── Pagination dots ──
+  ['entregas','cortes','sats','ops'].forEach(function(mk2){
+    var d=document.getElementById('dash-page-'+mk2); if(!d) return;
+    d.style.width      = mk2===m?'20px':'7px';
+    d.style.background = mk2===m?_METCOLORS[mk2]:'#1e2535';
+  });
+
+  // ── Color de línea / gradiente instantáneo ──
+  var s0=document.getElementById('dash-grad-stop0'),s1=document.getElementById('dash-grad-stop1');
+  if(s0) s0.setAttribute('stop-color',newColor);
+  if(s1) s1.setAttribute('stop-color',newColor);
+  var lineEl=document.getElementById('dash-line');
+  if(lineEl) lineEl.setAttribute('stroke',newColor);
+  newData.forEach(function(v,i){
+    var d=document.getElementById('dash-dot-'+i);
+    if(d) d.setAttribute('stroke',v>0?newColor:'#334155');
+  });
+
+  // ── Total y subtítulo ──
+  var tEl=document.getElementById('dash-total-val');
+  if(tEl){tEl.textContent=fmtNum(newData.reduce(function(a,b){return a+b;},0));tEl.style.color=newColor;}
+  var tuEl=document.getElementById('dash-total-unit');
+  if(tuEl) tuEl.textContent=_METUNITS[m]+' · '+hoy().substr(0,4);
+  var subEl=document.getElementById('dash-metrica-sub');
+  if(subEl) subEl.innerHTML=_METSUBS[m]+' · <span style="color:#94a3b8;">desliza izquierda/derecha para cambiar métrica</span>';
+
+  // ── Animación ──
+  if(_dashAnimFrame) cancelAnimationFrame(_dashAnimFrame);
+  var startPts=(_dashCurrentPts.length===12)
+    ?_dashCurrentPts.map(function(p){return{x:p.x,y:p.y};})
+    :targetPts.map(function(p){return{x:p.x,y:p.y};});
+  var t0=null,dur=400;
+  function _ease(t){return t<.5?2*t*t:-1+(4-2*t)*t;}
+  function _tick(ts){
+    if(!t0) t0=ts;
+    var t=Math.min((ts-t0)/dur,1),et=_ease(t);
+    var cur=startPts.map(function(sp,i){return{x:sp.x,y:sp.y+(targetPts[i].y-sp.y)*et};});
+    var lp=_smoothPath(cur);
+    var ap=lp+' L'+(W-PR).toFixed(1)+','+(H-PB)+' L'+PL+','+(H-PB)+' Z';
+    if(lineEl) lineEl.setAttribute('d',lp);
+    var aEl=document.getElementById('dash-area'); if(aEl) aEl.setAttribute('d',ap);
+    cur.forEach(function(p,i){
+      var d=document.getElementById('dash-dot-'+i); if(d) d.setAttribute('cy',p.y.toFixed(1));
+      var l=document.getElementById('dash-lbl-'+i); if(l) l.setAttribute('y',(p.y-14).toFixed(1));
+    });
+    if(t<1){ _dashAnimFrame=requestAnimationFrame(_tick); }
+    else {
+      _dashCurrentPts=targetPts.slice();
+      newData.forEach(function(v,i){
+        var l=document.getElementById('dash-lbl-'+i);
+        if(l) l.textContent=v>0?fmtNum(v):'';
+      });
+    }
+  }
+  _dashAnimFrame=requestAnimationFrame(_tick);
+}
+
+function dashChartTouchStart(e){ _dashTouchX=e.touches[0].clientX; }
 function dashChartTouchEnd(e){
   if(_dashTouchX===null) return;
-  var dx = e.changedTouches[0].clientX - _dashTouchX;
-  _dashTouchX = null;
+  var dx=e.changedTouches[0].clientX-_dashTouchX; _dashTouchX=null;
   if(Math.abs(dx)<40) return;
-  var order=['entregas','cortes','sats','ops'];
-  var idx=order.indexOf(_dashMetrica);
-  _dashMetrica = dx<0 ? order[(idx+1)%order.length] : order[(idx-1+order.length)%order.length];
-  renderPage('dashboard');
+  var order=['entregas','cortes','sats','ops'],idx=order.indexOf(_dashMetrica);
+  setDashMetrica(dx<0?order[(idx+1)%order.length]:order[(idx-1+order.length)%order.length]);
 }
 function verSateliteDesdeDB(satId){ navTo('satelites'); setTimeout(function(){ abrirSat(satId); }, 100); }
 
@@ -1772,132 +1886,78 @@ function renderDashboard(){
   });
   h += '</div>';
 
-  // ── Datos por métrica ──────────────────────────────────────────────────────
+  // ── Gráfica multimétrica ─────────────────────────────────────────────────
   var mesesChart = meses.map(function(m){ return yearActual+'-'+m; });
-  var allMetricas = {
-    entregas: {
-      label:'Entregas', unit:'uds', color:'#00d4ff',
-      title:'Uds Entregadas por Mes', sub:'Unidades confirmadas entregadas a planta',
-      data: mesesChart.map(function(m){
-        return DB.ots.filter(function(o){ return o.estado==='ENTREGADO'&&(o.fecha_entrega_real||'').startsWith(m); })
-                     .reduce(function(a,o){ return a+(o.unidades_entregadas||0); },0);
-      })
-    },
-    cortes: {
-      label:'Cortadas', unit:'uds', color:'#fbbf24',
-      title:'Uds Cortadas por Mes', sub:'Unidades que pasaron a Corte por Alistar',
-      data: mesesChart.map(function(m){
-        return DB.ots.filter(function(o){
-          if(o.estado==='PENDIENTE_CORTAR') return false;
-          var ref = o.fecha_corte || o.fecha_ot || '';
-          return ref.startsWith(m);
-        }).reduce(function(a,o){ return a+(o.cantidad||0); },0);
-      })
-    },
-    sats: {
-      label:'Satélites', unit:'sat', color:'#a855f7',
-      title:'Satélites Activos por Mes', sub:'Talleres distintos con OTs activas',
-      data: mesesChart.map(function(m){
-        var ids={};
-        DB.ots.forEach(function(o){
-          if(o.satelite_id && (o.fecha_ot||'').startsWith(m)) ids[o.satelite_id]=1;
-        });
-        return Object.keys(ids).length;
-      })
-    },
-    ops: {
-      label:'OPs', unit:'ops', color:'#34d399',
-      title:'Órdenes de Producción por Mes', sub:'OPs creadas en el mes',
-      data: mesesChart.map(function(m){
-        return DB.ops.filter(function(o){ return (o.fecha_op||'').startsWith(m); }).length;
-      })
-    }
-  };
-
-  var metActiva = allMetricas[_dashMetrica] || allMetricas.entregas;
-  var dataChart = metActiva.data;
+  var metOrder = ['entregas','cortes','sats','ops'];
+  var metLabels = {entregas:'Entregas',cortes:'Cortadas',sats:'Satélites',ops:'OPs'};
+  var dataChart = _getDashMetricData(_dashMetrica);
   var PL=50,PR=20,PT=30,PB=46,W=800,H=200;
   var maxC = Math.max.apply(null,dataChart.concat([1]));
-  var n=mesesChart.length, slotW=(W-PL-PR)/n, pts=[];
+  var slotW=(W-PL-PR)/12, pts=[];
   dataChart.forEach(function(v,i){ pts.push({x:PL+i*slotW+slotW/2, y:PT+(H-PT-PB)*(1-v/maxC)}); });
-
-  function smoothPath(points){
-    if(!points.length) return '';
-    var d='M'+points[0].x.toFixed(1)+','+points[0].y.toFixed(1);
-    for(var i=1;i<points.length;i++){
-      var cp1x=points[i-1].x+(points[i].x-points[i-1].x)*0.4, cp1y=points[i-1].y;
-      var cp2x=points[i].x-(points[i].x-points[i-1].x)*0.4, cp2y=points[i].y;
-      d+=' C'+cp1x.toFixed(1)+','+cp1y.toFixed(1)+' '+cp2x.toFixed(1)+','+cp2y.toFixed(1)+' '+points[i].x.toFixed(1)+','+points[i].y.toFixed(1);
-    }
-    return d;
-  }
-  var linePath = smoothPath(pts);
+  _dashCurrentPts = pts.slice(); // guardar posiciones iniciales para animación
+  var linePath = _smoothPath(pts);
   var areaPath = linePath+' L'+(W-PR).toFixed(1)+','+(H-PB)+' L'+PL+','+(H-PB)+' Z';
-  var mc = metActiva.color;
+  var mc = _METCOLORS[_dashMetrica]||'#00d4ff';
   var totalAnio = dataChart.reduce(function(a,b){ return a+b; },0);
 
-  // ── Card gráfica con tabs y swipe ─────────────────────────────────────────
+  // ── Card gráfica ──────────────────────────────────────────────────────────
   h += '<div class="card" style="padding:16px 16px 14px;margin-bottom:16px;">';
-
-  // Fila superior: tabs izquierda + total derecha
   h += '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap;">';
 
   // Tabs de métricas
   h += '<div style="display:flex;gap:6px;flex-wrap:wrap;">';
-  var metOrder = ['entregas','cortes','sats','ops'];
-  var _metBg = {entregas:'rgba(0,212,255,.18)',cortes:'rgba(251,191,36,.18)',sats:'rgba(168,85,247,.18)',ops:'rgba(52,211,153,.18)'};
   metOrder.forEach(function(mk){
-    var mc2 = allMetricas[mk].color, isAct = _dashMetrica===mk;
+    var mc2=_METCOLORS[mk], isAct=_dashMetrica===mk;
     h += '<button data-mk="'+mk+'" onclick="setDashMetrica(this.dataset.mk)" style="'
-      +'background:'+(isAct?_metBg[mk]:'rgba(255,255,255,.04)')+';'
+      +'background:'+(isAct?_METBG[mk]:'rgba(255,255,255,.04)')+';'
       +'border:1px solid '+(isAct?mc2:'rgba(255,255,255,.1)')+';'
       +'color:'+(isAct?mc2:'#64748b')+';'
       +'border-radius:20px;padding:5px 14px;cursor:pointer;font-size:12px;font-weight:'+(isAct?'700':'500')+';'
       +'transition:all .2s;white-space:nowrap;">'
-      +allMetricas[mk].label+'</button>';
+      +metLabels[mk]+'</button>';
   });
   h += '</div>';
 
-  // Total + título
+  // Total (con ID para actualizar sin re-render)
   h += '<div style="text-align:right;flex-shrink:0;">';
-  h += '<div style="font-size:26px;font-weight:800;color:'+mc+';font-family:var(--bebas);line-height:1;">'+fmtNum(totalAnio)+'</div>';
-  h += '<div style="font-size:10px;color:#64748b;">'+metActiva.unit+' · '+(filtro||yearActual)+'</div>';
+  h += '<div id="dash-total-val" style="font-size:26px;font-weight:800;color:'+mc+';font-family:var(--bebas);line-height:1;">'+fmtNum(totalAnio)+'</div>';
+  h += '<div id="dash-total-unit" style="font-size:10px;color:#64748b;">'+_METUNITS[_dashMetrica]+' · '+(filtro||yearActual)+'</div>';
   h += '</div>';
   h += '</div>';
 
   // Subtítulo
-  h += '<div style="font-size:11px;color:#64748b;margin-bottom:10px;">'+metActiva.sub+' · <span style="color:#94a3b8;">desliza izquierda/derecha para cambiar métrica</span></div>';
+  h += '<div id="dash-metrica-sub" style="font-size:11px;color:#64748b;margin-bottom:10px;">'+_METSUBS[_dashMetrica]+' · <span style="color:#94a3b8;">desliza para cambiar métrica</span></div>';
 
   // SVG con swipe
   h += '<div ontouchstart="dashChartTouchStart(event)" ontouchend="dashChartTouchEnd(event)" style="touch-action:pan-y;user-select:none;">';
   h += '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block;overflow:visible;" xmlns="http://www.w3.org/2000/svg">';
-  h += '<defs>';
-  h += '<linearGradient id="area-grad" x1="0" y1="0" x2="0" y2="1">';
-  h += '<stop offset="0%" stop-color="'+mc+'" stop-opacity="0.32"/>';
-  h += '<stop offset="75%" stop-color="'+mc+'" stop-opacity="0.04"/>';
+  h += '<defs><linearGradient id="area-grad" x1="0" y1="0" x2="0" y2="1">';
+  h += '<stop id="dash-grad-stop0" offset="0%" stop-color="'+mc+'" stop-opacity="0.32"/>';
+  h += '<stop id="dash-grad-stop1" offset="75%" stop-color="'+mc+'" stop-opacity="0.04"/>';
   h += '<stop offset="100%" stop-color="'+mc+'" stop-opacity="0"/>';
-  h += '</linearGradient>';
-  h += '</defs>';
+  h += '</linearGradient></defs>';
   for(var gi=0;gi<=4;gi++){
     var gy=PT+Math.round((H-PT-PB)*gi/4), gv=Math.round(maxC*(4-gi)/4);
     h += '<line x1="'+PL+'" y1="'+gy+'" x2="'+(W-PR)+'" y2="'+gy+'" stroke="#1e2535" stroke-width="1" stroke-dasharray="3,6"/>';
     h += '<text x="'+(PL-6)+'" y="'+(gy+4)+'" fill="#334155" font-size="10" text-anchor="end" font-family="system-ui">'+fmtNum(gv)+'</text>';
   }
-  h += '<path d="'+areaPath+'" fill="url(#area-grad)"/>';
-  h += '<path d="'+linePath+'" fill="none" stroke="'+mc+'" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
+  h += '<path id="dash-area" d="'+areaPath+'" fill="url(#area-grad)"/>';
+  h += '<path id="dash-line" d="'+linePath+'" fill="none" stroke="'+mc+'" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
   pts.forEach(function(p,i){
     var mes2=mesesChart[i], isActive=filtro===mes2, v=dataChart[i];
-    h += '<circle data-mes="'+mes2+'" onclick="setDashFiltro(this.dataset.mes)" cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="'+(isActive?7:5)+'" fill="'+(isActive?mc:'#0d1117')+'" stroke="'+(v>0?mc:'#334155')+'" stroke-width="2" style="cursor:pointer;"/>';
-    if(v>0) h += '<text x="'+p.x.toFixed(1)+'" y="'+(p.y-14)+'" fill="'+(isActive?mc:'#94a3b8')+'" font-size="'+(isActive?'13':'11')+'" font-weight="'+(isActive?'700':'500')+'" text-anchor="middle" font-family="system-ui">'+fmtNum(v)+'</text>';
+    h += '<circle id="dash-dot-'+i+'" data-mes="'+mes2+'" onclick="setDashFiltro(this.dataset.mes)" cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="'+(isActive?7:5)+'" fill="'+(isActive?mc:'#0d1117')+'" stroke="'+(v>0?mc:'#334155')+'" stroke-width="2" style="cursor:pointer;"/>';
+    if(v>0) h += '<text id="dash-lbl-'+i+'" x="'+p.x.toFixed(1)+'" y="'+(p.y-14)+'" fill="'+(isActive?mc:'#94a3b8')+'" font-size="'+(isActive?'13':'11')+'" font-weight="'+(isActive?'700':'500')+'" text-anchor="middle" font-family="system-ui">'+fmtNum(v)+'</text>';
+    else    h += '<text id="dash-lbl-'+i+'" x="'+p.x.toFixed(1)+'" y="'+(p.y-14)+'" fill="#94a3b8" font-size="11" font-weight="500" text-anchor="middle" font-family="system-ui"></text>';
     h += '<text x="'+p.x.toFixed(1)+'" y="'+(H-PB+18)+'" fill="'+(isActive?mc:'#475569')+'" font-size="11" font-weight="'+(isActive?'700':'400')+'" text-anchor="middle" font-family="system-ui">'+nomMes[i]+'</text>';
   });
   h += '</svg>';
 
-  // Indicador de swipe (puntitos de paginación, estilo mobile)
+  // Paginación estilo mobile
   h += '<div style="display:flex;justify-content:center;gap:6px;padding:8px 0 2px;">';
   metOrder.forEach(function(mk){
-    var isAct=_dashMetrica===mk, mc3=allMetricas[mk].color;
-    h += '<div data-mk="'+mk+'" onclick="setDashMetrica(this.dataset.mk)" style="width:'+(isAct?'20px':'7px')+';height:7px;border-radius:4px;background:'+(isAct?mc3:'#1e2535')+';transition:all .3s;cursor:pointer;"></div>';
+    var isAct=_dashMetrica===mk, mc3=_METCOLORS[mk];
+    h += '<div id="dash-page-'+mk+'" data-mk="'+mk+'" onclick="setDashMetrica(this.dataset.mk)" style="width:'+(isAct?'20px':'7px')+';height:7px;border-radius:4px;background:'+(isAct?mc3:'#1e2535')+';transition:all .3s;cursor:pointer;"></div>';
   });
   h += '</div>';
 
