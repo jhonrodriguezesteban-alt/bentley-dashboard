@@ -1792,7 +1792,9 @@ function planDrop(e, mesKey){
 function _planOpUds(op){
   var ots = (DB.ots||[]).filter(function(o){ return o.op_id===op.id && o.estado!=='ARCHIVADO'; });
   var uds = ots.reduce(function(a,o){ return a+(parseInt(o.cantidad)||0); },0);
-  if(!uds && op.referencias) uds = op.referencias.reduce(function(a,r){ return a+(parseInt(r.cantidad)||0); },0);
+  if(!uds && op.referencias) uds = op.referencias.reduce(function(a,r){
+    return a + Object.values(r.cantidades||{}).reduce(function(b,v){ return b+(parseInt(v)||0); },0);
+  },0);
   return uds;
 }
 
@@ -1830,6 +1832,7 @@ function _planMiniCard(op){
 
 function renderPlaneacion(){
   var MESES = [
+    {k:'2026-06',label:'Junio',     color:'#6366f1',bg:'rgba(99,102,241,.07)'},
     {k:'2026-07',label:'Julio',     color:'#3b82f6',bg:'rgba(59,130,246,.07)'},
     {k:'2026-08',label:'Agosto',    color:'#8b5cf6',bg:'rgba(139,92,246,.07)'},
     {k:'2026-09',label:'Septiembre',color:'#f59e0b',bg:'rgba(245,158,11,.07)'},
