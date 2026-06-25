@@ -472,9 +472,12 @@ textarea.form-control{resize:vertical;min-height:80px;}
   /* Main fills screen */
   #main{margin-left:0;width:100%;}
   /* Topbar */
-  #topbar{padding:0 12px;height:52px;}
-  #topbar-title{font-size:20px;letter-spacing:1px;}
-  .badge-user{font-size:10px;padding:3px 8px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  #topbar{padding:0 12px;height:auto;min-height:52px;align-items:stretch;}
+  #topbar-left-group{display:flex;align-items:center;gap:8px;padding:8px 0;}
+  #topbar-title{font-size:18px;letter-spacing:.5px;}
+  #topbar-clock-mobile{display:flex !important;flex-direction:row;align-items:baseline;gap:6px;}
+  #topbar-right{display:none;}
+  .badge-user{font-size:10px;padding:3px 8px;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   #sync-indicator{display:none;}
   /* Page content */
   #page-content{padding:12px;}
@@ -667,9 +670,15 @@ textarea.form-control{resize:vertical;min-height:80px;}
 <!-- Main -->
 <div id="main">
   <div id="topbar">
-    <div style="display:flex;align-items:center;gap:10px;">
+    <div id="topbar-left-group" style="display:flex;align-items:center;gap:10px;">
       <button id="mob-menu" onclick="toggleSidebar()">☰</button>
-      <div id="topbar-title">DASHBOARD</div>
+      <div style="display:flex;flex-direction:column;justify-content:center;">
+        <div id="topbar-title">DASHBOARD</div>
+        <div id="topbar-clock-mobile" style="display:none;gap:6px;align-items:baseline;">
+          <span id="clock-time-mob" style="font-weight:700;color:#4ade80;font-size:13px;letter-spacing:.5px;text-shadow:0 0 6px rgba(74,222,128,.4);"></span>
+          <span id="clock-date-mob" style="font-size:10px;color:#34d399;"></span>
+        </div>
+      </div>
     </div>
     <div id="topbar-right">
       <div id="topbar-clock" style="font-size:12px;text-align:right;line-height:1.3;">
@@ -1679,8 +1688,14 @@ function startClock(){
     var meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
     var tEl = document.getElementById('clock-time');
     var dEl = document.getElementById('clock-date');
-    if(tEl) tEl.textContent = h+':'+m+':'+s;
-    if(dEl) dEl.textContent = dias[now.getDay()]+' '+now.getDate()+' '+meses[now.getMonth()]+' '+now.getFullYear();
+    var tMob = document.getElementById('clock-time-mob');
+    var dMob = document.getElementById('clock-date-mob');
+    var timeStr = h+':'+m+':'+s;
+    var dateStr = dias[now.getDay()]+' '+now.getDate()+' '+meses[now.getMonth()]+' '+now.getFullYear();
+    if(tEl) tEl.textContent = timeStr;
+    if(dEl) dEl.textContent = dateStr;
+    if(tMob) tMob.textContent = timeStr;
+    if(dMob) dMob.textContent = dateStr;
   }
   tick();
   setInterval(tick, 1000);
