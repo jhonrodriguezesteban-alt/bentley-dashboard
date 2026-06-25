@@ -4757,6 +4757,25 @@ function abrirFormDiseno(id){
 
   body += '<div class="form-group"><label class="form-label">Nota / Pendiente</label><input id="dis-nota" class="form-control" value="'+esc(d?d.nota||d.estado||'':'')+'" placeholder="Ej: PDTE FOTO JUAN, POR REVISAR CAPOTA..."></div>';
 
+  // Tela estado
+  var telaActual = d ? (d.tela_estado||'sin_tela') : 'sin_tela';
+  var telaNota = d ? (d.tela_nota||'') : '';
+  var FORM_TELA_KEYS = ['sin_tela','en_busqueda','pte_llegar','asignada'];
+  var FORM_TELA_LABELS = {'sin_tela':'❌ Sin tela','en_busqueda':'🔍 En búsqueda','pte_llegar':'📦 Pte. por llegar','asignada':'🧵 Asignada'};
+  var FORM_TELA_COLORS = {'sin_tela':'#f87171','en_busqueda':'#fbbf24','pte_llegar':'#fb923c','asignada':'#34d399'};
+  var FORM_TELA_BGS    = {'sin_tela':'rgba(248,113,113,.15)','en_busqueda':'rgba(251,191,36,.15)','pte_llegar':'rgba(251,146,60,.15)','asignada':'rgba(52,211,153,.15)'};
+  var FORM_TELA_BORDERS= {'sin_tela':'rgba(248,113,113,.4)','en_busqueda':'rgba(251,191,36,.4)','pte_llegar':'rgba(251,146,60,.4)','asignada':'rgba(52,211,153,.4)'};
+  body += '<div class="form-group"><label class="form-label">Estado de Tela</label>';
+  body += '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;" id="dis-tela-btns">';
+  FORM_TELA_KEYS.forEach(function(k){
+    var isSel = telaActual===k;
+    body += '<button type="button" data-tela="'+k+'" onclick="selTelaForm(this.dataset.tela)" style="padding:4px 10px;border-radius:10px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid '+(isSel?FORM_TELA_BORDERS[k]:'#2d3348')+';background:'+(isSel?FORM_TELA_BGS[k]:'transparent')+';color:'+(isSel?FORM_TELA_COLORS[k]:'#475569')+';">'+FORM_TELA_LABELS[k]+'</button>';
+  });
+  body += '</div>';
+  body += '<input type="hidden" id="dis-tela-estado" value="'+telaActual+'">';
+  body += '<input type="text" id="dis-tela-nota" class="form-control" value="'+esc(telaNota)+'" placeholder="Referencia de tela..." style="display:'+(telaActual==='asignada'||telaActual==='pte_llegar'?'block':'none')+';">';
+  body += '</div>';
+
   // Sección de fotos
   body += '<div style="border-top:1px solid #1e2535;padding-top:14px;margin-top:4px;">';
   body += '<label class="form-label" style="margin-bottom:8px;">📷 Fotos de referencia</label>';
@@ -4776,6 +4795,21 @@ function abrirFormDiseno(id){
   if(mcBtn) mcBtn.onclick = function(){ cancelarFormDiseno(); };
 }
 
+function selTelaForm(k){
+  var COLORS = {'sin_tela':'#f87171','en_busqueda':'#fbbf24','pte_llegar':'#fb923c','asignada':'#34d399'};
+  var BGS    = {'sin_tela':'rgba(248,113,113,.15)','en_busqueda':'rgba(251,191,36,.15)','pte_llegar':'rgba(251,146,60,.15)','asignada':'rgba(52,211,153,.15)'};
+  var BORDERS= {'sin_tela':'rgba(248,113,113,.4)','en_busqueda':'rgba(251,191,36,.4)','pte_llegar':'rgba(251,146,60,.4)','asignada':'rgba(52,211,153,.4)'};
+  document.getElementById('dis-tela-estado').value = k;
+  document.querySelectorAll('#dis-tela-btns button').forEach(function(btn){
+    var bk = btn.dataset.tela;
+    var isSel = bk===k;
+    btn.style.borderColor  = isSel ? BORDERS[bk] : '#2d3348';
+    btn.style.background   = isSel ? BGS[bk]     : 'transparent';
+    btn.style.color        = isSel ? COLORS[bk]  : '#475569';
+  });
+  var notaInput = document.getElementById('dis-tela-nota');
+  if(notaInput) notaInput.style.display = (k==='asignada'||k==='pte_llegar') ? 'block' : 'none';
+}
 function cancelarFormDiseno(){
   closeModal();
   if(_modalCatReturn){
@@ -4920,6 +4954,9 @@ async function guardarDisenoForm(){
   var proveedor = provSel || null;
   var preId = document.getElementById('dis-pre-id') ? document.getElementById('dis-pre-id').value : null;
   var editId = document.getElementById('dis-edit-id') ? document.getElementById('dis-edit-id').value : null;
+  var telaEst = document.getElementById('dis-tela-estado') ? document.getElementById('dis-tela-estado').value : 'sin_tela';
+  var telaNotaVal = (document.getElementById('dis-tela-nota') ? document.getElementById('dis-tela-nota').value : '').trim();
+  if(telaEst==='sin_tela'||telaEst==='en_busqueda') telaNotaVal = '';
   if(!nombre){ toast('La referencia es requerida','error'); return; }
   if(!DB.disenos) DB.disenos = [];
 
@@ -4928,11 +4965,11 @@ async function guardarDisenoForm(){
 
   if(editId){
     var ex = DB.disenos.find(function(d){ return d.id===editId; });
-    if(ex){ ex.nombre=nombre; ex.marca=marca; ex.categoria=cat; ex.responsable=resp; ex.prioridad=prio; ex.kanban_estado=kanban; ex.nota=nota; ex.genero=genero; ex.proveedor=proveedor||null; }
+    if(ex){ ex.nombre=nombre; ex.marca=marca; ex.categoria=cat; ex.responsable=resp; ex.prioridad=prio; ex.kanban_estado=kanban; ex.nota=nota; ex.genero=genero; ex.proveedor=proveedor||null; ex.tela_estado=telaEst; ex.tela_nota=telaNotaVal; }
   } else {
     var nuevoId = preId || uid();
     // _ts negativo para que aparezca primero en el sort (más reciente)
-    DB.disenos.push({id:nuevoId,nombre:nombre,marca:marca,categoria:cat,responsable:resp,prioridad:prio,kanban_estado:kanban,nota:nota,genero:genero,proveedor:proveedor||null,fecha_creacion:hoy(),_ts:new Date().toISOString()});
+    DB.disenos.push({id:nuevoId,nombre:nombre,marca:marca,categoria:cat,responsable:resp,prioridad:prio,kanban_estado:kanban,nota:nota,genero:genero,proveedor:proveedor||null,tela_estado:telaEst,tela_nota:telaNotaVal,fecha_creacion:hoy(),_ts:new Date().toISOString()});
     // Notificación push al equipo
     enviarNotifOS(
       '🎨 Nuevo diseño creado',
@@ -5138,6 +5175,13 @@ function _renderDrawerComentarios(){
       h += '<span style="font-size:10px;color:#334155;">'+esc(c.fecha||'')+(c.hora?' · '+esc(c.hora):'')+'</span>';
       h += '</div>';
       h += '<div style="font-size:12px;color:#94a3b8;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(preview)+'</div>';
+      var nLikes = (c.likes||[]).length, nReplies = (c.replies||[]).length;
+      if(nLikes||nReplies){
+        h += '<div style="display:flex;gap:8px;margin-top:5px;">';
+        if(nLikes) h += '<span style="font-size:10px;color:#f87171;">❤️ '+nLikes+'</span>';
+        if(nReplies) h += '<span style="font-size:10px;color:#818cf8;">💬 '+nReplies+'</span>';
+        h += '</div>';
+      }
       h += '</div>';
       h += '<div style="color:#334155;font-size:14px;align-self:center;margin-left:4px;">›</div>';
       h += '</div>';
@@ -5172,30 +5216,69 @@ function abrirDetalleComentario(cid){
 
 function _mostrarModalComentario(texto, autor, fecha, editable){
   var esNuevo = !_comentModalCid;
+  var d = (DB.disenos||[]).find(function(x){ return x.id===_comentCtx; });
+  var c = esNuevo ? null : (d ? (d.comentarios||[]).find(function(x){ return x.id===_comentModalCid; }) : null);
   var overlay = document.createElement('div');
   overlay.id = 'coment-modal';
   overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9999;display:flex;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);';
   var ac = AVATAR_COLORS_C[autor] || '#64748b';
   var inicial = autor ? autor[0].toUpperCase() : '✎';
+  var yo = getUser()||'';
 
-  var inner = '<div style="width:100%;max-width:520px;background:#111827;border-radius:18px 18px 0 0;padding:20px 20px 32px;display:flex;flex-direction:column;gap:14px;">';
-  // Handle
-  inner += '<div style="width:40px;height:4px;background:#334155;border-radius:2px;margin:0 auto 4px;"></div>';
+  var inner = '<div style="width:100%;max-width:520px;background:#111827;border-radius:18px 18px 0 0;padding:20px 20px 28px;display:flex;flex-direction:column;gap:12px;max-height:88vh;overflow-y:auto;">';
+  inner += '<div style="width:40px;height:4px;background:#334155;border-radius:2px;margin:0 auto 2px;flex-shrink:0;"></div>';
 
   if(!esNuevo){
-    // Header con avatar
-    inner += '<div style="display:flex;align-items:center;gap:10px;">';
+    inner += '<div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">';
     inner += '<div style="width:38px;height:38px;border-radius:50%;background:'+ac+'22;border:2px solid '+ac+'66;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:'+ac+';">'+esc(inicial)+'</div>';
-    inner += '<div><div style="font-size:13px;font-weight:700;color:'+ac+';">'+esc(autor)+'</div><div style="font-size:10px;color:#475569;">'+esc(fecha)+'</div></div>';
+    inner += '<div style="flex:1;"><div style="font-size:13px;font-weight:700;color:'+ac+';">'+esc(autor)+'</div><div style="font-size:10px;color:#475569;">'+esc(fecha)+'</div></div>';
     inner += '</div>';
   }
 
-  // Textarea (readonly si no es propio y no es nuevo)
   var readonly = !esNuevo && !editable;
-  inner += '<textarea id="coment-modal-ta" '+(readonly?'readonly':'')+' placeholder="Escribe tu comentario..." style="width:100%;min-height:120px;background:'+(readonly?'#0d1117':'rgba(255,255,255,.04)')+';border:1px solid '+(readonly?'#1e2535':'rgba(99,102,241,.3)')+';border-radius:10px;color:#e2e8f0;font-size:14px;line-height:1.6;padding:12px;resize:none;outline:none;font-family:inherit;box-sizing:border-box;'+(readonly?'cursor:default;':'')+'">'+esc(texto)+'</textarea>';
+  inner += '<textarea id="coment-modal-ta" '+(readonly?'readonly':'')+' placeholder="Escribe tu comentario..." style="width:100%;min-height:100px;background:'+(readonly?'#0d1117':'rgba(255,255,255,.04)')+';border:1px solid '+(readonly?'#1e2535':'rgba(99,102,241,.3)')+';border-radius:10px;color:#e2e8f0;font-size:14px;line-height:1.6;padding:12px;resize:none;outline:none;font-family:inherit;box-sizing:border-box;'+(readonly?'cursor:default;':'')+'">'+esc(texto)+'</textarea>';
 
-  // Botones
-  inner += '<div style="display:flex;gap:10px;justify-content:flex-end;">';
+  if(!esNuevo && c){
+    // ── Reacciones ─────────────────────────────────────────────────────
+    var likes = c.likes||[];
+    var yoLike = likes.indexOf(yo) > -1;
+    inner += '<div style="display:flex;align-items:center;gap:10px;padding:2px 0;flex-shrink:0;" id="coment-reacciones">';
+    inner += '<button onclick="toggleLikeComentario(\''+_comentModalCid+'\')" style="display:inline-flex;align-items:center;gap:5px;background:'+(yoLike?'rgba(239,68,68,.15)':'rgba(255,255,255,.04)')+';border:1px solid '+(yoLike?'rgba(239,68,68,.4)':'#2d3348')+';border-radius:20px;color:'+(yoLike?'#f87171':'#64748b')+';font-size:13px;font-weight:700;padding:5px 14px;cursor:pointer;transition:all .15s;">'+(yoLike?'❤️':'🤍')+(likes.length?' '+likes.length:'')+'</button>';
+    inner += '<button onclick="toggleRespuestaForm()" style="display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.04);border:1px solid #2d3348;border-radius:20px;color:#64748b;font-size:13px;font-weight:700;padding:5px 14px;cursor:pointer;">💬 Responder</button>';
+    inner += '</div>';
+
+    // ── Respuestas existentes ──────────────────────────────────────────
+    var replies = c.replies||[];
+    if(replies.length){
+      inner += '<div style="border-left:2px solid #1e2535;padding-left:12px;display:flex;flex-direction:column;gap:8px;flex-shrink:0;" id="coment-replies-list">';
+      replies.forEach(function(r){
+        var ra = AVATAR_COLORS_C[r.autor]||'#64748b';
+        var ri = (r.autor||'?')[0].toUpperCase();
+        var esPropio = r.autor===yo;
+        inner += '<div style="background:#0d1117;border:1px solid #1e2535;border-radius:10px;padding:10px 12px;">';
+        inner += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">';
+        inner += '<div style="width:26px;height:26px;border-radius:50%;background:'+ra+'22;border:2px solid '+ra+'55;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:'+ra+';">'+ri+'</div>';
+        inner += '<span style="font-size:12px;font-weight:700;color:'+ra+';">'+esc(r.autor)+'</span>';
+        inner += '<span style="font-size:10px;color:#334155;margin-left:auto;">'+esc(r.fecha||'')+(r.hora?' · '+esc(r.hora):'')+'</span>';
+        if(esPropio) inner += '<button data-rid="'+r.id+'" onclick="eliminarRespuestaComentario(\''+_comentModalCid+'\',this.dataset.rid)" style="background:none;border:none;color:#475569;font-size:11px;cursor:pointer;padding:0 2px;">✕</button>';
+        inner += '</div>';
+        inner += '<div style="font-size:13px;color:#cbd5e1;line-height:1.5;">'+esc(r.texto)+'</div>';
+        inner += '</div>';
+      });
+      inner += '</div>';
+    }
+
+    // ── Form de respuesta (oculto) ──────────────────────────────────────
+    inner += '<div id="coment-reply-form" style="display:none;flex-direction:column;gap:8px;flex-shrink:0;">';
+    inner += '<textarea id="coment-reply-ta" placeholder="Escribe tu respuesta..." style="width:100%;min-height:72px;background:rgba(255,255,255,.04);border:1px solid rgba(99,102,241,.3);border-radius:10px;color:#e2e8f0;font-size:13px;line-height:1.5;padding:10px 12px;resize:none;outline:none;font-family:inherit;box-sizing:border-box;"></textarea>';
+    inner += '<div style="display:flex;gap:8px;justify-content:flex-end;">';
+    inner += '<button onclick="toggleRespuestaForm()" style="background:none;border:1px solid #1e2535;border-radius:8px;color:#64748b;font-size:12px;font-weight:600;padding:6px 14px;cursor:pointer;">Cancelar</button>';
+    inner += '<button onclick="agregarRespuestaComentario(\''+_comentModalCid+'\')" style="background:#6366f1;border:none;border-radius:8px;color:#fff;font-size:12px;font-weight:700;padding:6px 16px;cursor:pointer;">Publicar</button>';
+    inner += '</div></div>';
+  }
+
+  // ── Botones principales ────────────────────────────────────────────
+  inner += '<div style="display:flex;gap:10px;justify-content:flex-end;flex-shrink:0;border-top:1px solid #1e2535;padding-top:10px;">';
   inner += '<button onclick="cerrarModalComentario()" style="background:none;border:1px solid #1e2535;border-radius:8px;color:#64748b;font-size:13px;font-weight:600;padding:8px 18px;cursor:pointer;">Cerrar</button>';
   if(editable && !esNuevo){
     inner += '<button onclick="activarEdicionComentario()" id="coment-edit-btn" style="background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.3);border-radius:8px;color:#818cf8;font-size:13px;font-weight:600;padding:8px 18px;cursor:pointer;">✏️ Editar</button>';
@@ -5210,6 +5293,68 @@ function _mostrarModalComentario(texto, autor, fecha, editable){
   overlay.addEventListener('click', function(e){ if(e.target===overlay) cerrarModalComentario(); });
   document.body.appendChild(overlay);
   setTimeout(function(){ var ta=document.getElementById('coment-modal-ta'); if(ta && !ta.readOnly) ta.focus(); }, 60);
+}
+
+function toggleRespuestaForm(){
+  var f = document.getElementById('coment-reply-form');
+  if(!f) return;
+  var visible = f.style.display !== 'none';
+  f.style.display = visible ? 'none' : 'flex';
+  if(!visible) setTimeout(function(){ var ta=document.getElementById('coment-reply-ta'); if(ta) ta.focus(); },60);
+}
+
+function toggleLikeComentario(cid){
+  var d = (DB.disenos||[]).find(function(x){ return x.id===_comentCtx; });
+  if(!d) return;
+  var c = (d.comentarios||[]).find(function(x){ return x.id===cid; });
+  if(!c) return;
+  if(!c.likes) c.likes = [];
+  var yo = getUser()||'';
+  var idx = c.likes.indexOf(yo);
+  if(idx > -1) c.likes.splice(idx,1);
+  else c.likes.push(yo);
+  guardarDisenos();
+  // Actualizar solo el botón sin cerrar el modal
+  var yoLike = c.likes.indexOf(yo) > -1;
+  var btn = document.querySelector('#coment-reacciones button:first-child');
+  if(btn){
+    btn.style.background = yoLike ? 'rgba(239,68,68,.15)' : 'rgba(255,255,255,.04)';
+    btn.style.borderColor = yoLike ? 'rgba(239,68,68,.4)' : '#2d3348';
+    btn.style.color = yoLike ? '#f87171' : '#64748b';
+    btn.textContent = (yoLike?'❤️':'🤍') + (c.likes.length?' '+c.likes.length:'');
+  }
+}
+
+function agregarRespuestaComentario(cid){
+  var ta = document.getElementById('coment-reply-ta');
+  var texto = (ta?ta.value:'').trim();
+  if(!texto){ toast('Escribe algo','warning'); return; }
+  var d = (DB.disenos||[]).find(function(x){ return x.id===_comentCtx; });
+  if(!d) return;
+  var c = (d.comentarios||[]).find(function(x){ return x.id===cid; });
+  if(!c) return;
+  if(!c.replies) c.replies = [];
+  var ahora = new Date();
+  var hora = ahora.getHours().toString().padStart(2,'0')+':'+ahora.getMinutes().toString().padStart(2,'0');
+  c.replies.push({id:'r_'+Date.now(), texto:texto, autor:getUser()||'Desconocido', fecha:hoy(), hora:hora});
+  guardarDisenos();
+  cerrarModalComentario();
+  _renderDrawerComentarios();
+  abrirDetalleComentario(cid);
+  toast('Respuesta publicada','success');
+}
+
+function eliminarRespuestaComentario(cid, rid){
+  if(!confirm('¿Eliminar esta respuesta?')) return;
+  var d = (DB.disenos||[]).find(function(x){ return x.id===_comentCtx; });
+  if(!d) return;
+  var c = (d.comentarios||[]).find(function(x){ return x.id===cid; });
+  if(!c) return;
+  c.replies = (c.replies||[]).filter(function(r){ return r.id!==rid; });
+  guardarDisenos();
+  cerrarModalComentario();
+  _renderDrawerComentarios();
+  abrirDetalleComentario(cid);
 }
 
 function cerrarModalComentario(){
