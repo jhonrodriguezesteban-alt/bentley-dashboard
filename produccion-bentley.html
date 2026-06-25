@@ -5095,98 +5095,157 @@ function abrirComentariosDiseno(id){
   _renderDrawerComentarios();
 }
 
+var AVATAR_COLORS_C = {Carolina:'#f472b6',Isa:'#a78bfa',John:'#38bdf8',Juan:'#34d399'};
+
 function _renderDrawerComentarios(){
   var id = _comentCtx;
   var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
   if(!d) return;
-  var comentarios = (d.comentarios||[]).slice().reverse(); // más recientes primero
+  var comentarios = (d.comentarios||[]).slice().reverse();
 
   var h = '';
 
-  // Input para nuevo comentario — colapsado por defecto
-  h += '<div id="coment-add-wrap" style="margin-bottom:18px;">';
-  h += '<button onclick="abrirInputComentario()" id="coment-add-btn" style="width:100%;padding:8px;border-radius:8px;background:rgba(99,102,241,.06);border:1px dashed rgba(99,102,241,.3);color:#818cf8;font-size:12px;font-weight:600;cursor:pointer;text-align:center;">+ Agregar comentario</button>';
-  h += '<div id="coment-input-wrap" style="display:none;background:#0d1117;border:1px solid #1e2535;border-radius:10px;padding:12px;margin-top:8px;">';
-  h += '<textarea id="coment-input" placeholder="Escribe un comentario..." style="width:100%;background:transparent;border:none;outline:none;color:#e2e8f0;font-size:13px;resize:none;min-height:70px;font-family:inherit;box-sizing:border-box;"></textarea>';
-  h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;">';
-  h += '<button onclick="cerrarInputComentario()" style="background:none;border:none;color:#475569;font-size:12px;cursor:pointer;padding:0;">Cancelar</button>';
-  h += '<button onclick="agregarComentarioDiseno()" style="background:#6366f1;border:none;border-radius:7px;color:#fff;font-size:12px;font-weight:700;padding:6px 18px;cursor:pointer;">Publicar</button>';
-  h += '</div></div>';
-  h += '</div>';
+  // Botón nuevo comentario
+  h += '<button onclick="abrirNuevoComentario()" style="width:100%;padding:10px;border-radius:10px;background:rgba(99,102,241,.08);border:1px dashed rgba(99,102,241,.35);color:#818cf8;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:18px;letter-spacing:.5px;">＋ Nuevo comentario</button>';
 
-  // Historial
+  // Lista de comentarios — tarjetas clicables
   if(!comentarios.length){
-    h += '<div style="text-align:center;padding:24px 0;color:#334155;font-size:12px;">Sin comentarios aún</div>';
+    h += '<div style="text-align:center;padding:32px 0;color:#334155;font-size:13px;">Sin comentarios aún</div>';
   } else {
-    var AVATAR_COLORS = {Carolina:'#f472b6',Isa:'#a78bfa',John:'#38bdf8',Juan:'#34d399'};
     comentarios.forEach(function(c){
-      var ac = AVATAR_COLORS[c.autor] || '#64748b';
+      var ac = AVATAR_COLORS_C[c.autor] || '#64748b';
       var inicial = (c.autor||'?')[0].toUpperCase();
-      h += '<div style="display:flex;gap:10px;margin-bottom:14px;align-items:flex-start;">';
-      h += '<div style="flex-shrink:0;width:30px;height:30px;border-radius:50%;background:'+ac+'22;border:1px solid '+ac+'55;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:'+ac+';">'+inicial+'</div>';
+      var preview = (c.texto||'').replace(/\n/g,' ').substring(0,80) + ((c.texto||'').length>80?'…':'');
+      h += '<div data-cid="'+c.id+'" onclick="abrirDetalleComentario(this.dataset.cid)" style="display:flex;gap:12px;align-items:flex-start;background:#0d1117;border:1px solid #1e2535;border-radius:12px;padding:12px 14px;margin-bottom:10px;cursor:pointer;transition:border-color .15s;" onmouseenter="this.style.borderColor=\''+ac+'44\'" onmouseleave="this.style.borderColor=\'#1e2535\'">';
+      h += '<div style="flex-shrink:0;width:34px;height:34px;border-radius:50%;background:'+ac+'22;border:2px solid '+ac+'55;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:'+ac+';">'+inicial+'</div>';
       h += '<div style="flex:1;min-width:0;">';
-      h += '<div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px;">';
+      h += '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">';
       h += '<span style="font-size:12px;font-weight:700;color:'+ac+';">'+esc(c.autor||'')+'</span>';
       h += '<span style="font-size:10px;color:#334155;">'+esc(c.fecha||'')+(c.hora?' · '+esc(c.hora):'')+'</span>';
       h += '</div>';
-      h += '<div style="background:#0d1117;border:1px solid #1e2535;border-radius:0 8px 8px 8px;padding:8px 11px;font-size:12px;color:#cbd5e1;line-height:1.5;white-space:pre-wrap;">'+esc(c.texto||'')+'</div>';
-      if(c.autor === getUser()) {
-        h += '<button data-cid="'+c.id+'" onclick="eliminarComentarioDiseno(this.dataset.cid)" style="background:none;border:none;cursor:pointer;color:#334155;font-size:10px;margin-top:3px;padding:0;">✕ Eliminar</button>';
-      }
-      h += '</div></div>';
+      h += '<div style="font-size:12px;color:#94a3b8;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(preview)+'</div>';
+      h += '</div>';
+      h += '<div style="color:#334155;font-size:14px;align-self:center;margin-left:4px;">›</div>';
+      h += '</div>';
     });
   }
 
   openDrawer('💬 ' + d.nombre, h, '');
-  // Focus en textarea
-  setTimeout(function(){ var el=document.getElementById('coment-input'); if(el) el.focus(); }, 80);
 }
 
-function abrirInputComentario(){
-  var btn = document.getElementById('coment-add-btn');
-  var wrap = document.getElementById('coment-input-wrap');
-  if(btn) btn.style.display = 'none';
-  if(wrap){ wrap.style.display = 'block'; setTimeout(function(){ var el=document.getElementById('coment-input'); if(el) el.focus(); }, 50); }
+// Modal overlay para nuevo comentario o ver/editar uno existente
+var _comentModalCid = null;
+
+function abrirNuevoComentario(){
+  _comentModalCid = null;
+  _mostrarModalComentario('', '', '', false);
 }
-function cerrarInputComentario(){
-  var btn = document.getElementById('coment-add-btn');
-  var wrap = document.getElementById('coment-input-wrap');
-  var el = document.getElementById('coment-input');
-  if(el) el.value = '';
-  if(wrap) wrap.style.display = 'none';
-  if(btn) btn.style.display = '';
+
+function abrirDetalleComentario(cid){
+  var d = (DB.disenos||[]).find(function(x){ return x.id===_comentCtx; });
+  if(!d) return;
+  var c = (d.comentarios||[]).find(function(x){ return x.id===cid; });
+  if(!c) return;
+  _comentModalCid = cid;
+  var esPropio = c.autor === getUser();
+  _mostrarModalComentario(c.texto, c.autor, (c.fecha||'')+(c.hora?' · '+c.hora:''), esPropio);
+}
+
+function _mostrarModalComentario(texto, autor, fecha, editable){
+  var esNuevo = !_comentModalCid;
+  var overlay = document.createElement('div');
+  overlay.id = 'coment-modal';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9999;display:flex;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);';
+  var ac = AVATAR_COLORS_C[autor] || '#64748b';
+  var inicial = autor ? autor[0].toUpperCase() : '✎';
+
+  var inner = '<div style="width:100%;max-width:520px;background:#111827;border-radius:18px 18px 0 0;padding:20px 20px 32px;display:flex;flex-direction:column;gap:14px;">';
+  // Handle
+  inner += '<div style="width:40px;height:4px;background:#334155;border-radius:2px;margin:0 auto 4px;"></div>';
+
+  if(!esNuevo){
+    // Header con avatar
+    inner += '<div style="display:flex;align-items:center;gap:10px;">';
+    inner += '<div style="width:38px;height:38px;border-radius:50%;background:'+ac+'22;border:2px solid '+ac+'66;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:'+ac+';">'+esc(inicial)+'</div>';
+    inner += '<div><div style="font-size:13px;font-weight:700;color:'+ac+';">'+esc(autor)+'</div><div style="font-size:10px;color:#475569;">'+esc(fecha)+'</div></div>';
+    inner += '</div>';
+  }
+
+  // Textarea (readonly si no es propio y no es nuevo)
+  var readonly = !esNuevo && !editable;
+  inner += '<textarea id="coment-modal-ta" '+(readonly?'readonly':'')+' placeholder="Escribe tu comentario..." style="width:100%;min-height:120px;background:'+(readonly?'#0d1117':'rgba(255,255,255,.04)')+';border:1px solid '+(readonly?'#1e2535':'rgba(99,102,241,.3)')+';border-radius:10px;color:#e2e8f0;font-size:14px;line-height:1.6;padding:12px;resize:none;outline:none;font-family:inherit;box-sizing:border-box;'+(readonly?'cursor:default;':'')+'">'+esc(texto)+'</textarea>';
+
+  // Botones
+  inner += '<div style="display:flex;gap:10px;justify-content:flex-end;">';
+  inner += '<button onclick="cerrarModalComentario()" style="background:none;border:1px solid #1e2535;border-radius:8px;color:#64748b;font-size:13px;font-weight:600;padding:8px 18px;cursor:pointer;">Cerrar</button>';
+  if(editable && !esNuevo){
+    inner += '<button onclick="activarEdicionComentario()" id="coment-edit-btn" style="background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.3);border-radius:8px;color:#818cf8;font-size:13px;font-weight:600;padding:8px 18px;cursor:pointer;">✏️ Editar</button>';
+    inner += '<button onclick="guardarEdicionComentario()" id="coment-save-btn" style="display:none;background:#6366f1;border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:700;padding:8px 18px;cursor:pointer;">Guardar</button>';
+    inner += '<button onclick="eliminarComentarioDiseno(\''+_comentModalCid+'\')" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:8px;color:#ef4444;font-size:13px;font-weight:600;padding:8px 18px;cursor:pointer;">🗑</button>';
+  } else if(esNuevo){
+    inner += '<button onclick="agregarComentarioDiseno()" style="background:#6366f1;border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:700;padding:8px 22px;cursor:pointer;">Publicar</button>';
+  }
+  inner += '</div></div>';
+
+  overlay.innerHTML = inner;
+  overlay.addEventListener('click', function(e){ if(e.target===overlay) cerrarModalComentario(); });
+  document.body.appendChild(overlay);
+  setTimeout(function(){ var ta=document.getElementById('coment-modal-ta'); if(ta && !ta.readOnly) ta.focus(); }, 60);
+}
+
+function cerrarModalComentario(){
+  var el = document.getElementById('coment-modal');
+  if(el) el.remove();
+}
+
+function activarEdicionComentario(){
+  var ta = document.getElementById('coment-modal-ta');
+  var btnEdit = document.getElementById('coment-edit-btn');
+  var btnSave = document.getElementById('coment-save-btn');
+  if(ta){ ta.readOnly=false; ta.style.background='rgba(255,255,255,.04)'; ta.style.borderColor='rgba(99,102,241,.3)'; ta.style.cursor=''; ta.focus(); }
+  if(btnEdit) btnEdit.style.display='none';
+  if(btnSave) btnSave.style.display='';
+}
+
+function guardarEdicionComentario(){
+  var ta = document.getElementById('coment-modal-ta');
+  var texto = ta ? ta.value.trim() : '';
+  if(!texto) return;
+  var d = (DB.disenos||[]).find(function(x){ return x.id===_comentCtx; });
+  if(!d) return;
+  var c = (d.comentarios||[]).find(function(x){ return x.id===_comentModalCid; });
+  if(c){ c.texto=texto; c.editado=hoy(); }
+  guardarDisenos();
+  renderPage(currentPage);
+  cerrarModalComentario();
+  _renderDrawerComentarios();
+  toast('Comentario actualizado','success');
 }
 
 function agregarComentarioDiseno(){
-  var id = _comentCtx;
-  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
+  var d = (DB.disenos||[]).find(function(x){ return x.id===_comentCtx; });
   if(!d) return;
-  var el = document.getElementById('coment-input');
-  var texto = (el ? el.value : '').trim();
-  if(!texto) return;
+  var ta = document.getElementById('coment-modal-ta');
+  var texto = (ta ? ta.value : '').trim();
+  if(!texto){ toast('Escribe algo antes de publicar','warning'); return; }
   if(!d.comentarios) d.comentarios = [];
   var ahora = new Date();
   var hora = ahora.getHours().toString().padStart(2,'0')+':'+ahora.getMinutes().toString().padStart(2,'0');
-  d.comentarios.push({
-    id: 'c_'+Date.now(),
-    texto: texto,
-    autor: getUser() || 'Desconocido',
-    fecha: hoy(),
-    hora: hora
-  });
+  d.comentarios.push({ id:'c_'+Date.now(), texto:texto, autor:getUser()||'Desconocido', fecha:hoy(), hora:hora });
   guardarDisenos();
   renderPage(currentPage);
+  cerrarModalComentario();
   _renderDrawerComentarios();
   toast('Comentario publicado','success');
 }
 
 function eliminarComentarioDiseno(cid){
-  var id = _comentCtx;
-  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
+  var d = (DB.disenos||[]).find(function(x){ return x.id===_comentCtx; });
   if(!d) return;
   d.comentarios = (d.comentarios||[]).filter(function(c){ return c.id!==cid; });
   guardarDisenos();
   renderPage(currentPage);
+  cerrarModalComentario();
   _renderDrawerComentarios();
 }
 
