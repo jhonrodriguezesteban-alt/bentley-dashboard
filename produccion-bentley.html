@@ -472,8 +472,8 @@ textarea.form-control{resize:vertical;min-height:80px;}
   /* Main fills screen */
   #main{margin-left:0;width:100%;}
   /* Topbar */
-  #topbar{padding:0 12px;height:48px;}
-  #topbar-title{font-size:16px;}
+  #topbar{padding:0 12px;height:52px;}
+  #topbar-title{font-size:20px;letter-spacing:1px;}
   .badge-user{font-size:10px;padding:3px 8px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   #sync-indicator{display:none;}
   /* Page content */
@@ -7359,6 +7359,8 @@ if(_sc==='1'){ var _sb=document.getElementById('sidebar'); var _mn=document.getE
 var _initPage = localStorage.getItem('bentley_last_page') || 'dashboard';
 currentPage = _initPage;
 renderPage(_initPage);
+// Marcar el nav item correcto al arrancar
+document.querySelectorAll('.nav-item').forEach(function(el){ el.classList.toggle('active', el.dataset.page===_initPage); });
 // Pre-carga usuarios desde GitHub antes de mostrar el login,
 // así los usuarios creados en otro dispositivo ya están disponibles.
 (async function(){
