@@ -880,6 +880,7 @@ var CATALOGO = []; // cargado de prod_catalogo.json
 var CATEGORIAS = ['CAMISAS','CHAQUETAS','CAMISETAS','BUZOS','GABAN','CONJUNTOS','CHALECOS','PANTALONES','ABRIGOS','FALDA','BLUSAS','VESTIDOS','CAMISONES'];
 var TALLAS_DEFAULT = ['T4','T6','T8','T10','T12','T14','T16'];
 var TALLAS_ALL = ['T2','T4','T6','T8','T10','T12','T14','T16'];
+var CAT_CODE_MAP = {'0':'CAMISETAS','AB':'ABRIGOS','BG':'GABAN','BL':'BLUSAS','BZ':'BUZOS','CH':'CHAQUETAS','CHL':'CHALECOS','CJ':'CONJUNTOS','CM':'CAMISAS','CMS':'CAMISONES','CMT':'CAMISETAS','CMTS':'CAMISETAS','FL':'FALDA','GB':'GABAN','PT':'PANTALONES','PTT':'PANTALONES','VS':'VESTIDOS'};
 var CORTADORES = ['CARVAJAL','JAVIER'];
 var ESTADOS = ['POR_REVISAR','PENDIENTE_CORTAR','CORTE_POR_ALISTAR','ASIGNADO','EN_CONFECCION','ENTREGADO_PARCIAL','ENTREGADO','NOVEDAD'];
 var ESTADO_LABELS = {
@@ -3803,10 +3804,14 @@ function opRefNombreInput(rid, val){
     var precioFmt = p.precio ? '$'+p.precio.toLocaleString('es-CO') : '<span style="color:#64748b;">Sin precio MO</span>';
     var catItem = CATALOGO.find(function(c){ return c.ref.toUpperCase()===(p.nombre||'').toUpperCase(); })||null;
     var colStr = catItem ? catItem.colores.map(function(c){ return c.n; }).join(', ') : '';
+    var tallasStr = catItem && catItem.colores.length ? catItem.colores[0].tallas.map(function(t){ return t.t; }).join(' ') : '';
     var isDeOp = !p.precio && !p.codigo;
-    return '<div style="padding:9px 12px;cursor:pointer;border-bottom:1px solid #1e2535;background:#161b27;" data-rid="'+rid+'" data-nombre="'+esc(p.nombre)+'" data-precio="'+(p.precio||0)+'" data-cod="'+esc(p.codigo||'')+'" data-cat="'+esc(p.cat||'')+'" onmousedown="opRefSelCatalogo(this)" onmouseenter="this.style.background=\'#1e2a3a\'" onmouseleave="this.style.background=\'#161b27\'">'
+    var catFull = p.cat || (catItem ? CAT_CODE_MAP[catItem.cat] : '') || '';
+    return '<div style="padding:9px 12px;cursor:pointer;border-bottom:1px solid #1e2535;background:#161b27;" data-rid="'+rid+'" data-nombre="'+esc(p.nombre)+'" data-precio="'+(p.precio||0)+'" data-cod="'+esc(p.codigo||'')+'" data-cat="'+esc(catFull)+'" onmousedown="opRefSelCatalogo(this)" onmouseenter="this.style.background=\'#1e2a3a\'" onmouseleave="this.style.background=\'#161b27\'">'
       +'<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;"><div style="font-size:13px;font-weight:600;color:#e2e8f0;">'+esc(p.nombre)+'</div><div style="font-size:11px;">'+precioFmt+'</div></div>'
-      +(isDeOp?'<div style="font-size:10px;color:#f97316;margin-top:2px;">↺ de producción anterior</div>':'')
+      +(catFull?'<div style="font-size:10px;color:#00d4ff;margin-top:2px;font-weight:600;">'+esc(catFull)+'</div>':'')
+      +(isDeOp?'<div style="font-size:10px;color:#f97316;margin-top:1px;">↺ de producción anterior</div>':'')
+      +(tallasStr?'<div style="font-size:10px;color:#475569;margin-top:1px;">'+esc(tallasStr)+'</div>':'')
       +(colStr?'<div style="font-size:10px;color:#64748b;margin-top:1px;">'+esc(colStr)+'</div>':'')
       +'</div>';
   }).join('');
@@ -3821,16 +3826,28 @@ function opRefSelCatalogo(el){
   var r = _opRefs.find(function(x){ return x.rid===rid; });
   if(!r) return;
   r.nombre=nombre; r.ref=cod; if(precio) r.vmo=precio;
-  // Auto-llenar categoría
-  if(cat){ r.cat=cat; var elCat=document.getElementById('ref-cat-'+rid); if(elCat) elCat.value=cat; }
   var catItem = CATALOGO.find(function(c){ return c.ref.toUpperCase()===(nombre||'').toUpperCase(); })||null;
-  if(catItem) r.colores = catItem.colores.map(function(c){ return c.n; });
+  // Auto-llenar categoría: primero data-cat, luego CAT_CODE_MAP desde catálogo
+  var catFull = cat || (catItem ? CAT_CODE_MAP[catItem.cat] : '') || '';
+  if(catFull){ r.cat=catFull; var elCat=document.getElementById('ref-cat-'+rid); if(elCat) elCat.value=catFull; }
+  if(catItem){
+    r.colores = catItem.colores.map(function(c){ return c.n; });
+    // Tallas: unión de tallas de todos los colores del catálogo
+    var tallasSet = {};
+    catItem.colores.forEach(function(col){ (col.tallas||[]).forEach(function(t){ tallasSet[t.t]=true; }); });
+    var tallasOrden = TALLAS_ALL.filter(function(t){ return tallasSet[t]; });
+    if(tallasOrden.length) r.tallas = tallasOrden;
+  }
   var elNom=document.getElementById('ref-nom-'+rid), elRef=document.getElementById('ref-ref-'+rid), elVmo=document.getElementById('ref-vmo-'+rid);
   if(elNom) elNom.value=nombre;
   if(elRef && cod) elRef.value=cod;
   if(elVmo && precio) elVmo.value=precio;
   opRefOcultarSug(rid);
   opRefRenderColorTags(rid);
+  // Actualizar checkboxes de tallas en DOM
+  document.querySelectorAll('.ref-talla-'+rid).forEach(function(ck){
+    ck.checked = r.tallas.indexOf(ck.value) > -1;
+  });
   opRefGenTabla(rid);
   opRefPreviewUpdate();
 }
