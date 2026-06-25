@@ -948,7 +948,7 @@ function _getHash(u){ var cfg=_getCfgUsers(); return (cfg[u]&&cfg[u].hash)||_U[u
 // Devuelve nombre display
 function _getName(u){ var cfg=_getCfgUsers(); return (cfg[u]&&cfg[u].name)||_NAMES[u]||u; }
 // Módulos permitidos para un usuario (jhon = todos)
-var ALL_MODULES = ['dashboard','satelites','ops','monitoreo','entregas','diseno','logistica','novedades','simulador','costos_mo'];
+var ALL_MODULES = ['dashboard','satelites','ops','monitoreo','entregas','diseno','planeacion','logistica','novedades','simulador','costos_mo'];
 function _getModules(u){
   if(u==='jhon') return ALL_MODULES.slice();
   var cfg=_getCfgUsers();
@@ -1064,7 +1064,7 @@ function applyModuleAccess(uid){
 
 var ALL_MODULE_LABELS = {
   dashboard:'Dashboard', satelites:'Satélites', ops:'OTs', entregas:'Entregas',
-  diseno:'Diseño', logistica:'Logística', novedades:'Novedades',
+  diseno:'Diseño', planeacion:'Planeación', logistica:'Logística', novedades:'Novedades',
   simulador:'Simulador', costos_mo:'Costos MO'
 };
 
