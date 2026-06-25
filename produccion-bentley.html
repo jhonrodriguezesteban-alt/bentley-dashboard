@@ -1839,7 +1839,20 @@ function renderPlaneacion(){
   ];
   if(!DB.planeacion) DB.planeacion = {meses:{}};
   var meses = DB.planeacion.meses||{};
-  var allOps = (DB.ops||[]).filter(function(op){ return op.estado_op!=='ARCHIVADO'; });
+  // Solo OPs con al menos un sub-grupo en las dos primeras columnas
+  var PLAN_ESTADOS = ['POR_REVISAR','PENDIENTE_CORTAR'];
+  var allOps = (DB.ops||[]).filter(function(op){
+    if(op.estado_op==='ARCHIVADO') return false;
+    var colores = (op.colores&&op.colores.length) ? op.colores : ['—'];
+    return colores.some(function(color){
+      var otsColor = (DB.ots||[]).filter(function(o){
+        return o.op_id===op.id && (color==='—' || (o.color||'').toUpperCase()===color.toUpperCase());
+      });
+      var override = _getSubgEstado(op.id, color);
+      var estado = override || _subgEstadoDerivado(otsColor);
+      return PLAN_ESTADOS.indexOf(estado)>=0;
+    });
+  });
 
   // IDs asignados a algún mes
   var assignedSet = {};
