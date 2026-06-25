@@ -5103,12 +5103,16 @@ function _renderDrawerComentarios(){
 
   var h = '';
 
-  // Input para nuevo comentario
-  h += '<div style="background:#0d1117;border:1px solid #1e2535;border-radius:10px;padding:12px;margin-bottom:18px;">';
+  // Input para nuevo comentario — colapsado por defecto
+  h += '<div id="coment-add-wrap" style="margin-bottom:18px;">';
+  h += '<button onclick="abrirInputComentario()" id="coment-add-btn" style="width:100%;padding:8px;border-radius:8px;background:rgba(99,102,241,.06);border:1px dashed rgba(99,102,241,.3);color:#818cf8;font-size:12px;font-weight:600;cursor:pointer;text-align:center;">+ Agregar comentario</button>';
+  h += '<div id="coment-input-wrap" style="display:none;background:#0d1117;border:1px solid #1e2535;border-radius:10px;padding:12px;margin-top:8px;">';
   h += '<textarea id="coment-input" placeholder="Escribe un comentario..." style="width:100%;background:transparent;border:none;outline:none;color:#e2e8f0;font-size:13px;resize:none;min-height:70px;font-family:inherit;box-sizing:border-box;"></textarea>';
-  h += '<div style="display:flex;justify-content:flex-end;margin-top:6px;">';
+  h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;">';
+  h += '<button onclick="cerrarInputComentario()" style="background:none;border:none;color:#475569;font-size:12px;cursor:pointer;padding:0;">Cancelar</button>';
   h += '<button onclick="agregarComentarioDiseno()" style="background:#6366f1;border:none;border-radius:7px;color:#fff;font-size:12px;font-weight:700;padding:6px 18px;cursor:pointer;">Publicar</button>';
   h += '</div></div>';
+  h += '</div>';
 
   // Historial
   if(!comentarios.length){
@@ -5138,6 +5142,21 @@ function _renderDrawerComentarios(){
   setTimeout(function(){ var el=document.getElementById('coment-input'); if(el) el.focus(); }, 80);
 }
 
+function abrirInputComentario(){
+  var btn = document.getElementById('coment-add-btn');
+  var wrap = document.getElementById('coment-input-wrap');
+  if(btn) btn.style.display = 'none';
+  if(wrap){ wrap.style.display = 'block'; setTimeout(function(){ var el=document.getElementById('coment-input'); if(el) el.focus(); }, 50); }
+}
+function cerrarInputComentario(){
+  var btn = document.getElementById('coment-add-btn');
+  var wrap = document.getElementById('coment-input-wrap');
+  var el = document.getElementById('coment-input');
+  if(el) el.value = '';
+  if(wrap) wrap.style.display = 'none';
+  if(btn) btn.style.display = '';
+}
+
 function agregarComentarioDiseno(){
   var id = _comentCtx;
   var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
@@ -5155,7 +5174,6 @@ function agregarComentarioDiseno(){
     fecha: hoy(),
     hora: hora
   });
-  if(el) el.value = '';
   guardarDisenos();
   renderPage(currentPage);
   _renderDrawerComentarios();
