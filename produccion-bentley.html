@@ -529,7 +529,7 @@ textarea.form-control{resize:vertical;min-height:80px;}
 #sidebar.collapsed #sidebar-logo>svg{order:1;}
 #sidebar.collapsed #hamburger-btn{order:2;}
 #main.sidebar-collapsed{margin-left:60px;}
-#sidebar.collapsed .nav-item .icon{width:auto;font-size:18px;}
+#sidebar.collapsed .nav-item .icon{width:auto;font-size:26px;}
     input[type=number]::-webkit-inner-spin-button,
     input[type=number]::-webkit-outer-spin-button { -webkit-appearance:none; margin:0; }
     input[type=number] { -moz-appearance:textfield; }
@@ -5548,7 +5548,9 @@ function abrirFormLogistica(id){
   body += '<div class="form-group"><label class="form-label">Destino / Dirección</label><input id="log-dest" type="text" class="form-control" value="'+esc(t.destino||'')+'" placeholder="Ej: Cra 15 #45-20 Taller Los Pinos"></div>';
   body += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">';
   body += '<div class="form-group"><label class="form-label">Fecha</label><input id="log-fecha-inp" type="date" class="form-control" value="'+t.fecha+'"></div>';
-  body += '<div class="form-group"><label class="form-label">Hora aprox.</label><input id="log-hora" type="time" class="form-control" value="'+(t.hora||'')+'"></div>';
+  var horaOpts = '<option value="">-- Sin hora --</option>';
+  for(var hh=5;hh<=22;hh++){['00','30'].forEach(function(mm){ var v=(hh<10?'0':'')+hh+':'+mm; horaOpts+='<option value="'+v+'"'+(t.hora===v?' selected':'')+'>'+v+'</option>'; });}
+  body += '<div class="form-group"><label class="form-label">Hora aprox.</label><select id="log-hora" class="form-control">'+horaOpts+'</select></div>';
   body += '</div>';
   body += '<div class="form-group"><label class="form-label">Nota interna</label><input id="log-nota" type="text" class="form-control" value="'+esc(t.nota||'')+'" placeholder="Observación para el conductor..."></div>';
   body += '<input type="hidden" id="log-edit-id" value="'+(isNew?'__new__':id)+'">';
