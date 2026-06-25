@@ -634,6 +634,9 @@ textarea.form-control{resize:vertical;min-height:80px;}
     <div class="nav-item" onclick="navTo('diseno')" data-page="diseno">
       <span class="icon">🎨</span><span class="nav-label"> Diseño</span>
     </div>
+    <div class="nav-item" onclick="navTo('planeacion')" data-page="planeacion">
+      <span class="icon">📅</span><span class="nav-label"> Planeación</span>
+    </div>
     <div class="nav-item" onclick="navTo('logistica')" data-page="logistica">
       <span class="icon">🚚</span><span class="nav-label"> Logística</span>
     </div>
@@ -876,7 +879,7 @@ var GT = (function(){
 
 // ─── Constants ─────────────────────────────────────────────────────────────────
 var REPO = 'jhonrodriguezesteban-alt/bentley-dashboard';
-var FILES = { satelites: 'prod_satelites.json', ops: 'prod_ops.json', ots: 'prod_ots.json', disenos: 'prod_disenos.json', prog_ops: 'prod_prog_ops.json', costos_mo: 'prod_costos_mo.json', usuarios: 'prod_usuarios.json', sim: 'prod_simulador.json', logistica: 'prod_logistica.json' };
+var FILES = { satelites: 'prod_satelites.json', ops: 'prod_ops.json', ots: 'prod_ots.json', disenos: 'prod_disenos.json', prog_ops: 'prod_prog_ops.json', costos_mo: 'prod_costos_mo.json', usuarios: 'prod_usuarios.json', sim: 'prod_simulador.json', logistica: 'prod_logistica.json', planeacion: 'prod_planeacion.json' };
 var BASE_URL = 'https://jhonrodriguezesteban-alt.github.io/bentley-dashboard/';
 var RAW_URL = 'https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/';
 
@@ -1600,6 +1603,9 @@ async function cargarDatos(){
     else { var lsRaw=localStorage.getItem('bentley_sim_data'); if(lsRaw){ try{ var lsP=JSON.parse(lsRaw); DB.sim={active:lsP.active||[],data:lsP.data||lsP}; _simActive=DB.sim.active; _simData=DB.sim.data; }catch(e){} } }
     var logR = await fetch(BASE_URL + 'prod_logistica.json?t=' + t);
     if(logR.ok){ var d10 = await logR.json(); DB.logistica = {tareas: d10.tareas||[]}; }
+    var planR = await fetch(BASE_URL + 'prod_planeacion.json?t=' + t);
+    if(planR.ok){ var d11 = await planR.json(); DB.planeacion = {meses: d11.meses||{}}; }
+    else { if(!DB.planeacion) DB.planeacion = {meses:{}}; }
     if(DB.satelites.length === 0) seedSatelites();
     saveLocal();
     var msg = 'Datos cargados: ' + DB.ops.length + ' OPs, ' + DB.ots.length + ' OTs, ' + CATALOGO.length + ' refs SKU';
@@ -1728,6 +1734,194 @@ function renderPage(page){
   else if(page==='costos_mo') el.innerHTML = renderCostosMO();
   else if(page==='simulador') el.innerHTML = renderSimulador();
   else if(page==='monitoreo') el.innerHTML = renderMonitoreo();
+  else if(page==='planeacion') el.innerHTML = renderPlaneacion();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// PLANEACIÓN DE PRODUCCIÓN
+// ═══════════════════════════════════════════════════════════════════════════════
+var _planDragOpId = null;
+
+async function guardarPlaneacion(){
+  if(!DB.planeacion) DB.planeacion = {meses:{}};
+  var ok = await guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}});
+  if(ok) toast('Planeación guardada','success');
+}
+
+function _planAsignar(opId, mesKey){
+  if(!DB.planeacion) DB.planeacion = {meses:{}};
+  if(!DB.planeacion.meses) DB.planeacion.meses = {};
+  // Quitar de todos los meses
+  Object.keys(DB.planeacion.meses).forEach(function(m){
+    DB.planeacion.meses[m] = (DB.planeacion.meses[m]||[]).filter(function(id){ return id!==opId; });
+  });
+  if(mesKey){
+    if(!DB.planeacion.meses[mesKey]) DB.planeacion.meses[mesKey] = [];
+    if(DB.planeacion.meses[mesKey].indexOf(opId)<0) DB.planeacion.meses[mesKey].push(opId);
+  }
+  guardarPlaneacion();
+  renderPage('planeacion');
+}
+
+function planDragStart(e, opId){
+  _planDragOpId = opId;
+  e.dataTransfer.effectAllowed = 'move';
+  setTimeout(function(){
+    var el = document.querySelector('[data-plan-op="'+opId+'"]');
+    if(el){ el.style.opacity='.35'; el.style.transform='scale(.95)'; }
+  },0);
+}
+function planDragEnd(){
+  _planDragOpId = null;
+  document.querySelectorAll('[data-plan-op]').forEach(function(el){ el.style.opacity=''; el.style.transform=''; });
+  document.querySelectorAll('.plan-dz').forEach(function(el){ el.style.background=''; el.style.borderColor=''; });
+}
+function planDragOver(e, mesKey){
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  document.querySelectorAll('.plan-dz').forEach(function(el){ el.style.background=''; el.style.borderColor=''; });
+  var dz = document.querySelector('[data-plan-dz="'+(mesKey||'pool')+'"]');
+  if(dz){ dz.style.background='rgba(99,102,241,.08)'; dz.style.borderColor='rgba(99,102,241,.4)'; }
+}
+function planDrop(e, mesKey){
+  e.preventDefault();
+  if(!_planDragOpId) return;
+  _planAsignar(_planDragOpId, mesKey||null);
+}
+
+function _planOpUds(op){
+  var ots = (DB.ots||[]).filter(function(o){ return o.op_id===op.id && o.estado!=='ARCHIVADO'; });
+  var uds = ots.reduce(function(a,o){ return a+(parseInt(o.cantidad)||0); },0);
+  if(!uds && op.referencias) uds = op.referencias.reduce(function(a,r){ return a+(parseInt(r.cantidad)||0); },0);
+  return uds;
+}
+
+function _planMiniCard(op){
+  var uds = _planOpUds(op);
+  var baseId = fmtOpId(op.id);
+  var colores = op.colores && op.colores.length ? op.colores : [];
+  var inMes = null;
+  if(DB.planeacion && DB.planeacion.meses){
+    Object.keys(DB.planeacion.meses).forEach(function(m){
+      if((DB.planeacion.meses[m]||[]).indexOf(op.id)>=0) inMes = m;
+    });
+  }
+  var h = '<div data-plan-op="'+op.id+'" draggable="true" ondragstart="planDragStart(event,\''+op.id+'\')" ondragend="planDragEnd()" style="background:#13161f;border:1px solid #1e2535;border-radius:9px;padding:9px 10px;cursor:grab;width:136px;flex-shrink:0;user-select:none;transition:opacity .15s,transform .15s;">';
+  h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">';
+  h += '<span style="font-size:11px;font-weight:800;color:#00d4ff;">'+esc(baseId)+'</span>';
+  h += '<span style="font-size:8px;font-weight:700;background:rgba(148,163,184,.1);border:1px solid #1e2535;border-radius:4px;color:#64748b;padding:1px 5px;text-transform:uppercase;">'+esc((op.categoria||'').substring(0,5))+'</span>';
+  h += '</div>';
+  h += '<div style="font-size:11px;font-weight:700;color:#cbd5e1;line-height:1.3;margin-bottom:5px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;" title="'+esc(op.nombre_producto||'')+'">'+esc(op.nombre_producto||'Sin nombre')+'</div>';
+  if(colores.length){
+    h += '<div style="display:flex;flex-wrap:wrap;gap:2px;margin-bottom:5px;">';
+    colores.slice(0,3).forEach(function(c){ h += '<span style="font-size:8px;background:rgba(148,163,184,.07);border:1px solid #1e2535;border-radius:3px;color:#94a3b8;padding:1px 4px;text-transform:uppercase;white-space:nowrap;overflow:hidden;max-width:60px;text-overflow:ellipsis;">'+esc(c)+'</span>'; });
+    if(colores.length>3) h += '<span style="font-size:8px;color:#475569;">+'+( colores.length-3)+'</span>';
+    h += '</div>';
+  }
+  h += '<div style="display:flex;align-items:center;justify-content:space-between;">';
+  h += '<span style="font-size:10px;font-weight:700;color:#64748b;">'+uds+' uds</span>';
+  if(inMes){
+    h += '<button data-opid="'+op.id+'" onclick="event.stopPropagation();_planAsignar(this.dataset.opid,null)" title="Quitar" style="background:none;border:none;color:#334155;font-size:11px;cursor:pointer;padding:0;line-height:1;">✕</button>';
+  }
+  h += '</div>';
+  h += '</div>';
+  return h;
+}
+
+function renderPlaneacion(){
+  var MESES = [
+    {k:'2026-07',label:'Julio',     color:'#3b82f6',bg:'rgba(59,130,246,.07)'},
+    {k:'2026-08',label:'Agosto',    color:'#8b5cf6',bg:'rgba(139,92,246,.07)'},
+    {k:'2026-09',label:'Septiembre',color:'#f59e0b',bg:'rgba(245,158,11,.07)'},
+    {k:'2026-10',label:'Octubre',   color:'#10b981',bg:'rgba(16,185,129,.07)'},
+    {k:'2026-11',label:'Noviembre', color:'#ef4444',bg:'rgba(239,68,68,.07)'},
+    {k:'2026-12',label:'Diciembre', color:'#f97316',bg:'rgba(249,115,22,.07)'},
+  ];
+  if(!DB.planeacion) DB.planeacion = {meses:{}};
+  var meses = DB.planeacion.meses||{};
+  var allOps = (DB.ops||[]).filter(function(op){ return op.estado_op!=='ARCHIVADO'; });
+
+  // IDs asignados a algún mes
+  var assignedSet = {};
+  MESES.forEach(function(m){ (meses[m.k]||[]).forEach(function(id){ assignedSet[id]=m.k; }); });
+  var poolOps = allOps.filter(function(op){ return !assignedSet[op.id]; });
+
+  var h = '<style>.plan-dz{border:2px dashed transparent;border-radius:10px;transition:background .15s,border-color .15s;}</style>';
+  h += '<div style="padding:16px 20px;height:100%;overflow-y:auto;box-sizing:border-box;">';
+
+  // ── Header ──────────────────────────────────────────────────────────────────
+  var totalAsig = allOps.length - poolOps.length;
+  var totalUdsAll = allOps.reduce(function(a,op){ return a+_planOpUds(op); },0);
+  h += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap;">';
+  h += '<div style="font-size:20px;font-weight:800;color:#e2e8f0;letter-spacing:.3px;">📅 Planeación de Producción</div>';
+  h += '<div style="display:flex;gap:10px;margin-left:auto;flex-wrap:wrap;">';
+  h += '<span style="font-size:11px;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);border-radius:8px;color:#00d4ff;padding:4px 10px;font-weight:700;">'+allOps.length+' OPs activas</span>';
+  h += '<span style="font-size:11px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:8px;color:#34d399;padding:4px 10px;font-weight:700;">'+totalAsig+' asignadas</span>';
+  h += '<span style="font-size:11px;background:rgba(148,163,184,.08);border:1px solid #1e2535;border-radius:8px;color:#64748b;padding:4px 10px;font-weight:700;">'+poolOps.length+' sin asignar</span>';
+  h += '</div></div>';
+
+  // ── Pool ─────────────────────────────────────────────────────────────────────
+  h += '<div style="background:#0a0d14;border:1px solid #1e2535;border-radius:12px;padding:12px 14px;margin-bottom:20px;">';
+  h += '<div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">📦 Sin Asignar · '+poolOps.length+' OPs</div>';
+  h += '<div data-plan-dz="pool" class="plan-dz" ondragover="planDragOver(event,null)" ondrop="planDrop(event,null)" style="min-height:72px;display:flex;flex-wrap:wrap;gap:8px;">';
+  if(!poolOps.length){
+    h += '<div style="color:#1e2535;font-size:12px;padding:18px 0;width:100%;text-align:center;">✓ Todas las OPs están asignadas a un mes</div>';
+  } else {
+    poolOps.forEach(function(op){ h += _planMiniCard(op); });
+  }
+  h += '</div></div>';
+
+  // ── Grid de meses ────────────────────────────────────────────────────────────
+  h += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">';
+
+  MESES.forEach(function(mes){
+    var opIds = meses[mes.k]||[];
+    var mesOps = opIds.map(function(id){ return allOps.find(function(o){ return o.id===id; }); }).filter(Boolean);
+
+    var totalUds = 0;
+    var catMap = {};
+    mesOps.forEach(function(op){
+      var u = _planOpUds(op);
+      totalUds += u;
+      var cat = op.categoria||'Otros';
+      catMap[cat] = (catMap[cat]||0) + u;
+    });
+    var catEntries = Object.keys(catMap).sort(function(a,b){ return catMap[b]-catMap[a]; });
+
+    h += '<div style="background:#0a0d14;border:1px solid '+mes.color+'33;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;">';
+
+    // Month header
+    h += '<div style="background:'+mes.bg+';border-bottom:1px solid '+mes.color+'22;padding:11px 14px;">';
+    h += '<div style="display:flex;align-items:baseline;justify-content:space-between;">';
+    h += '<div style="font-size:14px;font-weight:800;color:'+mes.color+';text-transform:uppercase;letter-spacing:.5px;">'+mes.label+'</div>';
+    if(totalUds) h += '<div style="font-size:20px;font-weight:900;color:'+mes.color+';">'+totalUds+'<span style="font-size:9px;font-weight:500;color:'+mes.color+'88;margin-left:2px;">uds</span></div>';
+    h += '</div>';
+    h += '<div style="font-size:10px;color:#64748b;margin-top:2px;">'+mesOps.length+' OP'+(mesOps.length!==1?'s':'')+(totalUds?' · '+totalUds+' uds totales':'')+'</div>';
+    h += '</div>';
+
+    // Category breakdown
+    if(catEntries.length){
+      h += '<div style="padding:7px 14px;border-bottom:1px solid #0d1117;display:flex;flex-wrap:wrap;gap:4px;">';
+      catEntries.forEach(function(cat){
+        h += '<span style="font-size:9px;font-weight:700;background:'+mes.color+'12;border:1px solid '+mes.color+'25;border-radius:5px;color:'+mes.color+';padding:2px 7px;">'+esc(cat)+' <span style="opacity:.7;">'+catMap[cat]+'</span></span>';
+      });
+      h += '</div>';
+    }
+
+    // Drop zone
+    h += '<div data-plan-dz="'+mes.k+'" class="plan-dz" ondragover="planDragOver(event,\''+mes.k+'\')" ondrop="planDrop(event,\''+mes.k+'\')" style="flex:1;min-height:100px;padding:8px;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;">';
+    if(!mesOps.length){
+      h += '<div style="color:#1e2535;font-size:11px;width:100%;text-align:center;padding:16px 0;pointer-events:none;">Arrastra OPs aquí</div>';
+    } else {
+      mesOps.forEach(function(op){ h += _planMiniCard(op); });
+    }
+    h += '</div>';
+    h += '</div>';
+  });
+
+  h += '</div>'; // grid
+  h += '</div>'; // page
+  return h;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
