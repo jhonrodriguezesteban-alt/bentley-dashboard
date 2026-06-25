@@ -2562,8 +2562,8 @@ function renderOPs(){
     h += '</div>';
     h += '<div style="background:#0d1117;border:1px solid '+col.color+'33;border-top:none;border-radius:0 0 10px 10px;padding:10px;min-height:100px;overflow-y:auto;overflow-x:hidden;max-height:calc(100vh - 310px);">';
 
-    // En Pte. de Cortar y Corte p/ Alistar: una tarjeta consolidada por OP
-    var esColumnaConsolidada = col.k === 'PENDIENTE_CORTAR' || col.k === 'CORTE_POR_ALISTAR';
+    // En Nuevas Prog., Pte. de Cortar y Corte p/ Alistar: una tarjeta consolidada por OP
+    var esColumnaConsolidada = col.k === 'POR_REVISAR' || col.k === 'PENDIENTE_CORTAR' || col.k === 'CORTE_POR_ALISTAR';
     if(esColumnaConsolidada){
       var opGroupMap = {};
       var opGroupOrder = [];
@@ -2604,10 +2604,40 @@ function renderOPs(){
         h += '<div style="height:3px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;margin-bottom:8px;"><div style="height:100%;width:'+pctTotal+'%;background:'+(pctTotal>=100?'#34d399':'#00d4ff')+';border-radius:4px;transition:width .4s;"></div></div>';
 
         if(grp.length > 1){
-          h += '<div style="margin-bottom:8px;display:flex;flex-wrap:wrap;gap:3px;">';
-          grp.forEach(function(s){
-            h += '<span style="background:rgba(148,163,184,.08);border:1px solid #1e2535;border-radius:5px;font-size:9px;color:#94a3b8;padding:1px 6px;text-transform:uppercase;">'+esc(s.color)+'</span>';
-          });
+          if(col.k === 'POR_REVISAR'){
+            // Sub-órdenes detalladas para Nuevas Programaciones
+            h += '<div style="margin-bottom:8px;display:flex;flex-direction:column;gap:4px;">';
+            grp.forEach(function(s, si){
+              var subNum = baseId + '.' + (s.colorIdx+1);
+              var novS = s.otsColor.filter(function(o){ return o.estado==='NOVEDAD'; }).length;
+              h += '<div style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.03);border:1px solid #1e2535;border-radius:7px;padding:5px 8px;">';
+              h += '<span style="font-size:10px;font-weight:700;color:#00d4ff;flex-shrink:0;">'+esc(subNum)+'</span>';
+              h += '<span style="width:6px;height:6px;border-radius:50%;background:#94a3b8;flex-shrink:0;"></span>';
+              h += '<span style="font-size:9px;font-weight:700;color:#94a3b8;text-transform:uppercase;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(s.color)+'</span>';
+              h += '<span style="font-size:9px;color:#475569;flex-shrink:0;">'+s.otsColor.length+' OTs · '+s.uds+' uds</span>';
+              if(novS) h += '<span style="font-size:8px;color:#ef4444;font-weight:700;flex-shrink:0;">'+novS+'N</span>';
+              h += '</div>';
+            });
+            h += '</div>';
+          } else {
+            h += '<div style="margin-bottom:8px;display:flex;flex-wrap:wrap;gap:3px;">';
+            grp.forEach(function(s){
+              h += '<span style="background:rgba(148,163,184,.08);border:1px solid #1e2535;border-radius:5px;font-size:9px;color:#94a3b8;padding:1px 6px;text-transform:uppercase;">'+esc(s.color)+'</span>';
+            });
+            h += '</div>';
+          }
+        } else if(col.k === 'POR_REVISAR'){
+          // OP de un solo color — mostrar sub-orden igual para coherencia visual
+          var s0 = grp[0];
+          var novS0 = s0.otsColor.filter(function(o){ return o.estado==='NOVEDAD'; }).length;
+          h += '<div style="margin-bottom:8px;">';
+          h += '<div style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.03);border:1px solid #1e2535;border-radius:7px;padding:5px 8px;">';
+          h += '<span style="font-size:10px;font-weight:700;color:#00d4ff;">'+esc(baseId)+'</span>';
+          h += '<span style="width:6px;height:6px;border-radius:50%;background:#94a3b8;flex-shrink:0;"></span>';
+          h += '<span style="font-size:9px;font-weight:700;color:#94a3b8;text-transform:uppercase;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(s0.color==='—'?'Un color':s0.color)+'</span>';
+          h += '<span style="font-size:9px;color:#475569;">'+s0.otsColor.length+' OTs · '+s0.uds+' uds</span>';
+          if(novS0) h += '<span style="font-size:8px;color:#ef4444;font-weight:700;">'+novS0+'N</span>';
+          h += '</div>';
           h += '</div>';
         }
 
