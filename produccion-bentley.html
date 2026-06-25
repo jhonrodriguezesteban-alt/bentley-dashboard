@@ -5250,9 +5250,11 @@ function _renderDrawerComentarios(){
 
 // Modal overlay para nuevo comentario o ver/editar uno existente
 var _comentModalCid = null;
+var _comentImgsPendientes = []; // FileList temporales antes de publicar
 
 function abrirNuevoComentario(){
   _comentModalCid = null;
+  _comentImgsPendientes = [];
   _mostrarModalComentario('', '', '', false);
 }
 
@@ -5287,8 +5289,25 @@ function _mostrarModalComentario(texto, autor, fecha, editable){
     inner += '</div>';
   }
 
+  // Imágenes adjuntas en comentario existente
+  if(!esNuevo && c && c.imagenes && c.imagenes.length){
+    inner += '<div style="display:flex;gap:8px;flex-wrap:wrap;flex-shrink:0;">';
+    c.imagenes.forEach(function(img){
+      inner += '<img src="'+img.url+'" onclick="abrirLightbox(\''+img.url+'\',[\''+img.url+'\'])" style="width:90px;height:90px;object-fit:cover;border-radius:10px;cursor:zoom-in;border:1px solid #1e2535;" loading="lazy">';
+    });
+    inner += '</div>';
+  }
+
   var readonly = !esNuevo && !editable;
   inner += '<textarea id="coment-modal-ta" '+(readonly?'readonly':'')+' placeholder="Escribe tu comentario..." style="width:100%;min-height:100px;background:'+(readonly?'#0d1117':'rgba(255,255,255,.04)')+';border:1px solid '+(readonly?'#1e2535':'rgba(99,102,241,.3)')+';border-radius:10px;color:#e2e8f0;font-size:14px;line-height:1.6;padding:12px;resize:none;outline:none;font-family:inherit;box-sizing:border-box;'+(readonly?'cursor:default;':'')+'">'+esc(texto)+'</textarea>';
+
+  // Adjuntar imágenes — solo en comentario nuevo
+  if(esNuevo){
+    inner += '<div style="flex-shrink:0;">';
+    inner += '<div id="coment-imgs-preview" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;"></div>';
+    inner += '<label style="display:inline-flex;align-items:center;gap:6px;background:rgba(251,191,36,.07);border:1px dashed rgba(251,191,36,.35);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:12px;color:#fbbf24;font-weight:600;">📎 Adjuntar imagen<input type="file" accept="image/*" multiple style="display:none" onchange="seleccionarImagenesComentario(this.files)"></label>';
+    inner += '</div>';
+  }
 
   if(!esNuevo && c){
     // ── Reacciones ─────────────────────────────────────────────────────
@@ -5345,6 +5364,29 @@ function _mostrarModalComentario(texto, autor, fecha, editable){
   overlay.addEventListener('click', function(e){ if(e.target===overlay) cerrarModalComentario(); });
   document.body.appendChild(overlay);
   setTimeout(function(){ var ta=document.getElementById('coment-modal-ta'); if(ta && !ta.readOnly) ta.focus(); }, 60);
+}
+
+function seleccionarImagenesComentario(files){
+  if(!files||!files.length) return;
+  for(var i=0;i<files.length;i++) _comentImgsPendientes.push(files[i]);
+  var preview = document.getElementById('coment-imgs-preview');
+  if(!preview) return;
+  preview.innerHTML = '';
+  _comentImgsPendientes.forEach(function(f, idx){
+    var url = URL.createObjectURL(f);
+    var wrap = document.createElement('div');
+    wrap.style.cssText = 'position:relative;width:72px;height:72px;flex-shrink:0;';
+    var img = document.createElement('img');
+    img.src = url;
+    img.style.cssText = 'width:72px;height:72px;object-fit:cover;border-radius:8px;border:1px solid #1e2535;';
+    var del = document.createElement('button');
+    del.textContent = '✕';
+    del.dataset.idx = idx;
+    del.style.cssText = 'position:absolute;top:-5px;right:-5px;width:18px;height:18px;border-radius:50%;background:#ef4444;border:none;color:#fff;font-size:10px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;line-height:1;';
+    del.onclick = function(e){ e.stopPropagation(); _comentImgsPendientes.splice(parseInt(this.dataset.idx),1); seleccionarImagenesComentario([]); };
+    wrap.appendChild(img); wrap.appendChild(del);
+    preview.appendChild(wrap);
+  });
 }
 
 function toggleRespuestaForm(){
@@ -5438,16 +5480,38 @@ function guardarEdicionComentario(){
   toast('Comentario actualizado','success');
 }
 
-function agregarComentarioDiseno(){
+async function agregarComentarioDiseno(){
   var d = (DB.disenos||[]).find(function(x){ return x.id===_comentCtx; });
   if(!d) return;
   var ta = document.getElementById('coment-modal-ta');
   var texto = (ta ? ta.value : '').trim();
-  if(!texto){ toast('Escribe algo antes de publicar','warning'); return; }
+  if(!texto && !_comentImgsPendientes.length){ toast('Escribe algo o adjunta una imagen','warning'); return; }
   if(!d.comentarios) d.comentarios = [];
   var ahora = new Date();
   var hora = ahora.getHours().toString().padStart(2,'0')+':'+ahora.getMinutes().toString().padStart(2,'0');
-  d.comentarios.push({ id:'c_'+Date.now(), texto:texto, autor:getUser()||'Desconocido', fecha:hoy(), hora:hora });
+  var cid = 'c_'+Date.now();
+  var nuevoC = { id:cid, texto:texto, autor:getUser()||'Desconocido', fecha:hoy(), hora:hora, imagenes:[] };
+
+  // Subir imágenes adjuntas
+  if(_comentImgsPendientes.length){
+    var tk = GT || localStorage.getItem('bentley_gh_token') || '';
+    if(tk){
+      var btn = document.querySelector('#coment-modal button[onclick*="agregarComentarioDiseno"]');
+      if(btn){ btn.disabled=true; btn.textContent='Subiendo...'; }
+      for(var i=0;i<_comentImgsPendientes.length;i++){
+        var file = _comentImgsPendientes[i];
+        try{
+          var b64 = await new Promise(function(res,rej){ var r=new FileReader(); r.onload=function(e){res(e.target.result.split(',')[1]);}; r.onerror=rej; r.readAsDataURL(file); });
+          var ext = (file.name.split('.').pop()||'jpg').toLowerCase();
+          var fname = 'disenos-imgs/coment_'+d.id+'_'+cid+'_'+i+'.'+ext;
+          var putR = await fetch('https://api.github.com/repos/'+REPO+'/contents/'+fname,{method:'PUT',headers:{'Authorization':'token '+tk,'Content-Type':'application/json'},body:JSON.stringify({message:'Foto comentario: '+d.nombre,content:b64})});
+          if(putR.ok) nuevoC.imagenes.push({id:'ci_'+Date.now()+'_'+i, url:RAW_URL+fname});
+        }catch(e){}
+      }
+    }
+  }
+  _comentImgsPendientes = [];
+  d.comentarios.push(nuevoC);
   guardarDisenos();
   renderPage(currentPage);
   cerrarModalComentario();
