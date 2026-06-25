@@ -514,7 +514,7 @@ textarea.form-control{resize:vertical;min-height:80px;}
   .estado{font-size:10px;padding:2px 6px;}
   /* Dashboard chart — más alto en móvil */
   #dash-metrica-sub{display:none;}
-  #dash-chart-svg{height:200px !important;}
+  #dash-chart-svg{height:260px !important;}
   /* Logística — tarjeta en 2 filas */
   .log-card{flex-wrap:wrap !important;align-items:flex-start !important;padding:12px !important;}
   .log-card-info{order:10;flex-basis:100% !important;min-width:unset !important;margin-top:8px;}
@@ -1996,30 +1996,36 @@ function renderDashboard(){
   h += '</div>'; // card
 
   // ── Fila 3 columnas ─────────────────────────────────────────────────────────
-  h += '<div class="dash-3col" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:16px;">';
-
-  // COL 1 — Top Satélites con barras estilo referencia
-  var satMapTop={};
+  // ── Lista completa de satélites entregados (reemplaza Top Satélites compacto) ─
+  var satMapAll={};
   DB.ots.filter(function(o){ if(o.estado!=='ENTREGADO'||!o.satelite_id) return false; return !filtro||(o.fecha_entrega_real||'').startsWith(filtro); })
-        .forEach(function(o){ satMapTop[o.satelite_id]=(satMapTop[o.satelite_id]||0)+(o.unidades_entregadas||0); });
-  var topSat=Object.keys(satMapTop).map(function(k){ return {id:k,uds:satMapTop[k]}; }).sort(function(a,b){ return b.uds-a.uds; }).slice(0,8);
-  var maxTS=topSat.length?topSat[0].uds:1;
-  var satPal=[C_CYAN,C_GREEN,C_PURPLE,C_ORANGE,C_PINK,C_GOLD,'#38bdf8','#a3e635'];
-  h += '<div class="card" style="padding:18px 16px;">';
-  h += '<div style="font-family:var(--bebas);font-size:17px;letter-spacing:1px;margin-bottom:2px;">Top Satélites</div>';
-  h += '<div style="font-size:10px;color:#64748b;margin-bottom:12px;">Uds entregadas · '+(filtro||'año')+' · click para detalle</div>';
-  if(topSat.length){
-    topSat.forEach(function(s,i){
-      var pct=Math.round(s.uds/maxTS*100), bc=satPal[i%satPal.length], nom=getSatNombre(s.id);
-      h += '<div data-sat="'+s.id+'" onclick="verSateliteDesdeDB(this.dataset.sat)" style="margin-bottom:9px;cursor:pointer;">';
-      h += '<div style="display:flex;justify-content:space-between;margin-bottom:3px;">';
-      h += '<span style="font-size:11px;color:#94a3b8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:65%;">'+nom+'</span>';
-      h += '<span style="font-size:12px;font-weight:700;color:'+bc+';flex-shrink:0;">'+fmtNum(s.uds)+'</span></div>';
-      h += '<div style="height:5px;border-radius:4px;background:#1e2535;overflow:hidden;">';
-      h += '<div style="height:100%;width:'+pct+'%;border-radius:4px;background:linear-gradient(90deg,'+bc+','+bc+'66);"></div></div></div>';
-    });
-  } else h += '<div style="color:#334155;font-size:12px;padding:16px 0;text-align:center;">Sin entregas</div>';
+        .forEach(function(o){ satMapAll[o.satelite_id]=(satMapAll[o.satelite_id]||0)+(o.unidades_entregadas||0); });
+  var allSatRank=Object.keys(satMapAll).map(function(k){ return {id:k,uds:satMapAll[k]}; }).sort(function(a,b){ return b.uds-a.uds; });
+  var maxAS=allSatRank.length?allSatRank[0].uds:1;
+  var rColorsD=['#00d4ff','#a855f7','#34d399','#f97316','#ec4899','#fbbf24','#38bdf8','#a3e635','#fb7185','#818cf8','#2dd4bf','#f472b6','#e879f9','#86efac','#fca5a5','#93c5fd'];
+  h += '<div class="card" style="padding:18px 16px;margin-bottom:14px;">';
+  h += '<div style="display:flex;align-items:baseline;gap:10px;margin-bottom:14px;flex-wrap:wrap;">';
+  h += '<span style="font-family:var(--bebas);font-size:20px;letter-spacing:1px;">Satélites · Unidades Entregadas</span>';
+  h += '<span style="font-size:11px;color:#64748b;">'+(filtro||'año')+' · '+allSatRank.length+' talleres</span>';
+  h += '<span style="font-size:11px;color:#475569;margin-left:auto;">Toca para ver detalle</span>';
   h += '</div>';
+  if(allSatRank.length){
+    allSatRank.forEach(function(s,i){
+      var pct=Math.round(s.uds/maxAS*100), bc=rColorsD[i%rColorsD.length], nom=getSatNombre(s.id);
+      h += '<div data-sat="'+s.id+'" onclick="verSatEntregas(this.dataset.sat)" style="display:flex;align-items:center;gap:12px;margin-bottom:7px;padding:9px 12px;border-radius:10px;background:rgba(255,255,255,.02);cursor:pointer;border:1px solid transparent;transition:all .15s;" onmouseenter="this.style.background=\'rgba(255,255,255,0.05)\';this.style.borderColor=\''+bc+'33\'" onmouseleave="this.style.background=\'rgba(255,255,255,0.02)\';this.style.borderColor=\'transparent\'">';
+      h += '<span style="font-size:14px;font-weight:800;color:'+bc+';min-width:26px;text-align:right;flex-shrink:0;">'+(i+1)+'</span>';
+      h += '<span style="font-size:13px;font-weight:600;color:#e2e8f0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+nom+'</span>';
+      h += '<div style="width:120px;height:6px;border-radius:4px;background:#1e2535;flex-shrink:0;overflow:hidden;"><div style="height:100%;width:'+pct+'%;background:linear-gradient(90deg,'+bc+','+bc+'99);border-radius:4px;"></div></div>';
+      h += '<span style="font-size:13px;font-weight:700;color:'+bc+';min-width:52px;text-align:right;flex-shrink:0;">'+fmtNum(s.uds)+'</span>';
+      h += '<span style="font-size:11px;color:#475569;flex-shrink:0;">›</span>';
+      h += '</div>';
+    });
+  } else {
+    h += '<div style="color:#334155;font-size:12px;padding:16px 0;text-align:center;">Sin entregas'+(filtro?' en '+filtro:'')+'</div>';
+  }
+  h += '</div>';
+
+  h += '<div class="dash-3col" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">';
 
   // COL 2 — Estado OPs donut compacto
   var opData=[{k:'COMPLETADO',label:'Completadas',color:C_GREEN},{k:'EN_PROCESO',label:'En Proceso',color:C_PURPLE},{k:'CON_NOVEDAD',label:'Con Novedad',color:C_PINK},{k:'PENDIENTE',label:'Pendiente',color:'#475569'}];
@@ -4046,7 +4052,9 @@ function verOT(id){
 // ═══════════════════════════════════════════════════════════════════════════════
 var _entFiltroMes = '';
 var _entSatOpen = {};
+var _entOpOpen = {};
 function toggleEntSat(satId){ _entSatOpen[satId] = !_entSatOpen[satId]; renderPage('entregas'); }
+function toggleEntOp(key){ _entOpOpen[key] = !_entOpOpen[key]; renderPage('entregas'); }
 function setEntFiltro(mes){ _entFiltroMes = mes; renderPage('entregas'); }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -6009,41 +6017,8 @@ function renderEntregas(){
   h += kpiCard('Prom por satélite', fmtNum(promPorSat), '', 'Unidades/satélite');
   h += '</div>';
 
-  // ── Top Satélites por ENTREGAS (clicables) ───────────────────────────────────
-  var satEntMap = {};
-  DB.ots.filter(function(o){
-    if(o.estado!=='ENTREGADO'||!o.satelite_id) return false;
-    return !filtroE || (o.fecha_entrega_real||'').startsWith(filtroE);
-  }).forEach(function(o){ satEntMap[o.satelite_id]=(satEntMap[o.satelite_id]||0)+(o.unidades_entregadas||0); });
-  var satRankEnt = Object.keys(satEntMap).map(function(k){ return {id:k,uds:satEntMap[k]}; }).sort(function(a,b){ return b.uds-a.uds; });
-  var maxRE = satRankEnt.length ? satRankEnt[0].uds : 1;
-  var rColors = ['#00d4ff','#a855f7','#34d399','#f97316','#ec4899','#fbbf24','#38bdf8','#a3e635','#fb7185','#818cf8','#2dd4bf','#f472b6'];
-
-  h += '<div class="card" style="margin-top:16px;padding:20px 18px;">';
-  h += '<div style="display:flex;align-items:baseline;gap:10px;margin-bottom:14px;">';
-  h += '<span style="font-family:var(--bebas);font-size:20px;letter-spacing:1px;">Top Satélites · Unidades Entregadas</span>';
-  h += '<span style="font-size:12px;color:#64748b;">'+(filtroE||'todo el año')+' · toca para ver detalle por referencia</span>';
-  h += '</div>';
-  if(satRankEnt.length){
-    satRankEnt.forEach(function(s,i){
-      var pct = Math.round(s.uds/maxRE*100);
-      var bc = rColors[i%rColors.length];
-      var nom = getSatNombre(s.id);
-      h += '<div data-sat="'+s.id+'" onclick="verSatEntregas(this.dataset.sat)" style="display:flex;align-items:center;gap:12px;margin-bottom:8px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,0.02);cursor:pointer;border:1px solid transparent;transition:all .15s;" onmouseenter="this.style.background=\'rgba(255,255,255,0.05)\';this.style.borderColor=\''+bc+'33\'" onmouseleave="this.style.background=\'rgba(255,255,255,0.02)\';this.style.borderColor=\'transparent\'">';
-      h += '<span style="font-size:16px;font-weight:800;color:'+bc+';min-width:28px;text-align:right;">'+(i+1)+'</span>';
-      h += '<span style="font-size:13px;font-weight:600;color:#e2e8f0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+nom+'</span>';
-      h += '<div style="width:200px;height:8px;border-radius:6px;background:#1e2535;flex-shrink:0;overflow:hidden;"><div style="height:100%;width:'+pct+'%;background:linear-gradient(90deg,'+bc+','+bc+'99);border-radius:6px;"></div></div>';
-      h += '<span style="font-size:15px;font-weight:700;color:'+bc+';min-width:58px;text-align:right;">'+fmtNum(s.uds)+'</span>';
-      h += '<span style="font-size:12px;color:#475569;">›</span>';
-      h += '</div>';
-    });
-  } else {
-    h += '<div style="color:#475569;font-size:13px;text-align:center;padding:20px 0;">Sin entregas registradas'+(filtroE?' en '+filtroE:'')+'</div>';
-  }
-  h += '</div>';
-
-  // ── Satellite sections (accordion) ───────────────────────────────────────────
-  h += '<div style="margin-top:20px;">';
+  // ── Talleres: acordeón Taller → OP → OT ─────────────────────────────────────
+  h += '<div style="margin-top:8px;">';
   var bySat = {};
   enConf.forEach(function(ot){
     var sid = ot.satelite_id || 'SIN_SATELITE';
@@ -6051,8 +6026,7 @@ function renderEntregas(){
     (bySat[sid] = bySat[sid]||[]).push(ot);
   });
 
-  // Sort: satellites with urgent OTs first
-  var satOrder = Object.keys(bySat).filter(function(k){ return k !== 'SIN_SATELITE'; }).sort(function(a, b){
+  var satOrder = Object.keys(bySat).filter(function(k){ return k !== 'SIN_SATELITE'; }).sort(function(a,b){
     var urgA = bySat[a].filter(function(o){ var d=diasRestantes(o.fecha_estimada_entrega); return d!==null && d<=3; }).length;
     var urgB = bySat[b].filter(function(o){ var d=diasRestantes(o.fecha_estimada_entrega); return d!==null && d<=3; }).length;
     return urgB - urgA;
@@ -6060,47 +6034,74 @@ function renderEntregas(){
   if(bySat['SIN_SATELITE']) satOrder.push('SIN_SATELITE');
 
   satOrder.forEach(function(satId){
-    var ots = bySat[satId];
+    var otsDelSat = bySat[satId];
     var satNom = satId === 'SIN_SATELITE' ? 'Sin satélite asignado' : getSatNombre(satId);
-    var urgentes = ots.filter(function(o){ var d=diasRestantes(o.fecha_estimada_entrega); return d!==null && d<=3; }).length;
-    // Auto-expand if has urgent OTs; otherwise respect toggle state
+    var urgentes = otsDelSat.filter(function(o){ var d=diasRestantes(o.fecha_estimada_entrega); return d!==null && d<=3; }).length;
     var isOpen = _entSatOpen.hasOwnProperty(satId) ? _entSatOpen[satId] : (urgentes > 0);
+    var totalUdsSat = otsDelSat.reduce(function(a,o){ return a+(o.cantidad||0); },0);
 
-    h += '<div class="card" style="margin-bottom:12px;padding:0;overflow:hidden;">';
-    // Header
-    h += '<div data-sat="' + satId + '" onclick="toggleEntSat(this.dataset.sat)" style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;background:var(--card-bg);">';
-    h += '<div style="display:flex;align-items:center;gap:10px;">';
-    h += '<span style="font-weight:700;font-size:14px;">' + satNom + '</span>';
-    h += '<span style="font-size:12px;color:var(--dim);">' + ots.length + ' OTs · ' + ots.reduce(function(a,o){return a+(o.cantidad||0);},0) + ' uds</span>';
-    if(urgentes){ h += '<span style="background:var(--red);color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;">' + urgentes + ' urgentes</span>'; }
+    // Agrupar OTs de este satélite por OP
+    var byOp = {};
+    otsDelSat.forEach(function(ot){
+      var opId = ot.op_id || 'SIN_OP';
+      (byOp[opId] = byOp[opId]||[]).push(ot);
+    });
+    var opIds = Object.keys(byOp);
+
+    h += '<div class="card" style="margin-bottom:10px;padding:0;overflow:hidden;">';
+
+    // — Fila del taller —
+    h += '<div data-sat="'+satId+'" onclick="toggleEntSat(this.dataset.sat)" style="display:flex;align-items:center;justify-content:space-between;padding:13px 16px;cursor:pointer;background:#0f1520;border-bottom:'+(isOpen?'1px solid #1e2535':'none')+';">';
+    h += '<div style="display:flex;align-items:center;gap:10px;min-width:0;">';
+    h += '<span style="font-size:16px;">🏭</span>';
+    h += '<div style="min-width:0;">';
+    h += '<div style="font-weight:700;font-size:14px;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+satNom+'</div>';
+    h += '<div style="font-size:11px;color:#475569;margin-top:1px;">'+opIds.length+' OPs · '+otsDelSat.length+' OTs · '+fmtNum(totalUdsSat)+' uds</div>';
     h += '</div>';
-    h += '<span style="color:var(--dim);font-size:16px;">' + (isOpen ? '▲' : '▼') + '</span>';
+    if(urgentes) h += '<span style="background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:8px;flex-shrink:0;">'+urgentes+' urgente'+(urgentes>1?'s':'')+'</span>';
+    h += '</div>';
+    h += '<span style="color:#475569;font-size:14px;flex-shrink:0;margin-left:8px;">'+(isOpen?'▲':'▼')+'</span>';
     h += '</div>';
 
     if(isOpen){
-      h += '<div style="padding:0 16px 12px;">';
-      h += '<table style="width:100%;border-collapse:collapse;font-size:13px;"><thead><tr>';
-      h += '<th style="text-align:left;padding:6px 4px;color:var(--dim);font-weight:600;border-bottom:1px solid var(--card-border);">OT</th>';
-      h += '<th style="text-align:left;padding:6px 4px;color:var(--dim);font-weight:600;border-bottom:1px solid var(--card-border);">Producto</th>';
-      h += '<th style="text-align:left;padding:6px 4px;color:var(--dim);font-weight:600;border-bottom:1px solid var(--card-border);">Color</th>';
-      h += '<th style="text-align:left;padding:6px 4px;color:var(--dim);font-weight:600;border-bottom:1px solid var(--card-border);">Talla</th>';
-      h += '<th style="text-align:right;padding:6px 4px;color:var(--dim);font-weight:600;border-bottom:1px solid var(--card-border);">Cant</th>';
-      h += '<th style="text-align:right;padding:6px 4px;color:var(--dim);font-weight:600;border-bottom:1px solid var(--card-border);">Días</th>';
-      h += '<th style="padding:6px 4px;border-bottom:1px solid var(--card-border);"></th>';
-      h += '</tr></thead><tbody>';
-      ots.forEach(function(ot){
-        var dias = diasRestantes(ot.fecha_estimada_entrega);
-        h += '<tr style="border-bottom:1px solid rgba(255,255,255,0.04);">';
-        h += '<td style="padding:6px 4px;font-weight:700;color:var(--accent);">OT-' + ot.numero_ot + '</td>';
-        h += '<td style="padding:6px 4px;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + ot.nombre + '</td>';
-        h += '<td style="padding:6px 4px;">' + ot.color + '</td>';
-        h += '<td style="padding:6px 4px;">' + ot.talla + '</td>';
-        h += '<td style="padding:6px 4px;text-align:right;">' + ot.cantidad + '</td>';
-        h += '<td style="padding:6px 4px;text-align:right;">' + diasChip(dias) + '</td>';
-        h += '<td style="padding:6px 4px;text-align:right;"><button class="btn btn-success btn-sm" data-ot="' + ot.id + '" onclick="modalEntrega(this.dataset.ot)">Registrar</button></td>';
-        h += '</tr>';
+      opIds.forEach(function(opId){
+        var otsOp = byOp[opId];
+        var opObj = DB.ops.find(function(o){ return o.id===opId; });
+        var opNom = opObj ? (opObj.nombre||opId) : opId;
+        var opNum = opObj ? ('OP-'+String(opObj.numero||'').padStart(4,'0')) : opId;
+        var opKey = satId+'__'+opId;
+        var isOpOpen = !!_entOpOpen[opKey];
+        var urgOP = otsOp.filter(function(o){ var d=diasRestantes(o.fecha_estimada_entrega); return d!==null && d<=3; }).length;
+        var totalUdsOp = otsOp.reduce(function(a,o){ return a+(o.cantidad||0); },0);
+
+        // — Fila de la OP —
+        h += '<div data-opkey="'+opKey+'" onclick="toggleEntOp(this.dataset.opkey)" style="display:flex;align-items:center;gap:10px;padding:10px 16px 10px 32px;cursor:pointer;background:'+(isOpOpen?'rgba(0,212,255,.04)':'#0d1117')+';border-bottom:1px solid #1a2032;">';
+        h += '<span style="font-size:12px;font-weight:700;color:#00d4ff;flex-shrink:0;">'+opNum+'</span>';
+        h += '<div style="flex:1;min-width:0;">';
+        h += '<div style="font-size:13px;font-weight:600;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+opNom+'</div>';
+        h += '<div style="font-size:11px;color:#475569;margin-top:1px;">'+otsOp.length+' OTs · '+fmtNum(totalUdsOp)+' uds</div>';
+        h += '</div>';
+        if(urgOP) h += '<span style="background:rgba(239,68,68,.2);color:#ef4444;font-size:10px;font-weight:700;padding:2px 7px;border-radius:6px;flex-shrink:0;">'+urgOP+' urg.</span>';
+        h += '<span style="color:#334155;font-size:13px;flex-shrink:0;">'+(isOpOpen?'▲':'▼')+'</span>';
+        h += '</div>';
+
+        if(isOpOpen){
+          // — Filas de OTs de esta OP —
+          otsOp.forEach(function(ot){
+            var dias = diasRestantes(ot.fecha_estimada_entrega);
+            var esUrgente = dias!==null && dias<=3;
+            h += '<div style="display:flex;align-items:center;gap:8px;padding:9px 16px 9px 44px;background:#080c12;border-bottom:1px solid rgba(255,255,255,.03);">';
+            h += '<span style="font-size:11px;font-weight:700;color:#38bdf8;flex-shrink:0;">OT-'+ot.numero_ot+'</span>';
+            h += '<div style="flex:1;min-width:0;">';
+            h += '<div style="font-size:12px;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(ot.color)+' · T'+esc(ot.talla)+'</div>';
+            h += '</div>';
+            h += '<span style="font-size:12px;font-weight:700;color:#64748b;flex-shrink:0;">'+ot.cantidad+' uds</span>';
+            h += diasChip(dias);
+            h += '<button data-ot="'+ot.id+'" onclick="event.stopPropagation();modalEntrega(this.dataset.ot)" style="background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);border-radius:6px;color:#34d399;font-size:11px;font-weight:700;padding:4px 10px;cursor:pointer;flex-shrink:0;">Registrar</button>';
+            h += '</div>';
+          });
+        }
       });
-      h += '</tbody></table></div>';
     }
     h += '</div>';
   });
@@ -6108,7 +6109,6 @@ function renderEntregas(){
   if(!Object.keys(bySat).length){
     h += '<div class="empty-state"><div class="icon">✅</div><p>No hay órdenes en confección actualmente.</p></div>';
   }
-
   h += '</div>';
   return h;
 }
