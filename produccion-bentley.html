@@ -4571,7 +4571,21 @@ function setTelaDis(id, estado){
   if(!d) return;
   d.tela_estado = estado;
   if(estado==='sin_tela'||estado==='en_busqueda') d.tela_nota = '';
-  saveLocal(); guardarDisenos(); renderPage('diseno');
+  saveLocal(); guardarDisenos();
+  if(_modalCatReturn){
+    var catRet = _modalCatReturn;
+    _modalCatReturn = null;
+    renderPage('diseno');
+    setTimeout(function(){ abrirModalCategoria(catRet); }, 80);
+  } else {
+    renderPage('diseno');
+  }
+}
+function _modalSetCatReturn(){
+  var tituloEl = document.getElementById('modal-cat-titulo');
+  if(!tituloEl) return;
+  var titulo = tituloEl.textContent;
+  _modalCatReturn = titulo.split('·')[0].trim()==='TODOS EN PROCESO' ? '__TODOS__' : titulo.split('·')[0].trim().toLowerCase();
 }
 function setTelaNotaDis(id, nota){
   var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
@@ -5130,7 +5144,12 @@ function _renderDrawerComentarios(){
     });
   }
 
-  openDrawer('💬 ' + d.nombre, h, '');
+  var catReturn = _modalCatReturn || null;
+  var footer = '';
+  if(catReturn){
+    footer = '<button onclick="closeDrawer();_modalCatReturn=null;setTimeout(function(){abrirModalCategoria(\''+catReturn+'\');},80)" style="background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.3);border-radius:8px;color:#818cf8;font-size:13px;font-weight:600;padding:8px 18px;cursor:pointer;">← Volver al modal</button>';
+  }
+  openDrawer('💬 ' + d.nombre, h, footer);
 }
 
 // Modal overlay para nuevo comentario o ver/editar uno existente
@@ -5469,10 +5488,27 @@ function abrirModalCategoria(cat){
         b += '<button data-id="'+d.id+'" data-pv="'+pv+'" onclick="event.stopPropagation();setPrioDis(this.dataset.id,parseInt(this.dataset.pv));abrirModalCategoria(document.getElementById(\'modal-cat-titulo\').textContent.split(\'·\')[0].trim()===\'TODOS EN PROCESO\'?\'__TODOS__\':document.getElementById(\'modal-cat-titulo\').textContent.split(\'·\')[0].trim().toLowerCase())" style="font-size:9px;font-weight:800;color:'+c2.color+';background:'+(isSel?c2.bg:'transparent')+';border:1px solid '+(isSel?c2.border:'#1e2535')+';border-radius:4px;padding:2px 6px;cursor:pointer;">'+c2.label+'</button>';
       });
       b += '</div>';
+      // Tela estado en modal
+      var mTelaEst = d.tela_estado||'sin_tela';
+      var MTELA_CFG = {
+        sin_tela:   {label:'❌ Sin tela',        color:'#f87171', bg:'rgba(248,113,113,.15)', border:'rgba(248,113,113,.4)'},
+        en_busqueda:{label:'🔍 En búsqueda',     color:'#fbbf24', bg:'rgba(251,191,36,.15)',  border:'rgba(251,191,36,.4)'},
+        pte_llegar: {label:'📦 Pte. llegar',     color:'#fb923c', bg:'rgba(251,146,60,.15)',  border:'rgba(251,146,60,.4)'},
+        asignada:   {label:'🧵 Asignada',        color:'#34d399', bg:'rgba(52,211,153,.15)',  border:'rgba(52,211,153,.4)'},
+      };
+      var mtc = MTELA_CFG[mTelaEst]||MTELA_CFG.sin_tela;
+      b += '<div style="margin-top:6px;border-top:1px solid #1e2535;padding-top:6px;">';
+      b += '<div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;">';
+      b += '<button data-disid="'+d.id+'" onclick="event.stopPropagation();_modalSetCatReturn();abrirTelaPopover(this.dataset.disid,this)" style="padding:2px 8px;border-radius:10px;font-size:9px;font-weight:700;cursor:pointer;border:1px solid '+mtc.border+';background:'+mtc.bg+';color:'+mtc.color+';">'+mtc.label+'</button>';
+      if(mTelaEst==='asignada'||mTelaEst==='pte_llegar'){
+        b += '<input data-disid="'+d.id+'" type="text" value="'+esc(d.tela_nota||'')+'" onchange="setTelaNotaDis(this.dataset.disid,this.value)" onclick="event.stopPropagation()" placeholder="Ref. tela..." style="flex:1;min-width:0;background:#0d1117;border:1px solid '+(mTelaEst==='asignada'?'rgba(52,211,153,.3)':'rgba(251,146,60,.3)')+';border-radius:5px;color:#e2e8f0;font-size:10px;padding:2px 6px;outline:none;">';
+      }
+      b += '</div>';
+      b += '</div>';
       // Botón comentarios en modal
       var nCom=(d.comentarios||[]).length;
       b += '<div style="margin-top:5px;">';
-      b += '<button data-did="'+d.id+'" onclick="event.stopPropagation();cerrarModalCategoria();setTimeout(function(){abrirComentariosDiseno(this.dataset.did);}.bind(this),80)" style="display:inline-flex;align-items:center;gap:5px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.3);border-radius:6px;color:#818cf8;font-size:10px;font-weight:600;padding:3px 9px;cursor:pointer;">💬 '+(nCom?nCom+' comentario'+(nCom>1?'s':''):'Comentar')+'</button>';
+      b += '<button data-did="'+d.id+'" onclick="event.stopPropagation();_modalSetCatReturn();cerrarModalCategoria();setTimeout(function(){abrirComentariosDiseno(this.dataset.did);}.bind(this),80)" style="display:inline-flex;align-items:center;gap:5px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.3);border-radius:6px;color:#818cf8;font-size:10px;font-weight:600;padding:3px 9px;cursor:pointer;">💬 '+(nCom?nCom+' comentario'+(nCom>1?'s':''):'Comentar')+'</button>';
       b += '</div>';
       b += '</div></div>';
     });
