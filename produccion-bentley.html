@@ -6037,7 +6037,7 @@ function renderEntregas(){
     var otsDelSat = bySat[satId];
     var satNom = satId === 'SIN_SATELITE' ? 'Sin satélite asignado' : getSatNombre(satId);
     var urgentes = otsDelSat.filter(function(o){ var d=diasRestantes(o.fecha_estimada_entrega); return d!==null && d<=3; }).length;
-    var isOpen = _entSatOpen.hasOwnProperty(satId) ? _entSatOpen[satId] : (urgentes > 0);
+    var isOpen = _entSatOpen.hasOwnProperty(satId) ? _entSatOpen[satId] : false;
     var totalUdsSat = otsDelSat.reduce(function(a,o){ return a+(o.cantidad||0); },0);
 
     // Agrupar OTs de este satélite por OP
