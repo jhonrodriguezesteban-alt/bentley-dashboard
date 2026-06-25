@@ -525,7 +525,9 @@ textarea.form-control{resize:vertical;min-height:80px;}
 #sidebar.collapsed .nav-item{justify-content:center;padding:14px 0;}
 #sidebar.collapsed #sidebar-logo .brand,#sidebar.collapsed #sidebar-logo .sub{display:none;}
 #sidebar.collapsed #sidebar-footer span{display:none;}
-#sidebar.collapsed #sidebar-logo{justify-content:center;}
+#sidebar.collapsed #sidebar-logo{flex-direction:column;align-items:center;padding:16px 0 12px;gap:10px;justify-content:flex-start;}
+#sidebar.collapsed #sidebar-logo>svg{order:1;}
+#sidebar.collapsed #hamburger-btn{order:2;}
 #main.sidebar-collapsed{margin-left:60px;}
 #sidebar.collapsed .nav-item .icon{width:auto;font-size:18px;}
     input[type=number]::-webkit-inner-spin-button,
