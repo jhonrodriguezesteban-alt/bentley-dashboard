@@ -475,6 +475,7 @@ textarea.form-control{resize:vertical;min-height:80px;}
   #topbar{padding:0 12px;height:48px;}
   #topbar-title{font-size:16px;}
   .badge-user{font-size:10px;padding:3px 8px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  #sync-indicator{display:none;}
   /* Page content */
   #page-content{padding:12px;}
   /* KPI grid — 2 columns on mobile */
@@ -511,6 +512,15 @@ textarea.form-control{resize:vertical;min-height:80px;}
   .dias-chip{font-size:10px;padding:2px 5px;}
   /* Estado badge */
   .estado{font-size:10px;padding:2px 6px;}
+  /* Dashboard chart — más alto en móvil */
+  #dash-metrica-sub{display:none;}
+  #dash-chart-svg{height:200px !important;}
+  /* Logística — tarjeta en 2 filas */
+  .log-card{flex-wrap:wrap !important;align-items:flex-start !important;padding:12px !important;}
+  .log-card-info{order:10;flex-basis:100% !important;min-width:unset !important;margin-top:8px;}
+  .log-card-info .log-desc{white-space:normal !important;overflow:visible !important;text-overflow:unset !important;font-size:14px !important;line-height:1.4;}
+  .log-card-info .log-dest{white-space:normal !important;overflow:visible !important;text-overflow:unset !important;font-size:12px !important;}
+  .log-card-right{margin-left:auto;flex-shrink:0;}
 }
 
 @media(max-width:420px){
@@ -642,6 +652,17 @@ textarea.form-control{resize:vertical;min-height:80px;}
 
 <!-- Mobile sidebar backdrop -->
 <div id="mob-sidebar-bg" onclick="toggleSidebar()"></div>
+
+<!-- Loading overlay (datos GitHub) -->
+<div id="data-loading" style="display:none;position:fixed;inset:0;background:rgba(13,17,23,.95);z-index:300;flex-direction:column;align-items:center;justify-content:center;gap:18px;">
+  <svg width="52" height="60" viewBox="0 0 160 182" style="opacity:.9;">
+    <defs><linearGradient id="dl-g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#00d4ff"/><stop offset="100%" stop-color="#0077bb"/></linearGradient></defs>
+    <polygon points="80,6 152,46 152,136 80,176 8,136 8,46" fill="rgba(0,212,255,.06)" stroke="#00d4ff" stroke-width="2.5"/>
+    <text x="80" y="120" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="86" font-weight="900" fill="url(#dl-g)">B</text>
+  </svg>
+  <div style="width:36px;height:36px;border:3px solid rgba(0,212,255,.15);border-top-color:#00d4ff;border-radius:50%;animation:spin .7s linear infinite;"></div>
+  <div style="color:#475569;font-size:12px;letter-spacing:2px;text-transform:uppercase;">Sincronizando datos...</div>
+</div>
 
 <!-- Main -->
 <div id="main">
@@ -1505,6 +1526,8 @@ async function guardarTodo(){
 
 // ─── Load Data ─────────────────────────────────────────────────────────────────
 async function cargarDatos(){
+  var dlEl = document.getElementById('data-loading');
+  if(dlEl){ dlEl.style.display='flex'; }
   try {
     var t = Date.now();
     var [satR, opsR, otsR, catR] = await Promise.all([
@@ -1568,6 +1591,7 @@ async function cargarDatos(){
     else { seedSatelites(); }
     toast('Sin conexión — usando datos locales', 'warning');
   }
+  if(dlEl){ dlEl.style.display='none'; }
   updateNovBadge();
   renderPage(currentPage);
 }
@@ -1938,7 +1962,7 @@ function renderDashboard(){
 
   // SVG con swipe
   h += '<div ontouchstart="dashChartTouchStart(event)" ontouchend="dashChartTouchEnd(event)" style="touch-action:pan-y;user-select:none;">';
-  h += '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block;overflow:visible;" xmlns="http://www.w3.org/2000/svg">';
+  h += '<svg id="dash-chart-svg" viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block;overflow:visible;" xmlns="http://www.w3.org/2000/svg">';
   h += '<defs><linearGradient id="area-grad" x1="0" y1="0" x2="0" y2="1">';
   h += '<stop id="dash-grad-stop0" offset="0%" stop-color="'+mc+'" stop-opacity="0.32"/>';
   h += '<stop id="dash-grad-stop1" offset="75%" stop-color="'+mc+'" stop-opacity="0.04"/>';
@@ -5450,32 +5474,28 @@ function renderLogistica(){
   tareasDelDia.forEach(function(t, idx){
     var tc = LOG_TIPOS[t.tipo] || LOG_TIPOS.diligencia;
     var done = t.estado === 'completado';
-    h += '<div data-tid="'+t.id+'" style="display:flex;align-items:center;gap:10px;background:'+(done?'rgba(52,211,153,.04)':'#13161f')+';border:1px solid '+(done?'rgba(52,211,153,.2)':'#1e2535')+';border-left:3px solid '+(done?'#34d399':tc.color)+';border-radius:10px;padding:12px 14px;margin-bottom:8px;opacity:'+(done?'.7':'1')+';transition:all .2s;" draggable="true" ondragstart="_logDragId=this.dataset.tid;this.style.opacity=\'.4\'" ondragend="this.style.opacity=\'\'" ondragover="event.preventDefault()" ondrop="_logDrop(event,this.dataset.tid)">';
+    h += '<div data-tid="'+t.id+'" class="log-card" style="display:flex;align-items:center;gap:10px;background:'+(done?'rgba(52,211,153,.04)':'#13161f')+';border:1px solid '+(done?'rgba(52,211,153,.2)':'#1e2535')+';border-left:3px solid '+(done?'#34d399':tc.color)+';border-radius:10px;padding:12px 14px;margin-bottom:8px;opacity:'+(done?'.7':'1')+';transition:all .2s;" draggable="true" ondragstart="_logDragId=this.dataset.tid;this.style.opacity=\'.4\'" ondragend="this.style.opacity=\'\'" ondragover="event.preventDefault()" ondrop="_logDrop(event,this.dataset.tid)">';
 
     // Orden badge
-    h += '<div style="font-size:11px;font-weight:700;color:#475569;min-width:20px;text-align:center;">'+(idx+1)+'</div>';
+    h += '<div style="font-size:11px;font-weight:700;color:#475569;min-width:20px;text-align:center;flex-shrink:0;">'+(idx+1)+'</div>';
 
     // Tipo badge
-    h += '<span style="padding:2px 8px;border-radius:8px;font-size:10px;font-weight:700;white-space:nowrap;background:'+tc.bg+';border:1px solid '+tc.border+';color:'+tc.color+';">'+tc.label+'</span>';
+    h += '<span style="padding:3px 10px;border-radius:8px;font-size:11px;font-weight:700;white-space:nowrap;flex-shrink:0;background:'+tc.bg+';border:1px solid '+tc.border+';color:'+tc.color+';">'+tc.label+'</span>';
 
     // Info
-    h += '<div style="flex:1;min-width:0;">';
-    h += '<div style="font-size:13px;font-weight:700;color:'+(done?'#64748b':'#e2e8f0')+';'+(done?'text-decoration:line-through;':'')+' white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(t.descripcion)+'</div>';
-    if(t.destino) h += '<div style="font-size:11px;color:#475569;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">📍 '+esc(t.destino)+'</div>';
+    h += '<div class="log-card-info" style="flex:1;min-width:0;">';
+    h += '<div class="log-desc" style="font-size:13px;font-weight:700;color:'+(done?'#64748b':'#e2e8f0')+';'+(done?'text-decoration:line-through;':'')+' white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(t.descripcion)+'</div>';
+    if(t.destino) h += '<div class="log-dest" style="font-size:11px;color:#475569;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">📍 '+esc(t.destino)+'</div>';
     if(t.nota && done) h += '<div style="font-size:10px;color:#34d399;margin-top:2px;">✓ '+esc(t.nota)+'</div>';
     h += '</div>';
 
-    // Hora
-    if(t.hora) h += '<div style="font-size:12px;font-weight:700;color:#475569;flex-shrink:0;">'+esc(t.hora)+'</div>';
-
-    // Botón completar
-    h += '<button data-tid="'+t.id+'" onclick="toggleLogCompletado(this.dataset.tid)" title="'+(done?'Desmarcar':'Marcar completado')+'" style="display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;cursor:pointer;flex-shrink:0;border:2px solid '+(done?'#34d399':'#1e2535')+';background:'+(done?'rgba(52,211,153,.15)':'transparent')+';color:'+(done?'#34d399':'#475569')+';font-size:14px;transition:all .2s;">'+(done?'✓':'○')+'</button>';
-
-    // Menú acciones
-    h += '<div style="display:flex;gap:4px;flex-shrink:0;">';
-    h += '<button data-tid="'+t.id+'" onclick="abrirFormLogistica(this.dataset.tid)" title="Editar" style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);border-radius:6px;cursor:pointer;color:#00d4ff;font-size:12px;">✏</button>';
-    h += '<button data-tid="'+t.id+'" onclick="reprogramarLogTarea(this.dataset.tid)" title="Reprogramar" style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);border-radius:6px;cursor:pointer;color:#fbbf24;font-size:12px;">📅</button>';
-    h += '<button data-tid="'+t.id+'" onclick="eliminarLogTarea(this.dataset.tid)" title="Eliminar" style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:6px;cursor:pointer;color:#ef4444;font-size:12px;">🗑</button>';
+    // Hora + botón completar + acciones agrupados
+    h += '<div class="log-card-right" style="display:flex;align-items:center;gap:6px;flex-shrink:0;">';
+    if(t.hora) h += '<div style="font-size:12px;font-weight:700;color:#64748b;">'+esc(t.hora)+'</div>';
+    h += '<button data-tid="'+t.id+'" onclick="toggleLogCompletado(this.dataset.tid)" title="'+(done?'Desmarcar':'Marcar completado')+'" style="display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;cursor:pointer;border:2px solid '+(done?'#34d399':'#1e2535')+';background:'+(done?'rgba(52,211,153,.15)':'transparent')+';color:'+(done?'#34d399':'#475569')+';font-size:14px;transition:all .2s;">'+(done?'✓':'○')+'</button>';
+    h += '<button data-tid="'+t.id+'" onclick="abrirFormLogistica(this.dataset.tid)" title="Editar" style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);border-radius:6px;cursor:pointer;color:#00d4ff;font-size:14px;">✏</button>';
+    h += '<button data-tid="'+t.id+'" onclick="reprogramarLogTarea(this.dataset.tid)" title="Reprogramar" style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);border-radius:6px;cursor:pointer;color:#fbbf24;font-size:16px;">📅</button>';
+    h += '<button data-tid="'+t.id+'" onclick="eliminarLogTarea(this.dataset.tid)" title="Eliminar" style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:6px;cursor:pointer;color:#ef4444;font-size:16px;">🗑</button>';
     h += '</div>';
 
     h += '</div>';
