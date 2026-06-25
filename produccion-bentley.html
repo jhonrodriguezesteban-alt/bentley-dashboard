@@ -4472,7 +4472,9 @@ function renderDiseno(){
       h += '<div style="display:flex;align-items:center;gap:6px;">';
       h += '<button data-disid="'+d.id+'" onclick="event.stopPropagation();abrirTelaPopover(this.dataset.disid,this)" title="Clic para cambiar estado de tela" style="padding:3px 10px;border-radius:10px;font-size:10px;font-weight:700;cursor:pointer;border:1px solid '+tc.border+';background:'+tc.bg+';color:'+tc.color+';transition:all .15s;">'+tc.label+'</button>';
       if(telaEst==='asignada'||telaEst==='pte_llegar'){
-        h += '<input data-disid="'+d.id+'" type="text" value="'+esc(d.tela_nota||'')+'" onchange="setTelaNotaDis(this.dataset.disid,this.value)" onclick="event.stopPropagation()" placeholder="Ref. de tela..." style="flex:1;min-width:0;background:#0d1117;border:1px solid '+(telaEst==='asignada'?'rgba(52,211,153,.3)':'rgba(251,146,60,.3)')+';border-radius:6px;color:#e2e8f0;font-size:11px;padding:3px 8px;outline:none;">';
+        var tnPreview = d.tela_nota ? (d.tela_nota.length>22?d.tela_nota.substring(0,22)+'…':d.tela_nota) : 'Agregar nota...';
+        var tnColor = d.tela_nota ? '#e2e8f0' : '#475569';
+        h += '<button data-disid="'+d.id+'" onclick="event.stopPropagation();abrirTelaNotaModal(this.dataset.disid)" style="flex:1;min-width:0;text-align:left;background:#0d1117;border:1px solid '+(telaEst==='asignada'?'rgba(52,211,153,.25)':'rgba(251,146,60,.25)')+';border-radius:6px;color:'+tnColor+';font-size:11px;padding:3px 8px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(tnPreview)+'</button>';
       }
       h += '</div>';
       h += '</div>';
@@ -4592,6 +4594,56 @@ function setTelaNotaDis(id, nota){
   if(!d) return;
   d.tela_nota = nota;
   saveLocal(); guardarDisenos();
+}
+function abrirTelaNotaModal(id){
+  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
+  if(!d) return;
+  var telaEst = d.tela_estado||'sin_tela';
+  var TELA_COLORS = {sin_tela:'#f87171',en_busqueda:'#fbbf24',pte_llegar:'#fb923c',asignada:'#34d399'};
+  var tc = TELA_COLORS[telaEst]||'#64748b';
+  var overlay = document.createElement('div');
+  overlay.id = 'tela-nota-modal';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9999;display:flex;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);';
+  var inner = '<div style="width:100%;max-width:520px;background:#111827;border-radius:18px 18px 0 0;padding:20px 20px 32px;display:flex;flex-direction:column;gap:14px;">';
+  inner += '<div style="width:40px;height:4px;background:#334155;border-radius:2px;margin:0 auto 2px;"></div>';
+  inner += '<div style="display:flex;align-items:center;gap:10px;">';
+  inner += '<div style="font-size:22px;">🧵</div>';
+  inner += '<div><div style="font-size:14px;font-weight:800;color:#e2e8f0;">'+esc(d.nombre||'')+'</div><div style="font-size:11px;color:'+tc+';font-weight:700;margin-top:2px;">Nota de tela · '+esc((d.tela_estado||'').replace(/_/g,' ').toUpperCase())+'</div></div>';
+  inner += '</div>';
+  inner += '<textarea id="tela-nota-ta" placeholder="Escribe la referencia o nota de tela..." style="width:100%;min-height:130px;background:rgba(255,255,255,.04);border:1px solid rgba(52,211,153,.3);border-radius:10px;color:#e2e8f0;font-size:14px;line-height:1.6;padding:12px;resize:none;outline:none;font-family:inherit;box-sizing:border-box;">'+esc(d.tela_nota||'')+'</textarea>';
+  inner += '<div style="display:flex;gap:10px;justify-content:flex-end;">';
+  inner += '<button onclick="document.getElementById(\'tela-nota-modal\').remove()" style="background:none;border:1px solid #1e2535;border-radius:8px;color:#64748b;font-size:13px;font-weight:600;padding:8px 18px;cursor:pointer;">Cancelar</button>';
+  inner += '<button data-disid="'+id+'" onclick="guardarTelaNotaModal(this.dataset.disid)" style="background:#34d399;border:none;border-radius:8px;color:#0d1117;font-size:13px;font-weight:700;padding:8px 22px;cursor:pointer;">Guardar</button>';
+  inner += '</div></div>';
+  overlay.innerHTML = inner;
+  overlay.addEventListener('click', function(e){ if(e.target===overlay) overlay.remove(); });
+  document.body.appendChild(overlay);
+  setTimeout(function(){ var ta=document.getElementById('tela-nota-ta'); if(ta) ta.focus(); }, 60);
+}
+function guardarTelaNotaModal(id){
+  var ta = document.getElementById('tela-nota-ta');
+  var nota = ta ? ta.value.trim() : '';
+  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
+  if(!d) return;
+  d.tela_nota = nota;
+  saveLocal(); guardarDisenos();
+  var modal = document.getElementById('tela-nota-modal');
+  if(modal) modal.remove();
+  // Actualizar botón preview en la tarjeta sin re-render completo
+  var btn = document.querySelector('[data-disid="'+id+'"].tela-nota-btn');
+  if(btn){ btn.textContent = nota ? (nota.length>22?nota.substring(0,22)+'…':nota) : 'Agregar nota...'; btn.style.color = nota ? '#e2e8f0' : '#475569'; }
+  // Si venía desde modal de categoría, refrescar ese modal
+  if(_modalCatReturn || document.getElementById('modal-categoria').style.display==='flex'){
+    var tituloEl = document.getElementById('modal-cat-titulo');
+    if(tituloEl){
+      var titulo = tituloEl.textContent;
+      var catKey = titulo.split('·')[0].trim()==='TODOS EN PROCESO' ? '__TODOS__' : titulo.split('·')[0].trim().toLowerCase();
+      setTimeout(function(){ abrirModalCategoria(catKey); }, 80);
+    }
+  } else {
+    renderPage('diseno');
+  }
+  toast('Nota de tela guardada','success');
 }
 function abrirTelaPopover(id, btn){
   var existing = document.getElementById('tela-popover');
@@ -5646,7 +5698,9 @@ function abrirModalCategoria(cat){
       b += '<div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;">';
       b += '<button data-disid="'+d.id+'" onclick="event.stopPropagation();_modalSetCatReturn();abrirTelaPopover(this.dataset.disid,this)" style="padding:2px 8px;border-radius:10px;font-size:9px;font-weight:700;cursor:pointer;border:1px solid '+mtc.border+';background:'+mtc.bg+';color:'+mtc.color+';">'+mtc.label+'</button>';
       if(mTelaEst==='asignada'||mTelaEst==='pte_llegar'){
-        b += '<input data-disid="'+d.id+'" type="text" value="'+esc(d.tela_nota||'')+'" onchange="setTelaNotaDis(this.dataset.disid,this.value)" onclick="event.stopPropagation()" placeholder="Ref. tela..." style="flex:1;min-width:0;background:#0d1117;border:1px solid '+(mTelaEst==='asignada'?'rgba(52,211,153,.3)':'rgba(251,146,60,.3)')+';border-radius:5px;color:#e2e8f0;font-size:10px;padding:2px 6px;outline:none;">';
+        var mtnPreview = d.tela_nota ? (d.tela_nota.length>20?d.tela_nota.substring(0,20)+'…':d.tela_nota) : 'Agregar nota...';
+        var mtnColor = d.tela_nota ? '#e2e8f0' : '#475569';
+        b += '<button data-disid="'+d.id+'" onclick="event.stopPropagation();abrirTelaNotaModal(this.dataset.disid)" style="flex:1;min-width:0;text-align:left;background:#0d1117;border:1px solid '+(mTelaEst==='asignada'?'rgba(52,211,153,.25)':'rgba(251,146,60,.25)')+';border-radius:5px;color:'+mtnColor+';font-size:10px;padding:2px 6px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(mtnPreview)+'</button>';
       }
       b += '</div>';
       b += '</div>';
