@@ -1789,12 +1789,17 @@ function planDrop(e, mesKey){
   _planAsignar(_planDragOpId, mesKey||null);
 }
 
+var _PLAN_NO_CORTADO = {'POR_REVISAR':1,'PENDIENTE_CORTAR':1};
 function _planOpUds(op){
-  var ots = (DB.ots||[]).filter(function(o){ return o.op_id===op.id && o.estado!=='ARCHIVADO'; });
+  // Solo unidades que aún NO han pasado por corte
+  var ots = (DB.ots||[]).filter(function(o){ return o.op_id===op.id && _PLAN_NO_CORTADO[o.estado]; });
   var uds = ots.reduce(function(a,o){ return a+(parseInt(o.cantidad)||0); },0);
-  if(!uds && op.referencias) uds = op.referencias.reduce(function(a,r){
-    return a + Object.values(r.cantidades||{}).reduce(function(b,v){ return b+(parseInt(v)||0); },0);
-  },0);
+  if(!uds && op.referencias){
+    // OP sin OTs creadas aún: sumar desde referencias (cantidad total pendiente)
+    uds = op.referencias.reduce(function(a,r){
+      return a + Object.values(r.cantidades||{}).reduce(function(b,v){ return b+(parseInt(v)||0); },0);
+    },0);
+  }
   return uds;
 }
 
