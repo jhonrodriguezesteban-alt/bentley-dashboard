@@ -674,9 +674,10 @@ textarea.form-control{resize:vertical;min-height:80px;}
       <button id="mob-menu" onclick="toggleSidebar()">☰</button>
       <div style="display:flex;flex-direction:column;justify-content:center;">
         <div id="topbar-title">DASHBOARD</div>
-        <div id="topbar-clock-mobile" style="display:none;gap:6px;align-items:baseline;">
+        <div id="topbar-clock-mobile" style="display:none;gap:6px;align-items:center;">
           <span id="clock-time-mob" style="font-weight:700;color:#4ade80;font-size:13px;letter-spacing:.5px;text-shadow:0 0 6px rgba(74,222,128,.4);"></span>
           <span id="clock-date-mob" style="font-size:10px;color:#34d399;"></span>
+          <button onclick="recargarApp()" title="Recargar" style="background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);border-radius:6px;color:#00d4ff;cursor:pointer;padding:3px 7px;font-size:14px;line-height:1;margin-left:2px;">↻</button>
         </div>
       </div>
     </div>
@@ -686,7 +687,10 @@ textarea.form-control{resize:vertical;min-height:80px;}
         <div id="clock-date" style="font-size:10px;color:#34d399;"></div>
       </div>
       <span class="badge-user" id="badge-user">Invitado</span>
-      <div id="sync-indicator" style="font-size:11px;color:var(--dim);">⬡ Local</div>
+      <div id="sync-indicator" style="display:flex;align-items:center;gap:6px;">
+        <span id="sync-time" style="font-size:11px;color:var(--dim);">⬡ Local</span>
+        <button onclick="recargarApp()" title="Recargar datos" style="background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);border-radius:6px;color:#00d4ff;cursor:pointer;padding:4px 8px;font-size:14px;line-height:1;transition:background .15s;" onmouseenter="this.style.background='rgba(0,212,255,.18)'" onmouseleave="this.style.background='rgba(0,212,255,.08)'">↻</button>
+      </div>
     </div>
   </div>
   <div id="page-content"></div>
@@ -1406,7 +1410,7 @@ async function guardarArchivo(key, data){
         var res = await putR.json();
         if(res.content && res.content.sha) _fileShas[key] = res.content.sha;
         _saving[key] = false;
-        var si = document.getElementById('sync-indicator');
+        var si = document.getElementById('sync-time');
         if(si){ si.textContent = '✓ Sync ' + new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}); si.style.color = 'var(--green)'; }
         return true;
       } else if(putR.status === 409){
@@ -1477,7 +1481,7 @@ async function _autoSyncTick(){
     saveLocal();
     updateNovBadge();
     renderPage(currentPage);
-    var si = document.getElementById('sync-indicator');
+    var si = document.getElementById('sync-time');
     if(si){ si.textContent = '↻ ' + new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}); si.style.color = 'var(--cyan)';
       setTimeout(function(){ if(si) si.style.color=''; }, 2000); }
   }
@@ -1514,7 +1518,7 @@ async function _fastSyncTick(){
     _fileShas['disenos'] = fileData.sha;
     saveLocal();
     if(currentPage === 'diseno') renderPage('diseno');
-    var si = document.getElementById('sync-indicator');
+    var si = document.getElementById('sync-time');
     if(si){ si.textContent = '↻ ' + new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}); si.style.color = 'var(--cyan)';
       setTimeout(function(){ if(si) si.style.color=''; }, 2000); }
   } catch(e){ /* silencioso */ }
@@ -1532,6 +1536,12 @@ async function guardarTodo(){
   var ok2 = await guardarArchivo('ops', {ops: DB.ops});
   var ok3 = await guardarArchivo('ots', {ots: DB.ots});
   return ok1 && ok2 && ok3;
+}
+
+function recargarApp(){
+  var btn = event && event.currentTarget;
+  if(btn){ btn.style.transform='rotate(360deg)'; btn.style.transition='transform .5s'; setTimeout(function(){ btn.style.transform=''; btn.style.transition=''; },500); }
+  cargarDatos();
 }
 
 // ─── Load Data ─────────────────────────────────────────────────────────────────
