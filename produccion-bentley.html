@@ -8516,14 +8516,12 @@ function calcPrecios(costo, producto){
     var margen = (precio - c) / precio;
     return {precio:precio, pvp:pvp, costo:c, comision:comision, costoExtra:costoExtra, margen:margen, sugerido:c/(1-mg), meta:mg};
   }
-  var pw = pt.precio_web||0;
-  // envío ponderado Web: proporción del flete promedio respecto al valor del pedido
-  var envio_ponderado = pw > 0 ? (pw * (1 + pm.iva) * (pm.costo_envio_flete||12000)) / (pm.pedido_base_web||200000) : 0;
-  var costo_extra_web = (pm.costo_empaque_web||2000) + (pm.costo_fijo_web||5000) + envio_ponderado;
+  // Web: solo comisión 4% de plataformas digitales, sin envío ni empaque
+  // (igual estructura que mayorista/detal — la única diferencia es la meta de margen)
   return {
     mayorista: canal(pt.precio_mayorista||0, pm.margen_mayorista, 0),
     detal:     canal(pt.precio_detal||0,     pm.margen_detal,     0),
-    web:       canal(pw,                     pm.margen_web,       costo_extra_web),
+    web:       canal(pt.precio_web||0,       pm.margen_web,       0),
   };
 }
 function matchRecetaOP(nombre){
@@ -8693,67 +8691,107 @@ function _listaRecetas(recetas){
   h+='</div>';
   return h;
 }
+var _recetaGruposAbiertos = {};
 function verReceta(id){
   var rec=(DB.costeo.recetas||[]).find(function(x){return x.id===id;}); if(!rec) return;
   _costeoRecetaId=id;
-  var res=calcResumen(rec); var precios=calcPrecios(res.total,rec.producto);
+  var res=calcResumen(rec); var pr=calcPrecios(res.total,rec.producto);
   var b='';
-  b+='<div style="background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.15);border-radius:10px;padding:14px 16px;margin-bottom:16px;">';
-  b+='<div style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Costo de producción</div>';
-  b+='<div style="font-family:var(--bebas);font-size:32px;color:#00d4ff;margin-bottom:8px;">'+fmtCopFull(res.total)+'</div>';
-  b+='<div style="display:flex;gap:12px;flex-wrap:wrap;">';
-  [['MAT',res.mat,'#0ea5e9'],['MOD',res.mod,'#34d399'],['CIF',res.cif,'#fbbf24'],['SVC',res.svc,'#a855f7']].forEach(function(it){
+
+  // ── Cabecera: costo + desglose ────────────────────────────────────────────
+  b+='<div style="background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.15);border-radius:10px;padding:16px 18px;margin-bottom:14px;">';
+  b+='<div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;">Costo de producción</div>';
+  b+='<div style="font-family:var(--bebas);font-size:36px;color:#00d4ff;letter-spacing:1px;line-height:1;">'+fmtCopFull(res.total)+'</div>';
+  b+='<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;">';
+  [['Materiales',res.mat,'#0ea5e9'],['Mano de obra',res.mod,'#34d399'],['CIF',res.cif,'#fbbf24'],['Servicios',res.svc,'#a855f7']].forEach(function(it){
     if(!it[1]) return;
-    b+='<div style="background:'+it[2]+'10;border:1px solid '+it[2]+'30;border-radius:6px;padding:4px 10px;text-align:center;">';
-    b+='<div style="font-size:9px;color:#64748b;text-transform:uppercase;">'+it[0]+'</div>';
-    b+='<div style="font-size:13px;font-weight:700;color:'+it[2]+';">'+fmtCopFull(it[1])+'</div></div>';
+    b+='<div style="background:'+it[2]+'12;border:1px solid '+it[2]+'30;border-radius:7px;padding:6px 12px;min-width:80px;">';
+    b+='<div style="font-size:9px;color:'+it[2]+';text-transform:uppercase;font-weight:700;letter-spacing:.4px;margin-bottom:2px;">'+it[0]+'</div>';
+    b+='<div style="font-size:15px;font-weight:700;color:#e2e8f0;">'+fmtCopFull(it[1])+'</div>';
+    b+='<div style="font-size:9px;color:#475569;">'+((it[1]/res.total)*100).toFixed(0)+'% del costo</div>';
+    b+='</div>';
   });
   b+='</div></div>';
+
+  // ── Canales de precio ─────────────────────────────────────────────────────
   b+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;">';
-  [['Mayorista','mayorista'],['Detal','detal'],['Web','web']].forEach(function(it){
-    var ch=precios[it[1]]; var col=semaforoMargen(ch.margen,ch.meta);
-    b+='<div style="background:#0d1117;border:1px solid '+(ch.precio?col+'44':'#1e2535')+';border-radius:8px;padding:10px 12px;">';
-    b+='<div style="font-size:10px;font-weight:700;color:'+col+';text-transform:uppercase;margin-bottom:6px;">'+it[0]+'</div>';
+  [['Mayorista','mayorista','#60a5fa'],['Detal','detal','#34d399'],['Web','web','#a78bfa']].forEach(function(it){
+    var ch=pr[it[1]]; var col=ch.precio?semaforoMargen(ch.margen,ch.meta):'#1e2535'; var accent=it[2];
+    b+='<div style="background:#0d1117;border:1px solid '+(ch.precio?col+'55':'#1e2535')+';border-top:2px solid '+accent+';border-radius:8px;padding:12px;">';
+    b+='<div style="font-size:10px;font-weight:700;color:'+accent+';text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">'+it[0]+'</div>';
     if(!ch.precio){
-      b+='<div style="font-size:11px;color:#334155;">Sin precio — <button data-rid="'+id+'" onclick="abrirPreciosReceta(this.dataset.rid)" style="background:none;border:none;color:#fbbf24;font-size:10px;cursor:pointer;text-decoration:underline;">Asignar</button></div>';
+      b+='<div style="font-size:11px;color:#334155;margin-bottom:4px;">Sin precio</div>';
+      b+='<button data-rid="'+id+'" onclick="abrirPreciosReceta(this.dataset.rid)" style="font-size:10px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2);color:#fbbf24;border-radius:5px;padding:3px 8px;cursor:pointer;width:100%;">+ Asignar precio</button>';
     } else {
-      b+='<div style="font-size:11px;color:#e2e8f0;font-weight:600;">'+fmtCopFull(ch.precio)+'</div>';
-      b+='<div style="font-size:10px;color:#475569;">+IVA: '+fmtCopFull(ch.pvp)+'</div>';
-      b+='<div style="font-size:10px;color:#64748b;margin-top:2px;">Costo: '+fmtCopFull(ch.costo)+'</div>';
-      b+='<div style="font-size:16px;font-weight:800;color:'+col+';margin-top:4px;">'+fmtPct(ch.margen)+'</div>';
-      b+='<div style="font-size:9px;color:#475569;">meta '+fmtPct(ch.meta)+'</div>';
-      if(ch.margen<ch.meta*0.85) b+='<div style="font-size:10px;color:#ef4444;margin-top:2px;">Sug: '+fmtCopFull(ch.sugerido)+'</div>';
+      b+='<div style="display:flex;align-items:baseline;gap:4px;margin-bottom:2px;">';
+      b+='<span style="font-size:16px;font-weight:700;color:#e2e8f0;">'+fmtCopFull(ch.precio)+'</span>';
+      b+='<span style="font-size:10px;color:#475569;">base</span></div>';
+      b+='<div style="font-size:11px;color:#64748b;margin-bottom:8px;">'+fmtCopFull(ch.pvp)+' con IVA</div>';
+      b+='<div style="background:'+col+'18;border:1px solid '+col+'33;border-radius:6px;padding:6px 8px;text-align:center;">';
+      b+='<div style="font-size:22px;font-weight:800;color:'+col+';line-height:1;">'+fmtPct(ch.margen)+'</div>';
+      b+='<div style="font-size:9px;color:'+col+';opacity:.7;">'+(ch.margen>=ch.meta?'✓ cumple':'meta '+fmtPct(ch.meta))+'</div>';
+      b+='</div>';
+      b+='<div style="font-size:10px;color:#334155;margin-top:6px;">Costo ef.: '+fmtCopFull(ch.costo)+' · com. '+fmtCopFull(ch.comision||0)+'</div>';
+      if(ch.margen<ch.meta*0.85) b+='<div style="font-size:10px;color:#ef4444;margin-top:3px;">↑ Sugerido: '+fmtCopFull(ch.sugerido)+'</div>';
     }
     b+='</div>';
   });
   b+='</div>';
-  b+='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">';
-  b+='<div style="font-size:10px;color:#475569;text-transform:uppercase;letter-spacing:.5px;">Componentes ('+(rec.componentes||[]).length+')</div>';
-  b+='<button data-rid="'+id+'" onclick="abrirFormCompReceta(this.dataset.rid)" style="font-size:11px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);color:#00d4ff;border-radius:6px;padding:4px 10px;cursor:pointer;">+ Agregar</button>';
+
+  // ── Componentes colapsables por grupo ─────────────────────────────────────
+  var grupos=[
+    {tipo:'MOD',    label:'Mano de Obra Directa',             color:'#34d399', total:res.mod},
+    {tipo:'CIF',    label:'Costos Indirectos de Fabricación', color:'#fbbf24', total:res.cif},
+    {tipo:'MATERIAL',label:'Materiales e Insumos',            color:'#0ea5e9', total:res.mat},
+    {tipo:'SERVICIO',label:'Servicios Externos',              color:'#a855f7', total:res.svc},
+  ];
+  b+='<div style="font-size:10px;color:#475569;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;display:flex;align-items:center;gap:8px;">';
+  b+='Componentes ('+(rec.componentes||[]).length+')';
+  b+='<button data-rid="'+id+'" onclick="abrirFormCompReceta(this.dataset.rid)" style="font-size:10px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);color:#00d4ff;border-radius:5px;padding:2px 8px;cursor:pointer;margin-left:auto;">+ Agregar</button>';
   b+='</div>';
-  b+='<div style="display:flex;flex-direction:column;gap:4px;">';
-  (rec.componentes||[]).forEach(function(comp){
-    var costo=calcCostoComp(comp);
-    var tipoColor={MATERIAL:'#0ea5e9',MOD:'#34d399',CIF:'#fbbf24',SERVICIO:'#a855f7'}[comp.tipo]||'#64748b';
-    var desc='';
-    if(comp.tipo==='MATERIAL'){var mp=(DB.costeo.mp||[]).find(function(x){return x.id===comp.mp_id;}); desc=esc(mp?mp.nombre:'(MP no encontrada)')+' · '+comp.consumo+' '+esc(mp?mp.unidad:'');}
-    else if(comp.tipo==='MOD'){var pu=(DB.costeo.puestos||[]).find(function(x){return x.id===comp.puesto_id;}); desc=esc(pu?pu.zona+' – '+pu.cargo:'(puesto no encontrado)')+' · '+comp.tiempo_minutos+' min';}
-    else if(comp.tipo==='CIF'){desc='Zona: '+esc(comp.zona||'')+' · '+comp.tiempo_minutos+' min';}
-    else if(comp.tipo==='SERVICIO'){var sv=(DB.costeo.servicios||[]).find(function(x){return x.id===comp.servicio_id;}); desc=esc(sv?sv.nombre:'(servicio no encontrado)')+' × '+comp.cantidad;}
-    b+='<div style="background:#0a0d14;border:1px solid #1e2535;border-left:3px solid '+tipoColor+';border-radius:7px;padding:7px 10px;display:flex;align-items:center;gap:8px;">';
-    b+='<span style="font-size:9px;font-weight:700;color:'+tipoColor+';background:'+tipoColor+'15;border-radius:4px;padding:1px 5px;flex-shrink:0;">'+comp.tipo+'</span>';
-    b+='<span style="font-size:11px;color:#94a3b8;flex:1;">'+desc+'</span>';
-    b+='<span style="font-size:12px;font-weight:700;color:#e2e8f0;flex-shrink:0;">'+fmtCopFull(costo)+'</span>';
-    b+='<button data-rid="'+id+'" data-cid="'+comp.id+'" onclick="eliminarCompReceta(this.dataset.rid,this.dataset.cid)" style="background:none;border:none;color:#334155;font-size:12px;cursor:pointer;padding:0;flex-shrink:0;">✕</button>';
+  grupos.forEach(function(g){
+    var gc=(rec.componentes||[]).filter(function(c){return c.tipo===g.tipo;});
+    if(!gc.length) return;
+    var abierto=!!_recetaGruposAbiertos[id+'_'+g.tipo];
+    b+='<div style="margin-bottom:6px;">';
+    // Cabecera del grupo — clic para expandir/contraer
+    b+='<div data-recid="'+id+'" data-tipo="'+g.tipo+'" onclick="_toggleGrupoReceta(this.dataset.recid,this.dataset.tipo)" style="display:flex;align-items:center;gap:10px;background:#0d1117;border:1px solid #1e2535;border-left:3px solid '+g.color+';border-radius:8px;padding:9px 12px;cursor:pointer;user-select:none;" onmouseover="this.style.background=\'#0f1219\'" onmouseout="this.style.background=\'#0d1117\'">';
+    b+='<span style="font-size:10px;font-weight:700;color:'+g.color+';text-transform:uppercase;flex:1;">'+g.label+'</span>';
+    b+='<span style="font-size:10px;color:#475569;">'+gc.length+' ítem'+(gc.length>1?'s':'')+'</span>';
+    b+='<span style="font-size:14px;font-weight:700;color:'+g.color+';">'+fmtCopFull(g.total)+'</span>';
+    b+='<span style="font-size:12px;color:#475569;margin-left:4px;">'+(abierto?'▲':'▼')+'</span>';
+    b+='</div>';
+    // Lista de componentes (visible solo si abierto)
+    if(abierto){
+      b+='<div style="margin-top:3px;display:flex;flex-direction:column;gap:3px;">';
+      gc.forEach(function(comp){
+        var costo=calcCostoComp(comp); var desc='';
+        if(comp.tipo==='MATERIAL'){var mp=(DB.costeo.mp||[]).find(function(x){return x.id===comp.mp_id;}); desc=esc(mp?mp.nombre:'?')+' · '+comp.consumo+' '+esc(mp?mp.unidad:'');}
+        else if(comp.tipo==='MOD'){var pu=(DB.costeo.puestos||[]).find(function(x){return x.id===comp.puesto_id;}); desc=esc(pu?pu.zona+' – '+pu.cargo:'?')+' · '+comp.tiempo_minutos+' min';}
+        else if(comp.tipo==='CIF'){desc='Zona: '+esc(comp.zona||'')+' · '+comp.tiempo_minutos+' min';}
+        else if(comp.tipo==='SERVICIO'){var sv=(DB.costeo.servicios||[]).find(function(x){return x.id===comp.servicio_id;}); desc=esc(sv?sv.nombre:'?')+' × '+comp.cantidad;}
+        b+='<div style="display:flex;align-items:center;gap:8px;background:#080b10;border:1px solid #1a1f2e;border-radius:6px;padding:6px 10px 6px 16px;">';
+        b+='<span style="font-size:11px;color:#64748b;flex:1;">'+desc+'</span>';
+        b+='<span style="font-size:12px;font-weight:600;color:#94a3b8;white-space:nowrap;">'+fmtCopFull(costo)+'</span>';
+        b+='<button data-rid="'+id+'" data-cid="'+comp.id+'" onclick="event.stopPropagation();eliminarCompReceta(this.dataset.rid,this.dataset.cid)" style="background:none;border:none;color:#1e2535;font-size:11px;cursor:pointer;padding:0;flex-shrink:0;" onmouseover="this.style.color=\'#ef4444\'" onmouseout="this.style.color=\'#1e2535\'">✕</button>';
+        b+='</div>';
+      });
+      b+='</div>';
+    }
     b+='</div>';
   });
-  b+='</div>';
+
   var footer='<div style="display:flex;gap:8px;">';
   footer+='<button data-rid="'+id+'" onclick="abrirModalReceta(this.dataset.rid)" style="background:rgba(148,163,184,.1);border:1px solid #1e2535;color:#94a3b8;border-radius:8px;padding:8px 14px;font-size:12px;cursor:pointer;">✏️ Editar</button>';
   footer+='<button data-rid="'+id+'" onclick="eliminarReceta(this.dataset.rid)" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#ef4444;border-radius:8px;padding:8px 14px;font-size:12px;cursor:pointer;">🗑 Eliminar</button>';
   footer+='<button data-rid="'+id+'" onclick="abrirPreciosReceta(this.dataset.rid)" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2);color:#fbbf24;border-radius:8px;padding:8px 14px;font-size:12px;cursor:pointer;">💲 Precios</button>';
   footer+='</div>';
   openDrawer('🧪 '+esc(rec.producto), b, footer);
+}
+function _toggleGrupoReceta(recId, tipo){
+  var key=recId+'_'+tipo;
+  _recetaGruposAbiertos[key]=!_recetaGruposAbiertos[key];
+  verReceta(recId);
 }
 
 // ── MODAL NUEVA/EDITAR RECETA ─────────────────────────────────────────────────
