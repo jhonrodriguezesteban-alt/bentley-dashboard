@@ -8547,7 +8547,7 @@ function renderCosteo(){
   var h='<div style="padding:16px 20px;height:100%;overflow-y:auto;box-sizing:border-box;">';
   // Buscador global del módulo
   h+='<div style="margin-bottom:14px;">';
-  h+='<input id="costeo-global-search" type="text" placeholder="🔍 Buscar en todo el módulo (MP, recetas, servicios)..." oninput="buscarCosteoGlobal(this.value)" style="width:100%;box-sizing:border-box;background:#0d1117;border:1px solid #1e2535;border-radius:9px;color:#e2e8f0;padding:10px 14px;font-size:13px;outline:none;" onfocus="this.style.borderColor='#00d4ff'" onblur="this.style.borderColor='#1e2535'">';
+  h+='<input id="costeo-global-search" type="text" placeholder="🔍 Buscar en todo el módulo (MP, recetas, servicios)..." oninput="buscarCosteoGlobal(this.value)" style="width:100%;box-sizing:border-box;background:#0d1117;border:1px solid #1e2535;border-radius:9px;color:#e2e8f0;padding:10px 14px;font-size:13px;outline:none;" onfocus="this.style.borderColor=&quot;#00d4ff&quot;" onblur="this.style.borderColor=&quot;#1e2535&quot;">';
   h+='</div>';
   h+='<div style="display:flex;gap:0;border-bottom:1px solid #1e2535;margin-bottom:20px;overflow-x:auto;flex-shrink:0;">';
   tabs.forEach(function(t){
@@ -8562,6 +8562,16 @@ function renderCosteo(){
   h+='</div>';
   return h;
 }
+function _buscarIrReceta(el){
+  var id=el.dataset.id;
+  var r=document.getElementById('costeo-search-results'); if(r)r.remove();
+  _costeoTab='recetas'; renderPage('costeo');
+  setTimeout(function(){ verReceta(id); },80);
+}
+function _buscarIrMP(){
+  var r=document.getElementById('costeo-search-results'); if(r)r.remove();
+  _costeoTab='mp'; renderPage('costeo');
+}
 function buscarCosteoGlobal(q){
   if(!q||q.length<2){ return; }
   var qu=q.toUpperCase();
@@ -8573,9 +8583,9 @@ function buscarCosteoGlobal(q){
   if(!el){ el=document.createElement('div'); el.id='costeo-search-results'; el.style.cssText='position:absolute;z-index:800;background:#0d1117;border:1px solid #1e2535;border-radius:10px;padding:10px;max-height:320px;overflow-y:auto;width:calc(100% - 40px);box-shadow:0 8px 32px rgba(0,0,0,.6);'; document.getElementById('costeo-global-search').parentNode.style.position='relative'; document.getElementById('costeo-global-search').parentNode.appendChild(el); }
   if(!mps.length&&!recs.length&&!svcs.length){ el.innerHTML='<div style="padding:12px;color:#475569;font-size:12px;">Sin resultados para "'+esc(q)+'"</div>'; return; }
   var h='';
-  if(recs.length){ h+='<div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;padding:4px 6px;margin-bottom:4px;">Recetas ('+recs.length+')</div>'; recs.slice(0,5).forEach(function(r){ var res=calcResumen(r); h+='<div onclick="(function(){document.getElementById('costeo-search-results').remove();_costeoTab='recetas';renderPage('costeo');setTimeout(function(){verReceta(''+r.id+'');},80);})()" style="padding:7px 8px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background='rgba(255,255,255,.04)'" onmouseout="this.style.background=''"><span style="flex:1;font-size:12px;color:#e2e8f0;">'+esc(r.producto)+'</span><span style="font-size:11px;font-weight:700;color:#00d4ff;">'+fmtCopFull(res.total)+'</span></div>'; }); }
-  if(mps.length){ h+='<div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;padding:4px 6px;margin-bottom:4px;margin-top:8px;">Materias Primas ('+mps.length+')</div>'; mps.slice(0,5).forEach(function(m){ h+='<div onclick="(function(){document.getElementById('costeo-search-results').remove();_costeoTab='mp';renderPage('costeo');})()" style="padding:7px 8px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background='rgba(255,255,255,.04)'" onmouseout="this.style.background=''"><span style="flex:1;font-size:12px;color:#94a3b8;">'+esc(m.nombre)+'</span><span style="font-size:11px;color:#fbbf24;">'+fmtCopFull(m.precio_unitario)+'</span></div>'; }); }
-  if(svcs.length){ h+='<div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;padding:4px 6px;margin-bottom:4px;margin-top:8px;">Servicios ('+svcs.length+')</div>'; svcs.slice(0,5).forEach(function(s){ h+='<div style="padding:7px 8px;border-radius:6px;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background='rgba(255,255,255,.04)'" onmouseout="this.style.background=''"><span style="flex:1;font-size:12px;color:#94a3b8;">'+esc(s.nombre)+'</span><span style="font-size:11px;color:#a855f7;">'+fmtCopFull(s.costo_unitario)+'</span></div>'; }); }
+  if(recs.length){ h+='<div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;padding:4px 6px;margin-bottom:4px;">Recetas ('+recs.length+')</div>'; recs.slice(0,5).forEach(function(r){ var res=calcResumen(r); h+='<div onclick="_buscarIrReceta(this)" data-id="'+r.id+'" style="padding:7px 8px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background=&quot;rgba(255,255,255,.04)&quot;" onmouseout="this.style.background=&quot;&quot;"><span style="flex:1;font-size:12px;color:#e2e8f0;">'+esc(r.producto)+'</span><span style="font-size:11px;font-weight:700;color:#00d4ff;">'+fmtCopFull(res.total)+'</span></div>'; }); }
+  if(mps.length){ h+='<div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;padding:4px 6px;margin-bottom:4px;margin-top:8px;">Materias Primas ('+mps.length+')</div>'; mps.slice(0,5).forEach(function(m){ h+='<div onclick="_buscarIrMP()" style="padding:7px 8px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background=&quot;rgba(255,255,255,.04)&quot;" onmouseout="this.style.background=&quot;&quot;"><span style="flex:1;font-size:12px;color:#94a3b8;">'+esc(m.nombre)+'</span><span style="font-size:11px;color:#fbbf24;">'+fmtCopFull(m.precio_unitario)+'</span></div>'; }); }
+  if(svcs.length){ h+='<div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;padding:4px 6px;margin-bottom:4px;margin-top:8px;">Servicios ('+svcs.length+')</div>'; svcs.slice(0,5).forEach(function(s){ h+='<div style="padding:7px 8px;border-radius:6px;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background=&quot;rgba(255,255,255,.04)&quot;" onmouseout="this.style.background=&quot;&quot;"><span style="flex:1;font-size:12px;color:#94a3b8;">'+esc(s.nombre)+'</span><span style="font-size:11px;color:#a855f7;">'+fmtCopFull(s.costo_unitario)+'</span></div>'; }); }
   el.innerHTML=h;
   // Close on outside click
   setTimeout(function(){ document.addEventListener('click',function close(e){ if(!el.contains(e.target)&&e.target.id!=='costeo-global-search'){ var r=document.getElementById('costeo-search-results'); if(r)r.remove(); document.removeEventListener('click',close); } }); },100);
