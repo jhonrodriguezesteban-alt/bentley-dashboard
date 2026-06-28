@@ -9021,46 +9021,93 @@ function guardarParamsCosteo(){
 }
 
 // ── Tab: Análisis de Precios ──────────────────────────────────────────────────
+function fmtCopFull(n){
+  n = Math.round(n||0);
+  return '$' + n.toLocaleString('es-CO');
+}
 function renderCosteoPrecios(){
   var recetas=DB.costeo.recetas||[];
   if(!recetas.length) return '<div style="text-align:center;padding:60px;color:#475569;font-size:13px;"><div style="font-size:32px;margin-bottom:10px;">🧪</div>Primero crea recetas para ver el análisis de precios.</div>';
+  var pm=_costeoParams();
   var h='<div>';
-  h+='<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;font-size:11px;">';
-  h+='<span style="color:#34d399;">● Margen ≥ meta</span> <span style="color:#fbbf24;">● 85–99% de meta</span> <span style="color:#ef4444;">● Bajo mínimo</span> <span style="color:#334155;">● Sin precio</span>';
+  // Leyenda + política
+  h+='<div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-bottom:14px;">';
+  h+='<div style="display:flex;gap:10px;flex-wrap:wrap;font-size:11px;">';
+  h+='<span style="color:#34d399;">● Cumple meta</span><span style="color:#fbbf24;">● 85–99% de meta</span><span style="color:#ef4444;">● Bajo meta</span><span style="color:#334155;">● Sin precio</span>';
   h+='</div>';
-  h+='<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:12px;min-width:700px;">';
-  h+='<thead><tr style="border-bottom:1px solid #1e2535;color:#475569;font-size:10px;text-transform:uppercase;">';
-  h+='<th style="padding:8px 10px;text-align:left;">Producto</th>';
-  h+='<th style="padding:8px 10px;text-align:right;">Costo prod.</th>';
-  h+='<th style="padding:8px 10px;text-align:right;">Mayorista<br><span style="font-size:9px;font-weight:400;opacity:.6;">precio · margen · meta 30%</span></th>';
-  h+='<th style="padding:8px 10px;text-align:right;">Detal<br><span style="font-size:9px;font-weight:400;opacity:.6;">precio · margen · meta 50%</span></th>';
-  h+='<th style="padding:8px 10px;text-align:right;">Web<br><span style="font-size:9px;font-weight:400;opacity:.6;">precio · margen · meta 45%</span></th>';
-  h+='<th style="padding:8px 10px;text-align:center;"></th>';
-  h+='</tr></thead><tbody>';
+  h+='<div style="font-size:10px;color:#475569;margin-left:auto;">Política: May ≥'+fmtPct(pm.margen_mayorista)+' · Det ≥'+fmtPct(pm.margen_detal)+' · Web ≥'+fmtPct(pm.margen_web)+' (sobre precio base sin IVA)</div>';
+  h+='</div>';
+  h+='<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:12px;min-width:860px;">';
+  h+='<thead>';
+  // Fila 1: grupos de columnas
+  h+='<tr style="border-bottom:none;">';
+  h+='<th rowspan="2" style="padding:8px 10px;text-align:left;border-bottom:2px solid #1e2535;color:#475569;font-size:10px;text-transform:uppercase;min-width:180px;">Producto</th>';
+  h+='<th rowspan="2" style="padding:8px 10px;text-align:right;border-bottom:2px solid #1e2535;color:#00d4ff;font-size:10px;text-transform:uppercase;white-space:nowrap;">Costo<br>producción</th>';
+  var canales=[['MAYORISTA','#60a5fa',pm.margen_mayorista],['DETAL','#34d399',pm.margen_detal],['WEB','#a78bfa',pm.margen_web]];
+  canales.forEach(function(c){
+    h+='<th colspan="3" style="padding:6px 10px;text-align:center;border-bottom:1px solid '+c[1]+'33;border-left:1px solid #1e2535;color:'+c[1]+';font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;">'+c[0]+' <span style="font-weight:400;opacity:.6;font-size:9px;">meta '+fmtPct(c[2])+'</span></th>';
+  });
+  h+='<th rowspan="2" style="padding:8px 6px;border-bottom:2px solid #1e2535;"></th>';
+  h+='</tr>';
+  // Fila 2: sub-columnas por canal
+  h+='<tr style="border-bottom:2px solid #1e2535;color:#475569;font-size:9px;text-transform:uppercase;">';
+  canales.forEach(function(c){
+    h+='<th style="padding:4px 8px;text-align:right;border-left:1px solid #1e2535;white-space:nowrap;font-size:9px;">Base s/IVA</th>';
+    h+='<th style="padding:4px 8px;text-align:right;white-space:nowrap;font-size:9px;">Con IVA</th>';
+    h+='<th style="padding:4px 8px;text-align:center;white-space:nowrap;font-size:9px;font-weight:700;">Margen</th>';
+  });
+  h+='</tr>';
+  h+='</thead><tbody>';
+
+  var conP=0;
   recetas.forEach(function(rec){
     var res=calcResumen(rec);
     var pr=calcPrecios(res.total,rec.producto);
-    h+='<tr style="border-bottom:1px solid rgba(30,37,53,.5);" onmouseover="this.style.background=\'rgba(255,255,255,.02)\'" onmouseout="this.style.background=\'\'">';
-    h+='<td style="padding:9px 10px;"><div style="font-weight:700;color:#e2e8f0;">'+esc(rec.producto)+'</div>';
-    var nm=(rec.componentes||[]).length;
-    h+='<div style="font-size:10px;color:#475569;margin-top:1px;">'+nm+' comp.'+(res.mat?' · MAT '+fmtCop(res.mat):'')+(res.mod?' · MOD '+fmtCop(res.mod):'')+(res.cif?' · CIF '+fmtCop(res.cif):'')+(res.svc?' · SVC '+fmtCop(res.svc):'')+'</div></td>';
-    h+='<td style="padding:9px 10px;text-align:right;font-weight:700;color:#00d4ff;">'+fmtCop(res.total)+'</td>';
-    ['mayorista','detal','web'].forEach(function(c){
-      var ch=pr[c];
-      if(!ch.precio){ h+='<td style="padding:9px 10px;text-align:right;color:#334155;">—</td>'; return; }
+    var tienePrecio = pr.mayorista.precio||pr.detal.precio||pr.web.precio;
+    if(tienePrecio) conP++;
+    h+='<tr style="border-bottom:1px solid rgba(30,37,53,.5);" onmouseover="this.style.background=\'rgba(255,255,255,.025)\'" onmouseout="this.style.background=\'\'">';
+    // Producto
+    h+='<td style="padding:9px 10px;">';
+    h+='<div style="font-weight:700;color:#e2e8f0;font-size:12px;">'+esc(rec.producto)+'</div>';
+    h+='<div style="font-size:10px;color:#334155;margin-top:2px;display:flex;gap:6px;flex-wrap:wrap;">';
+    if(res.mat) h+='<span style="color:#0ea5e9;">MAT '+fmtCopFull(res.mat)+'</span>';
+    if(res.mod) h+='<span style="color:#34d399;">MOD '+fmtCopFull(res.mod)+'</span>';
+    if(res.cif) h+='<span style="color:#fbbf24;">CIF '+fmtCopFull(res.cif)+'</span>';
+    if(res.svc) h+='<span style="color:#a855f7;">SVC '+fmtCopFull(res.svc)+'</span>';
+    h+='</div></td>';
+    // Costo total
+    h+='<td style="padding:9px 10px;text-align:right;font-family:var(--bebas);font-size:17px;color:#00d4ff;white-space:nowrap;">'+fmtCopFull(res.total)+'</td>';
+    // Canales
+    [pr.mayorista, pr.detal, pr.web].forEach(function(ch){
+      if(!ch.precio){
+        h+='<td colspan="3" style="padding:9px 8px;text-align:center;color:#1e2535;font-size:10px;border-left:1px solid #0d1117;">Sin precio</td>';
+        return;
+      }
       var col=semaforoMargen(ch.margen,ch.meta);
-      h+='<td style="padding:9px 10px;text-align:right;">';
-      h+='<div style="font-weight:700;color:'+col+';">'+fmtCop(ch.precio)+'</div>';
-      h+='<div style="font-size:11px;color:'+col+';">'+fmtPct(ch.margen)+'</div>';
-      if(ch.margen<ch.meta*0.85) h+='<div style="font-size:9px;color:#ef4444;">Sugerido: '+fmtCop(ch.sugerido)+'</div>';
+      var badge='';
+      if(ch.margen>=ch.meta) badge='✓';
+      else if(ch.margen<ch.meta*0.85) badge='✗';
+      // Base s/IVA
+      h+='<td style="padding:9px 8px;text-align:right;border-left:1px solid #0d1117;white-space:nowrap;">';
+      h+='<span style="font-size:12px;font-weight:600;color:#e2e8f0;">'+fmtCopFull(ch.precio)+'</span>';
       h+='</td>';
+      // Con IVA
+      h+='<td style="padding:9px 8px;text-align:right;white-space:nowrap;">';
+      h+='<span style="font-size:11px;color:#64748b;">'+fmtCopFull(ch.pvp)+'</span>';
+      h+='</td>';
+      // Margen — prominente
+      h+='<td style="padding:9px 8px;text-align:center;white-space:nowrap;">';
+      h+='<div style="display:inline-flex;flex-direction:column;align-items:center;background:'+col+'18;border:1px solid '+col+'44;border-radius:6px;padding:3px 8px;min-width:54px;">';
+      h+='<span style="font-size:14px;font-weight:800;color:'+col+';line-height:1.1;">'+fmtPct(ch.margen)+'</span>';
+      if(badge) h+='<span style="font-size:9px;color:'+col+';margin-top:1px;">'+badge+' meta '+fmtPct(ch.meta)+'</span>';
+      if(ch.margen<ch.meta*0.85) h+='<span style="font-size:9px;color:#ef4444;margin-top:1px;">→ '+fmtCopFull(ch.sugerido)+'</span>';
+      h+='</div></td>';
     });
-    h+='<td style="padding:9px 10px;text-align:center;"><button data-rid="'+rec.id+'" onclick="verReceta(this.dataset.rid)" style="background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);color:#00d4ff;border-radius:5px;font-size:10px;padding:3px 8px;cursor:pointer;">Ver</button></td>';
+    h+='<td style="padding:9px 6px;text-align:center;"><button data-rid="'+rec.id+'" onclick="verReceta(this.dataset.rid)" style="background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.15);color:#00d4ff;border-radius:5px;font-size:10px;padding:3px 7px;cursor:pointer;">Ver</button></td>';
     h+='</tr>';
   });
   h+='</tbody></table></div>';
-  var conP=recetas.filter(function(r){ var pt=(DB.costeo.precios_pt||[]).find(function(x){return x.producto===r.producto;}); return pt&&(pt.precio_mayorista||pt.precio_detal||pt.precio_web); }).length;
-  h+='<div style="margin-top:14px;font-size:11px;color:#475569;">'+recetas.length+' productos costeados · '+conP+' con precios · '+(recetas.length-conP)+' sin precios</div>';
+  h+='<div style="margin-top:14px;font-size:11px;color:#475569;">'+recetas.length+' productos · '+conP+' con precios definidos · '+(recetas.length-conP)+' pendientes de asignar precio</div>';
   h+='</div>';
   return h;
 }
