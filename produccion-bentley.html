@@ -2775,7 +2775,7 @@ function renderOPs(){
     h += '<div style="font-size:11px;font-weight:700;color:'+col.color+';text-transform:uppercase;letter-spacing:.5px;">'+col.label+'</div>';
     h += '<div style="font-size:11px;font-weight:700;color:'+col.color+';background:'+col.color+'22;border-radius:10px;padding:1px 7px;">'+colSubgs.length+'</div>';
     h += '</div>';
-    h += '<div style="background:#0d1117;border:1px solid '+col.color+'33;border-top:none;border-radius:0 0 10px 10px;padding:10px;min-height:100px;overflow-y:auto;overflow-x:hidden;max-height:calc(100vh - 310px);">';
+    h += '<div data-kan-col="'+col.k+'" style="background:#0d1117;border:1px solid '+col.color+'33;border-top:none;border-radius:0 0 10px 10px;padding:10px;min-height:100px;overflow-y:auto;overflow-x:hidden;max-height:calc(100vh - 310px);transition:background .15s;" ondragover="kanDragOver(event,this)" ondragleave="this.style.background=\'\'" ondrop="kanDrop(event,this.dataset.kanCol)">';
 
     // En Nuevas Prog., Pte. de Cortar y Corte p/ Alistar: una tarjeta consolidada por OP
     var esColumnaConsolidada = col.k === 'POR_REVISAR' || col.k === 'PENDIENTE_CORTAR' || col.k === 'CORTE_POR_ALISTAR';
@@ -2797,7 +2797,7 @@ function renderOPs(){
         var novTotal = grp.reduce(function(a,s){ return a+s.otsColor.filter(function(o){ return o.estado==='NOVEDAD'; }).length; },0);
         var estadoConsolidado = grp[0].estado;
 
-        h += '<div style="background:#13161f;border:1px solid #1e2535;border-left:3px solid '+col.color+';border-radius:10px;padding:11px 12px;margin-bottom:8px;">';
+        h += '<div data-kan-card="1" data-opid="'+op.id+'" draggable="true" ondragstart="kanDragStart(event,this.dataset.opid,null)" ondragend="kanDragEnd(event)" ontouchstart="kanTouchStart(event,this.dataset.opid,null)" ontouchmove="kanTouchMove(event)" ontouchend="kanTouchEnd(event)" style="background:#13161f;border:1px solid #1e2535;border-left:3px solid '+col.color+';border-radius:10px;padding:11px 12px;margin-bottom:8px;cursor:grab;user-select:none;transition:opacity .15s,transform .15s;">';
 
         h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">';
         h += '<div style="display:flex;align-items:center;gap:6px;">';
@@ -2894,6 +2894,11 @@ function renderOPs(){
         }
 
         h += '<div style="border-top:1px solid #1e2535;padding-top:8px;">';
+        var _prevEst = _kanPrevEstado(estadoConsolidado);
+        if(_prevEst){
+          var _prevMeta = OP_KANBAN.find(function(c){ return c.k===_prevEst; });
+          h += '<button data-opid="'+op.id+'" data-prev="'+_prevEst+'" onclick="event.stopPropagation();cambiarEstadoOPAll(this.dataset.opid,this.dataset.prev)" style="width:100%;background:rgba(255,255,255,.03);border:1px solid #1e2535;border-radius:6px;color:#475569;font-size:10px;padding:4px 7px;cursor:pointer;margin-bottom:5px;text-align:left;">↩ '+esc(_prevMeta?_prevMeta.label:'Paso anterior')+'</button>';
+        }
         h += '<select data-opid="'+op.id+'" onchange="cambiarEstadoOPAll(this.dataset.opid,this.value)" onclick="event.stopPropagation()" style="width:100%;background:#0d1117;border:1px solid #1e2535;border-radius:6px;color:#94a3b8;font-size:11px;padding:4px 7px;cursor:pointer;outline:none;">';
         OP_KANBAN.forEach(function(c){
           h += '<option value="'+c.k+'"'+(estadoConsolidado===c.k?' selected':'')+' style="background:#1a1e2a;color:#e2e8f0;">'+c.label+'</option>';
@@ -2917,7 +2922,7 @@ function renderOPs(){
       var baseId = fmtOpId(op.id);
       var subLabel = s.totalColores > 1 ? baseId + '.' + (s.colorIdx+1) : baseId;
 
-      h += '<div style="background:#13161f;border:1px solid #1e2535;border-left:3px solid '+col.color+';border-radius:10px;padding:11px 12px;margin-bottom:8px;">';
+      h += '<div data-kan-card="1" data-opid="'+op.id+'" data-color="'+esc(s.color)+'" draggable="true" ondragstart="kanDragStart(event,this.dataset.opid,this.dataset.color)" ondragend="kanDragEnd(event)" ontouchstart="kanTouchStart(event,this.dataset.opid,this.dataset.color)" ontouchmove="kanTouchMove(event)" ontouchend="kanTouchEnd(event)" style="background:#13161f;border:1px solid #1e2535;border-left:3px solid '+col.color+';border-radius:10px;padding:11px 12px;margin-bottom:8px;cursor:grab;user-select:none;transition:opacity .15s,transform .15s;">';
 
       h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">';
       h += '<div style="display:flex;align-items:center;gap:6px;">';
@@ -2955,6 +2960,11 @@ function renderOPs(){
       h += '<div style="border-top:1px solid #1e2535;padding-top:8px;">';
       if(col.k === 'ALISTAMIENTO'){
         h += '<button data-opid="'+op.id+'" data-color="'+esc(s.color)+'" onclick="pasarOPAPago(this.dataset.opid,this.dataset.color)" style="width:100%;background:rgba(168,85,247,.2);border:1px solid rgba(168,85,247,.5);color:#a855f7;border-radius:6px;padding:6px;cursor:pointer;font-size:11px;font-weight:700;margin-bottom:6px;">💳 Pasar a Pago</button>';
+      }
+      var _prevEstS = _kanPrevEstado(s.estado);
+      if(_prevEstS){
+        var _prevMetaS = OP_KANBAN.find(function(c){ return c.k===_prevEstS; });
+        h += '<button data-opid="'+op.id+'" data-color="'+esc(s.color)+'" data-prev="'+_prevEstS+'" onclick="event.stopPropagation();cambiarEstadoSubg(this.dataset.opid,this.dataset.color,this.dataset.prev)" style="width:100%;background:rgba(255,255,255,.03);border:1px solid #1e2535;border-radius:6px;color:#475569;font-size:10px;padding:4px 7px;cursor:pointer;margin-bottom:5px;text-align:left;">↩ '+esc(_prevMetaS?_prevMetaS.label:'Paso anterior')+'</button>';
       }
       h += '<select data-opid="'+op.id+'" data-color="'+esc(s.color)+'" onchange="cambiarEstadoSubg(this.dataset.opid,this.dataset.color,this.value)" onclick="event.stopPropagation()" style="width:100%;background:#0d1117;border:1px solid #1e2535;border-radius:6px;color:#94a3b8;font-size:11px;padding:4px 7px;cursor:pointer;outline:none;">';
       OP_KANBAN.forEach(function(c){
@@ -3029,6 +3039,86 @@ function cambiarEstadoOPAll(opId, estado){
   colores.forEach(function(color){ _setSubgEstado(opId, color, estado); });
   renderPage('ops');
   toast('Estado actualizado', 'success');
+}
+
+// ── Kanban drag & drop (mouse + touch) ────────────────────────────────────────
+var _kanDragOpId = null, _kanDragColor = null;
+var _kanTouchGhost = null, _kanTouchOpId = null, _kanTouchColor = null;
+var _KAN_ORDER = ['POR_REVISAR','PENDIENTE_CORTAR','CORTE_POR_ALISTAR','EN_CONFECCION','NOVEDAD','ALISTAMIENTO'];
+function _kanPrevEstado(est){
+  var i = _KAN_ORDER.indexOf(est);
+  return i > 0 ? _KAN_ORDER[i-1] : null;
+}
+function kanDragStart(ev, opId, color){
+  _kanDragOpId = opId; _kanDragColor = color||null;
+  ev.dataTransfer.effectAllowed = 'move';
+  ev.currentTarget.style.opacity = '.35';
+  ev.currentTarget.style.transform = 'scale(.97)';
+}
+function kanDragEnd(ev){
+  if(ev && ev.currentTarget){ ev.currentTarget.style.opacity=''; ev.currentTarget.style.transform=''; }
+  _kanDragOpId = null; _kanDragColor = null;
+  document.querySelectorAll('[data-kan-col]').forEach(function(el){ el.style.background=''; el.style.borderColor=''; });
+}
+function kanDragOver(ev, el){
+  ev.preventDefault(); ev.dataTransfer.dropEffect = 'move';
+  var colK = el ? el.dataset.kanCol : null;
+  if(!colK) return;
+  var meta = OP_KANBAN.find(function(c){ return c.k===colK; });
+  if(meta){ el.style.background = meta.bg||'rgba(255,255,255,.04)'; }
+}
+function kanDrop(ev, colK){
+  ev.preventDefault();
+  document.querySelectorAll('[data-kan-col]').forEach(function(el){ el.style.background=''; });
+  if(!_kanDragOpId || !colK) return;
+  if(_kanDragColor) cambiarEstadoSubg(_kanDragOpId, _kanDragColor, colK);
+  else cambiarEstadoOPAll(_kanDragOpId, colK);
+}
+// Touch drag
+function kanTouchStart(ev, opId, color){
+  if(ev.touches.length !== 1) return;
+  _kanTouchOpId = opId; _kanTouchColor = color||null;
+  var t = ev.touches[0];
+  var src = ev.currentTarget;
+  var rect = src.getBoundingClientRect();
+  var lbl = src.querySelector('[style*="00d4ff"]');
+  var ghost = document.createElement('div');
+  ghost.style.cssText = 'position:fixed;z-index:9999;pointer-events:none;opacity:.85;left:'+Math.round(rect.left)+'px;top:'+Math.round(rect.top)+'px;width:'+Math.round(rect.width)+'px;background:#1a2035;border:2px solid #00d4ff;border-radius:10px;padding:7px 11px;font-size:12px;font-weight:800;color:#00d4ff;box-shadow:0 8px 24px rgba(0,0,0,.6);';
+  ghost.textContent = lbl ? lbl.textContent : 'OP';
+  document.body.appendChild(ghost);
+  _kanTouchGhost = ghost;
+  src.style.opacity = '.35';
+}
+function kanTouchMove(ev){
+  if(!_kanTouchGhost) return;
+  ev.preventDefault();
+  var t = ev.touches[0];
+  _kanTouchGhost.style.left = (t.clientX - 70)+'px';
+  _kanTouchGhost.style.top  = (t.clientY - 22)+'px';
+  // Highlight column under finger
+  document.querySelectorAll('[data-kan-col]').forEach(function(el){ el.style.background=''; });
+  _kanTouchGhost.style.pointerEvents = 'none';
+  var under = document.elementFromPoint(t.clientX, t.clientY);
+  var colEl = under ? under.closest('[data-kan-col]') : null;
+  if(colEl){
+    var meta = OP_KANBAN.find(function(c){ return c.k===colEl.dataset.kanCol; });
+    if(meta) colEl.style.background = meta.bg||'rgba(255,255,255,.06)';
+  }
+}
+function kanTouchEnd(ev){
+  if(_kanTouchGhost){ _kanTouchGhost.remove(); _kanTouchGhost = null; }
+  document.querySelectorAll('[data-kan-col]').forEach(function(el){ el.style.background=''; });
+  document.querySelectorAll('[data-kan-card]').forEach(function(el){ el.style.opacity=''; });
+  if(!_kanTouchOpId){ _kanTouchOpId=null; _kanTouchColor=null; return; }
+  var t = ev.changedTouches[0];
+  var under = document.elementFromPoint(t.clientX, t.clientY);
+  var colEl = under ? under.closest('[data-kan-col]') : null;
+  if(colEl){
+    var colK = colEl.dataset.kanCol;
+    if(_kanTouchColor) cambiarEstadoSubg(_kanTouchOpId, _kanTouchColor, colK);
+    else cambiarEstadoOPAll(_kanTouchOpId, colK);
+  }
+  _kanTouchOpId=null; _kanTouchColor=null;
 }
 
 var _archOpen = false;
