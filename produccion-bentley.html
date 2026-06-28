@@ -8456,7 +8456,8 @@ var COSTEO_PARAMS_DEF = {
   pct_ss_pension:0.12, pct_ss_salud:0.085, pct_arl:0.0435,
   pct_parafiscal:0.09,
   margen_mayorista:0.30, margen_detal:0.50, margen_web:0.45,
-  iva:0.19, costo_fijo_web:5000, costo_empaque_web:2000
+  iva:0.19, costo_fijo_web:5000, costo_empaque_web:2000,
+  costo_envio_flete:12000, pedido_base_web:200000
 };
 
 function _costeoParams(){ return Object.assign({}, COSTEO_PARAMS_DEF, DB.costeo.params||{}); }
@@ -8499,17 +8500,30 @@ function calcResumen(receta){
   return r;
 }
 function calcPrecios(costo, producto){
+  // Fórmulas exactas de MC COSTEADOS en PLANTILLA FINANCIERA COSTEO 2026.xlsx:
+  //   costo_efectivo = costo_base + (precio_base × 4%)          ← para todos los canales
+  //   Web agrega además: empaque $2k + logística $5k + envío ponderado
+  //   envío_ponderado = (precio_base × 1.19 × 12,000) / 200,000  ← variable según PVP
+  //   margen = (precio_base − costo_efectivo) / precio_base
+  //   precio_sugerido = costo_efectivo / (1 − meta_margen)
   var pm = _costeoParams();
   var pt = (DB.costeo.precios_pt||[]).find(function(x){ return x.producto===producto; })||{};
-  function canal(precio, mg, extraCosto){
-    var c = costo + extraCosto + precio*0.04;
-    var margen = precio ? (precio-c)/precio : 0;
-    return {precio:precio, pvp:precio*(1+pm.iva), costo:c, margen:margen, sugerido:mg?(c/(1-mg)):0, meta:mg};
+  function canal(precio, mg, costoExtra){
+    if(!precio) return {precio:0, pvp:0, costo:0, margen:0, sugerido:0, meta:mg, costoExtra:0};
+    var pvp = precio * (1 + pm.iva);
+    var comision = precio * 0.04;
+    var c = costo + comision + costoExtra;
+    var margen = (precio - c) / precio;
+    return {precio:precio, pvp:pvp, costo:c, comision:comision, costoExtra:costoExtra, margen:margen, sugerido:c/(1-mg), meta:mg};
   }
+  var pw = pt.precio_web||0;
+  // envío ponderado Web: proporción del flete promedio respecto al valor del pedido
+  var envio_ponderado = pw > 0 ? (pw * (1 + pm.iva) * (pm.costo_envio_flete||12000)) / (pm.pedido_base_web||200000) : 0;
+  var costo_extra_web = (pm.costo_empaque_web||2000) + (pm.costo_fijo_web||5000) + envio_ponderado;
   return {
     mayorista: canal(pt.precio_mayorista||0, pm.margen_mayorista, 0),
     detal:     canal(pt.precio_detal||0,     pm.margen_detal,     0),
-    web:       canal(pt.precio_web||0,       pm.margen_web,       pm.costo_fijo_web+pm.costo_empaque_web)
+    web:       canal(pw,                     pm.margen_web,       costo_extra_web),
   };
 }
 function matchRecetaOP(nombre){
@@ -9255,8 +9269,12 @@ function renderParamsCosteo(){
   b+='<div class="form-group"><label class="form-label">% Margen detal</label><input id="pm-mdet" class="form-control" type="number" min="0" max="100" step="1" value="'+(pm.margen_detal*100).toFixed(0)+'"></div>';
   b+='<div class="form-group"><label class="form-label">% Margen web</label><input id="pm-mweb" class="form-control" type="number" min="0" max="100" step="1" value="'+(pm.margen_web*100).toFixed(0)+'"></div>';
   b+='<div class="form-group"><label class="form-label">IVA %</label><input id="pm-iva" class="form-control" type="number" min="0" max="50" step="1" value="'+(pm.iva*100).toFixed(0)+'"></div>';
-  b+='<div class="form-group"><label class="form-label">Costo fijo pedido web ($)</label><input id="pm-cfweb" class="form-control" type="number" min="0" value="'+pm.costo_fijo_web+'"></div>';
-  b+='<div class="form-group"><label class="form-label">Costo empaque web ($)</label><input id="pm-ceweb" class="form-control" type="number" min="0" value="'+pm.costo_empaque_web+'"></div>';
+  b+='<div class="form-group"><label class="form-label">Costo fijo logística web ($)</label><input id="pm-cfweb" class="form-control" type="number" min="0" value="'+pm.costo_fijo_web+'"><div style="font-size:9px;color:#475569;margin-top:2px;">Ej: domicilio fijo $5,000</div></div>';
+  b+='<div class="form-group"><label class="form-label">Costo empaque web ($)</label><input id="pm-ceweb" class="form-control" type="number" min="0" value="'+pm.costo_empaque_web+'"><div style="font-size:9px;color:#475569;margin-top:2px;">Bolsa + sticker + papel</div></div>';
+  b+='<div class="form-group"><label class="form-label">Flete ponderado web ($)</label><input id="pm-flete" class="form-control" type="number" min="0" value="'+(pm.costo_envio_flete||12000)+'"><div style="font-size:9px;color:#475569;margin-top:2px;">Flete promedio por envío</div></div>';
+  b+='<div class="form-group"><label class="form-label">Pedido base web ($)</label><input id="pm-pbase" class="form-control" type="number" min="0" value="'+(pm.pedido_base_web||200000)+'"><div style="font-size:9px;color:#475569;margin-top:2px;">Valor promedio del pedido para ponderar flete</div></div>';
+  b+='</div>';
+  b+='<div style="background:rgba(168,85,247,.06);border:1px solid rgba(168,85,247,.15);border-radius:8px;padding:10px 14px;font-size:10px;color:#64748b;margin-top:4px;">Fórmula Web: Costo efectivo = Costo producción + (Precio base × 4%) + Empaque + Logística fija + (PVP × Flete / Pedido base)</div>';
   b+='</div></div>';
   b+='<div id="params-resumen" style="background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.15);border-radius:8px;padding:12px 14px;font-size:11px;color:#64748b;"></div>';
   b+='<button onclick="guardarParamsCosteo()" class="btn btn-primary" style="width:100%;">Guardar Parámetros</button>';
@@ -9275,7 +9293,7 @@ function actualizarResumenParams(){
 }
 function guardarParamsCosteo(){
   var g=function(id){ return parseFloat((document.getElementById(id)||{}).value)||0; };
-  DB.costeo.params={dias_laborables:g('pm-dias'),horas_dia:g('pm-horas'),pct_tmp:g('pm-tmp')/100,pct_tmnp:g('pm-tmnp')/100,pct_prestaciones:g('pm-pre')/100,pct_ss_pension:g('pm-pen')/100,pct_ss_salud:g('pm-sal')/100,pct_arl:g('pm-arl')/100,pct_parafiscal:g('pm-par')/100,margen_mayorista:g('pm-mmay')/100,margen_detal:g('pm-mdet')/100,margen_web:g('pm-mweb')/100,iva:g('pm-iva')/100,costo_fijo_web:g('pm-cfweb'),costo_empaque_web:g('pm-ceweb')};
+  DB.costeo.params={dias_laborables:g('pm-dias'),horas_dia:g('pm-horas'),pct_tmp:g('pm-tmp')/100,pct_tmnp:g('pm-tmnp')/100,pct_prestaciones:g('pm-pre')/100,pct_ss_pension:g('pm-pen')/100,pct_ss_salud:g('pm-sal')/100,pct_arl:g('pm-arl')/100,pct_parafiscal:g('pm-par')/100,margen_mayorista:g('pm-mmay')/100,margen_detal:g('pm-mdet')/100,margen_web:g('pm-mweb')/100,iva:g('pm-iva')/100,costo_fijo_web:g('pm-cfweb'),costo_empaque_web:g('pm-ceweb'),costo_envio_flete:g('pm-flete'),pedido_base_web:g('pm-pbase')};
   guardarCosteo().then(function(){ renderPage('costeo'); toast('Parámetros guardados. Las tarifas MOD se recalculan automáticamente.','success'); });
 }
 
@@ -9343,23 +9361,24 @@ function renderCosteoPrecios(){
         return;
       }
       var col=semaforoMargen(ch.margen,ch.meta);
-      var badge='';
-      if(ch.margen>=ch.meta) badge='✓';
-      else if(ch.margen<ch.meta*0.85) badge='✗';
-      // Base s/IVA
-      h+='<td style="padding:9px 8px;text-align:right;border-left:1px solid #0d1117;white-space:nowrap;">';
-      h+='<span style="font-size:12px;font-weight:600;color:#e2e8f0;">'+fmtCopFull(ch.precio)+'</span>';
+      var badge=''; if(ch.margen>=ch.meta) badge='✓'; else if(ch.margen<ch.meta*0.85) badge='✗';
+      // Precio base s/IVA + tooltip con desglose de costo
+      var costoTip='Costo prod: '+fmtCopFull(res.total)+' | Comisión 4%: '+fmtCopFull(ch.comision||0)+(ch.costoExtra?(' | Extras web: '+fmtCopFull(ch.costoExtra)):'')+' | Costo total: '+fmtCopFull(ch.costo);
+      h+='<td style="padding:9px 8px;text-align:right;border-left:1px solid #0d1117;white-space:nowrap;" title="'+costoTip+'">';
+      h+='<div style="font-size:12px;font-weight:600;color:#e2e8f0;">'+fmtCopFull(ch.precio)+'</div>';
+      h+='<div style="font-size:9px;color:#334155;">costo '+fmtCopFull(ch.costo)+'</div>';
       h+='</td>';
       // Con IVA
       h+='<td style="padding:9px 8px;text-align:right;white-space:nowrap;">';
-      h+='<span style="font-size:11px;color:#64748b;">'+fmtCopFull(ch.pvp)+'</span>';
+      h+='<div style="font-size:11px;color:#64748b;">'+fmtCopFull(ch.pvp)+'</div>';
+      h+='<div style="font-size:9px;color:#1e2535;">com. '+fmtCopFull(ch.comision||0)+'</div>';
       h+='</td>';
       // Margen — prominente
       h+='<td style="padding:9px 8px;text-align:center;white-space:nowrap;">';
-      h+='<div style="display:inline-flex;flex-direction:column;align-items:center;background:'+col+'18;border:1px solid '+col+'44;border-radius:6px;padding:3px 8px;min-width:54px;">';
-      h+='<span style="font-size:14px;font-weight:800;color:'+col+';line-height:1.1;">'+fmtPct(ch.margen)+'</span>';
-      if(badge) h+='<span style="font-size:9px;color:'+col+';margin-top:1px;">'+badge+' meta '+fmtPct(ch.meta)+'</span>';
-      if(ch.margen<ch.meta*0.85) h+='<span style="font-size:9px;color:#ef4444;margin-top:1px;">→ '+fmtCopFull(ch.sugerido)+'</span>';
+      h+='<div style="display:inline-flex;flex-direction:column;align-items:center;background:'+col+'18;border:1px solid '+col+'44;border-radius:6px;padding:4px 10px;min-width:60px;">';
+      h+='<span style="font-size:16px;font-weight:800;color:'+col+';line-height:1.1;">'+fmtPct(ch.margen)+'</span>';
+      h+='<span style="font-size:9px;color:'+col+';opacity:.7;">'+badge+' meta '+fmtPct(ch.meta)+'</span>';
+      if(ch.margen<ch.meta*0.85) h+='<span style="font-size:9px;color:#ef4444;margin-top:1px;">↑ '+fmtCopFull(ch.sugerido)+'</span>';
       h+='</div></td>';
     });
     h+='<td style="padding:9px 6px;text-align:center;"><button data-rid="'+rec.id+'" onclick="verReceta(this.dataset.rid)" style="background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.15);color:#00d4ff;border-radius:5px;font-size:10px;padding:3px 7px;cursor:pointer;">Ver</button></td>';
