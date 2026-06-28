@@ -8533,6 +8533,10 @@ function renderCosteo(){
   if(!DB.costeo) DB.costeo={mp:[],servicios:[],puestos:[],tarifas_cif:[],params:{},recetas:[],precios_pt:[]};
   var tabs=[{k:'mp',l:'📦 Materias Primas'},{k:'recetas',l:'🧪 Recetas'},{k:'tarifas',l:'⚙️ Tarifas'},{k:'precios',l:'💹 Análisis de Precios'}];
   var h='<div style="padding:16px 20px;height:100%;overflow-y:auto;box-sizing:border-box;">';
+  // Buscador global del módulo
+  h+='<div style="margin-bottom:14px;">';
+  h+='<input id="costeo-global-search" type="text" placeholder="🔍 Buscar en todo el módulo (MP, recetas, servicios)..." oninput="buscarCosteoGlobal(this.value)" style="width:100%;box-sizing:border-box;background:#0d1117;border:1px solid #1e2535;border-radius:9px;color:#e2e8f0;padding:10px 14px;font-size:13px;outline:none;" onfocus="this.style.borderColor='#00d4ff'" onblur="this.style.borderColor='#1e2535'">';
+  h+='</div>';
   h+='<div style="display:flex;gap:0;border-bottom:1px solid #1e2535;margin-bottom:20px;overflow-x:auto;flex-shrink:0;">';
   tabs.forEach(function(t){
     var a=_costeoTab===t.k;
@@ -8545,6 +8549,24 @@ function renderCosteo(){
   else if(_costeoTab==='precios') h+=renderCosteoPrecios();
   h+='</div>';
   return h;
+}
+function buscarCosteoGlobal(q){
+  if(!q||q.length<2){ return; }
+  var qu=q.toUpperCase();
+  var mps=(DB.costeo.mp||[]).filter(function(m){ return (m.nombre+' '+(m.familia||'')).toUpperCase().indexOf(qu)>=0; });
+  var recs=(DB.costeo.recetas||[]).filter(function(r){ return r.producto.toUpperCase().indexOf(qu)>=0; });
+  var svcs=(DB.costeo.servicios||[]).filter(function(s){ return s.nombre.toUpperCase().indexOf(qu)>=0; });
+  // Build results overlay
+  var el=document.getElementById('costeo-search-results');
+  if(!el){ el=document.createElement('div'); el.id='costeo-search-results'; el.style.cssText='position:absolute;z-index:800;background:#0d1117;border:1px solid #1e2535;border-radius:10px;padding:10px;max-height:320px;overflow-y:auto;width:calc(100% - 40px);box-shadow:0 8px 32px rgba(0,0,0,.6);'; document.getElementById('costeo-global-search').parentNode.style.position='relative'; document.getElementById('costeo-global-search').parentNode.appendChild(el); }
+  if(!mps.length&&!recs.length&&!svcs.length){ el.innerHTML='<div style="padding:12px;color:#475569;font-size:12px;">Sin resultados para "'+esc(q)+'"</div>'; return; }
+  var h='';
+  if(recs.length){ h+='<div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;padding:4px 6px;margin-bottom:4px;">Recetas ('+recs.length+')</div>'; recs.slice(0,5).forEach(function(r){ var res=calcResumen(r); h+='<div onclick="(function(){document.getElementById('costeo-search-results').remove();_costeoTab='recetas';renderPage('costeo');setTimeout(function(){verReceta(''+r.id+'');},80);})()" style="padding:7px 8px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background='rgba(255,255,255,.04)'" onmouseout="this.style.background=''"><span style="flex:1;font-size:12px;color:#e2e8f0;">'+esc(r.producto)+'</span><span style="font-size:11px;font-weight:700;color:#00d4ff;">'+fmtCopFull(res.total)+'</span></div>'; }); }
+  if(mps.length){ h+='<div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;padding:4px 6px;margin-bottom:4px;margin-top:8px;">Materias Primas ('+mps.length+')</div>'; mps.slice(0,5).forEach(function(m){ h+='<div onclick="(function(){document.getElementById('costeo-search-results').remove();_costeoTab='mp';renderPage('costeo');})()" style="padding:7px 8px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background='rgba(255,255,255,.04)'" onmouseout="this.style.background=''"><span style="flex:1;font-size:12px;color:#94a3b8;">'+esc(m.nombre)+'</span><span style="font-size:11px;color:#fbbf24;">'+fmtCopFull(m.precio_unitario)+'</span></div>'; }); }
+  if(svcs.length){ h+='<div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;padding:4px 6px;margin-bottom:4px;margin-top:8px;">Servicios ('+svcs.length+')</div>'; svcs.slice(0,5).forEach(function(s){ h+='<div style="padding:7px 8px;border-radius:6px;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background='rgba(255,255,255,.04)'" onmouseout="this.style.background=''"><span style="flex:1;font-size:12px;color:#94a3b8;">'+esc(s.nombre)+'</span><span style="font-size:11px;color:#a855f7;">'+fmtCopFull(s.costo_unitario)+'</span></div>'; }); }
+  el.innerHTML=h;
+  // Close on outside click
+  setTimeout(function(){ document.addEventListener('click',function close(e){ if(!el.contains(e.target)&&e.target.id!=='costeo-global-search'){ var r=document.getElementById('costeo-search-results'); if(r)r.remove(); document.removeEventListener('click',close); } }); },100);
 }
 
 // ── Tab: Materias Primas ──────────────────────────────────────────────────────
@@ -8569,7 +8591,7 @@ function _tablaMPs(mps){
     h+='<td style="padding:9px 10px;color:#e2e8f0;font-weight:600;">'+esc(mp.nombre||'')+'</td>';
     h+='<td style="padding:9px 10px;color:#64748b;">'+esc(mp.familia||'')+'</td>';
     h+='<td style="padding:9px 10px;color:#64748b;">'+esc(mp.unidad||'')+'</td>';
-    h+='<td style="padding:9px 10px;color:#fbbf24;font-weight:700;">'+fmtCop(parseFloat(mp.precio_unitario)||0)+'</td>';
+    h+='<td style="padding:9px 10px;color:#fbbf24;font-weight:700;">'+fmtCopFull(parseFloat(mp.precio_unitario)||0)+'</td>';
     h+='<td style="padding:9px 10px;color:#64748b;">'+esc(mp.proveedor||'—')+'</td>';
     h+='<td style="padding:9px 10px;white-space:nowrap;">';
     h+='<button data-mpid="'+mp.id+'" onclick="abrirFormMP(this.dataset.mpid)" style="background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);color:#00d4ff;border-radius:5px;font-size:10px;padding:3px 8px;cursor:pointer;margin-right:4px;">✏️</button>';
@@ -8617,70 +8639,88 @@ function eliminarMP(id){
 function renderCosteoRecetas(){
   var recetas = DB.costeo.recetas||[];
   var h='<div>';
-  h+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">';
-  h+='<div style="flex:1;font-size:13px;color:#64748b;">'+recetas.length+' recetas definidas</div>';
-  h+='<button onclick="abrirFormReceta(null)" style="background:#00d4ff;border:none;border-radius:8px;color:#000;font-size:12px;font-weight:700;padding:8px 16px;cursor:pointer;">+ Nueva Receta</button>';
+  h+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;">';
+  h+='<input id="rec-search" type="text" placeholder="🔍 Buscar referencia o producto..." oninput="filtrarCosteoRecetas(this.value)" style="flex:1;min-width:200px;background:#0d1117;border:1px solid #1e2535;border-radius:8px;color:#e2e8f0;padding:8px 12px;font-size:12px;outline:none;">';
+  h+='<span style="font-size:11px;color:#475569;white-space:nowrap;">'+recetas.length+' recetas</span>';
+  h+='<button onclick="abrirModalReceta(null)" style="background:#00d4ff;border:none;border-radius:8px;color:#000;font-size:12px;font-weight:700;padding:8px 18px;cursor:pointer;white-space:nowrap;">+ Nueva Receta</button>';
   h+='</div>';
-  if(!recetas.length){ h+='<div style="text-align:center;padding:50px;color:#475569;font-size:13px;">Sin recetas. Agrega la primera para empezar a costear.</div></div>'; return h; }
-  h+='<div style="display:flex;flex-direction:column;gap:8px;">';
+  h+='<div id="rec-lista">'+_listaRecetas(recetas)+'</div></div>';
+  return h;
+}
+function filtrarCosteoRecetas(q){
+  var recetas=(DB.costeo.recetas||[]).filter(function(r){ return !q||r.producto.toUpperCase().indexOf(q.toUpperCase())>=0; });
+  var el=document.getElementById('rec-lista'); if(el) el.innerHTML=_listaRecetas(recetas);
+}
+function _listaRecetas(recetas){
+  if(!recetas.length) return '<div style="text-align:center;padding:50px;color:#475569;font-size:13px;">Sin recetas registradas.</div>';
+  var h='<div style="display:flex;flex-direction:column;gap:8px;">';
   recetas.forEach(function(rec){
-    var res = calcResumen(rec);
-    var precios = calcPrecios(res.total, rec.producto);
-    var nComp = (rec.componentes||[]).length;
-    h+='<div style="background:#13161f;border:1px solid #1e2535;border-left:3px solid #00d4ff;border-radius:10px;padding:12px 14px;cursor:pointer;transition:border-color .15s;" onclick="verReceta(\''+rec.id+'\')" onmouseover="this.style.borderColor=\'#00d4ff\'" onmouseout="this.style.borderColor=\'#1e2535\'">';
+    var res=calcResumen(rec);
+    var precios=calcPrecios(res.total,rec.producto);
+    var nComp=(rec.componentes||[]).length;
+    h+='<div style="background:#13161f;border:1px solid #1e2535;border-left:3px solid #00d4ff;border-radius:10px;padding:12px 16px;cursor:pointer;transition:background .12s;" onclick="verReceta(\''+rec.id+'\')" onmouseover="this.style.background=\'#181c28\'" onmouseout="this.style.background=\'\'">';
     h+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">';
     h+='<span style="font-size:13px;font-weight:700;color:#e2e8f0;flex:1;">'+esc(rec.producto)+'</span>';
-    h+='<span style="font-size:11px;color:#64748b;">'+nComp+' comp.</span>';
-    h+='<span style="font-family:var(--bebas);font-size:18px;color:#00d4ff;">'+fmtCop(res.total)+'</span>';
+    h+='<span style="font-size:10px;color:#475569;">'+nComp+' comp.</span>';
+    h+='<span style="font-family:var(--bebas);font-size:20px;color:#00d4ff;letter-spacing:1px;">'+fmtCopFull(res.total)+'</span>';
     h+='</div>';
-    h+='<div style="display:flex;gap:8px;flex-wrap:wrap;">';
-    if(res.mat)  h+='<span style="font-size:10px;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);border-radius:5px;color:#00d4ff;padding:1px 7px;">MAT '+fmtCop(res.mat)+'</span>';
-    if(res.mod)  h+='<span style="font-size:10px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:5px;color:#34d399;padding:1px 7px;">MOD '+fmtCop(res.mod)+'</span>';
-    if(res.cif)  h+='<span style="font-size:10px;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);border-radius:5px;color:#fbbf24;padding:1px 7px;">CIF '+fmtCop(res.cif)+'</span>';
-    if(res.svc)  h+='<span style="font-size:10px;background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.2);border-radius:5px;color:#a855f7;padding:1px 7px;">SVC '+fmtCop(res.svc)+'</span>';
+    h+='<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">';
+    if(res.mat) h+='<span style="font-size:10px;background:rgba(14,165,233,.1);border:1px solid rgba(14,165,233,.25);border-radius:5px;color:#0ea5e9;padding:1px 8px;">MAT '+fmtCopFull(res.mat)+'</span>';
+    if(res.mod) h+='<span style="font-size:10px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:5px;color:#34d399;padding:1px 8px;">MOD '+fmtCopFull(res.mod)+'</span>';
+    if(res.cif) h+='<span style="font-size:10px;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);border-radius:5px;color:#fbbf24;padding:1px 8px;">CIF '+fmtCopFull(res.cif)+'</span>';
+    if(res.svc) h+='<span style="font-size:10px;background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.2);border-radius:5px;color:#a855f7;padding:1px 8px;">SVC '+fmtCopFull(res.svc)+'</span>';
     ['mayorista','detal','web'].forEach(function(c){
       var ch=precios[c]; if(!ch.precio) return;
       var col=semaforoMargen(ch.margen,ch.meta);
-      h+='<span style="font-size:10px;border-radius:5px;padding:1px 7px;background:'+col+'22;border:1px solid '+col+'44;color:'+col+';text-transform:capitalize;">'+c+' '+fmtPct(ch.margen)+'</span>';
+      h+='<span style="font-size:10px;border-radius:5px;padding:1px 8px;background:'+col+'18;border:1px solid '+col+'33;color:'+col+';text-transform:capitalize;font-weight:600;">'+c+' '+fmtPct(ch.margen)+'</span>';
     });
     h+='</div></div>';
   });
-  h+='</div></div>';
+  h+='</div>';
   return h;
 }
 function verReceta(id){
   var rec=(DB.costeo.recetas||[]).find(function(x){return x.id===id;}); if(!rec) return;
   _costeoRecetaId=id;
-  var res=calcResumen(rec); var precios=calcPrecios(res.total,rec.producto); var pm=_costeoParams();
+  var res=calcResumen(rec); var precios=calcPrecios(res.total,rec.producto);
   var b='';
-  b+='<div style="background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.2);border-radius:10px;padding:12px 16px;margin-bottom:16px;display:flex;gap:16px;flex-wrap:wrap;">';
-  b+='<div style="flex:1;"><div style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;">Costo de producción</div><div style="font-family:var(--bebas);font-size:28px;color:#00d4ff;">'+fmtCop(res.total)+'</div></div>';
-  [['MAT',res.mat,'#00d4ff'],['MOD',res.mod,'#34d399'],['CIF',res.cif,'#fbbf24'],['SVC',res.svc,'#a855f7']].forEach(function(it){ b+='<div style="text-align:center;"><div style="font-size:9px;color:#64748b;text-transform:uppercase;">'+it[0]+'</div><div style="font-size:14px;font-weight:700;color:'+it[2]+';">'+fmtCop(it[1])+'</div></div>'; });
-  b+='</div>';
-  b+='<div style="margin-bottom:16px;"><div style="font-size:10px;color:#475569;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Análisis por Canal</div>';
-  b+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">';
+  b+='<div style="background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.15);border-radius:10px;padding:14px 16px;margin-bottom:16px;">';
+  b+='<div style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Costo de producción</div>';
+  b+='<div style="font-family:var(--bebas);font-size:32px;color:#00d4ff;margin-bottom:8px;">'+fmtCopFull(res.total)+'</div>';
+  b+='<div style="display:flex;gap:12px;flex-wrap:wrap;">';
+  [['MAT',res.mat,'#0ea5e9'],['MOD',res.mod,'#34d399'],['CIF',res.cif,'#fbbf24'],['SVC',res.svc,'#a855f7']].forEach(function(it){
+    if(!it[1]) return;
+    b+='<div style="background:'+it[2]+'10;border:1px solid '+it[2]+'30;border-radius:6px;padding:4px 10px;text-align:center;">';
+    b+='<div style="font-size:9px;color:#64748b;text-transform:uppercase;">'+it[0]+'</div>';
+    b+='<div style="font-size:13px;font-weight:700;color:'+it[2]+';">'+fmtCopFull(it[1])+'</div></div>';
+  });
+  b+='</div></div>';
+  b+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;">';
   [['Mayorista','mayorista'],['Detal','detal'],['Web','web']].forEach(function(it){
     var ch=precios[it[1]]; var col=semaforoMargen(ch.margen,ch.meta);
     b+='<div style="background:#0d1117;border:1px solid '+(ch.precio?col+'44':'#1e2535')+';border-radius:8px;padding:10px 12px;">';
     b+='<div style="font-size:10px;font-weight:700;color:'+col+';text-transform:uppercase;margin-bottom:6px;">'+it[0]+'</div>';
-    if(!ch.precio){ b+='<div style="font-size:11px;color:#334155;">Sin precio — <button data-rid="'+id+'" onclick="abrirPreciosReceta(this.dataset.rid)" style="background:none;border:none;color:#fbbf24;font-size:10px;cursor:pointer;text-decoration:underline;">Asignar</button></div>'; }
-    else{
-      b+='<div style="font-size:12px;color:#e2e8f0;">'+fmtCop(ch.precio)+' <span style="color:#475569;font-size:10px;">(+IVA '+fmtCop(ch.pvp)+')</span></div>';
-      b+='<div style="font-size:11px;color:#64748b;margin-top:2px;">Costo: '+fmtCop(ch.costo)+'</div>';
-      b+='<div style="font-size:13px;font-weight:700;color:'+col+';margin-top:3px;">'+fmtPct(ch.margen)+' <span style="font-size:9px;color:#475569;">(meta '+fmtPct(ch.meta)+')</span></div>';
-      if(ch.margen<ch.meta*0.85) b+='<div style="font-size:10px;color:#ef4444;margin-top:2px;">Sugerido: '+fmtCop(ch.sugerido)+'</div>';
+    if(!ch.precio){
+      b+='<div style="font-size:11px;color:#334155;">Sin precio — <button data-rid="'+id+'" onclick="abrirPreciosReceta(this.dataset.rid)" style="background:none;border:none;color:#fbbf24;font-size:10px;cursor:pointer;text-decoration:underline;">Asignar</button></div>';
+    } else {
+      b+='<div style="font-size:11px;color:#e2e8f0;font-weight:600;">'+fmtCopFull(ch.precio)+'</div>';
+      b+='<div style="font-size:10px;color:#475569;">+IVA: '+fmtCopFull(ch.pvp)+'</div>';
+      b+='<div style="font-size:10px;color:#64748b;margin-top:2px;">Costo: '+fmtCopFull(ch.costo)+'</div>';
+      b+='<div style="font-size:16px;font-weight:800;color:'+col+';margin-top:4px;">'+fmtPct(ch.margen)+'</div>';
+      b+='<div style="font-size:9px;color:#475569;">meta '+fmtPct(ch.meta)+'</div>';
+      if(ch.margen<ch.meta*0.85) b+='<div style="font-size:10px;color:#ef4444;margin-top:2px;">Sug: '+fmtCopFull(ch.sugerido)+'</div>';
     }
     b+='</div>';
   });
-  b+='</div></div>';
+  b+='</div>';
   b+='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">';
-  b+='<div style="font-size:10px;color:#475569;text-transform:uppercase;letter-spacing:.5px;">Componentes ('+( rec.componentes||[]).length+')</div>';
+  b+='<div style="font-size:10px;color:#475569;text-transform:uppercase;letter-spacing:.5px;">Componentes ('+(rec.componentes||[]).length+')</div>';
   b+='<button data-rid="'+id+'" onclick="abrirFormCompReceta(this.dataset.rid)" style="font-size:11px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);color:#00d4ff;border-radius:6px;padding:4px 10px;cursor:pointer;">+ Agregar</button>';
   b+='</div>';
   b+='<div style="display:flex;flex-direction:column;gap:4px;">';
   (rec.componentes||[]).forEach(function(comp){
     var costo=calcCostoComp(comp);
-    var tipoColor={MATERIAL:'#00d4ff',MOD:'#34d399',CIF:'#fbbf24',SERVICIO:'#a855f7'}[comp.tipo]||'#64748b';
+    var tipoColor={MATERIAL:'#0ea5e9',MOD:'#34d399',CIF:'#fbbf24',SERVICIO:'#a855f7'}[comp.tipo]||'#64748b';
     var desc='';
     if(comp.tipo==='MATERIAL'){var mp=(DB.costeo.mp||[]).find(function(x){return x.id===comp.mp_id;}); desc=esc(mp?mp.nombre:'(MP no encontrada)')+' · '+comp.consumo+' '+esc(mp?mp.unidad:'');}
     else if(comp.tipo==='MOD'){var pu=(DB.costeo.puestos||[]).find(function(x){return x.id===comp.puesto_id;}); desc=esc(pu?pu.zona+' – '+pu.cargo:'(puesto no encontrado)')+' · '+comp.tiempo_minutos+' min';}
@@ -8689,25 +8729,244 @@ function verReceta(id){
     b+='<div style="background:#0a0d14;border:1px solid #1e2535;border-left:3px solid '+tipoColor+';border-radius:7px;padding:7px 10px;display:flex;align-items:center;gap:8px;">';
     b+='<span style="font-size:9px;font-weight:700;color:'+tipoColor+';background:'+tipoColor+'15;border-radius:4px;padding:1px 5px;flex-shrink:0;">'+comp.tipo+'</span>';
     b+='<span style="font-size:11px;color:#94a3b8;flex:1;">'+desc+'</span>';
-    b+='<span style="font-size:12px;font-weight:700;color:#e2e8f0;flex-shrink:0;">'+fmtCop(costo)+'</span>';
+    b+='<span style="font-size:12px;font-weight:700;color:#e2e8f0;flex-shrink:0;">'+fmtCopFull(costo)+'</span>';
     b+='<button data-rid="'+id+'" data-cid="'+comp.id+'" onclick="eliminarCompReceta(this.dataset.rid,this.dataset.cid)" style="background:none;border:none;color:#334155;font-size:12px;cursor:pointer;padding:0;flex-shrink:0;">✕</button>';
     b+='</div>';
   });
   b+='</div>';
   var footer='<div style="display:flex;gap:8px;">';
-  footer+='<button data-rid="'+id+'" onclick="abrirFormReceta(this.dataset.rid)" style="background:rgba(148,163,184,.1);border:1px solid #1e2535;color:#94a3b8;border-radius:8px;padding:8px 14px;font-size:12px;cursor:pointer;">✏️ Editar</button>';
+  footer+='<button data-rid="'+id+'" onclick="abrirModalReceta(this.dataset.rid)" style="background:rgba(148,163,184,.1);border:1px solid #1e2535;color:#94a3b8;border-radius:8px;padding:8px 14px;font-size:12px;cursor:pointer;">✏️ Editar</button>';
   footer+='<button data-rid="'+id+'" onclick="eliminarReceta(this.dataset.rid)" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#ef4444;border-radius:8px;padding:8px 14px;font-size:12px;cursor:pointer;">🗑 Eliminar</button>';
   footer+='<button data-rid="'+id+'" onclick="abrirPreciosReceta(this.dataset.rid)" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2);color:#fbbf24;border-radius:8px;padding:8px 14px;font-size:12px;cursor:pointer;">💲 Precios</button>';
   footer+='</div>';
   openDrawer('🧪 '+esc(rec.producto), b, footer);
 }
-function abrirFormReceta(id){
-  var rec=id?(DB.costeo.recetas||[]).find(function(x){return x.id===id;}):null;
-  var b='<div class="form-group"><label class="form-label">Nombre del Producto (debe coincidir con OPs)</label>';
-  b+='<input id="rec-producto" class="form-control" value="'+esc(rec?rec.producto:'')+'" placeholder="Ej: CHAQUETA CAZADORA">';
-  b+='<div style="font-size:10px;color:#64748b;margin-top:4px;">El nombre se usa para vincular automáticamente con las Órdenes de Producción.</div></div>';
-  openDrawer(id?'Editar Receta':'Nueva Receta', b, '<button onclick="guardarFormReceta(\''+( id||'')+'\',this)" class="btn btn-primary">Guardar</button>');
+
+// ── MODAL NUEVA/EDITAR RECETA ─────────────────────────────────────────────────
+var _modalRecetaId = null;
+var _modalRecetaComps = [];
+
+function _defaultComponentesMOD(){
+  var puestos = DB.costeo.puestos||[];
+  var defaults = [];
+  // Zonas estándar siempre presentes: cortador, aux corte, insumos, calidad, logística, empaque, bodega
+  var zonasPriority = [
+    {zona:'corte', cargo:'cortador'},
+    {zona:'corte', cargo:'aux corte'},
+    {zona:'insumos/alistamiento', cargo:null},
+    {zona:'calidad', cargo:null},
+    {zona:'logisitica', cargo:null},
+    {zona:'empaque', cargo:null},
+    {zona:'bodega almacenamiento', cargo:null},
+  ];
+  zonasPriority.forEach(function(z){
+    var p = puestos.find(function(p){ return p.zona===z.zona && (!z.cargo||p.cargo===z.cargo); });
+    if(p) defaults.push({id:_costeoId(), tipo:'MOD', puesto_id:p.id, tiempo_minutos:1});
+  });
+  return defaults;
 }
+function _defaultComponentesCIF(){
+  var cifs = DB.costeo.tarifas_cif||[];
+  var defaults = [];
+  var zonas = ['corte','insumos/alistamiento','calidad','logisitica','empaque','bodega almacenamiento'];
+  zonas.forEach(function(z){
+    var c = cifs.find(function(c){ return c.zona===z; });
+    if(c) defaults.push({id:_costeoId(), tipo:'CIF', zona:z, tiempo_minutos:1});
+  });
+  return defaults;
+}
+function _defaultComponentesConsumibles(){
+  var mps = DB.costeo.mp||[];
+  var keywords = ['etiqueta','bolsa','codigo de barras','código de barras','marquilla','cinta','hangtag','empaque'];
+  var comps = [];
+  keywords.forEach(function(kw){
+    var mp = mps.find(function(m){ return m.nombre.toLowerCase().indexOf(kw)>=0; });
+    if(mp && !comps.find(function(c){ return c.mp_id===mp.id; })){
+      comps.push({id:_costeoId(), tipo:'MATERIAL', mp_id:mp.id, consumo:1});
+    }
+  });
+  return comps;
+}
+
+function abrirModalReceta(id){
+  var rec = id ? (DB.costeo.recetas||[]).find(function(x){ return x.id===id; }) : null;
+  _modalRecetaId = id||null;
+  if(rec){
+    _modalRecetaComps = JSON.parse(JSON.stringify(rec.componentes||[]));
+  } else {
+    _modalRecetaComps = [].concat(
+      _defaultComponentesMOD(),
+      _defaultComponentesCIF(),
+      _defaultComponentesConsumibles()
+    );
+  }
+  _renderModalReceta(rec);
+}
+
+function _renderModalReceta(rec){
+  var overlay = document.getElementById('modal-receta-overlay');
+  if(!overlay){
+    overlay = document.createElement('div');
+    overlay.id = 'modal-receta-overlay';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9000;display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;';
+    document.body.appendChild(overlay);
+  }
+
+  var puestos = DB.costeo.puestos||[];
+  var cifs    = DB.costeo.tarifas_cif||[];
+  var mps     = DB.costeo.mp||[];
+  var svcs    = DB.costeo.servicios||[];
+
+  function descComp(comp){
+    if(comp.tipo==='MOD'){ var p=puestos.find(function(x){return x.id===comp.puesto_id;}); return (p?p.zona+' – '+p.cargo:'?')+' · '+comp.tiempo_minutos+' min'; }
+    if(comp.tipo==='CIF'){ return 'CIF '+esc(comp.zona||'')+' · '+comp.tiempo_minutos+' min'; }
+    if(comp.tipo==='MATERIAL'){ var m=mps.find(function(x){return x.id===comp.mp_id;}); return (m?m.nombre:'?')+' · '+comp.consumo+' '+(m?m.unidad:''); }
+    if(comp.tipo==='SERVICIO'){ var s=svcs.find(function(x){return x.id===comp.servicio_id;}); return (s?s.nombre:'?')+' × '+comp.cantidad; }
+    return '';
+  }
+
+  var tipoColor={MATERIAL:'#0ea5e9',MOD:'#34d399',CIF:'#fbbf24',SERVICIO:'#a855f7'};
+
+  // Group components by type for display
+  var grupos = [
+    {tipo:'MOD', label:'Mano de Obra Directa', color:'#34d399'},
+    {tipo:'CIF', label:'Costos Indirectos de Fabricación', color:'#fbbf24'},
+    {tipo:'MATERIAL', label:'Materiales e Insumos', color:'#0ea5e9'},
+    {tipo:'SERVICIO', label:'Servicios Externos', color:'#a855f7'},
+  ];
+
+  var puestoOpts = puestos.map(function(p){ return '<option value="'+p.id+'">'+esc(p.zona+' – '+p.cargo)+' ('+fmtCopFull(calcTarifaMOD(p.id))+'/min)</option>'; }).join('');
+  var cifOpts = cifs.map(function(c){ return '<option value="'+c.zona+'">'+esc(c.zona)+' ('+fmtCopFull(c.tarifa_min)+'/min)</option>'; }).join('');
+  var mpOpts  = mps.map(function(m){ return '<option value="'+m.id+'">'+esc(m.nombre)+' ('+esc(m.unidad)+' / '+fmtCopFull(m.precio_unitario)+')</option>'; }).join('');
+  var svcOpts = svcs.map(function(s){ return '<option value="'+s.id+'">'+esc(s.nombre)+' ('+fmtCopFull(s.costo_unitario)+')</option>'; }).join('');
+
+  var compListHtml = '';
+  grupos.forEach(function(g){
+    var gc = _modalRecetaComps.filter(function(c){ return c.tipo===g.tipo; });
+    compListHtml += '<div style="margin-bottom:14px;">';
+    compListHtml += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">';
+    compListHtml += '<span style="font-size:10px;font-weight:700;color:'+g.color+';text-transform:uppercase;letter-spacing:.5px;">'+g.label+'</span>';
+    compListHtml += '<span style="font-size:10px;color:#334155;">('+gc.length+')</span>';
+    compListHtml += '<button data-tipo="'+g.tipo+'" onclick="_modalAgregarComp(this.dataset.tipo)" style="margin-left:auto;font-size:10px;background:'+g.color+'15;border:1px solid '+g.color+'30;color:'+g.color+';border-radius:5px;padding:2px 8px;cursor:pointer;">+ Agregar</button>';
+    compListHtml += '</div>';
+    if(!gc.length){
+      compListHtml += '<div style="font-size:11px;color:#1e2535;padding:6px 10px;border:1px dashed #1e2535;border-radius:6px;">Sin componentes de este tipo</div>';
+    } else {
+      gc.forEach(function(comp){
+        var costo = calcCostoComp(comp);
+        compListHtml += '<div style="display:flex;align-items:center;gap:6px;background:#0a0d14;border:1px solid #1e2535;border-left:3px solid '+g.color+';border-radius:6px;padding:7px 10px;margin-bottom:4px;">';
+        compListHtml += '<span style="font-size:11px;color:#94a3b8;flex:1;">'+descComp(comp)+'</span>';
+        compListHtml += '<span style="font-size:11px;font-weight:700;color:#e2e8f0;white-space:nowrap;">'+fmtCopFull(costo)+'</span>';
+        compListHtml += '<button data-cid="'+comp.id+'" onclick="_modalEliminarComp(this.dataset.cid)" style="background:none;border:none;color:#334155;font-size:12px;cursor:pointer;flex-shrink:0;padding:0 2px;">✕</button>';
+        compListHtml += '</div>';
+      });
+    }
+    compListHtml += '</div>';
+  });
+
+  var totalPreview = _modalRecetaComps.reduce(function(a,c){ return a+calcCostoComp(c); },0);
+
+  var html = '<div style="background:#0d1117;border:1px solid #1e2535;border-radius:14px;width:100%;max-width:800px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;">';
+  // Header
+  html += '<div style="padding:18px 22px;border-bottom:1px solid #1e2535;display:flex;align-items:center;gap:12px;flex-shrink:0;">';
+  html += '<div style="font-family:var(--bebas);font-size:22px;color:#00d4ff;flex:1;">'+(rec?'EDITAR RECETA':'NUEVA RECETA')+'</div>';
+  html += '<div style="font-family:var(--bebas);font-size:20px;color:#34d399;">'+fmtCopFull(totalPreview)+'</div>';
+  html += '<button onclick="_cerrarModalReceta()" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#ef4444;border-radius:8px;font-size:12px;padding:6px 14px;cursor:pointer;">✕ Cerrar</button>';
+  html += '</div>';
+  // Body
+  html += '<div style="padding:20px 22px;overflow-y:auto;flex:1;">';
+  html += '<div class="form-group" style="margin-bottom:18px;">';
+  html += '<label class="form-label" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#64748b;">Nombre del Producto <span style="color:#ef4444;">*</span></label>';
+  html += '<input id="modal-rec-producto" class="form-control" style="font-size:14px;font-weight:600;" value="'+esc(rec?rec.producto:'')+'" placeholder="Ej: CHAQUETA CAZADORA - REF: 1002" autofocus>';
+  html += '<div style="font-size:10px;color:#334155;margin-top:4px;">Usa el mismo nombre del producto para que vincule con las Órdenes de Producción.</div>';
+  html += '</div>';
+  html += compListHtml;
+  html += '</div>';
+  // Footer
+  html += '<div style="padding:14px 22px;border-top:1px solid #1e2535;display:flex;align-items:center;gap:10px;flex-shrink:0;">';
+  html += '<div style="font-size:11px;color:#475569;flex:1;">'+_modalRecetaComps.length+' componentes</div>';
+  html += '<button onclick="_cerrarModalReceta()" style="background:rgba(148,163,184,.1);border:1px solid #1e2535;color:#94a3b8;border-radius:8px;padding:9px 18px;font-size:12px;cursor:pointer;">Cancelar</button>';
+  html += '<button onclick="_guardarModalReceta()" style="background:#00d4ff;border:none;border-radius:8px;color:#000;font-size:13px;font-weight:700;padding:9px 24px;cursor:pointer;">Guardar Receta</button>';
+  html += '</div>';
+  html += '</div>';
+
+  overlay.innerHTML = html;
+}
+
+function _cerrarModalReceta(){
+  var el = document.getElementById('modal-receta-overlay');
+  if(el) el.remove();
+  _modalRecetaId = null;
+  _modalRecetaComps = [];
+}
+
+function _modalEliminarComp(cid){
+  _modalRecetaComps = _modalRecetaComps.filter(function(c){ return c.id!==cid; });
+  var rec = _modalRecetaId ? (DB.costeo.recetas||[]).find(function(x){ return x.id===_modalRecetaId; }) : null;
+  _renderModalReceta(rec);
+}
+
+function _modalAgregarComp(tipo){
+  var puestos=DB.costeo.puestos||[]; var cifs=DB.costeo.tarifas_cif||[]; var mps=DB.costeo.mp||[]; var svcs=DB.costeo.servicios||[];
+  var optsHtml='';
+  if(tipo==='MOD') optsHtml=puestos.map(function(p){ return '<option value="'+p.id+'">'+esc(p.zona+' – '+p.cargo)+'</option>'; }).join('');
+  if(tipo==='CIF') optsHtml=cifs.map(function(c){ return '<option value="'+c.zona+'">'+esc(c.zona)+'</option>'; }).join('');
+  if(tipo==='MATERIAL') optsHtml=mps.map(function(m){ return '<option value="'+m.id+'">'+esc(m.nombre)+' ('+esc(m.unidad)+')</option>'; }).join('');
+  if(tipo==='SERVICIO') optsHtml=svcs.map(function(s){ return '<option value="'+s.id+'">'+esc(s.nombre)+'</option>'; }).join('');
+
+  var cantLabel = (tipo==='MOD'||tipo==='CIF') ? 'Tiempo estándar (minutos/prenda)' : (tipo==='MATERIAL' ? 'Consumo unitario (por prenda)' : 'Cantidad');
+  var cantPlaceholder = (tipo==='MOD'||tipo==='CIF') ? 'Ej: 2.31' : (tipo==='MATERIAL' ? 'Ej: 1.5' : '1');
+
+  var overlay2 = document.createElement('div');
+  overlay2.id = 'modal-comp-overlay';
+  overlay2.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9100;display:flex;align-items:center;justify-content:center;padding:16px;';
+  var tipoColor={MATERIAL:'#0ea5e9',MOD:'#34d399',CIF:'#fbbf24',SERVICIO:'#a855f7'}[tipo]||'#64748b';
+  var body='<div style="background:#0d1117;border:1px solid #1e2535;border-top:3px solid '+tipoColor+';border-radius:12px;padding:22px;width:100%;max-width:420px;">';
+  body+='<div style="font-family:var(--bebas);font-size:18px;color:'+tipoColor+';margin-bottom:16px;">AGREGAR '+esc(tipo)+'</div>';
+  body+='<div class="form-group" style="margin-bottom:14px;"><label class="form-label">'+( tipo==='MOD'?'Puesto de trabajo':tipo==='CIF'?'Zona CIF':tipo==='MATERIAL'?'Materia Prima':'Servicio')+'</label>';
+  body+='<select id="modal-comp-ref" class="form-control">'+(optsHtml||'<option>Sin opciones</option>')+'</select></div>';
+  body+='<div class="form-group" style="margin-bottom:18px;"><label class="form-label">'+cantLabel+'</label>';
+  body+='<input id="modal-comp-cant" class="form-control" type="number" min="0" step="0.001" value="1" placeholder="'+cantPlaceholder+'"></div>';
+  body+='<div style="display:flex;gap:10px;justify-content:flex-end;">';
+  body+='<button onclick="document.getElementById(\'modal-comp-overlay\').remove()" style="background:rgba(148,163,184,.1);border:1px solid #1e2535;color:#94a3b8;border-radius:8px;padding:8px 16px;font-size:12px;cursor:pointer;">Cancelar</button>';
+  body+='<button data-tipo="'+tipo+'" onclick="_modalConfirmarComp(this.dataset.tipo)" style="background:'+tipoColor+';border:none;border-radius:8px;color:#000;font-size:12px;font-weight:700;padding:8px 18px;cursor:pointer;">Agregar</button>';
+  body+='</div></div>';
+  overlay2.innerHTML = body;
+  document.body.appendChild(overlay2);
+}
+
+function _modalConfirmarComp(tipo){
+  var ref = (document.getElementById('modal-comp-ref')||{}).value;
+  var cant = parseFloat((document.getElementById('modal-comp-cant')||{}).value)||0;
+  if(!ref){ toast('Selecciona un elemento','error'); return; }
+  var comp = {id: _costeoId(), tipo: tipo};
+  if(tipo==='MOD'){ comp.puesto_id=ref; comp.tiempo_minutos=cant; }
+  else if(tipo==='CIF'){ comp.zona=ref; comp.tiempo_minutos=cant; }
+  else if(tipo==='MATERIAL'){ comp.mp_id=ref; comp.consumo=cant; }
+  else if(tipo==='SERVICIO'){ comp.servicio_id=ref; comp.cantidad=cant; }
+  _modalRecetaComps.push(comp);
+  var el=document.getElementById('modal-comp-overlay'); if(el) el.remove();
+  var rec=_modalRecetaId?(DB.costeo.recetas||[]).find(function(x){return x.id===_modalRecetaId;}):null;
+  _renderModalReceta(rec);
+}
+
+function _guardarModalReceta(){
+  var producto = ((document.getElementById('modal-rec-producto')||{}).value||'').trim().toUpperCase();
+  if(!producto){ toast('Nombre requerido','error'); return; }
+  if(!DB.costeo.recetas) DB.costeo.recetas=[];
+  if(_modalRecetaId){
+    var ex=DB.costeo.recetas.find(function(x){return x.id===_modalRecetaId;});
+    if(ex){ ex.producto=producto; ex.componentes=_modalRecetaComps; }
+  } else {
+    DB.costeo.recetas.push({id:_costeoId(), producto:producto, componentes:_modalRecetaComps});
+  }
+  guardarCosteo().then(function(){
+    _cerrarModalReceta();
+    renderPage('costeo');
+    toast('Receta guardada','success');
+  });
+}
+
 function guardarFormReceta(id){
   var producto=(document.getElementById('rec-producto').value||'').trim().toUpperCase();
   if(!producto){ toast('Nombre requerido','error'); return; }
@@ -8739,15 +8998,15 @@ function actualizarFormComp(){
     h+='<div class="form-group"><label class="form-label">Materia Prima</label><select id="comp-mp" class="form-control">'+(mpOpts||'<option>Sin MP registradas</option>')+'</select></div>';
     h+='<div class="form-group"><label class="form-label">Consumo unitario (por prenda)</label><input id="comp-consumo" class="form-control" type="number" min="0" step="0.001" placeholder="Ej: 1.5"></div>';
   } else if(tipo==='MOD'){
-    var pOpts=(DB.costeo.puestos||[]).map(function(p){ return '<option value="'+p.id+'">'+esc(p.zona+' – '+p.cargo)+' ('+fmtCop(calcTarifaMOD(p.id))+'/min)</option>'; }).join('');
+    var pOpts=(DB.costeo.puestos||[]).map(function(p){ return '<option value="'+p.id+'">'+esc(p.zona+' – '+p.cargo)+' ('+fmtCopFull(calcTarifaMOD(p.id))+'/min)</option>'; }).join('');
     h+='<div class="form-group"><label class="form-label">Puesto de trabajo</label><select id="comp-puesto" class="form-control">'+(pOpts||'<option>Sin puestos registrados — crea uno en ⚙️ Tarifas</option>')+'</select></div>';
     h+='<div class="form-group"><label class="form-label">Tiempo estándar (minutos por prenda)</label><input id="comp-tiempo" class="form-control" type="number" min="0" step="0.01" placeholder="Ej: 2.31"></div>';
   } else if(tipo==='CIF'){
-    var zOpts=COSTEO_ZONAS.map(function(z){ return '<option value="'+z+'">'+z+' ('+fmtCop(calcTarifaCIF(z))+'/min)</option>'; }).join('');
+    var zOpts=COSTEO_ZONAS.map(function(z){ return '<option value="'+z+'">'+z+' ('+fmtCopFull(calcTarifaCIF(z))+'/min)</option>'; }).join('');
     h+='<div class="form-group"><label class="form-label">Zona</label><select id="comp-zona" class="form-control">'+zOpts+'</select></div>';
     h+='<div class="form-group"><label class="form-label">Tiempo (minutos por prenda)</label><input id="comp-tiempo" class="form-control" type="number" min="0" step="0.01" placeholder="Ej: 2.31"></div>';
   } else if(tipo==='SERVICIO'){
-    var sOpts=(DB.costeo.servicios||[]).map(function(s){ return '<option value="'+s.id+'">'+esc(s.nombre)+' ('+fmtCop(s.costo_unitario)+')</option>'; }).join('');
+    var sOpts=(DB.costeo.servicios||[]).map(function(s){ return '<option value="'+s.id+'">'+esc(s.nombre)+' ('+fmtCopFull(s.costo_unitario)+')</option>'; }).join('');
     h+='<div class="form-group"><label class="form-label">Servicio externo</label><select id="comp-svc" class="form-control">'+(sOpts||'<option>Sin servicios — crea uno en ⚙️ Tarifas</option>')+'</select></div>';
     h+='<div class="form-group"><label class="form-label">Cantidad</label><input id="comp-cant" class="form-control" type="number" min="1" value="1"></div>';
   }
@@ -8825,10 +9084,10 @@ function renderPuestosMOD(){
     h+='<tr style="border-bottom:1px solid rgba(30,37,53,.6);" onmouseover="this.style.background=\'rgba(255,255,255,.02)\'" onmouseout="this.style.background=\'\'">';
     h+='<td style="padding:9px 10px;color:#e2e8f0;">'+esc(p.zona||'')+'</td>';
     h+='<td style="padding:9px 10px;color:#94a3b8;">'+esc(p.cargo||'')+'</td>';
-    h+='<td style="padding:9px 10px;color:#64748b;">'+fmtCop(p.salario_base||0)+'</td>';
-    h+='<td style="padding:9px 10px;color:#64748b;">'+fmtCop(p.bonificacion||0)+'</td>';
-    h+='<td style="padding:9px 10px;color:#94a3b8;">'+fmtCop(sal*factor)+'</td>';
-    h+='<td style="padding:9px 10px;color:#34d399;font-weight:700;">'+fmtCop(tarifa)+'/min</td>';
+    h+='<td style="padding:9px 10px;color:#64748b;">'+fmtCopFull(p.salario_base||0)+'</td>';
+    h+='<td style="padding:9px 10px;color:#64748b;">'+fmtCopFull(p.bonificacion||0)+'</td>';
+    h+='<td style="padding:9px 10px;color:#94a3b8;">'+fmtCopFull(sal*factor)+'</td>';
+    h+='<td style="padding:9px 10px;color:#34d399;font-weight:700;">'+fmtCopFull(tarifa)+'/min</td>';
     h+='<td style="padding:9px 10px;white-space:nowrap;">';
     h+='<button data-pid="'+p.id+'" onclick="abrirFormPuesto(this.dataset.pid)" style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.2);color:#34d399;border-radius:5px;font-size:10px;padding:3px 8px;cursor:pointer;margin-right:4px;">✏️</button>';
     h+='<button data-pid="'+p.id+'" onclick="eliminarPuesto(this.dataset.pid)" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#ef4444;border-radius:5px;font-size:10px;padding:3px 8px;cursor:pointer;">🗑</button>';
@@ -8866,7 +9125,7 @@ function actualizarPreviewPuesto(){
   var salTotal=(sal+bon)*factor;
   var tarifa=hProd>0?salTotal/(hProd*60):0;
   var el=document.getElementById('pu-preview');
-  if(el) el.innerHTML='Total con cargas: <strong style="color:#34d399;">'+fmtCop(salTotal)+'</strong> · Tarifa: <strong style="color:#34d399;">'+fmtCop(tarifa)+'/min</strong>';
+  if(el) el.innerHTML='Total con cargas: <strong style="color:#34d399;">'+fmtCopFull(salTotal)+'</strong> · Tarifa: <strong style="color:#34d399;">'+fmtCopFull(tarifa)+'/min</strong>';
 }
 function guardarFormPuesto(id){
   var zona=(document.getElementById('pu-zona').value||'').trim();
@@ -8898,7 +9157,7 @@ function renderTarifasCIF(){
   tarifas.forEach(function(t){
     h+='<tr style="border-bottom:1px solid rgba(30,37,53,.6);" onmouseover="this.style.background=\'rgba(255,255,255,.02)\'" onmouseout="this.style.background=\'\'">';
     h+='<td style="padding:9px 10px;color:#e2e8f0;">'+esc(t.zona||'')+'</td>';
-    h+='<td style="padding:9px 10px;color:#fbbf24;font-weight:700;">'+fmtCop(t.tarifa_min||0)+'/min</td>';
+    h+='<td style="padding:9px 10px;color:#fbbf24;font-weight:700;">'+fmtCopFull(t.tarifa_min||0)+'/min</td>';
     h+='<td style="padding:9px 10px;white-space:nowrap;">';
     h+='<button data-tid="'+t.id+'" onclick="abrirFormCIF(this.dataset.tid)" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2);color:#fbbf24;border-radius:5px;font-size:10px;padding:3px 8px;cursor:pointer;margin-right:4px;">✏️</button>';
     h+='<button data-tid="'+t.id+'" onclick="eliminarCIF(this.dataset.tid)" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#ef4444;border-radius:5px;font-size:10px;padding:3px 8px;cursor:pointer;">🗑</button>';
@@ -8941,7 +9200,7 @@ function renderServicios(){
   svcs.forEach(function(s){
     h+='<tr style="border-bottom:1px solid rgba(30,37,53,.6);" onmouseover="this.style.background=\'rgba(255,255,255,.02)\'" onmouseout="this.style.background=\'\'">';
     h+='<td style="padding:9px 10px;color:#e2e8f0;">'+esc(s.nombre||'')+'</td>';
-    h+='<td style="padding:9px 10px;color:#a855f7;font-weight:700;">'+fmtCop(s.costo_unitario||0)+'</td>';
+    h+='<td style="padding:9px 10px;color:#a855f7;font-weight:700;">'+fmtCopFull(s.costo_unitario||0)+'</td>';
     h+='<td style="padding:9px 10px;white-space:nowrap;">';
     h+='<button data-sid="'+s.id+'" onclick="abrirFormSvc(this.dataset.sid)" style="background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.2);color:#a855f7;border-radius:5px;font-size:10px;padding:3px 8px;cursor:pointer;margin-right:4px;">✏️</button>';
     h+='<button data-sid="'+s.id+'" onclick="eliminarSvc(this.dataset.sid)" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#ef4444;border-radius:5px;font-size:10px;padding:3px 8px;cursor:pointer;">🗑</button>';
