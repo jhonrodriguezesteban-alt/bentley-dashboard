@@ -8811,11 +8811,12 @@ var _modalRecetaComps = [];
 function _defaultComponentesMOD(){
   var puestos = DB.costeo.puestos||[];
   var defaults = [];
-  // Zonas estándar siempre presentes: cortador, aux corte, insumos, calidad, logística, empaque, bodega
   var zonasPriority = [
     {zona:'corte', cargo:'cortador'},
     {zona:'corte', cargo:'aux corte'},
     {zona:'insumos/alistamiento', cargo:null},
+    {zona:'vapor 116', cargo:null},
+    {zona:'broches/ ojales', cargo:null},
     {zona:'calidad', cargo:null},
     {zona:'logisitica', cargo:null},
     {zona:'empaque', cargo:null},
@@ -8830,12 +8831,18 @@ function _defaultComponentesMOD(){
 function _defaultComponentesCIF(){
   var cifs = DB.costeo.tarifas_cif||[];
   var defaults = [];
-  var zonas = ['corte','insumos/alistamiento','calidad','logisitica','empaque','bodega almacenamiento'];
+  var zonas = ['corte','insumos/alistamiento','vapor 116','broches/ ojales','calidad','logisitica','empaque','bodega almacenamiento'];
   zonas.forEach(function(z){
     var c = cifs.find(function(c){ return c.zona===z; });
     if(c) defaults.push({id:_costeoId(), tipo:'CIF', zona:z, tiempo_minutos:1});
   });
   return defaults;
+}
+function _defaultComponentesServicios(){
+  var svcs = DB.costeo.servicios||[];
+  var svc = svcs.find(function(s){ return (s.nombre||'').toLowerCase().indexOf('confeccion')>=0; });
+  if(!svc) return [];
+  return [{id:_costeoId(), tipo:'SERVICIO', servicio_id:svc.id, cantidad:1}];
 }
 function _defaultComponentesConsumibles(){
   var mps = DB.costeo.mp||[];
@@ -8859,7 +8866,8 @@ function abrirModalReceta(id){
     _modalRecetaComps = [].concat(
       _defaultComponentesMOD(),
       _defaultComponentesCIF(),
-      _defaultComponentesConsumibles()
+      _defaultComponentesConsumibles(),
+      _defaultComponentesServicios()
     );
   }
   _renderModalReceta(rec);
