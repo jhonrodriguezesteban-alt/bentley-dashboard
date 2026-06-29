@@ -8481,8 +8481,14 @@ function calcCostoComp(comp){
     var mp = (DB.costeo.mp||[]).find(function(x){ return x.id===comp.mp_id; });
     return (parseFloat(comp.consumo)||0) * (mp ? parseFloat(mp.precio_unitario)||0 : 0);
   }
-  if(comp.tipo==='MOD')      return (parseFloat(comp.tiempo_minutos)||0) * calcTarifaMOD(comp.puesto_id);
-  if(comp.tipo==='CIF')      return (parseFloat(comp.tiempo_minutos)||0) * calcTarifaCIF(comp.zona);
+  if(comp.tipo==='MOD'){
+    var uds = parseFloat(comp.unidades)||1;
+    return (parseFloat(comp.tiempo_minutos)||0) * calcTarifaMOD(comp.puesto_id) / uds;
+  }
+  if(comp.tipo==='CIF'){
+    var udsc = parseFloat(comp.unidades)||1;
+    return (parseFloat(comp.tiempo_minutos)||0) * calcTarifaCIF(comp.zona) / udsc;
+  }
   if(comp.tipo==='SERVICIO'){
     var sv = (DB.costeo.servicios||[]).find(function(x){ return x.id===comp.servicio_id; });
     return (parseFloat(comp.cantidad)||1) * (sv ? parseFloat(sv.costo_unitario)||0 : 0);
@@ -8777,8 +8783,8 @@ function verReceta(id){
       gc.forEach(function(comp){
         var costo=calcCostoComp(comp); var desc='';
         if(comp.tipo==='MATERIAL'){var mp=(DB.costeo.mp||[]).find(function(x){return x.id===comp.mp_id;}); desc=esc(mp?mp.nombre:'?')+' · '+comp.consumo+' '+esc(mp?mp.unidad:'');}
-        else if(comp.tipo==='MOD'){var pu=(DB.costeo.puestos||[]).find(function(x){return x.id===comp.puesto_id;}); desc=esc(pu?pu.zona+' – '+pu.cargo:'?')+' · '+comp.tiempo_minutos+' min';}
-        else if(comp.tipo==='CIF'){desc='Zona: '+esc(comp.zona||'')+' · '+comp.tiempo_minutos+' min';}
+        else if(comp.tipo==='MOD'){var pu=(DB.costeo.puestos||[]).find(function(x){return x.id===comp.puesto_id;}); var umod=parseFloat(comp.unidades)||1; desc=esc(pu?pu.zona+' – '+pu.cargo:'?')+' · '+comp.tiempo_minutos+' min / '+umod+' uds';}
+        else if(comp.tipo==='CIF'){var ucif=parseFloat(comp.unidades)||1; desc='CIF '+esc(comp.zona||'')+' · '+comp.tiempo_minutos+' min / '+ucif+' uds';}
         else if(comp.tipo==='SERVICIO'){var sv=(DB.costeo.servicios||[]).find(function(x){return x.id===comp.servicio_id;}); desc=esc(sv?sv.nombre:'?')+' × '+comp.cantidad;}
         b+='<div style="display:flex;align-items:center;gap:8px;background:#080b10;border:1px solid #1a1f2e;border-radius:6px;padding:6px 10px 6px 16px;">';
         b+='<span style="font-size:11px;color:#64748b;flex:1;">'+desc+'</span>';
@@ -8824,7 +8830,7 @@ function _defaultComponentesMOD(){
   ];
   zonasPriority.forEach(function(z){
     var p = puestos.find(function(p){ return p.zona===z.zona && (!z.cargo||p.cargo===z.cargo); });
-    if(p) defaults.push({id:_costeoId(), tipo:'MOD', puesto_id:p.id, tiempo_minutos:1});
+    if(p) defaults.push({id:_costeoId(), tipo:'MOD', puesto_id:p.id, tiempo_minutos:60, unidades:1});
   });
   return defaults;
 }
@@ -8834,7 +8840,7 @@ function _defaultComponentesCIF(){
   var zonas = ['corte','insumos/alistamiento','vapor 116','broches/ ojales','calidad','logisitica','empaque','bodega almacenamiento'];
   zonas.forEach(function(z){
     var c = cifs.find(function(c){ return c.zona===z; });
-    if(c) defaults.push({id:_costeoId(), tipo:'CIF', zona:z, tiempo_minutos:1});
+    if(c) defaults.push({id:_costeoId(), tipo:'CIF', zona:z, tiempo_minutos:60, unidades:1});
   });
   return defaults;
 }
@@ -8888,8 +8894,8 @@ function _renderModalReceta(rec){
   var svcs    = DB.costeo.servicios||[];
 
   function descComp(comp){
-    if(comp.tipo==='MOD'){ var p=puestos.find(function(x){return x.id===comp.puesto_id;}); return (p?p.zona+' – '+p.cargo:'?')+' · '+comp.tiempo_minutos+' min'; }
-    if(comp.tipo==='CIF'){ return 'CIF '+esc(comp.zona||'')+' · '+comp.tiempo_minutos+' min'; }
+    if(comp.tipo==='MOD'){ var p=puestos.find(function(x){return x.id===comp.puesto_id;}); var umod=parseFloat(comp.unidades)||1; return (p?p.zona+' – '+p.cargo:'?')+' · '+comp.tiempo_minutos+' min / '+umod+' uds'; }
+    if(comp.tipo==='CIF'){ var ucif=parseFloat(comp.unidades)||1; return 'CIF '+esc(comp.zona||'')+' · '+comp.tiempo_minutos+' min / '+ucif+' uds'; }
     if(comp.tipo==='MATERIAL'){ var m=mps.find(function(x){return x.id===comp.mp_id;}); return (m?m.nombre:'?')+' · '+comp.consumo+' '+(m?m.unidad:''); }
     if(comp.tipo==='SERVICIO'){ var s=svcs.find(function(x){return x.id===comp.servicio_id;}); return (s?s.nombre:'?')+' × '+comp.cantidad; }
     return '';
@@ -8984,21 +8990,33 @@ function _modalAgregarComp(tipo){
   if(tipo==='MATERIAL') optsHtml=mps.map(function(m){ return '<option value="'+m.id+'">'+esc(m.nombre)+' ('+esc(m.unidad)+')</option>'; }).join('');
   if(tipo==='SERVICIO') optsHtml=svcs.map(function(s){ return '<option value="'+s.id+'">'+esc(s.nombre)+'</option>'; }).join('');
 
-  var cantLabel = (tipo==='MOD'||tipo==='CIF') ? 'Tiempo estándar (minutos/prenda)' : (tipo==='MATERIAL' ? 'Consumo unitario (por prenda)' : 'Cantidad');
-  var cantPlaceholder = (tipo==='MOD'||tipo==='CIF') ? 'Ej: 2.31' : (tipo==='MATERIAL' ? 'Ej: 1.5' : '1');
+  var esTimpo = (tipo==='MOD'||tipo==='CIF');
 
   var overlay2 = document.createElement('div');
   overlay2.id = 'modal-comp-overlay';
   overlay2.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9100;display:flex;align-items:center;justify-content:center;padding:16px;';
   var tipoColor={MATERIAL:'#0ea5e9',MOD:'#34d399',CIF:'#fbbf24',SERVICIO:'#a855f7'}[tipo]||'#64748b';
-  var body='<div style="background:#0d1117;border:1px solid #1e2535;border-top:3px solid '+tipoColor+';border-radius:12px;padding:22px;width:100%;max-width:420px;">';
+  var body='<div style="background:#0d1117;border:1px solid #1e2535;border-top:3px solid '+tipoColor+';border-radius:12px;padding:22px;width:100%;max-width:440px;">';
   body+='<div style="font-family:var(--bebas);font-size:18px;color:'+tipoColor+';margin-bottom:16px;">AGREGAR '+esc(tipo)+'</div>';
-  body+='<div class="form-group" style="margin-bottom:14px;"><label class="form-label">'+( tipo==='MOD'?'Puesto de trabajo':tipo==='CIF'?'Zona CIF':tipo==='MATERIAL'?'Materia Prima':'Servicio')+'</label>';
+  body+='<div class="form-group" style="margin-bottom:14px;"><label class="form-label">'+(tipo==='MOD'?'Puesto de trabajo':tipo==='CIF'?'Zona CIF':tipo==='MATERIAL'?'Materia Prima':'Servicio')+'</label>';
   body+='<select id="modal-comp-ref" class="form-control">'+(optsHtml||'<option>Sin opciones</option>')+'</select></div>';
-  body+='<div class="form-group" style="margin-bottom:18px;"><label class="form-label">'+cantLabel+'</label>';
-  body+='<input id="modal-comp-cant" class="form-control" type="number" min="0" step="0.001" value="1" placeholder="'+cantPlaceholder+'"></div>';
+  if(esTimpo){
+    body+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">';
+    body+='<div class="form-group"><label class="form-label">Tiempo lote (min)</label>';
+    body+='<input id="modal-comp-cant" class="form-control" type="number" min="0" step="0.01" value="60" placeholder="Ej: 60"></div>';
+    body+='<div class="form-group"><label class="form-label">Uds. en ese lote</label>';
+    body+='<input id="modal-comp-uds" class="form-control" type="number" min="1" step="1" value="1" placeholder="Ej: 120"></div>';
+    body+='</div>';
+    body+='<div style="background:rgba(255,255,255,.03);border-radius:6px;padding:7px 10px;font-size:11px;color:#64748b;margin-bottom:16px;">costo/prenda = tarifa × tiempo ÷ unidades</div>';
+  } else if(tipo==='MATERIAL'){
+    body+='<div class="form-group" style="margin-bottom:18px;"><label class="form-label">Consumo unitario (por prenda)</label>';
+    body+='<input id="modal-comp-cant" class="form-control" type="number" min="0" step="0.001" value="1" placeholder="Ej: 1.5"></div>';
+  } else {
+    body+='<div class="form-group" style="margin-bottom:18px;"><label class="form-label">Cantidad</label>';
+    body+='<input id="modal-comp-cant" class="form-control" type="number" min="1" value="1"></div>';
+  }
   body+='<div style="display:flex;gap:10px;justify-content:flex-end;">';
-  body+='<button onclick="document.getElementById(\'modal-comp-overlay\').remove()" style="background:rgba(148,163,184,.1);border:1px solid #1e2535;color:#94a3b8;border-radius:8px;padding:8px 16px;font-size:12px;cursor:pointer;">Cancelar</button>';
+  body+='<button onclick="document.getElementById(&quot;modal-comp-overlay&quot;).remove()" style="background:rgba(148,163,184,.1);border:1px solid #1e2535;color:#94a3b8;border-radius:8px;padding:8px 16px;font-size:12px;cursor:pointer;">Cancelar</button>';
   body+='<button data-tipo="'+tipo+'" onclick="_modalConfirmarComp(this.dataset.tipo)" style="background:'+tipoColor+';border:none;border-radius:8px;color:#000;font-size:12px;font-weight:700;padding:8px 18px;cursor:pointer;">Agregar</button>';
   body+='</div></div>';
   overlay2.innerHTML = body;
@@ -9010,8 +9028,8 @@ function _modalConfirmarComp(tipo){
   var cant = parseFloat((document.getElementById('modal-comp-cant')||{}).value)||0;
   if(!ref){ toast('Selecciona un elemento','error'); return; }
   var comp = {id: _costeoId(), tipo: tipo};
-  if(tipo==='MOD'){ comp.puesto_id=ref; comp.tiempo_minutos=cant; }
-  else if(tipo==='CIF'){ comp.zona=ref; comp.tiempo_minutos=cant; }
+  if(tipo==='MOD'){ comp.puesto_id=ref; comp.tiempo_minutos=cant; comp.unidades=parseFloat((document.getElementById('modal-comp-uds')||{}).value)||1; }
+  else if(tipo==='CIF'){ comp.zona=ref; comp.tiempo_minutos=cant; comp.unidades=parseFloat((document.getElementById('modal-comp-uds')||{}).value)||1; }
   else if(tipo==='MATERIAL'){ comp.mp_id=ref; comp.consumo=cant; }
   else if(tipo==='SERVICIO'){ comp.servicio_id=ref; comp.cantidad=cant; }
   _modalRecetaComps.push(comp);
@@ -9070,11 +9088,19 @@ function actualizarFormComp(){
   } else if(tipo==='MOD'){
     var pOpts=(DB.costeo.puestos||[]).map(function(p){ return '<option value="'+p.id+'">'+esc(p.zona+' – '+p.cargo)+' ('+fmtCopFull(calcTarifaMOD(p.id))+'/min)</option>'; }).join('');
     h+='<div class="form-group"><label class="form-label">Puesto de trabajo</label><select id="comp-puesto" class="form-control">'+(pOpts||'<option>Sin puestos registrados — crea uno en ⚙️ Tarifas</option>')+'</select></div>';
-    h+='<div class="form-group"><label class="form-label">Tiempo estándar (minutos por prenda)</label><input id="comp-tiempo" class="form-control" type="number" min="0" step="0.01" placeholder="Ej: 2.31"></div>';
+    h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">';
+    h+='<div class="form-group"><label class="form-label">Tiempo lote (min)</label><input id="comp-tiempo" class="form-control" type="number" min="0" step="0.01" value="60" placeholder="Ej: 60"></div>';
+    h+='<div class="form-group"><label class="form-label">Uds. en ese lote</label><input id="comp-uds" class="form-control" type="number" min="1" step="1" value="1" placeholder="Ej: 120"></div>';
+    h+='</div>';
+    h+='<div style="font-size:11px;color:#64748b;margin-top:4px;">costo/prenda = tarifa × tiempo ÷ unidades</div>';
   } else if(tipo==='CIF'){
     var zOpts=COSTEO_ZONAS.map(function(z){ return '<option value="'+z+'">'+z+' ('+fmtCopFull(calcTarifaCIF(z))+'/min)</option>'; }).join('');
     h+='<div class="form-group"><label class="form-label">Zona</label><select id="comp-zona" class="form-control">'+zOpts+'</select></div>';
-    h+='<div class="form-group"><label class="form-label">Tiempo (minutos por prenda)</label><input id="comp-tiempo" class="form-control" type="number" min="0" step="0.01" placeholder="Ej: 2.31"></div>';
+    h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">';
+    h+='<div class="form-group"><label class="form-label">Tiempo lote (min)</label><input id="comp-tiempo" class="form-control" type="number" min="0" step="0.01" value="60" placeholder="Ej: 60"></div>';
+    h+='<div class="form-group"><label class="form-label">Uds. en ese lote</label><input id="comp-uds" class="form-control" type="number" min="1" step="1" value="1" placeholder="Ej: 120"></div>';
+    h+='</div>';
+    h+='<div style="font-size:11px;color:#64748b;margin-top:4px;">costo/prenda = tarifa × tiempo ÷ unidades</div>';
   } else if(tipo==='SERVICIO'){
     var sOpts=(DB.costeo.servicios||[]).map(function(s){ return '<option value="'+s.id+'">'+esc(s.nombre)+' ('+fmtCopFull(s.costo_unitario)+')</option>'; }).join('');
     h+='<div class="form-group"><label class="form-label">Servicio externo</label><select id="comp-svc" class="form-control">'+(sOpts||'<option>Sin servicios — crea uno en ⚙️ Tarifas</option>')+'</select></div>';
@@ -9086,8 +9112,8 @@ function guardarFormComp(recId){
   var tipo=(document.getElementById('comp-tipo')||{}).value;
   var comp={id:_costeoId(),tipo:tipo};
   if(tipo==='MATERIAL'){ comp.mp_id=(document.getElementById('comp-mp')||{}).value; comp.consumo=parseFloat((document.getElementById('comp-consumo')||{}).value)||0; if(!comp.mp_id){ toast('Selecciona una MP','error'); return; } }
-  else if(tipo==='MOD'){ comp.puesto_id=(document.getElementById('comp-puesto')||{}).value; comp.tiempo_minutos=parseFloat((document.getElementById('comp-tiempo')||{}).value)||0; if(!comp.puesto_id){ toast('Selecciona un puesto','error'); return; } }
-  else if(tipo==='CIF'){ comp.zona=(document.getElementById('comp-zona')||{}).value; comp.tiempo_minutos=parseFloat((document.getElementById('comp-tiempo')||{}).value)||0; }
+  else if(tipo==='MOD'){ comp.puesto_id=(document.getElementById('comp-puesto')||{}).value; comp.tiempo_minutos=parseFloat((document.getElementById('comp-tiempo')||{}).value)||0; comp.unidades=parseFloat((document.getElementById('comp-uds')||{}).value)||1; if(!comp.puesto_id){ toast('Selecciona un puesto','error'); return; } }
+  else if(tipo==='CIF'){ comp.zona=(document.getElementById('comp-zona')||{}).value; comp.tiempo_minutos=parseFloat((document.getElementById('comp-tiempo')||{}).value)||0; comp.unidades=parseFloat((document.getElementById('comp-uds')||{}).value)||1; }
   else if(tipo==='SERVICIO'){ comp.servicio_id=(document.getElementById('comp-svc')||{}).value; comp.cantidad=parseFloat((document.getElementById('comp-cant')||{}).value)||1; if(!comp.servicio_id){ toast('Selecciona un servicio','error'); return; } }
   var rec=(DB.costeo.recetas||[]).find(function(x){return x.id===recId;}); if(!rec){ toast('Receta no encontrada','error'); return; }
   if(!rec.componentes) rec.componentes=[];
