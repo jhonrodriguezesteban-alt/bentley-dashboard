@@ -7974,11 +7974,10 @@ function renderCostosMO(){
         var esNomina = ref.indexOf('NÓMINA')>=0 || ref.indexOf('Nómina')>=0;
 
         h += '<div style="display:flex;align-items:flex-start;gap:12px;padding:9px 16px;border-bottom:1px solid rgba(30,37,53,.5);">';
-        h += '<div style="flex:1;">';
-        h += '<div style="font-size:12px;color:#e2e8f0;font-weight:600;">'+esc(ref)+'</div>';
+        h += '<div data-ids="'+esc(idsJson)+'" onclick="verDetallePagoGrupo(JSON.parse(this.dataset.ids))" style="flex:1;cursor:pointer;" title="Ver detalle">';
+        h += '<div style="font-size:12px;color:#e2e8f0;font-weight:600;">'+esc(ref)+' <span style="font-size:10px;color:#334155;font-weight:400;">▸ ver detalle</span></div>';
         var detalleAbono = abonadoGrp>0 ? ' · <span style="color:#fbbf24;">Abonado: $'+abonadoGrp.toLocaleString('es-CO')+'</span> · <span style="color:#f97316;font-weight:700;">Saldo: $'+saldoGrp.toLocaleString('es-CO')+'</span>' : '';
         h += '<div style="font-size:11px;color:#64748b;">'+totalUdsGrp+' uds = <span style="color:#f97316;">$'+totalGrp.toLocaleString('es-CO')+'</span>'+detalleAbono+(fechaLabel?' · '+esc(fechaLabel):'')+(grp.length>1?' · <span style="color:#475569;">'+grp.length+' OTs</span>':'')+'</div>';
-        // Abonos registrados
         grp.forEach(function(p){
           if(p.abonos && p.abonos.length){
             p.abonos.forEach(function(ab){
@@ -8054,6 +8053,67 @@ function marcarPagado(id){
   p.estado = 'PAGADO';
   guardarCostosMO(); renderPage('costos_mo');
   toast('Pago registrado','success');
+}
+function verDetallePagoGrupo(ids){
+  var pagos = (DB.costos_mo&&DB.costos_mo.pagos)||[];
+  var grp   = ids.map(function(id){ return pagos.find(function(x){ return x.id===id; }); }).filter(Boolean);
+  if(!grp.length) return;
+  var totalGrp   = grp.reduce(function(a,p){ return a+(p.total||0); },0);
+  var abonadoGrp = grp.reduce(function(a,p){ return a+(p.total_abonado||0); },0);
+  var saldoGrp   = totalGrp - abonadoGrp;
+  var ref  = grp[0].referencia||'';
+  var sat  = grp[0].satelite_nombre||'';
+
+  var body = '';
+  // Encabezado resumen
+  body += '<div style="background:#0f1520;border:1px solid #1e2535;border-radius:8px;padding:14px 16px;margin-bottom:16px;">';
+  body += '<div style="font-size:11px;color:#64748b;margin-bottom:6px;">'+esc(sat)+'</div>';
+  body += '<div style="font-size:14px;font-weight:700;color:#e2e8f0;margin-bottom:10px;">'+esc(ref)+'</div>';
+  body += '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">';
+  body += '<div style="text-align:center;"><div style="font-size:10px;color:#64748b;margin-bottom:2px;">TOTAL</div><div style="font-size:15px;font-weight:800;color:#f97316;">$'+totalGrp.toLocaleString('es-CO')+'</div></div>';
+  body += '<div style="text-align:center;"><div style="font-size:10px;color:#64748b;margin-bottom:2px;">ABONADO</div><div style="font-size:15px;font-weight:800;color:#fbbf24;">$'+abonadoGrp.toLocaleString('es-CO')+'</div></div>';
+  body += '<div style="text-align:center;"><div style="font-size:10px;color:#64748b;margin-bottom:2px;">SALDO</div><div style="font-size:15px;font-weight:800;color:'+(saldoGrp>0?'#f97316':'#34d399')+';">$'+saldoGrp.toLocaleString('es-CO')+'</div></div>';
+  body += '</div></div>';
+
+  // Tabla de OTs
+  body += '<div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">Detalle por OT</div>';
+  body += '<div style="border:1px solid #1e2535;border-radius:8px;overflow:hidden;">';
+  body += '<table style="width:100%;border-collapse:collapse;">';
+  body += '<thead><tr style="background:#0a0d14;">';
+  body += '<th style="padding:8px 12px;text-align:left;font-size:10px;color:#475569;">OT / Nómina</th>';
+  body += '<th style="padding:8px 12px;text-align:center;font-size:10px;color:#475569;">Uds</th>';
+  body += '<th style="padding:8px 12px;text-align:right;font-size:10px;color:#475569;">Precio MO</th>';
+  body += '<th style="padding:8px 12px;text-align:right;font-size:10px;color:#475569;">Total</th>';
+  body += '<th style="padding:8px 12px;text-align:right;font-size:10px;color:#475569;">Saldo</th>';
+  body += '<th style="padding:8px 12px;text-align:center;font-size:10px;color:#475569;">Fecha</th>';
+  body += '</tr></thead><tbody>';
+  grp.forEach(function(p, i){
+    var abp  = p.total_abonado||0;
+    var salp = p.total - abp;
+    var bg   = i%2===0 ? '' : 'background:#080a10;';
+    body += '<tr style="border-top:1px solid #1e2535;'+bg+'">';
+    body += '<td style="padding:8px 12px;font-size:11px;color:#94a3b8;">'+esc(p.ot_id||p.id||'—')+'</td>';
+    body += '<td style="padding:8px 12px;text-align:center;font-size:12px;font-weight:700;color:#e2e8f0;">'+(p.uds||0)+'</td>';
+    body += '<td style="padding:8px 12px;text-align:right;font-size:11px;color:#64748b;">$'+(p.precio_mo||0).toLocaleString('es-CO')+'</td>';
+    body += '<td style="padding:8px 12px;text-align:right;font-size:12px;font-weight:700;color:#f97316;">$'+(p.total||0).toLocaleString('es-CO')+'</td>';
+    body += '<td style="padding:8px 12px;text-align:right;font-size:12px;font-weight:700;color:'+(salp>0?'#f97316':'#34d399')+';">$'+salp.toLocaleString('es-CO')+'</td>';
+    body += '<td style="padding:8px 12px;text-align:center;font-size:10px;color:#64748b;">'+esc(p.fecha||'—')+'</td>';
+    body += '</tr>';
+    if(p.abonos && p.abonos.length){
+      p.abonos.forEach(function(ab){
+        body += '<tr style="'+bg+'">';
+        body += '<td colspan="6" style="padding:3px 12px 3px 24px;font-size:10px;color:#475569;">↳ Abono '+esc(ab.fecha)+': $'+ab.valor.toLocaleString('es-CO')+'</td>';
+        body += '</tr>';
+      });
+    }
+  });
+  body += '</tbody></table></div>';
+
+  var idsJson = JSON.stringify(ids);
+  var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cerrar</button>';
+  footer += '<button data-ids="'+esc(idsJson)+'" onclick="closeModal();abrirAbonoGrupo(JSON.parse(this.dataset.ids))" style="background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.4);color:#fbbf24;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;">$ Abonar</button>';
+  footer += '<button data-ids="'+esc(idsJson)+'" onclick="closeModal();marcarPagadoGrupo(JSON.parse(this.dataset.ids))" class="btn btn-success">✓ Marcar Pagado</button>';
+  openModal('Resumen de pago', body, footer);
 }
 function marcarPagadoGrupo(ids){
   if(!DB.costos_mo||!DB.costos_mo.pagos) return;
