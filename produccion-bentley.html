@@ -9277,7 +9277,7 @@ function eliminarMP(id){
 
 // ── Tab: Recetas ──────────────────────────────────────────────────────────────
 function renderCosteoRecetas(){
-  var recetas = DB.costeo.recetas||[];
+  var recetas = (DB.costeo.recetas||[]).slice().reverse();
   var h='<div>';
   h+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;">';
   h+='<input id="rec-search" type="text" placeholder="🔍 Buscar referencia o producto..." oninput="filtrarCosteoRecetas(this.value)" style="flex:1;min-width:200px;background:#0d1117;border:1px solid #1e2535;border-radius:8px;color:#e2e8f0;padding:8px 12px;font-size:12px;outline:none;">';
@@ -9288,7 +9288,7 @@ function renderCosteoRecetas(){
   return h;
 }
 function filtrarCosteoRecetas(q){
-  var recetas=(DB.costeo.recetas||[]).filter(function(r){ return !q||r.producto.toUpperCase().indexOf(q.toUpperCase())>=0; });
+  var recetas=(DB.costeo.recetas||[]).slice().reverse().filter(function(r){ return !q||r.producto.toUpperCase().indexOf(q.toUpperCase())>=0||(r.referencia||'').toUpperCase().indexOf(q.toUpperCase())>=0; });
   var el=document.getElementById('rec-lista'); if(el) el.innerHTML=_listaRecetas(recetas);
 }
 function _listaRecetas(recetas){
@@ -9940,23 +9940,91 @@ function eliminarCompReceta(recId,compId){
   rec.componentes=(rec.componentes||[]).filter(function(x){return x.id!==compId;});
   guardarCosteo().then(function(){ closeDrawer(); renderPage('costeo'); setTimeout(function(){ verReceta(recId); },80); toast('Eliminado','success'); });
 }
+function _pvpCerrado(base, iva){
+  var pvp = base * (1 + iva);
+  var step = pvp >= 50000 ? 5000 : pvp >= 20000 ? 1000 : 500;
+  return Math.ceil(pvp / step) * step;
+}
+function _precioSugerido(costo, margen, iva){
+  if(!costo) return 0;
+  var minBase = costo / (1 - margen);
+  var pvpCerrado = _pvpCerrado(minBase, iva);
+  return Math.round(pvpCerrado / (1 + iva));
+}
+function _calcMargenPreview(base, costo, iva){
+  if(!base||!costo) return 0;
+  var pvp = base*(1+iva);
+  return (pvp - costo) / pvp;
+}
+function updatePrecioPreview(inp, canal){
+  var pm = _costeoParams();
+  var costoEl = document.getElementById('pt-costo-ref');
+  var costo = costoEl ? parseFloat(costoEl.dataset.costo)||0 : 0;
+  var base = parseFloat(inp.value)||0;
+  var pvp = _pvpCerrado(base, pm.iva);
+  var margen = _calcMargenPreview(base, costo, pm.iva);
+  var metas = {may: pm.margen_mayorista, det: pm.margen_detal, web: pm.margen_web};
+  var meta = metas[canal]||0;
+  var ok = margen >= meta;
+  var pvpEl = document.getElementById('pt-pvp-'+canal);
+  var mgEl  = document.getElementById('pt-mg-'+canal);
+  if(pvpEl) pvpEl.textContent = '$'+pvp.toLocaleString('es-CO');
+  if(mgEl){
+    mgEl.textContent = (margen*100).toFixed(1)+'%  '+(ok?'✓ cumple meta':'⚠ bajo meta '+Math.round(meta*100)+'%');
+    mgEl.style.color = ok ? '#22c55e' : '#ef4444';
+  }
+}
 function abrirPreciosReceta(recId){
   var rec=(DB.costeo.recetas||[]).find(function(x){return x.id===recId;}); if(!rec) return;
   var pt=(DB.costeo.precios_pt||[]).find(function(x){return x.producto===rec.producto;})||{};
-  var b='<div style="display:flex;flex-direction:column;gap:14px;">';
-  b+='<div style="font-size:11px;color:#64748b;">Precios <strong style="color:#fbbf24;">sin IVA</strong> — el 19% se calcula automáticamente.</div>';
-  b+='<div class="form-group"><label class="form-label">Precio Mayorista ($/ud sin IVA)</label><input id="pt-may" class="form-control" type="number" min="0" value="'+(pt.precio_mayorista||'')+'" placeholder="0"></div>';
-  b+='<div class="form-group"><label class="form-label">Precio Detal ($/ud sin IVA)</label><input id="pt-det" class="form-control" type="number" min="0" value="'+(pt.precio_detal||'')+'" placeholder="0"></div>';
-  b+='<div class="form-group"><label class="form-label">Precio Web ($/ud sin IVA)</label><input id="pt-web" class="form-control" type="number" min="0" value="'+(pt.precio_web||'')+'" placeholder="0"></div>';
+  var res=calcResumen(rec);
+  var pm=_costeoParams();
+  var costo=res.total;
+
+  // Precios existentes o sugeridos
+  var vMay = pt.precio_mayorista || _precioSugerido(costo, pm.margen_mayorista, pm.iva);
+  var vDet = pt.precio_detal     || _precioSugerido(costo, pm.margen_detal,     pm.iva);
+  var vWeb = pt.precio_web       || _precioSugerido(costo, pm.margen_web,       pm.iva);
+
+  function card(canal, label, accent, val, meta){
+    var pvp = _pvpCerrado(val, pm.iva);
+    var margen = _calcMargenPreview(val, costo, pm.iva);
+    var ok = margen >= meta;
+    var c='<div style="background:#080b10;border:1px solid #1e2535;border-top:2px solid '+accent+';border-radius:10px;padding:14px;">';
+    c+='<div style="font-size:11px;font-weight:700;color:'+accent+';text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">'+label+'</div>';
+    c+='<div style="font-size:10px;color:#475569;margin-bottom:4px;">Precio base (sin IVA)</div>';
+    c+='<input id="pt-'+canal+'" type="number" min="0" value="'+val+'" oninput="updatePrecioPreview(this,\''+canal+'\')" style="width:100%;background:#0d1117;border:1px solid #1e2535;border-radius:7px;color:#e2e8f0;font-size:16px;font-weight:700;padding:8px 10px;box-sizing:border-box;margin-bottom:8px;">';
+    c+='<div style="background:'+accent+'12;border:1px solid '+accent+'25;border-radius:7px;padding:8px 10px;">';
+    c+='<div style="font-size:10px;color:'+accent+';opacity:.7;margin-bottom:2px;">Precio consumidor (IVA incluido)</div>';
+    c+='<div id="pt-pvp-'+canal+'" style="font-family:var(--bebas);font-size:26px;color:'+accent+';letter-spacing:1px;">$'+pvp.toLocaleString('es-CO')+'</div>';
+    c+='<div id="pt-mg-'+canal+'" style="font-size:11px;font-weight:600;color:'+(ok?'#22c55e':'#ef4444')+';">'+(margen*100).toFixed(1)+'%  '+(ok?'✓ cumple meta':'⚠ bajo meta '+Math.round(meta*100)+'%')+'</div>';
+    c+='</div>';
+    c+='</div>';
+    return c;
+  }
+
+  var b='<div>';
+  b+='<div id="pt-costo-ref" data-costo="'+costo+'" style="background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.15);border-radius:8px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:12px;">';
+  b+='<span style="font-size:11px;color:#64748b;flex:1;">Costo de producción unitario</span>';
+  b+='<span style="font-family:var(--bebas);font-size:22px;color:#00d4ff;">$'+costo.toLocaleString('es-CO')+'</span>';
   b+='</div>';
-  openDrawer('💲 Precios — '+esc(rec.producto), b, '<button onclick="guardarPreciosReceta(\''+rec.producto+'\')" class="btn btn-primary">Guardar Precios</button>');
+  b+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px;">';
+  b+=card('may','💙 Mayorista','#60a5fa',vMay,pm.margen_mayorista);
+  b+=card('det','💚 Detal',    '#34d399',vDet,pm.margen_detal);
+  b+=card('web','🟣 Web',      '#a78bfa',vWeb,pm.margen_web);
+  b+='</div>';
+  b+='<div style="font-size:10px;color:#334155;text-align:center;">El precio base ingresado se redondea automáticamente al IVA más cercano en múltiplos de $1.000 o $5.000.</div>';
+  b+='</div>';
+  var footer='<button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>';
+  footer+='<button data-prod="'+esc(rec.producto)+'" onclick="guardarPreciosReceta(this.dataset.prod)" class="btn btn-primary" style="padding:10px 28px;">💾 Guardar Precios</button>';
+  openModal('💲 Precios — '+esc(rec.producto), b, footer, {wide:true});
 }
 function guardarPreciosReceta(producto){
   if(!DB.costeo.precios_pt) DB.costeo.precios_pt=[];
   var ex=DB.costeo.precios_pt.find(function(x){return x.producto===producto;});
   var data={producto:producto, precio_mayorista:parseFloat(document.getElementById('pt-may').value)||0, precio_detal:parseFloat(document.getElementById('pt-det').value)||0, precio_web:parseFloat(document.getElementById('pt-web').value)||0};
   if(ex) Object.assign(ex,data); else DB.costeo.precios_pt.push(data);
-  guardarCosteo().then(function(){ closeDrawer(); renderPage('costeo'); toast('Precios guardados','success'); });
+  guardarCosteo().then(function(){ closeModal(); renderPage('costeo'); toast('Precios guardados','success'); });
 }
 
 // ── Tab: Tarifas ──────────────────────────────────────────────────────────────
