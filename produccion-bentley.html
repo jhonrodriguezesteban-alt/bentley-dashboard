@@ -9663,7 +9663,7 @@ function _guardarNuevoComp(tipo){
     var nombre = ((document.getElementById('nuevo-comp-nombre')||{}).value||'').trim().toUpperCase();
     if(!nombre){ toast('Nombre requerido','error'); return; }
     var precio = parseFloat((document.getElementById('nuevo-comp-precio')||{}).value)||0;
-    nuevo = {id:_costeoId(), nombre:nombre, precio:precio};
+    nuevo = {id:_costeoId(), nombre:nombre, costo_unitario:precio};
     if(!DB.costeo.servicios) DB.costeo.servicios=[];
     DB.costeo.servicios.push(nuevo);
     selectId = nuevo.id;
@@ -10010,13 +10010,16 @@ function eliminarCIF(id){
 function renderServicios(){
   var svcs=DB.costeo.servicios||[];
   var h='<div>';
-  h+='<div style="display:flex;justify-content:flex-end;margin-bottom:10px;"><button onclick="abrirFormSvc(null)" style="background:#a855f7;border:none;border-radius:8px;color:#fff;font-size:12px;font-weight:700;padding:8px 16px;cursor:pointer;">+ Nuevo Servicio</button></div>';
+  h+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">';
+  h+='<input id="svc-buscar" type="text" placeholder="Buscar servicio…" oninput="_filtrarServicios()" style="flex:1;background:#0d1117;border:1px solid #1e2535;border-radius:8px;color:#e2e8f0;font-size:12px;padding:8px 12px;outline:none;" />';
+  h+='<button onclick="abrirFormSvc(null)" style="background:#a855f7;border:none;border-radius:8px;color:#fff;font-size:12px;font-weight:700;padding:8px 16px;cursor:pointer;white-space:nowrap;">+ Nuevo Servicio</button>';
+  h+='</div>';
   if(!svcs.length){ h+='<div style="text-align:center;padding:30px;color:#475569;font-size:12px;">Sin servicios registrados.</div></div>'; return h; }
-  h+='<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr style="border-bottom:1px solid #1e2535;color:#475569;font-size:10px;text-transform:uppercase;">';
+  h+='<div style="overflow-x:auto;"><table id="svc-tabla" style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr style="border-bottom:1px solid #1e2535;color:#475569;font-size:10px;text-transform:uppercase;">';
   ['Nombre','Costo/unidad',''].forEach(function(c){ h+='<th style="padding:8px 10px;text-align:left;">'+c+'</th>'; });
   h+='</tr></thead><tbody>';
   svcs.forEach(function(s){
-    h+='<tr style="border-bottom:1px solid rgba(30,37,53,.6);" onmouseover="this.style.background=\'rgba(255,255,255,.02)\'" onmouseout="this.style.background=\'\'">';
+    h+='<tr class="svc-row" style="border-bottom:1px solid rgba(30,37,53,.6);" onmouseover="this.style.background=\'rgba(255,255,255,.02)\'" onmouseout="this.style.background=\'\'">';
     h+='<td style="padding:9px 10px;color:#e2e8f0;">'+esc(s.nombre||'')+'</td>';
     h+='<td style="padding:9px 10px;color:#a855f7;font-weight:700;">'+fmtCopFull(s.costo_unitario||0)+'</td>';
     h+='<td style="padding:9px 10px;white-space:nowrap;">';
@@ -10026,6 +10029,12 @@ function renderServicios(){
   });
   h+='</tbody></table></div></div>';
   return h;
+}
+function _filtrarServicios(){
+  var q=((document.getElementById('svc-buscar')||{}).value||'').trim().toUpperCase();
+  document.querySelectorAll('#svc-tabla .svc-row').forEach(function(tr){
+    tr.style.display=(!q||tr.textContent.toUpperCase().indexOf(q)>=0)?'':'none';
+  });
 }
 function abrirFormSvc(id){
   var s=id?(DB.costeo.servicios||[]).find(function(x){return x.id===id;}):null;
