@@ -9973,9 +9973,10 @@ function _precioSugerido(costo, margen, iva){
   var pvpCerrado = _pvpCerrado(minBase, iva);
   return Math.round(pvpCerrado / (1 + iva));
 }
-function _calcMargenPvp(pvp, costo){
+function _calcMargenPvp(pvp, costo, iva){
   if(!pvp||!costo) return 0;
-  return (pvp - costo) / pvp;
+  var base = pvp / (1 + (iva||0));
+  return (base - costo) / base;
 }
 function updatePrecioPreview(inp, canal){
   var pm = _costeoParams();
@@ -9983,7 +9984,7 @@ function updatePrecioPreview(inp, canal){
   var costo = costoEl ? parseFloat(costoEl.dataset.costo)||0 : 0;
   var pvp = parseFloat(inp.value)||0;
   var base = pvp > 0 ? Math.round(pvp / (1 + pm.iva)) : 0;
-  var margen = _calcMargenPvp(pvp, costo);
+  var margen = _calcMargenPvp(pvp, costo, pm.iva);
   var metas = {may: pm.margen_mayorista, det: pm.margen_detal, web: pm.margen_web};
   var meta = metas[canal]||0;
   var ok = margen >= meta;
@@ -10012,7 +10013,7 @@ function abrirPreciosReceta(recId){
 
   function card(canal, label, accent, pvpVal, meta){
     var base = pvpVal > 0 ? Math.round(pvpVal / (1 + pm.iva)) : 0;
-    var margen = _calcMargenPvp(pvpVal, costo);
+    var margen = _calcMargenPvp(pvpVal, costo, pm.iva);
     var ok = margen >= meta;
     var c='<div style="background:#080b10;border:1px solid #1e2535;border-top:2px solid '+accent+';border-radius:10px;padding:14px;">';
     c+='<div style="font-size:11px;font-weight:700;color:'+accent+';text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">'+label+'</div>';
