@@ -9430,7 +9430,7 @@ function _toggleGrupoReceta(recId, tipo){
 // ── MODAL NUEVA/EDITAR RECETA ─────────────────────────────────────────────────
 var _modalRecetaId = null;
 var _modalRecetaComps = [];
-var _guardandoReceta = false;
+var _guardandoReceta = false; // kept for compat but no longer used as lock
 
 function _defaultComponentesMOD(){
   var puestos = DB.costeo.puestos||[];
@@ -9850,24 +9850,46 @@ function _modalConfirmarComp(tipo){
 }
 
 function _guardarModalReceta(){
-  if(_guardandoReceta) return;
   var producto = ((document.getElementById('modal-rec-producto')||{}).value||'').trim().toUpperCase();
   if(!producto){ toast('Nombre requerido','error'); return; }
   var referencia = ((document.getElementById('modal-rec-ref')||{}).value||'').trim().toUpperCase();
+
+  // Deshabilitar botón visualmente para evitar doble clic
+  var btn = document.querySelector('#modal-receta-overlay button[onclick="_guardarModalReceta()"]');
+  if(btn){ btn.disabled = true; btn.textContent = 'Guardando…'; }
+
   if(!DB.costeo.recetas) DB.costeo.recetas=[];
-  _guardandoReceta = true;
   if(_modalRecetaId){
     var ex=DB.costeo.recetas.find(function(x){return x.id===_modalRecetaId;});
-    if(ex){ ex.producto=producto; ex.referencia=referencia; ex.componentes=_modalRecetaComps; }
+    if(ex){ ex.producto=producto; ex.referencia=referencia; ex.componentes=JSON.parse(JSON.stringify(_modalRecetaComps)); }
   } else {
-    DB.costeo.recetas.push({id:_costeoId(), producto:producto, referencia:referencia, componentes:_modalRecetaComps});
+    DB.costeo.recetas.push({id:_costeoId(), producto:producto, referencia:referencia, componentes:JSON.parse(JSON.stringify(_modalRecetaComps))});
   }
-  guardarCosteo().then(function(){
-    _guardandoReceta = false;
-    _cerrarModalReceta();
-    renderPage('costeo');
-    toast('Receta guardada','success');
-  }).catch(function(){ _guardandoReceta = false; });
+
+  function _reactivarBtn(){ if(btn){ btn.disabled=false; btn.textContent='Guardar Receta'; } }
+
+  // Si costeo está ocupado (otro guardado en curso), reintentar hasta 3 veces con pausa
+  var intentos = 0;
+  function _intentarGuardar(){
+    intentos++;
+    guardarCosteo().then(function(ok){
+      if(ok){
+        _cerrarModalReceta();
+        renderPage('costeo');
+        toast('Receta guardada','success');
+      } else if(intentos < 3){
+        // Reintento con pequeña pausa (costeo podría estar ocupado por _guardarNuevoComp)
+        setTimeout(_intentarGuardar, 800);
+      } else {
+        toast('No se pudo guardar — revisa la conexión e intenta de nuevo','error');
+        _reactivarBtn();
+      }
+    }).catch(function(e){
+      toast('Error al guardar: '+(e&&e.message||'desconocido'),'error');
+      _reactivarBtn();
+    });
+  }
+  _intentarGuardar();
 }
 
 function guardarFormReceta(id){
