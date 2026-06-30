@@ -8069,6 +8069,22 @@ function renderCostosMO(){
     var rowIdx = 0;
     satOrder.forEach(function(satNom){
       var byRef = bySat[satNom];
+      var satTotal = Object.keys(byRef).reduce(function(acc, ref){
+        return acc + byRef[ref].reduce(function(a,p){ return a+(p.total||0)-(p.total_abonado||0); },0);
+      }, 0);
+      var satIds = Object.keys(byRef).reduce(function(acc, ref){ return acc.concat(byRef[ref].map(function(p){ return p.id; })); }, []);
+
+      // ── Fila cabecera de satélite ──
+      h += '<tr style="background:#0d1525;border-top:2px solid #1e2535;border-bottom:1px solid #1e2535;">';
+      h += '<td colspan="3" style="padding:8px 14px;">';
+      h += '<span style="font-size:12px;font-weight:800;color:#e2e8f0;text-transform:uppercase;letter-spacing:.5px;">'+esc(satNom)+'</span>';
+      h += '</td>';
+      h += '<td style="padding:8px 14px;text-align:right;font-size:13px;font-weight:800;color:#60a5fa;">$'+satTotal.toLocaleString('es-CO')+'</td>';
+      h += '<td style="padding:8px 14px;text-align:center;white-space:nowrap;">';
+      h += '<button data-sat="'+esc(satNom)+'" onclick="event.stopPropagation();agregarLineaPago(this.dataset.sat)" style="padding:3px 8px;border-radius:6px;font-size:10px;cursor:pointer;background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);color:#60a5fa;font-weight:600;margin-right:4px;">+ Línea</button>';
+      h += '<button data-ids="'+esc(JSON.stringify(satIds))+'" onclick="event.stopPropagation();marcarPagadoGrupo(JSON.parse(this.dataset.ids))" style="padding:3px 8px;border-radius:6px;font-size:10px;cursor:pointer;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#22c55e;font-weight:600;">✓ Pagar taller</button>';
+      h += '</td></tr>';
+
       Object.keys(byRef).forEach(function(ref){
         var grp = byRef[ref];
         var totalGrp = grp.reduce(function(a,p){ return a+(p.total||0); },0);
@@ -8079,24 +8095,34 @@ function renderCostosMO(){
         var fechas = grp.map(function(p){ return p.fecha||''; }).filter(function(f){ return f; });
         var fecha = fechas.length ? fechas[0] : '';
         var diasMora = fecha ? Math.floor((Date.now() - new Date(fecha).getTime())/(1000*60*60*24)) : 0;
-        var moraBg = diasMora > 30 ? 'rgba(239,68,68,.12)' : (diasMora >= 15 ? 'rgba(234,179,8,.08)' : '');
-        var moraColor = diasMora > 30 ? '#ef4444' : (diasMora >= 15 ? '#eab308' : '#64748b');
-        var bg = rowIdx%2===0 ? '' : 'background:#080a10;';
+        var moraBg = diasMora > 30 ? 'rgba(239,68,68,.09)' : (diasMora >= 15 ? 'rgba(234,179,8,.06)' : '');
+        var moraColor = diasMora > 30 ? '#ef4444' : (diasMora >= 15 ? '#eab308' : '#475569');
+        var bg = rowIdx%2===0 ? '' : 'background:#06080f;';
         rowIdx++;
-        h += '<tr data-ids="'+esc(idsJson)+'" onclick="if(!event.target.closest(\'button\'))abrirConciliacion(JSON.parse(this.dataset.ids))" style="'+bg+(moraBg?'background:'+moraBg+';':'')+' cursor:pointer;border-bottom:1px solid rgba(30,37,53,.5);" title="Ver conciliación">';
-        h += '<td style="padding:10px 14px;font-size:11px;color:#94a3b8;">'+esc(fecha||'—')+'</td>';
-        h += '<td style="padding:10px 14px;text-align:center;"><span style="font-size:12px;font-weight:700;color:'+moraColor+';">'+diasMora+'d</span></td>';
-        h += '<td style="padding:10px 14px;"><div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+esc(satNom)+'</div><div style="font-size:11px;color:#64748b;margin-top:1px;">'+esc(ref)+'</div>'+(abonadoGrp>0?'<div style="font-size:10px;color:#fbbf24;margin-top:2px;">Abonado: $'+abonadoGrp.toLocaleString('es-CO')+'</div>':'')+'</td>';
-        h += '<td style="padding:10px 14px;text-align:right;font-size:14px;font-weight:700;color:#f97316;">$'+saldoGrp.toLocaleString('es-CO')+'</td>';
-        h += '<td style="padding:10px 14px;text-align:center;white-space:nowrap;">';
-        h += '<button data-ids="'+esc(idsJson)+'" onclick="event.stopPropagation();abrirAbonoGrupo(JSON.parse(this.dataset.ids))" style="padding:4px 8px;border-radius:6px;font-size:11px;cursor:pointer;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:#fbbf24;font-weight:600;margin-right:4px;">$ Abonar</button>';
-        h += '<button data-ids="'+esc(idsJson)+'" onclick="event.stopPropagation();marcarPagadoGrupo(JSON.parse(this.dataset.ids))" class="btn btn-sm btn-success" style="padding:4px 8px;">✓ Pagado</button>';
+        h += '<tr data-ids="'+esc(idsJson)+'" onclick="if(!event.target.closest(\'button\')&&!event.target.closest(\'input\'))abrirConciliacion(JSON.parse(this.dataset.ids))" style="'+(moraBg?'background:'+moraBg+';':bg)+' cursor:pointer;border-bottom:1px solid rgba(30,37,53,.4);" title="Ver conciliación">';
+        h += '<td style="padding:9px 14px;font-size:11px;color:#64748b;">'+esc(fecha||'—')+'</td>';
+        h += '<td style="padding:9px 14px;text-align:center;"><span style="font-size:12px;font-weight:700;color:'+moraColor+';">'+diasMora+'d</span></td>';
+        h += '<td style="padding:9px 14px;">';
+        h += '<div style="font-size:12px;font-weight:600;color:#94a3b8;margin-bottom:2px;">'+esc(ref)+'</div>';
+        // Edición inline de uds y precio por primera OT del grupo
+        var firstP = grp[0];
+        h += '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">';
+        h += '<span style="font-size:10px;color:#475569;">Uds:</span>';
+        h += '<input data-id="'+firstP.id+'" data-field="uds" type="number" value="'+(firstP.uds||0)+'" onclick="event.stopPropagation()" oninput="editarCampoPago(this)" style="width:58px;background:#0d1117;border:1px solid #334155;border-radius:4px;color:#e2e8f0;font-size:11px;padding:2px 5px;text-align:center;">';
+        h += '<span style="font-size:10px;color:#475569;">Precio/ud:</span>';
+        h += '<input data-id="'+firstP.id+'" data-field="precio_mo" type="number" value="'+(firstP.precio_mo||0)+'" onclick="event.stopPropagation()" oninput="editarCampoPago(this)" style="width:78px;background:#0d1117;border:1px solid #334155;border-radius:4px;color:#e2e8f0;font-size:11px;padding:2px 5px;text-align:right;">';
+        h += '</div>';
+        if(abonadoGrp>0) h += '<div style="font-size:10px;color:#fbbf24;margin-top:2px;">Abonado: $'+abonadoGrp.toLocaleString('es-CO')+' · Saldo: $'+saldoGrp.toLocaleString('es-CO')+'</div>';
+        h += '</td>';
+        h += '<td style="padding:9px 14px;text-align:right;font-size:14px;font-weight:700;color:#f97316;" id="pago-total-'+firstP.id+'">$'+saldoGrp.toLocaleString('es-CO')+'</td>';
+        h += '<td style="padding:9px 14px;text-align:center;white-space:nowrap;">';
+        h += '<button data-ids="'+esc(idsJson)+'" onclick="event.stopPropagation();abrirAbonoGrupo(JSON.parse(this.dataset.ids))" style="padding:3px 7px;border-radius:6px;font-size:10px;cursor:pointer;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:#fbbf24;font-weight:600;margin-right:3px;">$ Abonar</button>';
+        h += '<button data-ids="'+esc(idsJson)+'" onclick="event.stopPropagation();marcarPagadoGrupo(JSON.parse(this.dataset.ids))" class="btn btn-sm btn-success" style="padding:3px 7px;font-size:10px;">✓ Pagado</button>';
         h += '</td></tr>';
-        // Mostrar abonos si hay
         grp.forEach(function(p){
           if(p.abonos && p.abonos.length){
             p.abonos.forEach(function(ab){
-              h += '<tr style="'+bg+'"><td colspan="5" style="padding:2px 14px 4px 120px;font-size:10px;color:#475569;">↳ Abono '+esc(ab.fecha)+': $'+ab.valor.toLocaleString('es-CO')+'</td></tr>';
+              h += '<tr><td colspan="5" style="padding:2px 14px 3px 130px;font-size:10px;color:#334155;">↳ Abono '+esc(ab.fecha)+': $'+ab.valor.toLocaleString('es-CO')+'</td></tr>';
             });
           }
         });
@@ -8104,9 +8130,9 @@ function renderCostosMO(){
     });
 
     // Fila total
-    h += '<tr style="background:#0a0d14;border-top:2px solid #1e2535;">';
-    h += '<td colspan="3" style="padding:12px 14px;font-size:12px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;">TOTAL A PAGAR</td>';
-    h += '<td style="padding:12px 14px;text-align:right;font-size:16px;font-weight:800;color:#f97316;font-family:var(--bebas);">'+fmtCop(totalPend)+'</td>';
+    h += '<tr style="background:#0a0d14;border-top:2px solid #1a365d;">';
+    h += '<td colspan="3" style="padding:14px 18px;font-size:13px;font-weight:800;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;">TOTAL A PAGAR</td>';
+    h += '<td style="padding:14px 18px;text-align:right;font-size:22px;font-weight:900;color:#f97316;font-family:var(--bebas);letter-spacing:.5px;">$'+totalPend.toLocaleString('es-CO')+'</td>';
     h += '<td style="padding:12px 14px;text-align:center;"><button class="btn btn-primary" onclick="event.stopPropagation();pagarTodos()" style="font-size:11px;padding:5px 10px;">Marcar todos PAGADO</button></td>';
     h += '</tr>';
     h += '</tbody></table></div>';
@@ -8373,6 +8399,68 @@ function guardarAbono(){
   else { toast('Abono de $'+valor.toLocaleString('es-CO')+' registrado','success'); }
   closeModal();
   guardarCostosMO(); renderPage('costos_mo');
+}
+function editarCampoPago(inp){
+  var id = inp.dataset.id;
+  var field = inp.dataset.field;
+  var val = parseFloat(inp.value)||0;
+  var p = (DB.costos_mo&&DB.costos_mo.pagos||[]).find(function(x){ return x.id===id; });
+  if(!p) return;
+  p[field] = val;
+  p.total = (p.uds||0) * (p.precio_mo||0);
+  var el = document.getElementById('pago-total-'+id);
+  var saldo = p.total - (p.total_abonado||0);
+  if(el) el.textContent = '$'+saldo.toLocaleString('es-CO');
+  clearTimeout(inp._saveTimer);
+  inp._saveTimer = setTimeout(function(){ guardarCostosMO(); }, 800);
+}
+function agregarLineaPago(satNom){
+  var body = '';
+  body += '<div class="form-group"><label class="form-label">Descripción / Referencia</label>';
+  body += '<input id="alp-ref" class="form-control" type="text" placeholder="Ej: Excedente producción junio"></div>';
+  body += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">';
+  body += '<div class="form-group"><label class="form-label">Unidades</label>';
+  body += '<input id="alp-uds" class="form-control" type="number" min="0" value="1"></div>';
+  body += '<div class="form-group"><label class="form-label">Valor por unidad ($)</label>';
+  body += '<input id="alp-precio" class="form-control" type="number" min="0" value="0"></div>';
+  body += '</div>';
+  body += '<div class="form-group"><label class="form-label">Fecha</label>';
+  body += '<input id="alp-fecha" class="form-control" type="date" value="'+hoy()+'"></div>';
+  body += '<input type="hidden" id="alp-sat" value="'+esc(satNom)+'">';
+  body += '<div id="alp-preview" style="background:#0f1520;border-radius:6px;padding:10px 14px;font-size:13px;color:#f97316;font-weight:700;margin-top:4px;display:none;"></div>';
+  var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>';
+  footer += '<button class="btn btn-primary" onclick="confirmarLineaPago()">Agregar línea</button>';
+  openModal('Agregar línea de pago — '+satNom, body, footer);
+  setTimeout(function(){
+    var uds = document.getElementById('alp-uds');
+    var precio = document.getElementById('alp-precio');
+    function upd(){ var t=(parseFloat((uds||{}).value)||0)*(parseFloat((precio||{}).value)||0); var pr=document.getElementById('alp-preview'); if(pr){ pr.style.display=t>0?'':'none'; pr.textContent='Total: $'+t.toLocaleString('es-CO'); } }
+    if(uds) uds.oninput=upd;
+    if(precio) precio.oninput=upd;
+    var ref=document.getElementById('alp-ref'); if(ref) ref.focus();
+  },80);
+}
+function confirmarLineaPago(){
+  var ref    = ((document.getElementById('alp-ref')||{}).value||'').trim().toUpperCase();
+  var uds    = parseFloat((document.getElementById('alp-uds')||{}).value)||0;
+  var precio = parseFloat((document.getElementById('alp-precio')||{}).value)||0;
+  var fecha  = (document.getElementById('alp-fecha')||{}).value||hoy();
+  var satNom = (document.getElementById('alp-sat')||{}).value||'';
+  if(!ref){ toast('Escribe una descripción','error'); return; }
+  if(uds<=0||precio<=0){ toast('Uds y precio deben ser > 0','error'); return; }
+  if(!DB.costos_mo) DB.costos_mo={precios:[],pagos:[]};
+  if(!DB.costos_mo.pagos) DB.costos_mo.pagos=[];
+  var id = 'lp_'+Date.now();
+  DB.costos_mo.pagos.push({
+    id:id, referencia:ref, satelite_nombre:satNom,
+    uds:uds, precio_mo:precio, total:uds*precio,
+    fecha:fecha, estado:'PENDIENTE_PAGO',
+    total_abonado:0, es_linea_manual:true
+  });
+  guardarCostosMO();
+  closeModal();
+  renderPage('costos_mo');
+  toast('Línea agregada: $'+(uds*precio).toLocaleString('es-CO'),'success');
 }
 function revertirPago(id){
   var p = (DB.costos_mo&&DB.costos_mo.pagos||[]).find(function(x){ return x.id===id; });
