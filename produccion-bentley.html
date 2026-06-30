@@ -8830,7 +8830,7 @@ function _defaultComponentesMOD(){
   ];
   zonasPriority.forEach(function(z){
     var p = puestos.find(function(p){ return p.zona===z.zona && (!z.cargo||p.cargo===z.cargo); });
-    if(p) defaults.push({id:_costeoId(), tipo:'MOD', puesto_id:p.id, tiempo_minutos:1, unidades:1});
+    if(p) defaults.push({id:_costeoId(), tipo:'MOD', puesto_id:p.id, tiempo_minutos:0, unidades:1});
   });
   return defaults;
 }
@@ -8840,7 +8840,7 @@ function _defaultComponentesCIF(){
   var zonas = ['corte','insumos/alistamiento','vapor 116','broches/ ojales','calidad','logisitica','empaque','bodega almacenamiento'];
   zonas.forEach(function(z){
     var c = cifs.find(function(c){ return c.zona===z; });
-    if(c) defaults.push({id:_costeoId(), tipo:'CIF', zona:z, tiempo_minutos:1, unidades:1});
+    if(c) defaults.push({id:_costeoId(), tipo:'CIF', zona:z, tiempo_minutos:0, unidades:1});
   });
   return defaults;
 }
@@ -8939,10 +8939,11 @@ function _renderModalReceta(rec){
         compListHtml += '<span style="font-size:11px;color:#94a3b8;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+esc(nombreComp)+'">'+esc(nombreComp)+'</span>';
         // Editable fields
         if(comp.tipo==='MOD'||comp.tipo==='CIF'){
-          compListHtml += '<input type="number" min="0" step="0.01" value="'+(comp.tiempo_minutos||0)+'" data-cid="'+comp.id+'" data-campo="tiempo_minutos" oninput="_modalEditComp(this)" style="width:52px;background:#0d1117;border:1px solid #1e2535;border-radius:4px;color:#fbbf24;font-size:11px;padding:2px 4px;text-align:center;">';
-          compListHtml += '<span style="font-size:10px;color:#475569;">min</span>';
-          compListHtml += '<span style="font-size:10px;color:#334155;">÷</span>';
-          compListHtml += '<input type="number" min="1" step="1" value="'+(comp.unidades||1)+'" data-cid="'+comp.id+'" data-campo="unidades" oninput="_modalEditComp(this)" style="width:52px;background:#0d1117;border:1px solid #1e2535;border-radius:4px;color:#34d399;font-size:11px;padding:2px 4px;text-align:center;">';
+          var tarifaRef = comp.tipo==='MOD' ? calcTarifaMOD(comp.puesto_id) : calcTarifaCIF(comp.zona);
+          compListHtml += '<span style="font-size:9px;color:#334155;white-space:nowrap;">'+fmtCopFull(tarifaRef)+'/min</span>';
+          compListHtml += '<input type="number" min="0" step="0.01" value="'+(comp.tiempo_minutos||0)+'" data-cid="'+comp.id+'" data-campo="tiempo_minutos" oninput="_modalEditComp(this)" style="width:52px;background:#0d1117;border:1px solid #1e2535;border-radius:4px;color:#fbbf24;font-size:11px;padding:2px 4px;text-align:center;" placeholder="min">';
+          compListHtml += '<span style="font-size:10px;color:#475569;">÷</span>';
+          compListHtml += '<input type="number" min="1" step="1" value="'+(comp.unidades||1)+'" data-cid="'+comp.id+'" data-campo="unidades" oninput="_modalEditComp(this)" style="width:48px;background:#0d1117;border:1px solid #1e2535;border-radius:4px;color:#34d399;font-size:11px;padding:2px 4px;text-align:center;" placeholder="uds">';
           compListHtml += '<span style="font-size:10px;color:#475569;">uds</span>';
         } else if(comp.tipo==='MATERIAL'){
           compListHtml += '<input type="number" min="0" step="0.001" value="'+(comp.consumo||0)+'" data-cid="'+comp.id+'" data-campo="consumo" oninput="_modalEditComp(this)" style="width:64px;background:#0d1117;border:1px solid #1e2535;border-radius:4px;color:#0ea5e9;font-size:11px;padding:2px 4px;text-align:center;">';
