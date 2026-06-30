@@ -9082,7 +9082,18 @@ function _modalAgregarComp(tipo){
   var body='<div style="background:#0d1117;border:1px solid #1e2535;border-top:3px solid '+tipoColor+';border-radius:12px;padding:22px;width:100%;max-width:440px;">';
   body+='<div style="font-family:var(--bebas);font-size:18px;color:'+tipoColor+';margin-bottom:16px;">AGREGAR '+esc(tipo)+'</div>';
   body+='<div class="form-group" style="margin-bottom:14px;"><label class="form-label">'+(tipo==='MOD'?'Puesto de trabajo':tipo==='CIF'?'Zona CIF':tipo==='MATERIAL'?'Materia Prima':'Servicio')+'</label>';
-  body+='<select id="modal-comp-ref" class="form-control">'+(optsHtml||'<option>Sin opciones</option>')+'</select></div>';
+  if(tipo==='MATERIAL'||tipo==='SERVICIO'){
+    body+='<input id="modal-comp-buscar" class="form-control" type="text" placeholder="Buscar..." autocomplete="off" oninput="_filtrarCompLista()" style="margin-bottom:6px;">';
+    body+='<div id="modal-comp-lista" style="max-height:220px;overflow-y:auto;border:1px solid #1e2535;border-radius:8px;background:#080a10;">';
+    var items = tipo==='MATERIAL' ? mps : svcs;
+    body+=items.map(function(m){ var label=tipo==='MATERIAL'?m.nombre+' ('+m.unidad+')':m.nombre; return '<div class="mc-item" data-val="'+m.id+'" onclick="_selectCompItem(this)" style="padding:8px 12px;cursor:pointer;font-size:12px;color:#cbd5e1;border-bottom:1px solid #0d1117;">'+esc(label)+'</div>'; }).join('');
+    body+='</div>';
+    body+='<input type="hidden" id="modal-comp-ref" value="">';
+    body+='<div id="modal-comp-sel" style="margin-top:6px;font-size:11px;color:'+tipoColor+';min-height:16px;"></div>';
+  } else {
+    body+='<select id="modal-comp-ref" class="form-control">'+(optsHtml||'<option>Sin opciones</option>')+'</select>';
+  }
+  body+='</div>';
   if(esTimpo){
     body+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">';
     body+='<div class="form-group"><label class="form-label">Tiempo lote (min)</label>';
@@ -9104,8 +9115,32 @@ function _modalAgregarComp(tipo){
   body+='</div></div>';
   overlay2.innerHTML = body;
   document.body.appendChild(overlay2);
+  setTimeout(function(){ var b=document.getElementById('modal-comp-buscar'); if(b) b.focus(); },80);
 }
 
+function _filtrarCompLista(){
+  var q = (document.getElementById('modal-comp-buscar')||{}).value||'';
+  q = q.trim().toUpperCase();
+  var items = document.querySelectorAll('#modal-comp-lista .mc-item');
+  var vis = 0;
+  items.forEach(function(el){
+    var match = !q || el.textContent.toUpperCase().indexOf(q)>=0;
+    el.style.display = match ? '' : 'none';
+    if(match) vis++;
+  });
+}
+function _selectCompItem(el){
+  document.querySelectorAll('#modal-comp-lista .mc-item').forEach(function(x){
+    x.style.background = '';
+    x.style.color = '#cbd5e1';
+  });
+  el.style.background = 'rgba(14,165,233,.15)';
+  el.style.color = '#e2e8f0';
+  var hidden = document.getElementById('modal-comp-ref');
+  if(hidden) hidden.value = el.dataset.val;
+  var sel = document.getElementById('modal-comp-sel');
+  if(sel) sel.textContent = '✓ ' + el.textContent;
+}
 function _modalConfirmarComp(tipo){
   var ref = (document.getElementById('modal-comp-ref')||{}).value;
   var cant = parseFloat((document.getElementById('modal-comp-cant')||{}).value)||0;
