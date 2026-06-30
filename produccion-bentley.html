@@ -9356,16 +9356,14 @@ function verReceta(id){
       b+='<div style="font-size:11px;color:#334155;margin-bottom:4px;">Sin precio</div>';
       b+='<button data-rid="'+id+'" onclick="abrirPreciosReceta(this.dataset.rid)" style="font-size:10px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2);color:#fbbf24;border-radius:5px;padding:3px 8px;cursor:pointer;width:100%;">+ Asignar precio</button>';
     } else {
-      b+='<div style="display:flex;align-items:baseline;gap:4px;margin-bottom:2px;">';
-      b+='<span style="font-size:16px;font-weight:700;color:#e2e8f0;">'+fmtCopFull(ch.precio)+'</span>';
-      b+='<span style="font-size:10px;color:#475569;">base</span></div>';
-      b+='<div style="font-size:11px;color:#64748b;margin-bottom:8px;">'+fmtCopFull(ch.pvp)+' con IVA</div>';
-      b+='<div style="background:'+col+'18;border:1px solid '+col+'33;border-radius:6px;padding:6px 8px;text-align:center;">';
-      b+='<div style="font-size:22px;font-weight:800;color:'+col+';line-height:1;">'+fmtPct(ch.margen)+'</div>';
+      b+='<div style="font-family:var(--bebas);font-size:28px;color:'+accent+';letter-spacing:1px;line-height:1;margin-bottom:1px;">'+fmtCopFull(ch.pvp)+'</div>';
+      b+='<div style="font-size:10px;color:#475569;margin-bottom:8px;">'+fmtCopFull(ch.precio)+' base · IVA incl.</div>';
+      b+='<div style="background:'+col+'18;border:1px solid '+col+'33;border-radius:6px;padding:5px 8px;text-align:center;">';
+      b+='<div style="font-size:20px;font-weight:800;color:'+col+';line-height:1;">'+fmtPct(ch.margen)+'</div>';
       b+='<div style="font-size:9px;color:'+col+';opacity:.7;">'+(ch.margen>=ch.meta?'✓ cumple':'meta '+fmtPct(ch.meta))+'</div>';
       b+='</div>';
-      b+='<div style="font-size:10px;color:#334155;margin-top:6px;">Costo ef.: '+fmtCopFull(ch.costo)+' · com. '+fmtCopFull(ch.comision||0)+'</div>';
-      if(ch.margen<ch.meta*0.85) b+='<div style="font-size:10px;color:#ef4444;margin-top:3px;">↑ Sugerido: '+fmtCopFull(ch.sugerido)+'</div>';
+      b+='<div style="font-size:10px;color:#334155;margin-top:5px;">Costo ef.: '+fmtCopFull(ch.costo)+' · com. '+fmtCopFull(ch.comision||0)+'</div>';
+      if(ch.margen<ch.meta*0.85) b+='<div style="font-size:10px;color:#ef4444;margin-top:3px;">↑ Sugerido: '+fmtCopFull(ch.sugerido)+' IVA</div>';
     }
     b+='</div>';
   });
