@@ -9553,10 +9553,14 @@ function _modalAgregarComp(tipo){
   var tipoColor={MATERIAL:'#0ea5e9',MOD:'#34d399',CIF:'#fbbf24',SERVICIO:'#a855f7'}[tipo]||'#64748b';
   var body='<div style="background:#0d1117;border:1px solid #1e2535;border-top:3px solid '+tipoColor+';border-radius:12px;padding:22px;width:100%;max-width:440px;">';
   body+='<div style="font-family:var(--bebas);font-size:18px;color:'+tipoColor+';margin-bottom:16px;">AGREGAR '+esc(tipo)+'</div>';
-  body+='<div class="form-group" style="margin-bottom:14px;"><label class="form-label">'+(tipo==='MOD'?'Puesto de trabajo':tipo==='CIF'?'Zona CIF':tipo==='MATERIAL'?'Materia Prima':'Servicio')+'</label>';
+  body+='<div class="form-group" style="margin-bottom:14px;">';
+  body+='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">';
+  body+='<label class="form-label" style="margin:0;">'+(tipo==='MOD'?'Puesto de trabajo':tipo==='CIF'?'Zona CIF':tipo==='MATERIAL'?'Materia Prima':'Servicio')+'</label>';
+  body+='<button data-tipo="'+tipo+'" onclick="_toggleCrearNuevoComp(this.dataset.tipo)" style="background:rgba('+({'MATERIAL':'14,165,233','MOD':'52,211,153','CIF':'251,191,36','SERVICIO':'168,85,247'}[tipo]||'100,116,139')+',.15);border:1px solid rgba('+({'MATERIAL':'14,165,233','MOD':'52,211,153','CIF':'251,191,36','SERVICIO':'168,85,247'}[tipo]||'100,116,139')+',.35);color:'+tipoColor+';border-radius:6px;padding:3px 10px;font-size:10px;font-weight:700;cursor:pointer;" id="btn-crear-nuevo-comp">+ Crear nuevo</button>';
+  body+='</div>';
   if(tipo==='MATERIAL'||tipo==='SERVICIO'){
     body+='<input id="modal-comp-buscar" class="form-control" type="text" placeholder="Buscar..." autocomplete="off" oninput="_filtrarCompLista()" style="margin-bottom:6px;">';
-    body+='<div id="modal-comp-lista" style="max-height:220px;overflow-y:auto;border:1px solid #1e2535;border-radius:8px;background:#080a10;">';
+    body+='<div id="modal-comp-lista" style="max-height:200px;overflow-y:auto;border:1px solid #1e2535;border-radius:8px;background:#080a10;">';
     var items = tipo==='MATERIAL' ? mps : svcs;
     body+=items.map(function(m){ var label=tipo==='MATERIAL'?m.nombre+' ('+m.unidad+')':m.nombre; return '<div class="mc-item" data-val="'+m.id+'" onclick="_selectCompItem(this)" style="padding:8px 12px;cursor:pointer;font-size:12px;color:#cbd5e1;border-bottom:1px solid #0d1117;">'+esc(label)+'</div>'; }).join('');
     body+='</div>';
@@ -9565,6 +9569,30 @@ function _modalAgregarComp(tipo){
   } else {
     body+='<select id="modal-comp-ref" class="form-control">'+(optsHtml||'<option>Sin opciones</option>')+'</select>';
   }
+  // Panel "Crear nuevo" — oculto por defecto
+  body+='<div id="panel-crear-nuevo-comp" style="display:none;margin-top:10px;background:#080b10;border:1px solid '+tipoColor+'33;border-radius:8px;padding:12px;">';
+  body+='<div style="font-size:10px;font-weight:700;color:'+tipoColor+';text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">Crear nuevo '+esc(tipo==='MATERIAL'?'Materia Prima':tipo==='SERVICIO'?'Servicio':tipo==='MOD'?'Puesto MOD':'Zona CIF')+'</div>';
+  if(tipo==='MATERIAL'){
+    body+='<input id="nuevo-comp-nombre" class="form-control" type="text" placeholder="Nombre *" style="margin-bottom:6px;">';
+    body+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px;">';
+    body+='<input id="nuevo-comp-unidad" class="form-control" type="text" placeholder="Unidad (m, kg, und…)">';
+    body+='<input id="nuevo-comp-precio" class="form-control" type="number" min="0" placeholder="Precio unitario $">';
+    body+='</div>';
+  } else if(tipo==='SERVICIO'){
+    body+='<input id="nuevo-comp-nombre" class="form-control" type="text" placeholder="Nombre del servicio *" style="margin-bottom:6px;">';
+    body+='<input id="nuevo-comp-precio" class="form-control" type="number" min="0" placeholder="Precio por unidad $" style="margin-bottom:6px;">';
+  } else if(tipo==='MOD'){
+    body+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px;">';
+    body+='<input id="nuevo-comp-zona" class="form-control" type="text" placeholder="Zona *">';
+    body+='<input id="nuevo-comp-cargo" class="form-control" type="text" placeholder="Cargo *">';
+    body+='</div>';
+    body+='<input id="nuevo-comp-salario" class="form-control" type="number" min="0" placeholder="Salario mensual $" style="margin-bottom:6px;">';
+  } else if(tipo==='CIF'){
+    body+='<input id="nuevo-comp-zona" class="form-control" type="text" placeholder="Nombre de la zona *" style="margin-bottom:6px;">';
+    body+='<input id="nuevo-comp-tarifa" class="form-control" type="number" min="0" step="0.01" placeholder="Tarifa $/min" style="margin-bottom:6px;">';
+  }
+  body+='<button data-tipo="'+tipo+'" onclick="_guardarNuevoComp(this.dataset.tipo)" style="width:100%;background:'+tipoColor+';border:none;border-radius:6px;color:#000;font-size:12px;font-weight:700;padding:8px;cursor:pointer;margin-top:4px;">Guardar y seleccionar</button>';
+  body+='</div>';
   body+='</div>';
   if(esTimpo){
     body+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">';
@@ -9590,6 +9618,96 @@ function _modalAgregarComp(tipo){
   setTimeout(function(){ var b=document.getElementById('modal-comp-buscar'); if(b) b.focus(); },80);
 }
 
+function _toggleCrearNuevoComp(tipo){
+  var panel = document.getElementById('panel-crear-nuevo-comp');
+  var lista  = document.getElementById('modal-comp-lista');
+  var buscar = document.getElementById('modal-comp-buscar');
+  var sel    = document.getElementById('modal-comp-ref');
+  if(!panel) return;
+  var showing = panel.style.display !== 'none';
+  panel.style.display = showing ? 'none' : '';
+  if(lista)  lista.style.display  = showing ? '' : 'none';
+  if(buscar) buscar.style.display = showing ? '' : 'none';
+  if(sel)    sel.style.display    = showing ? '' : 'none';
+  var btn = document.getElementById('btn-crear-nuevo-comp');
+  if(btn) btn.textContent = showing ? '+ Crear nuevo' : '← Volver a lista';
+  if(!showing){
+    var first = panel.querySelector('input[type=text],input[type=number]');
+    if(first) setTimeout(function(){ first.focus(); }, 60);
+  }
+}
+function _guardarNuevoComp(tipo){
+  if(!DB.costeo) DB.costeo={mp:[],servicios:[],puestos:[],tarifas_cif:[],recetas:[]};
+  var nuevo = null;
+  var selectId = '';
+  if(tipo==='MATERIAL'){
+    var nombre = ((document.getElementById('nuevo-comp-nombre')||{}).value||'').trim().toUpperCase();
+    if(!nombre){ toast('Nombre requerido','error'); return; }
+    var unidad = ((document.getElementById('nuevo-comp-unidad')||{}).value||'').trim()||'und';
+    var precio = parseFloat((document.getElementById('nuevo-comp-precio')||{}).value)||0;
+    nuevo = {id:_costeoId(), nombre:nombre, unidad:unidad, precio_unitario:precio};
+    if(!DB.costeo.mp) DB.costeo.mp=[];
+    DB.costeo.mp.push(nuevo);
+    selectId = nuevo.id;
+  } else if(tipo==='SERVICIO'){
+    var nombre = ((document.getElementById('nuevo-comp-nombre')||{}).value||'').trim().toUpperCase();
+    if(!nombre){ toast('Nombre requerido','error'); return; }
+    var precio = parseFloat((document.getElementById('nuevo-comp-precio')||{}).value)||0;
+    nuevo = {id:_costeoId(), nombre:nombre, precio:precio};
+    if(!DB.costeo.servicios) DB.costeo.servicios=[];
+    DB.costeo.servicios.push(nuevo);
+    selectId = nuevo.id;
+  } else if(tipo==='MOD'){
+    var zona  = ((document.getElementById('nuevo-comp-zona')||{}).value||'').trim().toLowerCase();
+    var cargo = ((document.getElementById('nuevo-comp-cargo')||{}).value||'').trim().toLowerCase();
+    if(!zona||!cargo){ toast('Zona y cargo requeridos','error'); return; }
+    var salario = parseFloat((document.getElementById('nuevo-comp-salario')||{}).value)||0;
+    nuevo = {id:_costeoId(), zona:zona, cargo:cargo, salario:salario};
+    if(!DB.costeo.puestos) DB.costeo.puestos=[];
+    DB.costeo.puestos.push(nuevo);
+    selectId = nuevo.id;
+  } else if(tipo==='CIF'){
+    var zona   = ((document.getElementById('nuevo-comp-zona')||{}).value||'').trim().toLowerCase();
+    if(!zona){ toast('Nombre de zona requerido','error'); return; }
+    var tarifa = parseFloat((document.getElementById('nuevo-comp-tarifa')||{}).value)||0;
+    nuevo = {zona:zona, tarifa_min:tarifa};
+    if(!DB.costeo.tarifas_cif) DB.costeo.tarifas_cif=[];
+    DB.costeo.tarifas_cif.push(nuevo);
+    selectId = zona;
+  }
+  if(!nuevo){ toast('Error al crear','error'); return; }
+  guardarCosteo().then(function(){
+    toast('Creado y seleccionado','success');
+    // Volver a lista y seleccionar el nuevo ítem
+    _toggleCrearNuevoComp(tipo);
+    // Reconstruir la lista con el nuevo ítem y seleccionarlo
+    var lista = document.getElementById('modal-comp-lista');
+    var selHidden = document.getElementById('modal-comp-ref');
+    var selDrop   = document.getElementById('modal-comp-ref');
+    if(lista){
+      // Buscar/Servicio/Material: agregar el nuevo ítem a la lista y seleccionarlo
+      var label = tipo==='MATERIAL' ? nuevo.nombre+' ('+(nuevo.unidad||'und')+')' : nuevo.nombre||nuevo.zona;
+      var div = document.createElement('div');
+      div.className = 'mc-item';
+      div.dataset.val = selectId;
+      div.onclick = function(){ _selectCompItem(this); };
+      div.style.cssText = 'padding:8px 12px;cursor:pointer;font-size:12px;color:#cbd5e1;border-bottom:1px solid #0d1117;background:rgba(52,211,153,.1);';
+      div.textContent = label;
+      lista.insertBefore(div, lista.firstChild);
+      _selectCompItem(div);
+    } else {
+      // MOD/CIF: agregar opción al select
+      var sel2 = document.getElementById('modal-comp-ref');
+      if(sel2 && sel2.tagName==='SELECT'){
+        var opt = document.createElement('option');
+        opt.value = selectId;
+        opt.textContent = tipo==='MOD' ? nuevo.zona+' – '+nuevo.cargo : nuevo.zona;
+        sel2.appendChild(opt);
+        sel2.value = selectId;
+      }
+    }
+  });
+}
 function _filtrarCompLista(){
   var q = (document.getElementById('modal-comp-buscar')||{}).value||'';
   q = q.trim().toUpperCase();
