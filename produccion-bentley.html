@@ -8040,6 +8040,14 @@ function renderCostosMO(){
     // Encabezado estilo nómina
     var meses = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
     var mesActual = meses[new Date().getMonth()];
+    // Detectar duplicados
+    var dupCount = _contarDuplicadosPagos(pendientes);
+    if(dupCount>0){
+      h += '<div style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:10px 16px;margin-bottom:12px;display:flex;align-items:center;gap:12px;">';
+      h += '<span style="font-size:12px;color:#ef4444;">⚠ Se detectaron <strong>'+dupCount+' pago(s) duplicado(s)</strong> con el mismo número de OT. Esto puede generar cobros dobles.</span>';
+      h += '<button onclick="_dedupPagos()" style="background:#ef4444;border:none;border-radius:6px;color:#fff;font-size:11px;font-weight:700;padding:5px 12px;cursor:pointer;white-space:nowrap;">🧹 Limpiar duplicados</button>';
+      h += '</div>';
+    }
     h += '<div style="background:#1a365d;color:#fff;padding:12px 18px;border-radius:8px 8px 0 0;margin-bottom:0;text-align:center;">';
     h += '<div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;opacity:.7;">Bentley Kids</div>';
     h += '<div style="font-size:16px;font-weight:700;letter-spacing:1px;">NÓMINA DEL MES DE '+mesActual+'</div>';
@@ -8075,13 +8083,21 @@ function renderCostosMO(){
       var satIds = Object.keys(byRef).reduce(function(acc, ref){ return acc.concat(byRef[ref].map(function(p){ return p.id; })); }, []);
 
       // ── Fila cabecera de satélite ──
+      var satNovs = _novedadesParaSatelite(satNom);
+      var satNovUds = satNovs.reduce(function(a,o){ return a+(o.cantidad-(o.unidades_entregadas||0)); },0);
       h += '<tr style="background:#0d1525;border-top:2px solid #1e2535;border-bottom:1px solid #1e2535;">';
       h += '<td colspan="3" style="padding:8px 14px;">';
       h += '<span style="font-size:12px;font-weight:800;color:#e2e8f0;text-transform:uppercase;letter-spacing:.5px;">'+esc(satNom)+'</span>';
+      if(satNovs.length){
+        h += ' <span style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.35);border-radius:5px;color:#ef4444;font-size:10px;font-weight:700;padding:2px 8px;margin-left:6px;cursor:pointer;" data-sat="'+esc(satNom)+'" onclick="event.stopPropagation();_verNovedadesPago(this.dataset.sat)">⚠ '+satNovUds+' prendas en novedad</span>';
+      }
       h += '</td>';
       h += '<td style="padding:8px 14px;text-align:right;font-size:13px;font-weight:800;color:#60a5fa;">$'+satTotal.toLocaleString('es-CO')+'</td>';
       h += '<td style="padding:8px 14px;text-align:center;white-space:nowrap;">';
       h += '<button data-sat="'+esc(satNom)+'" onclick="event.stopPropagation();agregarLineaPago(this.dataset.sat)" style="padding:3px 8px;border-radius:6px;font-size:10px;cursor:pointer;background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);color:#60a5fa;font-weight:600;margin-right:4px;">+ Línea</button>';
+      if(satNovs.length){
+        h += '<button data-sat="'+esc(satNom)+'" onclick="event.stopPropagation();_verNovedadesPago(this.dataset.sat)" style="padding:3px 8px;border-radius:6px;font-size:10px;cursor:pointer;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#ef4444;font-weight:600;margin-right:4px;">⚠ Novedades</button>';
+      }
       h += '<button data-ids="'+esc(JSON.stringify(satIds))+'" onclick="event.stopPropagation();marcarPagadoGrupo(JSON.parse(this.dataset.ids))" style="padding:3px 8px;border-radius:6px;font-size:10px;cursor:pointer;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#22c55e;font-weight:600;">✓ Pagar taller</button>';
       h += '</td></tr>';
 
@@ -8312,6 +8328,83 @@ function marcarPagadoGrupo(ids){
   guardarCostosMO(); renderPage('costos_mo');
   toast('Pagado ('+ids.length+' OTs)','success');
 }
+
+// ── Helpers novedades / dedup pagos ──────────────────────────────────────────
+function _novedadesParaSatelite(satNom){
+  return (DB.ots||[]).filter(function(o){
+    return o.estado==='NOVEDAD' && getSatNombre(o.satelite_id)===satNom;
+  });
+}
+
+function _contarDuplicadosPagos(pendientes){
+  var byOtId = {};
+  pendientes.forEach(function(p){ if(p.ot_id){ if(!byOtId[p.ot_id]) byOtId[p.ot_id]=0; byOtId[p.ot_id]++; } });
+  return Object.values(byOtId).filter(function(c){ return c>1; }).reduce(function(a,c){ return a+(c-1); },0);
+}
+
+function _dedupPagos(){
+  var pagos = (DB.costos_mo&&DB.costos_mo.pagos)||[];
+  var pendientes = pagos.filter(function(p){ return p.estado==='PENDIENTE_PAGO'; });
+  var byOtId = {};
+  var toRemove = [];
+  pendientes.forEach(function(p){
+    if(!p.ot_id) return;
+    if(!byOtId[p.ot_id]){ byOtId[p.ot_id]=p; }
+    else { toRemove.push(p.id); }
+  });
+  if(!toRemove.length){ toast('Sin duplicados','info'); return; }
+  if(!confirm('Se eliminarán '+toRemove.length+' pago(s) duplicado(s) (misma OT). ¿Continuar?')) return;
+  DB.costos_mo.pagos = pagos.filter(function(p){ return toRemove.indexOf(p.id)===-1; });
+  guardarCostosMO(); renderPage('costos_mo');
+  toast('Eliminados '+toRemove.length+' duplicado(s)','success');
+}
+
+function _verNovedadesPago(satNom){
+  var novs = _novedadesParaSatelite(satNom);
+  if(!novs.length){ toast('Sin novedades para '+satNom,'info'); return; }
+  var body = '<div style="font-size:12px;color:#64748b;margin-bottom:14px;">Estas OTs están en estado <strong style="color:#ef4444;">NOVEDAD</strong> y pueden estar bloqueando el pago. Revisá cada una y dá el aval cuando estén resueltas.</div>';
+  body += '<div style="display:flex;flex-direction:column;gap:8px;">';
+  novs.forEach(function(ot){
+    var udsNov = ot.cantidad - (ot.unidades_entregadas||0);
+    body += '<div style="background:#0d1117;border:1px solid rgba(239,68,68,.25);border-left:3px solid #ef4444;border-radius:8px;padding:12px 14px;">';
+    body += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">';
+    body += '<span style="font-size:11px;font-weight:700;color:#00d4ff;">OT-'+ot.numero_ot+'</span>';
+    body += '<span style="font-size:11px;color:#94a3b8;flex:1;">'+esc(ot.nombre)+' · '+esc(ot.color)+' · T'+esc(ot.talla)+'</span>';
+    body += '<span style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);border-radius:5px;color:#ef4444;font-size:11px;font-weight:700;padding:2px 8px;">'+udsNov+' uds bloqueadas</span>';
+    body += '</div>';
+    if(ot.motivo_incumplimiento){ body += '<div style="font-size:11px;color:#fbbf24;margin-bottom:8px;">📌 '+esc(ot.motivo_incumplimiento)+'</div>'; }
+    body += '<div style="display:flex;gap:6px;align-items:center;">';
+    body += '<label style="font-size:10px;color:#475569;">Motivo / resolución:</label>';
+    body += '<input id="nov-mot-'+ot.id+'" class="form-control" style="flex:1;font-size:11px;padding:4px 8px;" placeholder="Describe la resolución…" value="'+esc(ot.motivo_incumplimiento||'')+'">';
+    body += '<button data-otid="'+ot.id+'" onclick="_liberarNovedadPago(this.dataset.otid)" style="background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);color:#22c55e;border-radius:6px;font-size:11px;font-weight:700;padding:5px 12px;cursor:pointer;white-space:nowrap;">✓ Dar aval</button>';
+    body += '</div>';
+    body += '</div>';
+  });
+  body += '</div>';
+  openModal('⚠ Novedades — '+esc(satNom), body, '<button class="btn btn-ghost" onclick="closeModal()">Cerrar</button>', {wide:true});
+}
+
+async function _liberarNovedadPago(otId){
+  var ot = (DB.ots||[]).find(function(o){ return o.id===otId; });
+  if(!ot) return;
+  var motEl = document.getElementById('nov-mot-'+otId);
+  var mot = motEl ? (motEl.value||'').trim() : '';
+  ot.estado = 'ENTREGADO';
+  ot.unidades_entregadas = ot.cantidad;
+  ot.unidades_novedad = 0;
+  if(mot) ot.motivo_incumplimiento = mot;
+  ot.historial = ot.historial||[];
+  ot.historial.push({fecha:new Date().toISOString(), accion:'Novedad liberada desde Pagos', user:getUser()});
+  saveLocal(); updateNovBadge();
+  var ok = await guardarArchivo('ots',{ots:DB.ots});
+  if(ok){
+    toast('OT-'+ot.numero_ot+' liberada para pago','success');
+    closeModal();
+    renderPage('costos_mo');
+  }
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 function abrirAbonoGrupo(ids){
   if(!ids||!ids.length) return;
   var pagos = (DB.costos_mo&&DB.costos_mo.pagos)||[];
