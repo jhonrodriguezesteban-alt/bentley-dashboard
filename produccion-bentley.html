@@ -7952,23 +7952,44 @@ function renderCostosMO(){
       h += '<button data-sat="'+esc(satNom)+'" onclick="pagarSatelite(this.dataset.sat)" class="btn btn-sm" style="background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.3);color:#f97316;padding:4px 10px;">Pagar todo</button>';
       h += '</div></div>';
       h += '<div style="padding:8px 0;">';
+      // Agrupar por referencia dentro del satélite
+      var byRef = {};
+      var refOrder = [];
       items.forEach(function(p){
-        h += '<div style="display:flex;align-items:center;gap:12px;padding:8px 16px;border-bottom:1px solid rgba(30,37,53,.5);">';
-        h += '<div style="flex:1;"><div style="font-size:12px;color:#e2e8f0;font-weight:600;">'+esc(p.referencia)+'</div>';
-        var abonado = p.total_abonado||0;
-        var saldo = p.total - abonado;
-        var detalleAbono = abonado>0 ? ' · <span style="color:#fbbf24;">Abonado: $'+abonado.toLocaleString('es-CO')+'</span> · <span style="color:#f97316;font-weight:700;">Saldo: $'+saldo.toLocaleString('es-CO')+'</span>' : '';
-        h += '<div style="font-size:11px;color:#64748b;">'+p.uds+' uds × $'+(p.precio_mo||0).toLocaleString('es-CO')+' = <span style="color:#f97316;">$'+(p.total||0).toLocaleString('es-CO')+'</span>'+detalleAbono+' · '+esc(p.fecha||'')+'</div>';
-        if(p.abonos && p.abonos.length){
-          p.abonos.forEach(function(ab){
-            h += '<div style="font-size:10px;color:#475569;margin-top:2px;">↳ Abono '+esc(ab.fecha)+': $'+ab.valor.toLocaleString('es-CO')+'</div>';
-          });
-        }
+        var k = p.referencia||'Sin referencia';
+        if(!byRef[k]){ byRef[k]=[]; refOrder.push(k); }
+        byRef[k].push(p);
+      });
+      refOrder.forEach(function(ref){
+        var grp = byRef[ref];
+        var totalUdsGrp = grp.reduce(function(a,p){ return a+(p.uds||0); },0);
+        var totalGrp    = grp.reduce(function(a,p){ return a+(p.total||0); },0);
+        var abonadoGrp  = grp.reduce(function(a,p){ return a+(p.total_abonado||0); },0);
+        var saldoGrp    = totalGrp - abonadoGrp;
+        var ids         = grp.map(function(p){ return p.id; });
+        var idsJson     = JSON.stringify(ids);
+        var fechas      = grp.map(function(p){ return p.fecha||''; }).filter(function(f){ return f; });
+        var fechaLabel  = fechas.length ? fechas[0]+(fechas.length>1?' +'+( fechas.length-1):'') : '';
+        // Nómina: label especial
+        var esNomina = ref.indexOf('NÓMINA')>=0 || ref.indexOf('Nómina')>=0;
+
+        h += '<div style="display:flex;align-items:flex-start;gap:12px;padding:9px 16px;border-bottom:1px solid rgba(30,37,53,.5);">';
+        h += '<div style="flex:1;">';
+        h += '<div style="font-size:12px;color:#e2e8f0;font-weight:600;">'+esc(ref)+'</div>';
+        var detalleAbono = abonadoGrp>0 ? ' · <span style="color:#fbbf24;">Abonado: $'+abonadoGrp.toLocaleString('es-CO')+'</span> · <span style="color:#f97316;font-weight:700;">Saldo: $'+saldoGrp.toLocaleString('es-CO')+'</span>' : '';
+        h += '<div style="font-size:11px;color:#64748b;">'+totalUdsGrp+' uds = <span style="color:#f97316;">$'+totalGrp.toLocaleString('es-CO')+'</span>'+detalleAbono+(fechaLabel?' · '+esc(fechaLabel):'')+(grp.length>1?' · <span style="color:#475569;">'+grp.length+' OTs</span>':'')+'</div>';
+        // Abonos registrados
+        grp.forEach(function(p){
+          if(p.abonos && p.abonos.length){
+            p.abonos.forEach(function(ab){
+              h += '<div style="font-size:10px;color:#475569;margin-top:2px;">↳ Abono '+esc(ab.fecha)+': $'+ab.valor.toLocaleString('es-CO')+'</div>';
+            });
+          }
+        });
         h += '</div>';
-        var pendAct = p.total - (p.total_abonado||0);
         h += '<div style="display:flex;gap:5px;flex-shrink:0;">';
-        h += '<button data-id="'+p.id+'" onclick="abrirAbono(this.dataset.id)" style="padding:4px 10px;border-radius:6px;font-size:11px;cursor:pointer;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:#fbbf24;font-weight:600;">$ Abonar</button>';
-        h += '<button data-id="'+p.id+'" onclick="marcarPagado(this.dataset.id)" class="btn btn-sm btn-success" style="padding:4px 10px;">✓ Pagado</button>';
+        h += '<button data-ids="'+esc(idsJson)+'" onclick="abrirAbonoGrupo(JSON.parse(this.dataset.ids))" style="padding:4px 10px;border-radius:6px;font-size:11px;cursor:pointer;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:#fbbf24;font-weight:600;">$ Abonar</button>';
+        h += '<button data-ids="'+esc(idsJson)+'" onclick="marcarPagadoGrupo(JSON.parse(this.dataset.ids))" class="btn btn-sm btn-success" style="padding:4px 10px;">✓ Pagado</button>';
         h += '</div>';
         h += '</div>';
       });
@@ -8033,6 +8054,64 @@ function marcarPagado(id){
   p.estado = 'PAGADO';
   guardarCostosMO(); renderPage('costos_mo');
   toast('Pago registrado','success');
+}
+function marcarPagadoGrupo(ids){
+  if(!DB.costos_mo||!DB.costos_mo.pagos) return;
+  ids.forEach(function(id){
+    var p = DB.costos_mo.pagos.find(function(x){ return x.id===id; });
+    if(p) p.estado = 'PAGADO';
+  });
+  guardarCostosMO(); renderPage('costos_mo');
+  toast('Pagado ('+ids.length+' OTs)','success');
+}
+function abrirAbonoGrupo(ids){
+  if(!ids||!ids.length) return;
+  var pagos = (DB.costos_mo&&DB.costos_mo.pagos)||[];
+  var grp = ids.map(function(id){ return pagos.find(function(x){ return x.id===id; }); }).filter(Boolean);
+  if(!grp.length) return;
+  var totalGrp   = grp.reduce(function(a,p){ return a+(p.total||0); },0);
+  var abonadoGrp = grp.reduce(function(a,p){ return a+(p.total_abonado||0); },0);
+  var saldo      = totalGrp - abonadoGrp;
+  var ref        = grp[0].referencia||'';
+  var body = '';
+  body += '<div style="background:#0f1520;border:1px solid #1e2535;border-radius:8px;padding:12px 16px;margin-bottom:14px;">';
+  body += '<div style="font-size:11px;color:#64748b;">'+esc(grp[0].satelite_nombre||'')+' · '+esc(ref)+(grp.length>1?' · '+grp.length+' OTs':'')+'</div>';
+  body += '<div style="display:flex;justify-content:space-between;margin-top:6px;">';
+  body += '<span style="font-size:12px;color:#94a3b8;">Total: $'+totalGrp.toLocaleString('es-CO')+'</span>';
+  if(abonadoGrp>0) body += '<span style="font-size:12px;color:#fbbf24;">Abonado: $'+abonadoGrp.toLocaleString('es-CO')+'</span>';
+  body += '<span style="font-size:13px;font-weight:700;color:#f97316;">Saldo: $'+saldo.toLocaleString('es-CO')+'</span>';
+  body += '</div></div>';
+  body += '<div class="form-group"><label class="form-label">Valor del abono (COP)</label><input id="abono-valor" type="number" class="form-control" placeholder="0" max="'+saldo+'" autofocus></div>';
+  body += '<div class="form-group"><label class="form-label">Fecha</label><input id="abono-fecha" type="date" class="form-control" value="'+hoy()+'"></div>';
+  body += '<input type="hidden" id="abono-ids" value="'+esc(JSON.stringify(ids))+'">';
+  var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>';
+  footer += '<button class="btn btn-primary" style="background:#fbbf24;border-color:#fbbf24;color:#000;" onclick="guardarAbonoGrupo()">Registrar abono</button>';
+  openModal('Registrar Abono', body, footer);
+  setTimeout(function(){ var el=document.getElementById('abono-valor'); if(el) el.focus(); }, 100);
+}
+function guardarAbonoGrupo(){
+  var ids   = JSON.parse((document.getElementById('abono-ids')||{}).value||'[]');
+  var valor = parseFloat((document.getElementById('abono-valor')||{}).value)||0;
+  var fecha = (document.getElementById('abono-fecha')||{}).value||hoy();
+  if(!valor||valor<=0){ toast('Ingresa un valor','error'); return; }
+  var pagos = (DB.costos_mo&&DB.costos_mo.pagos)||[];
+  var grp   = ids.map(function(id){ return pagos.find(function(x){ return x.id===id; }); }).filter(Boolean);
+  if(!grp.length) return;
+  // Distribuir el abono proporcionalmente entre las OTs del grupo
+  var totalGrp = grp.reduce(function(a,p){ return a+(p.total||0); },0);
+  var resta = valor;
+  grp.forEach(function(p, i){
+    var parte = i===grp.length-1 ? resta : Math.round(valor * (p.total||0) / (totalGrp||1));
+    resta -= parte;
+    if(!p.abonos) p.abonos = [];
+    p.abonos.push({fecha:fecha, valor:parte});
+    p.total_abonado = (p.total_abonado||0) + parte;
+    if(p.total_abonado >= p.total) p.estado = 'PAGADO';
+  });
+  guardarCostosMO();
+  closeModal();
+  renderPage('costos_mo');
+  toast('Abono registrado','success');
 }
 
 function abrirAbono(id){
