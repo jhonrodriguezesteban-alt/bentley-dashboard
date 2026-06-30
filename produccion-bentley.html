@@ -1809,6 +1809,23 @@ function _planOpUds(op){
   return uds;
 }
 
+function _planRecetaDeOp(op){
+  var recetas = DB.costeo && DB.costeo.recetas ? DB.costeo.recetas : [];
+  if(!recetas.length || !op.nombre_producto) return null;
+  var nombre = op.nombre_producto.trim().toUpperCase();
+  // Buscar coincidencia exacta primero, luego parcial
+  var r = recetas.find(function(rec){ return rec.producto.toUpperCase()===nombre; });
+  if(!r) r = recetas.find(function(rec){ return rec.producto.toUpperCase().indexOf(nombre)===0; });
+  if(!r) r = recetas.find(function(rec){ return rec.producto.toUpperCase().indexOf(nombre)>=0; });
+  return r||null;
+}
+function _planCostoOp(op){
+  var rec = _planRecetaDeOp(op);
+  if(!rec) return null;
+  var res = calcResumen(rec);
+  var uds = _planOpUds(op);
+  return {mat:res.mat*uds, mod:res.mod*uds, cif:res.cif*uds, svc:res.svc*uds, total:res.total*uds, uds:uds, costo_ud:res.total};
+}
 function _planMiniCard(op){
   var uds = _planOpUds(op);
   var baseId = fmtOpId(op.id);
@@ -1819,7 +1836,8 @@ function _planMiniCard(op){
       if((DB.planeacion.meses[m]||[]).indexOf(op.id)>=0) inMes = m;
     });
   }
-  var h = '<div data-plan-op="'+op.id+'" draggable="true" ondragstart="planDragStart(event,\''+op.id+'\')" ondragend="planDragEnd()" style="background:#13161f;border:1px solid #1e2535;border-radius:9px;padding:9px 10px;cursor:grab;width:136px;flex-shrink:0;user-select:none;transition:opacity .15s,transform .15s;">';
+  var costo = _planCostoOp(op);
+  var h = '<div data-plan-op="'+op.id+'" draggable="true" ondragstart="planDragStart(event,\''+op.id+'\')" ondragend="planDragEnd()" style="background:#13161f;border:1px solid #1e2535;border-radius:9px;padding:9px 10px;cursor:grab;width:152px;flex-shrink:0;user-select:none;transition:opacity .15s,transform .15s;">';
   h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">';
   h += '<span style="font-size:11px;font-weight:800;color:#00d4ff;">'+esc(baseId)+'</span>';
   h += '<span style="font-size:8px;font-weight:700;background:rgba(148,163,184,.1);border:1px solid #1e2535;border-radius:4px;color:#64748b;padding:1px 5px;text-transform:uppercase;">'+esc((op.categoria||'').substring(0,5))+'</span>';
@@ -1828,15 +1846,30 @@ function _planMiniCard(op){
   if(colores.length){
     h += '<div style="display:flex;flex-wrap:wrap;gap:2px;margin-bottom:5px;">';
     colores.slice(0,3).forEach(function(c){ h += '<span style="font-size:8px;background:rgba(148,163,184,.07);border:1px solid #1e2535;border-radius:3px;color:#94a3b8;padding:1px 4px;text-transform:uppercase;white-space:nowrap;overflow:hidden;max-width:60px;text-overflow:ellipsis;">'+esc(c)+'</span>'; });
-    if(colores.length>3) h += '<span style="font-size:8px;color:#475569;">+'+( colores.length-3)+'</span>';
+    if(colores.length>3) h += '<span style="font-size:8px;color:#475569;">+'+(colores.length-3)+'</span>';
     h += '</div>';
   }
-  h += '<div style="display:flex;align-items:center;justify-content:space-between;">';
-  h += '<span style="font-size:10px;font-weight:700;color:#64748b;">'+uds+' uds</span>';
-  if(inMes){
-    h += '<button data-opid="'+op.id+'" onclick="event.stopPropagation();_planAsignar(this.dataset.opid,null)" title="Quitar" style="background:none;border:none;color:#334155;font-size:11px;cursor:pointer;padding:0;line-height:1;">✕</button>';
+  // Desglose de costos si hay receta
+  if(costo){
+    h += '<div style="border-top:1px solid #1e2535;margin:5px 0;padding-top:5px;">';
+    h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:2px 6px;margin-bottom:4px;">';
+    h += '<span style="font-size:8px;color:#0ea5e9;">MAT '+fmtCopFull(costo.mat)+'</span>';
+    h += '<span style="font-size:8px;color:#34d399;">MOD '+fmtCopFull(costo.mod)+'</span>';
+    h += '<span style="font-size:8px;color:#fbbf24;">CIF '+fmtCopFull(costo.cif)+'</span>';
+    h += '<span style="font-size:8px;color:#a855f7;">SVC '+fmtCopFull(costo.svc)+'</span>';
+    h += '</div>';
+    h += '<div style="font-size:10px;font-weight:800;color:#e2e8f0;">Total '+fmtCopFull(costo.total)+'</div>';
+    h += '<div style="font-size:8px;color:#475569;">'+fmtCopFull(costo.costo_ud)+'/prenda · '+uds+' uds</div>';
+    h += '</div>';
+  } else {
+    h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px;">';
+    h += '<span style="font-size:10px;font-weight:700;color:#64748b;">'+uds+' uds</span>';
+    h += '<span style="font-size:8px;color:#1e2535;">sin receta</span>';
+    h += '</div>';
   }
-  h += '</div>';
+  if(inMes){
+    h += '<button data-opid="'+op.id+'" onclick="event.stopPropagation();_planAsignar(this.dataset.opid,null)" title="Quitar" style="position:absolute;top:6px;right:6px;background:none;border:none;color:#334155;font-size:11px;cursor:pointer;padding:0;line-height:1;">✕</button>';
+  }
   h += '</div>';
   return h;
 }
@@ -1907,11 +1940,14 @@ function renderPlaneacion(){
 
     var totalUds = 0;
     var catMap = {};
+    var costoMes = {mat:0, mod:0, cif:0, svc:0, total:0};
     mesOps.forEach(function(op){
       var u = _planOpUds(op);
       totalUds += u;
       var cat = op.categoria||'Otros';
       catMap[cat] = (catMap[cat]||0) + u;
+      var c = _planCostoOp(op);
+      if(c){ costoMes.mat+=c.mat; costoMes.mod+=c.mod; costoMes.cif+=c.cif; costoMes.svc+=c.svc; costoMes.total+=c.total; }
     });
     var catEntries = Object.keys(catMap).sort(function(a,b){ return catMap[b]-catMap[a]; });
 
@@ -1924,6 +1960,17 @@ function renderPlaneacion(){
     if(totalUds) h += '<div style="font-size:20px;font-weight:900;color:'+mes.color+';">'+totalUds+'<span style="font-size:9px;font-weight:500;color:'+mes.color+'88;margin-left:2px;">uds</span></div>';
     h += '</div>';
     h += '<div style="font-size:10px;color:#64748b;margin-top:2px;">'+mesOps.length+' OP'+(mesOps.length!==1?'s':'')+(totalUds?' · '+totalUds+' uds totales':'')+'</div>';
+    if(costoMes.total>0){
+      h += '<div style="margin-top:7px;padding-top:7px;border-top:1px solid '+mes.color+'18;">';
+      h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;margin-bottom:4px;">';
+      h += '<span style="font-size:9px;color:#0ea5e9;font-weight:700;">MAT '+fmtCopFull(costoMes.mat)+'</span>';
+      h += '<span style="font-size:9px;color:#34d399;font-weight:700;">MOD '+fmtCopFull(costoMes.mod)+'</span>';
+      h += '<span style="font-size:9px;color:#fbbf24;font-weight:700;">CIF '+fmtCopFull(costoMes.cif)+'</span>';
+      h += '<span style="font-size:9px;color:#a855f7;font-weight:700;">SVC '+fmtCopFull(costoMes.svc)+'</span>';
+      h += '</div>';
+      h += '<div style="font-size:11px;font-weight:800;color:#e2e8f0;">Total '+fmtCopFull(costoMes.total)+'</div>';
+      h += '</div>';
+    }
     h += '</div>';
 
     // Category breakdown
@@ -8441,7 +8488,7 @@ function exportarMonitoreoCSV(){
 // ═══════════════════════════════════════════════════════════════════════════════
 // MÓDULO: COSTEO Y RENTABILIDAD
 // ═══════════════════════════════════════════════════════════════════════════════
-var _costeoTab = 'mp';
+var _costeoTab = 'recetas';
 var _costeoSubTab = 'puestos';
 var _costeoRecetaId = null;
 
