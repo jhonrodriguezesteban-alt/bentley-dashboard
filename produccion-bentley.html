@@ -9207,9 +9207,14 @@ function _listaRecetas(recetas){
     var nComp=(rec.componentes||[]).length;
     h+='<div style="background:#13161f;border:1px solid #1e2535;border-left:3px solid #00d4ff;border-radius:10px;padding:12px 16px;cursor:pointer;transition:background .12s;" onclick="verReceta(\''+rec.id+'\')" onmouseover="this.style.background=\'#181c28\'" onmouseout="this.style.background=\'\'">';
     h+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">';
-    h+='<span style="font-size:13px;font-weight:700;color:#e2e8f0;flex:1;">'+esc(rec.producto)+'</span>';
+    h+='<div style="flex:1;min-width:0;">';
+    if(rec.referencia) h+='<span style="font-size:10px;font-weight:700;color:#00d4ff;letter-spacing:2px;font-family:var(--bebas);margin-right:6px;">'+esc(rec.referencia)+'</span>';
+    h+='<span style="font-size:13px;font-weight:700;color:#e2e8f0;">'+esc(rec.producto)+'</span>';
+    h+='</div>';
     h+='<span style="font-size:10px;color:#475569;">'+nComp+' comp.</span>';
     h+='<span style="font-family:var(--bebas);font-size:20px;color:#00d4ff;letter-spacing:1px;">'+fmtCopFull(res.total)+'</span>';
+    h+='<button data-rid="'+rec.id+'" onclick="event.stopPropagation();abrirModalReceta(this.dataset.rid)" style="background:rgba(148,163,184,.1);border:1px solid #1e2535;color:#94a3b8;border-radius:6px;font-size:11px;padding:3px 9px;cursor:pointer;flex-shrink:0;">✏️</button>';
+    h+='<button data-rid="'+rec.id+'" onclick="event.stopPropagation();eliminarReceta(this.dataset.rid)" style="background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2);color:#ef4444;border-radius:6px;font-size:11px;padding:3px 9px;cursor:pointer;flex-shrink:0;">🗑</button>';
     h+='</div>';
     h+='<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">';
     if(res.mat) h+='<span style="font-size:10px;background:rgba(14,165,233,.1);border:1px solid rgba(14,165,233,.25);border-radius:5px;color:#0ea5e9;padding:1px 8px;">MAT '+fmtCopFull(res.mat)+'</span>';
@@ -9332,6 +9337,7 @@ function _toggleGrupoReceta(recId, tipo){
 // ── MODAL NUEVA/EDITAR RECETA ─────────────────────────────────────────────────
 var _modalRecetaId = null;
 var _modalRecetaComps = [];
+var _guardandoReceta = false;
 
 function _defaultComponentesMOD(){
   var puestos = DB.costeo.puestos||[];
@@ -9492,8 +9498,12 @@ function _renderModalReceta(rec){
   html += '<div style="padding:20px 22px;overflow-y:auto;flex:1;">';
   html += '<div class="form-group" style="margin-bottom:18px;">';
   html += '<label class="form-label" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#64748b;">Nombre del Producto <span style="color:#ef4444;">*</span></label>';
-  html += '<input id="modal-rec-producto" class="form-control" style="font-size:14px;font-weight:600;" value="'+esc(rec?rec.producto:'')+'" placeholder="Ej: CHAQUETA CAZADORA - REF: 1002" autofocus>';
+  html += '<input id="modal-rec-producto" class="form-control" style="font-size:14px;font-weight:600;" value="'+esc(rec?rec.producto:'')+'" placeholder="Ej: CHAQUETA CAZADORA" autofocus>';
   html += '<div style="font-size:10px;color:#334155;margin-top:4px;">Usa el mismo nombre del producto para que vincule con las Órdenes de Producción.</div>';
+  html += '</div>';
+  html += '<div class="form-group" style="margin-bottom:18px;">';
+  html += '<label class="form-label" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#64748b;">Referencia <span style="font-size:10px;color:#475569;">(4 dígitos)</span></label>';
+  html += '<input id="modal-rec-ref" class="form-control" style="font-size:16px;font-weight:700;letter-spacing:3px;width:120px;" maxlength="4" value="'+esc(rec&&rec.referencia?rec.referencia:'')+'" placeholder="1002">';
   html += '</div>';
   html += compListHtml;
   html += '</div>';
@@ -9747,20 +9757,24 @@ function _modalConfirmarComp(tipo){
 }
 
 function _guardarModalReceta(){
+  if(_guardandoReceta) return;
   var producto = ((document.getElementById('modal-rec-producto')||{}).value||'').trim().toUpperCase();
   if(!producto){ toast('Nombre requerido','error'); return; }
+  var referencia = ((document.getElementById('modal-rec-ref')||{}).value||'').trim().toUpperCase();
   if(!DB.costeo.recetas) DB.costeo.recetas=[];
+  _guardandoReceta = true;
   if(_modalRecetaId){
     var ex=DB.costeo.recetas.find(function(x){return x.id===_modalRecetaId;});
-    if(ex){ ex.producto=producto; ex.componentes=_modalRecetaComps; }
+    if(ex){ ex.producto=producto; ex.referencia=referencia; ex.componentes=_modalRecetaComps; }
   } else {
-    DB.costeo.recetas.push({id:_costeoId(), producto:producto, componentes:_modalRecetaComps});
+    DB.costeo.recetas.push({id:_costeoId(), producto:producto, referencia:referencia, componentes:_modalRecetaComps});
   }
   guardarCosteo().then(function(){
+    _guardandoReceta = false;
     _cerrarModalReceta();
     renderPage('costeo');
     toast('Receta guardada','success');
-  });
+  }).catch(function(){ _guardandoReceta = false; });
 }
 
 function guardarFormReceta(id){
