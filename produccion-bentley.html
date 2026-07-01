@@ -3153,6 +3153,23 @@ function _kanPrevEstado(est){
   var i = _KAN_ORDER.indexOf(est);
   return i > 0 ? _KAN_ORDER[i-1] : null;
 }
+async function _repararSubgEstados(){
+  (DB.ops||[]).forEach(function(op){
+    var otsOp = (DB.ots||[]).filter(function(o){ return o.op_id===op.id; });
+    var colores = [];
+    otsOp.forEach(function(o){ if(colores.indexOf(o.color)===-1) colores.push(o.color); });
+    colores.forEach(function(color){
+      var otsColor = otsOp.filter(function(o){ return o.color===color; });
+      var estadoDer = _subgEstadoDerivado(otsColor);
+      if(!op.subg_estados) op.subg_estados = {};
+      op.subg_estados[_subgKey(op.id, color)] = estadoDer;
+    });
+  });
+  saveLocal();
+  var ok = await guardarArchivo('ops', {ops: DB.ops});
+  if(ok){ toast('Kanban sincronizado con estados reales','success'); renderPage('ops'); }
+  else { toast('Error al guardar','error'); }
+}
 function kanDragStart(ev, opId, color){
   _kanDragOpId = opId; _kanDragColor = color||null;
   ev.dataTransfer.effectAllowed = 'move';
@@ -6864,6 +6881,7 @@ function renderProgPlaneacion(){
   PROG_ESTADOS.forEach(function(e){ h += '<option value="'+e+'"'+(_progFiltroEstado===e?' selected':'')+'>'+e+'</option>'; });
   h += '</select>';
   h += '<div style="flex:1;"></div>';
+  h += '<button onclick="_repararSubgEstados()" style="padding:6px 12px;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.4);border-radius:8px;color:#fbbf24;font-size:11px;font-weight:600;cursor:pointer;margin-right:6px;" title="Sincronizar columnas kanban con los estados reales de cada OT">🔧 Reparar kanban</button>';
   h += '<button class="btn btn-primary" onclick="abrirFormProgOp(null)">+ Nueva OP</button>';
   h += '</div>';
 
