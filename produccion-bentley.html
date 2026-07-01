@@ -2685,7 +2685,7 @@ function renderOPs(){
       var manual = _getSubgEstado(op.id, color);
       var estado = manual || _subgEstadoDerivado(otsColor);
       var uds = otsColor.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
-      var udsEnt = otsColor.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+(o.unidades_entregadas||0); }, 0);
+      var udsEnt = otsColor.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+((o.unidades_entregadas||0)>0?o.unidades_entregadas:(o.cantidad||0)); }, 0);
       var pct = uds ? Math.round(udsEnt/uds*100) : 0;
       var satIds = {};
       otsColor.forEach(function(o){ if(o.satelite_id) satIds[o.satelite_id]=1; });
@@ -3198,11 +3198,9 @@ function _kanPrevEstado(est){
   return i > 0 ? _KAN_ORDER[i-1] : null;
 }
 async function _repararSubgEstados(){
-  // Calcular fecha hace 7 días para distinguir entregas recientes
-  var hoyD = new Date(hoy());
-  var sieteDias = new Date(hoyD); sieteDias.setDate(hoyD.getDate() - 7);
-  var sieteDiasStr = sieteDias.toISOString().slice(0,10);
-
+  // Regla: ARCHIVADO derivado (todos ENTREGADO) →
+  //   ALISTAMIENTO si la OP no está marcada COMPLETADO
+  //   ARCHIVADO   si la OP ya está COMPLETADO (cerrada explícitamente)
   (DB.ops||[]).forEach(function(op){
     var otsOp = (DB.ots||[]).filter(function(o){ return o.op_id===op.id; });
     var colores = [];
@@ -3211,13 +3209,8 @@ async function _repararSubgEstados(){
       var otsColor = otsOp.filter(function(o){ return o.color===color; });
       var estadoDer = _subgEstadoDerivado(otsColor);
       if(!op.subg_estados) op.subg_estados = {};
-      // Si todas las OTs están ENTREGADO (ARCHIVADO derivado),
-      // solo poner ALISTAMIENTO si alguna fue entregada esta semana
       if(estadoDer === 'ARCHIVADO'){
-        var reciente = otsColor.some(function(o){
-          return o.fecha_entrega_real && o.fecha_entrega_real >= sieteDiasStr;
-        });
-        estadoDer = reciente ? 'ALISTAMIENTO' : 'ARCHIVADO';
+        estadoDer = (op.estado_op === 'COMPLETADO') ? 'ARCHIVADO' : 'ALISTAMIENTO';
       }
       op.subg_estados[_subgKey(op.id, color)] = estadoDer;
     });
@@ -3557,7 +3550,7 @@ function renderOPDetalle(opId){
   var otsConf     = otsOp.filter(function(o){ return o.estado==='EN_CONFECCION'; });
   var otsPCorte   = otsOp.filter(function(o){ return o.estado==='POR_REVISAR'||o.estado==='PENDIENTE_CORTAR'||o.estado==='CORTE_POR_ALISTAR'; });
   var otsNov      = otsOp.filter(function(o){ return o.estado==='NOVEDAD'||(o.unidades_novedad||0)>0; });
-  var udsEnt      = otsEnt.reduce(function(a,o){ return a+(o.unidades_entregadas||0); }, 0);
+  var udsEnt      = otsEnt.reduce(function(a,o){ return a+((o.unidades_entregadas||0)>0?o.unidades_entregadas:(o.cantidad||0)); }, 0);
   var udsConf     = otsConf.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
   var udsPCorte   = otsPCorte.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
   var pct = udsTotal ? Math.round(udsEnt/udsTotal*100) : 0;
@@ -7810,7 +7803,7 @@ function mostrarDetalleProduccionActiva(){
         : 'PENDIENTE_CORTAR';
       if(estado === 'ARCHIVADO') return;
       var uds = otsColor.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
-      var udsEnt = otsColor.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+(o.unidades_entregadas||0); }, 0);
+      var udsEnt = otsColor.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+((o.unidades_entregadas||0)>0?o.unidades_entregadas:(o.cantidad||0)); }, 0);
       if(byEstado[estado]) byEstado[estado].push({op:op, color:color, uds:uds, udsEnt:udsEnt});
       var cat = op.categoria || 'Sin Cat.';
       if(!byCat[cat]) byCat[cat] = {};
