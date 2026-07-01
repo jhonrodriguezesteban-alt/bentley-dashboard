@@ -3683,15 +3683,15 @@ function renderOPDetalle(opId){
         // Fila entregada — solo info, con fecha y días
         var diasEnt = ot.fecha_entrega_real ? Math.round((new Date(hoy()) - new Date(ot.fecha_entrega_real)) / 86400000) : null;
         var diasOp  = op.fecha_op ? Math.round((new Date(hoy()) - new Date(op.fecha_op)) / 86400000) : null;
-        h += '<div style="padding:6px 14px;border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:8px;opacity:.7;">';
+        h += '<div style="padding:6px 14px;border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:8px;">';
         h += '<span style="font-size:11px;font-weight:600;color:#34d399;min-width:32px;">'+esc(ot.talla||'—')+'</span>';
         h += badge(ot.estado);
         h += '<span style="font-size:10px;color:var(--dim);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(getSatNombre(ot.satelite_id))+'</span>';
-        h += '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:1px;">';
+        h += '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:1px;opacity:.8;">';
         h += '<span style="font-size:11px;color:#34d399;font-weight:700;">'+(ot.unidades_entregadas||0)+' uds</span>';
-        if(diasEnt!==null) h += '<span style="font-size:9px;color:#64748b;" title="Entregado '+fmtDate(ot.fecha_entrega_real)+'">entregado hace '+diasEnt+'d</span>';
-        if(diasOp!==null)  h += '<span style="font-size:9px;color:#475569;" title="OP ingresó '+fmtDate(op.fecha_op)+'">OP ingresó hace '+diasOp+'d</span>';
+        if(diasEnt!==null) h += '<span style="font-size:9px;color:#64748b;">hace '+diasEnt+'d</span>';
         h += '</div>';
+        h += '<button data-otid="'+ot.id+'" onclick="event.stopPropagation();_cambiarEstadoOT(this.dataset.otid)" title="Cambiar estado" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.25);color:#fbbf24;border-radius:5px;padding:3px 7px;cursor:pointer;font-size:10px;font-weight:700;white-space:nowrap;flex-shrink:0;">↩ Estado</button>';
         h += '</div>';
       } else {
         // Fila activa — input siempre visible
@@ -3707,6 +3707,7 @@ function renderOPDetalle(opId){
         h += '<input type="number" id="ent-'+ot.id+'" min="0" max="'+ot.cantidad+'" placeholder="0" data-otid="'+ot.id+'" data-max="'+ot.cantidad+'" class="ent-masiva-uds" value="'+(yaEnt>0?yaEnt:'')+'" style="width:50px;text-align:center;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.3);border-radius:5px;color:var(--text);padding:3px 4px;font-size:12px;font-weight:700;" oninput="this.style.borderColor=this.value>0?\'#34d399\':\'rgba(52,211,153,.3)\'">';
         h += '<span style="font-size:9px;color:#475569;">/ '+ot.cantidad+'</span>';
         h += '<button data-otid="'+ot.id+'" onclick="confirmarEntregaInline(this.dataset.otid)" style="background:rgba(52,211,153,.2);border:1px solid rgba(52,211,153,.5);color:#34d399;border-radius:5px;padding:3px 8px;cursor:pointer;font-size:11px;font-weight:700;white-space:nowrap;">✓</button>';
+        h += '<button data-otid="'+ot.id+'" onclick="event.stopPropagation();_cambiarEstadoOT(this.dataset.otid)" title="Cambiar estado" style="background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);color:#fbbf24;border-radius:5px;padding:3px 6px;cursor:pointer;font-size:11px;flex-shrink:0;">↩</button>';
         h += '</div>';
       }
     });
@@ -3781,6 +3782,95 @@ function mostrarKPIDetalle(opId, filtro){
 
   openModal(titulo.toUpperCase(), body, '');
 }
+
+// ── Cambio manual de estado de OT ────────────────────────────────────────────
+function _cambiarEstadoOT(otId){
+  var ot = (DB.ots||[]).find(function(o){ return o.id===otId; });
+  if(!ot) return;
+  var ESTADOS_LABELS = {
+    POR_REVISAR:'Por revisar', PENDIENTE_CORTAR:'Pendiente cortar',
+    CORTE_POR_ALISTAR:'Corte / Alistar', ASIGNADO:'Asignado al satélite',
+    EN_CONFECCION:'En confección', ENTREGADO_PARCIAL:'Entregado parcial',
+    ENTREGADO:'Entregado completo', NOVEDAD:'Novedad'
+  };
+  var ESTADO_COLORS = {
+    POR_REVISAR:'#94a3b8', PENDIENTE_CORTAR:'#fbbf24', CORTE_POR_ALISTAR:'#f97316',
+    ASIGNADO:'#60a5fa', EN_CONFECCION:'#a855f7', ENTREGADO_PARCIAL:'#34d399',
+    ENTREGADO:'#22c55e', NOVEDAD:'#ef4444'
+  };
+
+  var body = '<input type="hidden" id="cot-otid" value="'+esc(otId)+'">';
+  body += '<div style="background:#0d1117;border:1px solid #1e2535;border-radius:8px;padding:10px 14px;margin-bottom:16px;">';
+  body += '<div style="font-size:10px;color:#64748b;margin-bottom:4px;">OT-'+ot.numero_ot+' · '+esc(ot.nombre)+' · '+esc(ot.color)+' T'+esc(ot.talla)+'</div>';
+  body += '<div style="font-size:11px;color:#94a3b8;">Estado actual: <strong style="color:'+(ESTADO_COLORS[ot.estado]||'#e2e8f0')+'">'+(ESTADOS_LABELS[ot.estado]||ot.estado)+'</strong> · '+ot.cantidad+' uds</div>';
+  if(ot.estado==='ENTREGADO'){
+    body += '<div style="font-size:10px;color:#fbbf24;margin-top:6px;">⚠ Al revertir, las unidades entregadas se resetean. Si se generó un pago en MO, revisalo manualmente en Pagos.</div>';
+  }
+  body += '</div>';
+
+  body += '<div class="form-group" style="margin-bottom:14px;">';
+  body += '<label class="form-label">Nuevo estado</label>';
+  body += '<div style="display:flex;flex-direction:column;gap:6px;">';
+  Object.keys(ESTADOS_LABELS).forEach(function(k){
+    if(k===ot.estado) return;
+    body += '<label style="display:flex;align-items:center;gap:10px;background:#0d1117;border:1px solid #1e2535;border-radius:8px;padding:9px 12px;cursor:pointer;" onmouseover="this.style.borderColor=\''+(ESTADO_COLORS[k]||'#1e2535')+'55\'" onmouseout="this.style.borderColor=\'#1e2535\'">';
+    body += '<input type="radio" name="cot-estado" value="'+k+'" style="accent-color:'+(ESTADO_COLORS[k]||'#00d4ff')+';width:15px;height:15px;">';
+    body += '<span style="font-size:12px;font-weight:600;color:'+(ESTADO_COLORS[k]||'#e2e8f0')+'">'+(ESTADOS_LABELS[k])+'</span>';
+    body += '</label>';
+  });
+  body += '</div></div>';
+
+  body += '<div class="form-group">';
+  body += '<label class="form-label">Motivo del cambio <span style="color:#ef4444;">*</span></label>';
+  body += '<input id="cot-motivo" class="form-control" placeholder="Ej: Error al registrar entrega, se fue al satélite..." autofocus>';
+  body += '</div>';
+
+  var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>';
+  footer += '<button onclick="_confirmarCambioEstadoOT()" class="btn btn-primary">Cambiar estado</button>';
+  openModal('↩ Cambiar estado de OT', body, footer);
+}
+
+async function _confirmarCambioEstadoOT(){
+  var otId   = ((document.getElementById('cot-otid')||{}).value||'').trim();
+  var motivo = ((document.getElementById('cot-motivo')||{}).value||'').trim();
+  var radios = document.querySelectorAll('input[name="cot-estado"]');
+  var nuevoEstado = '';
+  radios.forEach(function(r){ if(r.checked) nuevoEstado = r.value; });
+
+  if(!nuevoEstado){ toast('Selecciona un estado destino','error'); return; }
+  if(!motivo){ toast('El motivo es obligatorio','error'); return; }
+
+  var ot = (DB.ots||[]).find(function(o){ return o.id===otId; });
+  if(!ot){ toast('OT no encontrada','error'); return; }
+
+  var estadoAnterior = ot.estado;
+  ot.estado = nuevoEstado;
+
+  // Limpiar campos de entrega si se revierte desde ENTREGADO
+  if(estadoAnterior==='ENTREGADO' && nuevoEstado!=='ENTREGADO' && nuevoEstado!=='ENTREGADO_PARCIAL'){
+    ot.unidades_entregadas = 0;
+    ot.fecha_entrega_real  = null;
+    ot.unidades_novedad    = 0;
+  }
+
+  if(!ot.historial) ot.historial = [];
+  ot.historial.push({
+    fecha: new Date().toISOString(),
+    accion: 'Estado cambiado manualmente: '+estadoAnterior+' → '+nuevoEstado+'. Motivo: '+motivo,
+    user: getUser()
+  });
+
+  saveLocal(); updateNovBadge();
+  var ok = await guardarArchivo('ots', {ots: DB.ots});
+  if(ok){
+    closeModal();
+    toast('Estado actualizado a '+nuevoEstado,'success');
+    if(_opDetalleId){
+      document.getElementById('page-content').innerHTML = renderOPDetalle(_opDetalleId);
+    }
+  }
+}
+// ─────────────────────────────────────────────────────────────────────────────
 
 // ── Edición de OP ────────────────────────────────────────────────────────────
 function activarEdicionOP(){
