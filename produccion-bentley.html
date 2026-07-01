@@ -917,13 +917,23 @@ var _U = {
   'jhon':       '7b5c574d555c400b090b0f',
   'juan':       '734c58570b090b0f',
   'produccion': '694b565d0b090b0f',
-  'calidad':    '7a58550b090b0f'
+  'calidad':    '7a58550b090b0f',
+  'elias':      '5c5550484a0b090b0f'
 };
 var _NAMES = {
   'jhon':'John Rodriguez',
   'juan':'Juan',
   'produccion':'Jefa de Producción',
-  'calidad':'Jefa de Calidad'
+  'calidad':'Jefa de Calidad',
+  'elias':'Elías - Conductor'
+};
+// Roles especiales por usuario (restringe UI dentro del módulo)
+var _ROLES = {
+  'elias': 'logistica'
+};
+// Módulos por defecto para usuarios base (si no tienen override en cfg)
+var _DEFAULT_MODULES = {
+  'elias': ['logistica']
 };
 function _xd(h){ return h.match(/.{2}/g).map(function(x){ return String.fromCharCode(parseInt(x,16)^57); }).join(''); }
 function _xe(s){ return s.split('').map(function(c){ return (c.charCodeAt(0)^57).toString(16).padStart(2,'0'); }).join(''); }
@@ -955,7 +965,16 @@ var ALL_MODULES = ['dashboard','satelites','ops','monitoreo','entregas','diseno'
 function _getModules(u){
   if(u==='jhon') return ALL_MODULES.slice();
   var cfg=_getCfgUsers();
-  return (cfg[u]&&cfg[u].modules)||ALL_MODULES.slice();
+  if(cfg[u]&&cfg[u].modules) return cfg[u].modules;
+  if(_DEFAULT_MODULES[u]) return _DEFAULT_MODULES[u].slice();
+  return ALL_MODULES.slice();
+}
+function _getRol(u){
+  var cfg=_getCfgUsers();
+  return (cfg[u]&&cfg[u].rol)||_ROLES[u]||null;
+}
+function _esRolLogistica(){
+  var uid=getCurrentUserId(); return uid && _getRol(uid)==='logistica';
 }
 
 function _findUser(input){
@@ -1003,8 +1022,10 @@ function doLogin(){
     document.getElementById('login-overlay').style.display = 'none';
     document.getElementById('badge-user').textContent = _getName(u);
     applyModuleAccess(u);
+    var allowedMods = _getModules(u);
     var lastPage = localStorage.getItem('bentley_last_page') || 'dashboard';
-    navTo(lastPage);
+    var startPage = (allowedMods.indexOf(lastPage) >= 0) ? lastPage : (allowedMods[0] || 'dashboard');
+    navTo(startPage);
     if(!DB.ops.length) cargarDatos().then(function(){ iniciarAutoSync(); });
     else iniciarAutoSync();
   } else {
@@ -1123,6 +1144,11 @@ function abrirFormUsuario(uid){
     '<input id="aum-name" style="width:100%;background:#111;border:1px solid #333;border-radius:6px;color:#eee;padding:8px;margin-top:4px;box-sizing:border-box;" value="' + name + '"></div>' +
     '<div style="margin-bottom:12px;"><label style="color:#aaa;font-size:12px;">' + (isNew ? 'Contraseña' : 'Nueva contraseña (dejar vacío = sin cambio)') + '</label>' +
     '<input id="aum-pass" type="password" style="width:100%;background:#111;border:1px solid #333;border-radius:6px;color:#eee;padding:8px;margin-top:4px;box-sizing:border-box;" placeholder="••••••••"></div>' +
+    '<div style="margin-bottom:12px;"><label style="color:#aaa;font-size:12px;">Rol especial (opcional)</label>' +
+    '<select id="aum-rol" style="width:100%;background:#111;border:1px solid #333;border-radius:6px;color:#eee;padding:8px;margin-top:4px;box-sizing:border-box;">' +
+    '<option value="">— Sin rol especial —</option>' +
+    '<option value="logistica"' + (uid && _getRol(uid)==='logistica' ? ' selected' : '') + '>🚚 Conductor / Logística</option>' +
+    '</select></div>' +
     '<div style="margin-bottom:16px;"><label style="color:#aaa;font-size:12px;">Módulos habilitados</label>' +
     '<div style="margin-top:8px;background:#111;border-radius:6px;padding:10px;">' + modsHtml + '</div></div>' +
     '<div style="display:flex;gap:8px;justify-content:flex-end;">' +
@@ -1147,6 +1173,8 @@ function guardarFormUsuario(uid, isNew){
   cfg[finalUid].name = name;
   cfg[finalUid].modules = mods;
   if(pass) cfg[finalUid].hash = _xe(pass);
+  var rolVal = (document.getElementById('aum-rol')||{}).value||'';
+  if(rolVal) cfg[finalUid].rol = rolVal; else delete cfg[finalUid].rol;
   _saveCfgUsers(cfg);
   document.getElementById('admin-user-modal').remove();
   renderAdminUsers();
@@ -6644,9 +6672,9 @@ function renderLogistica(){
     h += '<div class="log-card-right" style="display:flex;align-items:center;gap:6px;flex-shrink:0;">';
     if(t.hora) h += '<div style="font-size:12px;font-weight:700;color:#64748b;">'+esc(t.hora)+'</div>';
     h += '<button data-tid="'+t.id+'" onclick="toggleLogCompletado(this.dataset.tid)" title="'+(done?'Desmarcar':'Marcar completado')+'" style="display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;cursor:pointer;border:2px solid '+(done?'#34d399':'#1e2535')+';background:'+(done?'rgba(52,211,153,.15)':'transparent')+';color:'+(done?'#34d399':'#475569')+';font-size:14px;transition:all .2s;">'+(done?'✓':'○')+'</button>';
-    h += '<button data-tid="'+t.id+'" onclick="abrirFormLogistica(this.dataset.tid)" title="Editar" style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);border-radius:6px;cursor:pointer;color:#00d4ff;font-size:14px;">✏</button>';
+    h += '<button data-tid="'+t.id+'" onclick="abrirFormLogistica(this.dataset.tid)" title="Ver / Editar" style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);border-radius:6px;cursor:pointer;color:#00d4ff;font-size:14px;">✏</button>';
     h += '<button data-tid="'+t.id+'" onclick="reprogramarLogTarea(this.dataset.tid)" title="Reprogramar" style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);border-radius:6px;cursor:pointer;color:#fbbf24;font-size:16px;">📅</button>';
-    h += '<button data-tid="'+t.id+'" onclick="eliminarLogTarea(this.dataset.tid)" title="Eliminar" style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:6px;cursor:pointer;color:#ef4444;font-size:16px;">🗑</button>';
+    if(!_esRolLogistica()) h += '<button data-tid="'+t.id+'" onclick="eliminarLogTarea(this.dataset.tid)" title="Eliminar" style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:6px;cursor:pointer;color:#ef4444;font-size:16px;">🗑</button>';
     h += '</div>';
 
     h += '</div>';
