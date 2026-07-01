@@ -1797,13 +1797,13 @@
       "id": "OP-0054",
       "numero": 54,
       "fecha_op": "2026-05-08",
-      "cortador": "CARVAJAL",
+      "cortador": "Corte Carbajal",
       "categoria": "CHAQUETAS",
       "nombre_producto": "BEISBOLERA 2.0",
       "colores": [
         "ROSA",
         "CAFÉ",
-        "BEIGE"
+        "GRIS OSCURO"
       ],
       "tallas": [
         "T4",
@@ -1819,7 +1819,76 @@
       "total_uds": 322,
       "created_at": "2026-05-08",
       "created_by": "migrado_matriz",
-      "migrado": true
+      "migrado": true,
+      "referencias": [
+        {
+          "nombre": "BEISBOLERA 2.0",
+          "ref": "",
+          "cat": "CHAQUETAS",
+          "vmo": 1151,
+          "colores": [
+            "ROSA",
+            "CAFÉ",
+            "GRIS OSCURO"
+          ],
+          "tallas": [
+            "T4",
+            "T6",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "cantidades": {
+            "ROSA_T4": 22,
+            "ROSA_T6": 22,
+            "ROSA_T8": 22,
+            "ROSA_T10": 22,
+            "ROSA_T12": 22,
+            "ROSA_T14": 22,
+            "ROSA_T16": 22,
+            "CAFÉ_T4": 12,
+            "CAFÉ_T6": 12,
+            "CAFÉ_T8": 12,
+            "CAFÉ_T10": 12,
+            "CAFÉ_T12": 12,
+            "CAFÉ_T14": 12,
+            "CAFÉ_T16": 12,
+            "GRIS OSCURO_T4": 12,
+            "GRIS OSCURO_T6": 12,
+            "GRIS OSCURO_T8": 12,
+            "GRIS OSCURO_T10": 12,
+            "GRIS OSCURO_T12": 12,
+            "GRIS OSCURO_T14": 12,
+            "GRIS OSCURO_T16": 12
+          }
+        }
+      ],
+      "cantidades": {
+        "ROSA_T4": 22,
+        "ROSA_T6": 22,
+        "ROSA_T8": 22,
+        "ROSA_T10": 22,
+        "ROSA_T12": 22,
+        "ROSA_T14": 22,
+        "ROSA_T16": 22,
+        "CAFÉ_T4": 12,
+        "CAFÉ_T6": 12,
+        "CAFÉ_T8": 12,
+        "CAFÉ_T10": 12,
+        "CAFÉ_T12": 12,
+        "CAFÉ_T14": 12,
+        "CAFÉ_T16": 12,
+        "GRIS OSCURO_T4": 12,
+        "GRIS OSCURO_T6": 12,
+        "GRIS OSCURO_T8": 12,
+        "GRIS OSCURO_T10": 12,
+        "GRIS OSCURO_T12": 12,
+        "GRIS OSCURO_T14": 12,
+        "GRIS OSCURO_T16": 12
+      },
+      "updated_at": "2026-07-01"
     },
     {
       "id": "OP-0055",
@@ -1918,7 +1987,9 @@
       },
       "updated_at": "2026-06-23",
       "subg_estados": {
-        "OP-0055||CAFÉ": "CORTE_POR_ALISTAR"
+        "OP-0055||CAFÉ": "CORTE_POR_ALISTAR",
+        "OP-0055||GRIS CLARO": "CORTE_POR_ALISTAR",
+        "OP-0055||AZUL BEBE": "CORTE_POR_ALISTAR"
       }
     },
     {
