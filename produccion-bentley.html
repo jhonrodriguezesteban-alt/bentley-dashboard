@@ -2591,7 +2591,7 @@ function _subgEstadoDerivado(otsColor){
   if(!otsColor.length) return 'POR_REVISAR';
   if(otsColor.every(function(o){ return o.estado==='POR_REVISAR'; })) return 'POR_REVISAR';
   if(otsColor.some(function(o){ return o.estado==='NOVEDAD'; })) return 'NOVEDAD';
-  if(otsColor.every(function(o){ return o.estado==='ENTREGADO'; })) return 'ARCHIVADO';
+  if(otsColor.every(function(o){ return o.estado==='ENTREGADO'; })) return 'ALISTAMIENTO';
   if(otsColor.some(function(o){ return o.estado==='EN_CONFECCION'; })) return 'EN_CONFECCION';
   if(otsColor.some(function(o){ return o.estado==='CORTE_POR_ALISTAR'||o.estado==='ASIGNADO'; })) return 'CORTE_POR_ALISTAR';
   return 'PENDIENTE_CORTAR';
