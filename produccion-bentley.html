@@ -4912,6 +4912,46 @@ function getDisProveedores(){ return (DB.disenos_cfg && DB.disenos_cfg.proveedor
 
 function getDisMarcas(){ return (DB.disenos_cfg && DB.disenos_cfg.marcas) ? DB.disenos_cfg.marcas : DIS_MARCAS_DEFAULT; }
 
+function verGaleriaColumnaDiseno(colKey){
+  var col = DIS_KANBAN.find(function(c){ return c.k===colKey; });
+  if(!col) return;
+  var marca = _disFiltroMarca || (getDisMarcas()[0]);
+  var items = (DB.disenos||[]).filter(function(d){
+    return d.marca===marca && (d.kanban_estado||'EN_DISENO_DIGITAL')===colKey;
+  }).sort(function(a,b){
+    var pa=disPrioNorm(a.prioridad), pb=disPrioNorm(b.prioridad);
+    if(pa!==pb) return pa-pb;
+    return (b._ts||b.fecha_creacion||'')>(a._ts||a.fecha_creacion||'')?1:-1;
+  });
+  var DIS_RESP_C = {'John':'#60a5fa','Isa':'#f472b6','Carolina':'#34d399','Juan':'#fbbf24'};
+  var b = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;padding:4px 0;">';
+  if(!items.length){
+    b = '<div style="text-align:center;padding:40px;color:#475569;font-size:13px;">Sin diseños en esta columna</div>';
+  } else {
+    items.forEach(function(d){
+      var thumb = (d.imagenes&&d.imagenes.length) ? d.imagenes[0].url : '';
+      var rc = DIS_RESP_C[d.responsable]||'#94a3b8';
+      var prioColor = d.prioridad==='P1'?'#ef4444':d.prioridad==='P2'?'#fbbf24':'#64748b';
+      b += '<div data-id="'+d.id+'" onclick="abrirFormDiseno(this.dataset.id);closeModal()" style="background:#0d1117;border:1px solid '+col.color+'33;border-radius:10px;overflow:hidden;cursor:pointer;transition:border-color .15s;" onmouseover="this.style.borderColor=\''+col.color+'\'" onmouseleave="this.style.borderColor=\''+col.color+'33\'">';
+      if(thumb){
+        b += '<div style="height:120px;overflow:hidden;background:#111827;position:relative;">';
+        b += '<img src="'+thumb+'" style="width:100%;height:100%;object-fit:cover;" loading="lazy">';
+        if(d.prioridad) b += '<span style="position:absolute;top:6px;left:6px;background:'+prioColor+';color:#fff;border-radius:5px;font-size:9px;font-weight:700;padding:1px 5px;">'+esc(d.prioridad)+'</span>';
+        b += '</div>';
+      } else {
+        b += '<div style="height:80px;background:'+col.color+'0d;display:flex;align-items:center;justify-content:center;font-size:28px;">🎨</div>';
+      }
+      b += '<div style="padding:8px 9px;">';
+      b += '<div style="font-size:9px;font-weight:700;color:'+col.color+';text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px;">'+esc(d.categoria||'')+'</div>';
+      b += '<div style="font-size:11px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:5px;">'+esc(d.nombre)+'</div>';
+      if(d.responsable) b += '<div style="font-size:9px;color:'+rc+';">'+esc(d.responsable)+'</div>';
+      b += '</div></div>';
+    });
+    b += '</div>';
+  }
+  openModal(col.label.toUpperCase()+' — '+items.length+' diseños', b, '', {wide:true});
+}
+
 function renderDiseno(){
   var marcas = getDisMarcas();
   if(!_disFiltroMarca || !marcas.includes(_disFiltroMarca)) _disFiltroMarca = marcas[0];
@@ -5122,7 +5162,7 @@ function renderDiseno(){
     h += '<div style="flex:1 1 200px;min-width:200px;max-width:320px;display:flex;flex-direction:column;">';
     // Columna header
     h += '<div style="background:'+col.bg+';border:1px solid '+col.color+'44;border-bottom:none;border-radius:10px 10px 0 0;padding:10px 13px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">';
-    h += '<div style="font-size:11px;font-weight:700;color:'+col.color+';text-transform:uppercase;letter-spacing:.5px;">'+col.label+'</div>';
+    h += '<div data-colk="'+col.k+'" onclick="verGaleriaColumnaDiseno(this.dataset.colk)" style="font-size:11px;font-weight:700;color:'+col.color+';text-transform:uppercase;letter-spacing:.5px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:'+col.color+'66;" title="Ver galería visual">'+col.label+'</div>';
     h += '<div style="font-size:11px;font-weight:700;color:'+col.color+';background:'+col.color+'22;border-radius:10px;padding:1px 7px;">'+items.length+'</div>';
     h += '</div>';
     h += '<div class="kanban-col-body" data-col="'+col.k+'" ondragover="event.preventDefault();this.style.background=\'rgba(255,255,255,.04)\'" ondragleave="this.style.background=\'\'" ondrop="dropDisenoKanban(event,this.dataset.col);this.style.background=\'\'" style="background:#0d1117;border:1px solid '+col.color+'33;border-top:none;border-radius:0 0 10px 10px;padding:10px;min-height:100px;transition:background .15s;overflow-y:auto;overflow-x:hidden;max-height:calc(100vh - 310px);">';
