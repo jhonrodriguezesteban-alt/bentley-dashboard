@@ -3576,6 +3576,36 @@ function renderOPDetalle(opId){
   }
   h += '</div>';
 
+  // ── Vínculos: Diseño y Costeo ──
+  var _vinculoDiseno = op.diseno_origen_id ? (DB.disenos||[]).find(function(x){ return x.x===op.diseno_origen_id; }) : null;
+  var _vinculoReceta = op.receta_id ? (DB.costeo && DB.costeo.recetas ? DB.costeo.recetas.find(function(x){ return x.id===op.receta_id; }) : null) : null;
+  if(!_vinculoReceta) _vinculoReceta = _planRecetaDeOp(op);
+  var _costoUD = null;
+  if(_vinculoReceta){ var _resOp = calcResumen(_vinculoReceta); _costoUD = _resOp.total; }
+  if(op.diseno_origen_nombre || _vinculoReceta){
+    h += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">';
+    if(op.diseno_origen_nombre){
+      h += '<div style="display:flex;align-items:center;gap:8px;background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.3);border-radius:9px;padding:8px 14px;flex:1;min-width:200px;">';
+      h += '<span style="font-size:18px;">🎨</span>';
+      h += '<div>';
+      h += '<div style="font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:#38bdf8;font-weight:700;">Diseño de origen</div>';
+      h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+esc(op.diseno_origen_nombre)+'</div>';
+      h += '</div></div>';
+    }
+    if(_vinculoReceta){
+      var _udsOP = _planOpUds(op);
+      var _totalCostoOP = _costoUD * _udsOP;
+      h += '<div data-rid="'+_vinculoReceta.id+'" onclick="verReceta(this.dataset.rid)" style="display:flex;align-items:center;gap:8px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.3);border-radius:9px;padding:8px 14px;flex:1;min-width:200px;cursor:pointer;" title="Ver receta de costeo">';
+      h += '<span style="font-size:18px;">💰</span>';
+      h += '<div style="flex:1;">';
+      h += '<div style="font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:#10b981;font-weight:700;">Receta de costeo vinculada</div>';
+      h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+esc(_vinculoReceta.producto)+'</div>';
+      h += '<div style="font-size:11px;color:#94a3b8;margin-top:2px;">Costo/ud: <b style="color:#10b981;">'+fmtCop(_costoUD)+'</b> &nbsp;·&nbsp; Total ('+_udsOP+' uds): <b style="color:#10b981;">'+fmtCop(_totalCostoOP)+'</b></div>';
+      h += '</div><span style="font-size:11px;color:#10b981;opacity:.6;">→</span></div>';
+    }
+    h += '</div>';
+  }
+
   // ── KPIs interactivos ──
   function kpiCard(label, val, color, filterFn, filterLabel){
     var clickable = filterFn ? 'cursor:pointer;' : '';
@@ -4440,15 +4470,34 @@ async function crearOP(){
   setBtnLoading('btn-crear-op', false);
   if(ok1){
     toast('OP '+fmtOpId(opId)+' creada — genera OTs cuando pase a Corte por Alistar', 'success');
+    // Vincular con diseño de origen: desde botón diseño o por coincidencia de nombre
+    var disVincular = null;
     if(_opDesdeDisenoId){
-      var disOrigen = (DB.disenos||[]).find(function(x){ return x.id===_opDesdeDisenoId; });
-      if(disOrigen){
-        disOrigen.eliminado = true;
-        disOrigen._op_origen = opId;
-        guardarArchivo('disenos', {disenos: DB.disenos, disenos_cfg: DB.disenos_cfg});
-        saveLocal();
-      }
+      disVincular = (DB.disenos||[]).find(function(x){ return x.id===_opDesdeDisenoId; });
       _opDesdeDisenoId = null;
+    }
+    if(!disVincular){
+      // Buscar diseño en LISTA_PRODUCCION con nombre que coincida
+      var nombreOP = op.nombre_producto.trim().toUpperCase();
+      disVincular = (DB.disenos||[]).find(function(x){
+        return !x.eliminado && x.kanban_estado==='LISTA_PRODUCCION' &&
+               (x.nombre||'').trim().toUpperCase()===nombreOP;
+      });
+    }
+    if(disVincular){
+      disVincular.eliminado = true;
+      disVincular._op_origen = opId;
+      op.diseno_origen_id = disVincular.id;
+      op.diseno_origen_nombre = disVincular.nombre;
+      guardarArchivo('disenos', {disenos: DB.disenos, disenos_cfg: DB.disenos_cfg});
+      saveLocal();
+    }
+    // Vincular receta de costeo por nombre
+    var recVinculo = _planRecetaDeOp(op);
+    if(recVinculo){
+      op.receta_id = recVinculo.id;
+      op.receta_nombre = recVinculo.producto;
+      guardarArchivo('ops', {ops: DB.ops});
     }
     cerrarFormNuevaOP();
     navTo('ops');
