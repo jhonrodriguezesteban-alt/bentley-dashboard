@@ -367,12 +367,7 @@
       "created_by": "migrado_matriz",
       "migrado": true,
       "subg_estados": {
-        "OP-0013||NEGRO": "EN_CONFECCION",
-        "OP-0013||CAMEL": "EN_CONFECCION",
-        "OP-0013||VERDE MILITAR": "EN_CONFECCION",
-        "OP-0013||LILA": "EN_CONFECCION",
-        "OP-0013||AZUL OSCURO": "EN_CONFECCION",
-        "OP-0013||FUCSIA": "EN_CONFECCION"
+        "OP-0013||NEGRO": "EN_CONFECCION"
       }
     },
     {
@@ -2456,10 +2451,7 @@
       "total_uds": 122,
       "created_at": "2025-09-23",
       "created_by": "migrado_matriz",
-      "migrado": true,
-      "subg_estados": {
-        "OP-0169||VERDE MENTA": "CORTE_POR_ALISTAR"
-      }
+      "migrado": true
     },
     {
       "id": "OP-0174",
@@ -3113,7 +3105,10 @@
       "total_uds": 168,
       "created_at": "2026-06-24",
       "created_by": "jhon",
-      "migrado": true
+      "migrado": true,
+      "subg_estados": {
+        "OP-2026-077||GRIS CLARO": "PENDIENTE_CORTAR"
+      }
     },
     {
       "id": "OP-2026-078",
