@@ -4979,10 +4979,7 @@ function renderDiseno(){
     document.body.appendChild(fab);
   }
 
-  if(!todosItems.length){
-    h += '<div class="empty-state"><div class="icon">🎨</div><p>Sin diseños para '+esc(_disFiltroMarca)+'</p></div>';
-    return h;
-  }
+  // Si no hay diseños, igual se renderiza el kanban vacío para que se pueda crear el primero
 
   // ── Resumen por categoría ────────────────────────────────────────────────────
   var activosItems = todosItems.filter(function(d){ return d.kanban_estado !== 'LISTA_PRODUCCION'; });
