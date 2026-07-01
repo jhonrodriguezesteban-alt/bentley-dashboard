@@ -3908,8 +3908,15 @@ async function _confirmarCambioEstadoOT(){
     user: getUser()
   });
 
+  // Recalcular el estado derivado del grupo color+OP y actualizar subg_estados
+  // para que el kanban refleje la columna correcta
+  var otsDelColor = (DB.ots||[]).filter(function(o){ return o.op_id===ot.op_id && o.color===ot.color; });
+  var estadoGrupo = _subgEstadoDerivado(otsDelColor);
+  _setSubgEstado(ot.op_id, ot.color, estadoGrupo);
+
   saveLocal(); updateNovBadge();
-  var ok = await guardarArchivo('ots', {ots: DB.ots});
+  var okOts = await guardarArchivo('ots', {ots: DB.ots});
+  var ok    = okOts && await guardarArchivo('ops', {ops: DB.ops});
   if(ok){
     closeModal();
     toast('Estado actualizado a '+nuevoEstado,'success');
