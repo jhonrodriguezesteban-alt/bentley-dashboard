@@ -2591,7 +2591,7 @@ function _subgEstadoDerivado(otsColor){
   if(!otsColor.length) return 'POR_REVISAR';
   if(otsColor.every(function(o){ return o.estado==='POR_REVISAR'; })) return 'POR_REVISAR';
   if(otsColor.some(function(o){ return o.estado==='NOVEDAD'; })) return 'NOVEDAD';
-  if(otsColor.every(function(o){ return o.estado==='ENTREGADO'; })) return 'ALISTAMIENTO';
+  if(otsColor.every(function(o){ return o.estado==='ENTREGADO'; })) return 'ARCHIVADO';
   if(otsColor.some(function(o){ return o.estado==='EN_CONFECCION'; })) return 'EN_CONFECCION';
   if(otsColor.some(function(o){ return o.estado==='CORTE_POR_ALISTAR'||o.estado==='ASIGNADO'; })) return 'CORTE_POR_ALISTAR';
   return 'PENDIENTE_CORTAR';
@@ -3170,6 +3170,11 @@ function _kanPrevEstado(est){
   return i > 0 ? _KAN_ORDER[i-1] : null;
 }
 async function _repararSubgEstados(){
+  // Calcular fecha hace 7 días para distinguir entregas recientes
+  var hoyD = new Date(hoy());
+  var sieteDias = new Date(hoyD); sieteDias.setDate(hoyD.getDate() - 7);
+  var sieteDiasStr = sieteDias.toISOString().slice(0,10);
+
   (DB.ops||[]).forEach(function(op){
     var otsOp = (DB.ots||[]).filter(function(o){ return o.op_id===op.id; });
     var colores = [];
@@ -3178,12 +3183,20 @@ async function _repararSubgEstados(){
       var otsColor = otsOp.filter(function(o){ return o.color===color; });
       var estadoDer = _subgEstadoDerivado(otsColor);
       if(!op.subg_estados) op.subg_estados = {};
+      // Si todas las OTs están ENTREGADO (ARCHIVADO derivado),
+      // solo poner ALISTAMIENTO si alguna fue entregada esta semana
+      if(estadoDer === 'ARCHIVADO'){
+        var reciente = otsColor.some(function(o){
+          return o.fecha_entrega_real && o.fecha_entrega_real >= sieteDiasStr;
+        });
+        estadoDer = reciente ? 'ALISTAMIENTO' : 'ARCHIVADO';
+      }
       op.subg_estados[_subgKey(op.id, color)] = estadoDer;
     });
   });
   saveLocal();
   var ok = await guardarArchivo('ops', {ops: DB.ops});
-  if(ok){ toast('Kanban sincronizado con estados reales','success'); renderPage('ops'); }
+  if(ok){ toast('Kanban reparado','success'); renderPage('ops'); }
   else { toast('Error al guardar','error'); }
 }
 function kanDragStart(ev, opId, color){
@@ -3947,9 +3960,10 @@ async function _confirmarCambioEstadoOT(){
   });
 
   // Recalcular el estado derivado del grupo color+OP y actualizar subg_estados
-  // para que el kanban refleje la columna correcta
   var otsDelColor = (DB.ots||[]).filter(function(o){ return o.op_id===ot.op_id && o.color===ot.color; });
   var estadoGrupo = _subgEstadoDerivado(otsDelColor);
+  // Si todas las OTs quedaron ENTREGADO ahora, mover a ALISTAMIENTO (no ARCHIVADO)
+  if(estadoGrupo === 'ARCHIVADO') estadoGrupo = 'ALISTAMIENTO';
   _setSubgEstado(ot.op_id, ot.color, estadoGrupo);
 
   saveLocal(); updateNovBadge();
