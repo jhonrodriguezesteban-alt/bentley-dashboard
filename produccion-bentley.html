@@ -9419,7 +9419,7 @@ function _costeoId(){ return 'cid_'+Date.now()+'_'+Math.floor(Math.random()*9999
 
 function renderCosteo(){
   if(!DB.costeo) DB.costeo={mp:[],servicios:[],puestos:[],tarifas_cif:[],params:{},recetas:[],precios_pt:[]};
-  var tabs=[{k:'mp',l:'📦 Materias Primas'},{k:'recetas',l:'🧪 Recetas'},{k:'tarifas',l:'⚙️ Tarifas'},{k:'precios',l:'💹 Análisis de Precios'}];
+  var tabs=[{k:'mp',l:'📦 Materias Primas'},{k:'servicios',l:'🔧 Servicios'},{k:'recetas',l:'🧪 Recetas'},{k:'tarifas',l:'⚙️ Tarifas'},{k:'precios',l:'💹 Análisis de Precios'}];
   var h='<div style="padding:16px 20px;height:100%;overflow-y:auto;box-sizing:border-box;">';
   // Buscador global del módulo
   h+='<div style="margin-bottom:14px;">';
@@ -9431,10 +9431,11 @@ function renderCosteo(){
     h+='<button onclick="_costeoTab=\''+t.k+'\';renderPage(\'costeo\')" style="padding:10px 16px;font-size:12px;font-weight:600;cursor:pointer;background:none;border:none;border-bottom:2px solid '+(a?'#00d4ff':'transparent')+';color:'+(a?'#00d4ff':'#475569')+';white-space:nowrap;">'+t.l+'</button>';
   });
   h+='</div>';
-  if(_costeoTab==='mp')       h+=renderCosteoMP();
-  else if(_costeoTab==='recetas') h+=renderCosteoRecetas();
-  else if(_costeoTab==='tarifas') h+=renderCosteoTarifas();
-  else if(_costeoTab==='precios') h+=renderCosteoPrecios();
+  if(_costeoTab==='mp')          h+=renderCosteoMP();
+  else if(_costeoTab==='servicios') h+=renderServicios();
+  else if(_costeoTab==='recetas')   h+=renderCosteoRecetas();
+  else if(_costeoTab==='tarifas')   h+=renderCosteoTarifas();
+  else if(_costeoTab==='precios')   h+=renderCosteoPrecios();
   h+='</div>';
   return h;
 }
@@ -9594,7 +9595,7 @@ function verReceta(id){
   b+='<div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;">Costo de producción</div>';
   b+='<div style="font-family:var(--bebas);font-size:36px;color:#00d4ff;letter-spacing:1px;line-height:1;">'+fmtCopFull(res.total)+'</div>';
   b+='<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;">';
-  [['Materiales',res.mat,'#0ea5e9'],['Mano de obra',res.mod,'#34d399'],['CIF',res.cif,'#fbbf24'],['Servicios',res.svc,'#a855f7']].forEach(function(it){
+  [['Materiales',res.mat,'#0ea5e9'],['M.O.D.',res.mod,'#34d399'],['C.I.F.',res.cif,'#fbbf24'],['Servicios',res.svc,'#a855f7']].forEach(function(it){
     if(!it[1]) return;
     b+='<div style="background:'+it[2]+'12;border:1px solid '+it[2]+'30;border-radius:7px;padding:6px 12px;min-width:80px;">';
     b+='<div style="font-size:9px;color:'+it[2]+';text-transform:uppercase;font-weight:700;letter-spacing:.4px;margin-bottom:2px;">'+it[0]+'</div>';
@@ -10343,7 +10344,7 @@ function guardarPreciosReceta(producto){
 
 // ── Tab: Tarifas ──────────────────────────────────────────────────────────────
 function renderCosteoTarifas(){
-  var subs=[{k:'puestos',l:'👷 Puestos MOD'},{k:'cif',l:'🏭 Tarifas CIF'},{k:'servicios',l:'🔧 Servicios'},{k:'params',l:'⚙️ Parámetros'}];
+  var subs=[{k:'puestos',l:'👷 Puestos MOD'},{k:'cif',l:'🏭 Tarifas CIF'},{k:'params',l:'⚙️ Parámetros'}];
   var h='<div>';
   h+='<div style="display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap;">';
   subs.forEach(function(t){
