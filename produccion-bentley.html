@@ -9313,6 +9313,7 @@ function exportarMonitoreoCSV(){
 // ═══════════════════════════════════════════════════════════════════════════════
 var _costeoTab = 'recetas';
 var _costeoSubTab = 'puestos';
+var _preciosBuscar = '';
 var _costeoRecetaId = null;
 
 var COSTEO_MP_FAMILIAS = ['Telas','Hilos','Herrajes','Cremalleras','Apliques','Elásticos','Entretelas','Botones','Empaque','Otros'];
@@ -10595,7 +10596,13 @@ function renderCosteoPrecios(){
   var recetas=DB.costeo.recetas||[];
   if(!recetas.length) return '<div style="text-align:center;padding:60px;color:#475569;font-size:13px;"><div style="font-size:32px;margin-bottom:10px;">🧪</div>Primero crea recetas para ver el análisis de precios.</div>';
   var pm=_costeoParams();
+  if(_preciosBuscar) recetas=recetas.filter(function(r){ return (r.producto+' '+(r.referencia||'')).toUpperCase().indexOf(_preciosBuscar.toUpperCase())>=0; });
   var h='<div>';
+  // Buscador
+  h+='<div style="margin-bottom:12px;position:relative;">';
+  h+='<input id="precios-buscar" type="text" value="'+esc(_preciosBuscar)+'" placeholder="🔍 Buscar producto..." oninput="_preciosBuscar=this.value;var p=this.selectionStart;renderPage(\'costeo\');var el=document.getElementById(\'precios-buscar\');if(el){el.focus();try{el.setSelectionRange(p,p);}catch(e){}}" style="width:100%;box-sizing:border-box;background:#0d1117;border:1px solid #1e2535;border-radius:9px;color:#e2e8f0;padding:9px 36px 9px 14px;font-size:13px;outline:none;" onfocus="this.style.borderColor=\'#00d4ff\'" onblur="this.style.borderColor=\'#1e2535\'">';
+  if(_preciosBuscar) h+='<button onclick="_preciosBuscar=\'\';renderPage(\'costeo\')" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#475569;cursor:pointer;font-size:15px;padding:0;">×</button>';
+  h+='</div>';
   // Leyenda + política
   h+='<div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-bottom:14px;">';
   h+='<div style="display:flex;gap:10px;flex-wrap:wrap;font-size:11px;">';
@@ -10653,14 +10660,15 @@ function renderCosteoPrecios(){
       var badge=''; if(ch.margen>=ch.meta) badge='✓'; else if(ch.margen<ch.meta*0.85) badge='✗';
       // Precio base s/IVA + tooltip con desglose de costo
       var costoTip='Costo prod: '+fmtCopFull(res.total)+' | Comisión 4%: '+fmtCopFull(ch.comision||0)+(ch.costoExtra?(' | Extras web: '+fmtCopFull(ch.costoExtra)):'')+' | Costo total: '+fmtCopFull(ch.costo);
+      // Base s/IVA — secundario
       h+='<td style="padding:9px 8px;text-align:right;border-left:1px solid #0d1117;white-space:nowrap;" title="'+costoTip+'">';
-      h+='<div style="font-size:12px;font-weight:600;color:#e2e8f0;">'+fmtCopFull(ch.precio)+'</div>';
+      h+='<div style="font-size:10px;color:#475569;">'+fmtCopFull(ch.precio)+'</div>';
       h+='<div style="font-size:9px;color:#334155;">costo '+fmtCopFull(ch.costo)+'</div>';
       h+='</td>';
-      // Con IVA
+      // Con IVA — prominente
       h+='<td style="padding:9px 8px;text-align:right;white-space:nowrap;">';
-      h+='<div style="font-size:11px;color:#64748b;">'+fmtCopFull(ch.pvp)+'</div>';
-      h+='<div style="font-size:9px;color:#1e2535;">com. '+fmtCopFull(ch.comision||0)+'</div>';
+      h+='<div style="font-size:14px;font-weight:700;color:#e2e8f0;">'+fmtCopFull(ch.pvp)+'</div>';
+      h+='<div style="font-size:9px;color:#334155;">com. '+fmtCopFull(ch.comision||0)+'</div>';
       h+='</td>';
       // Margen — prominente
       h+='<td style="padding:9px 8px;text-align:center;white-space:nowrap;">';
