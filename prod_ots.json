@@ -43995,6 +43995,11 @@
           "fecha": "2026-07-01T17:30:33.992Z",
           "accion": "Estado cambiado manualmente: ENTREGADO → EN_CONFECCION. Motivo: error de estado",
           "user": "John Rodriguez"
+        },
+        {
+          "fecha": "2026-07-01T17:30:35.984Z",
+          "accion": "Estado cambiado manualmente: EN_CONFECCION → EN_CONFECCION. Motivo: error de estado",
+          "user": "John Rodriguez"
         }
       ],
       "notas": "",
@@ -44022,8 +44027,8 @@
       "satelite_id": "sat_10",
       "fecha_entrega_corte_satelite": null,
       "fecha_estimada_entrega": null,
-      "fecha_entrega_real": "2026-06-27",
-      "unidades_entregadas": 14,
+      "fecha_entrega_real": null,
+      "unidades_entregadas": 0,
       "unidades_novedad": 0,
       "unidades_por_llegar": 10,
       "nt_corte_satelite": null,
@@ -44036,7 +44041,7 @@
       "kpi_dias_programacion": null,
       "cumplió_fecha": false,
       "motivo_incumplimiento": "",
-      "estado": "ENTREGADO",
+      "estado": "EN_CONFECCION",
       "cortador": "CARVAJAL",
       "historial": [
         {
@@ -44053,6 +44058,11 @@
           "fecha": "2026-06-27T21:33:17.744Z",
           "accion": "Entrega completa: 14 uds → ENTREGADO",
           "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-07-01T17:30:44.800Z",
+          "accion": "Estado cambiado manualmente: ENTREGADO → EN_CONFECCION. Motivo: ERROR DE ESTADO",
+          "user": "John Rodriguez"
         }
       ],
       "notas": "",
