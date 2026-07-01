@@ -44392,8 +44392,8 @@
       "satelite_id": "sat_10",
       "fecha_entrega_corte_satelite": null,
       "fecha_estimada_entrega": null,
-      "fecha_entrega_real": "2026-06-27",
-      "unidades_entregadas": 20,
+      "fecha_entrega_real": null,
+      "unidades_entregadas": 0,
       "unidades_novedad": 0,
       "unidades_por_llegar": 14,
       "nt_corte_satelite": null,
@@ -44406,7 +44406,7 @@
       "kpi_dias_programacion": null,
       "cumplió_fecha": false,
       "motivo_incumplimiento": "",
-      "estado": "ENTREGADO",
+      "estado": "EN_CONFECCION",
       "cortador": "CARVAJAL",
       "historial": [
         {
@@ -44423,6 +44423,11 @@
           "fecha": "2026-06-27T21:33:17.745Z",
           "accion": "Entrega completa: 20 uds → ENTREGADO",
           "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-07-01T17:33:18.779Z",
+          "accion": "Estado cambiado manualmente: ENTREGADO → EN_CONFECCION. Motivo: ERROR DE ESTADO",
+          "user": "John Rodriguez"
         }
       ],
       "notas": "",
