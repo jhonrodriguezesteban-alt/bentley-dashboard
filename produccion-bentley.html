@@ -2890,6 +2890,29 @@ function renderOPs(){
               h += '</div>';
             });
             h += '</div>';
+          } else if(col.k === 'PENDIENTE_CORTAR'){
+            // Chips seleccionables
+            var nSel = _selColoresCount(op.id);
+            h += '<div style="margin-bottom:6px;display:flex;flex-wrap:wrap;gap:4px;">';
+            grp.forEach(function(s){
+              var selKey = op.id+'||'+s.color;
+              var sel = !!_kanColorSel[selKey];
+              h += '<span data-opid="'+op.id+'" data-color="'+esc(s.color)+'" onclick="event.stopPropagation();_toggleKanColorSel(this.dataset.opid,this.dataset.color);renderPage(\'ops\')" style="cursor:pointer;border-radius:5px;font-size:9px;font-weight:700;padding:2px 8px;text-transform:uppercase;user-select:none;transition:all .12s;';
+              if(sel){
+                h += 'background:rgba(249,115,22,.25);border:1px solid rgba(249,115,22,.7);color:#f97316;">';
+                h += '✓ '+esc(s.color);
+              } else {
+                h += 'background:rgba(148,163,184,.08);border:1px solid #1e2535;color:#64748b;">';
+                h += esc(s.color);
+              }
+              h += '</span>';
+            });
+            h += '</div>';
+            if(nSel > 0){
+              h += '<button data-opid="'+op.id+'" onclick="event.stopPropagation();_avanzarColoresSel(this.dataset.opid)" style="width:100%;padding:6px 10px;background:rgba(249,115,22,.15);border:1px solid rgba(249,115,22,.5);border-radius:7px;color:#f97316;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:4px;">→ Avanzar '+nSel+' color'+(nSel>1?'es':'')+' a Corte/Alistar</button>';
+            } else {
+              h += '<div style="font-size:9px;color:#334155;text-align:center;margin-bottom:4px;">Toca un color para seleccionarlo</div>';
+            }
           } else {
             h += '<div style="margin-bottom:8px;display:flex;flex-wrap:wrap;gap:3px;">';
             grp.forEach(function(s){
@@ -3097,6 +3120,31 @@ function cambiarEstadoOPAll(opId, estado){
   toast('Estado actualizado', 'success');
 }
 
+// ── Selección de colores en Pte. de Cortar ────────────────────────────────────
+var _kanColorSel = {}; // key: "opId||color" → true
+function _toggleKanColorSel(opId, color){
+  var k = opId+'||'+color;
+  if(_kanColorSel[k]) delete _kanColorSel[k]; else _kanColorSel[k] = true;
+}
+function _selColoresCount(opId){
+  return Object.keys(_kanColorSel).filter(function(k){ return k.indexOf(opId+'||')===0; }).length;
+}
+async function _avanzarColoresSel(opId){
+  var keys = Object.keys(_kanColorSel).filter(function(k){ return k.indexOf(opId+'||')===0; });
+  if(!keys.length) return;
+  var colores = keys.map(function(k){ return k.split('||')[1]; });
+  colores.forEach(function(color){
+    (DB.ots||[]).filter(function(o){
+      return o.op_id===opId && o.color===color &&
+             (o.estado==='PENDIENTE_CORTAR'||o.estado==='POR_REVISAR');
+    }).forEach(function(o){ o.estado='CORTE_POR_ALISTAR'; });
+    _setSubgEstado(opId, color, 'CORTE_POR_ALISTAR');
+    delete _kanColorSel[opId+'||'+color];
+  });
+  saveLocal();
+  var ok = await guardarArchivo('ots', {ots: DB.ots});
+  if(ok){ toast(colores.length+' color'+(colores.length>1?'es':'')+ ' → Corte/Alistar','success'); renderPage('ops'); }
+}
 // ── Kanban drag & drop (mouse + touch) ────────────────────────────────────────
 var _kanDragOpId = null, _kanDragColor = null;
 var _kanTouchGhost = null, _kanTouchOpId = null, _kanTouchColor = null;
