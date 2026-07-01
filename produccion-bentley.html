@@ -9673,6 +9673,7 @@ function verReceta(id){
   var footer='<div style="display:flex;gap:8px;">';
   var _esAdmin = getCurrentUserId()==='jhon';
   if(_esAdmin) footer+='<button data-rid="'+id+'" onclick="abrirModalReceta(this.dataset.rid)" style="background:rgba(148,163,184,.1);border:1px solid #1e2535;color:#94a3b8;border-radius:8px;padding:8px 14px;font-size:12px;cursor:pointer;">✏️ Editar</button>';
+  if(_esAdmin) footer+='<button data-rid="'+id+'" onclick="duplicarReceta(this.dataset.rid)" style="background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.3);color:#818cf8;border-radius:8px;padding:8px 14px;font-size:12px;cursor:pointer;">⧉ Duplicar</button>';
   if(_esAdmin) footer+='<button data-rid="'+id+'" onclick="eliminarReceta(this.dataset.rid)" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#ef4444;border-radius:8px;padding:8px 14px;font-size:12px;cursor:pointer;">🗑 Eliminar</button>';
   if(_esAdmin) footer+='<button data-rid="'+id+'" onclick="abrirPreciosReceta(this.dataset.rid)" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2);color:#fbbf24;border-radius:8px;padding:8px 14px;font-size:12px;cursor:pointer;">💲 Precios</button>';
   footer+='</div>';
@@ -10161,6 +10162,23 @@ function eliminarReceta(id){
   if(!confirm('¿Eliminar esta receta y todos sus componentes?')) return;
   DB.costeo.recetas=(DB.costeo.recetas||[]).filter(function(x){return x.id!==id;});
   guardarCosteo().then(function(){ closeDrawer(); renderPage('costeo'); toast('Eliminada','success'); });
+}
+function duplicarReceta(id){
+  var orig=(DB.costeo.recetas||[]).find(function(x){return x.id===id;});
+  if(!orig){ toast('Receta no encontrada','error'); return; }
+  var copia = JSON.parse(JSON.stringify(orig));
+  copia.id = _costeoId();
+  copia.producto = 'COPIA — '+orig.producto;
+  copia.referencia = '';
+  // Nuevos IDs para cada componente
+  (copia.componentes||[]).forEach(function(c){ c.id=_costeoId(); });
+  if(!DB.costeo.recetas) DB.costeo.recetas=[];
+  DB.costeo.recetas.push(copia);
+  guardarCosteo().then(function(){
+    closeDrawer();
+    renderPage('costeo');
+    toast('Receta duplicada — busca "COPIA — '+orig.producto+'"','success');
+  });
 }
 function abrirFormCompReceta(recId){
   closeDrawer();
