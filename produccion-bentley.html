@@ -631,6 +631,9 @@ textarea.form-control{resize:vertical;min-height:80px;}
     <div class="nav-item" onclick="navTo('entregas')" data-page="entregas">
       <span class="icon">📦</span><span class="nav-label"> Entregas</span>
     </div>
+    <div class="nav-item" onclick="navTo('cronograma')" data-page="cronograma">
+      <span class="icon">📆</span><span class="nav-label"> Cronograma</span>
+    </div>
     <div class="nav-item" onclick="navTo('diseno')" data-page="diseno">
       <span class="icon">🎨</span><span class="nav-label"> Diseño</span>
     </div>
@@ -882,7 +885,7 @@ var GT = (function(){
 
 // ─── Constants ─────────────────────────────────────────────────────────────────
 var REPO = 'jhonrodriguezesteban-alt/bentley-dashboard';
-var FILES = { satelites: 'prod_satelites.json', ops: 'prod_ops.json', ots: 'prod_ots.json', disenos: 'prod_disenos.json', prog_ops: 'prod_prog_ops.json', costos_mo: 'prod_costos_mo.json', usuarios: 'prod_usuarios.json', sim: 'prod_simulador.json', logistica: 'prod_logistica.json', planeacion: 'prod_planeacion.json', costeo: 'prod_costeo.json' };
+var FILES = { satelites: 'prod_satelites.json', ops: 'prod_ops.json', ots: 'prod_ots.json', disenos: 'prod_disenos.json', prog_ops: 'prod_prog_ops.json', costos_mo: 'prod_costos_mo.json', usuarios: 'prod_usuarios.json', sim: 'prod_simulador.json', logistica: 'prod_logistica.json', planeacion: 'prod_planeacion.json', costeo: 'prod_costeo.json', cronograma: 'prod_cronograma.json' };
 var BASE_URL = 'https://jhonrodriguezesteban-alt.github.io/bentley-dashboard/';
 var RAW_URL = 'https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/';
 
@@ -1489,6 +1492,7 @@ async function _autoSyncTick(){
       else if(key==='prog_ops'){ DB.prog_ops = parsed.ops_plan||[]; }
       else if(key==='costos_mo'){ DB.costos_mo = {precios:parsed.precios||[], pagos:parsed.pagos||[]}; }
       else if(key==='sim'){ DB.sim = {active:parsed.active||[], data:parsed.data||{}}; _simActive=DB.sim.active; _simData=DB.sim.data; }
+      else if(key==='cronograma'){ DB.cronograma = parsed.cronograma||[]; }
       // Detectar diseños nuevos y notificar
       if(key==='disenos' && prevDisenos !== null && prevDisenos.length > 0){
         (DB.disenos||[]).forEach(function(d){
@@ -1639,6 +1643,9 @@ async function cargarDatos(){
     var costeoR = await fetch(BASE_URL + 'prod_costeo.json?t=' + t);
     if(costeoR.ok){ var d12 = await costeoR.json(); DB.costeo = {mp:d12.mp||[],servicios:d12.servicios||[],puestos:d12.puestos||[],tarifas_cif:d12.tarifas_cif||[],params:d12.params||{},recetas:d12.recetas||[],precios_pt:d12.precios_pt||[]}; }
     else { if(!DB.planeacion) DB.planeacion = {meses:{}}; }
+    var cronR = await fetch(BASE_URL + 'prod_cronograma.json?t=' + t);
+    if(cronR.ok){ var d13 = await cronR.json(); DB.cronograma = d13.cronograma||[]; }
+    else { DB.cronograma = []; }
     if(DB.satelites.length === 0) seedSatelites();
     saveLocal();
     var msg = 'Datos cargados: ' + DB.ops.length + ' OPs, ' + DB.ots.length + ' OTs, ' + CATALOGO.length + ' refs SKU';
@@ -1768,6 +1775,7 @@ function renderPage(page){
   else if(page==='costeo') el.innerHTML = renderCosteo();
   else if(page==='simulador') el.innerHTML = renderSimulador();
   else if(page==='monitoreo') el.innerHTML = renderMonitoreo();
+  else if(page==='cronograma') el.innerHTML = renderCronograma();
   else if(page==='planeacion') el.innerHTML = renderPlaneacion();
 }
 
@@ -4016,6 +4024,15 @@ async function _confirmarCambioEstadoOT(){
   // Si todas las OTs quedaron ENTREGADO ahora, mover a ALISTAMIENTO (no ARCHIVADO)
   if(estadoGrupo === 'ARCHIVADO') estadoGrupo = 'ALISTAMIENTO';
   _setSubgEstado(ot.op_id, ot.color, estadoGrupo);
+
+  // Cronograma: auto-registrar cuando entra a EN_CONFECCION
+  if(nuevoEstado === 'EN_CONFECCION' && typeof _cronAutoSync === 'function'){
+    _cronAutoSync(ot);
+  }
+  // Cronograma: marcar como entregado cuando el grupo pasa a ALISTAMIENTO
+  if(estadoGrupo === 'ALISTAMIENTO' && typeof _cronMarcarEntregado === 'function'){
+    _cronMarcarEntregado(ot.op_id, ot.color);
+  }
 
   saveLocal(); updateNovBadge();
   var okOts = await guardarArchivo('ots', {ots: DB.ots});
@@ -7222,6 +7239,338 @@ function asignarSateliteOT(otId, satId){
     if(ok) toast('Satélite asignado a OT-'+ot.numero_ot,'success');
     renderPage('programacion');
   });
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// CRONOGRAMA — Seguimiento de fechas de entrega satélites
+// ═══════════════════════════════════════════════════════════════════════════════
+
+async function guardarCronograma(){
+  if(!DB.cronograma) DB.cronograma = [];
+  saveLocal();
+  return guardarArchivo('cronograma', {cronograma: DB.cronograma});
+}
+
+function _cronGetEntry(opId, color){
+  return (DB.cronograma||[]).find(function(e){ return e.op_id===opId && e.color===color; });
+}
+
+// Llamar cuando una OT entra en EN_CONFECCION
+function _cronAutoSync(ot){
+  if(!DB.cronograma) DB.cronograma = [];
+  var entry = _cronGetEntry(ot.op_id, ot.color);
+  if(entry) return; // ya existe
+  var op = (DB.ops||[]).find(function(o){ return o.id===ot.op_id; });
+  var uds = (DB.ots||[]).filter(function(o){ return o.op_id===ot.op_id && o.color===ot.color && o.estado==='EN_CONFECCION'; }).reduce(function(a,o){ return a+(o.cantidad||0); },0);
+  var nuevaEntry = {
+    id: uid(),
+    op_id: ot.op_id,
+    op_nombre: op ? op.nombre_producto : '',
+    color: ot.color,
+    satelite_id: ot.satelite_id || null,
+    uds: uds || (ot.cantidad||0),
+    fecha_entrada: hoy(),
+    fecha_compromiso: null,
+    fecha_inicial: null,
+    historial: [],
+    entregado: false,
+    fecha_entrega_real: null
+  };
+  DB.cronograma.push(nuevaEntry);
+  guardarCronograma();
+}
+
+// Cuando el color-grupo pasa a ENTREGADO/ALISTAMIENTO, marcar como entregado
+function _cronMarcarEntregado(opId, color){
+  var entry = _cronGetEntry(opId, color);
+  if(!entry || entry.entregado) return;
+  entry.entregado = true;
+  entry.fecha_entrega_real = hoy();
+  guardarCronograma();
+}
+
+async function cronSetFecha(entryId, nuevaFecha, motivo, sinModal){
+  var entry = (DB.cronograma||[]).find(function(e){ return e.id===entryId; });
+  if(!entry) return;
+  if(!nuevaFecha){ toast('Selecciona una fecha','error'); return; }
+  if(!motivo && !sinModal){ toast('Escribe el motivo del cambio','error'); return; }
+  if(!entry.fecha_inicial){
+    entry.fecha_inicial = nuevaFecha;
+  }
+  if(entry.fecha_compromiso && entry.fecha_compromiso !== nuevaFecha){
+    entry.historial.push({ fecha_anterior: entry.fecha_compromiso, fecha_nueva: nuevaFecha, motivo: motivo||'Asignación inicial', by: getUser(), at: hoy() });
+  } else if(!entry.fecha_compromiso){
+    entry.historial.push({ fecha_anterior: null, fecha_nueva: nuevaFecha, motivo: 'Fecha inicial asignada', by: getUser(), at: hoy() });
+  }
+  entry.fecha_compromiso = nuevaFecha;
+  var ok = await guardarCronograma();
+  if(ok){ toast('Fecha guardada','success'); closeModal(); renderPage('cronograma'); }
+  else toast('Error al guardar','error');
+}
+
+function cronAbrirFecha(entryId){
+  var entry = (DB.cronograma||[]).find(function(e){ return e.id===entryId; });
+  if(!entry) return;
+  var esNueva = !entry.fecha_compromiso;
+  var body = '';
+  body += '<div class="form-group" style="margin-bottom:14px;"><label class="form-label">Fecha compromiso</label>';
+  body += '<input type="date" id="cron-fecha-inp" class="form-control" value="'+(entry.fecha_compromiso||'')+'" style="width:100%;"></div>';
+  if(!esNueva){
+    body += '<div class="form-group"><label class="form-label">Motivo del cambio *</label>';
+    body += '<input id="cron-motivo-inp" class="form-control" placeholder="Ej: Satélite solicitó extensión por material" style="width:100%;"></div>';
+    if(entry.historial && entry.historial.length){
+      body += '<div style="margin-top:14px;border-top:1px solid #1e2535;padding-top:12px;">';
+      body += '<div style="font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#64748b;font-weight:700;margin-bottom:8px;">Historial de cambios</div>';
+      entry.historial.forEach(function(h){
+        body += '<div style="font-size:11px;color:#94a3b8;margin-bottom:6px;background:#0d1117;border-radius:6px;padding:7px 10px;">';
+        if(h.fecha_anterior) body += '<span style="color:#ef4444;text-decoration:line-through;">'+h.fecha_anterior+'</span> → ';
+        body += '<span style="color:#10b981;font-weight:700;">'+h.fecha_nueva+'</span>';
+        body += '<div style="color:#64748b;font-size:10px;margin-top:3px;">'+esc(h.motivo||'')+'  ·  '+esc(h.by||'')+'  ·  '+esc(h.at||'')+'</div>';
+        body += '</div>';
+      });
+      body += '</div>';
+    }
+  } else {
+    body += '<div style="font-size:11px;color:#64748b;margin-top:8px;">Primera asignación — no requiere motivo.</div>';
+  }
+  var footer = '<button onclick="cronSetFecha(\''+entryId+'\', document.getElementById(\'cron-fecha-inp\').value, '+(esNueva?'\'Asignación inicial\'':'(document.getElementById(\'cron-motivo-inp\')||{}).value||\'\'')+')" class="btn btn-primary">💾 Guardar</button>';
+  openModal((esNueva?'Asignar':'Cambiar')+' fecha — '+esc(entry.op_nombre)+' / '+esc(entry.color), body, footer, {wide:false});
+}
+
+var _cronFiltroSat = 'todos';
+var _cronFiltroSem = false; // mostrar solo esta semana
+
+function renderCronograma(){
+  if(!DB.cronograma) DB.cronograma = [];
+
+  // Auto-poblar desde OTs EN_CONFECCION que no tengan entrada
+  var toSync = [];
+  (DB.ots||[]).filter(function(o){ return o.estado==='EN_CONFECCION'; }).forEach(function(ot){
+    if(!_cronGetEntry(ot.op_id, ot.color)) toSync.push(ot);
+  });
+  if(toSync.length){
+    toSync.forEach(function(ot){ _cronAutoSync(ot); });
+  }
+
+  // Semana actual
+  var hoyDate = new Date();
+  var dow = hoyDate.getDay(); // 0=dom
+  var lunesOffset = dow===0 ? -6 : 1-dow;
+  var lunes = new Date(hoyDate); lunes.setDate(hoyDate.getDate()+lunesOffset);
+  var semDias = [];
+  for(var sd=0;sd<7;sd++){ var d2=new Date(lunes); d2.setDate(lunes.getDate()+sd); semDias.push(d2.toISOString().slice(0,10)); }
+  var semFin = semDias[6];
+  var semIni = semDias[0];
+
+  var activos = (DB.cronograma||[]).filter(function(e){ return !e.entregado; });
+  var todos   = DB.cronograma||[];
+
+  // KPIs
+  var totalConf   = activos.length;
+  var sinFecha    = activos.filter(function(e){ return !e.fecha_compromiso; }).length;
+  var estaSemana  = activos.filter(function(e){ return e.fecha_compromiso && e.fecha_compromiso>=semIni && e.fecha_compromiso<=semFin; }).length;
+  var vencidos    = activos.filter(function(e){ return e.fecha_compromiso && e.fecha_compromiso<hoy(); }).length;
+  var entregados  = todos.filter(function(e){ return e.entregado; });
+  var cumplidos   = entregados.filter(function(e){ return e.fecha_entrega_real && e.fecha_inicial && e.fecha_entrega_real<=e.fecha_inicial; }).length;
+  var pctCumplimiento = entregados.length ? Math.round(cumplidos/entregados.length*100) : 0;
+  var diasPromedio = 0;
+  if(entregados.length){
+    var sumDias = 0; var cntDias = 0;
+    entregados.forEach(function(e){
+      if(e.fecha_entrada && e.fecha_entrega_real){
+        var ms = new Date(e.fecha_entrega_real)-new Date(e.fecha_entrada);
+        sumDias += Math.round(ms/86400000); cntDias++;
+      }
+    });
+    if(cntDias) diasPromedio = Math.round(sumDias/cntDias);
+  }
+
+  var h = '<div style="padding:18px 16px 80px;">';
+
+  // ── Header ──
+  h += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;">';
+  h += '<div><div style="font-size:22px;font-weight:800;color:var(--accent);">📆 Cronograma</div>';
+  h += '<div style="font-size:11px;color:#64748b;">Seguimiento de fechas de entrega — satélites en confección</div></div>';
+  h += '</div>';
+
+  // ── KPIs ──
+  h += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:20px;">';
+  function cronKpi(label,val,color,sub){
+    return '<div class="card" style="padding:12px 14px;"><div style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">'+label+'</div>'+
+      '<div style="font-size:22px;font-weight:800;color:'+color+';">'+val+'</div>'+
+      (sub?'<div style="font-size:10px;color:#475569;margin-top:2px;">'+sub+'</div>':'')+
+      '</div>';
+  }
+  h += cronKpi('En confección', totalConf, 'var(--accent)', 'órdenes activas');
+  h += cronKpi('Sin fecha', sinFecha, sinFecha?'#f59e0b':'#10b981', 'pendiente asignar');
+  h += cronKpi('Esta semana', estaSemana, '#38bdf8', 'comprometidas');
+  h += cronKpi('Vencidas', vencidos, vencidos?'#ef4444':'#10b981', 'fecha pasada');
+  h += cronKpi('Cumplimiento', pctCumplimiento+'%', pctCumplimiento>=80?'#10b981':pctCumplimiento>=50?'#f59e0b':'#ef4444', entregados.length+' entregadas');
+  h += cronKpi('Días prom.', diasPromedio||'—', '#94a3b8', 'entrada → entrega');
+  h += '</div>';
+
+  // ── Vista semanal ──
+  var DIAS_LABEL = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  h += '<div class="card" style="padding:14px 16px;margin-bottom:20px;">';
+  h += '<div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#38bdf8;margin-bottom:12px;">📅 Esta semana — quién entrega</div>';
+  h += '<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;">';
+  semDias.forEach(function(dStr){
+    var dObj = new Date(dStr+'T12:00:00');
+    var esHoy = dStr===hoy();
+    var label = DIAS_LABEL[dObj.getDay()];
+    var dia   = dObj.getDate();
+    var entregan = activos.filter(function(e){ return e.fecha_compromiso===dStr; });
+    h += '<div style="background:'+(esHoy?'rgba(0,212,255,.12)':'#0d1117')+';border:1px solid '+(esHoy?'rgba(0,212,255,.4)':'#1e2535')+';border-radius:9px;padding:8px 6px;min-height:70px;">';
+    h += '<div style="font-size:9px;font-weight:700;color:'+(esHoy?'var(--accent)':'#64748b')+';text-align:center;text-transform:uppercase;">'+label+'</div>';
+    h += '<div style="font-size:16px;font-weight:800;color:'+(esHoy?'var(--accent)':'#94a3b8')+';text-align:center;margin-bottom:4px;">'+dia+'</div>';
+    if(entregan.length){
+      entregan.forEach(function(e){
+        var sat = getSatNombre(e.satelite_id);
+        h += '<div style="background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.3);border-radius:5px;padding:3px 5px;margin-bottom:3px;cursor:pointer;" title="'+esc(e.op_nombre+' / '+e.color)+'" onclick="cronAbrirFecha(\''+e.id+'\')">';
+        h += '<div style="font-size:9px;color:#10b981;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(e.op_nombre||e.op_id)+'</div>';
+        h += '<div style="font-size:8px;color:#64748b;">'+esc(e.color)+(sat?(' · '+sat):'')+'</div>';
+        h += '</div>';
+      });
+    } else {
+      h += '<div style="font-size:10px;color:#1e2535;text-align:center;margin-top:8px;">—</div>';
+    }
+    h += '</div>';
+  });
+  h += '</div></div>';
+
+  // ── Filtros ──
+  var sats = DB.satelites ? DB.satelites.filter(function(s){ return s.activo; }) : [];
+  h += '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:16px;">';
+  h += '<button data-sat="todos" onclick="_cronFiltroSat=\'todos\';renderPage(\'cronograma\')" style="font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid '+(_cronFiltroSat==='todos'?'var(--accent)':'#1e2535')+';background:'+(_cronFiltroSat==='todos'?'rgba(0,212,255,.12)':'transparent')+';color:'+(_cronFiltroSat==='todos'?'var(--accent)':'#64748b')+';cursor:pointer;">Todos</button>';
+  sats.forEach(function(s){
+    var active = _cronFiltroSat===s.id;
+    h += '<button data-sat="'+s.id+'" onclick="_cronFiltroSat=\''+s.id+'\';renderPage(\'cronograma\')" style="font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid '+(active?'var(--accent)':'#1e2535')+';background:'+(active?'rgba(0,212,255,.12)':'transparent')+';color:'+(active?'var(--accent)':'#64748b')+';cursor:pointer;">'+esc(s.nombre)+'</button>';
+  });
+  h += '<div style="flex:1;"></div>';
+  var filtBtnStyle = 'font-size:11px;padding:5px 12px;border-radius:20px;cursor:pointer;';
+  var actBtn = _cronFiltroSem;
+  h += '<button onclick="_cronFiltroSem='+(!_cronFiltroSem)+';renderPage(\'cronograma\')" style="'+filtBtnStyle+'border:1px solid '+(_cronFiltroSem?'#38bdf8':'#1e2535')+';background:'+(_cronFiltroSem?'rgba(56,189,248,.12)':'transparent')+';color:'+(_cronFiltroSem?'#38bdf8':'#64748b')+';">📅 Solo esta semana</button>';
+  h += '</div>';
+
+  // ── Tabla por satélite ──
+  var entries = activos.slice();
+  if(_cronFiltroSat !== 'todos') entries = entries.filter(function(e){ return e.satelite_id===_cronFiltroSat; });
+  if(_cronFiltroSem) entries = entries.filter(function(e){ return e.fecha_compromiso && e.fecha_compromiso>=semIni && e.fecha_compromiso<=semFin; });
+
+  // Agrupar por satélite
+  var satGroups = {};
+  var sinSatKey = '__sin_satelite__';
+  entries.forEach(function(e){
+    var k = e.satelite_id||sinSatKey;
+    if(!satGroups[k]) satGroups[k] = [];
+    satGroups[k].push(e);
+  });
+  // Poner sin satélite al final
+  var satKeys = Object.keys(satGroups).filter(function(k){ return k!==sinSatKey; });
+  if(satGroups[sinSatKey]) satKeys.push(sinSatKey);
+
+  if(!satKeys.length){
+    h += '<div style="text-align:center;padding:40px;color:#475569;">';
+    h += '<div style="font-size:36px;margin-bottom:8px;">📭</div>';
+    h += '<div>No hay órdenes en confección con el filtro seleccionado.</div></div>';
+  } else {
+    satKeys.forEach(function(satKey){
+      var satNom = satKey===sinSatKey ? '⚠ Sin satélite asignado' : getSatNombre(satKey);
+      var grp = satGroups[satKey];
+      var totalUds = grp.reduce(function(a,e){ return a+(e.uds||0); },0);
+      var venc = grp.filter(function(e){ return e.fecha_compromiso && e.fecha_compromiso<hoy(); }).length;
+
+      h += '<div class="card" style="margin-bottom:14px;overflow:hidden;">';
+      h += '<div style="padding:12px 16px;background:rgba(255,255,255,.03);border-bottom:1px solid #1e2535;display:flex;align-items:center;gap:10px;">';
+      h += '<span style="font-size:16px;">🏭</span>';
+      h += '<div style="flex:1;"><div style="font-size:13px;font-weight:800;color:#e2e8f0;">'+esc(satNom)+'</div>';
+      h += '<div style="font-size:10px;color:#64748b;">'+grp.length+' órdenes · '+totalUds.toLocaleString('es-CO')+' uds en confección'+(venc?' · <span style="color:#ef4444;">'+venc+' vencidas</span>':'')+'</div></div>';
+      h += '</div>';
+
+      h += '<div style="overflow-x:auto;">';
+      h += '<table style="width:100%;border-collapse:collapse;font-size:12px;">';
+      h += '<thead><tr style="background:#0a0d14;">';
+      h += '<th style="padding:9px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;white-space:nowrap;">OP / Ref.</th>';
+      h += '<th style="padding:9px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Color</th>';
+      h += '<th style="padding:9px 12px;text-align:right;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Uds</th>';
+      h += '<th style="padding:9px 12px;text-align:center;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Entrada</th>';
+      h += '<th style="padding:9px 12px;text-align:center;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Fecha inicial</th>';
+      h += '<th style="padding:9px 12px;text-align:center;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Compromiso</th>';
+      h += '<th style="padding:9px 12px;text-align:center;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Días</th>';
+      h += '<th style="padding:9px 12px;text-align:center;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Estado</th>';
+      h += '<th style="padding:9px 12px;text-align:center;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;"></th>';
+      h += '</tr></thead><tbody>';
+
+      grp.sort(function(a,b){
+        // Primero vencidas, luego por fecha compromiso
+        var fa = a.fecha_compromiso||'9999'; var fb = b.fecha_compromiso||'9999';
+        return fa.localeCompare(fb);
+      }).forEach(function(e, idx){
+        var hoyStr = hoy();
+        var esVencida = e.fecha_compromiso && e.fecha_compromiso < hoyStr;
+        var estaSemanaBool = e.fecha_compromiso && e.fecha_compromiso>=semIni && e.fecha_compromiso<=semFin;
+        var diasEnConf = e.fecha_entrada ? Math.round((new Date()-new Date(e.fecha_entrada))/86400000) : '—';
+        var diasAEntrega = e.fecha_compromiso ? Math.round((new Date(e.fecha_compromiso)-new Date())/86400000) : null;
+        var cambios = e.historial ? e.historial.filter(function(h){ return h.fecha_anterior; }).length : 0;
+        var bgRow = idx%2===0 ? 'transparent' : 'rgba(255,255,255,.015)';
+        if(esVencida) bgRow = 'rgba(239,68,68,.05)';
+        else if(estaSemanaBool) bgRow = 'rgba(56,189,248,.04)';
+
+        h += '<tr style="background:'+bgRow+';border-bottom:1px solid #1e2535;" onmouseover="this.style.background=\'rgba(255,255,255,.04)\'" onmouseout="this.style.background=\''+bgRow+'\'">';
+        h += '<td style="padding:10px 12px;"><div style="font-size:11px;font-weight:700;color:var(--accent);">'+esc(e.op_id)+'</div><div style="font-size:10px;color:#94a3b8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:130px;" title="'+esc(e.op_nombre)+'">'+esc(e.op_nombre||'—')+'</div></td>';
+        h += '<td style="padding:10px 12px;"><span style="background:rgba(148,163,184,.1);border:1px solid #1e2535;border-radius:4px;color:#cbd5e1;padding:2px 7px;font-size:11px;font-weight:600;">'+esc(e.color)+'</span></td>';
+        h += '<td style="padding:10px 12px;text-align:right;font-weight:700;color:#e2e8f0;">'+((e.uds||0).toLocaleString('es-CO'))+'</td>';
+        h += '<td style="padding:10px 12px;text-align:center;color:#64748b;font-size:11px;">'+(e.fecha_entrada||'—')+'</td>';
+        h += '<td style="padding:10px 12px;text-align:center;font-size:11px;color:'+(e.fecha_inicial?'#94a3b8':'#475569')+';'+(cambios?'text-decoration:underline;text-decoration-style:dotted;':'')+'">'+( e.fecha_inicial||'—' )+'</td>';
+        // Fecha compromiso — editable inline
+        var fcColor = !e.fecha_compromiso ? '#f59e0b' : (esVencida ? '#ef4444' : (estaSemanaBool ? '#38bdf8' : '#10b981'));
+        h += '<td style="padding:10px 12px;text-align:center;">';
+        h += '<button data-eid="'+e.id+'" onclick="cronAbrirFecha(this.dataset.eid)" style="background:rgba(255,255,255,.04);border:1px solid '+(e.fecha_compromiso?fcColor+'44':'rgba(245,158,11,.4)')+';border-radius:6px;color:'+fcColor+';padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;">'+(e.fecha_compromiso||'+ Asignar')+(cambios?' ✎':''+(e.fecha_compromiso&&cambios?' ('+cambios+'↩)':''))+'</button>';
+        h += '</td>';
+        // Días hasta entrega
+        var diasStr = diasAEntrega===null ? '—' : (diasAEntrega<0 ? Math.abs(diasAEntrega)+'d atrás' : diasAEntrega===0 ? 'HOY' : diasAEntrega+'d');
+        var diasColor = diasAEntrega===null?'#475569':(diasAEntrega<0?'#ef4444':(diasAEntrega===0?'#f59e0b':(diasAEntrega<=3?'#f59e0b':'#10b981')));
+        h += '<td style="padding:10px 12px;text-align:center;font-size:11px;font-weight:700;color:'+diasColor+';">'+diasStr+'</td>';
+        // Estado badge
+        var estadoBadge = esVencida ? '<span style="background:rgba(239,68,68,.15);color:#ef4444;border:1px solid rgba(239,68,68,.3);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;">VENCIDA</span>' :
+                          estaSemanaBool ? '<span style="background:rgba(56,189,248,.12);color:#38bdf8;border:1px solid rgba(56,189,248,.3);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;">ESTA SEM.</span>' :
+                          !e.fecha_compromiso ? '<span style="background:rgba(245,158,11,.12);color:#f59e0b;border:1px solid rgba(245,158,11,.3);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;">SIN FECHA</span>' :
+                          '<span style="background:rgba(16,185,129,.1);color:#10b981;border:1px solid rgba(16,185,129,.2);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;">EN TIEMPO</span>';
+        h += '<td style="padding:10px 12px;text-align:center;">'+estadoBadge+'</td>';
+        // Ir a OP
+        h += '<td style="padding:10px 12px;text-align:center;"><button data-opid="'+e.op_id+'" onclick="verDetalleOP(this.dataset.opid)" style="background:transparent;border:none;color:#475569;cursor:pointer;font-size:13px;" title="Ver OP">→</button></td>';
+        h += '</tr>';
+      });
+      h += '</tbody></table></div></div>';
+    });
+  }
+
+  // ── Historial de entregadas ──
+  var entregadasRecientes = todos.filter(function(e){ return e.entregado; }).sort(function(a,b){ return (b.fecha_entrega_real||'').localeCompare(a.fecha_entrega_real||''); }).slice(0,15);
+  if(entregadasRecientes.length){
+    h += '<div class="card" style="margin-bottom:14px;">';
+    h += '<div style="padding:12px 16px;border-bottom:1px solid #1e2535;display:flex;align-items:center;gap:8px;">';
+    h += '<span style="font-size:14px;">✅</span><span style="font-size:12px;font-weight:800;color:#10b981;text-transform:uppercase;letter-spacing:.5px;">Entregadas recientes</span></div>';
+    h += '<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:11px;">';
+    h += '<thead><tr style="background:#0a0d14;"><th style="padding:8px 12px;text-align:left;color:#475569;font-weight:700;">OP</th><th style="padding:8px 12px;color:#475569;font-weight:700;">Color</th><th style="padding:8px 12px;color:#475569;font-weight:700;">Satélite</th><th style="padding:8px 12px;text-align:center;color:#475569;font-weight:700;">Fecha inicial</th><th style="padding:8px 12px;text-align:center;color:#475569;font-weight:700;">Entregada</th><th style="padding:8px 12px;text-align:center;color:#475569;font-weight:700;">Días conf.</th><th style="padding:8px 12px;text-align:center;color:#475569;font-weight:700;">Cumplimiento</th></tr></thead><tbody>';
+    entregadasRecientes.forEach(function(e, idx){
+      var enTiempo = e.fecha_entrega_real && e.fecha_inicial && e.fecha_entrega_real<=e.fecha_inicial;
+      var diasConf = e.fecha_entrada && e.fecha_entrega_real ? Math.round((new Date(e.fecha_entrega_real)-new Date(e.fecha_entrada))/86400000) : '—';
+      h += '<tr style="background:'+(idx%2?'rgba(255,255,255,.015)':'transparent')+';border-bottom:1px solid #0f1521;">';
+      h += '<td style="padding:8px 12px;"><span style="font-size:10px;font-weight:700;color:var(--accent);">'+esc(e.op_id)+'</span><div style="font-size:10px;color:#64748b;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(e.op_nombre||'')+'</div></td>';
+      h += '<td style="padding:8px 12px;color:#94a3b8;">'+esc(e.color)+'</td>';
+      h += '<td style="padding:8px 12px;color:#64748b;">'+esc(getSatNombre(e.satelite_id))+'</td>';
+      h += '<td style="padding:8px 12px;text-align:center;color:#94a3b8;">'+(e.fecha_inicial||'—')+'</td>';
+      h += '<td style="padding:8px 12px;text-align:center;color:#10b981;font-weight:700;">'+(e.fecha_entrega_real||'—')+'</td>';
+      h += '<td style="padding:8px 12px;text-align:center;color:#64748b;">'+diasConf+'</td>';
+      h += '<td style="padding:8px 12px;text-align:center;">'+( enTiempo ? '<span style="color:#10b981;font-weight:700;">✓ A tiempo</span>' : (e.fecha_inicial?'<span style="color:#ef4444;font-weight:700;">✗ Tardío</span>':'<span style="color:#64748b;">Sin ref.</span>') )+'</td>';
+      h += '</tr>';
+    });
+    h += '</tbody></table></div></div>';
+  }
+
+  h += '</div>';
+  return h;
 }
 
 function renderEntregas(){
