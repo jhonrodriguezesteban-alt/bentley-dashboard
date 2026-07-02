@@ -632,7 +632,7 @@ textarea.form-control{resize:vertical;min-height:80px;}
       <span class="icon">📦</span><span class="nav-label"> Entregas</span>
     </div>
     <div class="nav-item" onclick="navTo('cronograma')" data-page="cronograma">
-      <span class="icon">📆</span><span class="nav-label"> Cronograma</span>
+      <span class="icon">🎯</span><span class="nav-label"> Cronograma</span>
     </div>
     <div class="nav-item" onclick="navTo('diseno')" data-page="diseno">
       <span class="icon">🎨</span><span class="nav-label"> Diseño</span>
@@ -7337,6 +7337,61 @@ function cronAbrirFecha(entryId){
   openModal((esNueva?'Asignar':'Cambiar')+' fecha — '+esc(entry.op_nombre)+' / '+esc(entry.color), body, footer, {wide:false});
 }
 
+// Abrir modal de fecha para toda la OP (aplica a todos los colores)
+function cronAbrirFechaOP(opId){
+  var opEntries = (DB.cronograma||[]).filter(function(e){ return e.op_id===opId && !e.entregado; });
+  if(!opEntries.length) return;
+  var rep = opEntries[0];
+  var esNueva = !rep.fecha_compromiso;
+  var colores = opEntries.map(function(e){ return e.color; }).join(', ');
+  var body = '';
+  body += '<div style="font-size:11px;color:#64748b;margin-bottom:12px;">Aplica a todos los colores: <b style="color:#e2e8f0;">'+esc(colores)+'</b></div>';
+  body += '<div class="form-group" style="margin-bottom:14px;"><label class="form-label">Fecha compromiso de entrega</label>';
+  body += '<input type="date" id="cron-op-fecha" class="form-control" value="'+(rep.fecha_compromiso||'')+'" style="width:100%;"></div>';
+  if(!esNueva){
+    body += '<div class="form-group"><label class="form-label">Motivo del cambio *</label>';
+    body += '<input id="cron-op-motivo" class="form-control" placeholder="Ej: Satélite solicitó extensión" style="width:100%;"></div>';
+    // Historial consolidado
+    var histAll = [];
+    opEntries.forEach(function(e){ (e.historial||[]).filter(function(h){ return h.fecha_anterior; }).forEach(function(h){ histAll.push(h); }); });
+    histAll.sort(function(a,b){ return (b.at||'').localeCompare(a.at||''); });
+    if(histAll.length){
+      body += '<div style="margin-top:14px;border-top:1px solid #1e2535;padding-top:12px;">';
+      body += '<div style="font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#64748b;font-weight:700;margin-bottom:8px;">Historial de cambios</div>';
+      histAll.forEach(function(h){
+        body += '<div style="font-size:11px;color:#94a3b8;margin-bottom:6px;background:#0d1117;border-radius:6px;padding:7px 10px;">';
+        body += '<span style="color:#ef4444;text-decoration:line-through;">'+esc(h.fecha_anterior)+'</span> → <span style="color:#10b981;font-weight:700;">'+esc(h.fecha_nueva)+'</span>';
+        body += '<div style="color:#64748b;font-size:10px;margin-top:3px;">'+esc(h.motivo||'')+'  ·  '+esc(h.by||'')+'  ·  '+esc(h.at||'')+'</div></div>';
+      });
+      body += '</div>';
+    }
+  } else {
+    body += '<div style="font-size:11px;color:#64748b;margin-top:8px;">Primera asignación — no requiere motivo.</div>';
+  }
+  var footer = '<button data-opid="'+opId+'" onclick="cronSetFechaOP(this.dataset.opid, document.getElementById(\'cron-op-fecha\').value, '+(esNueva?'\'Asignación inicial\'':'(document.getElementById(\'cron-op-motivo\')||{}).value||\'\'')+')" class="btn btn-primary">💾 Guardar para toda la OP</button>';
+  openModal((esNueva?'Asignar':'Cambiar')+' fecha — '+esc(rep.op_nombre||opId), body, footer, {wide:false});
+}
+
+async function cronSetFechaOP(opId, nuevaFecha, motivo){
+  if(!nuevaFecha){ toast('Selecciona una fecha','error'); return; }
+  var opEntries = (DB.cronograma||[]).filter(function(e){ return e.op_id===opId && !e.entregado; });
+  if(!opEntries.length) return;
+  var esNueva = !opEntries[0].fecha_compromiso;
+  if(!esNueva && !motivo){ toast('Escribe el motivo del cambio','error'); return; }
+  opEntries.forEach(function(e){
+    if(!e.fecha_inicial) e.fecha_inicial = nuevaFecha;
+    if(e.fecha_compromiso && e.fecha_compromiso !== nuevaFecha){
+      e.historial.push({ fecha_anterior: e.fecha_compromiso, fecha_nueva: nuevaFecha, motivo: motivo, by: getUser(), at: hoy() });
+    } else if(!e.fecha_compromiso){
+      e.historial.push({ fecha_anterior: null, fecha_nueva: nuevaFecha, motivo: 'Asignación inicial', by: getUser(), at: hoy() });
+    }
+    e.fecha_compromiso = nuevaFecha;
+  });
+  var ok = await guardarCronograma();
+  if(ok){ toast('Fecha guardada para toda la OP','success'); closeModal(); renderPage('cronograma'); }
+  else toast('Error al guardar','error');
+}
+
 var _cronFiltroSat = 'todos';
 var _cronFiltroSem = false; // mostrar solo esta semana
 
@@ -7389,7 +7444,7 @@ function renderCronograma(){
 
   // ── Header ──
   h += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;">';
-  h += '<div><div style="font-size:22px;font-weight:800;color:var(--accent);">📆 Cronograma</div>';
+  h += '<div><div style="font-size:22px;font-weight:800;color:var(--accent);">🎯 Cronograma</div>';
   h += '<div style="font-size:11px;color:#64748b;">Seguimiento de fechas de entrega — satélites en confección</div></div>';
   h += '</div>';
 
@@ -7452,12 +7507,12 @@ function renderCronograma(){
   h += '<button onclick="_cronFiltroSem='+(!_cronFiltroSem)+';renderPage(\'cronograma\')" style="'+filtBtnStyle+'border:1px solid '+(_cronFiltroSem?'#38bdf8':'#1e2535')+';background:'+(_cronFiltroSem?'rgba(56,189,248,.12)':'transparent')+';color:'+(_cronFiltroSem?'#38bdf8':'#64748b')+';">📅 Solo esta semana</button>';
   h += '</div>';
 
-  // ── Tabla por satélite ──
+  // ── Tabla agrupada por satélite → OP ──
   var entries = activos.slice();
   if(_cronFiltroSat !== 'todos') entries = entries.filter(function(e){ return e.satelite_id===_cronFiltroSat; });
   if(_cronFiltroSem) entries = entries.filter(function(e){ return e.fecha_compromiso && e.fecha_compromiso>=semIni && e.fecha_compromiso<=semFin; });
 
-  // Agrupar por satélite
+  // Agrupar entradas por satélite
   var satGroups = {};
   var sinSatKey = '__sin_satelite__';
   entries.forEach(function(e){
@@ -7465,7 +7520,6 @@ function renderCronograma(){
     if(!satGroups[k]) satGroups[k] = [];
     satGroups[k].push(e);
   });
-  // Poner sin satélite al final
   var satKeys = Object.keys(satGroups).filter(function(k){ return k!==sinSatKey; });
   if(satGroups[sinSatKey]) satKeys.push(sinSatKey);
 
@@ -7476,69 +7530,104 @@ function renderCronograma(){
   } else {
     satKeys.forEach(function(satKey){
       var satNom = satKey===sinSatKey ? '⚠ Sin satélite asignado' : getSatNombre(satKey);
-      var grp = satGroups[satKey];
-      var totalUds = grp.reduce(function(a,e){ return a+(e.uds||0); },0);
-      var venc = grp.filter(function(e){ return e.fecha_compromiso && e.fecha_compromiso<hoy(); }).length;
+      var grpEntries = satGroups[satKey];
+
+      // Agrupar por OP dentro de cada satélite
+      var opMap = {};
+      grpEntries.forEach(function(e){
+        if(!opMap[e.op_id]) opMap[e.op_id] = [];
+        opMap[e.op_id].push(e);
+      });
+      var opIds = Object.keys(opMap);
+      var totalUds = grpEntries.reduce(function(a,e){ return a+(e.uds||0); },0);
+      var vencOps = opIds.filter(function(oid){
+        var fc = opMap[oid][0].fecha_compromiso;
+        return fc && fc < hoy();
+      }).length;
 
       h += '<div class="card" style="margin-bottom:14px;overflow:hidden;">';
       h += '<div style="padding:12px 16px;background:rgba(255,255,255,.03);border-bottom:1px solid #1e2535;display:flex;align-items:center;gap:10px;">';
       h += '<span style="font-size:16px;">🏭</span>';
       h += '<div style="flex:1;"><div style="font-size:13px;font-weight:800;color:#e2e8f0;">'+esc(satNom)+'</div>';
-      h += '<div style="font-size:10px;color:#64748b;">'+grp.length+' órdenes · '+totalUds.toLocaleString('es-CO')+' uds en confección'+(venc?' · <span style="color:#ef4444;">'+venc+' vencidas</span>':'')+'</div></div>';
+      h += '<div style="font-size:10px;color:#64748b;">'+opIds.length+' órdenes · '+totalUds.toLocaleString('es-CO')+' uds'+(vencOps?' · <span style="color:#ef4444;">'+vencOps+' vencidas</span>':'')+'</div></div>';
       h += '</div>';
 
       h += '<div style="overflow-x:auto;">';
       h += '<table style="width:100%;border-collapse:collapse;font-size:12px;">';
       h += '<thead><tr style="background:#0a0d14;">';
-      h += '<th style="padding:9px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;white-space:nowrap;">OP / Ref.</th>';
-      h += '<th style="padding:9px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Color</th>';
+      h += '<th style="padding:9px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">OP</th>';
+      h += '<th style="padding:9px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Referencia</th>';
+      h += '<th style="padding:9px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Colores</th>';
       h += '<th style="padding:9px 12px;text-align:right;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Uds</th>';
-      h += '<th style="padding:9px 12px;text-align:center;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Entrada</th>';
+      h += '<th style="padding:9px 12px;text-align:center;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Entrada conf.</th>';
       h += '<th style="padding:9px 12px;text-align:center;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Fecha inicial</th>';
       h += '<th style="padding:9px 12px;text-align:center;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Compromiso</th>';
       h += '<th style="padding:9px 12px;text-align:center;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Días</th>';
       h += '<th style="padding:9px 12px;text-align:center;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Estado</th>';
-      h += '<th style="padding:9px 12px;text-align:center;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;"></th>';
+      h += '<th style="padding:9px 12px;text-align:center;font-size:10px;color:#475569;"></th>';
       h += '</tr></thead><tbody>';
 
-      grp.sort(function(a,b){
-        // Primero vencidas, luego por fecha compromiso
-        var fa = a.fecha_compromiso||'9999'; var fb = b.fecha_compromiso||'9999';
+      // Ordenar OPs: primero vencidas, luego por fecha compromiso
+      opIds.sort(function(a,b){
+        var fa = opMap[a][0].fecha_compromiso||'9999';
+        var fb = opMap[b][0].fecha_compromiso||'9999';
         return fa.localeCompare(fb);
-      }).forEach(function(e, idx){
+      }).forEach(function(opId, idx){
+        var opEntries = opMap[opId];
+        // Usar la primera entrada como representante de la OP
+        var rep = opEntries[0];
         var hoyStr = hoy();
-        var esVencida = e.fecha_compromiso && e.fecha_compromiso < hoyStr;
-        var estaSemanaBool = e.fecha_compromiso && e.fecha_compromiso>=semIni && e.fecha_compromiso<=semFin;
-        var diasEnConf = e.fecha_entrada ? Math.round((new Date()-new Date(e.fecha_entrada))/86400000) : '—';
-        var diasAEntrega = e.fecha_compromiso ? Math.round((new Date(e.fecha_compromiso)-new Date())/86400000) : null;
-        var cambios = e.historial ? e.historial.filter(function(h){ return h.fecha_anterior; }).length : 0;
+        var colores = opEntries.map(function(e){ return e.color; });
+        var totalUdsOp = opEntries.reduce(function(a,e){ return a+(e.uds||0); },0);
+        // Fecha compromiso: la misma para todos (se aplica por OP), usar la de la primera entrada
+        var fechaComp = rep.fecha_compromiso;
+        var fechaIni  = rep.fecha_inicial;
+        var fechaEntrada = opEntries.map(function(e){ return e.fecha_entrada||''; }).sort()[0]; // la más temprana
+        var cambios = opEntries.reduce(function(a,e){ return a+(e.historial?e.historial.filter(function(h){ return h.fecha_anterior; }).length:0); },0);
+        var esVencida = fechaComp && fechaComp < hoyStr;
+        var estaSemanaBool = fechaComp && fechaComp>=semIni && fechaComp<=semFin;
+        var diasAEntrega = fechaComp ? Math.round((new Date(fechaComp)-new Date())/86400000) : null;
+
         var bgRow = idx%2===0 ? 'transparent' : 'rgba(255,255,255,.015)';
         if(esVencida) bgRow = 'rgba(239,68,68,.05)';
         else if(estaSemanaBool) bgRow = 'rgba(56,189,248,.04)';
 
         h += '<tr style="background:'+bgRow+';border-bottom:1px solid #1e2535;" onmouseover="this.style.background=\'rgba(255,255,255,.04)\'" onmouseout="this.style.background=\''+bgRow+'\'">';
-        h += '<td style="padding:10px 12px;"><div style="font-size:11px;font-weight:700;color:var(--accent);">'+esc(e.op_id)+'</div><div style="font-size:10px;color:#94a3b8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:130px;" title="'+esc(e.op_nombre)+'">'+esc(e.op_nombre||'—')+'</div></td>';
-        h += '<td style="padding:10px 12px;"><span style="background:rgba(148,163,184,.1);border:1px solid #1e2535;border-radius:4px;color:#cbd5e1;padding:2px 7px;font-size:11px;font-weight:600;">'+esc(e.color)+'</span></td>';
-        h += '<td style="padding:10px 12px;text-align:right;font-weight:700;color:#e2e8f0;">'+((e.uds||0).toLocaleString('es-CO'))+'</td>';
-        h += '<td style="padding:10px 12px;text-align:center;color:#64748b;font-size:11px;">'+(e.fecha_entrada||'—')+'</td>';
-        h += '<td style="padding:10px 12px;text-align:center;font-size:11px;color:'+(e.fecha_inicial?'#94a3b8':'#475569')+';'+(cambios?'text-decoration:underline;text-decoration-style:dotted;':'')+'">'+( e.fecha_inicial||'—' )+'</td>';
-        // Fecha compromiso — editable inline
-        var fcColor = !e.fecha_compromiso ? '#f59e0b' : (esVencida ? '#ef4444' : (estaSemanaBool ? '#38bdf8' : '#10b981'));
+        // OP ID
+        h += '<td style="padding:10px 12px;white-space:nowrap;"><span style="font-size:11px;font-weight:800;color:var(--accent);">'+esc(opId)+'</span></td>';
+        // Nombre referencia
+        h += '<td style="padding:10px 12px;"><div style="font-size:12px;font-weight:600;color:#e2e8f0;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+esc(rep.op_nombre||'')+'">'+esc(rep.op_nombre||'—')+'</div></td>';
+        // Colores como badges
+        h += '<td style="padding:10px 12px;"><div style="display:flex;flex-wrap:wrap;gap:4px;">';
+        colores.forEach(function(c){ h += '<span style="background:rgba(148,163,184,.1);border:1px solid #1e2535;border-radius:4px;color:#cbd5e1;padding:2px 6px;font-size:10px;font-weight:600;white-space:nowrap;">'+esc(c)+'</span>'; });
+        h += '</div></td>';
+        // Uds totales
+        h += '<td style="padding:10px 12px;text-align:right;font-weight:700;color:#e2e8f0;white-space:nowrap;">'+totalUdsOp.toLocaleString('es-CO')+'</td>';
+        // Fecha entrada
+        h += '<td style="padding:10px 12px;text-align:center;color:#64748b;font-size:11px;white-space:nowrap;">'+(fechaEntrada||'—')+'</td>';
+        // Fecha inicial
+        h += '<td style="padding:10px 12px;text-align:center;font-size:11px;color:#94a3b8;white-space:nowrap;">'+(fechaIni||'—')+'</td>';
+        // Fecha compromiso (botón editar — aplica a toda la OP)
+        var fcColor = !fechaComp ? '#f59e0b' : (esVencida ? '#ef4444' : (estaSemanaBool ? '#38bdf8' : '#10b981'));
         h += '<td style="padding:10px 12px;text-align:center;">';
-        h += '<button data-eid="'+e.id+'" onclick="cronAbrirFecha(this.dataset.eid)" style="background:rgba(255,255,255,.04);border:1px solid '+(e.fecha_compromiso?fcColor+'44':'rgba(245,158,11,.4)')+';border-radius:6px;color:'+fcColor+';padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;">'+(e.fecha_compromiso||'+ Asignar')+(cambios?' ✎':''+(e.fecha_compromiso&&cambios?' ('+cambios+'↩)':''))+'</button>';
-        h += '</td>';
-        // Días hasta entrega
+        h += '<button data-opid="'+opId+'" onclick="cronAbrirFechaOP(this.dataset.opid)" style="background:rgba(255,255,255,.04);border:1px solid '+(fechaComp?fcColor+'55':'rgba(245,158,11,.4)')+';border-radius:6px;color:'+fcColor+';padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;">';
+        h += (fechaComp||'+ Asignar')+(cambios?' ✎ ('+cambios+'↩)':'');
+        h += '</button></td>';
+        // Días
         var diasStr = diasAEntrega===null ? '—' : (diasAEntrega<0 ? Math.abs(diasAEntrega)+'d atrás' : diasAEntrega===0 ? 'HOY' : diasAEntrega+'d');
         var diasColor = diasAEntrega===null?'#475569':(diasAEntrega<0?'#ef4444':(diasAEntrega===0?'#f59e0b':(diasAEntrega<=3?'#f59e0b':'#10b981')));
-        h += '<td style="padding:10px 12px;text-align:center;font-size:11px;font-weight:700;color:'+diasColor+';">'+diasStr+'</td>';
-        // Estado badge
-        var estadoBadge = esVencida ? '<span style="background:rgba(239,68,68,.15);color:#ef4444;border:1px solid rgba(239,68,68,.3);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;">VENCIDA</span>' :
-                          estaSemanaBool ? '<span style="background:rgba(56,189,248,.12);color:#38bdf8;border:1px solid rgba(56,189,248,.3);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;">ESTA SEM.</span>' :
-                          !e.fecha_compromiso ? '<span style="background:rgba(245,158,11,.12);color:#f59e0b;border:1px solid rgba(245,158,11,.3);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;">SIN FECHA</span>' :
-                          '<span style="background:rgba(16,185,129,.1);color:#10b981;border:1px solid rgba(16,185,129,.2);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;">EN TIEMPO</span>';
-        h += '<td style="padding:10px 12px;text-align:center;">'+estadoBadge+'</td>';
-        // Ir a OP
-        h += '<td style="padding:10px 12px;text-align:center;"><button data-opid="'+e.op_id+'" onclick="verDetalleOP(this.dataset.opid)" style="background:transparent;border:none;color:#475569;cursor:pointer;font-size:13px;" title="Ver OP">→</button></td>';
+        h += '<td style="padding:10px 12px;text-align:center;font-size:12px;font-weight:800;color:'+diasColor+';white-space:nowrap;">'+diasStr+'</td>';
+        // Estado
+        var badge = esVencida
+          ? '<span style="background:rgba(239,68,68,.15);color:#ef4444;border:1px solid rgba(239,68,68,.3);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;">VENCIDA</span>'
+          : estaSemanaBool
+            ? '<span style="background:rgba(56,189,248,.12);color:#38bdf8;border:1px solid rgba(56,189,248,.3);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;">ESTA SEM.</span>'
+            : !fechaComp
+              ? '<span style="background:rgba(245,158,11,.12);color:#f59e0b;border:1px solid rgba(245,158,11,.3);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;">SIN FECHA</span>'
+              : '<span style="background:rgba(16,185,129,.1);color:#10b981;border:1px solid rgba(16,185,129,.2);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;">EN TIEMPO</span>';
+        h += '<td style="padding:10px 12px;text-align:center;">'+badge+'</td>';
+        // Link OP
+        h += '<td style="padding:10px 12px;text-align:center;"><button data-opid="'+opId+'" onclick="verDetalleOP(this.dataset.opid)" style="background:transparent;border:none;color:#475569;cursor:pointer;font-size:14px;" title="Ver OP">→</button></td>';
         h += '</tr>';
       });
       h += '</tbody></table></div></div>';
