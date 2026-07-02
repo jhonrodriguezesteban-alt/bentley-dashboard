@@ -52,9 +52,17 @@
       "satelite_id": "sat_00",
       "uds": 210,
       "fecha_entrada": "2026-07-02",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
+      "fecha_compromiso": "2026-07-03",
+      "fecha_inicial": "2026-07-03",
+      "historial": [
+        {
+          "fecha_anterior": null,
+          "fecha_nueva": "2026-07-03",
+          "motivo": "Fecha inicial asignada",
+          "by": "John Rodriguez",
+          "at": "2026-07-02"
+        }
+      ],
       "entregado": false,
       "fecha_entrega_real": null
     },
