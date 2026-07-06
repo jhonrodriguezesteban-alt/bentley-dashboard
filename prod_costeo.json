@@ -4107,6 +4107,11 @@
       "id": "cid_1783367004731_3555",
       "nombre": "SERVICIO DE CONFECCION MARIPOSAS",
       "costo_unitario": 9000
+    },
+    {
+      "id": "cid_1783367005930_8955",
+      "nombre": "SERVICIO DE CONFECCION MARIPOSAS",
+      "costo_unitario": 9000
     }
   ],
   "puestos": [
@@ -28915,12 +28920,6 @@
           "cantidad": 0.9
         },
         {
-          "id": "cid_1783366904861_1827",
-          "tipo": "SERVICIO",
-          "servicio_id": "svc_41919_1861020",
-          "cantidad": 1
-        },
-        {
           "id": "cid_1783366904861_1840",
           "tipo": "MATERIAL",
           "mp_id": "mp_31515_1011020",
@@ -28955,9 +28954,15 @@
           "tipo": "MATERIAL",
           "mp_id": "mp_31515_1061020",
           "consumo": 1
+        },
+        {
+          "id": "cid_1783367011954_2680",
+          "tipo": "SERVICIO",
+          "servicio_id": "cid_1783367004731_3555",
+          "cantidad": 1
         }
       ],
-      "referencia": ""
+      "referencia": "1165"
     }
   ],
   "precios_pt": [
