@@ -5456,6 +5456,7 @@ function renderDiseno(){
 
   DIS_KANBAN.forEach(function(col){
     var items = todosItems.filter(function(d){
+      if(d.eliminado) return false;
       if((d.kanban_estado||'EN_DISENO_DIGITAL')!==col.k) return false;
       if(_disPrioFiltro && disPrioNorm(d.prioridad)!==_disPrioFiltro) return false;
       if(_disRespFiltro){
