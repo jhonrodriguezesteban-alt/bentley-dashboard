@@ -2037,15 +2037,23 @@ function renderPlaneacion(){
     h += '<div style="font-size:10px;color:#64748b;margin-top:2px;">'+mesOps.length+' OP'+(mesOps.length!==1?'s':'')+(totalUds?' · '+totalUds+' uds totales':'')+'</div>';
     if(costoMes.total>0){
       h += '<div style="margin-top:8px;padding-top:8px;border-top:1px solid '+mes.color+'22;">';
-      h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin-bottom:8px;">';
+      // Principales: Mat. Primas + Servicios (grandes)
+      h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px;">';
       h += '<div style="background:rgba(14,165,233,.07);border-radius:7px;padding:6px 8px;"><div style="font-size:9px;font-weight:700;color:#0ea5e9;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px;">Mat. Primas</div><div style="font-size:14px;font-weight:800;color:#0ea5e9;">'+fmtCopFull(costoMes.mat)+'</div></div>';
-      h += '<div style="background:rgba(52,211,153,.07);border-radius:7px;padding:6px 8px;"><div style="font-size:9px;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px;">M.O.D.</div><div style="font-size:14px;font-weight:800;color:#34d399;">'+fmtCopFull(costoMes.mod)+'</div></div>';
-      h += '<div style="background:rgba(251,191,36,.07);border-radius:7px;padding:6px 8px;"><div style="font-size:9px;font-weight:700;color:#fbbf24;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px;">CIF</div><div style="font-size:14px;font-weight:800;color:#fbbf24;">'+fmtCopFull(costoMes.cif)+'</div></div>';
       h += '<div style="background:rgba(168,85,247,.07);border-radius:7px;padding:6px 8px;"><div style="font-size:9px;font-weight:700;color:#a855f7;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px;">Servicios</div><div style="font-size:14px;font-weight:800;color:#a855f7;">'+fmtCopFull(costoMes.svc)+'</div></div>';
       h += '</div>';
-      h += '<div style="background:rgba(255,255,255,.05);border-radius:7px;padding:7px 10px;display:flex;align-items:center;justify-content:space-between;">';
-      h += '<span style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;">Total mes</span>';
-      h += '<span style="font-size:17px;font-weight:900;color:#e2e8f0;">'+fmtCopFull(costoMes.total)+'</span>';
+      // Total Mat+SVC
+      var totalPrincipal = costoMes.mat + costoMes.svc;
+      h += '<div style="background:rgba(255,255,255,.05);border-radius:7px;padding:7px 10px;display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">';
+      h += '<span style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;">Mat. + Servicios</span>';
+      h += '<span style="font-size:17px;font-weight:900;color:#e2e8f0;">'+fmtCopFull(totalPrincipal)+'</span>';
+      h += '</div>';
+      // MOD y CIF como chips pequeños
+      h += '<div style="display:flex;gap:6px;">';
+      h += '<div style="flex:1;background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.2);border-radius:6px;padding:4px 8px;display:flex;align-items:center;justify-content:space-between;">';
+      h += '<span style="font-size:9px;font-weight:700;color:#34d399;">M.O.D.</span><span style="font-size:11px;font-weight:800;color:#34d399;">'+fmtCopFull(costoMes.mod)+'</span></div>';
+      h += '<div style="flex:1;background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.2);border-radius:6px;padding:4px 8px;display:flex;align-items:center;justify-content:space-between;">';
+      h += '<span style="font-size:9px;font-weight:700;color:#fbbf24;">CIF</span><span style="font-size:11px;font-weight:800;color:#fbbf24;">'+fmtCopFull(costoMes.cif)+'</span></div>';
       h += '</div>';
       h += '</div>';
     }
