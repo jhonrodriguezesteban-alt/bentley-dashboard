@@ -10309,7 +10309,8 @@ function guardarFormMP(id){
   if(!DB.costeo.mp) DB.costeo.mp=[];
   if(id){ var ex=DB.costeo.mp.find(function(x){return x.id===id;}); if(ex) Object.assign(ex,data); }
   else { data.id=_costeoId(); DB.costeo.mp.push(data); }
-  guardarCosteo().then(function(){ closeDrawer(); renderPage('costeo'); toast('Materia prima guardada','success'); });
+  var recId = _costeoRecetaId;
+  guardarCosteo().then(function(){ closeDrawer(); renderPage('costeo'); toast('Materia prima guardada','success'); if(recId) setTimeout(function(){ verReceta(recId); },50); });
 }
 function eliminarMP(id){
   if(!confirm('¿Eliminar esta materia prima?')) return;
@@ -10438,14 +10439,23 @@ function verReceta(id){
     if(abierto){
       b+='<div style="margin-top:3px;display:flex;flex-direction:column;gap:3px;">';
       gc.forEach(function(comp){
-        var costo=calcCostoComp(comp); var desc='';
-        if(comp.tipo==='MATERIAL'){var mp=(DB.costeo.mp||[]).find(function(x){return x.id===comp.mp_id;}); desc=esc(mp?mp.nombre:'?')+' · '+comp.consumo+' '+esc(mp?mp.unidad:'');}
+        var costo=calcCostoComp(comp); var desc=''; var editBtn='';
+        if(comp.tipo==='MATERIAL'){
+          var mp=(DB.costeo.mp||[]).find(function(x){return x.id===comp.mp_id;});
+          desc=esc(mp?mp.nombre:'?')+' · '+comp.consumo+' '+esc(mp?mp.unidad:'');
+          if(mp) editBtn='<button data-mpid="'+mp.id+'" onclick="event.stopPropagation();abrirFormMP(this.dataset.mpid)" title="Editar precio MP" style="background:none;border:none;color:#334155;font-size:11px;cursor:pointer;padding:0;flex-shrink:0;" onmouseover="this.style.color=\'#0ea5e9\'" onmouseout="this.style.color=\'#334155\'">✏️</button>';
+        }
         else if(comp.tipo==='MOD'){var pu=(DB.costeo.puestos||[]).find(function(x){return x.id===comp.puesto_id;}); var umod=parseFloat(comp.unidades)||1; desc=esc(pu?pu.zona+' – '+pu.cargo:'?')+' · '+comp.tiempo_minutos+' min / '+umod+' uds';}
         else if(comp.tipo==='CIF'){var ucif=parseFloat(comp.unidades)||1; desc='CIF '+esc(comp.zona||'')+' · '+comp.tiempo_minutos+' min / '+ucif+' uds';}
-        else if(comp.tipo==='SERVICIO'){var sv=(DB.costeo.servicios||[]).find(function(x){return x.id===comp.servicio_id;}); desc=esc(sv?sv.nombre:'?')+' × '+comp.cantidad;}
+        else if(comp.tipo==='SERVICIO'){
+          var sv=(DB.costeo.servicios||[]).find(function(x){return x.id===comp.servicio_id;});
+          desc=esc(sv?sv.nombre:'?')+' × '+comp.cantidad;
+          if(sv) editBtn='<button data-svid="'+sv.id+'" onclick="event.stopPropagation();abrirFormSvc(this.dataset.svid)" title="Editar precio servicio" style="background:none;border:none;color:#334155;font-size:11px;cursor:pointer;padding:0;flex-shrink:0;" onmouseover="this.style.color=\'#a855f7\'" onmouseout="this.style.color=\'#334155\'">✏️</button>';
+        }
         b+='<div style="display:flex;align-items:center;gap:8px;background:#080b10;border:1px solid #1a1f2e;border-radius:6px;padding:6px 10px 6px 16px;">';
         b+='<span style="font-size:11px;color:#64748b;flex:1;">'+desc+'</span>';
         b+='<span style="font-size:12px;font-weight:600;color:#94a3b8;white-space:nowrap;">'+fmtCopFull(costo)+'</span>';
+        if(editBtn) b+=editBtn;
         b+='<button data-rid="'+id+'" data-cid="'+comp.id+'" onclick="event.stopPropagation();eliminarCompReceta(this.dataset.rid,this.dataset.cid)" style="background:none;border:none;color:#1e2535;font-size:11px;cursor:pointer;padding:0;flex-shrink:0;" onmouseover="this.style.color=\'#ef4444\'" onmouseout="this.style.color=\'#1e2535\'">✕</button>';
         b+='</div>';
       });
@@ -11310,7 +11320,8 @@ function guardarFormSvc(id){
   if(!DB.costeo.servicios) DB.costeo.servicios=[];
   if(id){ var ex=DB.costeo.servicios.find(function(x){return x.id===id;}); if(ex){ex.nombre=nombre;ex.costo_unitario=costo;} }
   else DB.costeo.servicios.push({id:_costeoId(),nombre:nombre,costo_unitario:costo});
-  guardarCosteo().then(function(){ closeDrawer(); renderPage('costeo'); toast('Servicio guardado','success'); });
+  var recId = _costeoRecetaId;
+  guardarCosteo().then(function(){ closeDrawer(); renderPage('costeo'); toast('Servicio guardado','success'); if(recId) setTimeout(function(){ verReceta(recId); },50); });
 }
 function eliminarSvc(id){
   if(!confirm('¿Eliminar este servicio?')) return;
