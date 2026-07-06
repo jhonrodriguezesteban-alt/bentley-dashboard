@@ -5451,12 +5451,13 @@ function renderDiseno(){
         // Botón crear OP
         h += '<button data-id="'+d.id+'" onclick="crearOpDesdeDiseno(this.dataset.id)" style="width:100%;background:linear-gradient(135deg,#059669,#10b981);border:none;border-radius:7px;color:#fff;font-size:12px;font-weight:700;padding:8px 0;cursor:pointer;letter-spacing:.5px;">✚ Crear Orden de Producción</button>';
         // Botones secundarios
-        h += '<div style="display:flex;gap:4px;margin-top:6px;justify-content:space-between;align-items:center;">';
+        h += '<div style="display:flex;gap:4px;margin-top:6px;align-items:center;">';
         h += '<select data-id="'+d.id+'" onchange="cambiarEstadoDiseno(this.dataset.id,this.value)" onclick="event.stopPropagation()" style="flex:1;min-width:0;background:#0d1117;border:1px solid #1e2535;border-radius:6px;color:#475569;font-size:10px;padding:3px 6px;cursor:pointer;outline:none;">';
         DIS_KANBAN.forEach(function(c){ h += '<option value="'+c.k+'"'+(curEstado===c.k?' selected':'')+' style="background:#1a1e2a;color:#e2e8f0;">'+c.label+'</option>'; });
         h += '</select>';
         var nCom2=(d.comentarios||[]).length;
         h += '<button data-id="'+d.id+'" onclick="event.stopPropagation();abrirComentariosDiseno(this.dataset.id)" style="position:relative;display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.3);border-radius:5px;cursor:pointer;color:#818cf8;font-size:12px;padding:0;line-height:1;flex-shrink:0;" title="Comentarios">💬'+(nCom2?'<span style="position:absolute;top:-4px;right:-4px;background:#6366f1;color:#fff;border-radius:8px;font-size:8px;font-weight:700;min-width:13px;height:13px;display:flex;align-items:center;justify-content:center;padding:0 2px;">'+nCom2+'</span>':'')+'</button>';
+        h += '<button data-id="'+d.id+'" onclick="event.stopPropagation();quitarDisenoListaProd(this.dataset.id)" title="Ya tiene OP — quitar de lista" style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);border-radius:5px;cursor:pointer;color:#f87171;font-size:12px;padding:0;line-height:1;flex-shrink:0;">✕</button>';
         h += '</div>';
         h += '</div></div>';
         return;
@@ -5579,6 +5580,17 @@ function moverDisenoAProduccion(id){
   d.kanban_estado = 'LISTA_PRODUCCION';
   guardarDisenos(); renderPage('diseno');
 }
+function quitarDisenoListaProd(id){
+  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
+  if(!d) return;
+  if(!confirm('"'+d.nombre+'" — ¿confirmas que ya tiene OP creada y quieres quitarla de esta lista?')) return;
+  d.eliminado = true;
+  d._quitado_manual = true;
+  guardarArchivo('disenos', {disenos: DB.disenos, disenos_cfg: DB.disenos_cfg});
+  toast('"'+d.nombre+'" quitado de Lista para Producción', 'success');
+  renderPage('diseno');
+}
+
 function cambiarEstadoDiseno(id, nuevoEstado){
   var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
   if(!d || d.kanban_estado === nuevoEstado) return;
