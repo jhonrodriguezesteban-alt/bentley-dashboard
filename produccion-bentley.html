@@ -1808,6 +1808,8 @@ function _planAsignar(opId, mesKey){
 function planDragStart(e, opId){
   _planDragOpId = opId;
   e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', opId);
+  e.stopPropagation();
   setTimeout(function(){
     var el = document.querySelector('[data-plan-op="'+opId+'"]');
     if(el){ el.style.opacity='.35'; el.style.transform='scale(.95)'; }
@@ -1820,6 +1822,7 @@ function planDragEnd(){
 }
 function planDragOver(e, mesKey){
   e.preventDefault();
+  e.stopPropagation();
   e.dataTransfer.dropEffect = 'move';
   document.querySelectorAll('.plan-dz').forEach(function(el){ el.style.background=''; el.style.borderColor=''; });
   var dz = document.querySelector('[data-plan-dz="'+(mesKey||'pool')+'"]');
@@ -1827,8 +1830,12 @@ function planDragOver(e, mesKey){
 }
 function planDrop(e, mesKey){
   e.preventDefault();
-  if(!_planDragOpId) return;
-  _planAsignar(_planDragOpId, mesKey||null);
+  e.stopPropagation();
+  // Usar dataTransfer como fuente de verdad para evitar que burbujee el drop a otro contenedor
+  var opId = e.dataTransfer.getData('text/plain') || _planDragOpId;
+  if(!opId) return;
+  _planDragOpId = null;
+  _planAsignar(opId, mesKey||null);
 }
 
 var _PLAN_NO_CORTADO = {'POR_REVISAR':1,'PENDIENTE_CORTAR':1};
