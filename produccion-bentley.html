@@ -1956,6 +1956,38 @@ function renderPlaneacion(){
   h += '<span style="font-size:11px;background:rgba(148,163,184,.08);border:1px solid #1e2535;border-radius:8px;color:#64748b;padding:4px 10px;font-weight:700;">'+poolOps.length+' sin asignar</span>';
   h += '</div></div>';
 
+  // ── Tarjeta resumen global ───────────────────────────────────────────────────
+  var globalMat=0,globalMod=0,globalCif=0,globalSvc=0,globalTotal=0,globalUds=0,globalOps=0;
+  MESES.forEach(function(mes){
+    var opIds2 = (DB.planeacion.meses||{})[mes.k]||[];
+    var mesOps2 = opIds2.map(function(id){ return allOps.find(function(o){ return o.id===id; }); }).filter(Boolean);
+    mesOps2.forEach(function(op){
+      globalUds += _planOpUds(op);
+      globalOps++;
+      var c2 = _planCostoOp(op);
+      if(c2){ globalMat+=c2.mat; globalMod+=c2.mod; globalCif+=c2.cif; globalSvc+=c2.svc; globalTotal+=c2.total; }
+    });
+  });
+  h += '<div style="background:linear-gradient(135deg,rgba(0,212,255,.06),rgba(139,92,246,.06));border:1px solid rgba(0,212,255,.2);border-radius:14px;padding:18px 22px;margin-bottom:20px;">';
+  h += '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">';
+  h += '<div><div style="font-size:13px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.8px;">Resumen Total Planeado</div>';
+  h += '<div style="font-size:11px;color:#475569;margin-top:2px;">'+globalOps+' OPs · '+globalUds.toLocaleString('es-CO')+' unidades programadas</div></div>';
+  h += '<div style="font-size:28px;font-weight:900;color:#e2e8f0;">'+fmtCopFull(globalTotal)+'<span style="font-size:13px;color:#475569;font-weight:500;margin-left:6px;">total presupuestado</span></div>';
+  h += '</div>';
+  h += '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">';
+  function planResKpi(label, val, color, pct){
+    return '<div style="background:rgba(255,255,255,.04);border:1px solid '+color+'33;border-radius:10px;padding:12px 14px;">'
+      +'<div style="font-size:10px;font-weight:700;color:'+color+';text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">'+label+'</div>'
+      +'<div style="font-size:22px;font-weight:900;color:#e2e8f0;line-height:1;">'+fmtCopFull(val)+'</div>'
+      +(globalTotal>0?'<div style="font-size:10px;color:#475569;margin-top:4px;">'+Math.round(val/globalTotal*100)+'% del total</div>':'')
+      +'</div>';
+  }
+  h += planResKpi('Materias Primas', globalMat, '#0ea5e9');
+  h += planResKpi('M.O.D.', globalMod, '#34d399');
+  h += planResKpi('CIF', globalCif, '#fbbf24');
+  h += planResKpi('Servicios', globalSvc, '#a855f7');
+  h += '</div></div>';
+
   // ── Pool ─────────────────────────────────────────────────────────────────────
   h += '<div style="background:#0a0d14;border:1px solid #1e2535;border-radius:12px;padding:12px 14px;margin-bottom:20px;">';
   h += '<div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">📦 Sin Asignar · '+poolOps.length+' OPs</div>';
@@ -1997,14 +2029,17 @@ function renderPlaneacion(){
     h += '</div>';
     h += '<div style="font-size:10px;color:#64748b;margin-top:2px;">'+mesOps.length+' OP'+(mesOps.length!==1?'s':'')+(totalUds?' · '+totalUds+' uds totales':'')+'</div>';
     if(costoMes.total>0){
-      h += '<div style="margin-top:7px;padding-top:7px;border-top:1px solid '+mes.color+'18;">';
-      h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;margin-bottom:4px;">';
-      h += '<span style="font-size:9px;color:#0ea5e9;font-weight:700;">MAT '+fmtCopFull(costoMes.mat)+'</span>';
-      h += '<span style="font-size:9px;color:#34d399;font-weight:700;">MOD '+fmtCopFull(costoMes.mod)+'</span>';
-      h += '<span style="font-size:9px;color:#fbbf24;font-weight:700;">CIF '+fmtCopFull(costoMes.cif)+'</span>';
-      h += '<span style="font-size:9px;color:#a855f7;font-weight:700;">SVC '+fmtCopFull(costoMes.svc)+'</span>';
+      h += '<div style="margin-top:8px;padding-top:8px;border-top:1px solid '+mes.color+'22;">';
+      h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin-bottom:8px;">';
+      h += '<div style="background:rgba(14,165,233,.07);border-radius:7px;padding:6px 8px;"><div style="font-size:9px;font-weight:700;color:#0ea5e9;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px;">Mat. Primas</div><div style="font-size:14px;font-weight:800;color:#0ea5e9;">'+fmtCopFull(costoMes.mat)+'</div></div>';
+      h += '<div style="background:rgba(52,211,153,.07);border-radius:7px;padding:6px 8px;"><div style="font-size:9px;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px;">M.O.D.</div><div style="font-size:14px;font-weight:800;color:#34d399;">'+fmtCopFull(costoMes.mod)+'</div></div>';
+      h += '<div style="background:rgba(251,191,36,.07);border-radius:7px;padding:6px 8px;"><div style="font-size:9px;font-weight:700;color:#fbbf24;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px;">CIF</div><div style="font-size:14px;font-weight:800;color:#fbbf24;">'+fmtCopFull(costoMes.cif)+'</div></div>';
+      h += '<div style="background:rgba(168,85,247,.07);border-radius:7px;padding:6px 8px;"><div style="font-size:9px;font-weight:700;color:#a855f7;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px;">Servicios</div><div style="font-size:14px;font-weight:800;color:#a855f7;">'+fmtCopFull(costoMes.svc)+'</div></div>';
       h += '</div>';
-      h += '<div style="font-size:11px;font-weight:800;color:#e2e8f0;">Total '+fmtCopFull(costoMes.total)+'</div>';
+      h += '<div style="background:rgba(255,255,255,.05);border-radius:7px;padding:7px 10px;display:flex;align-items:center;justify-content:space-between;">';
+      h += '<span style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;">Total mes</span>';
+      h += '<span style="font-size:17px;font-weight:900;color:#e2e8f0;">'+fmtCopFull(costoMes.total)+'</span>';
+      h += '</div>';
       h += '</div>';
     }
     h += '</div>';
