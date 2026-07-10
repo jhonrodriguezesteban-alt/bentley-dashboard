@@ -3173,25 +3173,50 @@ function renderOPs(){
   var opsArchivadas = DB.ops.filter(function(op){ return op.estado_op === 'ARCHIVADO'; });
 
   // Construir sub-grupos: una entrada por (op, color)
+  // REGLA: si TODAS las OTs de la OP van al mismo satélite → un solo subgrupo (sin dividir por color)
   var otsXop = {};
   DB.ots.forEach(function(ot){ if(ot.op_id){ (otsXop[ot.op_id]=otsXop[ot.op_id]||[]).push(ot); } });
 
-  // Para sub-numeración: índice de color dentro de la OP
-  var subgs = []; // {op, color, colorIdx, totalColores, otsColor, estado, uds, udsEnt, pct, sats}
+  var subgs = []; // {op, color, colorIdx, totalColores, otsColor, estado, uds, udsEnt, pct, sats, consolidado}
   ops.forEach(function(op){
     var otsOp = otsXop[op.id] || [];
     var colores = op.colores && op.colores.length ? op.colores : ['—'];
-    colores.forEach(function(color, ci){
-      var otsColor = color==='—' ? otsOp : otsOp.filter(function(o){ return (o.color||'').toUpperCase()===(color||'').toUpperCase(); });
-      var manual = _getSubgEstado(op.id, color);
-      var estado = _estadoEfectivo(manual, _subgEstadoDerivado(otsColor));
-      var uds = otsColor.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
-      var udsEnt = otsColor.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+((o.unidades_entregadas||0)>0?o.unidades_entregadas:(o.cantidad||0)); }, 0);
+
+    // Detectar si TODAS las OTs con satélite asignado van al mismo satélite único
+    var otsConSat = otsOp.filter(function(o){ return o.satelite_id; });
+    var satUnicos = {};
+    otsConSat.forEach(function(o){ satUnicos[o.satelite_id]=1; });
+    var unSoloSat = otsConSat.length > 0 && Object.keys(satUnicos).length === 1;
+
+    if(unSoloSat && colores.length > 1){
+      // Consolidar todos los colores en un único subgrupo
+      var manual = _getSubgEstado(op.id, '—');
+      // Estado: el más avanzado entre todos los colores
+      var estadoConsolidado = null;
+      colores.forEach(function(color){
+        var otsC = otsOp.filter(function(o){ return (o.color||'').toUpperCase()===(color||'').toUpperCase(); });
+        var manC = _getSubgEstado(op.id, color);
+        var estC = _estadoEfectivo(manC, _subgEstadoDerivado(otsC));
+        if(!estadoConsolidado || (_ESTADO_PROGRESO[estC]||0) > (_ESTADO_PROGRESO[estadoConsolidado]||0)) estadoConsolidado = estC;
+      });
+      var uds = otsOp.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
+      var udsEnt = otsOp.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+((o.unidades_entregadas||0)>0?o.unidades_entregadas:(o.cantidad||0)); }, 0);
       var pct = uds ? Math.round(udsEnt/uds*100) : 0;
-      var satIds = {};
-      otsColor.forEach(function(o){ if(o.satelite_id) satIds[o.satelite_id]=1; });
-      subgs.push({op:op, color:color, colorIdx:ci, totalColores:colores.length, otsColor:otsColor, estado:estado, uds:uds, udsEnt:udsEnt, pct:pct, sats:Object.keys(satIds).length});
-    });
+      subgs.push({op:op, color:'—', colorIdx:0, totalColores:1, otsColor:otsOp, estado:estadoConsolidado, uds:uds, udsEnt:udsEnt, pct:pct, sats:1, consolidado:true, coloresReales:colores});
+    } else {
+      // Dividir por color (comportamiento normal)
+      colores.forEach(function(color, ci){
+        var otsColor = color==='—' ? otsOp : otsOp.filter(function(o){ return (o.color||'').toUpperCase()===(color||'').toUpperCase(); });
+        var manual = _getSubgEstado(op.id, color);
+        var estado = _estadoEfectivo(manual, _subgEstadoDerivado(otsColor));
+        var uds = otsColor.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
+        var udsEnt = otsColor.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+((o.unidades_entregadas||0)>0?o.unidades_entregadas:(o.cantidad||0)); }, 0);
+        var pct = uds ? Math.round(udsEnt/uds*100) : 0;
+        var satIds = {};
+        otsColor.forEach(function(o){ if(o.satelite_id) satIds[o.satelite_id]=1; });
+        subgs.push({op:op, color:color, colorIdx:ci, totalColores:colores.length, otsColor:otsColor, estado:estado, uds:uds, udsEnt:udsEnt, pct:pct, sats:Object.keys(satIds).length});
+      });
+    }
   });
 
   // Resumen por categoría (tarjetas superiores) — solo sub-grupos NO entregados
@@ -3402,6 +3427,21 @@ function renderOPs(){
         h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">ENTG.</div><div style="font-size:13px;font-weight:700;color:'+(pctTotal>=100?'#34d399':pctTotal>50?'#0a84ff':'#e2e8f0')+';">'+pctTotal+'%</div></div>';
         h += '</div>';
         h += '<div style="height:3px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;margin-bottom:8px;"><div style="height:100%;width:'+pctTotal+'%;background:'+(pctTotal>=100?'#34d399':'#0a84ff')+';border-radius:4px;transition:width .4s;"></div></div>';
+
+        // Tarjeta consolidada (1 satélite, múltiples colores): mostrar satélite + chips de colores
+        if(grp[0].consolidado){
+          var _satIdC = null;
+          grp[0].otsColor.forEach(function(o){ if(o.satelite_id) _satIdC = o.satelite_id; });
+          var _satObjC = DB.satelites.find(function(st){ return st.id===_satIdC; });
+          var _satNomC = _satObjC ? _satObjC.nombre : (_satIdC||'');
+          h += '<div style="margin-bottom:7px;">';
+          if(_satNomC) h += '<div style="font-size:9px;font-weight:700;color:#f97316;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;">📍 '+esc(_satNomC)+'</div>';
+          h += '<div style="display:flex;flex-wrap:wrap;gap:3px;">';
+          (grp[0].coloresReales||[]).forEach(function(c){
+            h += '<span style="background:rgba(148,163,184,.08);border:1px solid rgba(255,255,255,.08);border-radius:5px;font-size:9px;color:#94a3b8;padding:1px 6px;text-transform:uppercase;">'+esc(c)+'</span>';
+          });
+          h += '</div></div>';
+        }
 
         if(grp.length > 1){
           if(col.k === 'POR_REVISAR'){
@@ -3810,18 +3850,35 @@ function _buildSubgs(){
   ops.forEach(function(op){
     var otsOp = otsXop[op.id] || [];
     var colores = op.colores && op.colores.length ? op.colores : ['—'];
-    colores.forEach(function(color, ci){
-      var otsColor = color==='—' ? otsOp : otsOp.filter(function(o){ return (o.color||'').toUpperCase()===(color||'').toUpperCase(); });
-      var manual = _getSubgEstado(op.id, color);
-      var estado = _estadoEfectivo(manual, _subgEstadoDerivado(otsColor));
-      var uds = otsColor.reduce(function(a,o){ return a+(o.cantidad||0); },0);
-      var udsEnt = otsColor.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+(o.unidades_entregadas||0); },0);
+    var otsConSat = otsOp.filter(function(o){ return o.satelite_id; });
+    var satUnicos = {};
+    otsConSat.forEach(function(o){ satUnicos[o.satelite_id]=1; });
+    var unSoloSat = otsConSat.length > 0 && Object.keys(satUnicos).length === 1;
+    var sat = DB.satelites.find(function(s){ return s.id===op.satelite_id; });
+    if(unSoloSat && colores.length > 1){
+      var estadoConsolidado = null;
+      colores.forEach(function(color){
+        var otsC = otsOp.filter(function(o){ return (o.color||'').toUpperCase()===(color||'').toUpperCase(); });
+        var estC = _estadoEfectivo(_getSubgEstado(op.id, color), _subgEstadoDerivado(otsC));
+        if(!estadoConsolidado || (_ESTADO_PROGRESO[estC]||0) > (_ESTADO_PROGRESO[estadoConsolidado]||0)) estadoConsolidado = estC;
+      });
+      var uds = otsOp.reduce(function(a,o){ return a+(o.cantidad||0); },0);
+      var udsEnt = otsOp.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+(o.unidades_entregadas||0); },0);
       var pct = uds ? Math.round(udsEnt/uds*100) : 0;
-      var satIds = {};
-      otsColor.forEach(function(o){ if(o.satelite_id) satIds[o.satelite_id]=1; });
-      var sat = DB.satelites.find(function(s){ return s.id===op.satelite_id; });
-      result.push({op:op, color:color, colorIdx:ci, totalColores:colores.length, otsColor:otsColor, estado:estado, uds:uds, udsEnt:udsEnt, pct:pct, sats:Object.keys(satIds).length, satelite_nombre:sat?sat.nombre:null});
-    });
+      result.push({op:op, color:'—', colorIdx:0, totalColores:1, otsColor:otsOp, estado:estadoConsolidado, uds:uds, udsEnt:udsEnt, pct:pct, sats:1, consolidado:true, coloresReales:colores, satelite_nombre:sat?sat.nombre:null});
+    } else {
+      colores.forEach(function(color, ci){
+        var otsColor = color==='—' ? otsOp : otsOp.filter(function(o){ return (o.color||'').toUpperCase()===(color||'').toUpperCase(); });
+        var manual = _getSubgEstado(op.id, color);
+        var estado = _estadoEfectivo(manual, _subgEstadoDerivado(otsColor));
+        var uds = otsColor.reduce(function(a,o){ return a+(o.cantidad||0); },0);
+        var udsEnt = otsColor.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+(o.unidades_entregadas||0); },0);
+        var pct = uds ? Math.round(udsEnt/uds*100) : 0;
+        var satIds = {};
+        otsColor.forEach(function(o){ if(o.satelite_id) satIds[o.satelite_id]=1; });
+        result.push({op:op, color:color, colorIdx:ci, totalColores:colores.length, otsColor:otsColor, estado:estado, uds:uds, udsEnt:udsEnt, pct:pct, sats:Object.keys(satIds).length, satelite_nombre:sat?sat.nombre:null});
+      });
+    }
   });
   return result;
 }
