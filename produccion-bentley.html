@@ -3684,6 +3684,15 @@ async function cambiarEstadoSubg(opId, color, estado){
   if(ok1 && ok2){ toast('Estado actualizado', 'success'); renderPage('ops'); }
   else toast('Error al guardar estado', 'error');
 }
+async function _cambiarEstadoOP(opId, nuevoEstado){
+  var op = DB.ops.find(function(o){ return o.id===opId; });
+  if(!op) return;
+  op.estado_op = nuevoEstado;
+  saveLocal();
+  var ok = await guardarArchivo('ops', {ops: DB.ops});
+  if(ok){ toast('Estado OP → ' + nuevoEstado, 'success'); renderPage('ops'); }
+  else toast('Error al guardar', 'error');
+}
 async function cambiarEstadoOPAll(opId, estado){
   var op = DB.ops.find(function(o){ return o.id===opId; });
   if(!op) return;
@@ -4133,7 +4142,13 @@ function renderOPDetalle(opId){
   h += '<div style="font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;">Orden de Producción</div>';
   h += '<div style="font-size:20px;font-weight:700;color:var(--accent);">' + op.id + ' <span style="color:var(--text);font-size:17px;">— ' + op.nombre_producto + '</span></div>';
   h += '</div>';
-  h += '<span style="background:' + estadoColor + '22;color:' + estadoColor + ';border:1px solid ' + estadoColor + '44;border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700;">' + (op.estado_op||'EN_PROCESO') + '</span>';
+  h += '<select data-opid="'+op.id+'" onchange="_cambiarEstadoOP(this.dataset.opid,this.value)" onclick="event.stopPropagation()" style="background:'+estadoColor+'18;color:'+estadoColor+';border:1px solid '+estadoColor+'55;border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700;cursor:pointer;outline:none;appearance:none;-webkit-appearance:none;padding-right:28px;background-image:url(\'data:image/svg+xml,<svg xmlns=\\\'http://www.w3.org/2000/svg\\\' width=\\\'10\\\' height=\\\'6\\\' viewBox=\\\'0 0 10 6\\\'><path d=\\\'M0 0l5 6 5-6z\\\' fill=\\\'%23ffffff55\\\'/></svg>\');background-repeat:no-repeat;background-position:right 10px center;">'
+  + '<option value="EN_PROCESO" style="background:#1c1c1e;"'+((!op.estado_op||op.estado_op==='EN_PROCESO')?' selected':'')+'> EN PROCESO</option>'
+  + '<option value="CON_NOVEDAD" style="background:#1c1c1e;"'+(op.estado_op==='CON_NOVEDAD'?' selected':'')+'>⚠ CON NOVEDAD</option>'
+  + '<option value="COMPLETADO" style="background:#1c1c1e;"'+(op.estado_op==='COMPLETADO'?' selected':'')+'> COMPLETADO</option>'
+  + '<option value="PAGO_PENDIENTE" style="background:#1c1c1e;"'+(op.estado_op==='PAGO_PENDIENTE'?' selected':'')+'>💳 PAGO PENDIENTE</option>'
+  + '<option value="ARCHIVADO" style="background:#1c1c1e;"'+(op.estado_op==='ARCHIVADO'?' selected':'')+'>📦 ARCHIVADO</option>'
+  + '</select>';
   if(!edit){
     h += '<button data-opid="'+op.id+'" onclick="modalEditarOP(this.dataset.opid)" style="background:rgba(255,200,0,.12);border:1px solid rgba(255,200,0,.35);color:#ffc800;border-radius:8px;padding:8px 16px;cursor:pointer;font-size:13px;font-weight:600;">✏ Editar OP</button>';
     h += '<button data-opid="'+op.id+'" onclick="eliminarOP(this.dataset.opid)" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.35);color:#ef4444;border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px;font-weight:600;">🗑</button>';
