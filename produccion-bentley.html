@@ -3731,6 +3731,117 @@ async function cambiarEstadoOPAll(opId, estado){
   if(ok1 && ok2) toast('Estado actualizado', 'success');
   else toast('Error al guardar estado', 'error');
 }
+function _separarReferencias(opId){
+  var op = DB.ops.find(function(o){ return o.id===opId; });
+  if(!op) return;
+  var otsOp = (DB.ots||[]).filter(function(o){ return o.op_id===opId; });
+  // Agrupar OTs por referencia (usa ot.referencia si existe, si no ot.nombre)
+  var refMap = {};
+  otsOp.forEach(function(ot){
+    var rk = (ot.referencia||ot.nombre||'SIN REF').trim().toUpperCase();
+    if(!refMap[rk]) refMap[rk] = {label: rk, nombre: ot.nombre||rk, count: 0, uds: 0, colores: []};
+    refMap[rk].count++;
+    refMap[rk].uds += (ot.cantidad||0);
+    if(ot.color && refMap[rk].colores.indexOf(ot.color)<0) refMap[rk].colores.push(ot.color);
+  });
+  var refs = Object.keys(refMap);
+  if(refs.length <= 1){ toast('Esta OP solo tiene una referencia','info'); return; }
+
+  var body = '<input type="hidden" id="sep-opid" value="'+esc(opId)+'">';
+  body += '<div style="font-size:12px;color:#94a3b8;margin-bottom:12px;">Selecciona qué referencias mover a una <strong>nueva OP</strong>. Las referencias no seleccionadas quedan en '+esc(op.id)+'.</div>';
+  body += '<div style="display:flex;flex-direction:column;gap:8px;">';
+  refs.forEach(function(rk){
+    var r = refMap[rk];
+    body += '<label style="display:flex;align-items:center;gap:10px;background:#0d1117;border:1px solid #2c2c2e;border-radius:9px;padding:10px 14px;cursor:pointer;" onmouseover="this.style.borderColor=\'#a855f755\'" onmouseout="this.style.borderColor=\'#2c2c2e\'">';
+    body += '<input type="checkbox" class="sep-ref-chk" value="'+esc(rk)+'" style="accent-color:#a855f7;width:15px;height:15px;">';
+    body += '<div style="flex:1;">';
+    body += '<div style="font-size:12px;font-weight:700;color:#e2e8f0;">'+esc(r.nombre)+'</div>';
+    body += '<div style="font-size:10px;color:#64748b;">'+r.count+' OTs · '+r.uds+' uds · '+r.colores.join(', ')+'</div>';
+    body += '</div></label>';
+  });
+  body += '</div>';
+  body += '<div style="margin-top:14px;padding:10px 14px;background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.25);border-radius:8px;font-size:11px;color:#a855f7;">La nueva OP heredará cortador, fecha y categoría de '+esc(op.id)+'. El nombre se generará automáticamente.</div>';
+
+  var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>';
+  footer += '<button onclick="_confirmarSepararRefs()" class="btn btn-primary" style="background:rgba(168,85,247,.3);border-color:#a855f7;color:#e2e8f0;">✂ Crear nueva OP</button>';
+  openModal('✂ Separar referencias de '+esc(op.id), body, footer);
+}
+
+async function _confirmarSepararRefs(){
+  var opId = ((document.getElementById('sep-opid')||{}).value||'').trim();
+  var op = DB.ops.find(function(o){ return o.id===opId; });
+  if(!op){ toast('OP no encontrada','error'); return; }
+
+  var selRefs = [];
+  document.querySelectorAll('.sep-ref-chk:checked').forEach(function(c){ selRefs.push(c.value); });
+  if(!selRefs.length){ toast('Selecciona al menos una referencia','error'); return; }
+
+  // Obtener OTs que se moverán
+  var otsOp = (DB.ots||[]).filter(function(o){ return o.op_id===opId; });
+  var otsMover = otsOp.filter(function(ot){
+    var rk = (ot.referencia||ot.nombre||'SIN REF').trim().toUpperCase();
+    return selRefs.indexOf(rk) >= 0;
+  });
+  if(!otsMover.length){ toast('No hay OTs para mover','error'); return; }
+
+  // Verificar que queden OTs en la OP original
+  var otsQuedan = otsOp.filter(function(ot){
+    var rk = (ot.referencia||ot.nombre||'SIN REF').trim().toUpperCase();
+    return selRefs.indexOf(rk) < 0;
+  });
+  if(!otsQuedan.length){ toast('Debes dejar al menos una referencia en la OP original','error'); return; }
+
+  // Crear la nueva OP
+  var numNuevo = nextOPNum();
+  var nuevoId = 'OP-'+new Date().getFullYear()+'-'+String(numNuevo).padStart(3,'0');
+  var nombresNuevos = [];
+  otsMover.forEach(function(ot){
+    var n = (ot.nombre||'').trim().toUpperCase();
+    if(n && nombresNuevos.indexOf(n)<0) nombresNuevos.push(n);
+  });
+  // Nombre: nombre base de la primera referencia (sin color ni talla)
+  var nombreNuevoOP = nombresNuevos[0] || selRefs[0];
+  var coloresNuevos = [];
+  otsMover.forEach(function(ot){ if(ot.color && coloresNuevos.indexOf(ot.color)<0) coloresNuevos.push(ot.color); });
+
+  var nuevaOP = {
+    id: nuevoId, numero: numNuevo,
+    fecha_op: op.fecha_op, cortador: op.cortador,
+    categoria: otsMover[0].categoria || op.categoria,
+    nombre_producto: nombreNuevoOP,
+    colores: coloresNuevos,
+    estado_op: 'EN_PROCESO',
+    created_at: hoy(), created_by: getUser()
+  };
+  DB.ops.push(nuevaOP);
+
+  // Mover las OTs seleccionadas
+  otsMover.forEach(function(ot){ ot.op_id = nuevoId; });
+
+  // Actualizar nombre y colores de la OP original
+  var coloresQuedan = [];
+  otsQuedan.forEach(function(ot){ if(ot.color && coloresQuedan.indexOf(ot.color)<0) coloresQuedan.push(ot.color); });
+  op.colores = coloresQuedan;
+  var nombresQuedan = [];
+  otsQuedan.forEach(function(ot){
+    var n = (ot.nombre||'').trim().toUpperCase();
+    if(n && nombresQuedan.indexOf(n)<0) nombresQuedan.push(n);
+  });
+  if(nombresQuedan.length) op.nombre_producto = nombresQuedan[0];
+
+  saveLocal();
+  var ok1 = await guardarArchivo('ops', {ops: DB.ops});
+  var ok2 = await guardarArchivo('ots', {ots: DB.ots});
+  if(ok1 && ok2){
+    closeModal();
+    toast(otsMover.length+' OTs movidas a '+nuevoId,'success');
+    _opDetalleId = opId;
+    renderPage('ops');
+  } else {
+    toast('Error al guardar','error');
+  }
+}
+
 async function eliminarOP(opId){
   if(!confirm('¿Eliminar esta OP y todas sus OTs? Esta acción no se puede deshacer.')) return;
   DB.ops = DB.ops.filter(function(o){ return o.id !== opId; });
@@ -4189,6 +4300,15 @@ function renderOPDetalle(opId){
   + '<option value="ARCHIVADO" style="background:#1c1c1e;"'+(op.estado_op==='ARCHIVADO'?' selected':'')+'>📦 ARCHIVADO</option>'
   + '</select>';
   if(!edit){
+    // Mostrar "Separar refs" solo si la OP tiene OTs con más de una referencia distinta
+    var _refsEnOp = [];
+    (DB.ots||[]).filter(function(o){ return o.op_id===op.id; }).forEach(function(o){
+      var rk = (o.referencia||o.nombre||'—');
+      if(_refsEnOp.indexOf(rk)<0) _refsEnOp.push(rk);
+    });
+    if(_refsEnOp.length > 1){
+      h += '<button data-opid="'+op.id+'" onclick="_separarReferencias(this.dataset.opid)" style="background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.35);color:#a855f7;border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px;font-weight:600;">✂ Separar refs</button>';
+    }
     h += '<button data-opid="'+op.id+'" onclick="modalEditarOP(this.dataset.opid)" style="background:rgba(255,200,0,.12);border:1px solid rgba(255,200,0,.35);color:#ffc800;border-radius:8px;padding:8px 16px;cursor:pointer;font-size:13px;font-weight:600;">✏ Editar OP</button>';
     h += '<button data-opid="'+op.id+'" onclick="eliminarOP(this.dataset.opid)" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.35);color:#ef4444;border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px;font-weight:600;">🗑</button>';
   } else {
@@ -4579,6 +4699,18 @@ function _cambiarEstadoOT(otId){
   }
   body += '</div>';
 
+  // Contar cuántas tallas del mismo color+OP existen para mostrar el toggle bulk
+  var otsDelMismoColor = (DB.ots||[]).filter(function(o){ return o.op_id===ot.op_id && o.color===ot.color && o.id!==ot.id; });
+  body += '<input type="hidden" id="cot-opid" value="'+esc(ot.op_id)+'">';
+  body += '<input type="hidden" id="cot-color" value="'+esc(ot.color)+'">';
+
+  if(otsDelMismoColor.length > 0){
+    body += '<label style="display:flex;align-items:center;gap:10px;background:rgba(10,132,255,.10);border:1px solid rgba(10,132,255,.35);border-radius:9px;padding:10px 14px;cursor:pointer;margin-bottom:14px;">';
+    body += '<input type="checkbox" id="cot-todas-tallas" style="accent-color:#0a84ff;width:16px;height:16px;">';
+    body += '<span style="font-size:12px;color:#60a5fa;font-weight:600;">Aplicar a <strong>todas las tallas</strong> de este color ('+(otsDelMismoColor.length+1)+' OTs)</span>';
+    body += '</label>';
+  }
+
   body += '<div class="form-group" style="margin-bottom:14px;">';
   body += '<label class="form-label">Nuevo estado</label>';
   body += '<div style="display:flex;flex-direction:column;gap:6px;">';
@@ -4607,6 +4739,9 @@ async function _confirmarCambioEstadoOT(){
   var radios = document.querySelectorAll('input[name="cot-estado"]');
   var nuevoEstado = '';
   radios.forEach(function(r){ if(r.checked) nuevoEstado = r.value; });
+  var todasTallas = !!(document.getElementById('cot-todas-tallas')||{checked:false}).checked;
+  var opIdCtx  = ((document.getElementById('cot-opid')||{}).value||'').trim();
+  var colorCtx = ((document.getElementById('cot-color')||{}).value||'').trim();
 
   if(!nuevoEstado){ toast('Selecciona un estado destino','error'); return; }
   if(!motivo){ toast('El motivo es obligatorio','error'); return; }
@@ -4614,21 +4749,32 @@ async function _confirmarCambioEstadoOT(){
   var ot = (DB.ots||[]).find(function(o){ return o.id===otId; });
   if(!ot){ toast('OT no encontrada','error'); return; }
 
-  var estadoAnterior = ot.estado;
-  ot.estado = nuevoEstado;
+  // Determinar qué OTs cambiar (una sola o todas las tallas del color)
+  var otsACambiar = todasTallas
+    ? (DB.ots||[]).filter(function(o){ return o.op_id===opIdCtx && o.color===colorCtx; })
+    : [ot];
 
-  // Limpiar campos de entrega si se revierte desde ENTREGADO
-  if(estadoAnterior==='ENTREGADO' && nuevoEstado!=='ENTREGADO' && nuevoEstado!=='ENTREGADO_PARCIAL'){
-    ot.unidades_entregadas = 0;
-    ot.fecha_entrega_real  = null;
-    ot.unidades_novedad    = 0;
-  }
+  otsACambiar.forEach(function(o){
+    var estadoAnterior = o.estado;
+    // No revertir OTs ya ENTREGADO cuando se aplica masivamente (solo la OT original si estaba en ese estado)
+    if(todasTallas && estadoAnterior === 'ENTREGADO' && nuevoEstado !== 'ENTREGADO' && nuevoEstado !== 'ENTREGADO_PARCIAL'){
+      return; // skip OTs entregadas en modo bulk
+    }
+    o.estado = nuevoEstado;
 
-  if(!ot.historial) ot.historial = [];
-  ot.historial.push({
-    fecha: new Date().toISOString(),
-    accion: 'Estado cambiado manualmente: '+estadoAnterior+' → '+nuevoEstado+'. Motivo: '+motivo,
-    user: getUser()
+    // Limpiar campos de entrega si se revierte desde ENTREGADO (solo en cambio individual)
+    if(!todasTallas && estadoAnterior==='ENTREGADO' && nuevoEstado!=='ENTREGADO' && nuevoEstado!=='ENTREGADO_PARCIAL'){
+      o.unidades_entregadas = 0;
+      o.fecha_entrega_real  = null;
+      o.unidades_novedad    = 0;
+    }
+
+    if(!o.historial) o.historial = [];
+    o.historial.push({
+      fecha: new Date().toISOString(),
+      accion: 'Estado cambiado'+(todasTallas?' (todas las tallas)':'')+': '+estadoAnterior+' → '+nuevoEstado+'. Motivo: '+motivo,
+      user: getUser()
+    });
   });
 
   // Recalcular el estado derivado del grupo color+OP y actualizar subg_estados
@@ -4652,7 +4798,8 @@ async function _confirmarCambioEstadoOT(){
   var ok    = okOts && await guardarArchivo('ops', {ops: DB.ops});
   if(ok){
     closeModal();
-    toast('Estado actualizado a '+nuevoEstado,'success');
+    var msg = todasTallas ? 'Todas las tallas → '+nuevoEstado : 'Estado actualizado a '+nuevoEstado;
+    toast(msg,'success');
     renderPage('ops');
   }
 }
