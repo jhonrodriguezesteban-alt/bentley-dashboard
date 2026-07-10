@@ -48351,6 +48351,11 @@
           "fecha": "2026-07-10T19:43:59.679Z",
           "accion": "Entrega completa: 12 uds → ENTREGADO",
           "user": "John Rodriguez"
+        },
+        {
+          "fecha": "2026-07-10T19:44:01.453Z",
+          "accion": "Entrega completa: 12 uds → ENTREGADO",
+          "user": "John Rodriguez"
         }
       ],
       "notas": "",
@@ -68942,10 +68947,10 @@
       "satelite_id": "sat_03",
       "fecha_entrega_corte_satelite": null,
       "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
-      "unidades_entregadas": 0,
+      "fecha_entrega_real": "2026-07-10",
+      "unidades_entregadas": 12,
       "unidades_novedad": 0,
-      "estado": "POR_REVISAR",
+      "estado": "ENTREGADO",
       "nt_corte_satelite": null,
       "nt_ingreso_planta": null,
       "op_effi": null,
@@ -68957,10 +68962,16 @@
           "fecha": "2026-07-10T19:43:52.530Z",
           "accion": "Taller asignado: ALEXANDRA FONSECA",
           "user": "John Rodriguez"
+        },
+        {
+          "fecha": "2026-07-10T19:44:09.897Z",
+          "accion": "Entrega completa: 12 uds → ENTREGADO",
+          "user": "John Rodriguez"
         }
       ],
       "created_at": "2026-07-10",
-      "created_by": "John Rodriguez"
+      "created_by": "John Rodriguez",
+      "total_costo_mo": 13812
     }
   ]
 }
