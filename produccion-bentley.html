@@ -1675,12 +1675,25 @@ async function _autoSyncTick(){
       if(_etag) _fileETags[key] = _etag;
       var fileData = await r.json();
       if(_fileShas[key] && _fileShas[key] === fileData.sha) continue;
+      var prevSha = _fileShas[key];
       _fileShas[key] = fileData.sha;
       var parsed = JSON.parse(decodeURIComponent(escape(atob(fileData.content.replace(/\n/g,'')))));
       var prevDisenos = (key==='disenos') ? (DB.disenos||[]).map(function(d){return d.id;}) : null;
       if(key==='disenos'){ DB.disenos = parsed.disenos||[]; DB.disenos_cfg = parsed.disenos_cfg||{}; }
-      else if(key==='ots'){ DB.ots = parsed.ots||[]; }
-      else if(key==='ops'){ DB.ops = parsed.ops||[]; }
+      else if(key==='ots'){
+        // Si ya teníamos datos locales más recientes (SHA propio != SHA previo remoto),
+        // hacer merge en lugar de reemplazar para no perder cambios locales no confirmados
+        if(prevSha && DB.ots && DB.ots.length){
+          var merged = _mergeArrayData('ots', parsed, {ots: DB.ots});
+          DB.ots = merged.ots||[];
+        } else { DB.ots = parsed.ots||[]; }
+      }
+      else if(key==='ops'){
+        if(prevSha && DB.ops && DB.ops.length){
+          var mergedO = _mergeArrayData('ops', parsed, {ops: DB.ops});
+          DB.ops = mergedO.ops||[];
+        } else { DB.ops = parsed.ops||[]; }
+      }
       else if(key==='satelites'){ DB.satelites = parsed.satelites||[]; }
       else if(key==='prog_ops'){ DB.prog_ops = parsed.ops_plan||[]; }
       else if(key==='costos_mo'){ DB.costos_mo = {precios:parsed.precios||[], pagos:parsed.pagos||[]}; }
