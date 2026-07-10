@@ -3163,7 +3163,7 @@ function _subgEstadoDerivado(otsColor){
 }
 
 // Obtener/guardar estado manual de un sub-grupo
-function _subgKey(opId, color){ return opId + '||' + color; }
+function _subgKey(opId, color){ return opId + '||' + (color||'').trim(); }
 function _getSubgEstado(opId, color){
   var op = DB.ops.find(function(o){ return o.id===opId; });
   if(!op) return 'PENDIENTE_CORTAR';
@@ -3228,7 +3228,7 @@ function renderOPs(){
       // Estado: el más avanzado entre todos los colores
       var estadoConsolidado = null;
       colores.forEach(function(color){
-        var otsC = otsOp.filter(function(o){ return (o.color||'').toUpperCase()===(color||'').toUpperCase(); });
+        var otsC = otsOp.filter(function(o){ return (o.color||'').trim().toUpperCase()===(color||'').trim().toUpperCase(); });
         var manC = _getSubgEstado(op.id, color);
         var estC = _estadoEfectivo(manC, _subgEstadoDerivado(otsC));
         if(!estadoConsolidado || (_ESTADO_PROGRESO[estC]||0) > (_ESTADO_PROGRESO[estadoConsolidado]||0)) estadoConsolidado = estC;
@@ -3240,7 +3240,7 @@ function renderOPs(){
     } else {
       // Dividir por color (comportamiento normal)
       colores.forEach(function(color, ci){
-        var otsColor = color==='—' ? otsOp : otsOp.filter(function(o){ return (o.color||'').toUpperCase()===(color||'').toUpperCase(); });
+        var otsColor = color==='—' ? otsOp : otsOp.filter(function(o){ return (o.color||'').trim().toUpperCase()===(color||'').trim().toUpperCase(); });
         var manual = _getSubgEstado(op.id, color);
         var estado = _estadoEfectivo(manual, _subgEstadoDerivado(otsColor));
         var uds = otsColor.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
@@ -4051,7 +4051,7 @@ function _buildSubgs(){
     if(unSoloSat && colores.length > 1){
       var estadoConsolidado = null;
       colores.forEach(function(color){
-        var otsC = otsOp.filter(function(o){ return (o.color||'').toUpperCase()===(color||'').toUpperCase(); });
+        var otsC = otsOp.filter(function(o){ return (o.color||'').trim().toUpperCase()===(color||'').trim().toUpperCase(); });
         var estC = _estadoEfectivo(_getSubgEstado(op.id, color), _subgEstadoDerivado(otsC));
         if(!estadoConsolidado || (_ESTADO_PROGRESO[estC]||0) > (_ESTADO_PROGRESO[estadoConsolidado]||0)) estadoConsolidado = estC;
       });
@@ -4061,7 +4061,7 @@ function _buildSubgs(){
       result.push({op:op, color:'—', colorIdx:0, totalColores:1, otsColor:otsOp, estado:estadoConsolidado, uds:uds, udsEnt:udsEnt, pct:pct, sats:1, consolidado:true, coloresReales:colores, satelite_nombre:sat?sat.nombre:null});
     } else {
       colores.forEach(function(color, ci){
-        var otsColor = color==='—' ? otsOp : otsOp.filter(function(o){ return (o.color||'').toUpperCase()===(color||'').toUpperCase(); });
+        var otsColor = color==='—' ? otsOp : otsOp.filter(function(o){ return (o.color||'').trim().toUpperCase()===(color||'').trim().toUpperCase(); });
         var manual = _getSubgEstado(op.id, color);
         var estado = _estadoEfectivo(manual, _subgEstadoDerivado(otsColor));
         var uds = otsColor.reduce(function(a,o){ return a+(o.cantidad||0); },0);
@@ -4171,7 +4171,7 @@ var CORTADORES = ['Corte Carbajal', 'Corte con proveedor'];
 async function asignarTallerSubg(opId, color, valor){
   if(!valor) return;
   var otsColor = DB.ots.filter(function(o){
-    return o.op_id===opId && (color==='—' || (o.color||'').toUpperCase()===(color||'').toUpperCase());
+    return o.op_id===opId && (color==='—' || (o.color||'').trim().toUpperCase()===(color||'').trim().toUpperCase());
   });
   if(!otsColor.length){ toast('No hay OTs en este sub-grupo','warning'); return; }
   var now = new Date().toISOString();
@@ -4213,7 +4213,7 @@ async function _confirmarAsigSat(opId){
 
   targetColores.forEach(function(color){
     var otsColor = DB.ots.filter(function(o){
-      return o.op_id===opId && (color==='—' || (o.color||'').toUpperCase()===(color||'').toUpperCase());
+      return o.op_id===opId && (color==='—' || (o.color||'').trim().toUpperCase()===(color||'').trim().toUpperCase());
     });
     otsColor.forEach(function(ot){
       if(isCortador){ ot.cortador = realVal; delete ot.satelite_id; }
