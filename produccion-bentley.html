@@ -3641,7 +3641,7 @@ async function cambiarEstadoSubg(opId, color, estado){
   renderPage('ops');
   var ok1 = await guardarArchivo('ops', {ops: DB.ops});
   var ok2 = await guardarArchivo('ots', {ots: DB.ots});
-  if(ok1 && ok2) toast('Estado actualizado', 'success');
+  if(ok1 && ok2){ toast('Estado actualizado', 'success'); renderPage('ops'); }
   else toast('Error al guardar estado', 'error');
 }
 async function cambiarEstadoOPAll(opId, estado){
@@ -3689,8 +3689,11 @@ async function _avanzarColoresSel(opId){
     delete _kanColorSel[opId+'||'+color];
   });
   saveLocal();
-  var ok = await guardarArchivo('ots', {ots: DB.ots});
-  if(ok){ toast(colores.length+' color'+(colores.length>1?'es':'')+ ' → Corte/Alistar','success'); renderPage('ops'); }
+  var okOts = await guardarArchivo('ots', {ots: DB.ots});
+  var okOps = await guardarArchivo('ops', {ops: DB.ops});
+  if(okOts && okOps){ toast(colores.length+' color'+(colores.length>1?'es':'')+ ' → Corte/Alistar','success'); renderPage('ops'); }
+  else if(okOts) toast('OTs guardadas pero error al guardar estado OP','warning');
+  else toast('Error al guardar','error');
 }
 // ── Kanban drag & drop (mouse + touch) ────────────────────────────────────────
 var _kanDragOpId = null, _kanDragColor = null;
@@ -4539,9 +4542,7 @@ async function _confirmarCambioEstadoOT(){
   if(ok){
     closeModal();
     toast('Estado actualizado a '+nuevoEstado,'success');
-    if(_opDetalleId){
-      document.getElementById('page-content').innerHTML = renderOPDetalle(_opDetalleId);
-    }
+    renderPage('ops');
   }
 }
 // ─────────────────────────────────────────────────────────────────────────────
