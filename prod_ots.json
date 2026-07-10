@@ -48323,8 +48323,8 @@
       "satelite_id": "sat_10",
       "fecha_entrega_corte_satelite": "2026-04-07",
       "fecha_estimada_entrega": "2026-04-21",
-      "fecha_entrega_real": "2026-04-24",
-      "unidades_entregadas": 11,
+      "fecha_entrega_real": "2026-07-10",
+      "unidades_entregadas": 12,
       "unidades_novedad": 0,
       "unidades_por_llegar": 1,
       "nt_corte_satelite": 19384,
@@ -48337,7 +48337,7 @@
       "kpi_dias_programacion": 23,
       "cumplió_fecha": false,
       "motivo_incumplimiento": "",
-      "estado": "NOVEDAD",
+      "estado": "ENTREGADO",
       "cortador": "CARVAJAL",
       "historial": [
         {
@@ -48346,12 +48346,18 @@
           "uds": 11,
           "usuario": "migrado_matriz",
           "nota": "Entrega registrada desde matriz. NT: 19463"
+        },
+        {
+          "fecha": "2026-07-10T19:43:59.679Z",
+          "accion": "Entrega completa: 12 uds → ENTREGADO",
+          "user": "John Rodriguez"
         }
       ],
       "notas": "",
       "created_at": "2026-03-24",
       "created_by": "migrado_matriz",
-      "migrado": true
+      "migrado": true,
+      "total_costo_mo": 0
     },
     {
       "id": "OT-12328",
