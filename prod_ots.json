@@ -66543,14 +66543,20 @@
       "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "CORTE_POR_ALISTAR",
+      "estado": "PENDIENTE_CORTAR",
       "nt_corte_satelite": null,
       "nt_ingreso_planta": null,
       "op_effi": null,
       "cumplió_fecha": null,
       "motivo_incumplimiento": "",
       "notas": "",
-      "historial": [],
+      "historial": [
+        {
+          "fecha": "2026-07-10T20:03:31.156Z",
+          "accion": "Estado cambiado manualmente: CORTE_POR_ALISTAR → PENDIENTE_CORTAR. Motivo: no hay tela",
+          "user": "John Rodriguez"
+        }
+      ],
       "created_at": "2026-06-23",
       "created_by": "John Rodriguez"
     },
