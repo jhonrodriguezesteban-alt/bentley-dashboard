@@ -3676,6 +3676,32 @@ function renderOPs(){
 }
 
 async function cambiarEstadoSubg(opId, color, estado){
+  // Cuando el usuario mueve una tarjeta HACIA ATRÁS, también resetear las OTs
+  // de ese color para que el estado derivado concuerde con el manual.
+  var _estadoOT = {
+    'POR_REVISAR': 'POR_REVISAR',
+    'PENDIENTE_CORTAR': 'PENDIENTE_CORTAR',
+    'CORTE_POR_ALISTAR': 'CORTE_POR_ALISTAR',
+    'EN_CONFECCION': 'EN_CONFECCION',
+    'NOVEDAD': 'NOVEDAD',
+    'ALISTAMIENTO': 'ALISTAMIENTO'
+  };
+  var progNuevo = _ESTADO_PROGRESO[estado] || 0;
+  var otsColor = (DB.ots||[]).filter(function(o){
+    return o.op_id === opId && (o.color||'').toUpperCase() === (color||'').toUpperCase();
+  });
+  var derivadoActual = _subgEstadoDerivado(otsColor);
+  var progDerivado = _ESTADO_PROGRESO[derivadoActual] || 0;
+  // Si el usuario está moviendo hacia atrás (estado < derivado actual), resetear OTs
+  if(progNuevo < progDerivado && _estadoOT[estado]){
+    var targetOT = _estadoOT[estado];
+    otsColor.forEach(function(ot){
+      // No tocar OTs en ENTREGADO (ya hay unidades entregadas físicamente)
+      if(ot.estado !== 'ENTREGADO'){
+        ot.estado = targetOT;
+      }
+    });
+  }
   _setSubgEstado(opId, color, estado);
   saveLocal();
   renderPage('ops');
@@ -3757,9 +3783,9 @@ async function _repararSubgEstados(silent){
   // Esto corrige estados stale que quedaron como override manual desactualizado.
   (DB.ops||[]).forEach(function(op){
     var otsOp = (DB.ots||[]).filter(function(o){ return o.op_id===op.id; });
-    var colores = [];
-    otsOp.forEach(function(o){ if(colores.indexOf(o.color)===-1) colores.push(o.color); });
-    colores.forEach(function(color){
+    var coloresConOTs = [];
+    otsOp.forEach(function(o){ if(coloresConOTs.indexOf(o.color)===-1) coloresConOTs.push(o.color); });
+    coloresConOTs.forEach(function(color){
       var otsColor = otsOp.filter(function(o){ return o.color===color; });
       var estadoDer = _subgEstadoDerivado(otsColor);
       if(!op.subg_estados) op.subg_estados = {};
@@ -3772,6 +3798,19 @@ async function _repararSubgEstados(silent){
         op.subg_estados[_subgKey(op.id, color)] = estadoDer;
       }
     });
+    // Colores del OP que NO tienen OTs → forzar POR_REVISAR para limpiar estados stale
+    var coloresOP = op.colores && op.colores.length ? op.colores : [];
+    if(op.subg_estados){
+      Object.keys(op.subg_estados).forEach(function(k){
+        var parts = k.split('||');
+        if(parts[0] !== op.id) return;
+        var colorKey = parts[1];
+        if(coloresConOTs.indexOf(colorKey) === -1){
+          // Este color no tiene OTs → resetear a POR_REVISAR
+          op.subg_estados[k] = 'POR_REVISAR';
+        }
+      });
+    }
   });
   saveLocal();
   if(silent) return true;
