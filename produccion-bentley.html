@@ -1919,15 +1919,36 @@ async function cargarDatos(){
   if(dlEl){ dlEl.style.display='flex'; }
   try {
     var t = Date.now();
+    var tk = GT || localStorage.getItem('bentley_gh_token') || '';
+    var _apiBase = 'https://api.github.com/repos/' + REPO + '/contents/';
+    var _apiH = tk ? {'Authorization': 'token ' + tk, 'Cache-Control': 'no-cache'} : {};
+    var _useApi = !!tk;
+
+    // Ops y OTs: API GitHub directo si hay token (sin delay de Pages), RAW URL si no
+    // Pages puede tardar 5-10min en propagar cambios, la API es inmediata
     var [satR, opsR, otsR, catR] = await Promise.all([
       fetch(BASE_URL + 'prod_satelites.json?t=' + t),
-      fetch(BASE_URL + 'prod_ops.json?t=' + t),
-      fetch(BASE_URL + 'prod_ots.json?t=' + t),
+      _useApi ? fetch(_apiBase + FILES['ops'], {headers: _apiH}) : fetch(RAW_URL + FILES['ops'] + '?t=' + t),
+      _useApi ? fetch(_apiBase + FILES['ots'], {headers: _apiH}) : fetch(RAW_URL + FILES['ots'] + '?t=' + t),
       fetch(BASE_URL + 'prod_catalogo.json?t=' + t)
     ]);
     if(satR.ok){ var d = await satR.json(); DB.satelites = d.satelites || []; }
-    if(opsR.ok){ var d2 = await opsR.json(); DB.ops = d2.ops || []; }
-    if(otsR.ok){ var d3 = await otsR.json(); DB.ots = d3.ots || []; }
+    if(opsR.ok){
+      if(_useApi){
+        var _opsApi = await opsR.json();
+        _fileShas['ops'] = _opsApi.sha;
+        var d2 = JSON.parse(decodeURIComponent(escape(atob(_opsApi.content.replace(/\n/g,'')))));
+        DB.ops = d2.ops || [];
+      } else { var d2 = await opsR.json(); DB.ops = d2.ops || []; }
+    }
+    if(otsR.ok){
+      if(_useApi){
+        var _otsApi = await otsR.json();
+        _fileShas['ots'] = _otsApi.sha;
+        var d3 = JSON.parse(decodeURIComponent(escape(atob(_otsApi.content.replace(/\n/g,'')))));
+        DB.ots = d3.ots || [];
+      } else { var d3 = await otsR.json(); DB.ots = d3.ots || []; }
+    }
     if(catR.ok){ var d4 = await catR.json(); CATALOGO = d4.catalogo || []; }
     // Diseños: cargar desde API GitHub (siempre fresco) si hay token, sino desde Pages
     var tk = GT || localStorage.getItem('bentley_gh_token') || '';
