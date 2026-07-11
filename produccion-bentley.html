@@ -742,6 +742,9 @@ textarea.form-control{resize:vertical;min-height:80px;}
     <div class="nav-item" onclick="navTo('simulador')" data-page="simulador">
       <span class="icon">🧮</span><span class="nav-label"> Simulador</span>
     </div>
+    <div class="nav-item" onclick="navTo('bitacora')" data-page="bitacora">
+      <span class="icon">📒</span><span class="nav-label"> Bitácora</span>
+    </div>
   </nav>
   <div id="sidebar-footer">
     <button class="btn-settings" onclick="openSettings()">⚙️ <span>Configuración</span></button>
@@ -982,7 +985,7 @@ var GT = (function(){
 
 // ─── Constants ─────────────────────────────────────────────────────────────────
 var REPO = 'jhonrodriguezesteban-alt/bentley-dashboard';
-var FILES = { satelites: 'prod_satelites.json', ops: 'prod_ops.json', ots: 'prod_ots.json', disenos: 'prod_disenos.json', prog_ops: 'prod_prog_ops.json', costos_mo: 'prod_costos_mo.json', usuarios: 'prod_usuarios.json', sim: 'prod_simulador.json', logistica: 'prod_logistica.json', planeacion: 'prod_planeacion.json', costeo: 'prod_costeo.json', cronograma: 'prod_cronograma.json' };
+var FILES = { satelites: 'prod_satelites.json', ops: 'prod_ops.json', ots: 'prod_ots.json', disenos: 'prod_disenos.json', prog_ops: 'prod_prog_ops.json', costos_mo: 'prod_costos_mo.json', usuarios: 'prod_usuarios.json', sim: 'prod_simulador.json', logistica: 'prod_logistica.json', planeacion: 'prod_planeacion.json', costeo: 'prod_costeo.json', cronograma: 'prod_cronograma.json', bitacora: 'prod_bitacora.json' };
 var BASE_URL = 'https://jhonrodriguezesteban-alt.github.io/bentley-dashboard/';
 var RAW_URL = 'https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/';
 
@@ -1001,7 +1004,7 @@ var ESTADO_LABELS = {
 };
 
 // ─── State ─────────────────────────────────────────────────────────────────────
-var DB = { satelites: [], ops: [], ots: [], disenos: [], prog_ops: [], disenos_cfg: {}, costos_mo: {precios:[], pagos:[]}, sim: {active:[], data:{}}, logistica: {tareas:[]}, costeo: {mp:[],servicios:[],puestos:[],tarifas_cif:[],params:{},recetas:[],precios_pt:[]} };
+var DB = { satelites: [], ops: [], ots: [], disenos: [], prog_ops: [], disenos_cfg: {}, costos_mo: {precios:[], pagos:[]}, sim: {active:[], data:{}}, logistica: {tareas:[]}, costeo: {mp:[],servicios:[],puestos:[],tarifas_cif:[],params:{},recetas:[],precios_pt:[]}, bitacora: {eventos:[]} };
 var currentPage = 'dashboard';
 var _opDetalleId = null;
 var _opEditMode = false;
@@ -1062,7 +1065,7 @@ function _getHash(u){ if(_U[u]) return _U[u]; var cfg=_getCfgUsers(); return (cf
 // Devuelve nombre display
 function _getName(u){ var cfg=_getCfgUsers(); return (cfg[u]&&cfg[u].name)||_NAMES[u]||u; }
 // Módulos permitidos para un usuario (jhon = todos)
-var ALL_MODULES = ['dashboard','satelites','ops','monitoreo','entregas','cronograma','diseno','planeacion','logistica','novedades','simulador','costos_mo','costeo'];
+var ALL_MODULES = ['dashboard','satelites','ops','monitoreo','entregas','cronograma','diseno','planeacion','logistica','novedades','simulador','costos_mo','costeo','bitacora'];
 function _getModules(u){
   if(u==='jhon') return ALL_MODULES.slice();
   var cfg=_getCfgUsers();
@@ -1584,6 +1587,15 @@ function _mergeArrayData(key, remoteData, localData){
   if(key==='ops')      return {ops:      mergeOps(remoteData.ops||[],      localData.ops||[])};
   if(key==='ots')      return {ots:      mergeById(remoteData.ots||[],      localData.ots||[])};
   if(key==='satelites')return {satelites:mergeById(remoteData.satelites||[],localData.satelites||[])};
+  if(key==='bitacora'){
+    // Bitácora: unión por ID — append-only, sin conflictos de escritura simultánea
+    var evMap = {};
+    (remoteData.eventos||[]).forEach(function(e){ evMap[e.id]=e; });
+    (localData.eventos||[]).forEach(function(e){ evMap[e.id]=e; });
+    var merged = Object.keys(evMap).map(function(k){ return evMap[k]; });
+    merged.sort(function(a,b){ return a.ts - b.ts; });
+    return {eventos: merged};
+  }
   return localData;
 }
 
@@ -1998,6 +2010,9 @@ async function cargarDatos(){
     var cronR = await fetch(BASE_URL + 'prod_cronograma.json?t=' + t);
     if(cronR.ok){ var d13 = await cronR.json(); DB.cronograma = d13.cronograma||[]; }
     else { DB.cronograma = []; }
+    var bitR = await fetch(BASE_URL + 'prod_bitacora.json?t=' + t);
+    if(bitR.ok){ var d14 = await bitR.json(); DB.bitacora = {eventos: d14.eventos||[]}; }
+    else { if(!DB.bitacora) DB.bitacora = {eventos:[]}; }
     if(DB.satelites.length === 0) seedSatelites();
     // Reparar silenciosamente estados Kanban stale al cargar datos frescos
     try { await _repararSubgEstados(true); } catch(e){}
@@ -2023,6 +2038,26 @@ function saveLocal(){ try{ localStorage.setItem('bentley_prod_db', JSON.stringif
 function seedSatelites(){
   var nombres = ['SOFIA SANCHEZ','JULIETH VERA','MELISSA MARTINEZ','ALEXANDRA FONSECA','MARTHA FLORES','SONIA VARGAS','ISABEL PARRA','MARCELA PEÑA','MARBI YANILI SALCEDO','MARIA ALIX MENDEZ','YURI VIVIANA PINILLA','MILENA OSORIO','MIRIAM PINTO','MARTHA QUIROGA','NATHALY BOSA','STELLA BUSTOS','VIVIANA AGUIRRE','NIEVES CRISTANCHO','YUDY CAROLINA CELIS QUINTERO','ROSALBA ROMERO TORRES','JEIMY CORTEZ'];
   DB.satelites = nombres.map(function(n){ return {id: uid(), nombre: n, activo: true, maquinas: [], personas: 0, especialidades: [], capacidad_semanal: 0, telefono: '', notas: '', created_at: hoy()}; });
+}
+
+// ─── Bitácora ──────────────────────────────────────────────────────────────────
+// Registra un evento de auditoría. Se persiste en prod_bitacora.json como append-only.
+// La fusión de escrituras simultáneas se hace por unión de IDs (sin conflictos).
+var _bitPendingFlush = false;
+function _logEvt(tipo, datos){
+  if(!DB.bitacora) DB.bitacora = {eventos:[]};
+  var ts = Date.now();
+  var idRnd = Math.random().toString(36).slice(2,7);
+  var evt = Object.assign({ id:'evt_'+ts+'_'+idRnd, ts:ts, user:getUser(), tipo:tipo }, datos);
+  DB.bitacora.eventos.push(evt);
+  // Flush a GitHub con debounce de 3s para no saturar con múltiples eventos seguidos
+  if(!_bitPendingFlush){
+    _bitPendingFlush = true;
+    setTimeout(function(){
+      _bitPendingFlush = false;
+      guardarArchivo('bitacora', {eventos: DB.bitacora.eventos});
+    }, 3000);
+  }
 }
 
 // ─── Utils ─────────────────────────────────────────────────────────────────────
@@ -2130,6 +2165,7 @@ function renderPage(page){
   else if(page==='simulador') el.innerHTML = renderSimulador();
   else if(page==='monitoreo') el.innerHTML = renderMonitoreo();
   else if(page==='cronograma') el.innerHTML = renderCronograma();
+  else if(page==='bitacora') el.innerHTML = renderBitacora();
   else if(page==='planeacion'){
     el.innerHTML = renderPlaneacion();
     if(_planScrollMes){
@@ -3737,6 +3773,16 @@ async function cambiarEstadoSubg(opId, color, estado){
     });
   }
   _setSubgEstado(opId, color, estado);
+  // Bitácora: movimiento de tarjeta Kanban por color
+  var op = DB.ops.find(function(o){ return o.id===opId; });
+  _logEvt('kanban_color', {
+    op_id: opId,
+    op_nombre: op ? op.nombre_producto : opId,
+    color: color,
+    estado_anterior: derivadoActual,
+    estado_nuevo: estado,
+    uds: otsColor.reduce(function(s,o){ return s+(o.cantidad||0); },0)
+  });
   saveLocal();
   renderPage('ops');
   var ok1 = await guardarArchivo('ops', {ops: DB.ops});
@@ -3862,6 +3908,15 @@ async function _confirmarSepararRefs(){
     if(n && nombresQuedan.indexOf(n)<0) nombresQuedan.push(n);
   });
   if(nombresQuedan.length) op.nombre_producto = nombresQuedan[0];
+
+  _logEvt('separar_refs', {
+    op_origen_id: opId,
+    op_origen_nombre: op.nombre_producto,
+    op_nueva_id: nuevoId,
+    op_nueva_nombre: nombreNuevoOP,
+    refs_separadas: selRefs,
+    ots_movidas: otsMover.length
+  });
 
   saveLocal();
   var ok1 = await guardarArchivo('ops', {ops: DB.ops});
@@ -4186,6 +4241,16 @@ async function asignarTallerSubg(opId, color, valor){
     ot.historial.push({fecha:now, accion:'Asignado a '+nombre+' → En Confección', user:user});
   });
   _setSubgEstado(opId, color, 'EN_CONFECCION');
+  var opBitSat = DB.ops.find(function(o){ return o.id===opId; });
+  _logEvt('asignar_satelite', {
+    op_id: opId,
+    op_nombre: opBitSat ? opBitSat.nombre_producto : opId,
+    color: color,
+    satelite: nombre,
+    es_cortador: esCortador,
+    total_ots: otsColor.length,
+    total_uds: otsColor.reduce(function(s,o){ return s+(o.cantidad||0); },0)
+  });
   saveLocal();
   var ok = await guardarArchivo('ots', {ots: DB.ots});
   var ok2 = await guardarArchivo('ops', {ops: DB.ops});
@@ -4827,6 +4892,20 @@ async function _confirmarCambioEstadoOT(){
     _cronMarcarEntregado(ot.op_id, ot.color);
   }
 
+  // Bitácora: cambio de estado de OT(s)
+  var opBit = DB.ops.find(function(o){ return o.op_id===ot.op_id||o.id===ot.op_id; });
+  _logEvt('estado_ot', {
+    op_id: ot.op_id,
+    op_nombre: opBit ? opBit.nombre_producto : ot.op_id,
+    referencia: ot.nombre || ot.referencia || '—',
+    color: ot.color,
+    talla: todasTallas ? 'todas las tallas' : ot.talla,
+    estado_anterior: otsACambiar[0] ? otsACambiar[0].estado : '—',
+    estado_nuevo: nuevoEstado,
+    bulk: todasTallas,
+    uds: otsACambiar.reduce(function(s,o){ return s+(o.cantidad||0); },0),
+    motivo: motivo
+  });
   saveLocal(); updateNovBadge();
   var okOts = await guardarArchivo('ots', {ots: DB.ots});
   var ok    = okOts && await guardarArchivo('ops', {ops: DB.ops});
@@ -5272,6 +5351,15 @@ async function crearOP(){
     created_at: hoy(), created_by: getUser()
   };
   DB.ops.push(op);
+  _logEvt('crear_op', {
+    op_id: opId,
+    op_nombre: op.nombre_producto,
+    categoria: op.categoria,
+    cortador: cortador,
+    fecha_op: fecha,
+    total_uds: refs.reduce(function(s,r){ return s+r.totalUds; },0),
+    referencias: refs.map(function(r){ return r.nombre; })
+  });
 
   setBtnLoading('btn-crear-op', true);
   saveLocal();
@@ -5552,6 +5640,15 @@ async function generarOTsParaOP(opId){
   });
   if(!newOTs.length){ toast('No hay cantidades definidas en la OP','error'); return; }
   DB.ots=DB.ots.concat(newOTs);
+  _logEvt('generar_ots', {
+    op_id: opId,
+    op_nombre: op.nombre_producto,
+    categoria: op.categoria,
+    total_ots: newOTs.length,
+    total_uds: newOTs.reduce(function(s,o){ return s+(o.cantidad||0); },0),
+    colores: op.colores||[],
+    referencias: refs.map(function(r){ return r.nombre; })
+  });
   saveLocal();
   var ok=await guardarArchivo('ots',{ots:DB.ots});
   if(ok){
@@ -6190,6 +6287,14 @@ function cambiarEstadoDiseno(id, nuevoEstado){
   if(nuevoEstado === 'LISTA_PRODUCCION' && !confirm('¿Mover "'+d.nombre+'" a Lista para Producción?')){ renderPage('diseno'); return; }
   var oldEstado = d.kanban_estado;
   d.kanban_estado = nuevoEstado;
+  _logEvt('estado_diseno', {
+    diseno_id: id,
+    nombre: d.nombre,
+    categoria: d.categoria,
+    marca: d.marca,
+    estado_anterior: oldEstado,
+    estado_nuevo: nuevoEstado
+  });
   // Auto-promoción: al llegar a LISTA_PRODUCCION, promover P2→P1 y P3→P2 de la misma categoría
   if(nuevoEstado === 'LISTA_PRODUCCION'){
     var cat = d.categoria;
@@ -7736,6 +7841,7 @@ function guardarFormLogistica(){
   if(!fecha){ toast('Selecciona una fecha','error'); return; }
   if(id==='__new__'){
     DB.logistica.tareas.push({id:'LG-'+Date.now(), tipo:tipo, descripcion:desc, destino:dest, fecha:fecha, hora:hora, orden:orden, estado:'pendiente', nota:nota, created_by:getUser()});
+    _logEvt('logistica_tarea', { tipo:tipo, descripcion:desc, destino:dest, fecha:fecha, hora:hora });
   } else {
     var t = (DB.logistica.tareas||[]).find(function(x){ return x.id===id; });
     if(t){ t.tipo=tipo; t.descripcion=desc; t.destino=dest; t.fecha=fecha; t.hora=hora; t.nota=nota; }
@@ -12201,6 +12307,271 @@ function renderCosteoPrecios(){
   h+='</tbody></table></div>';
   h+='<div style="margin-top:14px;font-size:11px;color:#475569;">'+recetas.length+' productos · '+conP+' con precios definidos · '+(recetas.length-conP)+' pendientes de asignar precio</div>';
   h+='</div>';
+  return h;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// BITÁCORA DE PRODUCCIÓN
+// ═══════════════════════════════════════════════════════════════════════════════
+var _bitFiltroFecha = '';
+var _bitFiltroUser  = '';
+var _bitFiltroTipo  = '';
+
+function renderBitacora(){
+  var hoy_str = hoy();
+  if(!_bitFiltroFecha) _bitFiltroFecha = hoy_str;
+
+  var eventos = (DB.bitacora && DB.bitacora.eventos) ? DB.bitacora.eventos.slice() : [];
+  // Filtrar por fecha
+  var evDia = eventos.filter(function(e){
+    var d = new Date(e.ts).toISOString().slice(0,10);
+    return d === _bitFiltroFecha;
+  });
+
+  // Filtros adicionales
+  if(_bitFiltroUser) evDia = evDia.filter(function(e){ return e.user === _bitFiltroUser; });
+  if(_bitFiltroTipo) evDia = evDia.filter(function(e){ return e.tipo === _bitFiltroTipo; });
+
+  // Usuarios únicos del día (sin filtro de user)
+  var evDiaSinFiltro = eventos.filter(function(e){ return new Date(e.ts).toISOString().slice(0,10) === _bitFiltroFecha; });
+  var usersDelDia = [];
+  evDiaSinFiltro.forEach(function(e){ if(e.user && usersDelDia.indexOf(e.user)<0) usersDelDia.push(e.user); });
+
+  // Tipos únicos del día
+  var tiposDelDia = [];
+  evDiaSinFiltro.forEach(function(e){ if(e.tipo && tiposDelDia.indexOf(e.tipo)<0) tiposDelDia.push(e.tipo); });
+
+  // Días con actividad (para el selector)
+  var diasConActividad = [];
+  eventos.forEach(function(e){
+    var d = new Date(e.ts).toISOString().slice(0,10);
+    if(diasConActividad.indexOf(d)<0) diasConActividad.push(d);
+  });
+  diasConActividad.sort().reverse();
+  if(diasConActividad.indexOf(hoy_str)<0) diasConActividad.unshift(hoy_str);
+
+  // Estadísticas del día
+  var stats = {
+    kanban_color: 0, estado_ot: 0, crear_op: 0, generar_ots: 0,
+    asignar_satelite: 0, separar_refs: 0, estado_diseno: 0, logistica_tarea: 0
+  };
+  evDiaSinFiltro.forEach(function(e){ if(stats[e.tipo]!==undefined) stats[e.tipo]++; });
+  var totalMovimientos = evDiaSinFiltro.length;
+  var udsProcesadas = evDiaSinFiltro.reduce(function(s,e){ return s+(e.uds||0); },0);
+  var otsCambiadas  = evDiaSinFiltro.filter(function(e){ return e.tipo==='estado_ot'||e.tipo==='kanban_color'; }).reduce(function(s,e){ return s+(e.tipo==='estado_ot'?1:0); },0);
+
+  // Etiquetas amigables
+  var _tipoLabel = {
+    kanban_color:    'Movimientos Kanban',
+    estado_ot:       'Cambios de estado OT',
+    crear_op:        'OPs creadas',
+    generar_ots:     'OTs generadas',
+    asignar_satelite:'Asignaciones a taller',
+    separar_refs:    'Separaciones de OP',
+    estado_diseno:   'Avances de diseño',
+    logistica_tarea: 'Tareas logísticas'
+  };
+  var _tipoColor = {
+    kanban_color:'#0a84ff', estado_ot:'#38bdf8', crear_op:'#a855f7',
+    generar_ots:'#22c55e', asignar_satelite:'#f97316', separar_refs:'#eab308',
+    estado_diseno:'#ec4899', logistica_tarea:'#64748b'
+  };
+  var _estadoLabel = {
+    POR_REVISAR:'Por Revisar', PENDIENTE_CORTAR:'Pendiente Cortar',
+    CORTE_POR_ALISTAR:'Corte por Alistar', EN_CONFECCION:'En Confección',
+    ALISTAMIENTO:'Alistamiento', NOVEDAD:'Novedad', ENTREGADO:'Entregado',
+    CORTE_POR_ALISTAR_CORTE:'Corte',
+    EN_DISENO_DIGITAL:'En Diseño Digital', MUESTRA_FISICA:'Muestra Física',
+    APROBACION:'Aprobación', LISTA_PRODUCCION:'Lista para Producción'
+  };
+  function lbl(e){ return _estadoLabel[e]||e||'—'; }
+  function fmtHora(ts){ var d=new Date(ts); return d.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}); }
+  function fmtFechaLarga(s){ var p=s.split('-'); var meses=['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic']; return p[2]+' '+meses[+p[1]]+' '+p[0]; }
+
+  var h = '';
+  h += '<div style="max-width:1100px;margin:0 auto;">';
+
+  // ── Encabezado y selector de fecha ──────────────────────────────────────────
+  h += '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;">';
+  h += '<div>';
+  h += '<h2 style="font-size:20px;font-weight:700;color:#e2e8f0;margin:0;">📒 Bitácora de Producción</h2>';
+  h += '<div style="font-size:12px;color:#64748b;margin-top:2px;">Historial detallado de movimientos del área · '+fmtFechaLarga(_bitFiltroFecha)+'</div>';
+  h += '</div>';
+  h += '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">';
+  // Selector de fecha
+  h += '<select onchange="_bitFiltroFecha=this.value;_bitFiltroUser=\'\';_bitFiltroTipo=\'\';renderPage(\'bitacora\')" style="background:#1c1c1e;border:1px solid #2c2c2e;color:#e2e8f0;border-radius:8px;padding:6px 10px;font-size:13px;cursor:pointer;">';
+  diasConActividad.forEach(function(d){
+    h += '<option value="'+d+'"'+(d===_bitFiltroFecha?' selected':'')+'>'+(d===hoy_str?'Hoy — ':'')+fmtFechaLarga(d)+'</option>';
+  });
+  h += '</select>';
+  // Filtro usuario
+  h += '<select onchange="_bitFiltroUser=this.value;renderPage(\'bitacora\')" style="background:#1c1c1e;border:1px solid #2c2c2e;color:#e2e8f0;border-radius:8px;padding:6px 10px;font-size:13px;cursor:pointer;">';
+  h += '<option value="">👤 Todos</option>';
+  usersDelDia.forEach(function(u){ h += '<option value="'+esc(u)+'"'+(u===_bitFiltroUser?' selected':'')+'>'+esc(u)+'</option>'; });
+  h += '</select>';
+  // Filtro tipo
+  h += '<select onchange="_bitFiltroTipo=this.value;renderPage(\'bitacora\')" style="background:#1c1c1e;border:1px solid #2c2c2e;color:#e2e8f0;border-radius:8px;padding:6px 10px;font-size:13px;cursor:pointer;">';
+  h += '<option value="">🏷 Todos los tipos</option>';
+  tiposDelDia.forEach(function(t){ h += '<option value="'+t+'"'+(t===_bitFiltroTipo?' selected':'')+'>'+(  _tipoLabel[t]||t)+'</option>'; });
+  h += '</select>';
+  h += '</div>';
+  h += '</div>';
+
+  if(totalMovimientos === 0 && !_bitFiltroUser && !_bitFiltroTipo){
+    h += '<div style="text-align:center;padding:60px 20px;color:#475569;">';
+    h += '<div style="font-size:48px;margin-bottom:12px;">📋</div>';
+    h += '<div style="font-size:16px;font-weight:600;color:#64748b;">Sin actividad registrada</div>';
+    h += '<div style="font-size:13px;margin-top:6px;">Los movimientos del equipo aparecerán aquí en tiempo real.</div>';
+    h += '</div>';
+    h += '</div>';
+    return h;
+  }
+
+  // ── Tarjetas de resumen ──────────────────────────────────────────────────────
+  h += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:20px;">';
+  var summaryCards = [
+    {label:'Movimientos totales', val:totalMovimientos, color:'#e2e8f0', bg:'#1c1c1e'},
+    {label:'Personas activas',    val:usersDelDia.length, color:'#0a84ff', bg:'rgba(10,132,255,.08)'},
+    {label:'Unidades procesadas', val:udsProcesadas.toLocaleString('es-CO'), color:'#22c55e', bg:'rgba(34,197,94,.08)'},
+    {label:'OTs con cambios',     val:otsCambiadas, color:'#38bdf8', bg:'rgba(56,189,248,.08)'},
+    {label:'OPs creadas',         val:stats.crear_op, color:'#a855f7', bg:'rgba(168,85,247,.08)'},
+    {label:'Talleres asignados',  val:stats.asignar_satelite, color:'#f97316', bg:'rgba(249,115,22,.08)'}
+  ];
+  summaryCards.forEach(function(c){
+    h += '<div style="background:'+c.bg+';border:1px solid '+c.color+'22;border-radius:10px;padding:14px 16px;">';
+    h += '<div style="font-size:22px;font-weight:800;color:'+c.color+';">'+c.val+'</div>';
+    h += '<div style="font-size:11px;color:#64748b;margin-top:2px;">'+c.label+'</div>';
+    h += '</div>';
+  });
+  h += '</div>';
+
+  // ── Actividad por usuario ────────────────────────────────────────────────────
+  if(!_bitFiltroUser && usersDelDia.length > 0){
+    h += '<div style="background:#111827;border:1px solid #1e293b;border-radius:12px;padding:16px;margin-bottom:18px;">';
+    h += '<div style="font-size:13px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px;">Actividad por persona</div>';
+    h += '<div style="display:flex;flex-direction:column;gap:8px;">';
+    usersDelDia.forEach(function(u){
+      var evUser = evDiaSinFiltro.filter(function(e){ return e.user===u; });
+      var maxEv = Math.max.apply(null, usersDelDia.map(function(uu){ return evDiaSinFiltro.filter(function(e){ return e.user===uu; }).length; }));
+      var pct = maxEv ? Math.round(evUser.length/maxEv*100) : 0;
+      // Tipos de acciones del usuario
+      var tiposU = {};
+      evUser.forEach(function(e){ tiposU[e.tipo]=(tiposU[e.tipo]||0)+1; });
+      var tiposStr = Object.keys(tiposU).map(function(t){ return (_tipoLabel[t]||t)+' ×'+tiposU[t]; }).join(' · ');
+      h += '<div style="cursor:pointer;" onclick="_bitFiltroUser=\''+esc(u)+'\';renderPage(\'bitacora\')">';
+      h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">';
+      h += '<span style="font-size:13px;font-weight:600;color:#e2e8f0;">'+esc(u)+'</span>';
+      h += '<span style="font-size:12px;color:#64748b;">'+evUser.length+' acción'+(evUser.length!==1?'es':'')+'</span>';
+      h += '</div>';
+      h += '<div style="background:#1e293b;border-radius:4px;height:6px;overflow:hidden;">';
+      h += '<div style="background:#0a84ff;height:6px;border-radius:4px;width:'+pct+'%;transition:width .3s;"></div>';
+      h += '</div>';
+      h += '<div style="font-size:10px;color:#475569;margin-top:3px;">'+tiposStr+'</div>';
+      h += '</div>';
+    });
+    h += '</div></div>';
+  }
+
+  // ── Timeline detallado ───────────────────────────────────────────────────────
+  h += '<div style="background:#111827;border:1px solid #1e293b;border-radius:12px;padding:16px;">';
+  var headerTimeline = 'Timeline detallado';
+  if(_bitFiltroUser || _bitFiltroTipo){
+    headerTimeline += ' — ';
+    if(_bitFiltroUser) headerTimeline += _bitFiltroUser;
+    if(_bitFiltroUser && _bitFiltroTipo) headerTimeline += ' · ';
+    if(_bitFiltroTipo) headerTimeline += (_tipoLabel[_bitFiltroTipo]||_bitFiltroTipo);
+    headerTimeline += ' <button onclick="_bitFiltroUser=\'\';_bitFiltroTipo=\'\';renderPage(\'bitacora\')" style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.2);color:#ef4444;border-radius:5px;font-size:10px;padding:2px 7px;cursor:pointer;margin-left:4px;">✕ Limpiar filtro</button>';
+  }
+  h += '<div style="font-size:13px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px;">'+headerTimeline+'</div>';
+
+  if(!evDia.length){
+    h += '<div style="text-align:center;padding:24px;color:#475569;font-size:13px;">Sin eventos con este filtro.</div>';
+  } else {
+    // Agrupar por hora (bloques de 1 hora)
+    var evDesc = evDia.slice().reverse(); // más reciente primero
+    h += '<div style="display:flex;flex-direction:column;gap:2px;">';
+    var lastHora = null;
+    evDesc.forEach(function(e){
+      var hora = fmtHora(e.ts);
+      var horaH = new Date(e.ts).getHours();
+      if(horaH !== lastHora){
+        lastHora = horaH;
+        h += '<div style="font-size:10px;font-weight:700;color:#334155;text-transform:uppercase;padding:8px 0 4px;letter-spacing:.05em;margin-top:4px;">'+hora.split(':')[0]+':00</div>';
+      }
+      var tc = _tipoColor[e.tipo]||'#64748b';
+
+      // Descripción detallada según tipo
+      var desc = '';
+      var detalle = '';
+      if(e.tipo==='kanban_color'){
+        desc = '<strong>'+esc(e.op_nombre||e.op_id)+'</strong> — color <strong>'+esc(e.color)+'</strong>';
+        detalle = lbl(e.estado_anterior)+' → <span style="color:'+tc+';font-weight:700;">'+lbl(e.estado_nuevo)+'</span>';
+        if(e.uds) detalle += ' · '+e.uds+' uds';
+      } else if(e.tipo==='estado_ot'){
+        desc = '<strong>'+esc(e.referencia)+'</strong> · '+esc(e.color)+(e.talla&&e.talla!=='todas las tallas'?' talla '+esc(e.talla):'');
+        if(e.bulk) desc += ' <span style="background:#0a84ff22;color:#38bdf8;font-size:9px;border-radius:3px;padding:1px 4px;">todas las tallas</span>';
+        detalle = lbl(e.estado_anterior)+' → <span style="color:'+tc+';font-weight:700;">'+lbl(e.estado_nuevo)+'</span>';
+        if(e.uds) detalle += ' · '+e.uds+' uds';
+        if(e.motivo) detalle += ' · <em style="color:#64748b;">'+esc(e.motivo)+'</em>';
+        if(e.op_id) desc += ' <span style="font-size:10px;color:#475569;">('+esc(e.op_id)+')</span>';
+      } else if(e.tipo==='crear_op'){
+        desc = 'Nueva OP <strong>'+esc(e.op_id)+'</strong> — '+esc(e.op_nombre);
+        detalle = esc(e.categoria);
+        if(e.total_uds) detalle += ' · '+e.total_uds+' uds programadas';
+        if(e.cortador) detalle += ' · Cortador: '+esc(e.cortador);
+        if(e.referencias&&e.referencias.length>1) detalle += ' · '+e.referencias.length+' referencias';
+      } else if(e.tipo==='generar_ots'){
+        desc = 'OTs generadas para <strong>'+esc(e.op_id)+'</strong> — '+esc(e.op_nombre);
+        detalle = e.total_ots+' OTs creadas';
+        if(e.total_uds) detalle += ' · '+e.total_uds+' uds totales';
+        if(e.colores&&e.colores.length) detalle += ' · Colores: '+e.colores.join(', ');
+      } else if(e.tipo==='asignar_satelite'){
+        desc = '<strong>'+esc(e.op_nombre||e.op_id)+'</strong> — '+esc(e.color)+' → <span style="color:#f97316;font-weight:700;">'+esc(e.satelite)+'</span>';
+        detalle = (e.es_cortador?'Asignado a cortador':'Enviado a taller');
+        if(e.total_ots) detalle += ' · '+e.total_ots+' OTs';
+        if(e.total_uds) detalle += ' · '+e.total_uds+' uds';
+      } else if(e.tipo==='separar_refs'){
+        desc = 'Separación de <strong>'+esc(e.op_origen_id)+'</strong> → nueva <strong>'+esc(e.op_nueva_id)+'</strong>';
+        detalle = 'Refs separadas: '+esc((e.refs_separadas||[]).join(', '));
+        if(e.ots_movidas) detalle += ' · '+e.ots_movidas+' OTs movidas';
+      } else if(e.tipo==='estado_diseno'){
+        desc = 'Diseño <strong>'+esc(e.nombre)+'</strong>';
+        if(e.categoria) desc += ' <span style="font-size:10px;color:#475569;">('+esc(e.categoria)+')</span>';
+        detalle = lbl(e.estado_anterior)+' → <span style="color:#ec4899;font-weight:700;">'+lbl(e.estado_nuevo)+'</span>';
+      } else if(e.tipo==='logistica_tarea'){
+        desc = 'Tarea logística: <strong>'+esc(e.descripcion)+'</strong>';
+        if(e.destino) detalle = '📍 '+esc(e.destino);
+        if(e.tipo_tarea) detalle += (detalle?' · ':'')+esc(e.tipo_tarea);
+        if(e.fecha && e.fecha!==_bitFiltroFecha) detalle += (detalle?' · ':'')+'Para el '+fmtDate(e.fecha);
+      } else {
+        desc = esc(e.tipo);
+        detalle = JSON.stringify(e).slice(0,80)+'…';
+      }
+
+      h += '<div style="display:grid;grid-template-columns:44px 4px 1fr;gap:0 10px;align-items:start;padding:4px 0;">';
+      // Hora
+      h += '<div style="font-size:11px;color:#334155;text-align:right;padding-top:2px;font-variant-numeric:tabular-nums;">'+hora+'</div>';
+      // Línea de color
+      h += '<div style="display:flex;flex-direction:column;align-items:center;"><div style="width:8px;height:8px;border-radius:50%;background:'+tc+';margin-top:3px;flex-shrink:0;"></div><div style="width:1px;flex:1;background:#1e293b;"></div></div>';
+      // Contenido
+      h += '<div style="background:#0d1117;border:1px solid #1e293b;border-radius:8px;padding:8px 12px;margin-bottom:3px;">';
+      h += '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;">';
+      h += '<div style="flex:1;min-width:0;">';
+      h += '<div style="font-size:12px;color:#cbd5e1;line-height:1.4;">'+desc+'</div>';
+      if(detalle) h += '<div style="font-size:11px;color:#64748b;margin-top:2px;">'+detalle+'</div>';
+      h += '</div>';
+      h += '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0;">';
+      h += '<span style="font-size:9px;font-weight:700;text-transform:uppercase;color:'+tc+';background:'+tc+'18;border-radius:3px;padding:1px 5px;white-space:nowrap;">'+(_tipoLabel[e.tipo]||e.tipo)+'</span>';
+      h += '<span style="font-size:10px;color:#475569;">'+esc(e.user)+'</span>';
+      h += '</div>';
+      h += '</div>';
+      h += '</div>';
+      h += '</div>';
+    });
+    h += '</div>';
+  }
+  h += '</div>'; // timeline card
+  h += '</div>'; // max-width container
   return h;
 }
 </script>
