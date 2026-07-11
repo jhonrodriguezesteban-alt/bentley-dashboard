@@ -4601,14 +4601,14 @@
       "id": "OP-0190",
       "numero": 190,
       "fecha_op": "2026-03-24",
-      "cortador": "CARVAJAL",
+      "cortador": "Corte Carbajal",
       "categoria": "CHAQUETAS",
-      "nombre_producto": "SAN POLO (PILOTO + CAMI + ROMPEVIENTOS)",
+      "nombre_producto": "CHAQUETA SAN POLOS PILOTO + CAMICHAQUETA SAN POLOS HOMBRE + CHAQUETA ROMPEVIENTOS BK",
       "colores": [
         "AZUL OSCURO",
         "NEGRO",
-        "VERDE",
-        "VERDE MILITAR"
+        "VERDE MILITAR",
+        "VERDE PINO"
       ],
       "estado_op": "EN_PROCESO",
       "created_at": "2026-07-10",
@@ -4624,7 +4624,98 @@
         "L",
         "XL",
         "XXL"
-      ]
+      ],
+      "referencias": [
+        {
+          "nombre": "CHAQUETA SAN POLOS PILOTO",
+          "ref": "",
+          "cat": "CHAQUETAS",
+          "vmo": 1151,
+          "colores": [
+            "AZUL OSCURO",
+            "NEGRO"
+          ],
+          "tallas": [
+            "M",
+            "L",
+            "XL",
+            "XXL"
+          ],
+          "cantidades": {
+            "AZUL OSCURO_M": 20,
+            "AZUL OSCURO_L": 40,
+            "AZUL OSCURO_XL": 15,
+            "AZUL OSCURO_XXL": 5,
+            "NEGRO_M": 20,
+            "NEGRO_L": 40,
+            "NEGRO_XL": 15,
+            "NEGRO_XXL": 5
+          }
+        },
+        {
+          "nombre": "CAMICHAQUETA SAN POLOS HOMBRE",
+          "ref": "3009",
+          "cat": "CHAQUETAS",
+          "vmo": 1151,
+          "colores": [
+            "VERDE MILITAR",
+            "AZUL OSCURO"
+          ],
+          "tallas": [
+            "M",
+            "L",
+            "XL",
+            "XXL"
+          ],
+          "cantidades": {
+            "VERDE MILITAR_M": 20,
+            "VERDE MILITAR_L": 40,
+            "VERDE MILITAR_XL": 15,
+            "VERDE MILITAR_XXL": 5,
+            "AZUL OSCURO_M": 20,
+            "AZUL OSCURO_L": 40,
+            "AZUL OSCURO_XL": 15,
+            "AZUL OSCURO_XXL": 5
+          }
+        },
+        {
+          "nombre": "CHAQUETA ROMPEVIENTOS BK",
+          "ref": "1180",
+          "cat": "CHAQUETAS",
+          "vmo": 1151,
+          "colores": [
+            "NEGRO",
+            "VERDE PINO"
+          ],
+          "tallas": [
+            "L",
+            "XL",
+            "XXL",
+            "XXXL"
+          ],
+          "cantidades": {
+            "NEGRO_L": 20,
+            "NEGRO_XL": 40,
+            "NEGRO_XXL": 15,
+            "NEGRO_XXXL": 5,
+            "VERDE PINO_L": 20,
+            "VERDE PINO_XL": 40,
+            "VERDE PINO_XXL": 15,
+            "VERDE PINO_XXXL": 5
+          }
+        }
+      ],
+      "cantidades": {
+        "AZUL OSCURO_M": 20,
+        "AZUL OSCURO_L": 40,
+        "AZUL OSCURO_XL": 15,
+        "AZUL OSCURO_XXL": 5,
+        "NEGRO_M": 20,
+        "NEGRO_L": 40,
+        "NEGRO_XL": 15,
+        "NEGRO_XXL": 5
+      },
+      "updated_at": "2026-07-11"
     }
   ]
 }
