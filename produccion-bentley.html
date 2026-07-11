@@ -995,7 +995,7 @@ var TALLAS_DEFAULT = ['T4','T6','T8','T10','T12','T14','T16'];
 var TALLAS_ALL = ['T2','T4','T6','T8','T10','T12','T14','T16'];
 var TALLAS_ADULTO = ['XS','S','M','L','XL','XXL','XXXL'];
 var CAT_CODE_MAP = {'0':'CAMISETAS','AB':'ABRIGOS','BG':'GABAN','BL':'BLUSAS','BZ':'BUZOS','CH':'CHAQUETAS','CHL':'CHALECOS','CJ':'CONJUNTOS','CM':'CAMISAS','CMS':'CAMISONES','CMT':'CAMISETAS','CMTS':'CAMISETAS','FL':'FALDA','GB':'GABAN','PT':'PANTALONES','PTT':'PANTALONES','VS':'VESTIDOS'};
-var CORTADORES = ['CARVAJAL','JAVIER'];
+var CORTADORES = ['Corte Carbajal', 'Corte con proveedor'];
 var ESTADOS = ['POR_REVISAR','PENDIENTE_CORTAR','CORTE_POR_ALISTAR','ASIGNADO','EN_CONFECCION','ENTREGADO_PARCIAL','ENTREGADO','NOVEDAD'];
 var ESTADO_LABELS = {
   POR_REVISAR:'Nuevas programaciones',
@@ -4222,7 +4222,7 @@ function filtrarArchivadas(q){
   });
 }
 
-var CORTADORES = ['Corte Carbajal', 'Corte con proveedor'];
+// CORTADORES ya definido arriba — no redeclarar
 
 async function asignarTallerSubg(opId, color, valor){
   if(!valor) return;
@@ -5035,7 +5035,8 @@ function _buildFormEditarOP(op){
   h += '<div class="form-group"><label class="form-label">Fecha OP *</label><input class="form-control" type="date" id="op-fecha" value="'+(op.fecha_op||hoy())+'"></div>';
   h += '<div class="form-group"><label class="form-label">Número OP</label><input class="form-control" type="number" id="op-num" value="'+(op.numero||'')+'" readonly style="background:rgba(255,255,255,.04);color:var(--dim);"></div>';
   h += '</div>';
-  h += '<div class="form-group"><label class="form-label">Cortador *</label><select class="form-control" id="op-cortador"><option value="">Seleccionar...</option>'+CORTADORES.map(function(c){ return '<option'+(op.cortador===c?' selected':'')+'>'+c+'</option>'; }).join('')+'</select></div>';
+  var _defCort = op.cortador || 'Corte Carbajal';
+  h += '<div class="form-group"><label class="form-label">Cortador *</label><select class="form-control" id="op-cortador"><option value="">Seleccionar...</option>'+CORTADORES.map(function(c){ return '<option'+(c===_defCort?' selected':'')+'>'+c+'</option>'; }).join('')+'</select></div>';
   h += '<div class="sep"></div>';
   h += '<div id="op-refs-container">';
   _opRefs.forEach(function(r,i){ h += _buildRefBlock(r,i,_opRefs.length); });
