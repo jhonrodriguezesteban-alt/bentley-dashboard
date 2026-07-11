@@ -993,6 +993,7 @@ var CATALOGO = []; // cargado de prod_catalogo.json
 var CATEGORIAS = ['CAMISAS','CHAQUETAS','CAMISETAS','BUZOS','GABAN','CONJUNTOS','CHALECOS','PANTALONES','ABRIGOS','FALDA','BLUSAS','VESTIDOS','CAMISONES'];
 var TALLAS_DEFAULT = ['T4','T6','T8','T10','T12','T14','T16'];
 var TALLAS_ALL = ['T2','T4','T6','T8','T10','T12','T14','T16'];
+var TALLAS_ADULTO = ['XS','S','M','L','XL','XXL','XXXL'];
 var CAT_CODE_MAP = {'0':'CAMISETAS','AB':'ABRIGOS','BG':'GABAN','BL':'BLUSAS','BZ':'BUZOS','CH':'CHAQUETAS','CHL':'CHALECOS','CJ':'CONJUNTOS','CM':'CAMISAS','CMS':'CAMISONES','CMT':'CAMISETAS','CMTS':'CAMISETAS','FL':'FALDA','GB':'GABAN','PT':'PANTALONES','PTT':'PANTALONES','VS':'VESTIDOS'};
 var CORTADORES = ['CARVAJAL','JAVIER'];
 var ESTADOS = ['POR_REVISAR','PENDIENTE_CORTAR','CORTE_POR_ALISTAR','ASIGNADO','EN_CONFECCION','ENTREGADO_PARCIAL','ENTREGADO','NOVEDAD'];
@@ -4492,7 +4493,7 @@ function renderOPDetalle(opId){
   });
   // También incluir tallas de op.tallas fallback
   (op.tallas||[]).forEach(function(t){ tallasSet[t]=1; });
-  var TALLA_ORD = ['2','3M','6M','9M','12M','18M','24M','T2','T4','T6','T8','T10','T12','T14','T16','UNICA','ÚNICA'];
+  var TALLA_ORD = ['2','3M','6M','9M','12M','18M','24M','T2','T4','T6','T8','T10','T12','T14','T16','XS','S','M','L','XL','XXL','XXXL','UNICA','ÚNICA'];
   var tallasGrid = Object.keys(tallasSet).sort(function(a,b){
     var ia=TALLA_ORD.indexOf(a), ib=TALLA_ORD.indexOf(b);
     if(ia<0&&ib<0) return a.localeCompare(b);
@@ -5429,8 +5430,16 @@ function _buildRefBlock(r, idx, total){
   h += '</div>';
   h += '<div style="display:flex;gap:6px;margin-top:8px;"><input class="form-control" id="ref-col-inp-'+r.rid+'" placeholder="Ej: NEGRO" style="max-width:200px;" onkeydown="if(event.key===\'Enter\'){event.preventDefault();opRefColorAdd(\''+r.rid+'\');}"><button type="button" class="btn btn-ghost btn-sm" data-rid="'+r.rid+'" onclick="opRefColorAdd(this.dataset.rid)">Añadir</button></div>';
   h += '</div>';
-  h += '<div class="form-group"><label class="form-label">Tallas</label><div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;">';
+  h += '<div class="form-group"><label class="form-label">Tallas</label>';
+  h += '<div style="margin-bottom:6px;"><span style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em;">Infantil</span></div>';
+  h += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;">';
   TALLAS_ALL.forEach(function(t){
+    h += '<label style="display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer;"><input type="checkbox" class="ck ref-talla-'+r.rid+'" value="'+t+'" '+(r.tallas.indexOf(t)>-1?'checked':'')+' data-rid="'+r.rid+'" onchange="opRefTallaChange(this.dataset.rid)"> '+t+'</label>';
+  });
+  h += '</div>';
+  h += '<div style="margin-bottom:6px;"><span style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em;">Adulto</span></div>';
+  h += '<div style="display:flex;flex-wrap:wrap;gap:8px;">';
+  TALLAS_ADULTO.forEach(function(t){
     h += '<label style="display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer;"><input type="checkbox" class="ck ref-talla-'+r.rid+'" value="'+t+'" '+(r.tallas.indexOf(t)>-1?'checked':'')+' data-rid="'+r.rid+'" onchange="opRefTallaChange(this.dataset.rid)"> '+t+'</label>';
   });
   h += '</div></div>';
@@ -10502,7 +10511,7 @@ var _monCorteActivos = {};  // key: opId+'||'+color → true
 var _monCorteQtys    = {};  // key: opId+'||'+color+'||'+talla → qty confirmada
 
 function renderMonitoreo(){
-  var TALLA_ORD = ['2','3M','6M','9M','12M','18M','24M','T2','T4','T6','T8','T10','T12','T14','T16','UNICA','ÚNICA'];
+  var TALLA_ORD = ['2','3M','6M','9M','12M','18M','24M','T2','T4','T6','T8','T10','T12','T14','T16','XS','S','M','L','XL','XXL','XXXL','UNICA','ÚNICA'];
   var ops = DB.ops.filter(function(op){ return op.estado_op !== 'ARCHIVADO' && op.estado_op !== 'PAGO_PENDIENTE'; });
   var otsXop = {};
   DB.ots.forEach(function(ot){ if(ot.op_id){ (otsXop[ot.op_id]=otsXop[ot.op_id]||[]).push(ot); } });
@@ -10751,7 +10760,7 @@ async function monConfirmarCortes(){
 }
 
 function exportarMonitoreoCSV(){
-  var TALLA_ORD = ['2','3M','6M','9M','12M','18M','24M','T2','T4','T6','T8','T10','T12','T14','T16','UNICA','ÚNICA'];
+  var TALLA_ORD = ['2','3M','6M','9M','12M','18M','24M','T2','T4','T6','T8','T10','T12','T14','T16','XS','S','M','L','XL','XXL','XXXL','UNICA','ÚNICA'];
   var ops = DB.ops.filter(function(op){ return op.estado_op !== 'ARCHIVADO' && op.estado_op !== 'PAGO_PENDIENTE'; });
   var otsXop = {};
   DB.ots.forEach(function(ot){ if(ot.op_id){ (otsXop[ot.op_id]=otsXop[ot.op_id]||[]).push(ot); } });
