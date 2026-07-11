@@ -12320,6 +12320,85 @@ function renderCosteoPrecios(){
   return h;
 }
 
+function exportarBitacoraCSV(){
+  var eventos = (DB.bitacora && DB.bitacora.eventos) ? DB.bitacora.eventos.slice() : [];
+  // Si hay filtro de fecha activo, exportar solo ese día; si no, todo el historial
+  var evExp = _bitFiltroFecha
+    ? eventos.filter(function(e){ return new Date(e.ts).toISOString().slice(0,10) === _bitFiltroFecha; })
+    : eventos;
+  if(_bitFiltroUser) evExp = evExp.filter(function(e){ return e.user === _bitFiltroUser; });
+  if(_bitFiltroTipo) evExp = evExp.filter(function(e){ return e.tipo === _bitFiltroTipo; });
+
+  var _tl = {
+    kanban_color:'Movimiento Kanban', estado_ot:'Cambio estado OT',
+    crear_op:'OP creada', generar_ots:'OTs generadas',
+    asignar_satelite:'Asignación a taller', separar_refs:'Separación de OP',
+    estado_diseno:'Avance diseño', logistica_tarea:'Tarea logística'
+  };
+  var _el = {
+    POR_REVISAR:'Por Revisar', PENDIENTE_CORTAR:'Pendiente Cortar',
+    CORTE_POR_ALISTAR:'Corte por Alistar', EN_CONFECCION:'En Confección',
+    ALISTAMIENTO:'Alistamiento', NOVEDAD:'Novedad', ENTREGADO:'Entregado',
+    EN_DISENO_DIGITAL:'En Diseño Digital', MUESTRA_FISICA:'Muestra Física',
+    APROBACION:'Aprobación', LISTA_PRODUCCION:'Lista para Producción'
+  };
+  function lbl(e){ return _el[e]||e||'—'; }
+
+  var header = ['FECHA','HORA','USUARIO','TIPO','OP / REFERENCIA','DETALLE','ESTADO ANTERIOR','ESTADO NUEVO','COLOR','TALLA','UNIDADES','MOTIVO / NOTA'];
+  var lines = [header.join(',')];
+
+  evExp.slice().sort(function(a,b){ return a.ts-b.ts; }).forEach(function(e){
+    var d = new Date(e.ts);
+    var fecha = d.toISOString().slice(0,10);
+    var hora  = d.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+    var ref = '', detalle = '', estAnt = '', estNuevo = '', color = '', talla = '', uds = '', motivo = '';
+
+    if(e.tipo==='kanban_color'){
+      ref = (e.op_nombre||e.op_id||'');
+      detalle = 'Tarjeta Kanban movida';
+      estAnt  = lbl(e.estado_anterior); estNuevo = lbl(e.estado_nuevo);
+      color   = e.color||''; uds = e.uds||'';
+    } else if(e.tipo==='estado_ot'){
+      ref = (e.op_id||'') + ' — ' + (e.referencia||'');
+      detalle = e.bulk ? 'Cambio masivo (todas las tallas)' : 'Cambio individual';
+      estAnt  = lbl(e.estado_anterior); estNuevo = lbl(e.estado_nuevo);
+      color   = e.color||''; talla = e.talla||''; uds = e.uds||''; motivo = e.motivo||'';
+    } else if(e.tipo==='crear_op'){
+      ref = (e.op_id||'') + ' — ' + (e.op_nombre||'');
+      detalle = 'Categoría: '+(e.categoria||'') + (e.cortador?' | Cortador: '+e.cortador:'');
+      uds = e.total_uds||'';
+    } else if(e.tipo==='generar_ots'){
+      ref = (e.op_id||'') + ' — ' + (e.op_nombre||'');
+      detalle = e.total_ots+' OTs generadas | Colores: '+((e.colores||[]).join(', '));
+      uds = e.total_uds||'';
+    } else if(e.tipo==='asignar_satelite'){
+      ref = (e.op_id||'') + ' — ' + (e.op_nombre||'');
+      detalle = 'Taller: '+(e.satelite||'') + (e.es_cortador?' (cortador)':'');
+      color   = e.color||''; uds = e.total_uds||'';
+    } else if(e.tipo==='separar_refs'){
+      ref = (e.op_origen_id||'') + ' → ' + (e.op_nueva_id||'');
+      detalle = 'Refs separadas: '+((e.refs_separadas||[]).join(', '));
+      uds = e.ots_movidas||'';
+    } else if(e.tipo==='estado_diseno'){
+      ref = e.nombre||'';
+      detalle = 'Categoría: '+(e.categoria||'');
+      estAnt  = lbl(e.estado_anterior); estNuevo = lbl(e.estado_nuevo);
+    } else if(e.tipo==='logistica_tarea'){
+      ref = e.descripcion||'';
+      detalle = 'Destino: '+(e.destino||'—') + (e.fecha?' | Para: '+e.fecha:'');
+    }
+
+    var row = [fecha, hora, e.user||'', (_tl[e.tipo]||e.tipo), ref, detalle, estAnt, estNuevo, color, talla, uds, motivo];
+    lines.push(row.map(function(v){ return '"'+String(v).replace(/"/g,'""')+'"'; }).join(','));
+  });
+
+  var nombre = 'bitacora_produccion_' + (_bitFiltroFecha||hoy()) + '.csv';
+  var blob = new Blob(['﻿'+lines.join('\n')], {type:'text/csv;charset=utf-8;'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a'); a.href=url; a.download=nombre; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 2000);
+}
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // BITÁCORA DE PRODUCCIÓN
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -12408,6 +12487,7 @@ function renderBitacora(){
   h += '<div style="font-size:12px;color:#64748b;margin-top:2px;">Historial detallado de movimientos del área · '+fmtFechaLarga(_bitFiltroFecha)+'</div>';
   h += '</div>';
   h += '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">';
+  h += '<button onclick="exportarBitacoraCSV()" style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#22c55e;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;">↓ Excel</button>';
   // Selector de fecha
   h += '<select onchange="_bitFiltroFecha=this.value;_bitFiltroUser=\'\';_bitFiltroTipo=\'\';renderPage(\'bitacora\')" style="background:#1c1c1e;border:1px solid #2c2c2e;color:#e2e8f0;border-radius:8px;padding:6px 10px;font-size:13px;cursor:pointer;">';
   diasConActividad.forEach(function(d){
