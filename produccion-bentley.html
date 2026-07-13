@@ -4501,13 +4501,20 @@ function renderOPDetalle(opId){
   });
   var coloresGrid = Object.keys(coloresSet).sort();
 
-  // Map: color → talla → ot
+  // Map: color → talla → [ots] (lista para soportar múltiples refs con mismo color+talla)
   var gridMap = {};
   otsOp.forEach(function(ot){
     var c = ot.color||'—', t = ot.talla||'—';
     if(!gridMap[c]) gridMap[c]={};
-    gridMap[c][t] = ot;
+    if(!gridMap[c][t]) gridMap[c][t]=[];
+    gridMap[c][t].push(ot);
   });
+  // Helper: primera OT de una celda (para compatibilidad con código que espera objeto)
+  function _gridOT(c,t){ var arr=gridMap[c]&&gridMap[c][t]; return arr&&arr[0]||null; }
+  // Helper: todas las OTs de una celda
+  function _gridOTs(c,t){ return (gridMap[c]&&gridMap[c][t])||[]; }
+  // Helper: lista plana de todas las OTs de un color
+  function _colorOTs(c){ var res=[]; Object.keys(gridMap[c]||{}).forEach(function(t){ (gridMap[c][t]||[]).forEach(function(o){ res.push(o); }); }); return res; }
 
   // Estado → color para celdas
   function cellBg(ot){
@@ -4550,10 +4557,12 @@ function renderOPDetalle(opId){
       h += '<td style="padding:9px 14px;font-weight:600;color:'+(sinOT?'#a855f7':'#e2e8f0')+';white-space:nowrap;">'+esc(color)+(sinOT?' <span style="font-size:9px;background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.3);border-radius:3px;color:#a855f7;padding:1px 4px;vertical-align:middle;">SIN OTs</span>':'')+'</td>';
     }
     tallasGrid.forEach(function(t){
-      var ot = gridMap[color] && gridMap[color][t];
+      var otsCell = _gridOTs(color, t);
+      var ot = otsCell[0]||null; // primera OT para estado/color
       var qty, cs, clickable, otId;
-      if(ot){
-        qty = ot.cantidad||0;
+      if(otsCell.length > 0){
+        // Sumar cantidades de todas las refs que comparten color+talla
+        qty = otsCell.reduce(function(s,o){ return s+(o.cantidad||0); },0);
         cs = cellBg(ot); clickable = 'cursor:pointer;'; otId = ot.id;
       } else if(sinOT){
         qty = _refsCantMap[color+'_'+t]||0;
@@ -4562,9 +4571,11 @@ function renderOPDetalle(opId){
       } else {
         qty = 0; cs = 'background:#0d1117;color:#334155;'; clickable = ''; otId = '';
       }
+      // Indicar si hay múltiples refs en esta celda
+      var multiRef = otsCell.length > 1;
       rowTotal += qty;
       totalesTalla[t] = (totalesTalla[t]||0) + qty;
-      h += '<td data-otid="'+otId+'" onclick="'+(ot?'abrirOT(this.dataset.otid)':'')+'" style="padding:8px 10px;text-align:center;'+cs+clickable+'border-left:1px solid rgba(255,255,255,.04);'+(ot?'border-radius:4px;':'')+'">'+( qty||'·')+'</td>';
+      h += '<td data-otid="'+otId+'" onclick="'+(ot?'abrirOT(this.dataset.otid)':'')+'" title="'+(multiRef?otsCell.length+' refs: '+otsCell.map(function(o){ return (o.nombre||'—')+' ('+( o.cantidad||0)+')'; }).join(', '):'')+'" style="padding:8px 10px;text-align:center;'+cs+clickable+'border-left:1px solid rgba(255,255,255,.04);'+(ot?'border-radius:4px;':'')+'">'+(qty||'·')+(multiRef?'<sup style="font-size:8px;color:#a855f7;">×'+otsCell.length+'</sup>':'')+'</td>';
     });
     totalGeneral += rowTotal;
     h += '<td style="padding:8px 10px;text-align:center;font-weight:700;color:'+(sinOT?'#a855f7':'#fbbf24')+';border-left:1px solid rgba(255,255,255,.08);">'+rowTotal+'</td>';
@@ -4624,7 +4635,7 @@ function renderOPDetalle(opId){
 
   var coloresOrdenados = coloresGrid; // includes SIN-OTs colors from op.referencias
   coloresOrdenados.forEach(function(color){
-    var otsC = Object.values(gridMap[color]||{}).sort(function(a,b){ return ESTADO_ORDER.indexOf(a.estado)-ESTADO_ORDER.indexOf(b.estado); });
+    var otsC = _colorOTs(color).sort(function(a,b){ return ESTADO_ORDER.indexOf(a.estado)-ESTADO_ORDER.indexOf(b.estado); });
     var udsC = otsC.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
     var udsEC = otsC.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+(o.unidades_entregadas||0); }, 0);
     var pctC = udsC ? Math.round(udsEC/udsC*100) : 0;
