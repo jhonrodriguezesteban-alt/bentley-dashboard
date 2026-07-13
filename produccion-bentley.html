@@ -4633,88 +4633,116 @@ function renderOPDetalle(opId){
     h += '</div>';
   }
 
-  var coloresOrdenados = coloresGrid; // includes SIN-OTs colors from op.referencias
-  coloresOrdenados.forEach(function(color){
-    var otsC = _colorOTs(color).sort(function(a,b){ return ESTADO_ORDER.indexOf(a.estado)-ESTADO_ORDER.indexOf(b.estado); });
+  // ── Helper: render a color block (header + OT rows) ────────────────────────
+  function _renderColorBlock(color, otsC, refNombre){
+    // refNombre: if set, use cambiarSateliteColorRef; else cambiarSateliteColor
     var udsC = otsC.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
     var udsEC = otsC.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+(o.unidades_entregadas||0); }, 0);
     var pctC = udsC ? Math.round(udsEC/udsC*100) : 0;
-
-    h += '<div style="border-bottom:1px solid var(--card-border);">';
+    var bk = '';
+    bk += '<div style="border-bottom:1px solid var(--card-border);">';
     var satColorId = null;
     otsC.forEach(function(o){ if(o.satelite_id && !satColorId) satColorId=o.satelite_id; });
     var tieneCorteActive = otsC.some(function(o){ return o.estado==='POR_REVISAR'||o.estado==='PENDIENTE_CORTAR'||o.estado==='CORTE_POR_ALISTAR'; });
     var tieneConfeccion = otsC.some(function(o){ return o.estado==='EN_CONFECCION'||o.estado==='ASIGNADO'||o.estado==='NOVEDAD'; });
-    h += '<div style="padding:6px 14px;background:rgba(255,255,255,.02);display:flex;align-items:center;gap:8px;flex-wrap:wrap;">';
-    h += '<span style="font-size:12px;font-weight:700;color:#e2e8f0;min-width:70px;">'+esc(color)+'</span>';
+    bk += '<div style="padding:6px 14px;background:rgba(255,255,255,.02);display:flex;align-items:center;gap:8px;flex-wrap:wrap;">';
+    bk += '<span style="font-size:12px;font-weight:700;color:#e2e8f0;min-width:70px;">'+esc(color)+'</span>';
     if(edit){
-      h += '<select data-color="'+esc(color)+'" data-field="sat-color" style="flex:1;background:rgba(255,200,0,.1);border:1px solid rgba(255,200,0,.4);border-radius:6px;color:var(--text);padding:3px 6px;font-size:11px;"><option value="">Sin asignar</option>'+satOpts.replace('value="'+(satColorId||'')+'"','value="'+(satColorId||'')+'" selected')+'</select>';
+      bk += '<select data-color="'+esc(color)+'" data-field="sat-color" style="flex:1;background:rgba(255,200,0,.1);border:1px solid rgba(255,200,0,.4);border-radius:6px;color:var(--text);padding:3px 6px;font-size:11px;"><option value="">Sin asignar</option>'+satOpts.replace('value="'+(satColorId||'')+'"','value="'+(satColorId||'')+'" selected')+'</select>';
     } else if(tieneCorteActive){
-      h += '<select data-opid="'+op.id+'" data-color="'+esc(color)+'" onchange="cambiarSateliteColor(this.dataset.opid,this.dataset.color,this.value)" style="flex:1;min-width:0;background:#0d1117;border:1px solid #2d3348;border-radius:5px;color:var(--text);padding:2px 5px;font-size:11px;cursor:pointer;"><option value="">Sin asignar</option>'+satOpts.replace('value="'+(satColorId||'')+'"','value="'+(satColorId||'')+'" selected')+'</select>';
+      if(refNombre){
+        bk += '<select data-opid="'+op.id+'" data-ref="'+esc(refNombre)+'" data-color="'+esc(color)+'" onchange="cambiarSateliteColorRef(this.dataset.opid,this.dataset.ref,this.dataset.color,this.value)" style="flex:1;min-width:0;background:#0d1117;border:1px solid #2d3348;border-radius:5px;color:var(--text);padding:2px 5px;font-size:11px;cursor:pointer;"><option value="">Sin asignar</option>'+satOpts.replace('value="'+(satColorId||'')+'"','value="'+(satColorId||'')+'" selected')+'</select>';
+      } else {
+        bk += '<select data-opid="'+op.id+'" data-color="'+esc(color)+'" onchange="cambiarSateliteColor(this.dataset.opid,this.dataset.color,this.value)" style="flex:1;min-width:0;background:#0d1117;border:1px solid #2d3348;border-radius:5px;color:var(--text);padding:2px 5px;font-size:11px;cursor:pointer;"><option value="">Sin asignar</option>'+satOpts.replace('value="'+(satColorId||'')+'"','value="'+(satColorId||'')+'" selected')+'</select>';
+      }
     } else {
-      h += '<span style="font-size:11px;color:var(--dim);flex:1;">'+esc(getSatNombre(satColorId))+'</span>';
-      if(tieneConfeccion) h += '<button data-opid="'+op.id+'" data-color="'+esc(color)+'" onclick="modalReprogramarSateliteColor(this.dataset.opid,this.dataset.color)" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:#fbbf24;border-radius:4px;padding:2px 5px;cursor:pointer;font-size:9px;" title="Reprogramar taller">↺</button>';
+      bk += '<span style="font-size:11px;color:var(--dim);flex:1;">'+esc(getSatNombre(satColorId))+'</span>';
+      if(tieneConfeccion) bk += '<button data-opid="'+op.id+'" data-color="'+esc(color)+'" onclick="modalReprogramarSateliteColor(this.dataset.opid,this.dataset.color)" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:#fbbf24;border-radius:4px;padding:2px 5px;cursor:pointer;font-size:9px;" title="Reprogramar taller">↺</button>';
     }
-    h += '<span style="font-size:10px;color:var(--green);">'+pctC+'% entregado</span>';
-    h += '</div>';
+    bk += '<span style="font-size:10px;color:var(--green);">'+pctC+'% entregado</span>';
+    bk += '</div>';
 
-    // Colores sin OTs aún — mostrar cantidades planeadas y botón generar
+    // Color sin OTs aún — mostrar cantidades planeadas
     if(otsC.length === 0){
       var tallasConQty = tallasGrid.filter(function(t){ return (_refsCantMap[color+'_'+t]||0)>0; });
-      h += '<div style="padding:8px 14px;border-top:1px solid rgba(255,255,255,.04);">';
+      bk += '<div style="padding:8px 14px;border-top:1px solid rgba(255,255,255,.04);">';
       if(tallasConQty.length){
-        h += '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;">';
+        bk += '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;">';
         tallasConQty.forEach(function(t){
-          h += '<span style="background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.3);border-radius:4px;padding:2px 8px;font-size:11px;color:#a855f7;">'+esc(t)+': '+(_refsCantMap[color+'_'+t]||0)+'</span>';
+          bk += '<span style="background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.3);border-radius:4px;padding:2px 8px;font-size:11px;color:#a855f7;">'+esc(t)+': '+(_refsCantMap[color+'_'+t]||0)+'</span>';
         });
-        h += '</div>';
+        bk += '</div>';
       }
-      h += '<button data-opid="'+op.id+'" onclick="generarOTsParaOP(this.dataset.opid)" style="width:100%;padding:6px;background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.3);color:#a855f7;border-radius:6px;cursor:pointer;font-size:11px;font-weight:700;">✚ Generar OTs para este color</button>';
-      h += '</div>';
+      bk += '<button data-opid="'+op.id+'" onclick="generarOTsParaOP(this.dataset.opid)" style="width:100%;padding:6px;background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.3);color:#a855f7;border-radius:6px;cursor:pointer;font-size:11px;font-weight:700;">✚ Generar OTs para este color</button>';
+      bk += '</div>';
     }
 
     otsC.forEach(function(ot){
-      var dias = diasRestantes(ot.fecha_estimada_entrega);
       if(edit){
-        h += '<div style="padding:8px 14px;border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:8px;">';
-        h += '<span style="font-size:11px;color:var(--dim);min-width:28px;">'+esc(ot.talla||'—')+'</span>';
-        h += '<input type="number" min="0" data-otid="'+ot.id+'" data-field="cantidad" value="'+(ot.cantidad||0)+'" style="width:60px;text-align:center;background:rgba(255,200,0,.1);border:1px solid rgba(255,200,0,.4);border-radius:6px;color:var(--text);padding:3px 5px;font-size:12px;">';
-        h += '<span style="font-size:10px;color:#475569;">uds</span>';
-        h += '</div>';
+        bk += '<div style="padding:8px 14px;border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:8px;">';
+        bk += '<span style="font-size:11px;color:var(--dim);min-width:28px;">'+esc(ot.talla||'—')+'</span>';
+        bk += '<input type="number" min="0" data-otid="'+ot.id+'" data-field="cantidad" value="'+(ot.cantidad||0)+'" style="width:60px;text-align:center;background:rgba(255,200,0,.1);border:1px solid rgba(255,200,0,.4);border-radius:6px;color:var(--text);padding:3px 5px;font-size:12px;">';
+        bk += '<span style="font-size:10px;color:#475569;">uds</span>';
+        bk += '</div>';
       } else if(ot.estado === 'ENTREGADO'){
-        // Fila entregada — solo info, con fecha y días
         var diasEnt = ot.fecha_entrega_real ? Math.round((new Date(hoy()) - new Date(ot.fecha_entrega_real)) / 86400000) : null;
-        var diasOp  = op.fecha_op ? Math.round((new Date(hoy()) - new Date(op.fecha_op)) / 86400000) : null;
-        h += '<div style="padding:6px 14px;border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:8px;">';
-        h += '<span style="font-size:11px;font-weight:600;color:#34d399;min-width:32px;">'+esc(ot.talla||'—')+'</span>';
-        h += badge(ot.estado);
-        h += '<span style="font-size:10px;color:var(--dim);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(getSatNombre(ot.satelite_id))+'</span>';
-        h += '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:1px;opacity:.8;">';
-        h += '<span style="font-size:11px;color:#34d399;font-weight:700;">'+(ot.unidades_entregadas||0)+' uds</span>';
-        if(diasEnt!==null) h += '<span style="font-size:9px;color:#64748b;">hace '+diasEnt+'d</span>';
-        h += '</div>';
-        h += '<button data-otid="'+ot.id+'" onclick="event.stopPropagation();_cambiarEstadoOT(this.dataset.otid)" title="Cambiar estado" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.25);color:#fbbf24;border-radius:5px;padding:3px 7px;cursor:pointer;font-size:10px;font-weight:700;white-space:nowrap;flex-shrink:0;">↩ Estado</button>';
-        h += '</div>';
+        bk += '<div style="padding:6px 14px;border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:8px;">';
+        bk += '<span style="font-size:11px;font-weight:600;color:#34d399;min-width:32px;">'+esc(ot.talla||'—')+'</span>';
+        bk += badge(ot.estado);
+        bk += '<span style="font-size:10px;color:var(--dim);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(getSatNombre(ot.satelite_id))+'</span>';
+        bk += '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:1px;opacity:.8;">';
+        bk += '<span style="font-size:11px;color:#34d399;font-weight:700;">'+(ot.unidades_entregadas||0)+' uds</span>';
+        if(diasEnt!==null) bk += '<span style="font-size:9px;color:#64748b;">hace '+diasEnt+'d</span>';
+        bk += '</div>';
+        bk += '<button data-otid="'+ot.id+'" onclick="event.stopPropagation();_cambiarEstadoOT(this.dataset.otid)" title="Cambiar estado" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.25);color:#fbbf24;border-radius:5px;padding:3px 7px;cursor:pointer;font-size:10px;font-weight:700;white-space:nowrap;flex-shrink:0;">↩ Estado</button>';
+        bk += '</div>';
       } else {
-        // Fila activa — input siempre visible
-        var esPendCorte = ot.estado==='PENDIENTE_CORTAR'||ot.estado==='CORTE_POR_ALISTAR';
-        var esConfeccion = ot.estado==='EN_CONFECCION'||ot.estado==='ASIGNADO'||ot.estado==='NOVEDAD';
         var yaEnt = ot.unidades_entregadas || 0;
         var rowBg = ot.estado==='NOVEDAD' ? 'rgba(239,68,68,.06)' : 'transparent';
-        h += '<div style="padding:6px 14px;border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:6px;background:'+rowBg+';">';
-        h += '<span style="font-size:12px;font-weight:700;color:var(--cyan);min-width:30px;">'+esc(ot.talla||'—')+'</span>';
-        h += badge(ot.estado);
-        h += '<span style="flex:1;"></span>';
-        // Input entrega inline + botón confirmar
-        h += '<input type="number" id="ent-'+ot.id+'" min="0" max="'+ot.cantidad+'" placeholder="0" data-otid="'+ot.id+'" data-max="'+ot.cantidad+'" class="ent-masiva-uds" value="'+(yaEnt>0?yaEnt:'')+'" style="width:50px;text-align:center;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.3);border-radius:5px;color:var(--text);padding:3px 4px;font-size:12px;font-weight:700;" oninput="this.style.borderColor=this.value>0?\'#34d399\':\'rgba(52,211,153,.3)\'">';
-        h += '<span style="font-size:9px;color:#475569;">/ '+ot.cantidad+'</span>';
-        h += '<button data-otid="'+ot.id+'" onclick="confirmarEntregaInline(this.dataset.otid)" style="background:rgba(52,211,153,.2);border:1px solid rgba(52,211,153,.5);color:#34d399;border-radius:5px;padding:3px 8px;cursor:pointer;font-size:11px;font-weight:700;white-space:nowrap;">✓</button>';
-        h += '<button data-otid="'+ot.id+'" onclick="event.stopPropagation();_cambiarEstadoOT(this.dataset.otid)" title="Cambiar estado" style="background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);color:#fbbf24;border-radius:5px;padding:3px 6px;cursor:pointer;font-size:11px;flex-shrink:0;">↩</button>';
-        h += '</div>';
+        bk += '<div style="padding:6px 14px;border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:6px;background:'+rowBg+';">';
+        bk += '<span style="font-size:12px;font-weight:700;color:var(--cyan);min-width:30px;">'+esc(ot.talla||'—')+'</span>';
+        bk += badge(ot.estado);
+        bk += '<span style="flex:1;"></span>';
+        bk += '<input type="number" id="ent-'+ot.id+'" min="0" max="'+ot.cantidad+'" placeholder="0" data-otid="'+ot.id+'" data-max="'+ot.cantidad+'" class="ent-masiva-uds" value="'+(yaEnt>0?yaEnt:'')+'" style="width:50px;text-align:center;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.3);border-radius:5px;color:var(--text);padding:3px 4px;font-size:12px;font-weight:700;" oninput="this.style.borderColor=this.value>0?\'#34d399\':\'rgba(52,211,153,.3)\'">';
+        bk += '<span style="font-size:9px;color:#475569;">/ '+ot.cantidad+'</span>';
+        bk += '<button data-otid="'+ot.id+'" onclick="confirmarEntregaInline(this.dataset.otid)" style="background:rgba(52,211,153,.2);border:1px solid rgba(52,211,153,.5);color:#34d399;border-radius:5px;padding:3px 8px;cursor:pointer;font-size:11px;font-weight:700;white-space:nowrap;">✓</button>';
+        bk += '<button data-otid="'+ot.id+'" onclick="event.stopPropagation();_cambiarEstadoOT(this.dataset.otid)" title="Cambiar estado" style="background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);color:#fbbf24;border-radius:5px;padding:3px 6px;cursor:pointer;font-size:11px;flex-shrink:0;">↩</button>';
+        bk += '</div>';
       }
     });
-    h += '</div>';
-  });
+    bk += '</div>';
+    return bk;
+  }
+
+  var _multiRef = (op.referencias||[]).length > 1;
+
+  if(_multiRef && otsOp.length > 0){
+    // ── Agrupación REFERENCIA → COLOR → TALLAS ──────────────────────────────
+    (op.referencias||[]).forEach(function(ref, ri){
+      var refNombre = ref.nombre || '';
+      // Header de referencia
+      h += '<div style="padding:8px 14px 6px;background:rgba(6,182,212,.06);border-bottom:1px solid rgba(6,182,212,.2);display:flex;align-items:center;gap:8px;">';
+      h += '<div style="font-size:9px;font-weight:800;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;background:rgba(6,182,212,.15);border:1px solid rgba(6,182,212,.3);border-radius:4px;padding:2px 6px;white-space:nowrap;">REF '+(ri+1)+'</div>';
+      h += '<div style="flex:1;min-width:0;">';
+      h += '<div style="font-size:12px;font-weight:700;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(refNombre)+'</div>';
+      h += '<div style="font-size:10px;color:#64748b;">'+esc(ref.cat||'—')+'</div>';
+      h += '</div>';
+      h += '</div>';
+      // Colores de esta referencia
+      (ref.colores||[]).forEach(function(color){
+        var otsRC = otsOp.filter(function(o){ return (o.nombre||'')===refNombre && (o.color||'—')===color; });
+        otsRC.sort(function(a,b){ return ESTADO_ORDER.indexOf(a.estado)-ESTADO_ORDER.indexOf(b.estado); });
+        h += _renderColorBlock(color, otsRC, refNombre);
+      });
+    });
+  } else {
+    // ── Agrupación original por COLOR (OP de una sola referencia) ───────────
+    var coloresOrdenados = coloresGrid;
+    coloresOrdenados.forEach(function(color){
+      var otsC = _colorOTs(color).sort(function(a,b){ return ESTADO_ORDER.indexOf(a.estado)-ESTADO_ORDER.indexOf(b.estado); });
+      h += _renderColorBlock(color, otsC, null);
+    });
+  }
 
   h += '</div>';
   if(edit){
@@ -9464,6 +9492,21 @@ async function cambiarSateliteColor(opId, color, nuevoSatId){
   saveLocal();
   var ok = await guardarArchivo('ots', {ots: DB.ots});
   if(ok){ toast('Taller asignado: '+satNombre+' ('+otsColor.length+' OTs)', 'success'); renderPage('ops'); }
+}
+
+async function cambiarSateliteColorRef(opId, refNombre, color, nuevoSatId){
+  var otsColor = DB.ots.filter(function(o){ return o.op_id===opId && (o.nombre||'')===refNombre && o.color===color; });
+  if(!otsColor.length) return;
+  var satNombre = getSatNombre(nuevoSatId);
+  otsColor.forEach(function(ot){
+    ot.satelite_id = nuevoSatId || null;
+    if(!ot.historial) ot.historial = [];
+    ot.historial.push({fecha: new Date().toISOString(), accion: 'Taller asignado: '+satNombre, user: getUser()});
+  });
+  _logEvt('asignar_satelite', {op_id: opId, ref: refNombre, color: color, satelite: satNombre});
+  saveLocal();
+  var ok = await guardarArchivo('ots', {ots: DB.ots});
+  if(ok){ toast('Taller: '+satNombre+' → '+esc(refNombre)+' / '+esc(color)+' ('+otsColor.length+' OTs)', 'success'); renderPage('ops'); }
 }
 
 function modalReprogramarSateliteColor(opId, color){
