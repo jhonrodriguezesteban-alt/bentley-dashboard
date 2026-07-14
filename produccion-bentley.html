@@ -3175,7 +3175,7 @@ function fmtOpId(id){
 
 // Derivar estado Kanban de un sub-grupo (OP+color) a partir de sus OTs
 // Nivel de progreso para comparar estados — más alto = más avanzado
-var _ESTADO_PROGRESO = {POR_REVISAR:0,PENDIENTE_CORTAR:1,CORTE_POR_ALISTAR:2,EN_CONFECCION:3,NOVEDAD:3,ALISTAMIENTO:4,ARCHIVADO:5};
+var _ESTADO_PROGRESO = {POR_REVISAR:0,PENDIENTE_CORTAR:1,CORTE_POR_ALISTAR:2,EN_CONFECCION:3,NOVEDAD:3,ALISTAMIENTO:4,PAGO_PENDIENTE:5,ARCHIVADO:6};
 
 // Devuelve el estado efectivo: si el derivado de OTs es más avanzado que el override manual, gana el derivado.
 // Esto evita que un subg_estados stale bloquee OPs que ya avanzaron.
@@ -3191,9 +3191,9 @@ function _subgEstadoDerivado(otsColor){
   if(!otsColor.length) return 'POR_REVISAR';
   if(otsColor.every(function(o){ return o.estado==='POR_REVISAR'; })) return 'POR_REVISAR';
   if(otsColor.some(function(o){ return o.estado==='NOVEDAD'; })) return 'NOVEDAD';
-  if(otsColor.every(function(o){ return o.estado==='ENTREGADO'; })) return 'ARCHIVADO';
+  if(otsColor.every(function(o){ return o.estado==='ENTREGADO'||o.estado==='PAGO_PENDIENTE'; })) return 'ARCHIVADO';
   // OTs en ALISTAMIENTO individual = proceso de entrega, equivale a completado a nivel de grupo
-  if(otsColor.every(function(o){ return o.estado==='ENTREGADO'||o.estado==='ALISTAMIENTO'; })) return 'ALISTAMIENTO';
+  if(otsColor.every(function(o){ return o.estado==='ENTREGADO'||o.estado==='ALISTAMIENTO'||o.estado==='PAGO_PENDIENTE'; })) return 'ALISTAMIENTO';
   if(otsColor.some(function(o){ return o.estado==='EN_CONFECCION'||o.estado==='ALISTAMIENTO'; })) return 'EN_CONFECCION';
   if(otsColor.some(function(o){ return o.estado==='CORTE_POR_ALISTAR'||o.estado==='ASIGNADO'; })) return 'CORTE_POR_ALISTAR';
   return 'PENDIENTE_CORTAR';
@@ -9433,10 +9433,17 @@ async function pasarOPAPago(opId, color){
       }
     }
   });
+  // Si TODAS las OTs de la OP quedaron en PAGO_PENDIENTE o ENTREGADO → marcar OP como PAGO_PENDIENTE
+  var todosOTs = DB.ots.filter(function(o){ return o.op_id===opId; });
+  var todosCompletos = todosOTs.length > 0 && todosOTs.every(function(o){
+    return o.estado==='PAGO_PENDIENTE'||o.estado==='ENTREGADO'||o.estado==='ARCHIVADO';
+  });
+  if(todosCompletos) op.estado_op = 'PAGO_PENDIENTE';
   guardarCostosMO();
   saveLocal(); updateNovBadge();
-  var ok = await guardarArchivo('ots', {ots: DB.ots});
-  if(ok){ toast(fmtOpId(opId)+' pasado a Pago · Ver en Pagos', 'success'); renderPage('ops'); }
+  var okOTs = await guardarArchivo('ots', {ots: DB.ots});
+  if(todosCompletos) await guardarArchivo('ops', {ops: DB.ops});
+  if(okOTs){ toast(fmtOpId(opId)+' pasado a Pago · Ver en módulo Pagos', 'success'); renderPage('ops'); }
 }
 
 function activarModoEntrega(opId){ _opModoEntrega = opId; renderPage('ops'); }
