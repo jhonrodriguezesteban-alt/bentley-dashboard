@@ -1588,6 +1588,35 @@ function _mergeArrayData(key, remoteData, localData){
   if(key==='ops')      return {ops:      mergeOps(remoteData.ops||[],      localData.ops||[])};
   if(key==='ots')      return {ots:      mergeById(remoteData.ots||[],      localData.ots||[])};
   if(key==='satelites')return {satelites:mergeById(remoteData.satelites||[],localData.satelites||[])};
+  if(key==='disenos'){
+    // Merge de diseños: kanban_estado más avanzado gana, imagenes = unión por URL
+    var DIS_ORD = ['CON_PROVEEDOR','EN_DISENO_DIGITAL','EN_CORTE_MUESTRA','EN_CONFECCION_MUESTRA','EN_REVISION_GERENCIA','EN_ESCALADO','LISTA_PRODUCCION'];
+    function disProg(st){ var i=DIS_ORD.indexOf(st); return i>=0?i:0; }
+    function unionImagenes(remImgs, locImgs){
+      var seen = {}, res = [];
+      (remImgs||[]).forEach(function(img){ var k=img.url||img.sha||JSON.stringify(img); if(!seen[k]){ seen[k]=1; res.push(img); } });
+      (locImgs||[]).forEach(function(img){ var k=img.url||img.sha||JSON.stringify(img); if(!seen[k]){ seen[k]=1; res.push(img); } });
+      return res;
+    }
+    var remDis = remoteData.disenos||[], locDis = localData.disenos||[];
+    var result = JSON.parse(JSON.stringify(remDis));
+    locDis.forEach(function(locD){
+      var ri = byId(result, locD.id);
+      if(ri >= 0){
+        var remProg = disProg(result[ri].kanban_estado);
+        var locProg = disProg(locD.kanban_estado);
+        var winnerEstado = (remProg >= locProg) ? result[ri].kanban_estado : locD.kanban_estado;
+        var mergedImgs = unionImagenes(result[ri].imagenes, locD.imagenes);
+        // Local gana en campos editables; remoto gana en estado si es más avanzado
+        result[ri] = Object.assign({}, result[ri], locD);
+        result[ri].kanban_estado = winnerEstado;
+        result[ri].imagenes = mergedImgs;
+      } else {
+        result.push(locD); // diseño nuevo creado por este usuario
+      }
+    });
+    return {disenos: result, disenos_cfg: localData.disenos_cfg || remoteData.disenos_cfg || {}};
+  }
   if(key==='bitacora'){
     // Bitácora: unión por ID — append-only, sin conflictos de escritura simultánea
     var evMap = {};
@@ -1620,14 +1649,15 @@ async function guardarArchivo(key, data){
         sha = cur.sha || null;
         // Si el SHA remoto difiere del último que conocemos (otro usuario guardó), hacer merge
         var shaCambio = sha && _fileShas[key] && sha !== _fileShas[key];
-        if((shaCambio || needsMerge) && (key==='ops'||key==='ots'||key==='satelites')){
+        if((shaCambio || needsMerge) && (key==='ops'||key==='ots'||key==='satelites'||key==='disenos')){
           try{
             var remoteRaw = JSON.parse(decodeURIComponent(escape(atob(cur.content.replace(/\n/g,'')))));
             dataToSave = _mergeArrayData(key, remoteRaw, data);
             // Actualizar DB en memoria con el merge para que el siguiente save también sea consistente
-            if(key==='ops')       DB.ops       = dataToSave.ops;
-            else if(key==='ots')  DB.ots       = dataToSave.ots;
+            if(key==='ops')            DB.ops       = dataToSave.ops;
+            else if(key==='ots')       DB.ots       = dataToSave.ots;
             else if(key==='satelites') DB.satelites = dataToSave.satelites;
+            else if(key==='disenos'){  DB.disenos   = dataToSave.disenos; DB.disenos_cfg = dataToSave.disenos_cfg||DB.disenos_cfg; }
             saveLocal();
           }catch(e){ dataToSave = data; }
         }
