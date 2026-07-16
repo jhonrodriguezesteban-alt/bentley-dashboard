@@ -1,28 +1,26 @@
 {
   "eventos": [
     {
-      "id": "evt_1784224352412_slh33",
-      "ts": 1784224352412,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782160552657_bg8wo6gbq",
-      "nombre": "SET SOLOMUN",
-      "categoria": "Conjuntos",
-      "marca": "Bentley Kids",
-      "estado_anterior": "EN_CORTE_MUESTRA",
-      "estado_nuevo": "EN_REVISION_GERENCIA"
-    },
-    {
-      "id": "evt_1784224382410_qiedr",
-      "ts": 1784224382410,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782160736991_yz0txufuq",
-      "nombre": "SET ACTIVE",
-      "categoria": "Conjuntos",
-      "marca": "Bentley Kids",
-      "estado_anterior": "EN_CORTE_MUESTRA",
-      "estado_nuevo": "EN_REVISION_GERENCIA"
+      "id": "evt_1784241261828_413p1",
+      "ts": 1784241261828,
+      "user": "Jefa de Producción",
+      "tipo": "generar_ots",
+      "op_id": "OP-0190",
+      "op_nombre": "CHAQUETA SAN POLOS PILOTO + CAMICHAQUETA SAN POLOS HOMBRE + CHAQUETA ROMPEVIENTOS BK",
+      "categoria": "CHAQUETAS",
+      "total_ots": 24,
+      "total_uds": 480,
+      "colores": [
+        "AZUL OSCURO",
+        "NEGRO",
+        "VERDE MILITAR",
+        "VERDE PINO"
+      ],
+      "referencias": [
+        "CHAQUETA SAN POLOS PILOTO",
+        "CAMICHAQUETA SAN POLOS HOMBRE",
+        "CHAQUETA ROMPEVIENTOS BK"
+      ]
     }
   ]
 }
