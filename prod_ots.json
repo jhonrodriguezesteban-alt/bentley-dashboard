@@ -69374,10 +69374,10 @@
       "satelite_id": "sat_18",
       "fecha_entrega_corte_satelite": null,
       "fecha_estimada_entrega": null,
-      "fecha_entrega_real": "2026-07-16",
-      "unidades_entregadas": 40,
+      "fecha_entrega_real": null,
+      "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "ENTREGADO",
+      "estado": "EN_CONFECCION",
       "nt_corte_satelite": null,
       "nt_ingreso_planta": null,
       "op_effi": null,
@@ -69393,6 +69393,11 @@
         {
           "fecha": "2026-07-16T22:39:27.627Z",
           "accion": "Entrega completa: 40 uds → ENTREGADO",
+          "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-07-16T22:41:17.442Z",
+          "accion": "Estado cambiado: ENTREGADO → EN_CONFECCION. Motivo: error",
           "user": "Jefa de Producción"
         }
       ],
