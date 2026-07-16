@@ -671,6 +671,9 @@ textarea.form-control{resize:vertical;min-height:80px;}
     setTimeout(_actualizarBtnNotif, 1500);
   });
 </script>
+<!-- Firebase Realtime Database SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
 </head>
 <body>
 
@@ -978,6 +981,96 @@ textarea.form-control{resize:vertical;min-height:80px;}
 
 // ─── Token (obfuscated, XOR 57) ───────────────────────────────────────────────
 var _GHE = '5e514966524e5f6168087d4e7f6b080d70607d6d48545c0d0c724953755c727f5100085d0e537d78';
+// ── Firebase Realtime Database ──────────────────────────────────────────────
+var _fbConfig = {
+  apiKey: "AIzaSyC8jbUj3zvN23iPXmKz8EkEYr63dpeuaYA",
+  authDomain: "bentley-produccion.firebaseapp.com",
+  databaseURL: "https://bentley-produccion-default-rtdb.firebaseio.com",
+  projectId: "bentley-produccion",
+  storageBucket: "bentley-produccion.firebasestorage.app",
+  messagingSenderId: "1013098760950",
+  appId: "1:1013098760950:web:27c093d7e16a3c1085bad7"
+};
+var _fbApp, _fbDb;
+try { _fbApp = firebase.initializeApp(_fbConfig); _fbDb = firebase.database(); } catch(e){ console.warn('Firebase init:', e); }
+var FB_ROOT = 'bentley-prod';
+var _fbOwnWrite = {}; // evita re-render cuando el propio usuario acaba de guardar
+
+async function _fbSet(key, data){
+  if(!_fbDb) return;
+  try { await _fbDb.ref(FB_ROOT+'/'+key).set(data); } catch(e){ console.warn('FB write '+key, e); }
+}
+
+async function _fbGet(key){
+  if(!_fbDb) return null;
+  try { var s = await _fbDb.ref(FB_ROOT+'/'+key).get(); return s.exists() ? s.val() : null; } catch(e){ return null; }
+}
+
+function _fbApplyKey(key, d){
+  if(!d) return;
+  if(key==='ops')       { DB.ops = d.ops||[]; }
+  else if(key==='ots')  { DB.ots = d.ots||[]; }
+  else if(key==='disenos') { DB.disenos = d.disenos||[]; DB.disenos_cfg = d.disenos_cfg||{}; }
+  else if(key==='logistica') { if(!DB.logistica) DB.logistica={tareas:[]}; DB.logistica.tareas = d.tareas||[]; }
+  else if(key==='satelites') { DB.satelites = d.satelites||[]; }
+  else if(key==='costos_mo') { DB.costos_mo = {precios:d.precios||[], pagos:d.pagos||[]}; }
+  else if(key==='bitacora')  { DB.bitacora = {eventos:d.eventos||[]}; }
+  else if(key==='cronograma'){ DB.cronograma = d.cronograma||[]; }
+  else if(key==='prog_ops')  { DB.prog_ops = d.ops_plan||[]; }
+  else if(key==='planeacion'){ DB.planeacion = {meses:d.meses||{}}; }
+  else if(key==='sim')       { DB.sim={active:d.active||[],data:d.data||{}}; _simActive=DB.sim.active; _simData=DB.sim.data; }
+  else if(key==='usuarios')  { DB.usuarios = d.usuarios||[]; }
+  else if(key==='costeo')    { DB.costeo = d; }
+}
+
+async function _fbMigrarSiVacio(){
+  if(!_fbDb) return;
+  try {
+    var snap = await _fbDb.ref(FB_ROOT+'/ops').get();
+    if(snap.exists() && (snap.val().ops||[]).length > 0) return; // ya hay datos
+    // Firebase vacío — migrar todo desde el DB en memoria (recién cargado de GitHub)
+    var migrar = {
+      ops:       {ops: DB.ops},
+      ots:       {ots: DB.ots},
+      disenos:   {disenos: DB.disenos, disenos_cfg: DB.disenos_cfg||{}},
+      logistica: {tareas: (DB.logistica||{}).tareas||[]},
+      satelites: {satelites: DB.satelites},
+      costos_mo: DB.costos_mo||{precios:[],pagos:[]},
+      bitacora:  DB.bitacora||{eventos:[]},
+      cronograma:{cronograma: DB.cronograma||[]},
+      prog_ops:  {ops_plan: DB.prog_ops||[]},
+      planeacion:{meses: (DB.planeacion||{}).meses||{}},
+      sim:       {active:(DB.sim||{}).active||[], data:(DB.sim||{}).data||{}},
+      costeo:    DB.costeo||{mp:[],servicios:[],puestos:[],tarifas_cif:[],params:{},recetas:[],precios_pt:[]}
+    };
+    var promises = Object.keys(migrar).map(function(k){ return _fbDb.ref(FB_ROOT+'/'+k).set(migrar[k]); });
+    await Promise.all(promises);
+    console.log('✅ Datos migrados a Firebase correctamente');
+    toast('Firebase sincronizado — sync en tiempo real activo ⚡', 'success');
+  } catch(e){ console.warn('FB migración:', e); }
+}
+
+var _fbListenersActive = false;
+function _iniciarListenersFirebase(){
+  if(!_fbDb || _fbListenersActive) return;
+  _fbListenersActive = true;
+  var KEYS = ['ops','ots','disenos','logistica','satelites','costos_mo','bitacora','cronograma','prog_ops','planeacion','sim','usuarios','costeo'];
+  KEYS.forEach(function(key){
+    _fbDb.ref(FB_ROOT+'/'+key).on('value', function(snap){
+      if(_fbOwnWrite[key]) return; // ignorar el echo de nuestro propio guardado
+      var d = snap.val();
+      if(!d) return;
+      _fbApplyKey(key, d);
+      saveLocal();
+      updateNovBadge();
+      renderPage(currentPage);
+      var si = document.getElementById('sync-time');
+      if(si){ si.textContent = '⚡ ' + new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}); si.style.color = 'var(--cyan)'; setTimeout(function(){ if(si) si.style.color=''; },2000); }
+    });
+  });
+}
+// ── Fin Firebase ─────────────────────────────────────────────────────────────
+
 var GT = (function(){
   // Decode embedded token
   return _GHE ? _GHE.match(/.{2}/g).map(function(h){return String.fromCharCode(parseInt(h,16)^57);}).join('') : '';
@@ -1681,6 +1774,10 @@ async function guardarArchivo(key, data){
         _saving[key] = false;
         // Broadcast instantáneo a otras pestañas del mismo dispositivo
         if(_bc) try{ _bc.postMessage({type:'db_update', key:key, data: key==='ops'?DB.ops : key==='ots'?DB.ots : key==='satelites'?DB.satelites : key==='disenos'?{disenos:DB.disenos,disenos_cfg:DB.disenos_cfg} : key==='prog_ops'?DB.prog_ops : DB.costos_mo}); }catch(e){}
+        // ── Mirror a Firebase para sync en tiempo real ──────────────────────
+        _fbOwnWrite[key] = true;
+        _fbSet(key, dataToSave).then(function(){ setTimeout(function(){ _fbOwnWrite[key]=false; }, 2000); });
+        // ────────────────────────────────────────────────────────────────────
         var si = document.getElementById('sync-time');
         if(si){ si.textContent = '✓ Sync ' + new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}); si.style.color = 'var(--green)'; }
         return true;
@@ -1856,8 +1953,11 @@ async function _opSyncTick(){
   }
 }
 function iniciarAutoSync(){
+  // Firebase listeners — sync en tiempo real (milisegundos)
+  _iniciarListenersFirebase();
+  // Polling GitHub como respaldo (reducido a 60s, Firebase es el canal principal)
   if(_autoSyncInterval) clearInterval(_autoSyncInterval);
-  _autoSyncInterval = setInterval(_autoSyncTick, 30000);
+  _autoSyncInterval = setInterval(_autoSyncTick, 60000);
   if(_fastSyncInterval) clearInterval(_fastSyncInterval);
   _fastSyncSha = null;
   _fastSyncInterval = setInterval(_fastSyncTick, 2000); // diseños cada 2s con ETag
@@ -2052,6 +2152,9 @@ async function cargarDatos(){
     // Reparar silenciosamente estados Kanban stale al cargar datos frescos
     try { await _repararSubgEstados(true); } catch(e){}
     saveLocal();
+    // ── Migrar datos a Firebase si está vacío (primera vez) ─────────────────
+    _fbMigrarSiVacio();
+    // ────────────────────────────────────────────────────────────────────────
     var msg = 'Datos cargados: ' + DB.ops.length + ' OPs, ' + DB.ots.length + ' OTs, ' + CATALOGO.length + ' refs SKU';
     toast(msg, 'success');
   } catch(e){
