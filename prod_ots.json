@@ -68899,6 +68899,11 @@
           "fecha": "2026-07-16T22:37:43.220Z",
           "accion": "Entrega completa: 20 uds → ENTREGADO",
           "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-07-16T22:37:53.120Z",
+          "accion": "Entrega completa: 20 uds → ENTREGADO",
+          "user": "Jefa de Producción"
         }
       ],
       "created_at": "2026-07-16",
@@ -68961,10 +68966,10 @@
       "satelite_id": "sat_10",
       "fecha_entrega_corte_satelite": null,
       "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
-      "unidades_entregadas": 0,
+      "fecha_entrega_real": "2026-07-16",
+      "unidades_entregadas": 15,
       "unidades_novedad": 0,
-      "estado": "CORTE_POR_ALISTAR",
+      "estado": "ENTREGADO",
       "nt_corte_satelite": null,
       "nt_ingreso_planta": null,
       "op_effi": null,
@@ -68976,10 +68981,16 @@
           "fecha": "2026-07-16T22:35:34.658Z",
           "accion": "Taller asignado: YURI VIVIANA PINILLA",
           "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-07-16T22:38:00.678Z",
+          "accion": "Entrega completa: 15 uds → ENTREGADO",
+          "user": "Jefa de Producción"
         }
       ],
       "created_at": "2026-07-16",
-      "created_by": "Jefa de Producción"
+      "created_by": "Jefa de Producción",
+      "total_costo_mo": 17265
     },
     {
       "id": "id_1784241261828_wrwoda0ug",
