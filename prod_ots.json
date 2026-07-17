@@ -45170,12 +45170,17 @@
       "kpi_dias_programacion": null,
       "cumplió_fecha": false,
       "motivo_incumplimiento": "",
-      "estado": "PENDIENTE_CORTAR",
+      "estado": "EN_CONFECCION",
       "cortador": "CARVAJAL",
       "historial": [
         {
           "fecha": "2026-07-07T19:18:53.492Z",
           "accion": "Taller asignado: SONIA VARGAS",
+          "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-07-17T14:28:32.819Z",
+          "accion": "Estado cambiado: PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
           "user": "Jefa de Producción"
         }
       ],
