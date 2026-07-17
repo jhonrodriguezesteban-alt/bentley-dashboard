@@ -1727,6 +1727,10 @@ function _mergeArrayData(key, remoteData, localData){
 async function guardarArchivo(key, data){
   if(_saving[key]){ return false; }
   _saving[key] = true;
+  // Escribir a Firebase PRIMERO — visible para todos los usuarios al instante,
+  // independientemente del estado de GitHub API
+  _fbOwnWrite[key] = true;
+  _fbSet(key, data).then(function(){ setTimeout(function(){ _fbOwnWrite[key]=false; }, 2000); });
   var tk = GT || localStorage.getItem('bentley_gh_token') || '';
   if(!tk){ toast('Sin token GitHub', 'error'); _saving[key]=false; return false; }
   var path = FILES[key];
@@ -2158,11 +2162,47 @@ async function cargarDatos(){
     var msg = 'Datos cargados: ' + DB.ops.length + ' OPs, ' + DB.ots.length + ' OTs, ' + CATALOGO.length + ' refs SKU';
     toast(msg, 'success');
   } catch(e){
-    // fallback local
-    var local = localStorage.getItem('bentley_prod_db');
-    if(local){ var parsed = JSON.parse(local); DB = parsed; }
-    else { seedSatelites(); }
-    toast('Sin conexión — usando datos locales', 'warning');
+    // Intentar Firebase antes de caer a localStorage
+    var fbLoaded = false;
+    if(_fbDb){
+      try {
+        var fbOps = await _fbGet('ops');
+        if(fbOps && (fbOps.ops||[]).length > 0){
+          DB.ops = fbOps.ops || [];
+          var fbOts = await _fbGet('ots');
+          if(fbOts) DB.ots = fbOts.ots || [];
+          var fbDis = await _fbGet('disenos');
+          if(fbDis){ DB.disenos = fbDis.disenos||[]; DB.disenos_cfg = fbDis.disenos_cfg||{}; }
+          var fbLog = await _fbGet('logistica');
+          if(fbLog) DB.logistica = {tareas: fbLog.tareas||[]};
+          var fbSat = await _fbGet('satelites');
+          if(fbSat) DB.satelites = fbSat.satelites||[];
+          var fbCron = await _fbGet('cronograma');
+          if(fbCron) DB.cronograma = fbCron.cronograma||[];
+          var fbPlan = await _fbGet('planeacion');
+          if(fbPlan) DB.planeacion = {meses: fbPlan.meses||{}};
+          var fbBit = await _fbGet('bitacora');
+          if(fbBit) DB.bitacora = {eventos: fbBit.eventos||[]};
+          var fbCosteo = await _fbGet('costeo');
+          if(fbCosteo) DB.costeo = fbCosteo;
+          var fbCmo = await _fbGet('costos_mo');
+          if(fbCmo) DB.costos_mo = {precios: fbCmo.precios||[], pagos: fbCmo.pagos||[]};
+          var fbProg = await _fbGet('prog_ops');
+          if(fbProg) DB.prog_ops = fbProg.ops_plan||[];
+          if(!DB.satelites || DB.satelites.length === 0) seedSatelites();
+          try { await _repararSubgEstados(true); } catch(re){}
+          saveLocal();
+          fbLoaded = true;
+          toast('GitHub no disponible — datos cargados desde Firebase ⚡', 'info');
+        }
+      } catch(fe){}
+    }
+    if(!fbLoaded){
+      var local = localStorage.getItem('bentley_prod_db');
+      if(local){ try { var parsed = JSON.parse(local); DB = parsed; } catch(pe){} }
+      else { seedSatelites(); }
+      toast('Sin conexión — usando datos locales', 'warning');
+    }
   }
   if(dlEl){ dlEl.style.display='none'; }
   updateNovBadge();
