@@ -2193,7 +2193,9 @@ async function cargarDatos(){
           try { await _repararSubgEstados(true); } catch(re){}
           saveLocal();
           fbLoaded = true;
-          toast('GitHub no disponible — datos cargados desde Firebase ⚡', 'info');
+          // Solo actualizar el indicador de sync, sin toast alarmante
+          var si = document.getElementById('sync-time');
+          if(si){ si.textContent = '⚡ Firebase'; si.style.color = '#38bdf8'; }
         }
       } catch(fe){}
     }
