@@ -63971,8 +63971,8 @@
       "fecha_entrega_corte_satelite": null,
       "fecha_estimada_entrega": null,
       "fecha_entrega_real": "2026-07-18",
-      "unidades_entregadas": 12,
-      "unidades_novedad": 4,
+      "unidades_entregadas": 16,
+      "unidades_novedad": 0,
       "unidades_por_llegar": 16,
       "nt_corte_satelite": null,
       "nt_ingreso_planta": null,
@@ -63984,7 +63984,7 @@
       "kpi_dias_programacion": null,
       "cumplió_fecha": false,
       "motivo_incumplimiento": "",
-      "estado": "NOVEDAD",
+      "estado": "ENTREGADO",
       "cortador": "CARVAJAL",
       "historial": [
         {
@@ -63996,13 +63996,18 @@
           "fecha": "2026-07-18T14:42:56.625Z",
           "accion": "Entrega parcial: 12 uds, 4 pendientes → NOVEDAD",
           "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-07-18T14:43:02.480Z",
+          "accion": "Entrega completa: 16 uds → ENTREGADO",
+          "user": "Jefa de Producción"
         }
       ],
       "notas": "",
       "created_at": "2026-05-25",
       "created_by": "migrado_matriz",
       "migrado": true,
-      "total_costo_mo": 13860
+      "total_costo_mo": 18480
     },
     {
       "id": "OT-auto-1387",
