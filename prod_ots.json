@@ -63811,8 +63811,8 @@
       "satelite_id": "sat_10",
       "fecha_entrega_corte_satelite": null,
       "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
-      "unidades_entregadas": 0,
+      "fecha_entrega_real": "2026-07-18",
+      "unidades_entregadas": 12,
       "unidades_novedad": 0,
       "unidades_por_llegar": 12,
       "nt_corte_satelite": null,
@@ -63825,19 +63825,25 @@
       "kpi_dias_programacion": null,
       "cumplió_fecha": false,
       "motivo_incumplimiento": "",
-      "estado": "PENDIENTE_CORTAR",
+      "estado": "ENTREGADO",
       "cortador": "CARVAJAL",
       "historial": [
         {
           "fecha": "2026-07-04T16:25:23.945Z",
           "accion": "Taller asignado: YURI VIVIANA PINILLA",
           "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-07-18T14:42:36.024Z",
+          "accion": "Entrega completa: 12 uds → ENTREGADO",
+          "user": "Jefa de Producción"
         }
       ],
       "notas": "",
       "created_at": "2026-05-25",
       "created_by": "migrado_matriz",
-      "migrado": true
+      "migrado": true,
+      "total_costo_mo": 13860
     },
     {
       "id": "OT-auto-1384",
@@ -63858,8 +63864,8 @@
       "satelite_id": "sat_10",
       "fecha_entrega_corte_satelite": null,
       "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
-      "unidades_entregadas": 0,
+      "fecha_entrega_real": "2026-07-18",
+      "unidades_entregadas": 16,
       "unidades_novedad": 0,
       "unidades_por_llegar": 16,
       "nt_corte_satelite": null,
@@ -63872,19 +63878,25 @@
       "kpi_dias_programacion": null,
       "cumplió_fecha": false,
       "motivo_incumplimiento": "",
-      "estado": "PENDIENTE_CORTAR",
+      "estado": "ENTREGADO",
       "cortador": "CARVAJAL",
       "historial": [
         {
           "fecha": "2026-07-04T16:25:23.945Z",
           "accion": "Taller asignado: YURI VIVIANA PINILLA",
           "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-07-18T14:42:43.548Z",
+          "accion": "Entrega completa: 16 uds → ENTREGADO",
+          "user": "Jefa de Producción"
         }
       ],
       "notas": "",
       "created_at": "2026-05-25",
       "created_by": "migrado_matriz",
-      "migrado": true
+      "migrado": true,
+      "total_costo_mo": 18480
     },
     {
       "id": "OT-auto-1385",
