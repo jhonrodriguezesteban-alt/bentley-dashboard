@@ -64413,12 +64413,17 @@
       "kpi_dias_programacion": null,
       "cumplió_fecha": false,
       "motivo_incumplimiento": "",
-      "estado": "PENDIENTE_CORTAR",
+      "estado": "EN_CONFECCION",
       "cortador": "CARVAJAL",
       "historial": [
         {
           "fecha": "2026-07-16T19:39:33.291Z",
           "accion": "Taller asignado: YURI VIVIANA PINILLA",
+          "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-07-18T14:45:49.610Z",
+          "accion": "Estado cambiado: PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
           "user": "Jefa de Producción"
         }
       ],
