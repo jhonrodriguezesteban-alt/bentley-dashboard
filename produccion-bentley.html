@@ -6068,7 +6068,9 @@ function disPrioNorm(p){ var n=parseInt(p)||3; return n>=3?3:n<=1?1:2; }
 function setPrioDis(id, prio){
   var d=(DB.disenos||[]).find(function(x){return x.id===id;});
   if(!d) return;
+  var oldPrio = d.prioridad;
   d.prioridad = prio;
+  _logEvt('diseno_prioridad', {diseno_id:id, nombre:d.nombre, categoria:d.categoria, prio_anterior:oldPrio, prio_nueva:prio});
   saveLocal();
   guardarArchivo('disenos',{disenos:DB.disenos,disenos_cfg:DB.disenos_cfg}).then(function(ok){ if(!ok) saveLocal(); });
   renderPage('diseno');
@@ -6511,7 +6513,12 @@ function moverDisenoKanban(id, dir){
   var idx = DIS_KANBAN.findIndex(function(c){ return c.k===(d.kanban_estado||'EN_DISENO_DIGITAL'); });
   var ni = idx+dir;
   if(ni<0||ni>=DIS_KANBAN.length) return;
+  var oldEstado = d.kanban_estado;
   d.kanban_estado = DIS_KANBAN[ni].k;
+  _logEvt('estado_diseno', {
+    diseno_id: id, nombre: d.nombre, categoria: d.categoria, marca: d.marca,
+    estado_anterior: oldEstado, estado_nuevo: d.kanban_estado
+  });
   guardarDisenos(); renderPage('diseno');
 }
 function moverDisenoAProduccion(id){
@@ -6573,14 +6580,18 @@ function cambiarEstadoDiseno(id, nuevoEstado){
 function cambiarRespDiseno(id, nuevoResp){
   var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
   if(!d || d.responsable === nuevoResp) return;
+  var oldResp = d.responsable;
   d.responsable = nuevoResp;
+  _logEvt('diseno_responsable', {diseno_id:id, nombre:d.nombre, categoria:d.categoria, resp_anterior:oldResp, resp_nuevo:nuevoResp});
   saveLocal(); guardarDisenos(); renderPage('diseno');
 }
 
 function setTelaDis(id, estado){
   var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
   if(!d) return;
+  var oldTela = d.tela_estado;
   d.tela_estado = estado;
+  _logEvt('diseno_tela', {diseno_id:id, nombre:d.nombre, categoria:d.categoria, tela_anterior:oldTela, tela_nueva:estado});
   if(estado==='sin_tela'||estado==='en_busqueda') d.tela_nota = '';
   saveLocal(); guardarDisenos();
   if(_modalCatReturn){
@@ -12595,7 +12606,9 @@ function exportarBitacoraCSV(){
     kanban_color:'Movimiento Kanban', estado_ot:'Cambio estado OT',
     crear_op:'OP creada', generar_ots:'OTs generadas',
     asignar_satelite:'Asignación a taller', separar_refs:'Separación de OP',
-    estado_diseno:'Avance diseño', logistica_tarea:'Tarea logística'
+    estado_diseno:'Avance diseño', logistica_tarea:'Tarea logística',
+    diseno_prioridad:'Cambio prioridad diseño', diseno_responsable:'Cambio responsable diseño',
+    diseno_tela:'Asignación tela diseño'
   };
   var _el = {
     POR_REVISAR:'Por Revisar', PENDIENTE_CORTAR:'Pendiente Cortar',
@@ -12725,7 +12738,8 @@ function renderBitacora(){
   var _tipoColor = {
     kanban_color:'#0a84ff', estado_ot:'#38bdf8', crear_op:'#a855f7',
     generar_ots:'#22c55e', asignar_satelite:'#f97316', separar_refs:'#eab308',
-    estado_diseno:'#ec4899', logistica_tarea:'#64748b'
+    estado_diseno:'#ec4899', logistica_tarea:'#64748b',
+    diseno_prioridad:'#fbbf24', diseno_responsable:'#a78bfa', diseno_tela:'#34d399'
   };
   var _estadoLabel = {
     POR_REVISAR:'Por Revisar', PENDIENTE_CORTAR:'Pendiente Cortar',
@@ -12895,6 +12909,20 @@ function renderBitacora(){
         if(e.destino) detalle = '📍 '+esc(e.destino);
         if(e.tipo_tarea) detalle += (detalle?' · ':'')+esc(e.tipo_tarea);
         if(e.fecha && e.fecha!==_bitFiltroFecha) detalle += (detalle?' · ':'')+'Para el '+fmtDate(e.fecha);
+      } else if(e.tipo==='diseno_prioridad'){
+        desc = 'Diseño <strong>'+esc(e.nombre)+'</strong>';
+        if(e.categoria) desc += ' <span style="font-size:10px;color:#475569;">('+esc(e.categoria)+')</span>';
+        var pLabels = {1:'P1',2:'P2',3:'P3'};
+        detalle = (pLabels[e.prio_anterior]||e.prio_anterior||'—')+' → <span style="color:#fbbf24;font-weight:700;">'+(pLabels[e.prio_nueva]||e.prio_nueva)+'</span>';
+      } else if(e.tipo==='diseno_responsable'){
+        desc = 'Diseño <strong>'+esc(e.nombre)+'</strong>';
+        if(e.categoria) desc += ' <span style="font-size:10px;color:#475569;">('+esc(e.categoria)+')</span>';
+        detalle = esc(e.resp_anterior||'—')+' → <span style="color:#a78bfa;font-weight:700;">'+esc(e.resp_nuevo)+'</span>';
+      } else if(e.tipo==='diseno_tela'){
+        var telaLabels = {sin_tela:'Sin tela', en_busqueda:'En búsqueda', asignada:'Asignada'};
+        desc = 'Diseño <strong>'+esc(e.nombre)+'</strong>';
+        if(e.categoria) desc += ' <span style="font-size:10px;color:#475569;">('+esc(e.categoria)+')</span>';
+        detalle = esc(telaLabels[e.tela_anterior]||e.tela_anterior||'—')+' → <span style="color:#34d399;font-weight:700;">'+esc(telaLabels[e.tela_nueva]||e.tela_nueva)+'</span>';
       } else {
         desc = esc(e.tipo);
         detalle = JSON.stringify(e).slice(0,80)+'…';
