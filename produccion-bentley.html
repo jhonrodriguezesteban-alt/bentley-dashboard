@@ -9392,6 +9392,56 @@ async function guardarCostosMO(){
 // ═══════════════════════════════════════════════════════════════════════════════
 // SIMULADOR DE PRODUCCIÓN
 // ═══════════════════════════════════════════════════════════════════════════════
+
+// Benchmark de costos por categoría (promedio ponderado, módulo Costeo — julio 2025)
+var COSTEO_BENCHMARK = {
+  'CHAQUETAS':         {n:15, mod:2870,  cif:4567,  mat:19527, svc:11712, total:38676, min:16984, max:69688, may:55251, det:77352},
+  'CHALECOS':          {n:5,  mod:3807,  cif:4250,  mat:15178, svc:10015, total:33250, min:27245, max:35334, may:47500, det:66500},
+  'CHAQUETAS DEP.':    {n:9,  mod:2954,  cif:4833,  mat:17505, svc:9826,  total:35118, min:28939, max:42651, may:50168, det:70235},
+  'ABRIGOS':           {n:7,  mod:3663,  cif:5221,  mat:24892, svc:12168, total:45944, min:27344, max:75186, may:65634, det:91888},
+  'CONJUNTOS':         {n:22, mod:3016,  cif:4348,  mat:21678, svc:11044, total:40086, min:25739, max:57828, may:57266, det:80173},
+  'PANTALONES':        {n:18, mod:2367,  cif:4587,  mat:14167, svc:7139,  total:28260, min:22001, max:41681, may:40371, det:56519},
+  'CAMIBUSOS':         {n:3,  mod:1983,  cif:4285,  mat:13358, svc:5333,  total:24959, min:22760, max:27087, may:35656, det:49919},
+  'BUZOS':             {n:6,  mod:1937,  cif:4118,  mat:10265, svc:8065,  total:24386, min:16588, max:32238, may:34836, det:48771},
+  'CAMISETAS':         {n:15, mod:2137,  cif:4477,  mat:9446,  svc:7016,  total:23076, min:11619, max:33444, may:32965, det:46151},
+  'BLUSAS':            {n:3,  mod:1539,  cif:3846,  mat:8214,  svc:2300,  total:15900, min:15107, max:16935, may:22714, det:31800},
+  'VESTIDOS':          {n:3,  mod:1827,  cif:3405,  mat:12388, svc:5400,  total:23021, min:18196, max:32039, may:32887, det:46041},
+  'CAMISONES':         {n:4,  mod:2598,  cif:5407,  mat:16964, svc:6425,  total:31395, min:25331, max:35788, may:44850, det:62790},
+  'FALDAS':            {n:2,  mod:2225,  cif:4253,  mat:9805,  svc:4500,  total:20783, min:20138, max:21428, may:29690, det:41566}
+};
+
+// Mapeo de nombres de categoría Effi → claves COSTEO_BENCHMARK
+var _COSTEO_CAT_MAP = {
+  'CHAQUETAS':'CHAQUETAS','CHAQUETAS PR':'CHAQUETAS','CHAQUETAS DEPORTIVAS':'CHAQUETAS DEP.','CHAQUETAS DEPORTIVAS PR':'CHAQUETAS DEP.',
+  'CHALECOS':'CHALECOS','CHALECOS PR':'CHALECOS',
+  'ABRIGOS':'ABRIGOS','ABRIGOS PR':'ABRIGOS',
+  'CONJUNTOS':'CONJUNTOS','CONJUNTOS PR':'CONJUNTOS',
+  'PANTALONES':'PANTALONES','PANTALONES PR':'PANTALONES','PANTALONETAS':'PANTALONES','BERMUDAS':'PANTALONES',
+  'CAMIBUSOS':'CAMIBUSOS','CAMIBUSOS PR':'CAMIBUSOS','HOODIES':'CAMIBUSOS',
+  'BUZOS':'BUZOS','BUZOS PR':'BUZOS',
+  'CAMISETAS':'CAMISETAS','CAMISETAS PR':'CAMISETAS',
+  'BLUSAS':'BLUSAS','BLUSAS PR':'BLUSAS',
+  'VESTIDOS':'VESTIDOS','VESTIDOS PR':'VESTIDOS',
+  'CAMISONES':'CAMISONES','CAMISONES PR':'CAMISONES',
+  'FALDAS':'FALDAS','FALDAS PR':'FALDAS'
+};
+
+function _getCosteoRef(categoria){
+  if(!categoria) return null;
+  var cat = categoria.trim().toUpperCase();
+  var key = _COSTEO_CAT_MAP[cat] || cat;
+  return COSTEO_BENCHMARK[key] || null;
+}
+
+function _fmtCOP(n){
+  if(n>=1000000) return '$' + (n/1000000).toFixed(1).replace('.0','') + 'M';
+  if(n>=1000) return '$' + Math.round(n/1000) + 'k';
+  return '$' + Math.round(n);
+}
+
+var _simBenchOpen = false;
+function toggleSimBench(){ _simBenchOpen = !_simBenchOpen; renderPage('simulador'); }
+
 var _simFiltroMarca = null;
 var _simData = {}; // { [disenoId]: { colores: [{color, tallas: {T:qty,...}}] } }
 var _simActive = []; // IDs de diseños añadidos al simulador
@@ -9468,11 +9518,68 @@ function renderSimulador(){
   });
   h += '</div>';
 
+  // Panel de referencia de costos (colapsable)
+  h += '<div style="margin-bottom:16px;">';
+  h += '<button onclick="toggleSimBench()" style="display:flex;align-items:center;gap:8px;background:rgba(168,85,247,.07);border:1px solid rgba(168,85,247,.25);border-radius:10px;padding:10px 16px;cursor:pointer;width:100%;color:#a855f7;font-size:12px;font-weight:600;">';
+  h += '<span>📊</span><span>Referencia de costos por categoría</span><span style="margin-left:auto;font-size:10px;color:#64748b;">'+(_simBenchOpen?'▲ cerrar':'▼ ver benchmark')+'</span>';
+  h += '</button>';
+  if(_simBenchOpen){
+    h += '<div style="background:#0f0d1a;border:1px solid rgba(168,85,247,.2);border-top:none;border-radius:0 0 10px 10px;overflow:hidden;">';
+    h += '<div style="overflow-x:auto;">';
+    h += '<table style="width:100%;border-collapse:collapse;font-size:11px;">';
+    h += '<thead><tr style="background:rgba(168,85,247,.1);">';
+    h += '<th style="text-align:left;padding:8px 12px;color:#a855f7;font-weight:700;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;">Categoría</th>';
+    h += '<th style="text-align:right;padding:8px 8px;color:#64748b;font-weight:600;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;">Refs</th>';
+    h += '<th style="text-align:right;padding:8px 8px;color:#5b8dd9;font-weight:600;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;">MOD</th>';
+    h += '<th style="text-align:right;padding:8px 8px;color:#9b72cf;font-weight:600;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;">CIF</th>';
+    h += '<th style="text-align:right;padding:8px 8px;color:#3db87a;font-weight:600;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;">Materiales</th>';
+    h += '<th style="text-align:right;padding:8px 8px;color:#e07b3a;font-weight:600;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;">Servicios</th>';
+    h += '<th style="text-align:right;padding:8px 12px;color:#e2e8f0;font-weight:700;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;">Costo/u</th>';
+    h += '<th style="text-align:right;padding:8px 8px;color:#34d399;font-weight:600;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;">Mayorista</th>';
+    h += '<th style="text-align:right;padding:8px 8px;color:#f59e0b;font-weight:600;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;">Detal</th>';
+    h += '</tr></thead><tbody>';
+    var benchKeys = Object.keys(COSTEO_BENCHMARK);
+    benchKeys.forEach(function(k, i){
+      var b = COSTEO_BENCHMARK[k];
+      var bg = i%2===0 ? 'transparent' : 'rgba(255,255,255,.02)';
+      h += '<tr style="background:'+bg+';border-bottom:1px solid rgba(255,255,255,.04);">';
+      h += '<td style="padding:7px 12px;font-weight:700;color:#c8ccdf;white-space:nowrap;">'+k+'</td>';
+      h += '<td style="padding:7px 8px;text-align:right;color:#64748b;font-variant-numeric:tabular-nums;">'+b.n+'</td>';
+      h += '<td style="padding:7px 8px;text-align:right;color:#5b8dd9;font-variant-numeric:tabular-nums;">'+b.mod.toLocaleString('es-CO',{maximumFractionDigits:0})+'</td>';
+      h += '<td style="padding:7px 8px;text-align:right;color:#9b72cf;font-variant-numeric:tabular-nums;">'+b.cif.toLocaleString('es-CO',{maximumFractionDigits:0})+'</td>';
+      h += '<td style="padding:7px 8px;text-align:right;color:#3db87a;font-variant-numeric:tabular-nums;">'+b.mat.toLocaleString('es-CO',{maximumFractionDigits:0})+'</td>';
+      h += '<td style="padding:7px 8px;text-align:right;color:#e07b3a;font-variant-numeric:tabular-nums;">'+b.svc.toLocaleString('es-CO',{maximumFractionDigits:0})+'</td>';
+      h += '<td style="padding:7px 12px;text-align:right;font-weight:700;color:#e2e8f0;font-variant-numeric:tabular-nums;">$'+b.total.toLocaleString('es-CO',{maximumFractionDigits:0})+'</td>';
+      h += '<td style="padding:7px 8px;text-align:right;color:#34d399;font-variant-numeric:tabular-nums;">$'+b.may.toLocaleString('es-CO',{maximumFractionDigits:0})+'</td>';
+      h += '<td style="padding:7px 8px;text-align:right;color:#f59e0b;font-variant-numeric:tabular-nums;">$'+b.det.toLocaleString('es-CO',{maximumFractionDigits:0})+'</td>';
+      h += '</tr>';
+    });
+    h += '</tbody></table>';
+    h += '</div>';
+    h += '<div style="padding:8px 12px;font-size:10px;color:#475569;">Promedio ponderado sobre 110 recetas activas del módulo Costeo. Excluye Chaqueta Burbujas (outlier MOD). Mayorista = costo/0.70 · Detal = costo/0.50</div>';
+    h += '</div>';
+  }
+  h += '</div>';
+
+  // Calcular inversión total estimada
+  var totalInversion = 0;
+  activeDis.forEach(function(it){
+    var ref = _getCosteoRef(it.categoria);
+    if(!ref) return;
+    var uds = 0;
+    _getSimData(it.key).colores.forEach(function(c){ Object.values(c.tallas||{}).forEach(function(q){ uds+=(parseInt(q)||0); }); });
+    totalInversion += uds * ref.total;
+  });
+
   // Barra resumen + buscador de diseño
   h += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;padding:14px 18px;background:rgba(10,132,255,.06);border:1px solid rgba(10,132,255,.2);border-radius:12px;flex-wrap:wrap;">';
   h += '<div><div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.8px;">Productos en simulación</div><div style="font-family:var(--bebas);font-size:32px;color:var(--cyan);" id="sim-cnt-dis">'+activeDis.length+'</div></div>';
   h += '<div style="width:1px;height:40px;background:#2c2c2e;flex-shrink:0;"></div>';
   h += '<div><div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.8px;">Total unidades</div><div style="font-family:var(--bebas);font-size:32px;color:var(--green);" id="sim-total-uds">'+totalUds.toLocaleString()+'</div></div>';
+  if(totalInversion > 0){
+    h += '<div style="width:1px;height:40px;background:#2c2c2e;flex-shrink:0;"></div>';
+    h += '<div><div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.8px;">Inversión estimada</div><div style="font-family:var(--bebas);font-size:32px;color:#a855f7;" id="sim-total-inv">'+_fmtCOP(totalInversion)+'</div><div style="font-size:9px;color:#475569;">basado en costo promedio/categoría</div></div>';
+  }
   h += '<div style="flex:1;min-width:200px;position:relative;">';
   h += '<input id="sim-search-dis" oninput="simFiltrarDis(this)" onfocus="simFiltrarDis(this)" onblur="setTimeout(function(){var d=document.getElementById(\'sim-dis-dropdown\');if(d)d.style.display=\'none\';},200)" placeholder="🔍  Buscar diseño..." autocomplete="off" style="width:100%;background:#0d1117;border:1px solid #334155;border-radius:8px;color:#e2e8f0;font-size:13px;padding:9px 14px;outline:none;box-sizing:border-box;">';
   h += '<div id="sim-dis-dropdown" style="display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:200;background:#1c1c1e;border:1px solid #334155;border-radius:10px;max-height:280px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.5);"></div>';
@@ -9510,8 +9617,17 @@ function renderSimulador(){
     if(!esOp && it.genero) h += '<span style="font-size:10px;color:'+_gc+';background:'+_gc+'18;border:1px solid '+_gc+'44;border-radius:4px;padding:1px 6px;">'+esc(it.genero)+'</span>';
     if(it.categoria) h += '<span style="font-size:10px;color:#64748b;">'+esc(it.categoria)+'</span>';
     h += '</div></div>';
+    var costRef = _getCosteoRef(it.categoria);
+    var costoEst = costRef && disUds > 0 ? disUds * costRef.total : 0;
+
     h += '<div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">';
     h += '<div style="text-align:right;"><div style="font-family:var(--bebas);font-size:26px;color:'+(disUds>0?'var(--green)':'#475569')+';" id="sim-dis-uds-'+safeKey+'">'+disUds+'</div><div style="font-size:9px;color:#64748b;">UDS</div></div>';
+    if(costRef){
+      h += '<div style="text-align:right;border-left:1px solid #2c2c2e;padding-left:10px;">';
+      h += '<div style="font-family:var(--bebas);font-size:22px;color:'+(costoEst>0?'#a855f7':'#334155')+';">'+( costoEst>0?_fmtCOP(costoEst):'—' )+'</div>';
+      h += '<div style="font-size:9px;color:#475569;white-space:nowrap;">'+_fmtCOP(costRef.total)+'/u est.</div>';
+      h += '</div>';
+    }
     h += '<button data-did="'+simKey+'" onclick="simQuitarDiseno(this.dataset.did)" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:6px;color:#ef4444;cursor:pointer;font-size:11px;padding:4px 8px;white-space:nowrap;">Quitar</button>';
     h += '</div></div>';
 
