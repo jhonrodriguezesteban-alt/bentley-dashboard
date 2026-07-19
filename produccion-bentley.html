@@ -2043,6 +2043,17 @@ function _planDisSetMes(disId, mes){
   DB.planeacion.disenos_plan[disId].mes = mes;
   saveLocal();
   guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}});
+  renderPage('planeacion');
+}
+function _planDisRemove(disId){
+  if(!DB.planeacion || !DB.planeacion.disenos_plan) return;
+  if(DB.planeacion.disenos_plan[disId]){
+    DB.planeacion.disenos_plan[disId].uds = 0;
+    DB.planeacion.disenos_plan[disId].mes = '';
+  }
+  saveLocal();
+  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}});
+  renderPage('planeacion');
 }
 
 function limpiarPlanDis(){
@@ -2620,6 +2631,53 @@ function _planMiniCard(op){
   return h;
 }
 
+function _planDisMiniCard(d, planD){
+  var ref = _getCosteoRef(d.categoria);
+  var qty = planD ? (planD.uds||0) : 0;
+  var subtotal = ref && qty > 0 ? qty * ref.total : 0;
+  var thumb = (d.imagenes&&d.imagenes.length) ? d.imagenes[0].url : '';
+  var pn = disPrioNorm(d.prioridad);
+  var pc = DIS_PRIO_CFG[pn];
+  var DIS_KL = {EN_DISENO_DIGITAL:'Diseño',CON_PROVEEDOR:'Proveedor',EN_CORTE_MUESTRA:'Corte',EN_CONFECCION_MUESTRA:'Confección',EN_REVISION_GERENCIA:'Revisión',EN_ESCALADO:'Escalado','ESCALADO / ÚLTIMOS DETALLES DISEÑO':'Escalado'};
+  var etLabel = DIS_KL[d.kanban_estado]||(d.kanban_estado||'').replace(/_/g,' ').substring(0,10);
+
+  var h = '<div style="background:rgba(16,185,129,.05);border:1px solid rgba(52,211,153,.3);border-radius:9px;padding:9px 10px;width:152px;flex-shrink:0;position:relative;box-sizing:border-box;">';
+  // Header
+  h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">';
+  h += '<div style="display:flex;align-items:center;gap:4px;">';
+  h += '<span style="font-size:10px;">🎨</span>';
+  h += '<span style="font-size:8px;font-weight:800;background:'+pc.bg+';border:1px solid '+pc.border+';color:'+pc.color+';border-radius:4px;padding:1px 5px;line-height:1.6;">'+pc.label+'</span>';
+  h += '</div>';
+  h += '<span style="font-size:8px;color:#34d399;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.2);border-radius:4px;padding:1px 5px;white-space:nowrap;">'+esc(etLabel)+'</span>';
+  h += '</div>';
+  // Thumbnail
+  if(thumb){
+    h += '<div style="width:100%;height:72px;border-radius:6px;overflow:hidden;margin-bottom:6px;background:#111827;">';
+    h += '<img src="'+esc(thumb)+'" style="width:100%;height:100%;object-fit:cover;" loading="lazy">';
+    h += '</div>';
+  }
+  // Nombre
+  h += '<div style="font-size:11px;font-weight:700;color:#d1fae5;line-height:1.3;margin-bottom:4px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">'+esc(d.nombre)+'</div>';
+  // Categoría + costo/u
+  h += '<div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px;">';
+  h += '<span style="font-size:9px;color:#6b7280;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;">'+esc(d.categoria||'—')+'</span>';
+  if(ref) h += '<span style="font-size:10px;font-weight:800;color:#a855f7;flex-shrink:0;margin-left:4px;">'+_fmtCOP(ref.total)+'/u</span>';
+  h += '</div>';
+  // Cantidad (input compacto)
+  h += '<div style="display:flex;align-items:center;gap:4px;margin-bottom:5px;">';
+  h += '<span style="font-size:9px;color:#64748b;white-space:nowrap;">Uds:</span>';
+  h += '<input type="number" min="0" step="12" data-did="'+d.id+'" value="'+(qty||'')+'" placeholder="0" onchange="_planDisSetUds(this.dataset.did,this.value)" style="flex:1;min-width:0;text-align:center;background:#0a1a12;border:1px solid rgba(52,211,153,.4);border-radius:5px;color:#34d399;font-size:12px;font-weight:800;padding:3px 4px;outline:none;-webkit-appearance:none;-moz-appearance:textfield;">';
+  h += '</div>';
+  // Subtotal
+  h += '<div style="font-size:10px;font-weight:800;color:#e2e8f0;font-variant-numeric:tabular-nums;text-align:right;">';
+  h += subtotal>0 ? '≈ '+fmtCopFull(subtotal) : '<span style="color:#1e3a2a;">— sin costo ref. —</span>';
+  h += '</div>';
+  // Botón quitar
+  h += '<button data-did="'+d.id+'" onclick="event.stopPropagation();_planDisRemove(this.dataset.did)" title="Quitar del mes" style="position:absolute;top:6px;right:6px;background:none;border:none;color:#334155;font-size:11px;cursor:pointer;padding:0;line-height:1;">✕</button>';
+  h += '</div>';
+  return h;
+}
+
 function renderPlaneacion(){
   var MESES = [
     {k:'2026-06',label:'Junio',     color:'#6366f1',bg:'rgba(99,102,241,.07)'},
@@ -2918,9 +2976,19 @@ function renderPlaneacion(){
   // ── Grid de meses ────────────────────────────────────────────────────────────
   h += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">';
 
+  // Índice de diseños por mes
+  var disPlanAll = (DB.planeacion && DB.planeacion.disenos_plan) || {};
+  var disenosActivos2 = (DB.disenos||[]).filter(function(d){ return !d.eliminado && d.kanban_estado !== 'LISTA_PRODUCCION'; });
+
   MESES.forEach(function(mes){
     var opIds = meses[mes.k]||[];
     var mesOps = opIds.map(function(id){ return allOps.find(function(o){ return o.id===id; }); }).filter(Boolean);
+
+    // Diseños asignados a este mes con cantidad > 0
+    var mesDisenos = disenosActivos2.filter(function(d){
+      var p = disPlanAll[d.id];
+      return p && p.mes === mes.k && (p.uds||0) > 0;
+    });
 
     var totalUds = 0;
     var catMap = {};
@@ -2933,6 +3001,18 @@ function renderPlaneacion(){
       var c = _planCostoOp(op);
       if(c){ costoMes.mat+=c.mat; costoMes.mod+=c.mod; costoMes.cif+=c.cif; costoMes.svc+=c.svc; costoMes.total+=c.total; }
     });
+
+    // Sumar diseños al total de uds y costo estimado
+    var disUds = 0, disInv = 0;
+    mesDisenos.forEach(function(d){
+      var p = disPlanAll[d.id];
+      var q = p ? (p.uds||0) : 0;
+      var r = _getCosteoRef(d.categoria);
+      disUds += q;
+      if(r) disInv += q * r.total;
+    });
+    var totalUdsCombinado = totalUds + disUds;
+
     var catEntries = Object.keys(catMap).sort(function(a,b){ return catMap[b]-catMap[a]; });
 
     h += '<div data-plan-mes="'+mes.k+'" style="background:#0a0d14;border:1px solid '+mes.color+'33;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;">';
@@ -2941,29 +3021,38 @@ function renderPlaneacion(){
     h += '<div style="background:'+mes.bg+';border-bottom:1px solid '+mes.color+'22;padding:11px 14px;">';
     h += '<div style="display:flex;align-items:baseline;justify-content:space-between;">';
     h += '<div style="font-size:14px;font-weight:800;color:'+mes.color+';text-transform:uppercase;letter-spacing:.5px;">'+mes.label+'</div>';
-    if(totalUds) h += '<div style="font-size:20px;font-weight:900;color:'+mes.color+';">'+totalUds+'<span style="font-size:9px;font-weight:500;color:'+mes.color+'88;margin-left:2px;">uds</span></div>';
+    if(totalUdsCombinado) h += '<div style="font-size:20px;font-weight:900;color:'+mes.color+';">'+totalUdsCombinado+'<span style="font-size:9px;font-weight:500;color:'+mes.color+'88;margin-left:2px;">uds</span></div>';
     h += '</div>';
-    h += '<div style="font-size:10px;color:#64748b;margin-top:2px;">'+mesOps.length+' OP'+(mesOps.length!==1?'s':'')+(totalUds?' · '+totalUds+' uds totales':'')+'</div>';
-    if(costoMes.total>0){
+    // Subtítulo: OPs + diseños
+    h += '<div style="font-size:10px;color:#64748b;margin-top:2px;">';
+    h += mesOps.length+' OP'+(mesOps.length!==1?'s':'');
+    if(totalUds) h += ' · '+totalUds+' uds OPs';
+    if(mesDisenos.length) h += ' <span style="color:#34d399;">· '+mesDisenos.length+' diseño'+(mesDisenos.length!==1?'s':'')+' · '+disUds+' uds</span>';
+    h += '</div>';
+    if(costoMes.total>0 || disInv>0){
       h += '<div style="margin-top:8px;padding-top:8px;border-top:1px solid '+mes.color+'22;">';
-      // Principales: Mat. Primas + Servicios (grandes)
       h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px;">';
       h += '<div style="background:rgba(14,165,233,.07);border-radius:7px;padding:6px 8px;"><div style="font-size:9px;font-weight:700;color:#0ea5e9;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px;">Mat. Primas</div><div style="font-size:14px;font-weight:800;color:#0ea5e9;">'+fmtCopFull(costoMes.mat)+'</div></div>';
       h += '<div style="background:rgba(168,85,247,.07);border-radius:7px;padding:6px 8px;"><div style="font-size:9px;font-weight:700;color:#a855f7;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px;">Servicios</div><div style="font-size:14px;font-weight:800;color:#a855f7;">'+fmtCopFull(costoMes.svc)+'</div></div>';
       h += '</div>';
-      // Total Mat+SVC
       var totalPrincipal = costoMes.mat + costoMes.svc;
       h += '<div style="background:rgba(255,255,255,.05);border-radius:7px;padding:7px 10px;display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">';
       h += '<span style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;">Mat. + Servicios</span>';
       h += '<span style="font-size:17px;font-weight:900;color:#e2e8f0;">'+fmtCopFull(totalPrincipal)+'</span>';
       h += '</div>';
-      // MOD y CIF como chips pequeños
       h += '<div style="display:flex;gap:6px;">';
       h += '<div style="flex:1;background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.2);border-radius:6px;padding:4px 8px;display:flex;align-items:center;justify-content:space-between;">';
       h += '<span style="font-size:9px;font-weight:700;color:#34d399;">M.O.D.</span><span style="font-size:11px;font-weight:800;color:#34d399;">'+fmtCopFull(costoMes.mod)+'</span></div>';
       h += '<div style="flex:1;background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.2);border-radius:6px;padding:4px 8px;display:flex;align-items:center;justify-content:space-between;">';
       h += '<span style="font-size:9px;font-weight:700;color:#fbbf24;">CIF</span><span style="font-size:11px;font-weight:800;color:#fbbf24;">'+fmtCopFull(costoMes.cif)+'</span></div>';
       h += '</div>';
+      // Chip de inversión en diseños si hay
+      if(disInv>0){
+        h += '<div style="margin-top:6px;background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.25);border-radius:6px;padding:5px 10px;display:flex;align-items:center;justify-content:space-between;">';
+        h += '<span style="font-size:9px;font-weight:700;color:#34d399;">🎨 Diseños est.</span>';
+        h += '<span style="font-size:11px;font-weight:800;color:#34d399;">'+fmtCopFull(disInv)+'</span>';
+        h += '</div>';
+      }
       h += '</div>';
     }
     h += '</div>';
@@ -2977,12 +3066,19 @@ function renderPlaneacion(){
       h += '</div>';
     }
 
-    // Drop zone
+    // Drop zone con OPs + tarjetas de diseño al final
     h += '<div data-plan-dz="'+mes.k+'" class="plan-dz" ondragover="planDragOver(event,\''+mes.k+'\')" ondrop="planDrop(event,\''+mes.k+'\')" style="flex:1;min-height:100px;padding:8px;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;">';
-    if(!mesOps.length){
+    if(!mesOps.length && !mesDisenos.length){
       h += '<div style="color:#2c2c2e;font-size:11px;width:100%;text-align:center;padding:16px 0;pointer-events:none;">Arrastra OPs aquí</div>';
     } else {
       mesOps.forEach(function(op){ h += _planMiniCard(op); });
+      // Separador entre OPs y diseños
+      if(mesOps.length > 0 && mesDisenos.length > 0){
+        h += '<div style="width:100%;border-top:1px dashed rgba(52,211,153,.2);margin:4px 0;display:flex;align-items:center;gap:6px;">';
+        h += '<span style="font-size:9px;color:#34d399;font-weight:700;white-space:nowrap;">🎨 Diseños planificados</span>';
+        h += '</div>';
+      }
+      mesDisenos.forEach(function(d){ h += _planDisMiniCard(d, disPlanAll[d.id]); });
     }
     h += '</div>';
     h += '</div>';
