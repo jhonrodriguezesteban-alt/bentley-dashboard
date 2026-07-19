@@ -1014,7 +1014,16 @@ function _fbApplyKey(key, d){
   else if(key==='logistica') { if(!DB.logistica) DB.logistica={tareas:[]}; DB.logistica.tareas = d.tareas||[]; }
   else if(key==='satelites') { DB.satelites = d.satelites||[]; }
   else if(key==='costos_mo') { DB.costos_mo = {precios:d.precios||[], pagos:d.pagos||[]}; }
-  else if(key==='bitacora')  { DB.bitacora = {eventos:d.eventos||[]}; }
+  else if(key==='bitacora')  {
+    // Merge por ID — nunca reemplazar eventos locales aún no guardados
+    if(!DB.bitacora) DB.bitacora = {eventos:[]};
+    var evMap = {};
+    (DB.bitacora.eventos||[]).forEach(function(e){ evMap[e.id]=e; });
+    (d.eventos||[]).forEach(function(e){ evMap[e.id]=e; });
+    var merged = Object.keys(evMap).map(function(k){ return evMap[k]; });
+    merged.sort(function(a,b){ return a.ts-b.ts; });
+    DB.bitacora = {eventos: merged};
+  }
   else if(key==='cronograma'){ DB.cronograma = d.cronograma||[]; }
   else if(key==='prog_ops')  { DB.prog_ops = d.ops_plan||[]; }
   else if(key==='planeacion'){ DB.planeacion = {meses:d.meses||{}}; }
@@ -1727,10 +1736,23 @@ function _mergeArrayData(key, remoteData, localData){
 async function guardarArchivo(key, data){
   if(_saving[key]){ return false; }
   _saving[key] = true;
-  // Escribir a Firebase PRIMERO — visible para todos los usuarios al instante,
-  // independientemente del estado de GitHub API
+  // Escribir a Firebase PRIMERO — visible para todos los usuarios al instante.
+  // Para bitácora: merge con Firebase antes de escribir para no perder eventos de otros usuarios.
   _fbOwnWrite[key] = true;
-  _fbSet(key, data).then(function(){ setTimeout(function(){ _fbOwnWrite[key]=false; }, 2000); });
+  if(key === 'bitacora' && _fbDb){
+    _fbGet('bitacora').then(function(fbCurrent){
+      var dataToFb = data;
+      if(fbCurrent && (fbCurrent.eventos||[]).length > 0){
+        dataToFb = _mergeArrayData('bitacora', fbCurrent, data);
+        // Actualizar memoria local con el merge
+        DB.bitacora = dataToFb;
+        saveLocal();
+      }
+      _fbSet('bitacora', dataToFb).then(function(){ setTimeout(function(){ _fbOwnWrite['bitacora']=false; }, 2000); });
+    });
+  } else {
+    _fbSet(key, data).then(function(){ setTimeout(function(){ _fbOwnWrite[key]=false; }, 2000); });
+  }
   var tk = GT || localStorage.getItem('bentley_gh_token') || '';
   if(!tk){ toast('Sin token GitHub', 'error'); _saving[key]=false; return false; }
   var path = FILES[key];
