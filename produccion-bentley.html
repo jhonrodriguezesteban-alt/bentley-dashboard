@@ -2929,16 +2929,30 @@ function renderPlaneacion(){
   // Header derecho: Unidades grandes + Mat+Svc como "total presupuestado"
   var globalMatSvc = globalMat + globalSvc;
   h += '<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">';
+  // Unidades
   h += '<div style="text-align:center;">';
   h += '<div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;">Unidades</div>';
   h += '<div style="font-size:36px;font-weight:900;color:#f1f5f9;line-height:1;">'+globalUdsCombinado.toLocaleString('es-CO')+'</div>';
-  if(globalDisUds>0) h += '<div style="font-size:9px;color:#34d399;margin-top:1px;">'+globalUds.toLocaleString('es-CO')+' OPs + '+globalDisUds.toLocaleString('es-CO')+' diseños</div>';
+  if(globalDisUds>0){
+    h += '<div style="font-size:9px;color:#64748b;margin-top:3px;font-variant-numeric:tabular-nums;">';
+    h += globalUds.toLocaleString('es-CO')+' prod. + <span style="color:#34d399;">'+globalDisUds.toLocaleString('es-CO')+' diseños</span>';
+    h += '</div>';
+  }
   h += '</div>';
-  h += '<div style="width:1px;height:44px;background:rgba(255,255,255,.1);"></div>';
+  h += '<div style="width:1px;height:60px;background:rgba(255,255,255,.1);"></div>';
+  // Inversión total combinada
+  var grandTotal = globalMatSvc + globalDisInv;
   h += '<div style="text-align:right;">';
-  h += '<div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;">Mat. Primas + Servicios</div>';
-  h += '<div style="font-size:28px;font-weight:900;color:#e2e8f0;line-height:1;">'+fmtCopFull(globalMatSvc)+'</div>';
-  if(globalDisInv>0) h += '<div style="font-size:9px;color:#34d399;margin-top:1px;">+ '+fmtCopFull(globalDisInv)+' diseños est. = '+fmtCopFull(globalMatSvc+globalDisInv)+'</div>';
+  h += '<div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;">Inversión total estimada</div>';
+  if(globalDisInv>0){
+    h += '<div style="font-size:32px;font-weight:900;color:#f1f5f9;line-height:1;">'+fmtCopFull(grandTotal)+'</div>';
+    h += '<div style="font-size:9px;color:#64748b;margin-top:3px;font-variant-numeric:tabular-nums;">';
+    h += fmtCopFull(globalMatSvc)+' prod. + <span style="color:#34d399;">'+fmtCopFull(globalDisInv)+' diseños</span>';
+    h += '</div>';
+  } else {
+    h += '<div style="font-size:32px;font-weight:900;color:#e2e8f0;line-height:1;">'+fmtCopFull(globalMatSvc)+'</div>';
+    h += '<div style="font-size:9px;color:#475569;margin-top:3px;">Mat. Primas + Servicios</div>';
+  }
   h += '</div>';
   h += '</div>';
   h += '</div>';
