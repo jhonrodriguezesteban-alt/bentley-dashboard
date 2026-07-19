@@ -2703,19 +2703,20 @@ function renderPlaneacion(){
   h += '</div>';
 
   if(_planDisOpen && disenosActivos.length > 0){
-    h += '<div style="background:#0a0f0d;border:1px solid rgba(16,185,129,.15);border-top:none;border-radius:0 0 12px 12px;overflow:hidden;">';
-    h += '<div style="overflow-x:auto;">';
-    h += '<table style="width:100%;border-collapse:collapse;font-size:12px;">';
-    h += '<thead><tr style="background:rgba(16,185,129,.06);border-bottom:1px solid rgba(16,185,129,.15);">';
-    h += '<th style="text-align:left;padding:9px 16px;color:#34d399;font-weight:700;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;">Diseño</th>';
-    h += '<th style="text-align:left;padding:9px 10px;color:#64748b;font-weight:600;text-transform:uppercase;font-size:10px;white-space:nowrap;">Categoría</th>';
-    h += '<th style="text-align:right;padding:9px 10px;color:#a855f7;font-weight:700;text-transform:uppercase;font-size:10px;white-space:nowrap;">Costo/u est.</th>';
-    h += '<th style="text-align:center;padding:9px 10px;color:#f59e0b;font-weight:700;text-transform:uppercase;font-size:10px;white-space:nowrap;">Mes</th>';
-    h += '<th style="text-align:center;padding:9px 10px;color:#3b82f6;font-weight:700;text-transform:uppercase;font-size:10px;white-space:nowrap;">Cantidad</th>';
-    h += '<th style="text-align:right;padding:9px 16px;color:#e2e8f0;font-weight:700;text-transform:uppercase;font-size:10px;white-space:nowrap;">Subtotal est.</th>';
-    h += '</tr></thead><tbody>';
+    var DIS_KANBAN_LABELS = {
+      EN_DISENO_DIGITAL:'Diseño digital', CON_PROVEEDOR:'Con proveedor',
+      EN_CORTE_MUESTRA:'Corte muestra', EN_CONFECCION_MUESTRA:'Confección muestra',
+      EN_REVISION_GERENCIA:'Revisión gerencia', EN_ESCALADO:'Escalado',
+      'ESCALADO / ÚLTIMOS DETALLES DISEÑO':'Escalado'
+    };
+    var DIS_KANBAN_COLORS2 = {
+      EN_DISENO_DIGITAL:'#a855f7', CON_PROVEEDOR:'#fb923c',
+      EN_CORTE_MUESTRA:'#f97316', EN_CONFECCION_MUESTRA:'#0a84ff',
+      EN_REVISION_GERENCIA:'#fbbf24', EN_ESCALADO:'#34d399',
+      'ESCALADO / ÚLTIMOS DETALLES DISEÑO':'#34d399'
+    };
 
-    // Agrupar por marca para separación visual
+    // Agrupar por marca
     var marcasGrupo = {};
     disenosActivos.forEach(function(d){
       var m = d.marca||'Sin marca';
@@ -2723,83 +2724,104 @@ function renderPlaneacion(){
       marcasGrupo[m].push(d);
     });
 
+    h += '<div style="background:#060c09;border:1px solid rgba(16,185,129,.15);border-top:none;border-radius:0 0 12px 12px;padding:14px 16px;">';
+
+    // Barra de totales + limpiar
+    h += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;">';
+    h += '<div style="display:flex;gap:16px;flex-wrap:wrap;">';
+    h += '<div style="display:flex;flex-direction:column;">';
+    h += '<span style="font-size:9px;color:#475569;text-transform:uppercase;letter-spacing:.5px;">Uds. planificadas</span>';
+    h += '<span style="font-size:20px;font-weight:900;color:#3b82f6;font-variant-numeric:tabular-nums;line-height:1;" id="pland-total-uds-foot">'+(dpTotalUds>0?dpTotalUds.toLocaleString('es-CO'):'—')+'</span>';
+    h += '</div>';
+    h += '<div style="display:flex;flex-direction:column;">';
+    h += '<span style="font-size:9px;color:#475569;text-transform:uppercase;letter-spacing:.5px;">Inversión estimada</span>';
+    h += '<span style="font-size:20px;font-weight:900;color:#34d399;font-variant-numeric:tabular-nums;line-height:1;" id="pland-total-inv-foot">'+(dpTotalInv>0?_fmtCOP(dpTotalInv):'—')+'</span>';
+    h += '</div>';
+    h += '</div>';
+    h += '<button onclick="limpiarPlanDis()" style="margin-left:auto;font-size:10px;padding:4px 12px;border-radius:6px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#ef4444;cursor:pointer;">🗑 Limpiar todo</button>';
+    h += '</div>';
+
     Object.keys(marcasGrupo).sort().forEach(function(marca){
       var disenos = marcasGrupo[marca];
-      // Separador de marca
-      h += '<tr><td colspan="6" style="padding:6px 16px 3px;background:rgba(255,255,255,.02);border-top:1px solid rgba(255,255,255,.05);">';
-      h += '<span style="font-size:9px;font-weight:800;color:#475569;text-transform:uppercase;letter-spacing:.1em;">'+esc(marca)+'</span>';
-      h += '</td></tr>';
+      // Header de marca
+      h += '<div style="font-size:9px;font-weight:800;color:#475569;text-transform:uppercase;letter-spacing:.12em;margin:10px 0 8px;padding-left:2px;border-left:3px solid #2c2c2e;padding-left:7px;">'+esc(marca)+'</div>';
+      // Grid de tarjetas
+      h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:12px;margin-bottom:6px;">';
 
-      disenos.forEach(function(d, i){
+      disenos.forEach(function(d){
         var ref = _getCosteoRef(d.categoria);
         var planD = disPlan[d.id]||{uds:0,mes:''};
         var qty = planD.uds||0;
         var subtotal = ref && qty > 0 ? qty * ref.total : 0;
-        var rowBg = i%2===0 ? 'transparent' : 'rgba(255,255,255,.015)';
-        var DIS_KANBAN_COLORS = {EN_DISENO_DIGITAL:'#a855f7',CON_PROVEEDOR:'#fb923c',EN_CORTE_MUESTRA:'#f97316',EN_CONFECCION_MUESTRA:'#0a84ff',EN_REVISION_GERENCIA:'#fbbf24','ESCALADO / ÚLTIMOS DETALLES DISEÑO':'#34d399',EN_ESCALADO:'#34d399'};
-        var etColor = DIS_KANBAN_COLORS[d.kanban_estado]||'#64748b';
-        h += '<tr style="background:'+rowBg+';border-bottom:1px solid rgba(255,255,255,.03);">';
-        // Nombre + etapa
-        h += '<td style="padding:8px 16px;white-space:nowrap;max-width:220px;">';
-        h += '<div style="font-weight:700;color:#e2e8f0;font-size:12px;overflow:hidden;text-overflow:ellipsis;">'+esc(d.nombre)+'</div>';
-        h += '<div style="font-size:9px;color:'+etColor+';margin-top:1px;">'+esc(d.kanban_estado||'En proceso')+'</div>';
-        h += '</td>';
-        // Categoría
-        h += '<td style="padding:8px 10px;color:#94a3b8;font-size:11px;white-space:nowrap;">'+esc(d.categoria||'—')+'</td>';
-        // Costo/u
-        h += '<td style="padding:8px 10px;text-align:right;white-space:nowrap;">';
-        if(ref){
-          h += '<div style="font-weight:700;color:#a855f7;font-variant-numeric:tabular-nums;">'+_fmtCOP(ref.total)+'</div>';
-          h += '<div style="font-size:9px;color:#374151;">may '+_fmtCOP(ref.may)+'</div>';
+        var thumb = (d.imagenes&&d.imagenes.length) ? d.imagenes[0].url : '';
+        var pn = disPrioNorm(d.prioridad);
+        var pc = DIS_PRIO_CFG[pn];
+        var etColor = DIS_KANBAN_COLORS2[d.kanban_estado]||'#64748b';
+        var etLabel = DIS_KANBAN_LABELS[d.kanban_estado]||(d.kanban_estado||'').replace(/_/g,' ');
+        var hasQty = qty > 0;
+
+        h += '<div style="background:#0d1117;border:1px solid '+(hasQty?'rgba(52,211,153,.3)':'#1e2530')+';border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s;">';
+
+        // Imagen / placeholder
+        h += '<div style="position:relative;height:120px;background:#111827;flex-shrink:0;overflow:hidden;">';
+        if(thumb){
+          h += '<img src="'+esc(thumb)+'" style="width:100%;height:100%;object-fit:cover;" loading="lazy">';
+          h += '<div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,.65) 100%);"></div>';
         } else {
-          h += '<span style="color:#334155;font-size:11px;">Sin ref.</span>';
+          h += '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:28px;opacity:.25;">👗</div>';
         }
-        h += '</td>';
-        // Mes
-        h += '<td style="padding:8px 10px;text-align:center;">';
-        h += '<select data-did="'+d.id+'" onchange="_planDisSetMes(this.dataset.did,this.value)" onclick="event.stopPropagation()" style="background:#0d1117;border:1px solid #2c2c2e;border-radius:6px;color:#f59e0b;font-size:11px;font-weight:600;padding:3px 6px;cursor:pointer;outline:none;">';
+        // Badge prioridad
+        h += '<span style="position:absolute;top:6px;left:6px;background:'+pc.bg+';border:1px solid '+pc.border+';color:'+pc.color+';border-radius:5px;font-size:9px;font-weight:800;padding:1px 6px;line-height:1.6;">'+pc.label+'</span>';
+        // Etapa kanban
+        h += '<span style="position:absolute;bottom:5px;left:6px;right:6px;font-size:8px;font-weight:700;color:'+etColor+';text-transform:uppercase;letter-spacing:.04em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(etLabel)+'</span>';
+        // Check si tiene cantidad
+        if(hasQty) h += '<span style="position:absolute;top:6px;right:6px;background:rgba(52,211,153,.25);border:1px solid rgba(52,211,153,.6);border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:10px;">✓</span>';
+        h += '</div>';
+
+        // Contenido
+        h += '<div style="padding:10px 11px 11px;flex:1;display:flex;flex-direction:column;gap:7px;">';
+        // Nombre
+        h += '<div style="font-size:11px;font-weight:800;color:#e2e8f0;line-height:1.3;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">'+esc(d.nombre)+'</div>';
+        // Categoría + costo
+        h += '<div style="display:flex;align-items:baseline;justify-content:space-between;gap:4px;">';
+        h += '<span style="font-size:9px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;">'+esc(d.categoria||'—')+'</span>';
+        if(ref){
+          h += '<span style="font-size:11px;font-weight:800;color:#a855f7;white-space:nowrap;flex-shrink:0;">'+_fmtCOP(ref.total)+'<span style="font-size:8px;font-weight:500;color:#64748b;">/u</span></span>';
+        }
+        h += '</div>';
+        // Referencia mayorista
+        if(ref){
+          h += '<div style="font-size:9px;color:#374151;">may '+_fmtCOP(ref.may)+' · det '+_fmtCOP(ref.det)+'</div>';
+        }
+        // Mes selector
+        h += '<select data-did="'+d.id+'" onchange="_planDisSetMes(this.dataset.did,this.value)" style="width:100%;background:#060c09;border:1px solid #2c2c2e;border-radius:7px;color:#f59e0b;font-size:10px;font-weight:700;padding:4px 6px;cursor:pointer;outline:none;">';
         MESES_SEL.forEach(function(ms){ h += '<option value="'+ms.k+'"'+(planD.mes===ms.k?' selected':'')+' style="background:#1c1c1e;color:#e2e8f0;">'+ms.l+'</option>'; });
         h += '</select>';
-        h += '</td>';
-        // Cantidad
-        h += '<td style="padding:8px 10px;text-align:center;">';
-        h += '<input type="number" min="0" step="12" data-did="'+d.id+'" value="'+(qty||'')+'" placeholder="0" oninput="_planDisSetUds(this.dataset.did,this.value)" style="width:72px;text-align:center;background:#0d1117;border:1px solid '+(qty>0?'rgba(59,130,246,.5)':'#2c2c2e')+';border-radius:6px;color:#3b82f6;font-size:13px;font-weight:700;padding:4px 6px;outline:none;-webkit-appearance:none;-moz-appearance:textfield;">';
-        h += '</td>';
+        // Cantidad + subtotal
+        h += '<div style="display:flex;align-items:center;gap:6px;">';
+        h += '<div style="display:flex;align-items:center;gap:0;border:1px solid '+(hasQty?'rgba(52,211,153,.4)':'#2c2c2e')+';border-radius:7px;overflow:hidden;flex:1;">';
+        h += '<span style="font-size:9px;color:#64748b;padding:0 5px;background:#0a0f0d;white-space:nowrap;">uds</span>';
+        h += '<input type="number" min="0" step="12" data-did="'+d.id+'" value="'+(qty||'')+'" placeholder="0" oninput="_planDisSetUds(this.dataset.did,this.value)" style="flex:1;min-width:0;text-align:center;background:#0d1117;border:none;color:'+(hasQty?'#34d399':'#3b82f6')+';font-size:13px;font-weight:800;padding:5px 4px;outline:none;-webkit-appearance:none;-moz-appearance:textfield;">';
+        h += '</div>';
+        h += '</div>';
         // Subtotal
-        h += '<td style="padding:8px 16px;text-align:right;" id="pland-sub-'+d.id+'">';
+        h += '<div id="pland-sub-'+d.id+'" style="text-align:right;">';
         if(subtotal > 0){
-          h += '<span style="font-weight:700;color:#e2e8f0;font-variant-numeric:tabular-nums;">'+_fmtCOP(subtotal)+'</span>';
+          h += '<span style="font-size:12px;font-weight:800;color:#e2e8f0;font-variant-numeric:tabular-nums;">'+_fmtCOP(subtotal)+'</span>';
+          h += '<span style="font-size:9px;color:#475569;margin-left:3px;">total</span>';
         } else {
-          h += '<span style="color:#2c2c2e;">—</span>';
+          h += '<span style="font-size:10px;color:#1e2530;">— sin cantidades —</span>';
         }
-        h += '</td>';
-        h += '</tr>';
+        h += '</div>';
+        h += '</div>'; // contenido
+        h += '</div>'; // tarjeta
       });
+      h += '</div>'; // grid
     });
-
-    // Fila de totales
-    h += '<tr style="background:rgba(52,211,153,.06);border-top:2px solid rgba(52,211,153,.2);">';
-    h += '<td colspan="4" style="padding:10px 16px;">';
-    h += '<div style="display:flex;align-items:center;gap:10px;">';
-    h += '<span style="font-size:11px;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:.5px;">TOTAL PROYECTADO</span>';
-    if(dpTotalUds > 0) h += '<span style="font-size:10px;color:#475569;">'+dpTotalUds.toLocaleString('es-CO')+' unidades</span>';
-    h += '<button onclick="limpiarPlanDis()" style="margin-left:auto;font-size:10px;padding:3px 10px;border-radius:5px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#ef4444;cursor:pointer;">🗑 Limpiar</button>';
-    h += '</div>';
-    h += '</td>';
-    h += '<td style="padding:10px 10px;text-align:center;">';
-    h += '<span style="font-size:12px;font-weight:800;color:#e2e8f0;font-variant-numeric:tabular-nums;" id="pland-total-uds-foot">'+(dpTotalUds>0?dpTotalUds.toLocaleString('es-CO')+' uds':'—')+'</span>';
-    h += '</td>';
-    h += '<td style="padding:10px 16px;text-align:right;">';
-    h += '<span style="font-size:16px;font-weight:900;color:#34d399;font-variant-numeric:tabular-nums;" id="pland-total-inv-foot">'+(dpTotalInv>0?_fmtCOP(dpTotalInv):'—')+'</span>';
-    h += '</td>';
-    h += '</tr>';
-
-    h += '</tbody></table>';
-    h += '</div>';
-    h += '<div style="padding:8px 16px;font-size:10px;color:#374151;border-top:1px solid rgba(255,255,255,.04);">Los costos son estimados basados en el promedio ponderado por categoría (módulo Costeo). Mayorista = costo/0.70 · Detal = costo/0.50</div>';
+    h += '<div style="margin-top:10px;font-size:10px;color:#1e2530;">Costos estimados: promedio ponderado por categoría (módulo Costeo)</div>';
     h += '</div>';
   } else if(_planDisOpen && disenosActivos.length === 0){
-    h += '<div style="background:#0a0f0d;border:1px solid rgba(16,185,129,.1);border-top:none;border-radius:0 0 12px 12px;padding:24px;text-align:center;color:#374151;font-size:12px;">No hay diseños activos en el módulo de Diseño.</div>';
+    h += '<div style="background:#060c09;border:1px solid rgba(16,185,129,.1);border-top:none;border-radius:0 0 12px 12px;padding:24px;text-align:center;color:#374151;font-size:12px;">No hay diseños activos en el módulo de Diseño.</div>';
   }
   h += '</div>';
 
