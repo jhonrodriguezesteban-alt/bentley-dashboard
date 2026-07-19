@@ -2774,13 +2774,18 @@ function renderPlaneacion(){
       'ESCALADO / ÚLTIMOS DETALLES DISEÑO':'#34d399'
     };
 
-    // Agrupar por marca
-    var marcasGrupo = {};
+    // Agrupar por categoría, ordenar categorías por nombre, dentro por prioridad
+    var catGrupo = {};
     disenosActivos.forEach(function(d){
-      var m = d.marca||'Sin marca';
-      if(!marcasGrupo[m]) marcasGrupo[m] = [];
-      marcasGrupo[m].push(d);
+      var c = d.categoria||'Sin categoría';
+      if(!catGrupo[c]) catGrupo[c] = [];
+      catGrupo[c].push(d);
     });
+    // Ordenar dentro de cada categoría por prioridad P1→P2→P3
+    Object.keys(catGrupo).forEach(function(c){
+      catGrupo[c].sort(function(a,b){ return disPrioNorm(a.prioridad)-disPrioNorm(b.prioridad); });
+    });
+    var catOrden = Object.keys(catGrupo).sort();
 
     h += '<div style="background:#060c09;border:1px solid rgba(16,185,129,.15);border-top:none;border-radius:0 0 12px 12px;padding:14px 16px;">';
 
@@ -2799,10 +2804,15 @@ function renderPlaneacion(){
     h += '<button onclick="limpiarPlanDis()" style="margin-left:auto;font-size:10px;padding:4px 12px;border-radius:6px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#ef4444;cursor:pointer;">🗑 Limpiar todo</button>';
     h += '</div>';
 
-    Object.keys(marcasGrupo).sort().forEach(function(marca){
-      var disenos = marcasGrupo[marca];
-      // Header de marca
-      h += '<div style="font-size:9px;font-weight:800;color:#475569;text-transform:uppercase;letter-spacing:.12em;margin:10px 0 8px;padding-left:2px;border-left:3px solid #2c2c2e;padding-left:7px;">'+esc(marca)+'</div>';
+    catOrden.forEach(function(cat){
+      var disenos = catGrupo[cat];
+      var ref = _getCosteoRef(cat);
+      // Header de categoría con costo/u de referencia
+      h += '<div style="display:flex;align-items:center;gap:8px;margin:10px 0 8px;padding-left:7px;border-left:3px solid rgba(168,85,247,.4);">';
+      h += '<span style="font-size:9px;font-weight:800;color:#a855f7;text-transform:uppercase;letter-spacing:.12em;">'+esc(cat)+'</span>';
+      h += '<span style="font-size:9px;color:#475569;">'+disenos.length+' diseño'+(disenos.length!==1?'s':'')+'</span>';
+      if(ref) h += '<span style="font-size:9px;font-weight:700;color:#64748b;margin-left:auto;">≈ '+_fmtCOP(ref.total)+'/u</span>';
+      h += '</div>';
       // Grid de tarjetas
       h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:12px;margin-bottom:6px;">';
 
@@ -2875,7 +2885,7 @@ function renderPlaneacion(){
         h += '</div>'; // tarjeta
       });
       h += '</div>'; // grid
-    });
+    }); // catOrden
     h += '<div style="margin-top:10px;font-size:10px;color:#1e2530;">Costos estimados: promedio ponderado por categoría (módulo Costeo)</div>';
     h += '</div>';
   } else if(_planDisOpen && disenosActivos.length === 0){
