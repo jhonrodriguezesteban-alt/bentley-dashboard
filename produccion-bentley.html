@@ -1026,7 +1026,7 @@ function _fbApplyKey(key, d){
   }
   else if(key==='cronograma'){ DB.cronograma = d.cronograma||[]; }
   else if(key==='prog_ops')  { DB.prog_ops = d.ops_plan||[]; }
-  else if(key==='planeacion'){ DB.planeacion = {meses:d.meses||{}}; }
+  else if(key==='planeacion'){ DB.planeacion = {meses:d.meses||{}, disenos_plan:d.disenos_plan||{}}; }
   else if(key==='sim')       { DB.sim={active:d.active||[],data:d.data||{}}; _simActive=DB.sim.active; _simData=DB.sim.data; }
   else if(key==='usuarios')  { DB.usuarios = d.usuarios||[]; }
   else if(key==='costeo')    { DB.costeo = d; }
@@ -1048,7 +1048,7 @@ async function _fbMigrarSiVacio(){
       bitacora:  DB.bitacora||{eventos:[]},
       cronograma:{cronograma: DB.cronograma||[]},
       prog_ops:  {ops_plan: DB.prog_ops||[]},
-      planeacion:{meses: (DB.planeacion||{}).meses||{}},
+      planeacion:{meses: (DB.planeacion||{}).meses||{}, disenos_plan:(DB.planeacion||{}).disenos_plan||{}},
       sim:       {active:(DB.sim||{}).active||[], data:(DB.sim||{}).data||{}},
       costeo:    DB.costeo||{mp:[],servicios:[],puestos:[],tarifas_cif:[],params:{},recetas:[],precios_pt:[]}
     };
@@ -2221,7 +2221,7 @@ async function cargarDatos(){
     var logR = await fetch(BASE_URL + 'prod_logistica.json?t=' + t);
     if(logR.ok){ var d10 = await logR.json(); DB.logistica = {tareas: d10.tareas||[]}; }
     var planR = await fetch(BASE_URL + 'prod_planeacion.json?t=' + t);
-    if(planR.ok){ var d11 = await planR.json(); DB.planeacion = {meses: d11.meses||{}}; }
+    if(planR.ok){ var d11 = await planR.json(); DB.planeacion = {meses: d11.meses||{}, disenos_plan: d11.disenos_plan||{}}; }
     var costeoR = await fetch(BASE_URL + 'prod_costeo.json?t=' + t);
     if(costeoR.ok){ var d12 = await costeoR.json(); DB.costeo = {mp:d12.mp||[],servicios:d12.servicios||[],puestos:d12.puestos||[],tarifas_cif:d12.tarifas_cif||[],params:d12.params||{},recetas:d12.recetas||[],precios_pt:d12.precios_pt||[]}; }
     else { if(!DB.planeacion) DB.planeacion = {meses:{}}; }
@@ -2259,7 +2259,7 @@ async function cargarDatos(){
           var fbCron = await _fbGet('cronograma');
           if(fbCron) DB.cronograma = fbCron.cronograma||[];
           var fbPlan = await _fbGet('planeacion');
-          if(fbPlan) DB.planeacion = {meses: fbPlan.meses||{}};
+          if(fbPlan) DB.planeacion = {meses: fbPlan.meses||{}, disenos_plan: fbPlan.disenos_plan||{}};
           var fbBit = await _fbGet('bitacora');
           if(fbBit) DB.bitacora = {eventos: fbBit.eventos||[]};
           var fbCosteo = await _fbGet('costeo');
