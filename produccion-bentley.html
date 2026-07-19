@@ -2445,6 +2445,8 @@ function _planAsignar(opId, mesKey){
     if(!DB.planeacion.meses[mesKey]) DB.planeacion.meses[mesKey] = [];
     if(DB.planeacion.meses[mesKey].indexOf(opId)<0) DB.planeacion.meses[mesKey].push(opId);
   }
+  var op = (DB.ops||[]).find(function(o){ return o.id===opId; });
+  _logEvt('planeacion_asignar', {op_id:opId, op_nombre:op?op.nombre_producto:'', mes:mesKey||'sin_mes'});
   guardarPlaneacion();
   renderPage('planeacion');
 }
@@ -3314,6 +3316,7 @@ async function guardarSat(id){
     var t = tipos[i].value.trim();
     if(t) sat.maquinas.push({tipo:t, cantidad:parseInt(cants[i].value)||1});
   }
+  _logEvt('satelite_editar', {satelite_id:id, nombre:sat.nombre, activo:sat.activo, personas:sat.personas, capacidad:sat.capacidad_semanal});
   setBtnLoading('guardar-sat-btn', true);
   saveLocal();
   var ok = await guardarArchivo('satelites', {satelites: DB.satelites});
@@ -3341,6 +3344,7 @@ async function crearSatelite(){
     maquinas: [], notas: '', created_at: hoy()
   };
   DB.satelites.push(sat);
+  _logEvt('satelite_crear', {nombre:sat.nombre, personas:sat.personas, capacidad:sat.capacidad_semanal});
   saveLocal();
   var ok = await guardarArchivo('satelites', {satelites: DB.satelites});
   if(ok){ toast('Satélite creado', 'success'); closeModal(); renderPage('satelites'); }
@@ -4135,6 +4139,8 @@ async function _confirmarSepararRefs(){
 
 async function eliminarOP(opId){
   if(!confirm('¿Eliminar esta OP y todas sus OTs? Esta acción no se puede deshacer.')) return;
+  var op = (DB.ops||[]).find(function(o){ return o.id===opId; });
+  _logEvt('eliminar_op', {op_id:opId, op_nombre:op?op.nombre_producto:'', categoria:op?op.categoria:''});
   DB.ops = DB.ops.filter(function(o){ return o.id !== opId; });
   DB.ots = DB.ots.filter(function(o){ return o.op_id !== opId; });
   saveLocal();
@@ -7539,6 +7545,7 @@ async function agregarComentarioDiseno(){
   }
   _comentImgsPendientes = [];
   d.comentarios.push(nuevoC);
+  _logEvt('diseno_comentario', {diseno_id:d.id, nombre:d.nombre, categoria:d.categoria, tiene_imagen:nuevoC.imagenes.length>0, extracto:texto.slice(0,80)});
   guardarDisenos();
   renderPage(currentPage);
   cerrarModalComentario();
@@ -8282,6 +8289,7 @@ function asignarSateliteOP(opId, satId){
     return k===opId && o.estado==='CORTE_POR_ALISTAR' && !o.satelite_id;
   }).forEach(function(ot){ ot.satelite_id=satId; ot.estado='ASIGNADO'; assigned++; });
   if(!assigned){ toast('Sin OTs para asignar','error'); return; }
+  _logEvt('asignar_satelite', {op_id:opId, satelite:getSatNombre(satId), total_ots:assigned});
   guardarArchivo('ots',{ots:DB.ots}).then(function(ok){
     if(ok) toast(assigned+' OTs asignadas a '+getSatNombre(satId),'success');
     renderPage('programacion');
@@ -8537,6 +8545,7 @@ async function cronSetFecha(entryId, nuevaFecha, motivo, sinModal){
     entry.historial.push({ fecha_anterior: null, fecha_nueva: nuevaFecha, motivo: 'Fecha inicial asignada', by: getUser(), at: hoy() });
   }
   entry.fecha_compromiso = nuevaFecha;
+  _logEvt('cronograma_fecha', {entry_id:entryId, op_id:entry.op_id, color:entry.color, satelite:entry.satelite_nombre, fecha_nueva:nuevaFecha, motivo:motivo||'Asignación inicial'});
   var ok = await guardarCronograma();
   if(ok){ toast('Fecha guardada','success'); closeModal(); renderPage('cronograma'); }
   else toast('Error al guardar','error');
@@ -8621,6 +8630,8 @@ async function cronSetFechaOP(opId, nuevaFecha, motivo){
     }
     e.fecha_compromiso = nuevaFecha;
   });
+  var op = (DB.ops||[]).find(function(o){ return o.id===opId; });
+  _logEvt('cronograma_fecha', {op_id:opId, op_nombre:op?op.nombre_producto:'', fecha_nueva:nuevaFecha, motivo:motivo||'Asignación inicial', total_entradas:opEntries.length});
   var ok = await guardarCronograma();
   if(ok){ toast('Fecha guardada para toda la OP','success'); closeModal(); renderPage('cronograma'); }
   else toast('Error al guardar','error');
@@ -9202,6 +9213,12 @@ async function confirmarEntrega(otId){
     }
   }
 
+  _logEvt('entrega_ot', {
+    ot_id:ot.id, referencia:ot.nombre||ot.referencia, color:ot.color, talla:ot.talla,
+    op_id:ot.op_id, satelite:getSatNombre(ot.satelite_id),
+    uds_entregadas:uds, uds_novedad:pendientes,
+    estado_nuevo: esNovedad?'NOVEDAD':'ENTREGADO', total_mo:ot.total_costo_mo||0
+  });
   saveLocal(); updateNovBadge();
   var ok = await guardarArchivo('ots', {ots: DB.ots});
   if(ok){
@@ -9316,6 +9333,7 @@ async function resolverNovedad(id){
   ot.estado = 'ENTREGADO';
   ot.unidades_novedad = 0;
   ot.historial.push({fecha: new Date().toISOString(), accion: 'Novedad resuelta', user: getUser()});
+  _logEvt('resolver_novedad', {ot_id:id, referencia:ot.nombre||ot.referencia, color:ot.color, talla:ot.talla, op_id:ot.op_id, satelite:getSatNombre(ot.satelite_id)});
   saveLocal(); updateNovBadge();
   var ok = await guardarArchivo('ots', {ots: DB.ots});
   if(ok){ toast('Novedad resuelta', 'success'); renderPage('novedades'); }
@@ -10285,6 +10303,7 @@ function marcarPagado(id){
   if(!p) return;
   p.estado = 'PAGADO';
   p.fecha_pago = new Date().toISOString().split('T')[0];
+  _logEvt('pago_satelite', {pago_id:id, satelite:p.satelite_nombre, referencia:p.referencia, uds:p.uds, total:p.total, tipo:'pago_individual'});
   guardarCostosMO(); renderPage('costos_mo');
   toast('Pago registrado','success');
 }
@@ -10352,10 +10371,13 @@ function verDetallePagoGrupo(ids){
 function marcarPagadoGrupo(ids){
   if(!DB.costos_mo||!DB.costos_mo.pagos) return;
   var hoy = new Date().toISOString().split('T')[0];
+  var totalGrp = 0;
+  var satNom = '';
   ids.forEach(function(id){
     var p = DB.costos_mo.pagos.find(function(x){ return x.id===id; });
-    if(p){ p.estado = 'PAGADO'; p.fecha_pago = hoy; }
+    if(p){ p.estado = 'PAGADO'; p.fecha_pago = hoy; totalGrp += p.total||0; satNom = satNom||p.satelite_nombre||''; }
   });
+  _logEvt('pago_satelite', {satelite:satNom, total_ots:ids.length, total:totalGrp, tipo:'pago_grupo'});
   guardarCostosMO(); renderPage('costos_mo');
   toast('Pagado ('+ids.length+' OTs)','success');
 }
@@ -12608,7 +12630,12 @@ function exportarBitacoraCSV(){
     asignar_satelite:'Asignación a taller', separar_refs:'Separación de OP',
     estado_diseno:'Avance diseño', logistica_tarea:'Tarea logística',
     diseno_prioridad:'Cambio prioridad diseño', diseno_responsable:'Cambio responsable diseño',
-    diseno_tela:'Asignación tela diseño'
+    diseno_tela:'Asignación tela diseño', diseno_comentario:'Comentario diseño',
+    entrega_ot:'Entrega OT', resolver_novedad:'Novedad resuelta',
+    pago_satelite:'Pago a satélite',
+    cronograma_fecha:'Fecha cronograma', planeacion_asignar:'Asignación planeación',
+    satelite_crear:'Satélite creado', satelite_editar:'Satélite editado',
+    eliminar_op:'OP eliminada'
   };
   var _el = {
     POR_REVISAR:'Por Revisar', PENDIENTE_CORTAR:'Pendiente Cortar',
@@ -12739,7 +12766,14 @@ function renderBitacora(){
     kanban_color:'#0a84ff', estado_ot:'#38bdf8', crear_op:'#a855f7',
     generar_ots:'#22c55e', asignar_satelite:'#f97316', separar_refs:'#eab308',
     estado_diseno:'#ec4899', logistica_tarea:'#64748b',
-    diseno_prioridad:'#fbbf24', diseno_responsable:'#a78bfa', diseno_tela:'#34d399'
+    diseno_prioridad:'#fbbf24', diseno_responsable:'#a78bfa', diseno_tela:'#34d399',
+    diseno_comentario:'#94a3b8',
+    entrega_ot:'#22c55e', resolver_novedad:'#34d399',
+    pago_satelite:'#f97316',
+    cronograma_fecha:'#38bdf8',
+    planeacion_asignar:'#a855f7',
+    satelite_crear:'#0a84ff', satelite_editar:'#64748b',
+    eliminar_op:'#ef4444'
   };
   var _estadoLabel = {
     POR_REVISAR:'Por Revisar', PENDIENTE_CORTAR:'Pendiente Cortar',
@@ -12909,6 +12943,44 @@ function renderBitacora(){
         if(e.destino) detalle = '📍 '+esc(e.destino);
         if(e.tipo_tarea) detalle += (detalle?' · ':'')+esc(e.tipo_tarea);
         if(e.fecha && e.fecha!==_bitFiltroFecha) detalle += (detalle?' · ':'')+'Para el '+fmtDate(e.fecha);
+      } else if(e.tipo==='entrega_ot'){
+        desc = '<strong>'+esc(e.referencia)+'</strong> · '+esc(e.color)+(e.talla?' talla '+esc(e.talla):'');
+        detalle = e.uds_entregadas+' uds entregadas';
+        if(e.uds_novedad) detalle += ' · <span style="color:#ef4444;">'+e.uds_novedad+' en novedad</span>';
+        if(e.satelite) detalle += ' · '+esc(e.satelite);
+        if(e.total_mo) detalle += ' · MO: $'+e.total_mo.toLocaleString('es-CO');
+      } else if(e.tipo==='resolver_novedad'){
+        desc = 'Novedad resuelta: <strong>'+esc(e.referencia)+'</strong> · '+esc(e.color)+(e.talla?' talla '+esc(e.talla):'');
+        if(e.satelite) detalle = esc(e.satelite);
+      } else if(e.tipo==='pago_satelite'){
+        desc = 'Pago a <strong>'+esc(e.satelite)+'</strong>';
+        if(e.referencia) desc += ' — '+esc(e.referencia);
+        detalle = '$'+(e.total||0).toLocaleString('es-CO');
+        if(e.total_ots) detalle += ' · '+e.total_ots+' OTs';
+        if(e.uds) detalle += ' · '+e.uds+' uds';
+      } else if(e.tipo==='cronograma_fecha'){
+        desc = 'Fecha compromiso: <strong>'+esc(e.op_nombre||e.op_id)+'</strong>';
+        if(e.color) desc += ' — '+esc(e.color);
+        detalle = '<span style="color:#38bdf8;font-weight:700;">'+fmtDate(e.fecha_nueva)+'</span>';
+        if(e.motivo) detalle += ' · '+esc(e.motivo);
+      } else if(e.tipo==='planeacion_asignar'){
+        desc = 'Planeación: <strong>'+esc(e.op_nombre||e.op_id)+'</strong>';
+        var mesLabels = {mes1:'Enero',mes2:'Febrero',mes3:'Marzo',mes4:'Abril',mes5:'Mayo',mes6:'Junio',mes7:'Julio',mes8:'Agosto',mes9:'Septiembre',mes10:'Octubre',mes11:'Noviembre',mes12:'Diciembre'};
+        detalle = 'Asignado a <span style="color:#a855f7;font-weight:700;">'+(mesLabels[e.mes]||e.mes||'sin mes')+'</span>';
+      } else if(e.tipo==='satelite_crear'){
+        desc = 'Nuevo satélite: <strong>'+esc(e.nombre)+'</strong>';
+        detalle = (e.personas||0)+' personas · Cap. '+( e.capacidad||0)+' uds/semana';
+      } else if(e.tipo==='satelite_editar'){
+        desc = 'Satélite editado: <strong>'+esc(e.nombre)+'</strong>';
+        detalle = (e.personas||0)+' personas · Cap. '+(e.capacidad||0)+' uds/semana · '+(e.activo?'Activo':'Inactivo');
+      } else if(e.tipo==='eliminar_op'){
+        desc = 'OP eliminada: <strong>'+esc(e.op_nombre||e.op_id)+'</strong>';
+        if(e.categoria) detalle = esc(e.categoria);
+      } else if(e.tipo==='diseno_comentario'){
+        desc = 'Comentario en <strong>'+esc(e.nombre)+'</strong>';
+        if(e.categoria) desc += ' <span style="font-size:10px;color:#475569;">('+esc(e.categoria)+')</span>';
+        detalle = e.extracto ? '"'+esc(e.extracto)+'"' : '';
+        if(e.tiene_imagen) detalle += (detalle?' · ':'')+'📷 Con imagen';
       } else if(e.tipo==='diseno_prioridad'){
         desc = 'Diseño <strong>'+esc(e.nombre)+'</strong>';
         if(e.categoria) desc += ' <span style="font-size:10px;color:#475569;">('+esc(e.categoria)+')</span>';
