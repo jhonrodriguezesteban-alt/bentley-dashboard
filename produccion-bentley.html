@@ -1066,7 +1066,9 @@ function _iniciarListenersFirebase(){
   var KEYS = ['ops','ots','disenos','logistica','satelites','costos_mo','bitacora','cronograma','prog_ops','planeacion','sim','usuarios','costeo'];
   KEYS.forEach(function(key){
     _fbDb.ref(FB_ROOT+'/'+key).on('value', function(snap){
-      if(_fbOwnWrite[key]) return; // ignorar el echo de nuestro propio guardado
+      // Para bitácora: NUNCA ignorar el echo propio — el merge por ID es idempotente
+      // y bloquear el listener causaría perder eventos de otros usuarios en la ventana de escritura
+      if(key !== 'bitacora' && _fbOwnWrite[key]) return;
       var d = snap.val();
       if(!d) return;
       _fbApplyKey(key, d);
