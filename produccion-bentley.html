@@ -2279,7 +2279,7 @@ async function cargarDatos(){
     var planR = await fetch(BASE_URL + 'prod_planeacion.json?t=' + t);
     if(planR.ok){ var d11 = await planR.json(); DB.planeacion = {meses: d11.meses||{}, disenos_plan: d11.disenos_plan||{}}; }
     var costeoR = await fetch(BASE_URL + 'prod_costeo.json?t=' + t);
-    if(costeoR.ok){ var d12 = await costeoR.json(); DB.costeo = {mp:d12.mp||[],servicios:d12.servicios||[],puestos:d12.puestos||[],tarifas_cif:d12.tarifas_cif||[],params:d12.params||{},recetas:d12.recetas||[],precios_pt:d12.precios_pt||[]}; }
+    if(costeoR.ok){ var d12 = await costeoR.json(); DB.costeo = {mp:d12.mp||[],servicios:d12.servicios||[],puestos:d12.puestos||[],tarifas_cif:d12.tarifas_cif||[],params:d12.params||{},recetas:d12.recetas||[],precios_pt:d12.precios_pt||[],receta_map:d12.receta_map||{}}; }
     else { if(!DB.planeacion) DB.planeacion = {meses:{}}; }
     var cronR = await fetch(BASE_URL + 'prod_cronograma.json?t=' + t);
     if(cronR.ok){ var d13 = await cronR.json(); DB.cronograma = d13.cronograma||[]; }
@@ -2631,7 +2631,13 @@ function _planRecetaDeOp(op){
   var recetas = DB.costeo && DB.costeo.recetas ? DB.costeo.recetas : [];
   if(!recetas.length || !op.nombre_producto) return null;
   var nombre = op.nombre_producto.trim().toUpperCase();
-  // Buscar coincidencia exacta primero, luego parcial
+  // 1. Verificar mapa de vínculos explícitos primero
+  var mapa = (DB.costeo && DB.costeo.receta_map) || {};
+  if(mapa[nombre]){
+    var rMap = recetas.find(function(rec){ return rec.id===mapa[nombre]; });
+    if(rMap) return rMap;
+  }
+  // 2. Coincidencia exacta o parcial por nombre
   var r = recetas.find(function(rec){ return rec.producto.toUpperCase()===nombre; });
   if(!r) r = recetas.find(function(rec){ return rec.producto.toUpperCase().indexOf(nombre)===0; });
   if(!r) r = recetas.find(function(rec){ return rec.producto.toUpperCase().indexOf(nombre)>=0; });
@@ -11914,7 +11920,8 @@ function renderCosteo(){
   if(!DB.costeo) DB.costeo={mp:[],servicios:[],puestos:[],tarifas_cif:[],params:{},recetas:[],precios_pt:[]};
   // Contar pendientes para badge
   var _recetasNombres = (DB.costeo.recetas||[]).map(function(r){ return r.producto.toUpperCase(); });
-  function _tieneReceta(nombre){ var n=(nombre||'').toUpperCase(); return _recetasNombres.some(function(rn){ return rn===n||rn.indexOf(n)===0||n.indexOf(rn)===0; }); }
+  var _recMapa = DB.costeo.receta_map||{};
+  function _tieneReceta(nombre){ var n=(nombre||'').toUpperCase(); return !!_recMapa[n]||_recetasNombres.some(function(rn){ return rn===n||rn.indexOf(n)===0||n.indexOf(rn)===0; }); }
   var _opsSinReceta = (DB.ops||[]).filter(function(op){ return op.estado_op!=='ARCHIVADO' && op.nombre_producto && !_tieneReceta(op.nombre_producto); });
   var _disSinReceta = (DB.disenos||[]).filter(function(d){ return !d.eliminado && d.nombre && !_tieneReceta(d.nombre); });
   var _totalPend = _opsSinReceta.length + _disSinReceta.length;
@@ -12975,7 +12982,8 @@ function guardarPreciosReceta(producto){
 // ── Tab: Tarifas ──────────────────────────────────────────────────────────────
 function renderCosteoPendientes(){
   var recetasNombres = (DB.costeo.recetas||[]).map(function(r){ return r.producto.toUpperCase(); });
-  function tieneRec(nombre){ var n=(nombre||'').toUpperCase(); return recetasNombres.some(function(rn){ return rn===n||rn.indexOf(n)===0||n.indexOf(rn)===0; }); }
+  var recMapa = DB.costeo.receta_map||{};
+  function tieneRec(nombre){ var n=(nombre||'').toUpperCase(); return !!recMapa[n]||recetasNombres.some(function(rn){ return rn===n||rn.indexOf(n)===0||n.indexOf(rn)===0; }); }
 
   // Agrupar OPs sin receta por nombre de producto (una sola entrada por producto único)
   var opMap = {};
@@ -13020,7 +13028,10 @@ function renderCosteoPendientes(){
       h += '<span style="font-size:10px;color:#475569;">'+item.ops.length+' OP'+(item.ops.length!==1?'s':'')+': '+item.ops.slice(0,4).map(function(id){ return '<span style="color:#0a84ff;font-weight:700;">'+fmtOpId(id)+'</span>'; }).join(' · ')+(item.ops.length>4?' <span style="color:#475569;">+' +(item.ops.length-4)+'</span>':'')+'</span>';
       h += '</div>';
       h += '</div>';
-      h += '<button data-nombre="'+esc(item.nombre)+'" onclick="_crearRecetaDesde(this.dataset.nombre)" style="background:#0a84ff;border:none;border-radius:7px;color:#000;font-size:11px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;flex-shrink:0;">+ Crear receta</button>';
+      h += '<div style="display:flex;gap:6px;flex-shrink:0;">';
+      h += '<button data-nombre="'+esc(item.nombre)+'" onclick="_vincularRecetaModal(this.dataset.nombre)" style="background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.35);border-radius:7px;color:#34d399;font-size:11px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">🔗 Vincular</button>';
+      h += '<button data-nombre="'+esc(item.nombre)+'" onclick="_crearRecetaDesde(this.dataset.nombre)" style="background:#0a84ff;border:none;border-radius:7px;color:#000;font-size:11px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">+ Crear</button>';
+      h += '</div>';
       h += '</div>';
     });
     h += '</div>';
@@ -13039,7 +13050,10 @@ function renderCosteoPendientes(){
       h += '<div style="font-size:13px;font-weight:700;color:#d1fae5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(d.nombre)+'</div>';
       h += '<div style="font-size:10px;color:#475569;margin-top:2px;">'+esc(d.categoria||'—')+' · '+(d.kanban_estado||'').replace(/_/g,' ')+'</div>';
       h += '</div>';
-      h += '<button data-nombre="'+esc(d.nombre)+'" onclick="_crearRecetaDesde(this.dataset.nombre)" style="background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.35);border-radius:7px;color:#fbbf24;font-size:11px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;flex-shrink:0;">+ Crear receta</button>';
+      h += '<div style="display:flex;gap:6px;flex-shrink:0;">';
+      h += '<button data-nombre="'+esc(d.nombre)+'" onclick="_vincularRecetaModal(this.dataset.nombre)" style="background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.35);border-radius:7px;color:#34d399;font-size:11px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">🔗 Vincular</button>';
+      h += '<button data-nombre="'+esc(d.nombre)+'" onclick="_crearRecetaDesde(this.dataset.nombre)" style="background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.35);border-radius:7px;color:#fbbf24;font-size:11px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">+ Crear</button>';
+      h += '</div>';
       h += '</div>';
     });
     h += '</div>';
@@ -13054,6 +13068,47 @@ function renderCosteoPendientes(){
 
   h += '</div>';
   return h;
+}
+
+function _vincularRecetaModal(nombre){
+  var recetas = (DB.costeo.recetas||[]).slice().sort(function(a,b){ return a.producto.localeCompare(b.producto); });
+  var html = '<div style="padding:0 20px 20px;">';
+  html += '<p style="font-size:12px;color:#94a3b8;margin-bottom:14px;">Selecciona la receta existente que corresponde a <strong style="color:#e2e8f0;">'+esc(nombre)+'</strong>:</p>';
+  html += '<input id="vinc-busq" type="text" placeholder="🔍 Filtrar recetas..." oninput="_vincFiltrar(this.value)" style="width:100%;box-sizing:border-box;background:#0d1117;border:1px solid #2c2c2e;border-radius:8px;color:#e2e8f0;padding:8px 12px;font-size:12px;outline:none;margin-bottom:10px;" autofocus>';
+  html += '<div id="vinc-lista" style="display:flex;flex-direction:column;gap:5px;max-height:380px;overflow-y:auto;">';
+  recetas.forEach(function(rec){
+    var res = calcResumen(rec);
+    html += '<div data-vinc-id="'+rec.id+'" data-vinc-nombre="'+esc(nombre)+'" onclick="_guardarVinculoReceta(this.dataset.vincNombre,this.dataset.vincId)" style="display:flex;align-items:center;justify-content:space-between;background:#0d1117;border:1px solid #2c2c2e;border-radius:8px;padding:10px 14px;cursor:pointer;transition:border-color .12s,background .12s;" onmouseover="this.style.borderColor=\'#0a84ff\';this.style.background=\'rgba(10,132,255,.06)\'" onmouseout="this.style.borderColor=\'#2c2c2e\';this.style.background=\'#0d1117\'">';
+    html += '<div style="flex:1;min-width:0;">';
+    html += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(rec.producto)+'</div>';
+    if(rec.referencia) html += '<div style="font-size:10px;color:#475569;">Ref: '+esc(rec.referencia)+'</div>';
+    html += '</div>';
+    html += '<div style="text-align:right;flex-shrink:0;margin-left:14px;">';
+    html += '<div style="font-size:14px;font-weight:800;color:#e2e8f0;">'+fmtCopFull(res.total)+'</div>';
+    html += '<div style="font-size:9px;color:#475569;">'+rec.componentes.length+' comp.</div>';
+    html += '</div>';
+    html += '</div>';
+  });
+  html += '</div></div>';
+  openModal('🔗 Vincular receta a · '+nombre, html);
+  setTimeout(function(){ var i=document.getElementById('vinc-busq'); if(i) i.focus(); },100);
+}
+function _vincFiltrar(q){
+  var el = document.getElementById('vinc-lista'); if(!el) return;
+  var Q = (q||'').trim().toUpperCase();
+  el.querySelectorAll('[data-vinc-id]').forEach(function(row){
+    var txt = row.textContent.toUpperCase();
+    row.style.display = (!Q || txt.indexOf(Q)>=0) ? '' : 'none';
+  });
+}
+function _guardarVinculoReceta(nombre, recetaId){
+  if(!DB.costeo.receta_map) DB.costeo.receta_map = {};
+  DB.costeo.receta_map[nombre.toUpperCase()] = recetaId;
+  guardarCosteo().then(function(){
+    closeModal();
+    toast('Receta vinculada a "'+nombre+'"','success');
+    renderPage('costeo');
+  });
 }
 
 function _crearRecetaDesde(nombre){
