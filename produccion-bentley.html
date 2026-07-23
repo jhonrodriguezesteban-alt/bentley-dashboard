@@ -11912,7 +11912,13 @@ function _costeoId(){ return 'cid_'+Date.now()+'_'+Math.floor(Math.random()*9999
 
 function renderCosteo(){
   if(!DB.costeo) DB.costeo={mp:[],servicios:[],puestos:[],tarifas_cif:[],params:{},recetas:[],precios_pt:[]};
-  var tabs=[{k:'mp',l:'📦 Materias Primas'},{k:'servicios',l:'🔧 Servicios'},{k:'recetas',l:'🧪 Recetas'},{k:'tarifas',l:'⚙️ Tarifas'},{k:'precios',l:'💹 Análisis de Precios'}];
+  // Contar pendientes para badge
+  var _recetasNombres = (DB.costeo.recetas||[]).map(function(r){ return r.producto.toUpperCase(); });
+  function _tieneReceta(nombre){ var n=(nombre||'').toUpperCase(); return _recetasNombres.some(function(rn){ return rn===n||rn.indexOf(n)===0||n.indexOf(rn)===0; }); }
+  var _opsSinReceta = (DB.ops||[]).filter(function(op){ return op.estado_op!=='ARCHIVADO' && op.nombre_producto && !_tieneReceta(op.nombre_producto); });
+  var _disSinReceta = (DB.disenos||[]).filter(function(d){ return !d.eliminado && d.nombre && !_tieneReceta(d.nombre); });
+  var _totalPend = _opsSinReceta.length + _disSinReceta.length;
+  var tabs=[{k:'mp',l:'📦 Materias Primas'},{k:'servicios',l:'🔧 Servicios'},{k:'recetas',l:'🧪 Recetas'},{k:'tarifas',l:'⚙️ Tarifas'},{k:'precios',l:'💹 Análisis de Precios'},{k:'pendientes',l:'⚠️ Pendientes'+(_totalPend?' <span style="background:#ef4444;color:#fff;border-radius:10px;font-size:9px;font-weight:800;padding:1px 6px;margin-left:2px;">'+_totalPend+'</span>':'')}];
   var h='<div style="padding:16px 20px;height:100%;overflow-y:auto;box-sizing:border-box;">';
   // Buscador global del módulo
   h+='<div style="margin-bottom:14px;">';
@@ -11924,11 +11930,12 @@ function renderCosteo(){
     h+='<button onclick="_costeoTab=\''+t.k+'\';renderPage(\'costeo\')" style="padding:10px 16px;font-size:12px;font-weight:600;cursor:pointer;background:none;border:none;border-bottom:2px solid '+(a?'#0a84ff':'transparent')+';color:'+(a?'#0a84ff':'#475569')+';white-space:nowrap;">'+t.l+'</button>';
   });
   h+='</div>';
-  if(_costeoTab==='mp')          h+=renderCosteoMP();
+  if(_costeoTab==='mp')             h+=renderCosteoMP();
   else if(_costeoTab==='servicios') h+=renderServicios();
   else if(_costeoTab==='recetas')   h+=renderCosteoRecetas();
   else if(_costeoTab==='tarifas')   h+=renderCosteoTarifas();
   else if(_costeoTab==='precios')   h+=renderCosteoPrecios();
+  else if(_costeoTab==='pendientes')h+=renderCosteoPendientes();
   h+='</div>';
   return h;
 }
@@ -12966,6 +12973,99 @@ function guardarPreciosReceta(producto){
 }
 
 // ── Tab: Tarifas ──────────────────────────────────────────────────────────────
+function renderCosteoPendientes(){
+  var recetasNombres = (DB.costeo.recetas||[]).map(function(r){ return r.producto.toUpperCase(); });
+  function tieneRec(nombre){ var n=(nombre||'').toUpperCase(); return recetasNombres.some(function(rn){ return rn===n||rn.indexOf(n)===0||n.indexOf(rn)===0; }); }
+
+  // Agrupar OPs sin receta por nombre de producto (una sola entrada por producto único)
+  var opMap = {};
+  (DB.ops||[]).filter(function(op){ return op.estado_op!=='ARCHIVADO' && op.nombre_producto && !tieneRec(op.nombre_producto); }).forEach(function(op){
+    var k = (op.nombre_producto||'').toUpperCase();
+    if(!opMap[k]) opMap[k] = {nombre:op.nombre_producto, categoria:op.categoria||'', ops:[], tipo:'op'};
+    opMap[k].ops.push(op.id);
+  });
+
+  // Diseños sin receta
+  var disPend = (DB.disenos||[]).filter(function(d){ return !d.eliminado && d.nombre && !tieneRec(d.nombre); });
+
+  var opItems = Object.values(opMap).sort(function(a,b){ return a.nombre.localeCompare(b.nombre); });
+
+  var h = '<div>';
+
+  // Resumen
+  h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;">';
+  h += '<div style="background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.25);border-radius:10px;padding:14px 18px;">';
+  h += '<div style="font-size:10px;font-weight:700;color:#f87171;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">OPs sin receta de costos</div>';
+  h += '<div style="font-size:32px;font-weight:900;color:#ef4444;">'+opItems.length+'</div>';
+  h += '<div style="font-size:11px;color:#64748b;margin-top:2px;">productos únicos activos en producción</div>';
+  h += '</div>';
+  h += '<div style="background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.25);border-radius:10px;padding:14px 18px;">';
+  h += '<div style="font-size:10px;font-weight:700;color:#fbbf24;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Diseños sin receta de costos</div>';
+  h += '<div style="font-size:32px;font-weight:900;color:#f59e0b;">'+disPend.length+'</div>';
+  h += '<div style="font-size:11px;color:#64748b;margin-top:2px;">diseños activos sin estructura de costos</div>';
+  h += '</div>';
+  h += '</div>';
+
+  // ── OPs pendientes ────────────────────────────────────────────────────────────
+  if(opItems.length){
+    h += '<div style="font-size:11px;font-weight:700;color:#f87171;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">📋 OPs activas sin receta</div>';
+    h += '<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:20px;">';
+    opItems.forEach(function(item){
+      var catColor = {CHAQUETAS:'#6366f1',ABRIGOS:'#8b5cf6',CONJUNTOS:'#3b82f6',PANTALONES:'#10b981',BUZOS:'#0ea5e9',BLUSAS:'#f59e0b',CAMISETAS:'#34d399',VESTIDOS:'#ec4899',CAMISONES:'#a855f7'}[(item.categoria||'').toUpperCase().replace(' PR','')] || '#475569';
+      h += '<div style="display:flex;align-items:center;gap:12px;background:#0d1117;border:1px solid rgba(239,68,68,.2);border-radius:9px;padding:11px 14px;">';
+      h += '<div style="flex:1;min-width:0;">';
+      h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+esc(item.nombre)+'</div>';
+      h += '<div style="display:flex;align-items:center;gap:8px;margin-top:4px;">';
+      h += '<span style="font-size:10px;font-weight:700;background:'+catColor+'18;border:1px solid '+catColor+'40;color:'+catColor+';border-radius:5px;padding:1px 7px;">'+esc(item.categoria||'Sin cat.')+'</span>';
+      h += '<span style="font-size:10px;color:#475569;">'+item.ops.length+' OP'+(item.ops.length!==1?'s':'')+': '+item.ops.slice(0,4).map(function(id){ return '<span style="color:#0a84ff;font-weight:700;">'+fmtOpId(id)+'</span>'; }).join(' · ')+(item.ops.length>4?' <span style="color:#475569;">+' +(item.ops.length-4)+'</span>':'')+'</span>';
+      h += '</div>';
+      h += '</div>';
+      h += '<button data-nombre="'+esc(item.nombre)+'" onclick="_crearRecetaDesde(this.dataset.nombre)" style="background:#0a84ff;border:none;border-radius:7px;color:#000;font-size:11px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;flex-shrink:0;">+ Crear receta</button>';
+      h += '</div>';
+    });
+    h += '</div>';
+  }
+
+  // ── Diseños pendientes ────────────────────────────────────────────────────────
+  if(disPend.length){
+    h += '<div style="font-size:11px;font-weight:700;color:#f59e0b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">🎨 Diseños sin receta</div>';
+    h += '<div style="display:flex;flex-direction:column;gap:6px;">';
+    disPend.forEach(function(d){
+      var thumb = (d.imagenes&&d.imagenes.length) ? d.imagenes[0].url : '';
+      h += '<div style="display:flex;align-items:center;gap:12px;background:#0d1117;border:1px solid rgba(251,191,36,.2);border-radius:9px;padding:11px 14px;">';
+      if(thumb) h += '<img src="'+esc(thumb)+'" style="width:40px;height:40px;object-fit:cover;border-radius:6px;flex-shrink:0;">';
+      else h += '<div style="width:40px;height:40px;border-radius:6px;background:#1c1c1e;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🎨</div>';
+      h += '<div style="flex:1;min-width:0;">';
+      h += '<div style="font-size:13px;font-weight:700;color:#d1fae5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(d.nombre)+'</div>';
+      h += '<div style="font-size:10px;color:#475569;margin-top:2px;">'+esc(d.categoria||'—')+' · '+(d.kanban_estado||'').replace(/_/g,' ')+'</div>';
+      h += '</div>';
+      h += '<button data-nombre="'+esc(d.nombre)+'" onclick="_crearRecetaDesde(this.dataset.nombre)" style="background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.35);border-radius:7px;color:#fbbf24;font-size:11px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;flex-shrink:0;">+ Crear receta</button>';
+      h += '</div>';
+    });
+    h += '</div>';
+  }
+
+  if(!opItems.length && !disPend.length){
+    h += '<div style="text-align:center;padding:60px 20px;color:#34d399;">';
+    h += '<div style="font-size:40px;margin-bottom:12px;">✅</div>';
+    h += '<div style="font-size:15px;font-weight:700;">Todos los productos tienen receta de costos</div>';
+    h += '</div>';
+  }
+
+  h += '</div>';
+  return h;
+}
+
+function _crearRecetaDesde(nombre){
+  _costeoTab = 'recetas';
+  renderPage('costeo');
+  abrirModalReceta(null);
+  setTimeout(function(){
+    var inp = document.getElementById('modal-rec-producto');
+    if(inp){ inp.value = nombre; inp.focus(); }
+  }, 150);
+}
+
 function renderCosteoTarifas(){
   var subs=[{k:'puestos',l:'👷 Puestos MOD'},{k:'cif',l:'🏭 Tarifas CIF'},{k:'params',l:'⚙️ Parámetros'}];
   var h='<div>';
