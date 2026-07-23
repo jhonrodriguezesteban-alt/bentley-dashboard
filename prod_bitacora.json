@@ -407,16 +407,25 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1784756019249_m9687",
-      "ts": 1784756019249,
-      "user": "Carolina",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782397563974_aiz708tzd",
-      "nombre": "CONJUNTO PASCAL",
       "categoria": "Conjuntos",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1782397563974_aiz708tzd",
       "estado_anterior": "EN_DISENO_DIGITAL",
-      "estado_nuevo": "EN_CORTE_MUESTRA"
+      "estado_nuevo": "EN_CORTE_MUESTRA",
+      "id": "evt_1784756019249_m9687",
+      "marca": "Bentley Kids",
+      "nombre": "CONJUNTO PASCAL",
+      "tipo": "estado_diseno",
+      "ts": 1784756019249,
+      "user": "Carolina"
+    },
+    {
+      "id": "evt_1784772598423_wd07j",
+      "ts": 1784772598423,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-0054",
+      "op_nombre": "BEISBOLERA 2.0",
+      "mes": "2026-06"
     }
   ]
 }
