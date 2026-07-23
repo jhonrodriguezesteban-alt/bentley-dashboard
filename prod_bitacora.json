@@ -440,16 +440,28 @@
       "user": "Carolina"
     },
     {
-      "id": "evt_1784817719974_6u3lm",
-      "ts": 1784817719974,
-      "user": "Carolina",
-      "tipo": "editar_diseno",
-      "nombre": "CHAQUETA BAGGY PINZAS PR VERSION KIDS",
       "categoria": "Chaquetas",
-      "marca": "Bentley Kids",
-      "prioridad": 1,
+      "id": "evt_1784817719974_6u3lm",
       "kanban": "EN_CORTE_MUESTRA",
-      "proveedor": "ninguno"
+      "marca": "Bentley Kids",
+      "nombre": "CHAQUETA BAGGY PINZAS PR VERSION KIDS",
+      "prioridad": 1,
+      "proveedor": "ninguno",
+      "tipo": "editar_diseno",
+      "ts": 1784817719974,
+      "user": "Carolina"
+    },
+    {
+      "id": "evt_1784821530496_r14dg",
+      "ts": 1784821530496,
+      "user": "Carolina",
+      "tipo": "estado_diseno",
+      "diseno_id": "id_1782181414506_mgfc0dyut",
+      "nombre": "PANTALON VENOM",
+      "categoria": "Pantalones",
+      "marca": "Bentley Kids",
+      "estado_anterior": "EN_DISENO_DIGITAL",
+      "estado_nuevo": "EN_CORTE_MUESTRA"
     }
   ]
 }
