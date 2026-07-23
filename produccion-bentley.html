@@ -2011,10 +2011,24 @@ function globalSearchClose(){
 var _PLAN_MES_LABELS = {'2026-06':'Junio','2026-07':'Julio','2026-08':'Agosto','2026-09':'Septiembre','2026-10':'Octubre','2026-11':'Noviembre','2026-12':'Diciembre'};
 var _PLAN_MES_COLORS = {'2026-06':'#6366f1','2026-07':'#3b82f6','2026-08':'#8b5cf6','2026-09':'#f59e0b','2026-10':'#10b981','2026-11':'#ef4444','2026-12':'#f97316'};
 var _planScrollMes = null;
-var _planDisOpen = true;
+var _planDisOpen = false;
+var _planBusqRef = '';
 var _planDisFiltroEtapa = ''; // '' = todas
 
 function togglePlanDis(){ _planDisOpen = !_planDisOpen; renderPage('planeacion'); }
+function _planFiltrarMeses(){
+  var q = (_planBusqRef||'').trim().toUpperCase();
+  var limpiarBtn = document.querySelector('#plan-busq-ref + button, #plan-busq-ref ~ button');
+  // Mostrar/ocultar botón limpiar inline sin re-render
+  document.querySelectorAll('[data-plan-mes]').forEach(function(card){
+    if(!q){ card.style.opacity=''; card.style.outline=''; return; }
+    var refs = (card.dataset.refs||'').toUpperCase();
+    var match = refs.indexOf(q) >= 0;
+    card.style.opacity = match ? '1' : '0.2';
+    card.style.outline = match ? '2px solid #0a84ff' : 'none';
+    card.style.transition = 'opacity .2s, outline .2s';
+  });
+}
 function setPlanDisFiltro(etapa){ _planDisFiltroEtapa = etapa; renderPage('planeacion'); }
 function hexToRgbStr(hex){ var r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16); return r+','+g+','+b; }
 
@@ -2438,6 +2452,7 @@ function renderPage(page){
   else if(page==='bitacora') el.innerHTML = renderBitacora();
   else if(page==='planeacion'){
     el.innerHTML = renderPlaneacion();
+    if(_planBusqRef) setTimeout(_planFiltrarMeses, 0);
     if(_planScrollMes){
       var target = _planScrollMes==='pool'
         ? document.querySelector('[data-plan-dz="pool"]')
@@ -3115,8 +3130,19 @@ function renderPlaneacion(){
   }
   h += '</div></div>';
 
+  // ── Buscador de referencias por mes ─────────────────────────────────────────
+  h += '<div style="margin-bottom:14px;display:flex;align-items:center;gap:10px;">';
+  h += '<div style="position:relative;flex:1;max-width:380px;">';
+  h += '<span style="position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;">🔍</span>';
+  h += '<input id="plan-busq-ref" type="text" value="'+esc(_planBusqRef)+'" placeholder="Buscar referencia en los meses..." oninput="_planBusqRef=this.value.toUpperCase();_planFiltrarMeses()" style="width:100%;box-sizing:border-box;background:#0a0d14;border:1px solid #2c2c2e;border-radius:9px;color:#e2e8f0;font-size:13px;font-weight:600;padding:9px 12px 9px 34px;outline:none;transition:border-color .15s;" onfocus="this.style.borderColor=\'#0a84ff\'" onblur="this.style.borderColor=\'#2c2c2e\'">';
+  h += '</div>';
+  if(_planBusqRef){
+    h += '<button onclick="_planBusqRef=\'\';document.getElementById(\'plan-busq-ref\').value=\'\';_planFiltrarMeses()" style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);border-radius:7px;color:#f87171;font-size:11px;font-weight:700;padding:7px 12px;cursor:pointer;">✕ Limpiar</button>';
+  }
+  h += '</div>';
+
   // ── Grid de meses ────────────────────────────────────────────────────────────
-  h += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">';
+  h += '<div id="plan-meses-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">';
 
   // Índice de diseños por mes
   var disPlanAll = (DB.planeacion && DB.planeacion.disenos_plan) || {};
@@ -3167,7 +3193,8 @@ function renderPlaneacion(){
 
     var catEntries = Object.keys(catMap).sort(function(a,b){ return catMap[b]-catMap[a]; });
 
-    h += '<div data-plan-mes="'+mes.k+'" style="background:#0a0d14;border:1px solid '+mes.color+'33;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;">';
+    var _mesRefs = mesOps.map(function(op){ return (op.nombre_producto||op.id); }).concat(mesDisenos.map(function(d){ return d.nombre||''; })).join('|').toUpperCase();
+    h += '<div data-plan-mes="'+mes.k+'" data-refs="'+esc(_mesRefs)+'" style="background:#0a0d14;border:1px solid '+mes.color+'33;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;">';
 
     // Month header
     h += '<div style="background:'+mes.bg+';border-bottom:1px solid '+mes.color+'22;padding:11px 14px;">';
