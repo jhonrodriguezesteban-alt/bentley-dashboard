@@ -9112,7 +9112,101 @@ async function cronSetFechaOP(opId, nuevaFecha, motivo){
 }
 
 var _cronFiltroSat = 'todos';
-var _cronFiltroSem = false; // mostrar solo esta semana
+var _cronFiltroSem = false;
+var _cronDragOpId2 = null;
+
+function _cronDragStart2(e, opId){
+  _cronDragOpId2 = opId;
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', opId);
+  setTimeout(function(){ var el=document.querySelector('[data-cronopid="'+opId+'"]'); if(el) el.style.opacity='0.4'; },0);
+}
+function _cronDragEnd2(e){
+  var opId = _cronDragOpId2;
+  if(opId){ var el=document.querySelector('[data-cronopid="'+opId+'"]'); if(el) el.style.opacity=''; }
+}
+function _cronDragOver2(e){
+  e.preventDefault(); e.dataTransfer.dropEffect='move';
+  e.currentTarget.style.background='rgba(10,132,255,.12)';
+  e.currentTarget.style.borderColor='rgba(10,132,255,.5)';
+}
+function _cronDragLeave2(e){
+  e.currentTarget.style.background='';
+  e.currentTarget.style.borderColor='';
+}
+async function _cronDrop2(e, fecha){
+  e.preventDefault();
+  e.currentTarget.style.background=''; e.currentTarget.style.borderColor='';
+  var opId = _cronDragOpId2 || e.dataTransfer.getData('text/plain');
+  _cronDragOpId2 = null;
+  if(!opId) return;
+  var ents = (DB.cronograma||[]).filter(function(x){ return x.op_id===opId && !x.entregado; });
+  if(!ents.length) return;
+  ents.forEach(function(x){
+    if(!x.fecha_inicial) x.fecha_inicial = fecha;
+    if(x.fecha_compromiso && x.fecha_compromiso!==fecha){
+      x.historial.push({fecha_anterior:x.fecha_compromiso, fecha_nueva:fecha, motivo:'Reubicado en tablero', by:getUser(), at:hoy()});
+    } else if(!x.fecha_compromiso){
+      x.historial.push({fecha_anterior:null, fecha_nueva:fecha, motivo:'Asignación inicial', by:getUser(), at:hoy()});
+    }
+    x.fecha_compromiso = fecha;
+  });
+  _logEvt('cronograma_fecha', {op_id:opId, fecha_nueva:fecha, motivo:'Reubicado en tablero'});
+  var ok = await guardarCronograma();
+  if(ok) renderPage('cronograma');
+}
+async function _cronDropPool2(e){
+  e.preventDefault();
+  e.currentTarget.style.background=''; e.currentTarget.style.borderColor='';
+  var opId = _cronDragOpId2 || e.dataTransfer.getData('text/plain');
+  _cronDragOpId2 = null;
+  if(!opId) return;
+  var ents = (DB.cronograma||[]).filter(function(x){ return x.op_id===opId && !x.entregado; });
+  ents.forEach(function(x){
+    if(x.fecha_compromiso) x.historial.push({fecha_anterior:x.fecha_compromiso, fecha_nueva:null, motivo:'Removido del tablero', by:getUser(), at:hoy()});
+    x.fecha_compromiso = null;
+  });
+  var ok = await guardarCronograma();
+  if(ok) renderPage('cronograma');
+}
+
+function _cronKanbanCard(opId, entries){
+  var rep = entries[0];
+  var totalUds = entries.reduce(function(a,x){ return a+(x.uds||0); },0);
+  var colores = entries.map(function(x){ return x.color; }).filter(Boolean);
+  var satNom = getSatNombre(rep.satelite_id);
+  var hoyStr = hoy();
+  var fechaComp = rep.fecha_compromiso;
+  var esVencida = fechaComp && fechaComp < hoyStr;
+  var esHoy = fechaComp === hoyStr;
+  var cambios = entries.reduce(function(a,x){ return a+(x.historial||[]).filter(function(h){ return h.fecha_anterior; }).length; },0);
+  var border = esVencida ? 'rgba(239,68,68,.45)' : '#252836';
+  var bg = esVencida ? 'rgba(239,68,68,.05)' : '#141820';
+  var nombre = rep.op_nombre || opId;
+  var h = '';
+  h += '<div draggable="true" data-cronopid="'+opId+'" ';
+  h += 'ondragstart="_cronDragStart2(event,this.dataset.cronopid)" ondragend="_cronDragEnd2(event)" ';
+  h += 'onclick="cronAbrirFechaOP(this.dataset.cronopid)" ';
+  h += 'style="background:'+bg+';border:1px solid '+border+';border-radius:10px;padding:9px 11px;cursor:grab;margin-bottom:6px;transition:box-shadow .12s;" ';
+  h += 'onmouseover="this.style.boxShadow=\'0 0 0 1px rgba(10,132,255,.5)\'" onmouseout="this.style.boxShadow=\'\'">';
+  h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">';
+  h += '<span style="font-size:9px;font-weight:800;color:var(--accent);background:rgba(10,132,255,.12);border:1px solid rgba(10,132,255,.2);border-radius:4px;padding:1px 5px;">'+esc(opId)+'</span>';
+  if(esVencida) h += '<span style="font-size:8px;font-weight:800;color:#ef4444;background:rgba(239,68,68,.15);border-radius:3px;padding:1px 5px;">VENCIDA</span>';
+  else if(esHoy) h += '<span style="font-size:8px;font-weight:800;color:#0a84ff;background:rgba(10,132,255,.15);border-radius:3px;padding:1px 5px;">HOY</span>';
+  else if(cambios) h += '<span style="font-size:8px;color:#f59e0b;" title="'+cambios+' cambio(s)">⚠ '+cambios+'</span>';
+  h += '</div>';
+  h += '<div style="font-size:11px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:4px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">'+esc(nombre)+'</div>';
+  h += '<div style="font-size:9px;color:#475569;margin-bottom:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">🏭 '+esc(satNom)+'</div>';
+  if(colores.length){
+    h += '<div style="display:flex;flex-wrap:wrap;gap:2px;margin-bottom:5px;">';
+    colores.slice(0,4).forEach(function(c){ h += '<span style="font-size:7px;background:#1c2033;border:1px solid #2c3050;border-radius:3px;padding:1px 4px;color:#64748b;max-width:55px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(c)+'</span>'; });
+    if(colores.length>4) h += '<span style="font-size:8px;color:#475569;">+'+( colores.length-4)+'</span>';
+    h += '</div>';
+  }
+  h += '<div style="font-size:10px;font-weight:700;color:#64748b;">'+totalUds.toLocaleString('es-CO')+' uds</div>';
+  h += '</div>';
+  return h;
+}
 
 function renderCronograma(){
   if(!DB.cronograma) DB.cronograma = [];
@@ -9126,15 +9220,17 @@ function renderCronograma(){
     toSync.forEach(function(ot){ _cronAutoSync(ot); });
   }
 
-  // Semana actual
-  var hoyDate = new Date();
-  var dow = hoyDate.getDay(); // 0=dom
-  var lunesOffset = dow===0 ? -6 : 1-dow;
-  var lunes = new Date(hoyDate); lunes.setDate(hoyDate.getDate()+lunesOffset);
-  var semDias = [];
-  for(var sd=0;sd<7;sd++){ var d2=new Date(lunes); d2.setDate(lunes.getDate()+sd); semDias.push(d2.toISOString().slice(0,10)); }
-  var semFin = semDias[6];
-  var semIni = semDias[0];
+  // Rango de días: -2 días pasados + hoy + 27 futuros = 30 columnas
+  var hoyStr2 = hoy();
+  var hoyBase = new Date(hoyStr2+'T12:00:00');
+  var DIAS_LABEL2 = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  var diasRange = [];
+  for(var di=-2; di<=27; di++){
+    var dd = new Date(hoyBase); dd.setDate(hoyBase.getDate()+di);
+    diasRange.push(dd.toISOString().slice(0,10));
+  }
+  var semIni = diasRange[2]; // hoy - 0 (index of today)
+  var semFin = diasRange[8]; // hoy + 6
 
   var activos = (DB.cronograma||[]).filter(function(e){ return !e.entregado; });
   var todos   = DB.cronograma||[];
@@ -9162,18 +9258,19 @@ function renderCronograma(){
   var h = '<div style="padding:18px 16px 80px;">';
 
   // ── Header ──
-  h += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;">';
+  h += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;">';
   h += '<div><div style="font-size:22px;font-weight:800;color:var(--accent);">🎯 Cronograma</div>';
-  h += '<div style="font-size:11px;color:#64748b;">Seguimiento de fechas de entrega — satélites en confección</div></div>';
+  h += '<div style="font-size:11px;color:#64748b;">Arrastra las OPs al día de entrega comprometida</div></div>';
   h += '</div>';
 
-  // ── KPIs ──
-  h += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:20px;">';
+  // ── KPIs compactos ──
+  h += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;">';
   function cronKpi(label,val,color,sub){
-    return '<div class="card" style="padding:12px 14px;"><div style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">'+label+'</div>'+
-      '<div style="font-size:22px;font-weight:800;color:'+color+';">'+val+'</div>'+
-      (sub?'<div style="font-size:10px;color:#475569;margin-top:2px;">'+sub+'</div>':'')+
-      '</div>';
+    return '<div style="background:#0f1520;border:1px solid #2c2c2e;border-radius:9px;padding:9px 14px;display:flex;align-items:center;gap:10px;">'+
+      '<div style="font-size:18px;font-weight:900;color:'+color+';">'+val+'</div>'+
+      '<div><div style="font-size:9px;font-weight:700;color:'+color+';text-transform:uppercase;letter-spacing:.4px;">'+label+'</div>'+
+      (sub?'<div style="font-size:9px;color:#475569;">'+sub+'</div>':'')+
+      '</div></div>';
   }
   h += cronKpi('En confección', totalConf, 'var(--accent)', 'órdenes activas');
   h += cronKpi('Sin fecha', sinFecha, sinFecha?'#f59e0b':'#10b981', 'pendiente asignar');
@@ -9183,198 +9280,120 @@ function renderCronograma(){
   h += cronKpi('Días prom.', diasPromedio||'—', '#94a3b8', 'entrada → entrega');
   h += '</div>';
 
-  // ── Vista semanal ──
-  var DIAS_LABEL = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
-  h += '<div class="card" style="padding:14px 16px;margin-bottom:20px;">';
-  h += '<div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#38bdf8;margin-bottom:12px;">📅 Esta semana — quién entrega</div>';
-  h += '<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;">';
-  semDias.forEach(function(dStr){
-    var dObj = new Date(dStr+'T12:00:00');
-    var esHoy = dStr===hoy();
-    var label = DIAS_LABEL[dObj.getDay()];
-    var dia   = dObj.getDate();
-    var entregan = activos.filter(function(e){ return e.fecha_compromiso===dStr; });
-    h += '<div style="background:'+(esHoy?'rgba(10,132,255,.12)':'#0d1117')+';border:1px solid '+(esHoy?'rgba(10,132,255,.4)':'#2c2c2e')+';border-radius:9px;padding:8px 6px;min-height:70px;">';
-    h += '<div style="font-size:9px;font-weight:700;color:'+(esHoy?'var(--accent)':'#64748b')+';text-align:center;text-transform:uppercase;">'+label+'</div>';
-    h += '<div style="font-size:16px;font-weight:800;color:'+(esHoy?'var(--accent)':'#94a3b8')+';text-align:center;margin-bottom:4px;">'+dia+'</div>';
-    if(entregan.length){
-      entregan.forEach(function(e){
-        var sat = getSatNombre(e.satelite_id);
-        h += '<div style="background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.3);border-radius:5px;padding:3px 5px;margin-bottom:3px;cursor:pointer;" title="'+esc(e.op_nombre+' / '+e.color)+'" onclick="cronAbrirFecha(\''+e.id+'\')">';
-        h += '<div style="font-size:9px;color:#10b981;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(e.op_nombre||e.op_id)+'</div>';
-        h += '<div style="font-size:8px;color:#64748b;">'+esc(e.color)+(sat?(' · '+sat):'')+'</div>';
-        h += '</div>';
-      });
-    } else {
-      h += '<div style="font-size:10px;color:#2c2c2e;text-align:center;margin-top:8px;">—</div>';
-    }
-    h += '</div>';
-  });
-  h += '</div></div>';
-
-  // ── Filtros ──
+  // ── Filtro satélite ──
   var sats = DB.satelites ? DB.satelites.filter(function(s){ return s.activo; }) : [];
-  h += '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:16px;">';
-  h += '<button data-sat="todos" onclick="_cronFiltroSat=\'todos\';renderPage(\'cronograma\')" style="font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid '+(_cronFiltroSat==='todos'?'var(--accent)':'#2c2c2e')+';background:'+(_cronFiltroSat==='todos'?'rgba(10,132,255,.12)':'transparent')+';color:'+(_cronFiltroSat==='todos'?'var(--accent)':'#64748b')+';cursor:pointer;">Todos</button>';
+  h += '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:12px;">';
+  h += '<span style="font-size:9px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.5px;margin-right:2px;">Taller:</span>';
+  h += '<button data-sat="todos" onclick="_cronFiltroSat=\'todos\';renderPage(\'cronograma\')" style="font-size:11px;padding:4px 10px;border-radius:14px;border:1px solid '+(_cronFiltroSat==='todos'?'var(--accent)':'#2c2c2e')+';background:'+(_cronFiltroSat==='todos'?'rgba(10,132,255,.12)':'transparent')+';color:'+(_cronFiltroSat==='todos'?'var(--accent)':'#64748b')+';cursor:pointer;">Todos</button>';
   sats.forEach(function(s){
     var active = _cronFiltroSat===s.id;
-    h += '<button data-sat="'+s.id+'" onclick="_cronFiltroSat=\''+s.id+'\';renderPage(\'cronograma\')" style="font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid '+(active?'var(--accent)':'#2c2c2e')+';background:'+(active?'rgba(10,132,255,.12)':'transparent')+';color:'+(active?'var(--accent)':'#64748b')+';cursor:pointer;">'+esc(s.nombre)+'</button>';
+    h += '<button data-satid="'+s.id+'" onclick="_cronFiltroSat=this.dataset.satid;renderPage(\'cronograma\')" style="font-size:11px;padding:4px 10px;border-radius:14px;border:1px solid '+(active?'var(--accent)':'#2c2c2e')+';background:'+(active?'rgba(10,132,255,.12)':'transparent')+';color:'+(active?'var(--accent)':'#64748b')+';cursor:pointer;">'+esc(s.nombre)+'</button>';
   });
-  h += '<div style="flex:1;"></div>';
-  var filtBtnStyle = 'font-size:11px;padding:5px 12px;border-radius:20px;cursor:pointer;';
-  var actBtn = _cronFiltroSem;
-  h += '<button onclick="_cronFiltroSem='+(!_cronFiltroSem)+';renderPage(\'cronograma\')" style="'+filtBtnStyle+'border:1px solid '+(_cronFiltroSem?'#38bdf8':'#2c2c2e')+';background:'+(_cronFiltroSem?'rgba(56,189,248,.12)':'transparent')+';color:'+(_cronFiltroSem?'#38bdf8':'#64748b')+';">📅 Solo esta semana</button>';
+  h += '<div style="flex:1"></div>';
+  h += '<button onclick="document.getElementById(\'cron-hoy-col\').scrollIntoView({behavior:\'smooth\',block:\'nearest\',inline:\'center\'})" style="font-size:10px;padding:4px 10px;border-radius:14px;border:1px solid rgba(10,132,255,.3);background:rgba(10,132,255,.08);color:var(--accent);cursor:pointer;">📍 Ir a hoy</button>';
   h += '</div>';
 
-  // ── Tabla agrupada por satélite → OP ──
-  var entries = activos.slice();
-  if(_cronFiltroSat !== 'todos') entries = entries.filter(function(e){ return e.satelite_id===_cronFiltroSat; });
-  if(_cronFiltroSem) entries = entries.filter(function(e){ return e.fecha_compromiso && e.fecha_compromiso>=semIni && e.fecha_compromiso<=semFin; });
+  // ── Construir mapa de OPs ──
+  var filtEntries = activos.slice();
+  if(_cronFiltroSat !== 'todos') filtEntries = filtEntries.filter(function(e){ return e.satelite_id===_cronFiltroSat; });
 
-  // Agrupar entradas por satélite
-  var satGroups = {};
-  var sinSatKey = '__sin_satelite__';
-  entries.forEach(function(e){
-    var k = e.satelite_id||sinSatKey;
-    if(!satGroups[k]) satGroups[k] = [];
-    satGroups[k].push(e);
+  var opMap2 = {};
+  filtEntries.forEach(function(e){
+    if(!opMap2[e.op_id]) opMap2[e.op_id] = [];
+    opMap2[e.op_id].push(e);
   });
-  var satKeys = Object.keys(satGroups).filter(function(k){ return k!==sinSatKey; });
-  if(satGroups[sinSatKey]) satKeys.push(sinSatKey);
 
-  if(!satKeys.length){
-    h += '<div style="text-align:center;padding:40px;color:#475569;">';
-    h += '<div style="font-size:36px;margin-bottom:8px;">📭</div>';
-    h += '<div>No hay órdenes en confección con el filtro seleccionado.</div></div>';
+  // Pool de sin fecha — ordenar por satelite + nombre
+  var sinFechaOps = Object.keys(opMap2).filter(function(id){
+    return !opMap2[id][0].fecha_compromiso;
+  }).sort(function(a,b){
+    var sa = getSatNombre(opMap2[a][0].satelite_id);
+    var sb = getSatNombre(opMap2[b][0].satelite_id);
+    return sa.localeCompare(sb) || (opMap2[a][0].op_nombre||a).localeCompare(opMap2[b][0].op_nombre||b);
+  });
+
+  // ── KANBAN ──
+  h += '<div style="display:flex;border:1px solid #1e2235;border-radius:12px;overflow:hidden;height:560px;background:#080c14;">';
+
+  // ── Columna SIN FECHA (fija, scroll-y) ──
+  h += '<div style="width:162px;flex-shrink:0;display:flex;flex-direction:column;border-right:1px solid #1e2235;">';
+  h += '<div style="padding:9px 10px;background:#0a0d14;border-bottom:1px solid #1e2235;flex-shrink:0;">';
+  h += '<div style="font-size:9px;font-weight:800;color:#f59e0b;text-transform:uppercase;letter-spacing:.6px;">Sin fecha</div>';
+  h += '<div style="font-size:10px;color:#64748b;margin-top:1px;">'+sinFechaOps.length+' OPs · Arrastra al día</div>';
+  h += '</div>';
+  h += '<div id="cron-pool" ondragover="_cronDragOver2(event)" ondragleave="_cronDragLeave2(event)" ondrop="_cronDropPool2(event)" ';
+  h += 'style="flex:1;overflow-y:auto;padding:8px;transition:background .15s;">';
+  if(sinFechaOps.length){
+    sinFechaOps.forEach(function(opId){ h += _cronKanbanCard(opId, opMap2[opId]); });
   } else {
-    satKeys.forEach(function(satKey){
-      var satNom = satKey===sinSatKey ? '⚠ Sin satélite asignado' : getSatNombre(satKey);
-      var grpEntries = satGroups[satKey];
-
-      // Agrupar por OP dentro de cada satélite
-      var opMap = {};
-      grpEntries.forEach(function(e){
-        if(!opMap[e.op_id]) opMap[e.op_id] = [];
-        opMap[e.op_id].push(e);
-      });
-      var opIds = Object.keys(opMap);
-      var totalUds = grpEntries.reduce(function(a,e){ return a+(e.uds||0); },0);
-      var vencOps = opIds.filter(function(oid){
-        var fc = opMap[oid][0].fecha_compromiso;
-        return fc && fc < hoy();
-      }).length;
-
-      h += '<div class="card" style="margin-bottom:14px;overflow:hidden;">';
-      h += '<div style="padding:12px 16px;background:rgba(255,255,255,.03);border-bottom:1px solid #2c2c2e;display:flex;align-items:center;gap:10px;">';
-      h += '<span style="font-size:16px;">🏭</span>';
-      h += '<div style="flex:1;"><div style="font-size:13px;font-weight:800;color:#e2e8f0;">'+esc(satNom)+'</div>';
-      h += '<div style="font-size:10px;color:#64748b;">'+opIds.length+' órdenes · '+totalUds.toLocaleString('es-CO')+' uds'+(vencOps?' · <span style="color:#ef4444;">'+vencOps+' vencidas</span>':'')+'</div></div>';
-      h += '</div>';
-
-      h += '<div style="overflow-x:auto;">';
-      h += '<table style="width:100%;border-collapse:collapse;font-size:12px;">';
-      h += '<thead><tr style="background:#0a0d14;">';
-      h += '<th style="padding:9px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">OP</th>';
-      h += '<th style="padding:9px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Referencia</th>';
-      h += '<th style="padding:9px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Colores</th>';
-      h += '<th style="padding:9px 12px;text-align:right;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Uds</th>';
-      h += '<th style="padding:9px 12px;text-align:center;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Entrada conf.</th>';
-      h += '<th style="padding:9px 12px;text-align:center;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Fecha inicial</th>';
-      h += '<th style="padding:9px 12px;text-align:center;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Compromiso</th>';
-      h += '<th style="padding:9px 12px;text-align:center;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Días</th>';
-      h += '<th style="padding:9px 12px;text-align:center;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#475569;font-weight:700;">Estado</th>';
-      h += '<th style="padding:9px 12px;text-align:center;font-size:10px;color:#475569;"></th>';
-      h += '</tr></thead><tbody>';
-
-      // Ordenar OPs: primero vencidas, luego por fecha compromiso
-      opIds.sort(function(a,b){
-        var fa = opMap[a][0].fecha_compromiso||'9999';
-        var fb = opMap[b][0].fecha_compromiso||'9999';
-        return fa.localeCompare(fb);
-      }).forEach(function(opId, idx){
-        var opEntries = opMap[opId];
-        // Usar la primera entrada como representante de la OP
-        var rep = opEntries[0];
-        var hoyStr = hoy();
-        var colores = opEntries.map(function(e){ return e.color; });
-        var totalUdsOp = opEntries.reduce(function(a,e){ return a+(e.uds||0); },0);
-        // Fecha compromiso: la misma para todos (se aplica por OP), usar la de la primera entrada
-        var fechaComp = rep.fecha_compromiso;
-        var fechaIni  = rep.fecha_inicial;
-        var fechaEntrada = opEntries.map(function(e){ return e.fecha_entrada||''; }).sort()[0]; // la más temprana
-        var cambios = opEntries.reduce(function(a,e){ return a+(e.historial?e.historial.filter(function(h){ return h.fecha_anterior; }).length:0); },0);
-        var esVencida = fechaComp && fechaComp < hoyStr;
-        var estaSemanaBool = fechaComp && fechaComp>=semIni && fechaComp<=semFin;
-        var diasAEntrega = fechaComp ? Math.round((new Date(fechaComp)-new Date())/86400000) : null;
-
-        var bgRow = idx%2===0 ? 'transparent' : 'rgba(255,255,255,.015)';
-        if(esVencida) bgRow = 'rgba(239,68,68,.05)';
-        else if(estaSemanaBool) bgRow = 'rgba(56,189,248,.04)';
-
-        h += '<tr style="background:'+bgRow+';border-bottom:1px solid #2c2c2e;" onmouseover="this.style.background=\'rgba(255,255,255,.04)\'" onmouseout="this.style.background=\''+bgRow+'\'">';
-        // OP ID
-        h += '<td style="padding:10px 12px;white-space:nowrap;"><span style="font-size:11px;font-weight:800;color:var(--accent);">'+esc(opId)+'</span></td>';
-        // Nombre referencia
-        h += '<td style="padding:10px 12px;"><div style="font-size:12px;font-weight:600;color:#e2e8f0;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+esc(rep.op_nombre||'')+'">'+esc(rep.op_nombre||'—')+'</div></td>';
-        // Colores como badges
-        h += '<td style="padding:10px 12px;"><div style="display:flex;flex-wrap:wrap;gap:4px;">';
-        colores.forEach(function(c){ h += '<span style="background:rgba(148,163,184,.1);border:1px solid #2c2c2e;border-radius:4px;color:#cbd5e1;padding:2px 6px;font-size:10px;font-weight:600;white-space:nowrap;">'+esc(c)+'</span>'; });
-        h += '</div></td>';
-        // Uds totales
-        h += '<td style="padding:10px 12px;text-align:right;font-weight:700;color:#e2e8f0;white-space:nowrap;">'+totalUdsOp.toLocaleString('es-CO')+'</td>';
-        // Fecha entrada
-        h += '<td style="padding:10px 12px;text-align:center;color:#64748b;font-size:11px;white-space:nowrap;">'+(fechaEntrada||'—')+'</td>';
-        // Fecha inicial
-        h += '<td style="padding:10px 12px;text-align:center;font-size:11px;color:#94a3b8;white-space:nowrap;">'+(fechaIni||'—')+'</td>';
-        // Fecha compromiso (botón editar — aplica a toda la OP)
-        var fcColor = !fechaComp ? '#f59e0b' : (esVencida ? '#ef4444' : (estaSemanaBool ? '#38bdf8' : '#10b981'));
-        h += '<td style="padding:10px 12px;text-align:center;">';
-        h += '<button data-opid="'+opId+'" onclick="cronAbrirFechaOP(this.dataset.opid)" style="background:rgba(255,255,255,.04);border:1px solid '+(fechaComp?fcColor+'55':'rgba(245,158,11,.4)')+';border-radius:6px;color:'+fcColor+';padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;">';
-        h += (fechaComp||'+ Asignar')+(cambios?' ✎ ('+cambios+'↩)':'');
-        h += '</button></td>';
-        // Días
-        var diasStr = diasAEntrega===null ? '—' : (diasAEntrega<0 ? Math.abs(diasAEntrega)+'d atrás' : diasAEntrega===0 ? 'HOY' : diasAEntrega+'d');
-        var diasColor = diasAEntrega===null?'#475569':(diasAEntrega<0?'#ef4444':(diasAEntrega===0?'#f59e0b':(diasAEntrega<=3?'#f59e0b':'#10b981')));
-        h += '<td style="padding:10px 12px;text-align:center;font-size:12px;font-weight:800;color:'+diasColor+';white-space:nowrap;">'+diasStr+'</td>';
-        // Estado
-        var badge = esVencida
-          ? '<span style="background:rgba(239,68,68,.15);color:#ef4444;border:1px solid rgba(239,68,68,.3);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;">VENCIDA</span>'
-          : estaSemanaBool
-            ? '<span style="background:rgba(56,189,248,.12);color:#38bdf8;border:1px solid rgba(56,189,248,.3);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;">ESTA SEM.</span>'
-            : !fechaComp
-              ? '<span style="background:rgba(245,158,11,.12);color:#f59e0b;border:1px solid rgba(245,158,11,.3);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;">SIN FECHA</span>'
-              : '<span style="background:rgba(16,185,129,.1);color:#10b981;border:1px solid rgba(16,185,129,.2);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;">EN TIEMPO</span>';
-        h += '<td style="padding:10px 12px;text-align:center;">'+badge+'</td>';
-        // Link OP
-        h += '<td style="padding:10px 12px;text-align:center;"><button data-opid="'+opId+'" onclick="verDetalleOP(this.dataset.opid)" style="background:transparent;border:none;color:#475569;cursor:pointer;font-size:14px;" title="Ver OP">→</button></td>';
-        h += '</tr>';
-      });
-      h += '</tbody></table></div></div>';
-    });
+    h += '<div style="text-align:center;padding:20px 8px;color:#2c3050;font-size:11px;">✓ Todas asignadas</div>';
   }
+  h += '</div></div>';
 
-  // ── Historial de entregadas ──
-  var entregadasRecientes = todos.filter(function(e){ return e.entregado; }).sort(function(a,b){ return (b.fecha_entrega_real||'').localeCompare(a.fecha_entrega_real||''); }).slice(0,15);
-  if(entregadasRecientes.length){
-    h += '<div class="card" style="margin-bottom:14px;">';
-    h += '<div style="padding:12px 16px;border-bottom:1px solid #2c2c2e;display:flex;align-items:center;gap:8px;">';
-    h += '<span style="font-size:14px;">✅</span><span style="font-size:12px;font-weight:800;color:#10b981;text-transform:uppercase;letter-spacing:.5px;">Entregadas recientes</span></div>';
-    h += '<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:11px;">';
-    h += '<thead><tr style="background:#0a0d14;"><th style="padding:8px 12px;text-align:left;color:#475569;font-weight:700;">OP</th><th style="padding:8px 12px;color:#475569;font-weight:700;">Color</th><th style="padding:8px 12px;color:#475569;font-weight:700;">Satélite</th><th style="padding:8px 12px;text-align:center;color:#475569;font-weight:700;">Fecha inicial</th><th style="padding:8px 12px;text-align:center;color:#475569;font-weight:700;">Entregada</th><th style="padding:8px 12px;text-align:center;color:#475569;font-weight:700;">Días conf.</th><th style="padding:8px 12px;text-align:center;color:#475569;font-weight:700;">Cumplimiento</th></tr></thead><tbody>';
-    entregadasRecientes.forEach(function(e, idx){
-      var enTiempo = e.fecha_entrega_real && e.fecha_inicial && e.fecha_entrega_real<=e.fecha_inicial;
-      var diasConf = e.fecha_entrada && e.fecha_entrega_real ? Math.round((new Date(e.fecha_entrega_real)-new Date(e.fecha_entrada))/86400000) : '—';
-      h += '<tr style="background:'+(idx%2?'rgba(255,255,255,.015)':'transparent')+';border-bottom:1px solid #0f1521;">';
-      h += '<td style="padding:8px 12px;"><span style="font-size:10px;font-weight:700;color:var(--accent);">'+esc(e.op_id)+'</span><div style="font-size:10px;color:#64748b;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(e.op_nombre||'')+'</div></td>';
-      h += '<td style="padding:8px 12px;color:#94a3b8;">'+esc(e.color)+'</td>';
-      h += '<td style="padding:8px 12px;color:#64748b;">'+esc(getSatNombre(e.satelite_id))+'</td>';
-      h += '<td style="padding:8px 12px;text-align:center;color:#94a3b8;">'+(e.fecha_inicial||'—')+'</td>';
-      h += '<td style="padding:8px 12px;text-align:center;color:#10b981;font-weight:700;">'+(e.fecha_entrega_real||'—')+'</td>';
-      h += '<td style="padding:8px 12px;text-align:center;color:#64748b;">'+diasConf+'</td>';
-      h += '<td style="padding:8px 12px;text-align:center;">'+( enTiempo ? '<span style="color:#10b981;font-weight:700;">✓ A tiempo</span>' : (e.fecha_inicial?'<span style="color:#ef4444;font-weight:700;">✗ Tardío</span>':'<span style="color:#64748b;">Sin ref.</span>') )+'</td>';
-      h += '</tr>';
+  // ── Columnas de días (scroll-x) ──
+  h += '<div style="display:flex;overflow-x:auto;flex:1;" id="cron-dias-scroll">';
+  diasRange.forEach(function(dStr){
+    var dObj = new Date(dStr+'T12:00:00');
+    var esHoyCol = dStr===hoyStr2;
+    var esPasado = dStr < hoyStr2;
+    var DIAS_SEMANA = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+    var diaNom = DIAS_SEMANA[dObj.getDay()];
+    var diaNum = dObj.getDate();
+    var mesNom = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'][dObj.getMonth()];
+
+    // OPs programadas para este día (agrupadas por OP, no por entrada)
+    var opsEnDia = Object.keys(opMap2).filter(function(id){
+      return opMap2[id][0].fecha_compromiso === dStr;
+    }).sort(function(a,b){
+      var va = opMap2[a][0].fecha_compromiso && opMap2[a][0].fecha_compromiso < hoyStr2;
+      var vb = opMap2[b][0].fecha_compromiso && opMap2[b][0].fecha_compromiso < hoyStr2;
+      return (vb?1:0)-(va?1:0) || (opMap2[a][0].op_nombre||a).localeCompare(opMap2[b][0].op_nombre||b);
     });
-    h += '</tbody></table></div></div>';
+
+    var colBg = esHoyCol ? 'rgba(10,132,255,.05)' : esPasado ? 'rgba(0,0,0,.2)' : 'transparent';
+    var headerBg = esHoyCol ? 'rgba(10,132,255,.15)' : esPasado ? '#070a10' : '#0a0d14';
+    var borderRight = '1px solid #1e2235';
+    var headerAccent = esHoyCol ? 'var(--accent)' : esPasado ? '#2c3050' : '#475569';
+    var numColor = esHoyCol ? 'var(--accent)' : esPasado ? '#2c3050' : '#94a3b8';
+
+    h += '<div id="'+(esHoyCol?'cron-hoy-col':'')+'" style="width:152px;flex-shrink:0;display:flex;flex-direction:column;border-right:'+borderRight+';background:'+colBg+';">';
+    // Header del día
+    h += '<div style="padding:8px 8px 6px;background:'+headerBg+';border-bottom:1px solid #1e2235;flex-shrink:0;text-align:center;">';
+    h += '<div style="font-size:8px;font-weight:800;color:'+headerAccent+';text-transform:uppercase;letter-spacing:.5px;">'+diaNom+(esHoyCol?' · HOY':'')+'</div>';
+    h += '<div style="font-size:20px;font-weight:900;color:'+numColor+';line-height:1.1;">'+diaNum+'</div>';
+    h += '<div style="font-size:8px;color:'+(esPasado?'#1e2235':'#2c3050')+';">'+mesNom+'</div>';
+    if(opsEnDia.length) h += '<div style="font-size:8px;color:#64748b;margin-top:2px;">'+opsEnDia.length+' OP'+(opsEnDia.length>1?'s':'')+'</div>';
+    h += '</div>';
+    // Drop zone
+    h += '<div data-fecha="'+dStr+'" ondragover="_cronDragOver2(event)" ondragleave="_cronDragLeave2(event)" ondrop="_cronDrop2(event,this.dataset.fecha)" ';
+    h += 'style="flex:1;overflow-y:auto;padding:6px;transition:background .15s;">';
+    if(opsEnDia.length){
+      opsEnDia.forEach(function(opId){ h += _cronKanbanCard(opId, opMap2[opId]); });
+    } else {
+      h += '<div style="height:100%;min-height:40px;border:1px dashed '+(esHoyCol?'rgba(10,132,255,.2)':'#1a1f2e')+';border-radius:8px;"></div>';
+    }
+    h += '</div>';
+    h += '</div>';
+  });
+  h += '</div>';
+  h += '</div>';
+
+  // ── Historial compacto ──
+  var entregadasRec = todos.filter(function(e){ return e.entregado; }).sort(function(a,b){ return (b.fecha_entrega_real||'').localeCompare(a.fecha_entrega_real||''); }).slice(0,10);
+  if(entregadasRec.length){
+    h += '<div style="margin-top:18px;">';
+    h += '<div style="font-size:10px;font-weight:800;color:#10b981;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">✅ Entregadas recientes</div>';
+    h += '<div style="display:flex;flex-wrap:wrap;gap:6px;">';
+    entregadasRec.forEach(function(e){
+      var enT = e.fecha_entrega_real && e.fecha_inicial && e.fecha_entrega_real<=e.fecha_inicial;
+      h += '<div style="background:#0f1520;border:1px solid '+(enT?'rgba(16,185,129,.25)':'rgba(239,68,68,.2)')+';border-radius:8px;padding:7px 10px;font-size:11px;">';
+      h += '<div style="font-weight:700;color:var(--accent);font-size:10px;">'+esc(e.op_id)+'</div>';
+      h += '<div style="color:#94a3b8;font-size:10px;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(e.op_nombre||'')+'</div>';
+      h += '<div style="color:#475569;font-size:9px;margin-top:2px;">'+esc(e.color)+' · '+(e.fecha_entrega_real||'—')+'</div>';
+      h += '<div style="font-size:9px;font-weight:700;color:'+(enT?'#10b981':'#ef4444')+';">'+(enT?'✓ A tiempo':'✗ Tardío')+'</div>';
+      h += '</div>';
+    });
+    h += '</div></div>';
   }
 
   h += '</div>';
