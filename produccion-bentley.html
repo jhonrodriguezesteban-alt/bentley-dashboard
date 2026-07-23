@@ -3233,7 +3233,7 @@ function renderPlaneacion(){
     var catEntries = Object.keys(catMap).sort(function(a,b){ return catMap[b]-catMap[a]; });
 
     var _mesRefs = mesOps.map(function(op){ return (op.nombre_producto||op.id); }).concat(mesDisenos.map(function(d){ return d.nombre||''; })).join('|').toUpperCase();
-    h += '<div data-plan-mes="'+mes.k+'" data-refs="'+esc(_mesRefs)+'" style="background:#0a0d14;border:1px solid '+mes.color+'33;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;">';
+    h += '<div data-plan-mes="'+mes.k+'" data-refs="'+esc(_mesRefs)+'" style="background:#0a0d14;border:1px solid '+mes.color+'33;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;max-height:680px;">';
 
     // Month header
     h += '<div style="background:'+mes.bg+';border-bottom:1px solid '+mes.color+'22;padding:11px 14px;">';
@@ -3306,7 +3306,7 @@ function renderPlaneacion(){
     }
 
     // Drop zone con OPs + tarjetas de diseño al final
-    h += '<div data-plan-dz="'+mes.k+'" class="plan-dz" ondragover="planDragOver(event,\''+mes.k+'\')" ondrop="planDrop(event,\''+mes.k+'\')" style="flex:1;min-height:100px;padding:8px;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;">';
+    h += '<div data-plan-dz="'+mes.k+'" class="plan-dz" ondragover="planDragOver(event,\''+mes.k+'\')" ondrop="planDrop(event,\''+mes.k+'\')" style="flex:1;overflow-y:auto;min-height:100px;padding:8px;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;-webkit-overflow-scrolling:touch;">';
     if(!mesOps.length && !mesDisenos.length){
       h += '<div style="color:#2c2c2e;font-size:11px;width:100%;text-align:center;padding:16px 0;pointer-events:none;">Arrastra OPs aquí</div>';
     } else {
