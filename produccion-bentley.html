@@ -2325,7 +2325,7 @@ function _logEvt(tipo, datos){
 }
 
 // ─── Utils ─────────────────────────────────────────────────────────────────────
-function hoy(){ return new Date().toISOString().split('T')[0]; }
+function hoy(){ var d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 function fmtDate(d){ if(!d) return '—'; var p = d.split('-'); return p[2]+'/'+p[1]+'/'+p[0]; }
 function diasRestantes(fechaStr){
   if(!fechaStr) return null;
@@ -4444,7 +4444,7 @@ async function _cambiarEstadoOP(opId, nuevoEstado){
   op.estado_op = nuevoEstado;
   saveLocal();
   var ok = await guardarArchivo('ops', {ops: DB.ops});
-  if(ok){ toast('Estado OP → ' + nuevoEstado, 'success'); renderPage('ops'); }
+  if(ok){ _logEvt('cambiar_estado_op', {op_id:opId, estado:nuevoEstado, nombre:op.nombre_producto}); toast('Estado OP → ' + nuevoEstado, 'success'); renderPage('ops'); }
   else toast('Error al guardar', 'error');
 }
 async function cambiarEstadoOPAll(opId, estado){
@@ -4456,7 +4456,7 @@ async function cambiarEstadoOPAll(opId, estado){
   renderPage('ops');
   var ok1 = await guardarArchivo('ops', {ops: DB.ops});
   var ok2 = await guardarArchivo('ots', {ots: DB.ots});
-  if(ok1 && ok2) toast('Estado actualizado', 'success');
+  if(ok1 && ok2){ _logEvt('cambiar_estado_op_all', {op_id:opId, estado:estado, colores:colores.length, nombre:op.nombre_producto}); toast('Estado actualizado', 'success'); }
   else toast('Error al guardar estado', 'error');
 }
 function _separarReferencias(opId){
@@ -4953,6 +4953,7 @@ var _opDesdeDisenoId = null;
 function crearOpDesdeDiseno(id){
   var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
   if(!d) return;
+  _logEvt('crear_op_desde_diseno', {diseno_id:id, nombre:d.nombre, categoria:d.categoria});
   _opDesdeDisenoId = id;
   navTo('ops');
   setTimeout(function(){
@@ -5665,6 +5666,7 @@ async function guardarEdicionOP(){
   });
 
   if(!cambios){ toast('Sin cambios', 'warning'); cancelarEdicionOP(); return; }
+  _logEvt('editar_op_inline', {op_id:_opDetalleId, cambios:cambios});
 
   // Actualizar estado de OP
   var op = DB.ops.find(function(o){ return o.id===_opDetalleId; });
@@ -5770,6 +5772,7 @@ async function guardarEdicionOPRefs(opId){
   op.categoria=refs[0].cat;
   op.nombre_producto=refs.length>1 ? refs.map(function(r){ return r.nombre; }).join(' + ') : refs[0].nombre;
   op.updated_at=hoy();
+  _logEvt('editar_op_refs', {op_id:opId, nombre:op.nombre_producto, categoria:op.categoria, colores:allColores.length, refs:refs.length});
 
   // ── Sincronizar OTs existentes y crear OTs para colores nuevos ───────────
   var otsExistentes = DB.ots.filter(function(o){ return o.op_id===opId; });
@@ -6467,7 +6470,7 @@ async function confirmarAsignar(ids){
   });
   saveLocal(); selectedOTs.clear();
   var ok = await guardarArchivo('ots', {ots: DB.ots});
-  if(ok){ toast('OTs asignadas correctamente', 'success'); closeModal(); renderPage('activas'); }
+  if(ok){ _logEvt('asignar_masivo_ots', {satelite:getSatNombre(satId), cantidad_ots:ids.length, fecha_estimada:fest}); toast('OTs asignadas correctamente', 'success'); closeModal(); renderPage('activas'); }
 }
 
 function verOT(id){
@@ -7105,6 +7108,7 @@ function guardarTelaNotaModal(id){
   var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
   if(!d) return;
   d.tela_nota = nota;
+  _logEvt('tela_nota', {diseno_id:d.id, nombre:d.nombre, tiene_nota:!!nota});
   saveLocal(); guardarDisenos();
   var modal = document.getElementById('tela-nota-modal');
   if(modal) modal.remove();
@@ -7161,6 +7165,7 @@ function cambiarProveedorDiseno(id, val){
   var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
   if(!d) return;
   d.proveedor = val || null;
+  _logEvt('cambiar_proveedor_diseno', {diseno_id:d.id, nombre:d.nombre, proveedor:d.proveedor||'ninguno'});
   guardarDisenos(); renderPage('diseno');
 }
 
@@ -7528,6 +7533,7 @@ async function guardarDisenoForm(){
       }
     }
   }
+  _logEvt(editId ? 'editar_diseno' : 'crear_diseno', {nombre:nombre, categoria:cat, marca:marca, prioridad:prio, kanban:kanban, proveedor:proveedor||'ninguno'});
   closeModal();
   guardarDisenos();
   if(_modalCatReturn){
@@ -7541,6 +7547,7 @@ async function guardarDisenoForm(){
 function eliminarDiseno(id){
   var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
   if(!d||!confirm('¿Eliminar "'+d.nombre+'"?')) return;
+  _logEvt('eliminar_diseno', {diseno_id:id, nombre:d.nombre, categoria:d.categoria});
   DB.disenos = DB.disenos.filter(function(x){ return x.id!==id; });
   closeModal(); guardarDisenos(); renderPage('diseno');
 }
@@ -7931,6 +7938,7 @@ function eliminarRespuestaComentario(cid, rid){
   var c = (d.comentarios||[]).find(function(x){ return x.id===cid; });
   if(!c) return;
   c.replies = (c.replies||[]).filter(function(r){ return r.id!==rid; });
+  _logEvt('eliminar_respuesta_comentario', {diseno_id:d.id, nombre:d.nombre, comentario_id:cid});
   guardarDisenos();
   cerrarModalComentario();
   _renderDrawerComentarios();
@@ -8010,6 +8018,7 @@ function eliminarComentarioDiseno(cid){
   var d = (DB.disenos||[]).find(function(x){ return x.id===_comentCtx; });
   if(!d) return;
   d.comentarios = (d.comentarios||[]).filter(function(c){ return c.id!==cid; });
+  _logEvt('eliminar_comentario_diseno', {diseno_id:d.id, nombre:d.nombre, comentario_id:cid});
   guardarDisenos();
   renderPage(currentPage);
   cerrarModalComentario();
@@ -8930,6 +8939,7 @@ function asignarSateliteOT(otId, satId){
   if(!ot) return;
   ot.satelite_id = satId;
   ot.estado = 'ASIGNADO';
+  _logEvt('asignar_satelite_ot', {ot_id:otId, numero_ot:ot.numero_ot, satelite:getSatNombre(satId), op_id:ot.op_id});
   guardarArchivo('ots', {ots:DB.ots}).then(function(ok){
     if(ok) toast('Satélite asignado a OT-'+ot.numero_ot,'success');
     renderPage('programacion');
@@ -10281,6 +10291,7 @@ async function confirmarEntregaInline(otId){
   saveLocal(); updateNovBadge();
   var ok = await guardarArchivo('ots', {ots: DB.ots});
   if(ok){
+    _logEvt('entrega_inline', {ot_id:otId, numero_ot:ot.numero_ot, op_id:ot.op_id, uds_entregadas:uds, pendientes:pendientes, estado:ot.estado, talla:ot.talla, satelite:getSatNombre(ot.satelite_id)});
     toast(pendientes > 0 ? ot.talla+': '+uds+' recibidas · '+pendientes+' novedad' : ot.talla+': '+uds+' uds entregadas ✓', pendientes > 0 ? 'error' : 'success');
     renderPage('ops');
   }
@@ -10345,7 +10356,7 @@ async function cambiarSateliteOT(otId, nuevoSatId){
   ot.historial.push({fecha: new Date().toISOString(), accion: 'Satélite cambiado: '+anterior+' → '+getSatNombre(nuevoSatId), user: getUser()});
   saveLocal();
   var ok = await guardarArchivo('ots', {ots: DB.ots});
-  if(ok){ toast('Satélite actualizado · '+getSatNombre(nuevoSatId), 'success'); renderPage('ops'); }
+  if(ok){ _logEvt('cambiar_satelite_ot', {ot_id:otId, numero_ot:ot.numero_ot, anterior:anterior, nuevo:getSatNombre(nuevoSatId)}); toast('Satélite actualizado · '+getSatNombre(nuevoSatId), 'success'); renderPage('ops'); }
 }
 
 function modalReprogramarSatelite(otId){
@@ -10394,7 +10405,7 @@ async function confirmarReprogramacion(otId){
   ot.historial.push({fecha: new Date().toISOString(), accion: accion, user: getUser()});
   saveLocal(); updateNovBadge();
   var ok = await guardarArchivo('ots', {ots: DB.ots});
-  if(ok){ toast('OT reprogramada · '+getSatNombre(nuevoSatId), 'success'); closeModal(); renderPage('ops'); }
+  if(ok){ _logEvt('reprogramar_ot', {ot_id:otId, numero_ot:ot.numero_ot, anterior:anterior, nuevo:getSatNombre(nuevoSatId), nuevo_estado:nuevoEstado||ot.estado, motivo:motivo}); toast('OT reprogramada · '+getSatNombre(nuevoSatId), 'success'); closeModal(); renderPage('ops'); }
 }
 
 async function guardarEntregasMasivas(opId){
@@ -10448,6 +10459,7 @@ async function guardarEntregasMasivas(opId){
   var ok = await guardarArchivo('ots', {ots: DB.ots});
   if(ok){
     _opModoEntrega = null;
+    _logEvt('entrega_masiva', {op_id:opId, total_uds:totalUds, total_ots:pendientes.length, con_novedad:totalNov});
     toast(totalUds+' uds registradas en '+pendientes.length+' OTs'+(totalNov?' · '+totalNov+' con novedad':''), totalNov?'error':'success');
     renderPage('ops');
   }
@@ -11071,6 +11083,7 @@ function guardarAbonoGrupo(){
     p.total_abonado = (p.total_abonado||0) + parte;
     if(p.total_abonado >= p.total) p.estado = 'PAGADO';
   });
+  _logEvt('abono_grupo', {ids:ids, valor:valor, fecha:fecha, ots:grp.length});
   guardarCostosMO();
   closeModal();
   renderPage('costos_mo');
@@ -11112,6 +11125,7 @@ function guardarAbono(){
   p.total_abonado = (p.total_abonado||0) + valor;
   if(p.total_abonado >= p.total){ p.estado = 'PAGADO'; toast('Saldo completado — marcado como PAGADO','success'); }
   else { toast('Abono de $'+valor.toLocaleString('es-CO')+' registrado','success'); }
+  _logEvt('abono_mo', {pago_id:id, satelite:p.satelite_nombre, referencia:p.referencia, valor:valor, total_abonado:p.total_abonado, pagado:p.estado==='PAGADO'});
   closeModal();
   guardarCostosMO(); renderPage('costos_mo');
 }
@@ -11183,6 +11197,7 @@ function revertirPago(id){
   if(!confirm('¿Revertir este pago a PENDIENTE?')) return;
   p.estado = 'PENDIENTE_PAGO';
   delete p.fecha_pago;
+  _logEvt('revertir_pago_mo', {pago_id:id, satelite:p.satelite_nombre, referencia:p.referencia, total:p.total});
   guardarCostosMO(); renderPage('costos_mo');
   toast('Pago revertido a pendiente','success');
 }
