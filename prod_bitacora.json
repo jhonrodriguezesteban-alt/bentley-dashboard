@@ -428,16 +428,28 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1784817659962_chr4i",
-      "ts": 1784817659962,
-      "user": "Carolina",
-      "tipo": "estado_diseno",
+      "categoria": "Chaquetas",
       "diseno_id": "id_1784480344159_33uewgfjm",
+      "estado_anterior": "EN_DISENO_DIGITAL",
+      "estado_nuevo": "EN_CORTE_MUESTRA",
+      "id": "evt_1784817659962_chr4i",
+      "marca": "Bentley Kids",
       "nombre": "CHAQUETA BAGGY PR VERSION KIDS",
+      "tipo": "estado_diseno",
+      "ts": 1784817659962,
+      "user": "Carolina"
+    },
+    {
+      "id": "evt_1784817719974_6u3lm",
+      "ts": 1784817719974,
+      "user": "Carolina",
+      "tipo": "editar_diseno",
+      "nombre": "CHAQUETA BAGGY PINZAS PR VERSION KIDS",
       "categoria": "Chaquetas",
       "marca": "Bentley Kids",
-      "estado_anterior": "EN_DISENO_DIGITAL",
-      "estado_nuevo": "EN_CORTE_MUESTRA"
+      "prioridad": 1,
+      "kanban": "EN_CORTE_MUESTRA",
+      "proveedor": "ninguno"
     }
   ]
 }
