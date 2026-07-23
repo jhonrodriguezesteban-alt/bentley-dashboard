@@ -509,19 +509,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1784837643379_fimeq",
-      "ts": 1784837643379,
-      "user": "Jefa de Producción",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-094",
-      "op_nombre": "CONJUNTO ISABELLA",
       "categoria": "CONJUNTOS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-07-23",
-      "total_uds": 65,
+      "id": "evt_1784837643379_fimeq",
+      "op_id": "OP-2026-094",
+      "op_nombre": "CONJUNTO ISABELLA",
       "referencias": [
         "CONJUNTO ISABELLA"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 65,
+      "ts": 1784837643379,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1784840045011_7m286",
+      "ts": 1784840045011,
+      "user": "Carolina",
+      "tipo": "estado_diseno",
+      "diseno_id": "id_1782177256318_rajj41618",
+      "nombre": "PANTALONETA JHONY",
+      "categoria": "PANTALONETAS",
+      "marca": "Bentley Kids",
+      "estado_anterior": "EN_DISENO_DIGITAL",
+      "estado_nuevo": "EN_CORTE_MUESTRA"
     }
   ]
 }
