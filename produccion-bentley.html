@@ -2455,8 +2455,8 @@ function renderPage(page){
 var _planDragOpId = null;
 
 async function guardarPlaneacion(){
-  if(!DB.planeacion) DB.planeacion = {meses:{}};
-  var ok = await guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}});
+  if(!DB.planeacion) DB.planeacion = {meses:{}, disenos_plan:{}};
+  var ok = await guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}});
   if(ok) toast('Planeación guardada','success');
 }
 
