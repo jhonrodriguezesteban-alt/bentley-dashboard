@@ -3036,7 +3036,7 @@ function renderPlaneacion(){
   h += '<span style="font-size:13px;font-weight:700;color:#fbbf24;">'+fmtCopFull(globalCif)+'</span>';
   h += '</div>';
   h += '</div>';
-  // Breakdown por categoría — ordenado de mayor a menor uds
+  // Breakdown por categoría — ordenado de mayor a menor uds (OPs + diseños planificados)
   var catMap = {};
   MESES.forEach(function(mes){
     var opIds3 = (DB.planeacion.meses||{})[mes.k]||[];
@@ -3044,10 +3044,19 @@ function renderPlaneacion(){
       var op = allOps.find(function(o){ return o.id===id; });
       if(!op) return;
       var cat = (op.categoria||'Sin categoría').trim().toUpperCase();
-      if(!catMap[cat]) catMap[cat] = {refs:[], uds:0};
+      if(!catMap[cat]) catMap[cat] = {refs:[], uds:0, disUds:0};
       catMap[cat].refs.push(op);
       catMap[cat].uds += _planOpUds(op);
     });
+  });
+  // Sumar diseños planificados al catMap por categoría
+  (DB.disenos||[]).filter(function(d){ return !d.eliminado && d.kanban_estado!=='LISTA_PRODUCCION'; }).forEach(function(d){
+    var p = disPlanGlobal[d.id];
+    if(!p || !p.mes || !(p.uds>0)) return;
+    var cat = (d.categoria||'Sin categoría').trim().toUpperCase();
+    if(!catMap[cat]) catMap[cat] = {refs:[], uds:0, disUds:0};
+    catMap[cat].disUds = (catMap[cat].disUds||0) + p.uds;
+    catMap[cat].uds += p.uds;
   });
   window._planCatMap = catMap;
   var catKeys = Object.keys(catMap).sort(function(a,b){ return catMap[b].uds - catMap[a].uds; });
@@ -3057,14 +3066,16 @@ function renderPlaneacion(){
     h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;">';
     catKeys.forEach(function(cat){
       var info = catMap[cat];
-      var pct = globalUds>0 ? (info.uds/globalUds*100) : 0;
+      var pct = globalUdsCombinado>0 ? (info.uds/globalUdsCombinado*100) : 0;
       h += '<div onclick="planVerCategoria(\''+cat+'\')" style="background:rgba(255,255,255,.04);border:1px solid #2c2c2e;border-radius:10px;padding:12px 13px;cursor:pointer;transition:border-color .15s,background .15s;" onmouseover="this.style.borderColor=\'rgba(10,132,255,.4)\';this.style.background=\'rgba(10,132,255,.04)\'" onmouseout="this.style.borderColor=\'#2c2c2e\';this.style.background=\'rgba(255,255,255,.04)\'">';
       h += '<div style="font-size:9px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;">'+cat+'</div>';
       h += '<div style="font-size:28px;font-weight:900;color:#f1f5f9;line-height:1;margin-bottom:4px;">'+info.uds.toLocaleString('es-CO')+'</div>';
       // Barra de participación
       h += '<div style="height:3px;background:#2c2c2e;border-radius:2px;margin-bottom:6px;"><div style="height:100%;width:'+pct.toFixed(1)+'%;background:linear-gradient(90deg,#0a84ff,#a855f7);border-radius:2px;"></div></div>';
       h += '<div style="display:flex;justify-content:space-between;align-items:center;">';
-      h += '<span style="font-size:10px;color:#475569;">'+info.refs.length+' '+(info.refs.length===1?'ref':'refs')+'</span>';
+      var refsLabel = info.refs.length ? info.refs.length+' '+(info.refs.length===1?'ref':'refs') : '';
+      var disLabel  = info.disUds ? '<span style="color:#34d399;">+'+info.disUds.toLocaleString('es-CO')+' dis.</span>' : '';
+      h += '<span style="font-size:10px;color:#475569;">'+refsLabel+(refsLabel&&disLabel?' ':'')+disLabel+'</span>';
       h += '<span style="font-size:11px;font-weight:700;color:#0a84ff;">'+pct.toFixed(1)+'%</span>';
       h += '</div></div>';
     });
