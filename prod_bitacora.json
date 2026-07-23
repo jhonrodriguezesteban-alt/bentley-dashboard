@@ -452,16 +452,31 @@
       "user": "Carolina"
     },
     {
-      "id": "evt_1784821530496_r14dg",
-      "ts": 1784821530496,
-      "user": "Carolina",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782181414506_mgfc0dyut",
-      "nombre": "PANTALON VENOM",
       "categoria": "Pantalones",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1782181414506_mgfc0dyut",
       "estado_anterior": "EN_DISENO_DIGITAL",
-      "estado_nuevo": "EN_CORTE_MUESTRA"
+      "estado_nuevo": "EN_CORTE_MUESTRA",
+      "id": "evt_1784821530496_r14dg",
+      "marca": "Bentley Kids",
+      "nombre": "PANTALON VENOM",
+      "tipo": "estado_diseno",
+      "ts": 1784821530496,
+      "user": "Carolina"
+    },
+    {
+      "id": "evt_1784837236511_skp9e",
+      "ts": 1784837236511,
+      "user": "Jefa de Producción",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-091",
+      "op_nombre": "PANTALON RAVE",
+      "categoria": "PANTALONES",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-07-23",
+      "total_uds": 40,
+      "referencias": [
+        "PANTALON RAVE"
+      ]
     }
   ]
 }
