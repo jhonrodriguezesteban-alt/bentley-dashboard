@@ -2663,7 +2663,7 @@ function _planMiniCard(op){
   var costo = _planCostoOp(op);
   var _canPl = _canEditPlan();
   var _refTxt = ((op.nombre_producto||'')+' '+op.id).toUpperCase();
-  var h = '<div data-plan-op="'+op.id+'" data-plan-ref="'+esc(_refTxt)+'" '+(_canPl?'draggable="true" ondragstart="planDragStart(event,\''+op.id+'\')" ondragend="planDragEnd()"':'')+' style="background:#1c1c1e;border:1px solid #2c2c2e;border-radius:9px;padding:9px 10px;cursor:'+(_canPl?'grab':'default')+';width:152px;flex-shrink:0;user-select:none;transition:opacity .15s,transform .15s,border-color .15s,box-shadow .15s;position:relative;">';
+  var h = '<div data-plan-op="'+op.id+'" data-plan-ref="'+esc(_refTxt)+'" '+(_canPl?'draggable="true" ondragstart="planDragStart(event,\''+op.id+'\')" ondragend="planDragEnd()"':'')+' style="background:#1c1c1e;border:1px solid #2c2c2e;border-radius:9px;padding:10px 12px;cursor:'+(_canPl?'grab':'default')+';width:210px;flex-shrink:0;user-select:none;transition:opacity .15s,transform .15s,border-color .15s,box-shadow .15s;position:relative;">';
   h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">';
   h += '<span style="font-size:11px;font-weight:800;color:#0a84ff;">'+esc(baseId)+'</span>';
   h += '<span style="font-size:8px;font-weight:700;background:rgba(148,163,184,.1);border:1px solid #2c2c2e;border-radius:4px;color:#64748b;padding:1px 5px;text-transform:uppercase;">'+esc((op.categoria||'').substring(0,5))+'</span>';
@@ -2711,7 +2711,7 @@ function _planDisMiniCard(d, planD){
   var etLabel = DIS_KL[d.kanban_estado]||(d.kanban_estado||'').replace(/_/g,' ').substring(0,10);
 
   var _disRefTxt = (d.nombre||'').toUpperCase();
-  var h = '<div data-plan-ref="'+esc(_disRefTxt)+'" style="background:rgba(16,185,129,.05);border:1px solid rgba(52,211,153,.3);border-radius:9px;padding:9px 10px;width:152px;flex-shrink:0;position:relative;box-sizing:border-box;transition:border-color .15s,box-shadow .15s;">';
+  var h = '<div data-plan-ref="'+esc(_disRefTxt)+'" style="background:rgba(16,185,129,.05);border:1px solid rgba(52,211,153,.3);border-radius:9px;padding:10px 12px;width:210px;flex-shrink:0;position:relative;box-sizing:border-box;transition:border-color .15s,box-shadow .15s;">';
   // Header
   h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">';
   h += '<div style="display:flex;align-items:center;gap:4px;">';
@@ -3181,7 +3181,7 @@ function renderPlaneacion(){
   h += '</div>';
 
   // ── Grid de meses ────────────────────────────────────────────────────────────
-  h += '<div id="plan-meses-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">';
+  h += '<div id="plan-meses-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;">';
 
   // Índice de diseños por mes
   var disPlanAll = (DB.planeacion && DB.planeacion.disenos_plan) || {};
