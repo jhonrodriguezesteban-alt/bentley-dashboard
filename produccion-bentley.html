@@ -2018,15 +2018,46 @@ var _planDisFiltroEtapa = ''; // '' = todas
 function togglePlanDis(){ _planDisOpen = !_planDisOpen; renderPage('planeacion'); }
 function _planFiltrarMeses(){
   var q = (_planBusqRef||'').trim().toUpperCase();
-  var limpiarBtn = document.querySelector('#plan-busq-ref + button, #plan-busq-ref ~ button');
-  // Mostrar/ocultar botón limpiar inline sin re-render
-  document.querySelectorAll('[data-plan-mes]').forEach(function(card){
-    if(!q){ card.style.opacity=''; card.style.outline=''; return; }
-    var refs = (card.dataset.refs||'').toUpperCase();
+
+  // Resetear todo si no hay búsqueda
+  if(!q){
+    document.querySelectorAll('[data-plan-mes]').forEach(function(mes){
+      mes.style.opacity=''; mes.style.outline='';
+    });
+    document.querySelectorAll('[data-plan-ref]').forEach(function(card){
+      card.style.opacity=''; card.style.boxShadow=''; card.style.zIndex='';
+      var isOp = card.hasAttribute('data-plan-op');
+      card.style.borderColor = isOp ? '#2c2c2e' : 'rgba(52,211,153,.3)';
+    });
+    return;
+  }
+
+  // Evaluar cada tarjeta individual
+  document.querySelectorAll('[data-plan-ref]').forEach(function(card){
+    var refTxt = (card.dataset.planRef||'').toUpperCase();
+    var match = refTxt.indexOf(q) >= 0;
+    var isOp = card.hasAttribute('data-plan-op');
+    if(match){
+      card.style.opacity = '1';
+      card.style.borderColor = '#0a84ff';
+      card.style.boxShadow = '0 0 0 2px rgba(10,132,255,.45), 0 4px 16px rgba(10,132,255,.25)';
+      card.style.zIndex = '2';
+      card.style.position = 'relative';
+    } else {
+      card.style.opacity = '0.18';
+      card.style.borderColor = isOp ? '#2c2c2e' : 'rgba(52,211,153,.15)';
+      card.style.boxShadow = 'none';
+      card.style.zIndex = '';
+    }
+  });
+
+  // Atenuar/resaltar columnas de mes según si tienen alguna tarjeta que coincide
+  document.querySelectorAll('[data-plan-mes]').forEach(function(mes){
+    var refs = (mes.dataset.refs||'').toUpperCase();
     var match = refs.indexOf(q) >= 0;
-    card.style.opacity = match ? '1' : '0.2';
-    card.style.outline = match ? '2px solid #0a84ff' : 'none';
-    card.style.transition = 'opacity .2s, outline .2s';
+    mes.style.opacity = match ? '1' : '0.25';
+    mes.style.outline = match ? '2px solid rgba(10,132,255,.35)' : 'none';
+    mes.style.transition = 'opacity .2s';
   });
 }
 function setPlanDisFiltro(etapa){ _planDisFiltroEtapa = etapa; renderPage('planeacion'); }
@@ -2625,7 +2656,8 @@ function _planMiniCard(op){
   }
   var costo = _planCostoOp(op);
   var _canPl = _canEditPlan();
-  var h = '<div data-plan-op="'+op.id+'" '+(_canPl?'draggable="true" ondragstart="planDragStart(event,\''+op.id+'\')" ondragend="planDragEnd()"':'')+' style="background:#1c1c1e;border:1px solid #2c2c2e;border-radius:9px;padding:9px 10px;cursor:'+(_canPl?'grab':'default')+';width:152px;flex-shrink:0;user-select:none;transition:opacity .15s,transform .15s;position:relative;">';
+  var _refTxt = ((op.nombre_producto||'')+' '+op.id).toUpperCase();
+  var h = '<div data-plan-op="'+op.id+'" data-plan-ref="'+esc(_refTxt)+'" '+(_canPl?'draggable="true" ondragstart="planDragStart(event,\''+op.id+'\')" ondragend="planDragEnd()"':'')+' style="background:#1c1c1e;border:1px solid #2c2c2e;border-radius:9px;padding:9px 10px;cursor:'+(_canPl?'grab':'default')+';width:152px;flex-shrink:0;user-select:none;transition:opacity .15s,transform .15s,border-color .15s,box-shadow .15s;position:relative;">';
   h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">';
   h += '<span style="font-size:11px;font-weight:800;color:#0a84ff;">'+esc(baseId)+'</span>';
   h += '<span style="font-size:8px;font-weight:700;background:rgba(148,163,184,.1);border:1px solid #2c2c2e;border-radius:4px;color:#64748b;padding:1px 5px;text-transform:uppercase;">'+esc((op.categoria||'').substring(0,5))+'</span>';
@@ -2672,7 +2704,8 @@ function _planDisMiniCard(d, planD){
   var DIS_KL = {EN_DISENO_DIGITAL:'Diseño',CON_PROVEEDOR:'Proveedor',EN_CORTE_MUESTRA:'Corte',EN_CONFECCION_MUESTRA:'Confección',EN_REVISION_GERENCIA:'Revisión',EN_ESCALADO:'Escalado','ESCALADO / ÚLTIMOS DETALLES DISEÑO':'Escalado'};
   var etLabel = DIS_KL[d.kanban_estado]||(d.kanban_estado||'').replace(/_/g,' ').substring(0,10);
 
-  var h = '<div style="background:rgba(16,185,129,.05);border:1px solid rgba(52,211,153,.3);border-radius:9px;padding:9px 10px;width:152px;flex-shrink:0;position:relative;box-sizing:border-box;">';
+  var _disRefTxt = (d.nombre||'').toUpperCase();
+  var h = '<div data-plan-ref="'+esc(_disRefTxt)+'" style="background:rgba(16,185,129,.05);border:1px solid rgba(52,211,153,.3);border-radius:9px;padding:9px 10px;width:152px;flex-shrink:0;position:relative;box-sizing:border-box;transition:border-color .15s,box-shadow .15s;">';
   // Header
   h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">';
   h += '<div style="display:flex;align-items:center;gap:4px;">';
