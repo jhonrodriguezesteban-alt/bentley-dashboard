@@ -3541,7 +3541,7 @@
       "id": "OP-2026-077",
       "numero": 77,
       "fecha_op": "2026-03-24",
-      "cortador": "CARVAJAL",
+      "cortador": "Corte Carbajal",
       "categoria": "CHAQUETAS",
       "nombre_producto": "TORERO PILI",
       "colores": [
@@ -3557,8 +3557,59 @@
         "T14",
         "T16"
       ],
-      "cantidades": {},
-      "referencias": [],
+      "cantidades": {
+        "GRIS CLARO_T4": 16,
+        "GRIS CLARO_T6": 16,
+        "GRIS CLARO_T8": 16,
+        "GRIS CLARO_T10": 16,
+        "GRIS CLARO_T12": 16,
+        "GRIS CLARO_T14": 16,
+        "GRIS CLARO_T16": 16,
+        "MARFIL_T4": 16,
+        "MARFIL_T6": 16,
+        "MARFIL_T8": 16,
+        "MARFIL_T10": 16,
+        "MARFIL_T12": 16,
+        "MARFIL_T14": 16,
+        "MARFIL_T16": 16
+      },
+      "referencias": [
+        {
+          "nombre": "TORERO PILI",
+          "ref": "",
+          "cat": "CHAQUETAS",
+          "vmo": 1151,
+          "colores": [
+            "GRIS CLARO",
+            "MARFIL"
+          ],
+          "tallas": [
+            "T4",
+            "T6",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "cantidades": {
+            "GRIS CLARO_T4": 16,
+            "GRIS CLARO_T6": 16,
+            "GRIS CLARO_T8": 16,
+            "GRIS CLARO_T10": 16,
+            "GRIS CLARO_T12": 16,
+            "GRIS CLARO_T14": 16,
+            "GRIS CLARO_T16": 16,
+            "MARFIL_T4": 16,
+            "MARFIL_T6": 16,
+            "MARFIL_T8": 16,
+            "MARFIL_T10": 16,
+            "MARFIL_T12": 16,
+            "MARFIL_T14": 16,
+            "MARFIL_T16": 16
+          }
+        }
+      ],
       "op_effi": null,
       "estado_op": "EN_PROCESO",
       "total_uds": 168,
@@ -3568,7 +3619,8 @@
       "subg_estados": {
         "OP-2026-077||GRIS CLARO": "EN_CONFECCION",
         "OP-2026-077||MARFIL": "CORTE_POR_ALISTAR"
-      }
+      },
+      "updated_at": "2026-07-24"
     },
     {
       "id": "OP-2026-078",
