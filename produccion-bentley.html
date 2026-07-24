@@ -2518,7 +2518,7 @@ function planVerCategoria(cat){
   if(!info) return;
   var ops = info.refs;
   var totalUds = info.uds;
-  var h = '<div style="padding:0 20px 20px;max-height:65vh;overflow-y:auto;-webkit-overflow-scrolling:touch;">';
+  var h = '<div style="padding:0 4px 20px;">';
   h += '<div style="font-size:11px;color:#64748b;margin-bottom:14px;">'+ops.length+' referencias · '+totalUds.toLocaleString('es-CO')+' unidades programadas</div>';
   // Agrupar por nombre_producto único (puede haber múltiples colores/OPs con mismo nombre)
   var refMap = {};
