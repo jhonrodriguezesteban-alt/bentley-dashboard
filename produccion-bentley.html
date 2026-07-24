@@ -6707,6 +6707,7 @@ var DIS_MARCAS_DEFAULT = ['Bentley Kids','Prime','Maquilas'];
 var DIS_CATEGORIAS = ['Abrigos','Accesorios','Blusas','Bodys','Buzos','Camisetas','Camisones','Chalecos','Chaquetas','Conjuntos','Faldas','Overol','Pantalonetas','Pantalones','Tejido de Punto','Vestidos','Otro'];
 var _disPrioFiltro = 0; // 0=todas, 1,2,3
 var _disBusqueda = '';
+var _disBusquedaTela = '';
 var DIS_PRIO_CFG = {
   1: {label:'P1', color:'#ff4d4d', bg:'rgba(255,77,77,.18)', border:'rgba(255,77,77,.6)'},
   2: {label:'P2', color:'#fbbf24', bg:'rgba(251,191,36,.18)', border:'rgba(251,191,36,.6)'},
@@ -6938,11 +6939,22 @@ function renderDiseno(){
   // ── Filtros: buscador | [Prioridad bubble] | [Responsable bubble] | [Tela bubble] ──
   h += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;">';
 
-  // Buscador
-  h += '<div style="position:relative;width:160px;flex-shrink:0;">';
+  // Buscador nombre/categoría
+  h += '<div style="position:relative;width:150px;flex-shrink:0;">';
   h += '<input id="dis-search-input" type="text" value="'+esc(_disBusqueda)+'" oninput="var _q=this.value,_p=this.selectionStart;_disBusqueda=_q;renderPage(\'diseno\');var _el=document.getElementById(\'dis-search-input\');if(_el){_el.focus();try{_el.setSelectionRange(_p,_p);}catch(e){}}" placeholder="🔍 Buscar..." style="width:100%;background:#0d1117;border:1px solid #2c2c2e;border-radius:20px;color:#e2e8f0;font-size:12px;padding:5px 28px 5px 12px;outline:none;box-sizing:border-box;">';
   if(_disBusqueda) h += '<button onclick="_disBusqueda=\'\';renderPage(\'diseno\')" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:#64748b;cursor:pointer;font-size:14px;padding:0;line-height:1;">×</button>';
   h += '</div>';
+  // Buscador de tela
+  h += '<div style="position:relative;flex-shrink:0;min-width:170px;">';
+  h += '<span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:13px;pointer-events:none;">🧵</span>';
+  h += '<input id="dis-tela-search" type="text" value="'+esc(_disBusquedaTela)+'" oninput="var _q=this.value,_p=this.selectionStart;_disBusquedaTela=_q;renderPage(\'diseno\');var _el=document.getElementById(\'dis-tela-search\');if(_el){_el.focus();try{_el.setSelectionRange(_p,_p);}catch(e){}}" placeholder="Buscar tela..." style="width:100%;background:'+ (_disBusquedaTela ? 'rgba(52,211,153,.08)' : '#0d1117')+';border:1px solid '+(_disBusquedaTela ? 'rgba(52,211,153,.5)' : '#2c2c2e')+';border-radius:20px;color:#e2e8f0;font-size:12px;padding:5px 28px 5px 28px;outline:none;box-sizing:border-box;">';
+  if(_disBusquedaTela) h += '<button onclick="_disBusquedaTela=\'\';renderPage(\'diseno\')" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:#34d399;cursor:pointer;font-size:14px;padding:0;line-height:1;">×</button>';
+  h += '</div>';
+  // Badge con resultados cuando hay búsqueda de tela activa
+  if(_disBusquedaTela){
+    var _telaHits = (DB.disenos||[]).filter(function(d){ return d.marca===_disFiltroMarca && !d.eliminado && (d.tela_nota||'').toUpperCase().indexOf(_disBusquedaTela.toUpperCase())>=0; }).length;
+    h += '<span style="font-size:11px;font-weight:700;color:#34d399;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);border-radius:12px;padding:3px 10px;white-space:nowrap;">'+_telaHits+' diseño'+(_telaHits!==1?'s':'')+' con esa tela</span>';
+  }
 
   // ── Burbuja Prioridad ──
   h += '<div style="display:flex;align-items:center;gap:5px;background:#0f1520;border:1px solid #2c2c2e;border-radius:20px;padding:4px 10px;flex-shrink:0;">';
@@ -7006,6 +7018,7 @@ function renderDiseno(){
       }
       if(_disTelaFiltro){ var te=d.tela_estado||'sin_tela'; if(te!==_disTelaFiltro) return false; }
       if(_disBusqueda){ var q=_disBusqueda.toUpperCase(); if((d.nombre||'').toUpperCase().indexOf(q)<0 && (d.categoria||'').toUpperCase().indexOf(q)<0) return false; }
+      if(_disBusquedaTela){ var qt=_disBusquedaTela.toUpperCase(); if((d.tela_nota||'').toUpperCase().indexOf(qt)<0) return false; }
       return true;
     }).sort(function(a,b){
       var pa=disPrioNorm(a.prioridad), pb=disPrioNorm(b.prioridad);
