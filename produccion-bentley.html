@@ -1623,7 +1623,11 @@ function openModal(title, bodyHtml, footerHtml, opts){
   document.getElementById('modal-footer').innerHTML = footerHtml || '';
   var m = document.getElementById('modal');
   m.classList.toggle('modal-wide', !!wide);
-  document.getElementById('modal-overlay').classList.add('open');
+  var ov = document.getElementById('modal-overlay');
+  // Si el modal de categoría está abierto, subir z-index para quedar encima
+  var catOpen = document.getElementById('modal-categoria');
+  ov.style.zIndex = (catOpen && catOpen.style.display !== 'none') ? '9999' : '';
+  ov.classList.add('open');
 }
 function closeModal(){ document.getElementById('modal-overlay').classList.remove('open'); }
 
