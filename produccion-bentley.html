@@ -3526,13 +3526,28 @@ function renderDashboard(){
   // ── KPI cards estilo referencia ─────────────────────────────────────────────
   var opsActivas = DB.ops.filter(function(op){ return op.estado!=='COMPLETADO'&&op.estado!=='CERRADO'; });
   var novCount = DB.ots.filter(function(o){ return o.estado==='NOVEDAD'; }).length;
+  // Uds pendientes de entregar (backlog total en planta)
+  var udsPendientes = DB.ots.filter(function(o){ return o.estado!=='ENTREGADO'&&o.estado!=='ARCHIVADO'; }).reduce(function(a,o){ return a+(o.cantidad||0); },0);
+  // Cortes del mes actual: OTs que avanzaron más allá de PENDIENTE_CORTAR con fecha_ot en mes actual
+  var cortesDelMes = DB.ots.filter(function(o){
+    var est = o.estado;
+    if(est==='POR_REVISAR'||est==='PENDIENTE_CORTAR') return false;
+    return (o.fecha_ot||'').startsWith(mesActual);
+  }).reduce(function(a,o){ return a+(o.cantidad||0); },0);
+  // Cumplimiento: OTs entregadas a tiempo vs vencidas
+  var otsEntregadas = DB.ots.filter(function(o){ return o.estado==='ENTREGADO'&&o.fecha_entrega_real&&o.fecha_estimada_entrega; });
+  var aTiempo = otsEntregadas.filter(function(o){ return o.fecha_entrega_real<=o.fecha_estimada_entrega; }).length;
+  var pctCumplimiento = otsEntregadas.length ? Math.round(aTiempo/otsEntregadas.length*100) : null;
+  var cumplColor = pctCumplimiento===null ? '#475569' : pctCumplimiento>=85 ? C_GREEN : pctCumplimiento>=65 ? C_GOLD : C_PINK;
   var kpiDefs = [
     {label:'OPs en Proceso',    val:fmtNum(opsActivas.length), color:C_CYAN,   sub:'Órdenes abiertas',    nav:'ops',         spark:mesesAll.map(function(m){ return DB.ops.filter(function(o){ return (o.fecha_op||'').startsWith(m); }).length; })},
     {label:'Uds en Confección', val:fmtNum(udsConf),           color:C_PURPLE, sub:'En talleres ahora',   nav:'programacion',spark:mesesAll.map(function(m){ return DB.ots.filter(function(o){ return o.estado==='EN_CONFECCION'&&(o.fecha_ot||'').startsWith(m); }).reduce(function(a,o){ return a+(o.cantidad||0); },0); })},
     {label:'Uds Entregadas',    val:fmtNum(udsEntregadas),     color:C_GREEN,  sub:(filtro||yearActual),  nav:null,          spark:dataByMes},
-    {label:'Satélites Activos', val:fmtNum(satActivos),        color:C_GOLD,   sub:'De '+DB.satelites.length+' total', nav:'satelites', spark:[]},
+    {label:'Pendiente Entregar',val:fmtNum(udsPendientes),     color:'#f97316',sub:'Backlog total en planta',nav:null,       spark:[]},
+    {label:'Cortes del Mes',    val:fmtNum(cortesDelMes),      color:C_GOLD,   sub:mesActual,             nav:null,          spark:mesesAll.map(function(m){ return DB.ots.filter(function(o){ var e=o.estado; return e!=='POR_REVISAR'&&e!=='PENDIENTE_CORTAR'&&(o.fecha_ot||'').startsWith(m); }).reduce(function(a,o){ return a+(o.cantidad||0); },0); })},
+    {label:'Cumplimiento',      val:pctCumplimiento!==null?pctCumplimiento+'%':'—', color:cumplColor, sub:otsEntregadas.length+' OTs evaluadas', nav:null, spark:[]},
+    {label:'Satélites Activos', val:fmtNum(satActivos),        color:'#fbbf24',sub:'De '+DB.satelites.length+' total', nav:'satelites', spark:[]},
     {label:'Novedades',         val:fmtNum(novCount),          color:novCount>0?C_PINK:'#475569', sub:'OTs con pendiente', nav:'novedades', spark:[]},
-    {label:'Diseños Activos',   val:fmtNum((DB.disenos||[]).filter(function(d){ return d.kanban_estado!=='LISTA_PRODUCCION'; }).length), color:'#38bdf8', sub:'En proceso', nav:'diseno', spark:[]},
   ];
   h += '<div class="dash-kpi-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:20px;">';
   kpiDefs.forEach(function(k){
@@ -3746,6 +3761,79 @@ function renderDashboard(){
       h += '</div>';
     });
     h += '</div></div>';
+  }
+
+  // ── Pipeline de Diseños ────────────────────────────────────────────────────
+  var DIS_PIPE = [
+    {k:'CON_PROVEEDOR',           l:'Con Proveedor',     c:'#fb923c'},
+    {k:'EN_DISENO_DIGITAL',       l:'Diseño Digital',    c:'#a855f7'},
+    {k:'EN_CORTE_MUESTRA',        l:'Corte Muestra',     c:'#f97316'},
+    {k:'EN_CONFECCION_MUESTRA',   l:'Confección Muestra',c:'#0a84ff'},
+    {k:'EN_REVISION_GERENCIA',    l:'Revisión Gerencia', c:'#ec4899'},
+    {k:'EN_ESCALADO',             l:'Escalado',          c:'#34d399'},
+    {k:'LISTA_PRODUCCION',        l:'Lista Producción',  c:'#22c55e'},
+  ];
+  var disTotal = (DB.disenos||[]).filter(function(d){ return !d.eliminado; }).length;
+  h += '<div class="card" style="padding:18px 16px;margin-bottom:14px;">';
+  h += '<div style="display:flex;align-items:baseline;gap:10px;margin-bottom:16px;flex-wrap:wrap;">';
+  h += '<span style="font-family:var(--bebas);font-size:20px;letter-spacing:1px;">Pipeline de Diseños</span>';
+  h += '<span style="font-size:11px;color:#64748b;">'+disTotal+' diseños en total</span>';
+  h += '<span onclick="navTo(\'diseno\')" style="font-size:11px;color:#0a84ff;margin-left:auto;cursor:pointer;">Ver todos ›</span>';
+  h += '</div>';
+  h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;">';
+  DIS_PIPE.forEach(function(etapa){
+    var cnt = (DB.disenos||[]).filter(function(d){ return !d.eliminado && d.kanban_estado===etapa.k; }).length;
+    var pct = disTotal ? Math.round(cnt/disTotal*100) : 0;
+    h += '<div onclick="navTo(\'diseno\')" style="background:rgba(255,255,255,.02);border:1px solid '+etapa.c+'33;border-radius:10px;padding:12px 14px;cursor:pointer;transition:border-color .15s;" onmouseenter="this.style.borderColor=\''+etapa.c+'88\'" onmouseleave="this.style.borderColor=\''+etapa.c+'33\'">';
+    h += '<div style="font-size:22px;font-weight:900;color:'+etapa.c+';font-family:var(--bebas);line-height:1;margin-bottom:4px;">'+cnt+'</div>';
+    h += '<div style="font-size:10px;color:#94a3b8;font-weight:600;margin-bottom:6px;line-height:1.3;">'+etapa.l+'</div>';
+    h += '<div style="height:3px;border-radius:2px;background:#1a2032;overflow:hidden;"><div style="height:100%;width:'+pct+'%;background:'+etapa.c+';border-radius:2px;"></div></div>';
+    h += '</div>';
+  });
+  h += '</div></div>';
+
+  // ── Cumplimiento de entregas ────────────────────────────────────────────────
+  if(otsEntregadas.length){
+    var vencidas = otsEntregadas.filter(function(o){ return o.fecha_entrega_real > o.fecha_estimada_entrega; });
+    var satCumplMap = {};
+    otsEntregadas.forEach(function(o){
+      var sid = o.satelite_id||'sin_sat';
+      if(!satCumplMap[sid]) satCumplMap[sid]={nom:getSatNombre(o.satelite_id),total:0,aT:0};
+      satCumplMap[sid].total++;
+      if(o.fecha_entrega_real<=o.fecha_estimada_entrega) satCumplMap[sid].aT++;
+    });
+    var satCumplList = Object.values(satCumplMap).filter(function(s){ return s.total>=2; })
+      .sort(function(a,b){ return (b.aT/b.total)-(a.aT/a.total); });
+    h += '<div class="card" style="padding:18px 16px;margin-bottom:14px;">';
+    h += '<div style="display:flex;align-items:baseline;gap:10px;margin-bottom:6px;flex-wrap:wrap;">';
+    h += '<span style="font-family:var(--bebas);font-size:20px;letter-spacing:1px;">Cumplimiento de Entregas</span>';
+    h += '<span style="font-size:11px;color:#64748b;">'+otsEntregadas.length+' OTs evaluadas · '+(filtro||yearActual)+'</span>';
+    h += '</div>';
+    h += '<div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">';
+    h += '<div style="font-size:48px;font-weight:900;font-family:var(--bebas);color:'+cumplColor+';line-height:1;">'+pctCumplimiento+'%</div>';
+    h += '<div>';
+    h += '<div style="font-size:12px;color:#34d399;font-weight:600;">'+aTiempo+' entregadas a tiempo</div>';
+    h += '<div style="font-size:12px;color:#ec4899;font-weight:600;">'+vencidas.length+' entregadas tarde</div>';
+    h += '</div>';
+    h += '<div style="flex:1;height:8px;border-radius:6px;background:#1a2032;overflow:hidden;max-width:200px;">';
+    h += '<div style="height:100%;width:'+pctCumplimiento+'%;background:linear-gradient(90deg,'+cumplColor+','+cumplColor+'aa);border-radius:6px;"></div>';
+    h += '</div>';
+    h += '</div>';
+    if(satCumplList.length){
+      h += '<div style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.7px;font-weight:600;margin-bottom:8px;">Por satélite</div>';
+      h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px;">';
+      satCumplList.forEach(function(s){
+        var p=Math.round(s.aT/s.total*100);
+        var sc=p>=85?C_GREEN:p>=65?C_GOLD:C_PINK;
+        h += '<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(255,255,255,.02);border-radius:8px;">';
+        h += '<div style="flex:1;font-size:12px;color:#94a3b8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+s.nom+'</div>';
+        h += '<div style="width:60px;height:4px;border-radius:3px;background:#1a2032;overflow:hidden;flex-shrink:0;"><div style="height:100%;width:'+p+'%;background:'+sc+';border-radius:3px;"></div></div>';
+        h += '<div style="font-size:12px;font-weight:700;color:'+sc+';min-width:34px;text-align:right;flex-shrink:0;">'+p+'%</div>';
+        h += '</div>';
+      });
+      h += '</div>';
+    }
+    h += '</div>';
   }
 
   return h;
