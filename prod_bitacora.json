@@ -828,19 +828,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "AZUL OSCURO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1784988336199_3yxva",
+      "motivo": "EN TALLER",
+      "op_id": "OP-0038",
+      "op_nombre": "CHAQUETA CAZADORA",
+      "referencia": "CHAQUETA CAZADORA",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1784988336199,
+      "uds": 76,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1784988349874_9fbgg",
+      "ts": 1784988349874,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-0038",
       "op_nombre": "CHAQUETA CAZADORA",
       "referencia": "CHAQUETA CAZADORA",
-      "color": "AZUL OSCURO",
+      "color": "LILA",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 76,
+      "uds": 104,
       "motivo": "EN TALLER"
     }
   ]
