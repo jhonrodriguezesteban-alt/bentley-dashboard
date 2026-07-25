@@ -786,14 +786,30 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1784987595731_q4w00",
-      "ts": 1784987595731,
-      "user": "Jefa de Producción",
-      "tipo": "diligencia",
       "descripcion": "llevar lonas a doña gilma",
       "destino": "suba",
       "fecha": "2026-07-25",
-      "hora": ""
+      "hora": "",
+      "id": "evt_1784987595731_q4w00",
+      "tipo": "diligencia",
+      "ts": 1784987595731,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1784988319391_8u64f",
+      "ts": 1784988319391,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0038",
+      "op_nombre": "CHAQUETA CAZADORA",
+      "referencia": "CHAQUETA CAZADORA",
+      "color": "AZUL OSCURO",
+      "talla": "T6",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": false,
+      "uds": 10,
+      "motivo": "EN TALLER"
     }
   ]
 }
