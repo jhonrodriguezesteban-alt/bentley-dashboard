@@ -1083,16 +1083,25 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1785251057064_rtlrc",
-      "ts": 1785251057064,
-      "user": "John Rodriguez",
-      "tipo": "crear_diseno",
-      "nombre": "CONJUNTO PALOMINO",
       "categoria": "Conjuntos",
-      "marca": "Bentley Kids",
-      "prioridad": 1,
+      "id": "evt_1785251057064_rtlrc",
       "kanban": "EN_CORTE_MUESTRA",
-      "proveedor": "ninguno"
+      "marca": "Bentley Kids",
+      "nombre": "CONJUNTO PALOMINO",
+      "prioridad": 1,
+      "proveedor": "ninguno",
+      "tipo": "crear_diseno",
+      "ts": 1785251057064,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785251405673_zhk2o",
+      "ts": 1785251405673,
+      "user": "John Rodriguez",
+      "tipo": "tela_nota",
+      "diseno_id": "id_1782158416240_udh4c2q9c",
+      "nombre": "PETO TEJIDO ESPIGA",
+      "tiene_nota": true
     }
   ]
 }
