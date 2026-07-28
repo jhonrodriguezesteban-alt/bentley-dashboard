@@ -7412,7 +7412,7 @@ function _disAddColorModal(disId){
 }
 function _disAgregarPendiente(){
   var nombre = (document.getElementById('dcol-nombre')||{}).value||'';
-  var hex    = (document.getElementById('dcol-hex')||{}).value||'#888888';
+  var hex    = _hsl2hex(_dcolH,_dcolS,_dcolL)||'#888888';
   if(!nombre.trim()){ toast('Escribe el nombre del color','warning'); return; }
   var col = {id:'col_'+Date.now()+'_'+Math.random().toString(36).substr(2,4), nombre:nombre.trim(), hex:hex};
   _disColoresPendientes.push(col);
