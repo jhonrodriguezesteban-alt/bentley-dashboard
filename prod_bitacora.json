@@ -1223,14 +1223,30 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1785256333843_r5uhq",
-      "ts": 1785256333843,
-      "user": "Jefa de Producción",
-      "tipo": "cambiar_estado_op_all",
-      "op_id": "OP-2026-093",
-      "estado": "EN_CONFECCION",
       "colores": 1,
-      "nombre": "CALIFORNIA"
+      "estado": "EN_CONFECCION",
+      "id": "evt_1785256333843_r5uhq",
+      "nombre": "CALIFORNIA",
+      "op_id": "OP-2026-093",
+      "tipo": "cambiar_estado_op_all",
+      "ts": 1785256333843,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785256343185_96u1n",
+      "ts": 1785256343185,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-093",
+      "op_nombre": "CALIFORNIA",
+      "referencia": "CALIFORNIA",
+      "color": "MARFIL",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 152,
+      "motivo": "EN TALLER"
     }
   ]
 }
