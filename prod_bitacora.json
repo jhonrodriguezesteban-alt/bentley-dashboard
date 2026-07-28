@@ -1277,16 +1277,32 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1785257088292_v5wmp",
-      "ts": 1785257088292,
-      "user": "John Rodriguez",
-      "tipo": "crear_diseno",
-      "nombre": "CAMIBUSO PASCAL",
       "categoria": "Buzos",
-      "marca": "Bentley Kids",
-      "prioridad": 1,
+      "id": "evt_1785257088292_v5wmp",
       "kanban": "EN_CORTE_MUESTRA",
-      "proveedor": "ninguno"
+      "marca": "Bentley Kids",
+      "nombre": "CAMIBUSO PASCAL",
+      "prioridad": 1,
+      "proveedor": "ninguno",
+      "tipo": "crear_diseno",
+      "ts": 1785257088292,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785257162872_7jlct",
+      "ts": 1785257162872,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0038",
+      "op_nombre": "CHAQUETA CAZADORA",
+      "referencia": "CHAQUETA CAZADORA",
+      "color": "AZUL BEBE",
+      "talla": "todas las tallas",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": true,
+      "uds": 122,
+      "motivo": "ENTREGADO"
     }
   ]
 }
