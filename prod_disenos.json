@@ -1194,6 +1194,15 @@
           "nombre": "PALO DE ROSA - 614"
         }
       ],
+      "comentarios": [
+        {
+          "autor": "John Rodriguez",
+          "fecha": "2026-07-28",
+          "hora": "10:56",
+          "id": "c_1785254181030",
+          "texto": "HACER SIMPLE LA MANGA Y PUÑO SI ES MUY COMPLEJO LOS PRENSES"
+        }
+      ],
       "fecha_creacion": "2026-06-22",
       "genero": "Niña",
       "id": "id_1782163675629_uulvnb5ge",
@@ -1220,18 +1229,7 @@
       "prioridad": 3,
       "responsable": "Carolina",
       "tela_estado": "asignada",
-      "tela_nota": "TELA ASPEN DE VITRAL",
-      "proveedor": null,
-      "comentarios": [
-        {
-          "id": "c_1785254181030",
-          "texto": "HACER SIMPLE LA MANGA Y PUÑO SI ES MUY COMPLEJO LOS PRENSES",
-          "autor": "John Rodriguez",
-          "fecha": "2026-07-28",
-          "hora": "10:56",
-          "imagenes": []
-        }
-      ]
+      "tela_nota": "TELA ASPEN DE VITRAL"
     },
     {
       "_ts": "2026-06-22T21:31:08.925Z",
@@ -1532,8 +1530,7 @@
       "prioridad": 1,
       "responsable": "Carolina",
       "tela_estado": "asignada",
-      "tela_nota": "TELA DONATELLA DE VITRAL",
-      "proveedor": null
+      "tela_nota": "TELA DONATELLA DE VITRAL"
     },
     {
       "_ts": "2026-06-22T22:09:45.201Z",
@@ -2064,6 +2061,13 @@
     {
       "_ts": "2026-06-23T01:30:48.260Z",
       "categoria": "CAMISON",
+      "colores_escogidos": [
+        {
+          "hex": "#f5f5db",
+          "id": "col_1785253788877_d6w3",
+          "nombre": "MANI - BEIGE 308"
+        }
+      ],
       "fecha_creacion": "2026-06-23",
       "genero": "Unisex",
       "id": "id_1782178045964_1yfpnq1np",
@@ -2083,14 +2087,7 @@
       "prioridad": 1,
       "responsable": "Carolina",
       "tela_estado": "asignada",
-      "tela_nota": "TELA FLUFY DE BEDA Y TELA MANI VITRAL",
-      "colores_escogidos": [
-        {
-          "id": "col_1785253788877_d6w3",
-          "nombre": "MANI - BEIGE 308",
-          "hex": "#f5f5db"
-        }
-      ]
+      "tela_nota": "TELA FLUFY DE BEDA Y TELA MANI VITRAL"
     },
     {
       "_ts": "2026-06-23T01:37:27.982Z",
@@ -2511,9 +2508,9 @@
           "nombre": "GRIS OSCURO- 210"
         },
         {
+          "hex": "#6f6544",
           "id": "col_1785252532156_b71v",
-          "nombre": "TAUPE - 315",
-          "hex": "#6f6544"
+          "nombre": "TAUPE - 315"
         }
       ],
       "fecha_creacion": "2026-06-23",
@@ -2645,6 +2642,15 @@
     {
       "_ts": "2026-06-23T03:18:54.180Z",
       "categoria": "Conjuntos",
+      "comentarios": [
+        {
+          "autor": "Carolina",
+          "fecha": "2026-07-28",
+          "hora": "10:46",
+          "id": "c_1785253598024",
+          "texto": "Ya estálisto, estamos pendientes de ancho"
+        }
+      ],
       "fecha_creacion": "2026-06-23",
       "genero": "Niño",
       "id": "id_1782184669773_oiigizrk8",
@@ -2662,17 +2668,7 @@
       "nombre": "SET ARTES",
       "nota": "REALIZAR CONJUNTO SUBLIMADO CON TELA PARA TIERRA CALIENTE",
       "prioridad": 1,
-      "responsable": "Carolina",
-      "comentarios": [
-        {
-          "id": "c_1785253598024",
-          "texto": "Ya estálisto, estamos pendientes de ancho",
-          "autor": "Carolina",
-          "fecha": "2026-07-28",
-          "hora": "10:46",
-          "imagenes": []
-        }
-      ]
+      "responsable": "Carolina"
     },
     {
       "_ts": "2026-06-23T03:20:13.250Z",
@@ -3177,6 +3173,11 @@
           "hex": "#aa7942",
           "id": "col_1784927953535_pq3v",
           "nombre": "MISO - BEIGE 322"
+        },
+        {
+          "id": "col_1785256432778_3vs7",
+          "nombre": "VERDE MILITAR",
+          "hex": "#4d5421"
         }
       ],
       "fecha_creacion": "2026-06-23",
@@ -3601,14 +3602,14 @@
       "categoria": "Conjuntos",
       "colores_escogidos": [
         {
+          "hex": "#fffff0",
           "id": "col_1785255836706_ze1f",
-          "nombre": "MARFIL 110",
-          "hex": "#fffff0"
+          "nombre": "MARFIL 110"
         },
         {
+          "hex": "#9e9e9e",
           "id": "col_1785255844536_4zjh",
-          "nombre": "GRIS JASPED -222",
-          "hex": "#9e9e9e"
+          "nombre": "GRIS JASPED -222"
         }
       ],
       "fecha_creacion": "2026-06-25",
@@ -4198,20 +4199,19 @@
       "tela_nota": "TELA AGNES"
     },
     {
-      "id": "id_1785255139718_q7nn7ajws",
-      "nombre": "PANTALON TRENCH",
-      "marca": "Bentley Kids",
+      "_ts": "2026-07-28T16:16:00.615Z",
       "categoria": "Pantalones",
-      "responsable": "Isa",
-      "prioridad": 1,
-      "kanban_estado": "EN_CORTE_MUESTRA",
-      "nota": "HORMA DEL REVE SIN PLIEGUES Y RECTO",
-      "genero": "Niño",
-      "proveedor": null,
-      "tela_estado": "asignada",
-      "tela_nota": "tela trench de vitral",
       "fecha_creacion": "2026-07-28",
-      "_ts": "2026-07-28T16:16:00.615Z"
+      "genero": "Niño",
+      "id": "id_1785255139718_q7nn7ajws",
+      "kanban_estado": "EN_CORTE_MUESTRA",
+      "marca": "Bentley Kids",
+      "nombre": "PANTALON TRENCH",
+      "nota": "HORMA DEL REVE SIN PLIEGUES Y RECTO",
+      "prioridad": 1,
+      "responsable": "Isa",
+      "tela_estado": "asignada",
+      "tela_nota": "tela trench de vitral"
     }
   ],
   "disenos_cfg": {
