@@ -1032,19 +1032,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1785249935031_cniof",
-      "ts": 1785249935031,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-095",
-      "op_nombre": "CHAQUETA SUEDE OLD MONEY",
       "categoria": "CHAQUETAS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-07-28",
-      "total_uds": 96,
+      "id": "evt_1785249935031_cniof",
+      "op_id": "OP-2026-095",
+      "op_nombre": "CHAQUETA SUEDE OLD MONEY",
       "referencias": [
         "CHAQUETA SUEDE OLD MONEY"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 96,
+      "ts": 1785249935031,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785250268148_t2hs9",
+      "ts": 1785250268148,
+      "user": "John Rodriguez",
+      "tipo": "crear_diseno",
+      "nombre": "CHAQUETA MINI PARIS",
+      "categoria": "Chaquetas",
+      "marca": "Bentley Kids",
+      "prioridad": 1,
+      "kanban": "EN_CORTE_MUESTRA",
+      "proveedor": "ninguno"
     }
   ]
 }
