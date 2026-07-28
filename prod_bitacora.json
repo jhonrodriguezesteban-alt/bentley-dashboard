@@ -1529,8 +1529,24 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1785259401214_p5ubc",
+      "motivo": "EN TALLER",
+      "op_id": "OP-0033",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "referencia": "OVERSIZED CAPOTA",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1785259401214,
+      "uds": 91,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785259406664_yrb4v",
+      "ts": 1785259406664,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-0033",
@@ -1542,6 +1558,22 @@
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
       "uds": 91,
+      "motivo": "EN TALLER"
+    },
+    {
+      "id": "evt_1785259424637_01m3e",
+      "ts": 1785259424637,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0033",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "referencia": "OVERSIZED CAPOTA",
+      "color": "BEIGE",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 68,
       "motivo": "EN TALLER"
     }
   ]
