@@ -7158,6 +7158,7 @@ function renderDiseno(){
         var tnPreview = d.tela_nota ? (d.tela_nota.length>22?d.tela_nota.substring(0,22)+'…':d.tela_nota) : 'Agregar nota...';
         var tnColor = d.tela_nota ? '#e2e8f0' : '#475569';
         h += '<button data-disid="'+d.id+'" onclick="event.stopPropagation();abrirTelaNotaModal(this.dataset.disid)" style="flex:1;min-width:0;text-align:left;background:#0d1117;border:1px solid '+(telaEst==='asignada'?'rgba(52,211,153,.25)':'rgba(251,146,60,.25)')+';border-radius:6px;color:'+tnColor+';font-size:11px;padding:3px 8px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(tnPreview)+'</button>';
+        if(d.tela_precio){ h += '<span style="font-size:10px;font-weight:700;color:#fb923c;white-space:nowrap;padding:0 4px;">$'+Number(d.tela_precio).toLocaleString('es-CO')+'</span>'; }
       }
       h += '</div>';
       h += '</div>';
@@ -7617,6 +7618,12 @@ function abrirTelaNotaModal(id){
   inner += '<div><div style="font-size:14px;font-weight:800;color:#e2e8f0;">'+esc(d.nombre||'')+'</div><div style="font-size:11px;color:'+tc+';font-weight:700;margin-top:2px;">Nota de tela · '+esc((d.tela_estado||'').replace(/_/g,' ').toUpperCase())+'</div></div>';
   inner += '</div>';
   inner += '<textarea id="tela-nota-ta" placeholder="Escribe la referencia o nota de tela..." style="width:100%;min-height:130px;background:rgba(255,255,255,.04);border:1px solid rgba(52,211,153,.3);border-radius:10px;color:#e2e8f0;font-size:14px;line-height:1.6;padding:12px;resize:none;outline:none;font-family:inherit;box-sizing:border-box;">'+esc(d.tela_nota||'')+'</textarea>';
+  inner += '<div style="display:flex;align-items:center;gap:10px;">';
+  inner += '<div style="font-size:11px;color:#64748b;font-weight:600;white-space:nowrap;">💰 Precio / mt</div>';
+  inner += '<div style="position:relative;flex:1;">';
+  inner += '<span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#64748b;font-size:13px;font-weight:600;">$</span>';
+  inner += '<input id="tela-precio-in" type="number" min="0" step="100" placeholder="0" value="'+(d.tela_precio||'')+'" style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(251,146,60,.3);border-radius:8px;color:#fb923c;font-size:14px;font-weight:700;padding:8px 10px 8px 22px;outline:none;box-sizing:border-box;">';
+  inner += '</div></div>';
   inner += '<div style="display:flex;gap:10px;justify-content:flex-end;">';
   inner += '<button onclick="document.getElementById(\'tela-nota-modal\').remove()" style="background:none;border:1px solid #2c2c2e;border-radius:8px;color:#64748b;font-size:13px;font-weight:600;padding:8px 18px;cursor:pointer;">Cancelar</button>';
   inner += '<button data-disid="'+id+'" onclick="guardarTelaNotaModal(this.dataset.disid)" style="background:#34d399;border:none;border-radius:8px;color:#0d1117;font-size:13px;font-weight:700;padding:8px 22px;cursor:pointer;">Guardar</button>';
@@ -7629,10 +7636,13 @@ function abrirTelaNotaModal(id){
 function guardarTelaNotaModal(id){
   var ta = document.getElementById('tela-nota-ta');
   var nota = ta ? ta.value.trim() : '';
+  var precioIn = document.getElementById('tela-precio-in');
+  var precio = precioIn ? parseFloat(precioIn.value)||0 : 0;
   var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
   if(!d) return;
   d.tela_nota = nota;
-  _logEvt('tela_nota', {diseno_id:d.id, nombre:d.nombre, tiene_nota:!!nota});
+  d.tela_precio = precio || null;
+  _logEvt('tela_nota', {diseno_id:d.id, nombre:d.nombre, tiene_nota:!!nota, precio:precio});
   saveLocal(); guardarDisenos();
   var modal = document.getElementById('tela-nota-modal');
   if(modal) modal.remove();
