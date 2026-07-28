@@ -1447,20 +1447,32 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MARFIL",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1785258039883_uj8iu",
-      "ts": 1785258039883,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-0049",
       "op_nombre": "CONJUNTO OSLO",
       "referencia": "CONJUNTO OSLO",
-      "color": "MARFIL",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1785258039883,
       "uds": 91,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785258928031_2gtct",
+      "ts": 1785258928031,
+      "user": "John Rodriguez",
+      "tipo": "editar_diseno",
+      "nombre": "CONJUNTO REXTON",
+      "categoria": "Conjuntos",
+      "marca": "Bentley Kids",
+      "prioridad": 1,
+      "kanban": "EN_CORTE_MUESTRA",
+      "proveedor": "ninguno"
     }
   ]
 }
