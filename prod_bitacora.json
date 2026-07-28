@@ -1634,20 +1634,32 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "AZUL BEBE",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1785259949358_dvesf",
-      "ts": 1785259949358,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-0032",
       "op_nombre": "CHALECO ROGGER",
       "referencia": "CHALECO ROGGER",
-      "color": "AZUL BEBE",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1785259949358,
       "uds": 112,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785260691163_vql6m",
+      "ts": 1785260691163,
+      "user": "John Rodriguez",
+      "tipo": "crear_diseno",
+      "nombre": "PANTALON GEPARDO",
+      "categoria": "Pantalones",
+      "marca": "Bentley Kids",
+      "prioridad": 1,
+      "kanban": "EN_CORTE_MUESTRA",
+      "proveedor": "ninguno"
     }
   ]
 }
