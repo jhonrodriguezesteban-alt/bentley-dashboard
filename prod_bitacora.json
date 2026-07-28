@@ -1196,20 +1196,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1785256257804_jtta8",
-      "ts": 1785256257804,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-092",
       "op_nombre": "PANTALON MONIQUE",
       "referencia": "PANTALON MONIQUE",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1785256257804,
       "uds": 52,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785256313464_l4p0z",
+      "ts": 1785256313464,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-093",
+      "nombre": "CALIFORNIA",
+      "categoria": "PANTALONES",
+      "colores": 1,
+      "refs": 1
     }
   ]
 }
