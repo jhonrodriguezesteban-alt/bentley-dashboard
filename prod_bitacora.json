@@ -1143,20 +1143,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1785256131291_bdfyh",
-      "ts": 1785256131291,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-0034",
       "op_nombre": "PILOTO PANCAKE",
       "referencia": "PILOTO PANCAKE",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1785256131291,
       "uds": 72,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785256176572_ul0sh",
+      "ts": 1785256176572,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-092",
+      "nombre": "PANTALON MONIQUE",
+      "categoria": "PANTALONES",
+      "colores": 1,
+      "refs": 1
     }
   ]
 }
