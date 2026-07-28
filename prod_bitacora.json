@@ -1212,15 +1212,25 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1785256313464_l4p0z",
-      "ts": 1785256313464,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-093",
-      "nombre": "CALIFORNIA",
       "categoria": "PANTALONES",
       "colores": 1,
-      "refs": 1
+      "id": "evt_1785256313464_l4p0z",
+      "nombre": "CALIFORNIA",
+      "op_id": "OP-2026-093",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1785256313464,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785256333843_r5uhq",
+      "ts": 1785256333843,
+      "user": "Jefa de Producción",
+      "tipo": "cambiar_estado_op_all",
+      "op_id": "OP-2026-093",
+      "estado": "EN_CONFECCION",
+      "colores": 1,
+      "nombre": "CALIFORNIA"
     }
   ]
 }
