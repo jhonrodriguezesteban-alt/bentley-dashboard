@@ -1475,15 +1475,31 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1785259127315_4rzpb",
-      "ts": 1785259127315,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-091",
-      "nombre": "PANTALON RAVE",
       "categoria": "PANTALONES",
       "colores": 1,
-      "refs": 1
+      "id": "evt_1785259127315_4rzpb",
+      "nombre": "PANTALON RAVE",
+      "op_id": "OP-2026-091",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1785259127315,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785259163315_9qa99",
+      "ts": 1785259163315,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-091",
+      "op_nombre": "PANTALON RAVE",
+      "referencia": "PANTALON RAVE",
+      "color": "CAMEL",
+      "talla": "todas las tallas",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
+      "bulk": true,
+      "uds": 64,
+      "motivo": "en insumos"
     }
   ]
 }
