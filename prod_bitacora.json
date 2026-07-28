@@ -1463,16 +1463,27 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1785258928031_2gtct",
-      "ts": 1785258928031,
-      "user": "John Rodriguez",
-      "tipo": "editar_diseno",
-      "nombre": "CONJUNTO REXTON",
       "categoria": "Conjuntos",
-      "marca": "Bentley Kids",
-      "prioridad": 1,
+      "id": "evt_1785258928031_2gtct",
       "kanban": "EN_CORTE_MUESTRA",
-      "proveedor": "ninguno"
+      "marca": "Bentley Kids",
+      "nombre": "CONJUNTO REXTON",
+      "prioridad": 1,
+      "proveedor": "ninguno",
+      "tipo": "editar_diseno",
+      "ts": 1785258928031,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785259127315_4rzpb",
+      "ts": 1785259127315,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-091",
+      "nombre": "PANTALON RAVE",
+      "categoria": "PANTALONES",
+      "colores": 1,
+      "refs": 1
     }
   ]
 }
