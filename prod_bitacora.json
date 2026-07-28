@@ -1104,6 +1104,25 @@
       "user": "John Rodriguez"
     },
     {
+      "id": "evt_1785253542351_vb45c",
+      "ts": 1785253542351,
+      "user": "John Rodriguez",
+      "tipo": "diseno_tela",
+      "diseno_id": "id_1782178045964_1yfpnq1np",
+      "nombre": "CAMISON SIDNEY",
+      "categoria": "CAMISON",
+      "tela_nueva": "asignada"
+    },
+    {
+      "id": "evt_1785253557759_4snkj",
+      "ts": 1785253557759,
+      "user": "John Rodriguez",
+      "tipo": "tela_nota",
+      "diseno_id": "id_1782178045964_1yfpnq1np",
+      "nombre": "CAMISON SIDNEY",
+      "tiene_nota": true
+    },
+    {
       "categoria": "Conjuntos",
       "diseno_id": "id_1782184669773_oiigizrk8",
       "extracto": "Ya estálisto, estamos pendientes de ancho",
@@ -1115,16 +1134,28 @@
       "user": "Carolina"
     },
     {
-      "id": "evt_1785253676401_98pxf",
-      "ts": 1785253676401,
-      "user": "Carolina",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782184669773_oiigizrk8",
-      "nombre": "SET ARTES",
       "categoria": "Conjuntos",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1782184669773_oiigizrk8",
       "estado_anterior": "EN_DISENO_DIGITAL",
-      "estado_nuevo": "EN_CORTE_MUESTRA"
+      "estado_nuevo": "EN_CORTE_MUESTRA",
+      "id": "evt_1785253676401_98pxf",
+      "marca": "Bentley Kids",
+      "nombre": "SET ARTES",
+      "tipo": "estado_diseno",
+      "ts": 1785253676401,
+      "user": "Carolina"
+    },
+    {
+      "id": "evt_1785254057847_mywi8",
+      "ts": 1785254057847,
+      "user": "John Rodriguez",
+      "tipo": "editar_diseno",
+      "nombre": "BLAZER DONATELLA NIÑA CORTO",
+      "categoria": "Chaquetas",
+      "marca": "Bentley Kids",
+      "prioridad": 1,
+      "kanban": "EN_CONFECCION_MUESTRA",
+      "proveedor": "ninguno"
     }
   ]
 }
