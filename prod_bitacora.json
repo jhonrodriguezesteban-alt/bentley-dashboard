@@ -1385,20 +1385,29 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "VERDE MENTA",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1785257262104_cdfmc",
-      "ts": 1785257262104,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-0038",
       "op_nombre": "CHAQUETA CAZADORA",
       "referencia": "CHAQUETA CAZADORA",
-      "color": "VERDE MENTA",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1785257262104,
       "uds": 133,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785257497813_v4cua",
+      "ts": 1785257497813,
+      "user": "John Rodriguez",
+      "tipo": "eliminar_diseno",
+      "diseno_id": "id_1782399079884_ifzzbilos",
+      "nombre": "CAMISETA MANI",
+      "categoria": "Camisetas"
     }
   ]
 }
