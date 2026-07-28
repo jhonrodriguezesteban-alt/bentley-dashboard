@@ -956,20 +956,30 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "VERDE MILITAR",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1784988410557_k8p7q",
-      "ts": 1784988410557,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-0038",
       "op_nombre": "CHAQUETA CAZADORA",
       "referencia": "CHAQUETA CAZADORA",
-      "color": "VERDE MILITAR",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1784988410557,
       "uds": 84,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785246123109_q0pv5",
+      "ts": 1785246123109,
+      "user": "Jefa de Producción",
+      "tipo": "materia_prima",
+      "descripcion": "Recoger rollos guata",
+      "destino": "Poli carpa",
+      "fecha": "2026-07-28",
+      "hora": ""
     }
   ]
 }
