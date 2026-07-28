@@ -1602,19 +1602,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MORA LECHE",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1785259780672_yfyl5",
+      "motivo": "EN TALLER",
+      "op_id": "OP-0033",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "referencia": "OVERSIZED CAPOTA",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1785259780672,
+      "uds": 84,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785259857984_otq55",
+      "ts": 1785259857984,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-0033",
       "op_nombre": "OVERSIZED CAPOTA",
       "referencia": "OVERSIZED CAPOTA",
-      "color": "MORA LECHE",
+      "color": "VERDE MILITAR",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 84,
+      "uds": 72,
       "motivo": "EN TALLER"
     }
   ]
