@@ -1577,13 +1577,29 @@
       "user": "Jefa de Producción"
     },
     {
+      "capacidad": 110,
       "id": "evt_1785259712828_k5kh9",
-      "ts": 1785259712828,
-      "user": "Jefa de Producción",
-      "tipo": "satelite_crear",
       "nombre": "CAMILO HERNANDEZ",
       "personas": 1,
-      "capacidad": 110
+      "tipo": "satelite_crear",
+      "ts": 1785259712828,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785259775804_by84t",
+      "ts": 1785259775804,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0033",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "referencia": "OVERSIZED CAPOTA",
+      "color": "MORA LECHE",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 84,
+      "motivo": "EN TALLER"
     }
   ]
 }
