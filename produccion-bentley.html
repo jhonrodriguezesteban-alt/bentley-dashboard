@@ -7113,8 +7113,9 @@ function renderDiseno(){
       if(_colsDis.length){
         h += '<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:4px;">';
         _colsDis.forEach(function(col){
+          var dotHex = col.hex || _disDetectHex(col.nombre||'') || '#6b7280';
           h += '<div style="display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:2px 6px 2px 4px;max-width:100%;overflow:hidden;">';
-          h += '<span style="width:12px;height:12px;border-radius:50%;background:'+esc(col.hex||'#888')+';flex-shrink:0;display:inline-block;border:1px solid rgba(255,255,255,.2);"></span>';
+          h += '<span style="width:12px;height:12px;border-radius:50%;background:'+dotHex+';flex-shrink:0;display:inline-block;box-shadow:0 0 0 1.5px rgba(255,255,255,.25),inset 0 0 0 1px rgba(0,0,0,.2);"></span>';
           h += '<span style="font-size:10px;color:#cbd5e1;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:80px;">'+esc(col.nombre||'Color')+'</span>';
           h += '<button data-disid="'+d.id+'" data-colid="'+esc(col.id)+'" onclick="event.stopPropagation();_disEditColorModal(this.dataset.disid,this.dataset.colid)" title="Editar" style="background:none;border:none;cursor:pointer;color:#475569;font-size:9px;padding:0;line-height:1;flex-shrink:0;">✏</button>';
           h += '<button data-disid="'+d.id+'" data-colid="'+esc(col.id)+'" onclick="event.stopPropagation();_disRemoveColor(this.dataset.disid,this.dataset.colid)" title="Eliminar" style="background:none;border:none;cursor:pointer;color:#475569;font-size:9px;padding:0;line-height:1;flex-shrink:0;">✕</button>';
@@ -8845,8 +8846,9 @@ function abrirModalCategoria(cat){
       if(_mCols.length){
         b += '<div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:4px;">';
         _mCols.forEach(function(col){
+          var mDotHex = col.hex || _disDetectHex(col.nombre||'') || '#6b7280';
           b += '<div style="display:inline-flex;align-items:center;gap:3px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:1px 5px 1px 3px;">';
-          b += '<span style="width:10px;height:10px;border-radius:50%;background:'+esc(col.hex||'#888')+';flex-shrink:0;display:inline-block;border:1px solid rgba(255,255,255,.2);"></span>';
+          b += '<span style="width:10px;height:10px;border-radius:50%;background:'+mDotHex+';flex-shrink:0;display:inline-block;box-shadow:0 0 0 1.5px rgba(255,255,255,.25),inset 0 0 0 1px rgba(0,0,0,.2);"></span>';
           b += '<span style="font-size:9px;color:#cbd5e1;font-weight:600;max-width:60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(col.nombre||'')+'</span>';
           b += '<button data-disid="'+d.id+'" data-colid="'+esc(col.id)+'" onclick="event.stopPropagation();_disRemoveColor(this.dataset.disid,this.dataset.colid)" style="background:none;border:none;cursor:pointer;color:#475569;font-size:8px;padding:0;line-height:1;flex-shrink:0;">✕</button>';
           b += '</div>';
