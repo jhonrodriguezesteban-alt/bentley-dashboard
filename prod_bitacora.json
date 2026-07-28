@@ -1249,20 +1249,32 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MARFIL",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1785256346850_p60ok",
-      "ts": 1785256346850,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-093",
       "op_nombre": "CALIFORNIA",
       "referencia": "CALIFORNIA",
-      "color": "MARFIL",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1785256346850,
       "uds": 152,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785256745567_h178w",
+      "ts": 1785256745567,
+      "user": "John Rodriguez",
+      "tipo": "crear_diseno",
+      "nombre": "CAMIBUZO NEVADO",
+      "categoria": "Buzos",
+      "marca": "Bentley Kids",
+      "prioridad": 1,
+      "kanban": "EN_CORTE_MUESTRA",
+      "proveedor": "ninguno"
     }
   ]
 }
