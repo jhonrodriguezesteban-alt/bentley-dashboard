@@ -1104,25 +1104,6 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1785253542351_vb45c",
-      "ts": 1785253542351,
-      "user": "John Rodriguez",
-      "tipo": "diseno_tela",
-      "diseno_id": "id_1782178045964_1yfpnq1np",
-      "nombre": "CAMISON SIDNEY",
-      "categoria": "CAMISON",
-      "tela_nueva": "asignada"
-    },
-    {
-      "id": "evt_1785253557759_4snkj",
-      "ts": 1785253557759,
-      "user": "John Rodriguez",
-      "tipo": "tela_nota",
-      "diseno_id": "id_1782178045964_1yfpnq1np",
-      "nombre": "CAMISON SIDNEY",
-      "tiene_nota": true
-    },
-    {
       "categoria": "Conjuntos",
       "diseno_id": "id_1782184669773_oiigizrk8",
       "extracto": "Ya estálisto, estamos pendientes de ancho",
@@ -1146,69 +1127,20 @@
       "user": "Carolina"
     },
     {
-      "id": "evt_1785254057847_mywi8",
-      "ts": 1785254057847,
-      "user": "John Rodriguez",
-      "tipo": "editar_diseno",
-      "nombre": "BLAZER DONATELLA NIÑA CORTO",
-      "categoria": "Chaquetas",
-      "marca": "Bentley Kids",
-      "prioridad": 1,
-      "kanban": "EN_CONFECCION_MUESTRA",
-      "proveedor": "ninguno"
-    },
-    {
-      "id": "evt_1785254165712_x7mgq",
-      "ts": 1785254165712,
-      "user": "John Rodriguez",
-      "tipo": "editar_diseno",
-      "nombre": "SET PANA",
-      "categoria": "Conjuntos",
-      "marca": "Bentley Kids",
-      "prioridad": 3,
-      "kanban": "EN_DISENO_DIGITAL",
-      "proveedor": "ninguno"
-    },
-    {
-      "id": "evt_1785254181030_yzf2u",
-      "ts": 1785254181030,
-      "user": "John Rodriguez",
-      "tipo": "diseno_comentario",
-      "diseno_id": "id_1782163675629_uulvnb5ge",
-      "nombre": "SET PANA",
-      "categoria": "Conjuntos",
-      "tiene_imagen": false,
-      "extracto": "HACER SIMPLE LA MANGA Y PUÑO SI ES MUY COMPLEJO LOS PRENSES"
-    },
-    {
-      "id": "evt_1785255360616_hrwbm",
-      "ts": 1785255360616,
-      "user": "John Rodriguez",
-      "tipo": "crear_diseno",
-      "nombre": "PANTALON TRENCH",
-      "categoria": "Pantalones",
-      "marca": "Bentley Kids",
-      "prioridad": 1,
-      "kanban": "EN_CORTE_MUESTRA",
-      "proveedor": "ninguno"
-    },
-    {
-      "id": "evt_1785255675435_krko5",
-      "ts": 1785255675435,
-      "user": "John Rodriguez",
-      "tipo": "tela_nota",
-      "diseno_id": "id_1782401927717_21tmv43pe",
-      "nombre": "CONJUNTO JACOBO",
-      "tiene_nota": true
-    },
-    {
-      "id": "evt_1785255747580_iqcus",
-      "ts": 1785255747580,
-      "user": "John Rodriguez",
-      "tipo": "tela_nota",
-      "diseno_id": "id_1782401927717_21tmv43pe",
-      "nombre": "CONJUNTO JACOBO",
-      "tiene_nota": true
+      "id": "evt_1785256095322_vlgih",
+      "ts": 1785256095322,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0034",
+      "op_nombre": "PILOTO PANCAKE",
+      "referencia": "PILOTO PANCAKE",
+      "color": "CAMEL",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 84,
+      "motivo": "EN TALLER"
     }
   ]
 }
