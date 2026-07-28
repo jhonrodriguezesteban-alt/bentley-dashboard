@@ -1170,14 +1170,30 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1785256237794_ooppf",
-      "ts": 1785256237794,
-      "user": "Jefa de Producción",
-      "tipo": "cambiar_estado_op_all",
-      "op_id": "OP-2026-092",
-      "estado": "EN_CONFECCION",
       "colores": 1,
-      "nombre": "PANTALON MONIQUE"
+      "estado": "EN_CONFECCION",
+      "id": "evt_1785256237794_ooppf",
+      "nombre": "PANTALON MONIQUE",
+      "op_id": "OP-2026-092",
+      "tipo": "cambiar_estado_op_all",
+      "ts": 1785256237794,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785256254225_2fynz",
+      "ts": 1785256254225,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-092",
+      "op_nombre": "PANTALON MONIQUE",
+      "referencia": "PANTALON MONIQUE",
+      "color": "NEGRO",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 52,
+      "motivo": "EN TALLER"
     }
   ]
 }
