@@ -10812,6 +10812,10 @@ async function pasarOPAPago(opId, color){
       }
     }
   });
+  // Actualizar subg_estados del color pasado a PAGO_PENDIENTE para que salga de la columna ALISTAMIENTO
+  if(!op.subg_estados) op.subg_estados = {};
+  var colorKey = color || '';
+  op.subg_estados[_subgKey(opId, colorKey)] = 'PAGO_PENDIENTE';
   // Si TODAS las OTs de la OP quedaron en PAGO_PENDIENTE o ENTREGADO → marcar OP como PAGO_PENDIENTE
   var todosOTs = DB.ots.filter(function(o){ return o.op_id===opId; });
   var todosCompletos = todosOTs.length > 0 && todosOTs.every(function(o){
