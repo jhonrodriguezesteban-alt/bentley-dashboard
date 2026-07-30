@@ -2124,18 +2124,30 @@
       "user": "Jefa de Producción"
     },
     {
+      "estado": "NOVEDAD",
       "id": "evt_1785434032466_cafn9",
-      "ts": 1785434032466,
-      "user": "Jefa de Producción",
-      "tipo": "entrega_inline",
-      "ot_id": "OT-10955",
       "numero_ot": 10955,
       "op_id": "OP-0124",
-      "uds_entregadas": 31,
+      "ot_id": "OT-10955",
       "pendientes": 1,
-      "estado": "NOVEDAD",
+      "satelite": "JULIETH VERA",
       "talla": "T16",
-      "satelite": "JULIETH VERA"
+      "tipo": "entrega_inline",
+      "ts": 1785434032466,
+      "uds_entregadas": 31,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785438564213_1fg1x",
+      "ts": 1785438564213,
+      "user": "Isabel",
+      "tipo": "estado_diseno",
+      "diseno_id": "id_1782181414506_mgfc0dyut",
+      "nombre": "PANTALON VENOM",
+      "categoria": "Pantalones",
+      "marca": "Bentley Kids",
+      "estado_anterior": "EN_CONFECCION_MUESTRA",
+      "estado_nuevo": "EN_REVISION_GERENCIA"
     }
   ]
 }
