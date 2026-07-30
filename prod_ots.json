@@ -535,7 +535,7 @@
       "created_at": "2025-05-26",
       "created_by": "migrado_matriz",
       "cumplió_fecha": false,
-      "estado": "EN_CONFECCION",
+      "estado": "ENTREGADO",
       "fecha_entrega_corte_satelite": "2026-04-23",
       "fecha_op": "2025-05-26",
       "fecha_ot": "2025-09-02",
@@ -557,10 +557,19 @@
       "satelite_nombre": "JULIETH VERA",
       "talla": "T12",
       "total_mayorista": 1440000,
-      "unidades_entregadas": 0,
-      "unidades_novedad": 32,
+      "unidades_entregadas": 32,
+      "unidades_novedad": 0,
       "unidades_por_llegar": 32,
-      "valor_mo": 1151
+      "valor_mo": 1151,
+      "fecha_entrega_real": "2026-07-30",
+      "total_costo_mo": 36832,
+      "historial": [
+        {
+          "fecha": "2026-07-30T17:53:24.586Z",
+          "accion": "Entrega completa: 32 uds → ENTREGADO",
+          "user": "Jefa de Producción"
+        }
+      ]
     },
     {
       "cantidad": 32,
