@@ -2788,7 +2788,7 @@ function renderPlaneacion(){
         return o.op_id===op.id && (color==='—' || (o.color||'').toUpperCase()===color.toUpperCase());
       });
       var override = _getSubgEstado(op.id, color);
-      var estado = _estadoEfectivo(override, _subgEstadoDerivado(otsColor));
+      var estado = _estadoEfectivo(override, _subgEstadoDerivado(otsColor), otsColor);
       return PLAN_ESTADOS.indexOf(estado)>=0;
     });
   });
@@ -4023,9 +4023,13 @@ var _ESTADO_PROGRESO = {POR_REVISAR:0,PENDIENTE_CORTAR:1,CORTE_POR_ALISTAR:2,EN_
 
 // Devuelve el estado efectivo: si el derivado de OTs es más avanzado que el override manual, gana el derivado.
 // Esto evita que un subg_estados stale bloquee OPs que ya avanzaron.
-function _estadoEfectivo(manual, derivado){
+function _estadoEfectivo(manual, derivado, otsColor){
   if(!manual) return derivado || 'PENDIENTE_CORTAR';
   var d = derivado === 'ARCHIVADO' ? 'ALISTAMIENTO' : (derivado || 'PENDIENTE_CORTAR');
+  // Si hay OTs reales y TODAS están en un estado temprano (recién cortando de nuevo),
+  // el derivado manda siempre — evita que un override manual viejo (ej. ALISTAMIENTO de un
+  // ciclo anterior) deje una OP "atascada" adelante cuando en realidad se volvió a programar corte.
+  if(otsColor && otsColor.length && (_ESTADO_PROGRESO[d]||0) <= 1) return d;
   // El derivado gana cuando es más avanzado (excepto NOVEDAD que es un estado de alerta, no de avance)
   if(d !== 'NOVEDAD' && (_ESTADO_PROGRESO[d]||0) > (_ESTADO_PROGRESO[manual]||0)) return d;
   return manual;
@@ -4111,7 +4115,7 @@ function renderOPs(){
       colores.forEach(function(color){
         var otsC = otsOp.filter(function(o){ return (o.color||'').trim().toUpperCase()===(color||'').trim().toUpperCase(); });
         var manC = _getSubgEstado(op.id, color);
-        var estC = _estadoEfectivo(manC, _subgEstadoDerivado(otsC));
+        var estC = _estadoEfectivo(manC, _subgEstadoDerivado(otsC), otsC);
         if(!estadoConsolidado || (_ESTADO_PROGRESO[estC]||0) > (_ESTADO_PROGRESO[estadoConsolidado]||0)) estadoConsolidado = estC;
       });
       var uds = otsOp.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
@@ -4123,7 +4127,7 @@ function renderOPs(){
       colores.forEach(function(color, ci){
         var otsColor = color==='—' ? otsOp : otsOp.filter(function(o){ return (o.color||'').trim().toUpperCase()===(color||'').trim().toUpperCase(); });
         var manual = _getSubgEstado(op.id, color);
-        var estado = _estadoEfectivo(manual, _subgEstadoDerivado(otsColor));
+        var estado = _estadoEfectivo(manual, _subgEstadoDerivado(otsColor), otsColor);
         var uds = otsColor.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
         var udsEnt = otsColor.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+((o.unidades_entregadas||0)>0?o.unidades_entregadas:(o.cantidad||0)); }, 0);
         var pct = uds ? Math.round(udsEnt/uds*100) : 0;
@@ -4954,7 +4958,7 @@ function _buildSubgs(){
       var estadoConsolidado = null;
       colores.forEach(function(color){
         var otsC = otsOp.filter(function(o){ return (o.color||'').trim().toUpperCase()===(color||'').trim().toUpperCase(); });
-        var estC = _estadoEfectivo(_getSubgEstado(op.id, color), _subgEstadoDerivado(otsC));
+        var estC = _estadoEfectivo(_getSubgEstado(op.id, color), _subgEstadoDerivado(otsC), otsC);
         if(!estadoConsolidado || (_ESTADO_PROGRESO[estC]||0) > (_ESTADO_PROGRESO[estadoConsolidado]||0)) estadoConsolidado = estC;
       });
       var uds = otsOp.reduce(function(a,o){ return a+(o.cantidad||0); },0);
@@ -4965,7 +4969,7 @@ function _buildSubgs(){
       colores.forEach(function(color, ci){
         var otsColor = color==='—' ? otsOp : otsOp.filter(function(o){ return (o.color||'').trim().toUpperCase()===(color||'').trim().toUpperCase(); });
         var manual = _getSubgEstado(op.id, color);
-        var estado = _estadoEfectivo(manual, _subgEstadoDerivado(otsColor));
+        var estado = _estadoEfectivo(manual, _subgEstadoDerivado(otsColor), otsColor);
         var uds = otsColor.reduce(function(a,o){ return a+(o.cantidad||0); },0);
         var udsEnt = otsColor.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+(o.unidades_entregadas||0); },0);
         var pct = uds ? Math.round(udsEnt/uds*100) : 0;
