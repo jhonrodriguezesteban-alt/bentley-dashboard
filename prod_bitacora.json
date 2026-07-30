@@ -2010,16 +2010,26 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1785427048171_5xy92",
-      "ts": 1785427048171,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782181414506_mgfc0dyut",
-      "nombre": "PANTALON VENOM",
       "categoria": "Pantalones",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1782181414506_mgfc0dyut",
       "estado_anterior": "EN_CORTE_MUESTRA",
-      "estado_nuevo": "EN_CONFECCION_MUESTRA"
+      "estado_nuevo": "EN_CONFECCION_MUESTRA",
+      "id": "evt_1785427048171_5xy92",
+      "marca": "Bentley Kids",
+      "nombre": "PANTALON VENOM",
+      "tipo": "estado_diseno",
+      "ts": 1785427048171,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1785431987035_9fadw",
+      "ts": 1785431987035,
+      "user": "Jefa de Producción",
+      "tipo": "cambiar_estado_op_all",
+      "op_id": "OP-2026-094",
+      "estado": "EN_CONFECCION",
+      "colores": 2,
+      "nombre": "CONJUNTO ISABELLA"
     }
   ]
 }
