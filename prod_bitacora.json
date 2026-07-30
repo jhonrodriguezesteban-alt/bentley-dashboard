@@ -2240,19 +2240,30 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1785448439477_1932f",
-      "ts": 1785448439477,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-097",
-      "op_nombre": "CAMISON BERLIN",
       "categoria": "CAMISONES",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-07-30",
-      "total_uds": 48,
+      "id": "evt_1785448439477_1932f",
+      "op_id": "OP-2026-097",
+      "op_nombre": "CAMISON BERLIN",
       "referencias": [
         "CAMISON BERLIN"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 48,
+      "ts": 1785448439477,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785449056207_juja8",
+      "ts": 1785449056207,
+      "user": "John Rodriguez",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-0037",
+      "nombre": "CHALECO ACOLCHADO MANY",
+      "categoria": "CHALECOS",
+      "colores": 4,
+      "refs": 1
     }
   ]
 }
