@@ -2308,6 +2308,15 @@
     {
       "_ts": "2026-06-23T02:25:06.762Z",
       "categoria": "Pantalones",
+      "comentarios": [
+        {
+          "autor": "Isabel",
+          "fecha": "2026-07-30",
+          "hora": "14:16",
+          "id": "c_1785438962530",
+          "texto": "Muestra confeccionada para medir a Alejo. \nEn cuanto al trazo los bolsillos están muy angostos. Revisar con otro modelo como pantalón Chicago. Para la talla 14 podrían ser +3 CM de ancho.\nTambién es necesario marcar los piquetes para la ubicación de bolsillo en el costado del delantero y eliminar los piquetes que están ubicados en los bolsillos"
+        }
+      ],
       "fecha_creacion": "2026-06-23",
       "genero": "Niño",
       "id": "id_1782181414506_mgfc0dyut",
@@ -2320,11 +2329,11 @@
           "url": "https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/disenos-imgs/id_1782181414506_mgfc0dyut_1782181506772_0.jpeg"
         },
         {
-          "id": "img_1785438518869_0",
-          "url": "https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/disenos-imgs/id_1782181414506_mgfc0dyut_1785438518869_0.jpg",
-          "tipo": "muestra",
           "fecha": "2026-07-30",
-          "nombre": "64647.jpg"
+          "id": "img_1785438518869_0",
+          "nombre": "64647.jpg",
+          "tipo": "muestra",
+          "url": "https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/disenos-imgs/id_1782181414506_mgfc0dyut_1785438518869_0.jpg"
         }
       ],
       "kanban_estado": "EN_REVISION_GERENCIA",
@@ -2334,17 +2343,7 @@
       "prioridad": 1,
       "responsable": "Carolina",
       "tela_estado": "asignada",
-      "tela_nota": "paño algodon",
-      "comentarios": [
-        {
-          "id": "c_1785438962530",
-          "texto": "Muestra confeccionada para medir a Alejo. \nEn cuanto al trazo los bolsillos están muy angostos. Revisar con otro modelo como pantalón Chicago. Para la talla 14 podrían ser +3 CM de ancho.\nTambién es necesario marcar los piquetes para la ubicación de bolsillo en el costado del delantero y eliminar los piquetes que están ubicados en los bolsillos",
-          "autor": "Isabel",
-          "fecha": "2026-07-30",
-          "hora": "14:16",
-          "imagenes": []
-        }
-      ]
+      "tela_nota": "paño algodon"
     },
     {
       "_ts": "2026-06-23T02:33:15.533Z",
@@ -3937,11 +3936,11 @@
       "comentarios": [
         {
           "autor": "Isabel",
+          "editado": "2026-07-30",
           "fecha": "2026-07-30",
           "hora": "09:46",
           "id": "c_1785422803300",
-          "texto": "Muestra confeccionada, material demasiado grueso. Me parece que se ve vasto. En cuanto a la confección es bastante pesado, el filete tiende a saltar la puntada.\n\nEn cuanto al trazo, en caso de ser aprobado añadir moldes para puño 24cm  y pretina completa 95cm. eliminar las puntas de pretina.",
-          "editado": "2026-07-30"
+          "texto": "Muestra confeccionada, material demasiado grueso. Me parece que se ve vasto. En cuanto a la confección es bastante pesado, el filete tiende a saltar la puntada.\n\nEn cuanto al trazo, en caso de ser aprobado añadir moldes para puño 24cm  y pretina completa 95cm. eliminar las puntas de pretina."
         }
       ],
       "fecha_creacion": "2026-06-25",
@@ -4024,7 +4023,7 @@
           "url": "https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/disenos-imgs/id_1782403672846_j98262q3l_1785422903500_3.jpg"
         }
       ],
-      "kanban_estado": "EN_CONFECCION_MUESTRA",
+      "kanban_estado": "EN_REVISION_GERENCIA",
       "marca": "Bentley Kids",
       "nombre": "COUNTRY POLAR",
       "nota": "REALIZAR CON LA BASE DEL COUNTRY Y LA TELA VELVET POLAR UN DISEÑO PARA VER CÓMO SE VE",
