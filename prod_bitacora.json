@@ -1817,12 +1817,27 @@
     },
     {
       "id": "evt_1785354455636_nvkye",
-      "ts": 1785354455636,
-      "user": "John Rodriguez",
-      "tipo": "planeacion_asignar",
+      "mes": "2026-08",
       "op_id": "OP-2026-082",
       "op_nombre": "CONJUNTO OSLO",
-      "mes": "2026-08"
+      "tipo": "planeacion_asignar",
+      "ts": 1785354455636,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785374553128_uxfjd",
+      "ts": 1785374553128,
+      "user": "John Rodriguez",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-096",
+      "op_nombre": "FALDA ESCOSES",
+      "categoria": "FALDA",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-07-29",
+      "total_uds": 184,
+      "referencias": [
+        "FALDA ESCOSES"
+      ]
     }
   ]
 }
