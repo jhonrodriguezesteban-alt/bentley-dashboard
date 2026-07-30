@@ -2110,17 +2110,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "estado": "ENTREGADO",
       "id": "evt_1785434023830_o67vc",
-      "ts": 1785434023830,
-      "user": "Jefa de Producción",
-      "tipo": "entrega_inline",
-      "ot_id": "OT-10954",
       "numero_ot": 10954,
       "op_id": "OP-0124",
-      "uds_entregadas": 32,
+      "ot_id": "OT-10954",
       "pendientes": 0,
-      "estado": "ENTREGADO",
+      "satelite": "JULIETH VERA",
       "talla": "T14",
+      "tipo": "entrega_inline",
+      "ts": 1785434023830,
+      "uds_entregadas": 32,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785434032466_cafn9",
+      "ts": 1785434032466,
+      "user": "Jefa de Producción",
+      "tipo": "entrega_inline",
+      "ot_id": "OT-10955",
+      "numero_ot": 10955,
+      "op_id": "OP-0124",
+      "uds_entregadas": 31,
+      "pendientes": 1,
+      "estado": "NOVEDAD",
+      "talla": "T16",
       "satelite": "JULIETH VERA"
     }
   ]
