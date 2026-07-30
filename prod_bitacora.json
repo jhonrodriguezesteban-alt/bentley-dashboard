@@ -2195,15 +2195,27 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1785446942677_n6tn0",
-      "ts": 1785446942677,
-      "user": "John Rodriguez",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-0021",
-      "nombre": "BLUSA MANGA LARGA SELENA",
       "categoria": "BLUSAS",
       "colores": 5,
-      "refs": 1
+      "id": "evt_1785446942677_n6tn0",
+      "nombre": "BLUSA MANGA LARGA SELENA",
+      "op_id": "OP-0021",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1785446942677,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785447305682_m2f36",
+      "ts": 1785447305682,
+      "user": "John Rodriguez",
+      "tipo": "kanban_color",
+      "op_id": "OP-0055",
+      "op_nombre": "COUNTRY 2.0",
+      "color": "—",
+      "estado_anterior": "POR_REVISAR",
+      "estado_nuevo": "PENDIENTE_CORTAR",
+      "uds": 0
     }
   ]
 }
