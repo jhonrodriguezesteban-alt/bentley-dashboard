@@ -2032,16 +2032,26 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1785431995209_as77p",
-      "ts": 1785431995209,
-      "user": "Jefa de Producción",
-      "tipo": "kanban_color",
-      "op_id": "OP-2026-094",
-      "op_nombre": "CONJUNTO ISABELLA",
       "color": "MARFIL",
       "estado_anterior": "POR_REVISAR",
       "estado_nuevo": "CORTE_POR_ALISTAR",
-      "uds": 0
+      "id": "evt_1785431995209_as77p",
+      "op_id": "OP-2026-094",
+      "op_nombre": "CONJUNTO ISABELLA",
+      "tipo": "kanban_color",
+      "ts": 1785431995209,
+      "uds": 0,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785432108783_4yln9",
+      "ts": 1785432108783,
+      "user": "Jefa de Producción",
+      "tipo": "cambiar_estado_op_all",
+      "op_id": "OP-2026-072",
+      "estado": "PENDIENTE_CORTAR",
+      "colores": 1,
+      "nombre": "BLUSA MANGA LARGA SELENA"
     }
   ]
 }
