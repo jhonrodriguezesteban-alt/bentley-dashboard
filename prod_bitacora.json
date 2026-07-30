@@ -1825,19 +1825,35 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1785374553128_uxfjd",
-      "ts": 1785374553128,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-096",
-      "op_nombre": "FALDA ESCOSES",
       "categoria": "FALDA",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-07-29",
-      "total_uds": 184,
+      "id": "evt_1785374553128_uxfjd",
+      "op_id": "OP-2026-096",
+      "op_nombre": "FALDA ESCOSES",
       "referencias": [
         "FALDA ESCOSES"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 184,
+      "ts": 1785374553128,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785416603786_27iz7",
+      "ts": 1785416603786,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-088",
+      "op_nombre": "CHAQUETA BURBUJAS",
+      "referencia": "CHAQUETA BURBUJAS",
+      "color": "AZUL OSCURO",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 84,
+      "motivo": "EN TALLER"
     }
   ]
 }
