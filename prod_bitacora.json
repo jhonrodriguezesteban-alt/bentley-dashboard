@@ -2044,14 +2044,28 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1785432108783_4yln9",
-      "ts": 1785432108783,
-      "user": "Jefa de Producción",
-      "tipo": "cambiar_estado_op_all",
-      "op_id": "OP-2026-072",
-      "estado": "PENDIENTE_CORTAR",
       "colores": 1,
-      "nombre": "BLUSA MANGA LARGA SELENA"
+      "estado": "PENDIENTE_CORTAR",
+      "id": "evt_1785432108783_4yln9",
+      "nombre": "BLUSA MANGA LARGA SELENA",
+      "op_id": "OP-2026-072",
+      "tipo": "cambiar_estado_op_all",
+      "ts": 1785432108783,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785433968191_wg8r7",
+      "ts": 1785433968191,
+      "user": "Jefa de Producción",
+      "tipo": "entrega_inline",
+      "ot_id": "OT-10950",
+      "numero_ot": 10950,
+      "op_id": "OP-0124",
+      "uds_entregadas": 32,
+      "pendientes": 0,
+      "estado": "ENTREGADO",
+      "talla": "T6",
+      "satelite": "JULIETH VERA"
     }
   ]
 }
