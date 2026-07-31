@@ -10861,9 +10861,11 @@ async function pasarOPAPago(opId, color){
   if(!op) return;
   if(!confirm('¿Pasar '+fmtOpId(opId)+(color?' · '+color:'')+' a Pago? Aparecerá en el módulo de Costos MO para gestión.')) return;
   // Marcar sub-grupo como PAGO_PENDIENTE a nivel OT
+  // Nota: 'ALISTAMIENTO' es un estado AGREGADO del subgrupo (derivado cuando todas sus OTs
+  // están ENTREGADO) — la OT individual nunca tiene ese valor, siempre es 'ENTREGADO'.
   var otsOp = DB.ots.filter(function(o){ return o.op_id===opId && (!color || o.color===color); });
   otsOp.forEach(function(ot){
-    if(ot.estado === 'ALISTAMIENTO'){
+    if(ot.estado === 'ENTREGADO'){
       ot.estado = 'PAGO_PENDIENTE';
       if(!ot.historial) ot.historial=[];
       ot.historial.push({fecha: new Date().toISOString(), accion: 'Pasado a Pago desde Alistamiento', user: getUser()});
@@ -10888,10 +10890,14 @@ async function pasarOPAPago(opId, color){
   if(!op.subg_estados) op.subg_estados = {};
   var colorKey = color || '';
   op.subg_estados[_subgKey(opId, colorKey)] = 'PAGO_PENDIENTE';
-  // Si TODAS las OTs de la OP quedaron en PAGO_PENDIENTE o ENTREGADO → marcar OP como PAGO_PENDIENTE
-  var todosOTs = DB.ots.filter(function(o){ return o.op_id===opId; });
-  var todosCompletos = todosOTs.length > 0 && todosOTs.every(function(o){
-    return o.estado==='PAGO_PENDIENTE'||o.estado==='ENTREGADO'||o.estado==='ARCHIVADO';
+  // Si TODOS los colores de la OP (incluyendo los que aún no tienen ni una OT generada,
+  // es decir todavía sin cortar) quedaron en PAGO_PENDIENTE/ENTREGADO/ARCHIVADO → marcar OP completa.
+  // Un color sin OTs deriva a POR_REVISAR (no completo), así que la OP no se oculta mientras
+  // falten colores por cortar.
+  var coloresOP = (op.colores && op.colores.length) ? op.colores : ['—'];
+  var todosCompletos = coloresOP.every(function(c){
+    var estC = _planEstadoColor(op, c);
+    return estC==='PAGO_PENDIENTE'||estC==='ENTREGADO'||estC==='ARCHIVADO';
   });
   if(todosCompletos) op.estado_op = 'PAGO_PENDIENTE';
   guardarCostosMO();
