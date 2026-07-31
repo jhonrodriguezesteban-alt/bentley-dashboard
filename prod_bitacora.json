@@ -2515,20 +2515,30 @@
       "user": "John Rodriguez"
     },
     {
+      "bulk": true,
+      "color": "AZUL OSCURO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1785527745093_l4cta",
-      "ts": 1785527745093,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-0057",
       "op_nombre": "CHAQUETA RALPH",
       "referencia": "CHAQUETA RALPH",
-      "color": "AZUL OSCURO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1785527745093,
       "uds": 96,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785527750892_39q98",
+      "ts": 1785527750892,
+      "user": "John Rodriguez",
+      "tipo": "cambiar_estado_op_all",
+      "op_id": "OP-0057",
+      "estado": "EN_CONFECCION",
+      "colores": 2,
+      "nombre": "CHAQUETA RALPH"
     }
   ]
 }
