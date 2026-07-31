@@ -2441,20 +2441,31 @@
       "user": "Isabel"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "PENDIENTE_CORTAR",
       "id": "evt_1785527040532_xtol9",
-      "ts": 1785527040532,
-      "user": "John Rodriguez",
-      "tipo": "estado_ot",
+      "motivo": "no se ha cortado",
       "op_id": "OP-0021",
       "op_nombre": "BLUSA MANGA LARGA SELENA",
       "referencia": "BLUSA MANGA LARGA SELENA",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "PENDIENTE_CORTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1785527040532,
       "uds": 84,
-      "motivo": "no se ha cortado"
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785527314447_bkz18",
+      "ts": 1785527314447,
+      "user": "John Rodriguez",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-0054",
+      "nombre": "BEISBOLERA 2.0",
+      "categoria": "CHAQUETAS",
+      "colores": 3,
+      "refs": 1
     }
   ]
 }
