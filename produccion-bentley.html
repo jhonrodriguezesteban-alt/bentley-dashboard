@@ -2671,14 +2671,21 @@ function _planEstadoColor(op, color){
   return _estadoEfectivo(_getSubgEstado(op.id, color), _subgEstadoDerivado(otsColor), otsColor);
 }
 
+// El objeto receta_map se guarda tal cual en Firebase Realtime DB, donde CADA key se
+// convierte en un segmento de ruta — no puede contener . $ # [ ] /. Los nombres de
+// producto sí pueden tener esos caracteres (ej. "BEISBOLERA 2.0"), así que se sanitizan
+// SIEMPRE igual al leer y al escribir para que la clave nunca rompa el guardado.
+function _recSanitizeKey(s){ return (s||'').replace(/[.$#\[\]\/]/g,'_'); }
+
 function _planRecetaDeOp(op){
   var recetas = DB.costeo && DB.costeo.recetas ? DB.costeo.recetas : [];
   if(!recetas.length || !op.nombre_producto) return null;
   var nombre = op.nombre_producto.trim().toUpperCase();
   // 1. Verificar mapa de vínculos explícitos primero
   var mapa = (DB.costeo && DB.costeo.receta_map) || {};
-  if(mapa[nombre]){
-    var rMap = recetas.find(function(rec){ return rec.id===mapa[nombre]; });
+  var mapKey = _recSanitizeKey(nombre);
+  if(mapa[mapKey]){
+    var rMap = recetas.find(function(rec){ return rec.id===mapa[mapKey]; });
     if(rMap) return rMap;
   }
   // 2. Coincidencia exacta o parcial por nombre
@@ -12503,7 +12510,7 @@ function renderCosteo(){
   // Contar pendientes para badge
   var _recetasNombres = (DB.costeo.recetas||[]).map(function(r){ return r.producto.toUpperCase(); });
   var _recMapa = DB.costeo.receta_map||{};
-  function _tieneReceta(nombre){ var n=(nombre||'').toUpperCase(); return !!_recMapa[n]||_recetasNombres.some(function(rn){ return rn===n||rn.indexOf(n)===0||n.indexOf(rn)===0; }); }
+  function _tieneReceta(nombre){ var n=(nombre||'').toUpperCase(); return !!_recMapa[_recSanitizeKey(n)]||_recetasNombres.some(function(rn){ return rn===n||rn.indexOf(n)===0||n.indexOf(rn)===0; }); }
   var _opsSinReceta = (DB.ops||[]).filter(function(op){ return op.estado_op!=='ARCHIVADO' && op.nombre_producto && !_tieneReceta(op.nombre_producto); });
   var _disSinReceta = (DB.disenos||[]).filter(function(d){ return !d.eliminado && d.nombre && !_tieneReceta(d.nombre); });
   var _totalPend = _opsSinReceta.length + _disSinReceta.length;
@@ -13565,7 +13572,7 @@ function guardarPreciosReceta(producto){
 function renderCosteoPendientes(){
   var recetasNombres = (DB.costeo.recetas||[]).map(function(r){ return r.producto.toUpperCase(); });
   var recMapa = DB.costeo.receta_map||{};
-  function tieneRec(nombre){ var n=(nombre||'').toUpperCase(); return !!recMapa[n]||recetasNombres.some(function(rn){ return rn===n||rn.indexOf(n)===0||n.indexOf(rn)===0; }); }
+  function tieneRec(nombre){ var n=(nombre||'').toUpperCase(); return !!recMapa[_recSanitizeKey(n)]||recetasNombres.some(function(rn){ return rn===n||rn.indexOf(n)===0||n.indexOf(rn)===0; }); }
 
   // Agrupar OPs sin receta por nombre de producto (una sola entrada por producto único)
   var opMap = {};
@@ -13685,7 +13692,7 @@ function _vincFiltrar(q){
 }
 function _guardarVinculoReceta(nombre, recetaId){
   if(!DB.costeo.receta_map) DB.costeo.receta_map = {};
-  DB.costeo.receta_map[nombre.toUpperCase()] = recetaId;
+  DB.costeo.receta_map[_recSanitizeKey(nombre.toUpperCase())] = recetaId;
   guardarCosteo().then(function(){
     closeModal();
     toast('Receta vinculada a "'+nombre+'"','success');
