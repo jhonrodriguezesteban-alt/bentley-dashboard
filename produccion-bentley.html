@@ -9886,6 +9886,24 @@ function renderCronograma(){
     toSync.forEach(function(ot){ _cronAutoSync(ot); });
   }
 
+  // Auto-cerrar entradas activas cuyo color ya NO tiene ninguna OT en producción real
+  // (se entregó, sea por confirmarEntregaInline/Guardar todas o cualquier otro camino
+  // que no pase por el modal "Cambiar estado" — esos flujos nunca marcaban el cronograma).
+  var ACTIVO_PROD = {POR_REVISAR:1,PENDIENTE_CORTAR:1,CORTE_POR_ALISTAR:1,ASIGNADO:1,EN_CONFECCION:1,NOVEDAD:1};
+  var cronCerrados = false;
+  (DB.cronograma||[]).filter(function(e){ return !e.entregado; }).forEach(function(e){
+    var otsColor = (DB.ots||[]).filter(function(o){ return o.op_id===e.op_id && o.color===e.color; });
+    if(!otsColor.length) return; // sin OTs asociadas — no tocar, puede ser dato viejo/manual
+    var sigueEnProceso = otsColor.some(function(o){ return ACTIVO_PROD[o.estado]; });
+    if(!sigueEnProceso){
+      e.entregado = true;
+      var fechasReales = otsColor.map(function(o){ return o.fecha_entrega_real; }).filter(Boolean).sort();
+      e.fecha_entrega_real = fechasReales.length ? fechasReales[fechasReales.length-1] : hoy();
+      cronCerrados = true;
+    }
+  });
+  if(cronCerrados) guardarCronograma();
+
   // Rango de días: -2 días pasados + hoy + 27 futuros = 30 columnas
   var hoyStr2 = hoy();
   var hoyBase = new Date(hoyStr2+'T12:00:00');
