@@ -3512,6 +3512,19 @@ function renderPlaneacion(){
           h += '</div>';
         }
       }
+      // ── Mini-total del mes: inmediato (prod. + diseños, sin Fenio) + Fenio diferido ──
+      var mesInmediato = totalPrincipal + disInv;
+      var mesConFenio = mesInmediato + disFenioInv;
+      h += '<div style="margin-top:10px;padding-top:10px;border-top:1px dashed '+mes.color+'33;">';
+      h += '<div style="display:flex;align-items:center;justify-content:space-between;">';
+      h += '<span style="font-size:10px;font-weight:800;color:'+mes.color+';text-transform:uppercase;letter-spacing:.5px;">Total mes</span>';
+      h += '<span style="font-size:19px;font-weight:900;color:'+mes.color+';">'+fmtCopFull(mesConFenio)+'</span>';
+      h += '</div>';
+      h += '<div style="font-size:9px;color:#64748b;text-align:right;margin-top:2px;">';
+      h += fmtCopFull(mesInmediato)+' inmediato';
+      if(disFenioInv>0) h += ' + <span style="color:#fbbf24;">'+fmtCopFull(disFenioInv)+' Fenio dic.</span>';
+      h += '</div>';
+      h += '</div>';
       h += '</div>';
     }
     h += '</div>';
