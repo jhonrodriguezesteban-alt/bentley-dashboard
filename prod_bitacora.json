@@ -3123,19 +3123,30 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1785536518568_v0ntc",
-      "ts": 1785536518568,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-100",
-      "op_nombre": "CHAQUETA HARLEY",
       "categoria": "CHAQUETAS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-07-31",
-      "total_uds": 240,
+      "id": "evt_1785536518568_v0ntc",
+      "op_id": "OP-2026-100",
+      "op_nombre": "CHAQUETA HARLEY",
       "referencias": [
         "CHAQUETA HARLEY"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 240,
+      "ts": 1785536518568,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785536677090_koikb",
+      "ts": 1785536677090,
+      "user": "John Rodriguez",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-079",
+      "nombre": "BEISBOLERA ARMIN",
+      "categoria": "CHAQUETAS",
+      "colores": 2,
+      "refs": 1
     }
   ]
 }
