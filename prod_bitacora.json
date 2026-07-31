@@ -3029,21 +3029,37 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1785534563946_zidhb",
-      "ts": 1785534563946,
-      "user": "John Rodriguez",
-      "tipo": "generar_ots",
-      "op_id": "OP-0054",
-      "op_nombre": "BEISBOLERA 2.0",
       "categoria": "CHAQUETAS",
-      "total_ots": 7,
-      "total_uds": 84,
       "colores": [
         "CAFÉ"
       ],
+      "id": "evt_1785534563946_zidhb",
+      "op_id": "OP-0054",
+      "op_nombre": "BEISBOLERA 2.0",
       "referencias": [
         "BEISBOLERA 2.0"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 7,
+      "total_uds": 84,
+      "ts": 1785534563946,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785534583332_18ryp",
+      "ts": 1785534583332,
+      "user": "John Rodriguez",
+      "tipo": "estado_ot",
+      "op_id": "OP-0054",
+      "op_nombre": "BEISBOLERA 2.0",
+      "referencia": "BEISBOLERA 2.0",
+      "color": "CAFÉ",
+      "talla": "todas las tallas",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": true,
+      "uds": 84,
+      "motivo": "ya salio"
     }
   ]
 }
