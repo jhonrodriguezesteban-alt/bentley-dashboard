@@ -20,6 +20,14 @@
       "nombre_producto": "CHAQUETA CAZADORA",
       "numero": 1,
       "op_effi": 5200,
+      "subg_estados": {
+        "OP-0001||AZUL OSCURO": "ALISTAMIENTO",
+        "OP-0001||FUCSIA": "ALISTAMIENTO",
+        "OP-0001||LILA": "ALISTAMIENTO",
+        "OP-0001||NEGRO": "ALISTAMIENTO",
+        "OP-0001||ROSA": "ALISTAMIENTO",
+        "OP-0001||VERDE MILITAR": "EN_CONFECCION"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -29,15 +37,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 616,
-      "subg_estados": {
-        "OP-0001||FUCSIA": "ALISTAMIENTO",
-        "OP-0001||LILA": "ALISTAMIENTO",
-        "OP-0001||ROSA": "ALISTAMIENTO",
-        "OP-0001||VERDE MILITAR": "EN_CONFECCION",
-        "OP-0001||NEGRO": "ALISTAMIENTO",
-        "OP-0001||AZUL OSCURO": "ALISTAMIENTO"
-      }
+      "total_uds": 616
     },
     {
       "categoria": "CHAQUETAS",
@@ -54,6 +54,9 @@
       "nombre_producto": "OVERSIZED CAPOTA",
       "numero": 2,
       "op_effi": 5209,
+      "subg_estados": {
+        "OP-0002||VINOTINTO": "ARCHIVADO"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -63,10 +66,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 98,
-      "subg_estados": {
-        "OP-0002||VINOTINTO": "ARCHIVADO"
-      }
+      "total_uds": 98
     },
     {
       "categoria": "CHAQUETAS",
@@ -83,6 +83,9 @@
       "nombre_producto": "CHAQUETA CAZADORA HOJAS",
       "numero": 3,
       "op_effi": 5196,
+      "subg_estados": {
+        "OP-0003||NEGRO": "ARCHIVADO"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -92,10 +95,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 84,
-      "subg_estados": {
-        "OP-0003||NEGRO": "ARCHIVADO"
-      }
+      "total_uds": 84
     },
     {
       "categoria": "BUZOS",
@@ -113,17 +113,17 @@
       "nombre_producto": "BUZO YINKY",
       "numero": 4,
       "op_effi": 5210,
+      "subg_estados": {
+        "OP-0004||CAMUFLADO AZUL": "ALISTAMIENTO",
+        "OP-0004||CAMUFLADO VERDE": "ALISTAMIENTO"
+      },
       "tallas": [
         "T2/4",
         "T6/8",
         "T10/12",
         "T14/16"
       ],
-      "total_uds": 196,
-      "subg_estados": {
-        "OP-0004||CAMUFLADO VERDE": "ALISTAMIENTO",
-        "OP-0004||CAMUFLADO AZUL": "ALISTAMIENTO"
-      }
+      "total_uds": 196
     },
     {
       "categoria": "CHAQUETAS",
@@ -139,16 +139,16 @@
       "migrado": true,
       "nombre_producto": "CAMICHAQUETA SAN POLO HOMBRE",
       "numero": 5,
+      "subg_estados": {
+        "OP-0005||ROJO": "ARCHIVADO"
+      },
       "tallas": [
         "M",
         "L",
         "XL",
         "S"
       ],
-      "total_uds": 77,
-      "subg_estados": {
-        "OP-0005||ROJO": "ARCHIVADO"
-      }
+      "total_uds": 77
     },
     {
       "categoria": "CHAQUETAS",
@@ -164,14 +164,14 @@
       "migrado": true,
       "nombre_producto": "CHAQUETA DELCO LISO DAMA",
       "numero": 6,
+      "subg_estados": {
+        "OP-0006||NEGRO": "ARCHIVADO"
+      },
       "tallas": [
         "M",
         "L"
       ],
-      "total_uds": 22,
-      "subg_estados": {
-        "OP-0006||NEGRO": "ARCHIVADO"
-      }
+      "total_uds": 22
     },
     {
       "categoria": "PANTALONES",
@@ -189,17 +189,17 @@
       "nombre_producto": "PANTALON CARGO",
       "numero": 7,
       "op_effi": 3238,
+      "subg_estados": {
+        "OP-0007||BEIGE": "ARCHIVADO",
+        "OP-0007||CAMEL": "ARCHIVADO"
+      },
       "tallas": [
         "T10",
         "T12",
         "T14",
         "T16"
       ],
-      "total_uds": 62,
-      "subg_estados": {
-        "OP-0007||BEIGE": "ARCHIVADO",
-        "OP-0007||CAMEL": "ARCHIVADO"
-      }
+      "total_uds": 62
     },
     {
       "categoria": "BUZOS",
@@ -277,18 +277,18 @@
       "nombre_producto": "GABAN PARIS",
       "numero": 9,
       "op_effi": 5216,
+      "subg_estados": {
+        "OP-0009||BEIGE": "EN_CONFECCION",
+        "OP-0009||CAMEL": "EN_CONFECCION",
+        "OP-0009||NEGRO": "EN_CONFECCION",
+        "OP-0009||ROSA": "EN_CONFECCION"
+      },
       "tallas": [
         "T8",
         "T10",
         "T12"
       ],
-      "total_uds": 48,
-      "subg_estados": {
-        "OP-0009||BEIGE": "EN_CONFECCION",
-        "OP-0009||ROSA": "EN_CONFECCION",
-        "OP-0009||NEGRO": "EN_CONFECCION",
-        "OP-0009||CAMEL": "EN_CONFECCION"
-      }
+      "total_uds": 48
     },
     {
       "categoria": "CAMISAS",
@@ -313,23 +313,23 @@
       "nombre_producto": "CAMISA SYROS",
       "numero": 10,
       "op_effi": 5217,
+      "subg_estados": {
+        "OP-0010||ANIMAL PRINT LILA": "ALISTAMIENTO",
+        "OP-0010||ANIMAL PRINT ROSA": "ALISTAMIENTO",
+        "OP-0010||AZUL BEBE": "CORTE_POR_ALISTAR",
+        "OP-0010||AZUL OSCURO": "CORTE_POR_ALISTAR",
+        "OP-0010||CAMEL": "CORTE_POR_ALISTAR",
+        "OP-0010||GATOS MARFIL": "ALISTAMIENTO",
+        "OP-0010||LOVER BLANCO": "ALISTAMIENTO",
+        "OP-0010||ROSA CLARO": "ALISTAMIENTO",
+        "OP-0010||ROSADO": "ALISTAMIENTO"
+      },
       "tallas": [
         "T10",
         "T8",
         "T12"
       ],
-      "total_uds": 52,
-      "subg_estados": {
-        "OP-0010||AZUL BEBE": "CORTE_POR_ALISTAR",
-        "OP-0010||CAMEL": "CORTE_POR_ALISTAR",
-        "OP-0010||AZUL OSCURO": "CORTE_POR_ALISTAR",
-        "OP-0010||GATOS MARFIL": "ALISTAMIENTO",
-        "OP-0010||ROSA CLARO": "ALISTAMIENTO",
-        "OP-0010||ANIMAL PRINT LILA": "ALISTAMIENTO",
-        "OP-0010||ANIMAL PRINT ROSA": "ALISTAMIENTO",
-        "OP-0010||ROSADO": "ALISTAMIENTO",
-        "OP-0010||LOVER BLANCO": "ALISTAMIENTO"
-      }
+      "total_uds": 52
     },
     {
       "categoria": "CAMISETAS",
@@ -356,16 +356,16 @@
       "numero": 11,
       "op_effi": 5220,
       "subg_estados": {
-        "OP-0011||SKATE GRIS": "ARCHIVADO",
-        "OP-0011||DINO AZUL BEBE": "ALISTAMIENTO",
-        "OP-0011||VIDEO JUEGOS AZUL BEBE": "ALISTAMIENTO",
+        "OP-0011||BEIGE": "EN_CONFECCION",
         "OP-0011||BLANCO DINO": "ALISTAMIENTO",
         "OP-0011||CAMEL": "ALISTAMIENTO",
-        "OP-0011||BEIGE": "EN_CONFECCION",
-        "OP-0011||MARFIL": "ALISTAMIENTO",
-        "OP-0011||VERDE MANZANA": "ALISTAMIENTO",
+        "OP-0011||DINO AZUL BEBE": "ALISTAMIENTO",
         "OP-0011||DINO NEGRO": "ALISTAMIENTO",
-        "OP-0011||GRIS DINO": "ALISTAMIENTO"
+        "OP-0011||GRIS DINO": "ALISTAMIENTO",
+        "OP-0011||MARFIL": "ALISTAMIENTO",
+        "OP-0011||SKATE GRIS": "ARCHIVADO",
+        "OP-0011||VERDE MANZANA": "ALISTAMIENTO",
+        "OP-0011||VIDEO JUEGOS AZUL BEBE": "ALISTAMIENTO"
       },
       "tallas": [
         "T8",
@@ -422,12 +422,12 @@
       "numero": 13,
       "op_effi": 5222,
       "subg_estados": {
-        "OP-0013||NEGRO": "EN_CONFECCION",
-        "OP-0013||CAMEL": "EN_CONFECCION",
-        "OP-0013||VERDE MILITAR": "EN_CONFECCION",
-        "OP-0013||LILA": "EN_CONFECCION",
         "OP-0013||AZUL OSCURO": "EN_CONFECCION",
-        "OP-0013||FUCSIA": "EN_CONFECCION"
+        "OP-0013||CAMEL": "EN_CONFECCION",
+        "OP-0013||FUCSIA": "EN_CONFECCION",
+        "OP-0013||LILA": "EN_CONFECCION",
+        "OP-0013||NEGRO": "EN_CONFECCION",
+        "OP-0013||VERDE MILITAR": "EN_CONFECCION"
       },
       "tallas": [
         "T8",
@@ -453,16 +453,16 @@
       "nombre_producto": "LEGGIN CAMPANITA",
       "numero": 14,
       "op_effi": 5223,
+      "subg_estados": {
+        "OP-0014||BEIGE": "CORTE_POR_ALISTAR",
+        "OP-0014||CAMEL": "CORTE_POR_ALISTAR",
+        "OP-0014||MARFIL": "CORTE_POR_ALISTAR",
+        "OP-0014||NEGRO": "CORTE_POR_ALISTAR"
+      },
       "tallas": [
         "T10"
       ],
-      "total_uds": 19,
-      "subg_estados": {
-        "OP-0014||NEGRO": "CORTE_POR_ALISTAR",
-        "OP-0014||MARFIL": "CORTE_POR_ALISTAR",
-        "OP-0014||BEIGE": "CORTE_POR_ALISTAR",
-        "OP-0014||CAMEL": "CORTE_POR_ALISTAR"
-      }
+      "total_uds": 19
     },
     {
       "categoria": "BUZOS",
@@ -480,15 +480,15 @@
       "nombre_producto": "RANGLAND FUTURE",
       "numero": 15,
       "op_effi": 5224,
+      "subg_estados": {
+        "OP-0015||CAMEL": "CORTE_POR_ALISTAR",
+        "OP-0015||ROJO": "CORTE_POR_ALISTAR"
+      },
       "tallas": [
         "T8",
         "T10"
       ],
-      "total_uds": 16,
-      "subg_estados": {
-        "OP-0015||ROJO": "CORTE_POR_ALISTAR",
-        "OP-0015||CAMEL": "CORTE_POR_ALISTAR"
-      }
+      "total_uds": 16
     },
     {
       "categoria": "CAMISAS",
@@ -508,17 +508,17 @@
       "nombre_producto": "CAMISA UNDERGROUND",
       "numero": 16,
       "op_effi": 5225,
+      "subg_estados": {
+        "OP-0016||BLANCO": "CORTE_POR_ALISTAR",
+        "OP-0016||CAMEL": "CORTE_POR_ALISTAR",
+        "OP-0016||NEGRO": "CORTE_POR_ALISTAR",
+        "OP-0016||VERDE MILITAR": "CORTE_POR_ALISTAR"
+      },
       "tallas": [
         "T8",
         "T10"
       ],
-      "total_uds": 34,
-      "subg_estados": {
-        "OP-0016||NEGRO": "CORTE_POR_ALISTAR",
-        "OP-0016||VERDE MILITAR": "CORTE_POR_ALISTAR",
-        "OP-0016||BLANCO": "CORTE_POR_ALISTAR",
-        "OP-0016||CAMEL": "CORTE_POR_ALISTAR"
-      }
+      "total_uds": 34
     },
     {
       "categoria": "CHALECOS",
@@ -536,14 +536,14 @@
       "nombre_producto": "CHALECO OVEJERO",
       "numero": 17,
       "op_effi": 5226,
+      "subg_estados": {
+        "OP-0017||MARFIL": "CORTE_POR_ALISTAR",
+        "OP-0017||NEGRO": "CORTE_POR_ALISTAR"
+      },
       "tallas": [
         "T10"
       ],
-      "total_uds": 17,
-      "subg_estados": {
-        "OP-0017||NEGRO": "CORTE_POR_ALISTAR",
-        "OP-0017||MARFIL": "CORTE_POR_ALISTAR"
-      }
+      "total_uds": 17
     },
     {
       "categoria": "BUZOS",
@@ -572,28 +572,28 @@
       "migrado": true,
       "nombre_producto": "RANGLAND SOFT",
       "numero": 18,
+      "subg_estados": {
+        "OP-0018||AZUL BEBE": "CORTE_POR_ALISTAR",
+        "OP-0018||AZUL OSCURO": "CORTE_POR_ALISTAR",
+        "OP-0018||AZUL REY": "CORTE_POR_ALISTAR",
+        "OP-0018||BEIGE": "CORTE_POR_ALISTAR",
+        "OP-0018||CAMEL": "CORTE_POR_ALISTAR",
+        "OP-0018||GRIS CLARO": "CORTE_POR_ALISTAR",
+        "OP-0018||GRIS OSCURO": "CORTE_POR_ALISTAR",
+        "OP-0018||LILA": "CORTE_POR_ALISTAR",
+        "OP-0018||MARFIL": "CORTE_POR_ALISTAR",
+        "OP-0018||NARANJA": "CORTE_POR_ALISTAR",
+        "OP-0018||NEGRO": "CORTE_POR_ALISTAR",
+        "OP-0018||ROSA": "CORTE_POR_ALISTAR",
+        "OP-0018||VERDE CALI BEAR MONTAIN": "CORTE_POR_ALISTAR",
+        "OP-0018||VERDE MILITAR": "CORTE_POR_ALISTAR"
+      },
       "tallas": [
         "T8",
         "T10",
         "T12"
       ],
-      "total_uds": 160,
-      "subg_estados": {
-        "OP-0018||NEGRO": "CORTE_POR_ALISTAR",
-        "OP-0018||NARANJA": "CORTE_POR_ALISTAR",
-        "OP-0018||AZUL BEBE": "CORTE_POR_ALISTAR",
-        "OP-0018||ROSA": "CORTE_POR_ALISTAR",
-        "OP-0018||LILA": "CORTE_POR_ALISTAR",
-        "OP-0018||MARFIL": "CORTE_POR_ALISTAR",
-        "OP-0018||CAMEL": "CORTE_POR_ALISTAR",
-        "OP-0018||BEIGE": "CORTE_POR_ALISTAR",
-        "OP-0018||GRIS CLARO": "CORTE_POR_ALISTAR",
-        "OP-0018||AZUL REY": "CORTE_POR_ALISTAR",
-        "OP-0018||VERDE CALI BEAR MONTAIN": "CORTE_POR_ALISTAR",
-        "OP-0018||VERDE MILITAR": "CORTE_POR_ALISTAR",
-        "OP-0018||GRIS OSCURO": "CORTE_POR_ALISTAR",
-        "OP-0018||AZUL OSCURO": "CORTE_POR_ALISTAR"
-      }
+      "total_uds": 160
     },
     {
       "categoria": "CHAQUETAS",
@@ -660,6 +660,13 @@
       "nombre_producto": "BLUSA JEN",
       "numero": 20,
       "op_effi": 5237,
+      "subg_estados": {
+        "OP-0020||AZUL BEBE": "ARCHIVADO",
+        "OP-0020||BEIGE": "ARCHIVADO",
+        "OP-0020||BLANCO NEGRO": "ARCHIVADO",
+        "OP-0020||NEGRO": "ARCHIVADO",
+        "OP-0020||ROSA": "ARCHIVADO"
+      },
       "tallas": [
         "T8",
         "T10",
@@ -669,14 +676,7 @@
         "T4",
         "T6"
       ],
-      "total_uds": 417,
-      "subg_estados": {
-        "OP-0020||BEIGE": "ARCHIVADO",
-        "OP-0020||NEGRO": "ARCHIVADO",
-        "OP-0020||AZUL BEBE": "ARCHIVADO",
-        "OP-0020||BLANCO NEGRO": "ARCHIVADO",
-        "OP-0020||ROSA": "ARCHIVADO"
-      }
+      "total_uds": 417
     },
     {
       "cantidades": {
@@ -779,6 +779,13 @@
           "vmo": 1151
         }
       ],
+      "subg_estados": {
+        "OP-0021||BEIGE": "PENDIENTE_CORTAR",
+        "OP-0021||GRIS": "PENDIENTE_CORTAR",
+        "OP-0021||MARFIL": "PENDIENTE_CORTAR",
+        "OP-0021||NEGRO": "ALISTAMIENTO",
+        "OP-0021||VERDE": "POR_REVISAR"
+      },
       "tallas": [
         "T6",
         "T8",
@@ -788,14 +795,7 @@
         "T16"
       ],
       "total_uds": 319,
-      "updated_at": "2026-07-30",
-      "subg_estados": {
-        "OP-0021||BEIGE": "PENDIENTE_CORTAR",
-        "OP-0021||GRIS": "PENDIENTE_CORTAR",
-        "OP-0021||MARFIL": "PENDIENTE_CORTAR",
-        "OP-0021||NEGRO": "ALISTAMIENTO",
-        "OP-0021||VERDE": "POR_REVISAR"
-      }
+      "updated_at": "2026-07-30"
     },
     {
       "categoria": "CHALECOS",
@@ -814,6 +814,11 @@
       "nombre_producto": "CHALECO PUFFY",
       "numero": 22,
       "op_effi": 5240,
+      "subg_estados": {
+        "OP-0022||BLANCO": "EN_CONFECCION",
+        "OP-0022||NEGRO": "ALISTAMIENTO",
+        "OP-0022||VERDE MILITAR": "NOVEDAD"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -823,12 +828,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 170,
-      "subg_estados": {
-        "OP-0022||BLANCO": "EN_CONFECCION",
-        "OP-0022||NEGRO": "ALISTAMIENTO",
-        "OP-0022||VERDE MILITAR": "NOVEDAD"
-      }
+      "total_uds": 170
     },
     {
       "categoria": "CHAQUETAS",
@@ -846,6 +846,10 @@
       "nombre_producto": "CHAQUETA HARLEY",
       "numero": 23,
       "op_effi": 5230,
+      "subg_estados": {
+        "OP-0023||BEIGE": "ARCHIVADO",
+        "OP-0023||NEGRO": "ARCHIVADO"
+      },
       "tallas": [
         "T6",
         "T8",
@@ -854,11 +858,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 132,
-      "subg_estados": {
-        "OP-0023||BEIGE": "ARCHIVADO",
-        "OP-0023||NEGRO": "ARCHIVADO"
-      }
+      "total_uds": 132
     },
     {
       "categoria": "CONJUNTOS",
@@ -877,6 +877,11 @@
       "nombre_producto": "CONJUNTO ISABELLA",
       "numero": 24,
       "op_effi": 5235,
+      "subg_estados": {
+        "OP-0024||BEIGE": "ARCHIVADO",
+        "OP-0024||CAMEL": "ARCHIVADO",
+        "OP-0024||NEGRO": "ARCHIVADO"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -886,12 +891,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 252,
-      "subg_estados": {
-        "OP-0024||BEIGE": "ARCHIVADO",
-        "OP-0024||CAMEL": "ARCHIVADO",
-        "OP-0024||NEGRO": "ARCHIVADO"
-      }
+      "total_uds": 252
     },
     {
       "categoria": "FALDA",
@@ -909,6 +909,10 @@
       "nombre_producto": "FALDA ESCOSES",
       "numero": 26,
       "op_effi": 5229,
+      "subg_estados": {
+        "OP-0026||BEIGE": "ARCHIVADO",
+        "OP-0026||GRIS CLARO": "ARCHIVADO"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -918,11 +922,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 140,
-      "subg_estados": {
-        "OP-0026||BEIGE": "ARCHIVADO",
-        "OP-0026||GRIS CLARO": "ARCHIVADO"
-      }
+      "total_uds": 140
     },
     {
       "categoria": "FALDA",
@@ -940,6 +940,10 @@
       "nombre_producto": "FALDA GABY BK",
       "numero": 27,
       "op_effi": 5243,
+      "subg_estados": {
+        "OP-0027||BEIGE": "ARCHIVADO",
+        "OP-0027||NEGRO": "ARCHIVADO"
+      },
       "tallas": [
         "T6",
         "T8",
@@ -948,11 +952,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 144,
-      "subg_estados": {
-        "OP-0027||BEIGE": "ARCHIVADO",
-        "OP-0027||NEGRO": "ARCHIVADO"
-      }
+      "total_uds": 144
     },
     {
       "categoria": "PANTALONES",
@@ -970,6 +970,10 @@
       "nombre_producto": "PANTALON RAVE",
       "numero": 28,
       "op_effi": 5233,
+      "subg_estados": {
+        "OP-0028||BEIGE": "ARCHIVADO",
+        "OP-0028||NEGRO": "ARCHIVADO"
+      },
       "tallas": [
         "T6",
         "T8",
@@ -979,11 +983,7 @@
         "T16",
         "T4"
       ],
-      "total_uds": 130,
-      "subg_estados": {
-        "OP-0028||BEIGE": "ARCHIVADO",
-        "OP-0028||NEGRO": "ARCHIVADO"
-      }
+      "total_uds": 130
     },
     {
       "categoria": "VESTIDOS",
@@ -1002,6 +1002,11 @@
       "nombre_producto": "VESTIDO NAPOLES",
       "numero": 29,
       "op_effi": 5242,
+      "subg_estados": {
+        "OP-0029||BEIGE": "ARCHIVADO",
+        "OP-0029||CAMEL": "ARCHIVADO",
+        "OP-0029||NEGRO": "ARCHIVADO"
+      },
       "tallas": [
         "T10",
         "T12",
@@ -1011,12 +1016,7 @@
         "T8",
         "T14"
       ],
-      "total_uds": 178,
-      "subg_estados": {
-        "OP-0029||BEIGE": "ARCHIVADO",
-        "OP-0029||CAMEL": "ARCHIVADO",
-        "OP-0029||NEGRO": "ARCHIVADO"
-      }
+      "total_uds": 178
     },
     {
       "categoria": "CAMISONES",
@@ -1034,6 +1034,10 @@
       "nombre_producto": "CAMISON BERLIN",
       "numero": 30,
       "op_effi": 5244,
+      "subg_estados": {
+        "OP-0030||AZUL BEBE": "ARCHIVADO",
+        "OP-0030||CAMEL": "ARCHIVADO"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -1043,11 +1047,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 140,
-      "subg_estados": {
-        "OP-0030||CAMEL": "ARCHIVADO",
-        "OP-0030||AZUL BEBE": "ARCHIVADO"
-      }
+      "total_uds": 140
     },
     {
       "categoria": "CONJUNTOS",
@@ -1063,6 +1063,9 @@
       "migrado": true,
       "nombre_producto": "CONJUNTO TRENZAS",
       "numero": 31,
+      "subg_estados": {
+        "OP-0031||AZUL BEBE": "PENDIENTE_CORTAR"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -1072,10 +1075,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 112,
-      "subg_estados": {
-        "OP-0031||AZUL BEBE": "PENDIENTE_CORTAR"
-      }
+      "total_uds": 112
     },
     {
       "cantidades": {
@@ -1384,6 +1384,9 @@
       "migrado": true,
       "nombre_producto": "SET FRANKY",
       "numero": 35,
+      "subg_estados": {
+        "OP-0035||GRIS OSCURO": "PENDIENTE_CORTAR"
+      },
       "tallas": [
         "T8",
         "T10",
@@ -1391,10 +1394,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 50,
-      "subg_estados": {
-        "OP-0035||GRIS OSCURO": "PENDIENTE_CORTAR"
-      }
+      "total_uds": 50
     },
     {
       "categoria": "PANTALONES",
@@ -1411,6 +1411,10 @@
       "migrado": true,
       "nombre_producto": "PANTALON DRILL ANCHO",
       "numero": 36,
+      "subg_estados": {
+        "OP-0036||BEIGE": "PENDIENTE_CORTAR",
+        "OP-0036||NEGRO": "PENDIENTE_CORTAR"
+      },
       "tallas": [
         "T6",
         "T8",
@@ -1419,31 +1423,27 @@
         "T14",
         "T16"
       ],
-      "total_uds": 100,
-      "subg_estados": {
-        "OP-0036||BEIGE": "PENDIENTE_CORTAR",
-        "OP-0036||NEGRO": "PENDIENTE_CORTAR"
-      }
+      "total_uds": 100
     },
     {
       "cantidades": {
-        "NEGRO_T10": 22,
-        "NEGRO_T12": 22,
-        "NEGRO_T14": 22,
-        "NEGRO_T16": 22,
+        "BEIGE_T12": 20,
+        "BEIGE_T14": 20,
+        "BEIGE_T16": 20,
         "MARFIL_T10": 20,
         "MARFIL_T12": 20,
         "MARFIL_T14": 20,
         "MARFIL_T16": 20,
-        "ROSA_T6": 10,
-        "ROSA_T8": 20,
+        "NEGRO_T10": 22,
+        "NEGRO_T12": 22,
+        "NEGRO_T14": 22,
+        "NEGRO_T16": 22,
         "ROSA_T10": 20,
         "ROSA_T12": 20,
         "ROSA_T14": 20,
         "ROSA_T16": 20,
-        "BEIGE_T12": 20,
-        "BEIGE_T14": 20,
-        "BEIGE_T16": 20
+        "ROSA_T6": 10,
+        "ROSA_T8": 20
       },
       "categoria": "CHALECOS",
       "colores": [
@@ -1463,16 +1463,34 @@
       "numero": 37,
       "referencias": [
         {
-          "nombre": "CHALECO ACOLCHADO MANY",
-          "ref": "",
+          "cantidades": {
+            "BEIGE_T12": 20,
+            "BEIGE_T14": 20,
+            "BEIGE_T16": 20,
+            "MARFIL_T10": 20,
+            "MARFIL_T12": 20,
+            "MARFIL_T14": 20,
+            "MARFIL_T16": 20,
+            "NEGRO_T10": 22,
+            "NEGRO_T12": 22,
+            "NEGRO_T14": 22,
+            "NEGRO_T16": 22,
+            "ROSA_T10": 20,
+            "ROSA_T12": 20,
+            "ROSA_T14": 20,
+            "ROSA_T16": 20,
+            "ROSA_T6": 10,
+            "ROSA_T8": 20
+          },
           "cat": "CHALECOS",
-          "vmo": 1151,
           "colores": [
             "NEGRO",
             "MARFIL",
             "ROSA",
             "BEIGE"
           ],
+          "nombre": "CHALECO ACOLCHADO MANY",
+          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -1482,27 +1500,14 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T10": 22,
-            "NEGRO_T12": 22,
-            "NEGRO_T14": 22,
-            "NEGRO_T16": 22,
-            "MARFIL_T10": 20,
-            "MARFIL_T12": 20,
-            "MARFIL_T14": 20,
-            "MARFIL_T16": 20,
-            "ROSA_T6": 10,
-            "ROSA_T8": 20,
-            "ROSA_T10": 20,
-            "ROSA_T12": 20,
-            "ROSA_T14": 20,
-            "ROSA_T16": 20,
-            "BEIGE_T12": 20,
-            "BEIGE_T14": 20,
-            "BEIGE_T16": 20
-          }
+          "vmo": 1151
         }
       ],
+      "subg_estados": {
+        "OP-0037||MARFIL": "PENDIENTE_CORTAR",
+        "OP-0037||NEGRO": "PENDIENTE_CORTAR",
+        "OP-0037||ROSA": "PENDIENTE_CORTAR"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -1513,12 +1518,7 @@
         "T16"
       ],
       "total_uds": 137,
-      "updated_at": "2026-07-30",
-      "subg_estados": {
-        "OP-0037||NEGRO": "PENDIENTE_CORTAR",
-        "OP-0037||MARFIL": "PENDIENTE_CORTAR",
-        "OP-0037||ROSA": "PENDIENTE_CORTAR"
-      }
+      "updated_at": "2026-07-30"
     },
     {
       "cantidades": {
@@ -1752,6 +1752,9 @@
           "vmo": 1151
         }
       ],
+      "subg_estados": {
+        "OP-0039||NEGRO": "PENDIENTE_CORTAR"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -1762,10 +1765,7 @@
         "T16"
       ],
       "total_uds": 84,
-      "updated_at": "2026-06-28",
-      "subg_estados": {
-        "OP-0039||NEGRO": "PENDIENTE_CORTAR"
-      }
+      "updated_at": "2026-06-28"
     },
     {
       "categoria": "PANTALONES",
@@ -1781,6 +1781,9 @@
       "migrado": true,
       "nombre_producto": "PANTALON DONATELLA",
       "numero": 40,
+      "subg_estados": {
+        "OP-0040||MARFIL": "PENDIENTE_CORTAR"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -1790,10 +1793,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 84,
-      "subg_estados": {
-        "OP-0040||MARFIL": "PENDIENTE_CORTAR"
-      }
+      "total_uds": 84
     },
     {
       "categoria": "CHAQUETAS",
@@ -1811,6 +1811,10 @@
       "nombre_producto": "CHAQUETA ONION",
       "numero": 41,
       "op_effi": 5231,
+      "subg_estados": {
+        "OP-0041||GRIS OSCURO": "ARCHIVADO",
+        "OP-0041||VINOTINTO": "ARCHIVADO"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -1820,11 +1824,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 154,
-      "subg_estados": {
-        "OP-0041||VINOTINTO": "ARCHIVADO",
-        "OP-0041||GRIS OSCURO": "ARCHIVADO"
-      }
+      "total_uds": 154
     },
     {
       "cantidades": {
@@ -1965,8 +1965,8 @@
         }
       ],
       "subg_estados": {
-        "OP-0043||ROSA": "ARCHIVADO",
-        "OP-0043||GRIS CLARO": "PENDIENTE_CORTAR"
+        "OP-0043||GRIS CLARO": "PENDIENTE_CORTAR",
+        "OP-0043||ROSA": "ARCHIVADO"
       },
       "tallas": [
         "T4",
@@ -1996,6 +1996,10 @@
       "nombre_producto": "HOODIE RANGLAND PAÑO ALGODON CERRADO",
       "numero": 44,
       "op_effi": 5246,
+      "subg_estados": {
+        "OP-0044||AVENA": "ARCHIVADO",
+        "OP-0044||GRIS OSCURO": "ARCHIVADO"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -2005,11 +2009,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 168,
-      "subg_estados": {
-        "OP-0044||AVENA": "ARCHIVADO",
-        "OP-0044||GRIS OSCURO": "ARCHIVADO"
-      }
+      "total_uds": 168
     },
     {
       "categoria": "BUZOS",
@@ -2059,6 +2059,10 @@
       "migrado": true,
       "nombre_producto": "CAMISON DRAKE",
       "numero": 46,
+      "subg_estados": {
+        "OP-0046||BEIGE": "PENDIENTE_CORTAR",
+        "OP-0046||NEGRO": "PENDIENTE_CORTAR"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -2068,11 +2072,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 168,
-      "subg_estados": {
-        "OP-0046||BEIGE": "PENDIENTE_CORTAR",
-        "OP-0046||NEGRO": "PENDIENTE_CORTAR"
-      }
+      "total_uds": 168
     },
     {
       "categoria": "CHAQUETAS",
@@ -2090,6 +2090,11 @@
       "migrado": true,
       "nombre_producto": "BEISBOLERA 2.0",
       "numero": 47,
+      "subg_estados": {
+        "OP-0047||CAFÉ": "ALISTAMIENTO",
+        "OP-0047||GRIS OSCURO": "PAGO_PENDIENTE",
+        "OP-0047||VINOTINTO": "ALISTAMIENTO"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -2099,12 +2104,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 252,
-      "subg_estados": {
-        "OP-0047||CAFÉ": "ALISTAMIENTO",
-        "OP-0047||VINOTINTO": "ALISTAMIENTO",
-        "OP-0047||GRIS OSCURO": "PAGO_PENDIENTE"
-      }
+      "total_uds": 252
     },
     {
       "categoria": "CONJUNTOS",
@@ -2125,6 +2125,13 @@
       "nombre_producto": "CONJUNTO MANCHESTER",
       "numero": 48,
       "op_effi": 5248,
+      "subg_estados": {
+        "OP-0048||AZUL BEBE": "ALISTAMIENTO",
+        "OP-0048||CAFÉ": "ALISTAMIENTO",
+        "OP-0048||GRIS CLARO": "ALISTAMIENTO",
+        "OP-0048||NEGRO": "ALISTAMIENTO",
+        "OP-0048||VINOTINTO": "EN_CONFECCION"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -2134,14 +2141,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 378,
-      "subg_estados": {
-        "OP-0048||GRIS CLARO": "ALISTAMIENTO",
-        "OP-0048||AZUL BEBE": "ALISTAMIENTO",
-        "OP-0048||NEGRO": "ALISTAMIENTO",
-        "OP-0048||CAFÉ": "ALISTAMIENTO",
-        "OP-0048||VINOTINTO": "EN_CONFECCION"
-      }
+      "total_uds": 378
     },
     {
       "cantidades": {
@@ -2280,6 +2280,13 @@
       "nombre_producto": "PANTALON CHICAGO",
       "numero": 50,
       "op_effi": 5252,
+      "subg_estados": {
+        "OP-0050||AVENA": "ARCHIVADO",
+        "OP-0050||CAFÉ": "ARCHIVADO",
+        "OP-0050||GRIS OSCURO": "ARCHIVADO",
+        "OP-0050||MARFIL": "ARCHIVADO",
+        "OP-0050||NEGRO": "ARCHIVADO"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -2289,14 +2296,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 420,
-      "subg_estados": {
-        "OP-0050||AVENA": "ARCHIVADO",
-        "OP-0050||GRIS OSCURO": "ARCHIVADO",
-        "OP-0050||NEGRO": "ARCHIVADO",
-        "OP-0050||CAFÉ": "ARCHIVADO",
-        "OP-0050||MARFIL": "ARCHIVADO"
-      }
+      "total_uds": 420
     },
     {
       "cantidades": {
@@ -2372,11 +2372,11 @@
         "OP-0051||DINO COLORES GRIS": "EN_CONFECCION",
         "OP-0051||DINO MUSICA AZUL OSC": "EN_CONFECCION",
         "OP-0051||LEONES MARFIL": "EN_CONFECCION",
+        "OP-0051||NEGRO": "EN_CONFECCION",
         "OP-0051||PERROS DORMIDOS MARFIL": "EN_CONFECCION",
         "OP-0051||ROJO": "EN_CONFECCION",
-        "OP-0051||NEGRO": "EN_CONFECCION",
-        "OP-0051||VERDE MILITAR": "EN_CONFECCION",
-        "OP-0051||VERDE": "EN_CONFECCION"
+        "OP-0051||VERDE": "EN_CONFECCION",
+        "OP-0051||VERDE MILITAR": "EN_CONFECCION"
       },
       "tallas": [
         "T8",
@@ -2488,6 +2488,12 @@
           "vmo": 1151
         }
       ],
+      "subg_estados": {
+        "OP-0053||AZUL OSCURO": "PENDIENTE_CORTAR",
+        "OP-0053||LILA": "ALISTAMIENTO",
+        "OP-0053||MARFIL": "PENDIENTE_CORTAR",
+        "OP-0053||ROJO": "EN_CONFECCION"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -2498,43 +2504,45 @@
         "T16"
       ],
       "total_uds": 504,
-      "updated_at": "2026-07-01",
-      "subg_estados": {
-        "OP-0053||LILA": "ALISTAMIENTO",
-        "OP-0053||ROJO": "EN_CONFECCION",
-        "OP-0053||MARFIL": "PENDIENTE_CORTAR",
-        "OP-0053||AZUL OSCURO": "PENDIENTE_CORTAR"
-      }
+      "updated_at": "2026-07-01"
     },
     {
       "cantidades": {
-        "ROSA_T4": 17,
-        "ROSA_T6": 17,
-        "ROSA_T8": 17,
-        "ROSA_T10": 17,
-        "ROSA_T12": 17,
-        "ROSA_T14": 17,
-        "ROSA_T16": 17,
-        "CAFÉ_T4": 12,
-        "CAFÉ_T6": 12,
-        "CAFÉ_T8": 12,
         "CAFÉ_T10": 12,
         "CAFÉ_T12": 12,
         "CAFÉ_T14": 12,
         "CAFÉ_T16": 12,
-        "GRIS OSCURO_T4": 12,
-        "GRIS OSCURO_T6": 12,
-        "GRIS OSCURO_T8": 12,
+        "CAFÉ_T4": 12,
+        "CAFÉ_T6": 12,
+        "CAFÉ_T8": 12,
         "GRIS OSCURO_T10": 12,
         "GRIS OSCURO_T12": 12,
         "GRIS OSCURO_T14": 12,
-        "GRIS OSCURO_T16": 12
+        "GRIS OSCURO_T16": 12,
+        "GRIS OSCURO_T4": 12,
+        "GRIS OSCURO_T6": 12,
+        "GRIS OSCURO_T8": 12,
+        "ROSA_T10": 17,
+        "ROSA_T12": 17,
+        "ROSA_T14": 17,
+        "ROSA_T16": 17,
+        "ROSA_T4": 17,
+        "ROSA_T6": 17,
+        "ROSA_T8": 17,
+        "VINOTINTO_T10": 12,
+        "VINOTINTO_T12": 12,
+        "VINOTINTO_T14": 12,
+        "VINOTINTO_T16": 12,
+        "VINOTINTO_T4": 12,
+        "VINOTINTO_T6": 12,
+        "VINOTINTO_T8": 12
       },
       "categoria": "CHAQUETAS",
       "colores": [
         "ROSA",
         "CAFÉ",
-        "GRIS OSCURO"
+        "GRIS OSCURO",
+        "VINOTINTO"
       ],
       "cortador": "Corte Carbajal",
       "created_at": "2026-05-08",
@@ -2547,15 +2555,45 @@
       "numero": 54,
       "referencias": [
         {
-          "nombre": "BEISBOLERA 2.0",
-          "ref": "",
+          "cantidades": {
+            "CAFÉ_T10": 12,
+            "CAFÉ_T12": 12,
+            "CAFÉ_T14": 12,
+            "CAFÉ_T16": 12,
+            "CAFÉ_T4": 12,
+            "CAFÉ_T6": 12,
+            "CAFÉ_T8": 12,
+            "GRIS OSCURO_T10": 12,
+            "GRIS OSCURO_T12": 12,
+            "GRIS OSCURO_T14": 12,
+            "GRIS OSCURO_T16": 12,
+            "GRIS OSCURO_T4": 12,
+            "GRIS OSCURO_T6": 12,
+            "GRIS OSCURO_T8": 12,
+            "ROSA_T10": 17,
+            "ROSA_T12": 17,
+            "ROSA_T14": 17,
+            "ROSA_T16": 17,
+            "ROSA_T4": 17,
+            "ROSA_T6": 17,
+            "ROSA_T8": 17,
+            "VINOTINTO_T10": 12,
+            "VINOTINTO_T12": 12,
+            "VINOTINTO_T14": 12,
+            "VINOTINTO_T16": 12,
+            "VINOTINTO_T4": 12,
+            "VINOTINTO_T6": 12,
+            "VINOTINTO_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 1151,
           "colores": [
             "ROSA",
             "CAFÉ",
-            "GRIS OSCURO"
+            "GRIS OSCURO",
+            "VINOTINTO"
           ],
+          "nombre": "BEISBOLERA 2.0",
+          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -2565,36 +2603,14 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "ROSA_T4": 17,
-            "ROSA_T6": 17,
-            "ROSA_T8": 17,
-            "ROSA_T10": 17,
-            "ROSA_T12": 17,
-            "ROSA_T14": 17,
-            "ROSA_T16": 17,
-            "CAFÉ_T4": 12,
-            "CAFÉ_T6": 12,
-            "CAFÉ_T8": 12,
-            "CAFÉ_T10": 12,
-            "CAFÉ_T12": 12,
-            "CAFÉ_T14": 12,
-            "CAFÉ_T16": 12,
-            "GRIS OSCURO_T4": 12,
-            "GRIS OSCURO_T6": 12,
-            "GRIS OSCURO_T8": 12,
-            "GRIS OSCURO_T10": 12,
-            "GRIS OSCURO_T12": 12,
-            "GRIS OSCURO_T14": 12,
-            "GRIS OSCURO_T16": 12
-          }
+          "vmo": 1151
         }
       ],
       "subg_estados": {
+        "OP-0054||BEIGE": "PENDIENTE_CORTAR",
         "OP-0054||CAFÉ": "PAGO_PENDIENTE",
         "OP-0054||GRIS OSCURO": "POR_REVISAR",
-        "OP-0054||ROSA": "EN_CONFECCION",
-        "OP-0054||BEIGE": "PENDIENTE_CORTAR"
+        "OP-0054||ROSA": "EN_CONFECCION"
       },
       "tallas": [
         "T4",
@@ -2725,6 +2741,10 @@
       "migrado": true,
       "nombre_producto": "PANTALON ZAMBA",
       "numero": 56,
+      "subg_estados": {
+        "OP-0056||BEIGE": "PENDIENTE_CORTAR",
+        "OP-0056||NEGRO": "PENDIENTE_CORTAR"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -2734,11 +2754,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 168,
-      "subg_estados": {
-        "OP-0056||NEGRO": "PENDIENTE_CORTAR",
-        "OP-0056||BEIGE": "PENDIENTE_CORTAR"
-      }
+      "total_uds": 168
     },
     {
       "cantidades": {
@@ -2938,6 +2954,9 @@
       "nombre_producto": "BEISBOLERA ARMIN",
       "numero": 71,
       "op_effi": 5176,
+      "subg_estados": {
+        "OP-0071||AVENA": "ARCHIVADO"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -2947,10 +2966,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 126,
-      "subg_estados": {
-        "OP-0071||AVENA": "ARCHIVADO"
-      }
+      "total_uds": 126
     },
     {
       "categoria": "CAMISAS",
@@ -2970,6 +2986,12 @@
       "nombre_producto": "CAMISA UNDERGROUND",
       "numero": 124,
       "op_effi": 5090,
+      "subg_estados": {
+        "OP-0124||BEIGE": "NOVEDAD",
+        "OP-0124||BLANCO": "NOVEDAD",
+        "OP-0124||NEGRO": "NOVEDAD",
+        "OP-0124||VERDE MILITAR": "NOVEDAD"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -2979,13 +3001,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 784,
-      "subg_estados": {
-        "OP-0124||NEGRO": "NOVEDAD",
-        "OP-0124||VERDE MILITAR": "NOVEDAD",
-        "OP-0124||BLANCO": "NOVEDAD",
-        "OP-0124||BEIGE": "NOVEDAD"
-      }
+      "total_uds": 784
     },
     {
       "categoria": "CHAQUETAS",
@@ -3002,6 +3018,9 @@
       "nombre_producto": "OVERSIZED CAPOTA",
       "numero": 126,
       "op_effi": 5113,
+      "subg_estados": {
+        "OP-0126||CAMEL": "ARCHIVADO"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -3011,10 +3030,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 154,
-      "subg_estados": {
-        "OP-0126||CAMEL": "ARCHIVADO"
-      }
+      "total_uds": 154
     },
     {
       "categoria": "CHAQUETAS",
@@ -3031,6 +3047,9 @@
       "nombre_producto": "PILOTO PANCAKE",
       "numero": 132,
       "op_effi": 5124,
+      "subg_estados": {
+        "OP-0132||VERDE MILITAR": "ARCHIVADO"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -3040,10 +3059,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 154,
-      "subg_estados": {
-        "OP-0132||VERDE MILITAR": "ARCHIVADO"
-      }
+      "total_uds": 154
     },
     {
       "categoria": "CHAQUETAS",
@@ -3060,6 +3076,9 @@
       "nombre_producto": "CHAQUETA TORERO NIÑA",
       "numero": 133,
       "op_effi": 5081,
+      "subg_estados": {
+        "OP-0133||NEGRO": "ARCHIVADO"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -3069,10 +3088,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 210,
-      "subg_estados": {
-        "OP-0133||NEGRO": "ARCHIVADO"
-      }
+      "total_uds": 210
     },
     {
       "categoria": "CAMISETAS",
@@ -3096,6 +3112,16 @@
       "nombre_producto": "CAMISETA BASICA BK",
       "numero": 134,
       "op_effi": 5025,
+      "subg_estados": {
+        "OP-0134||BEIGE": "ARCHIVADO",
+        "OP-0134||CAFÉ": "ARCHIVADO",
+        "OP-0134||MARFIL": "ARCHIVADO",
+        "OP-0134||RAYAS AZUL": "ARCHIVADO",
+        "OP-0134||RAYAS ROSA": "ARCHIVADO",
+        "OP-0134||RAYAS VERDE": "ARCHIVADO",
+        "OP-0134||RAYAS VINOTINTO": "ARCHIVADO",
+        "OP-0134||TERRACOTA": "ARCHIVADO"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -3105,17 +3131,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 403,
-      "subg_estados": {
-        "OP-0134||RAYAS ROSA": "ARCHIVADO",
-        "OP-0134||TERRACOTA": "ARCHIVADO",
-        "OP-0134||RAYAS VERDE": "ARCHIVADO",
-        "OP-0134||RAYAS VINOTINTO": "ARCHIVADO",
-        "OP-0134||CAFÉ": "ARCHIVADO",
-        "OP-0134||MARFIL": "ARCHIVADO",
-        "OP-0134||RAYAS AZUL": "ARCHIVADO",
-        "OP-0134||BEIGE": "ARCHIVADO"
-      }
+      "total_uds": 403
     },
     {
       "categoria": "BUZOS",
@@ -3133,6 +3149,10 @@
       "nombre_producto": "OSO CON OSO",
       "numero": 136,
       "op_effi": 5159,
+      "subg_estados": {
+        "OP-0136||LILA": "ARCHIVADO",
+        "OP-0136||VERDE PINO": "ARCHIVADO"
+      },
       "tallas": [
         "T2",
         "T4",
@@ -3143,11 +3163,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 480,
-      "subg_estados": {
-        "OP-0136||VERDE PINO": "ARCHIVADO",
-        "OP-0136||LILA": "ARCHIVADO"
-      }
+      "total_uds": 480
     },
     {
       "categoria": "GABAN",
@@ -3164,6 +3180,9 @@
       "nombre_producto": "GABAN BODOQUE",
       "numero": 139,
       "op_effi": 5110,
+      "subg_estados": {
+        "OP-0139||NEGRO": "ALISTAMIENTO"
+      },
       "tallas": [
         "T8",
         "T10",
@@ -3171,10 +3190,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 150,
-      "subg_estados": {
-        "OP-0139||NEGRO": "ALISTAMIENTO"
-      }
+      "total_uds": 150
     },
     {
       "categoria": "CONJUNTOS",
@@ -3192,6 +3208,11 @@
       "migrado": true,
       "nombre_producto": "CONJUNTO TRENZAS",
       "numero": 149,
+      "subg_estados": {
+        "OP-0149||AVENA": "EN_CONFECCION",
+        "OP-0149||NEGRO": "PENDIENTE_CORTAR",
+        "OP-0149||ROSA": "PENDIENTE_CORTAR"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -3201,12 +3222,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 434,
-      "subg_estados": {
-        "OP-0149||NEGRO": "PENDIENTE_CORTAR",
-        "OP-0149||AVENA": "EN_CONFECCION",
-        "OP-0149||ROSA": "PENDIENTE_CORTAR"
-      }
+      "total_uds": 434
     },
     {
       "categoria": "CONJUNTOS",
@@ -3222,6 +3238,9 @@
       "migrado": true,
       "nombre_producto": "CONJUNTO TRENZAS",
       "numero": 167,
+      "subg_estados": {
+        "OP-0167||CAMEL": "PENDIENTE_CORTAR"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -3231,10 +3250,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 112,
-      "subg_estados": {
-        "OP-0167||CAMEL": "PENDIENTE_CORTAR"
-      }
+      "total_uds": 112
     },
     {
       "categoria": "BUZOS",
@@ -3251,6 +3267,10 @@
       "migrado": true,
       "nombre_producto": "CAMIBUSO STRAWBERRIES",
       "numero": 169,
+      "subg_estados": {
+        "OP-0169||VERDE MENTA": "CORTE_POR_ALISTAR",
+        "OP-0169||VERDE PINO": "ALISTAMIENTO"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -3260,11 +3280,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 122,
-      "subg_estados": {
-        "OP-0169||VERDE MENTA": "CORTE_POR_ALISTAR",
-        "OP-0169||VERDE PINO": "ALISTAMIENTO"
-      }
+      "total_uds": 122
     },
     {
       "categoria": "CONJUNTOS",
@@ -3282,6 +3298,10 @@
       "nombre_producto": "SET FRANKY",
       "numero": 174,
       "op_effi": 5167,
+      "subg_estados": {
+        "OP-0174||AVENA": "ALISTAMIENTO",
+        "OP-0174||MARFIL": "ALISTAMIENTO"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -3291,11 +3311,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 252,
-      "subg_estados": {
-        "OP-0174||MARFIL": "ALISTAMIENTO",
-        "OP-0174||AVENA": "ALISTAMIENTO"
-      }
+      "total_uds": 252
     },
     {
       "categoria": "CHAQUETAS",
@@ -3315,6 +3331,12 @@
       "nombre_producto": "OVERSIZED CAPOTA",
       "numero": 175,
       "op_effi": 5114,
+      "subg_estados": {
+        "OP-0175||BEIGE": "ARCHIVADO",
+        "OP-0175||CAMEL": "ARCHIVADO",
+        "OP-0175||GRIS OSCURO": "ARCHIVADO",
+        "OP-0175||NEGRO": "ARCHIVADO"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -3324,13 +3346,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 161,
-      "subg_estados": {
-        "OP-0175||BEIGE": "ARCHIVADO",
-        "OP-0175||GRIS OSCURO": "ARCHIVADO",
-        "OP-0175||NEGRO": "ARCHIVADO",
-        "OP-0175||CAMEL": "ARCHIVADO"
-      }
+      "total_uds": 161
     },
     {
       "categoria": "CHAQUETAS",
@@ -3348,6 +3364,10 @@
       "nombre_producto": "PILOTO PANCAKE",
       "numero": 176,
       "op_effi": 5122,
+      "subg_estados": {
+        "OP-0176||BEIGE": "ARCHIVADO",
+        "OP-0176||GRIS CLARO": "ARCHIVADO"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -3357,11 +3377,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 199,
-      "subg_estados": {
-        "OP-0176||BEIGE": "ARCHIVADO",
-        "OP-0176||GRIS CLARO": "ARCHIVADO"
-      }
+      "total_uds": 199
     },
     {
       "categoria": "CHAQUETAS",
@@ -3378,6 +3394,9 @@
       "nombre_producto": "BONNIE",
       "numero": 178,
       "op_effi": 5188,
+      "subg_estados": {
+        "OP-0178||VERDE MENTA": "ARCHIVADO"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -3387,10 +3406,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 7,
-      "subg_estados": {
-        "OP-0178||VERDE MENTA": "ARCHIVADO"
-      }
+      "total_uds": 7
     },
     {
       "categoria": "CHAQUETAS",
@@ -3410,6 +3426,12 @@
       "nombre_producto": "CHAQUETA RALPH",
       "numero": 184,
       "op_effi": 5172,
+      "subg_estados": {
+        "OP-0184||AZUL OSCURO": "ARCHIVADO",
+        "OP-0184||BEIGE": "ARCHIVADO",
+        "OP-0184||CAMEL": "ARCHIVADO",
+        "OP-0184||NEGRO": "ARCHIVADO"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -3419,13 +3441,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 392,
-      "subg_estados": {
-        "OP-0184||BEIGE": "ARCHIVADO",
-        "OP-0184||CAMEL": "ARCHIVADO",
-        "OP-0184||AZUL OSCURO": "ARCHIVADO",
-        "OP-0184||NEGRO": "ARCHIVADO"
-      }
+      "total_uds": 392
     },
     {
       "categoria": "CHAQUETAS",
@@ -3446,20 +3462,20 @@
       "nombre_producto": "OVERSIZED CAPOTA",
       "numero": 185,
       "op_effi": 5195,
+      "subg_estados": {
+        "OP-0185||BEIGE": "ARCHIVADO",
+        "OP-0185||CAMEL": "ARCHIVADO",
+        "OP-0185||GRIS OSCURO": "ARCHIVADO",
+        "OP-0185||NEGRO": "ARCHIVADO",
+        "OP-0185||VERDE MILITAR": "ARCHIVADO"
+      },
       "tallas": [
         "T10",
         "T12",
         "T14",
         "T16"
       ],
-      "total_uds": 55,
-      "subg_estados": {
-        "OP-0185||GRIS OSCURO": "ARCHIVADO",
-        "OP-0185||CAMEL": "ARCHIVADO",
-        "OP-0185||NEGRO": "ARCHIVADO",
-        "OP-0185||BEIGE": "ARCHIVADO",
-        "OP-0185||VERDE MILITAR": "ARCHIVADO"
-      }
+      "total_uds": 55
     },
     {
       "categoria": "CHAQUETAS",
@@ -3477,17 +3493,17 @@
       "nombre_producto": "PILOTO PANCAKE",
       "numero": 186,
       "op_effi": 5194,
+      "subg_estados": {
+        "OP-0186||BEIGE": "CORTE_POR_ALISTAR",
+        "OP-0186||GRIS CLARO": "CORTE_POR_ALISTAR"
+      },
       "tallas": [
         "T10",
         "T12",
         "T14",
         "T16"
       ],
-      "total_uds": 28,
-      "subg_estados": {
-        "OP-0186||BEIGE": "CORTE_POR_ALISTAR",
-        "OP-0186||GRIS CLARO": "CORTE_POR_ALISTAR"
-      }
+      "total_uds": 28
     },
     {
       "categoria": "CHAQUETAS",
@@ -3507,6 +3523,12 @@
       "nombre_producto": "BOMBON",
       "numero": 187,
       "op_effi": 5198,
+      "subg_estados": {
+        "OP-0187||GRIS CLARO": "ARCHIVADO",
+        "OP-0187||NEGRO": "ARCHIVADO",
+        "OP-0187||ROSA": "ARCHIVADO",
+        "OP-0187||VERDE LIMON": "ARCHIVADO"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -3516,13 +3538,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 168,
-      "subg_estados": {
-        "OP-0187||NEGRO": "ARCHIVADO",
-        "OP-0187||ROSA": "ARCHIVADO",
-        "OP-0187||GRIS CLARO": "ARCHIVADO",
-        "OP-0187||VERDE LIMON": "ARCHIVADO"
-      }
+      "total_uds": 168
     },
     {
       "categoria": "CHALECOS",
@@ -3540,17 +3556,17 @@
       "nombre_producto": "CHALECO PUFFY",
       "numero": 188,
       "op_effi": 5197,
+      "subg_estados": {
+        "OP-0188||BLANCO": "NOVEDAD",
+        "OP-0188||VERDE MILITAR": "NOVEDAD"
+      },
       "tallas": [
         "T10",
         "T12",
         "T14",
         "T16"
       ],
-      "total_uds": 36,
-      "subg_estados": {
-        "OP-0188||VERDE MILITAR": "NOVEDAD",
-        "OP-0188||BLANCO": "NOVEDAD"
-      }
+      "total_uds": 36
     },
     {
       "categoria": "CHAQUETAS",
@@ -3570,6 +3586,12 @@
       "nombre_producto": "CAZADORA RAYAS",
       "numero": 189,
       "op_effi": 5227,
+      "subg_estados": {
+        "OP-0189||BEIGE": "ARCHIVADO",
+        "OP-0189||NEGRO": "ARCHIVADO",
+        "OP-0189||ROSA": "ARCHIVADO",
+        "OP-0189||VERDE MILITAR": "ARCHIVADO"
+      },
       "tallas": [
         "T8",
         "T10",
@@ -3577,13 +3599,7 @@
         "T14",
         "T16"
       ],
-      "total_uds": 42,
-      "subg_estados": {
-        "OP-0189||VERDE MILITAR": "ARCHIVADO",
-        "OP-0189||NEGRO": "ARCHIVADO",
-        "OP-0189||ROSA": "ARCHIVADO",
-        "OP-0189||BEIGE": "ARCHIVADO"
-      }
+      "total_uds": 42
     },
     {
       "cantidades": {
@@ -3716,6 +3732,13 @@
           "vmo": 2200
         }
       ],
+      "subg_estados": {
+        "OP-2026-073||BLANCO NEGRO": "POR_REVISAR",
+        "OP-2026-073||CAMEL": "POR_REVISAR",
+        "OP-2026-073||GRIS CLARO": "POR_REVISAR",
+        "OP-2026-073||MARFIL": "POR_REVISAR",
+        "OP-2026-073||NEGRO": "POR_REVISAR"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -3725,29 +3748,22 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-07-30",
-      "subg_estados": {
-        "OP-2026-073||MARFIL": "POR_REVISAR",
-        "OP-2026-073||NEGRO": "POR_REVISAR",
-        "OP-2026-073||BLANCO NEGRO": "POR_REVISAR",
-        "OP-2026-073||CAMEL": "POR_REVISAR",
-        "OP-2026-073||GRIS CLARO": "POR_REVISAR"
-      }
+      "updated_at": "2026-07-30"
     },
     {
       "cantidades": {
-        "GRIS OSCURO_T6": 12,
-        "GRIS OSCURO_T8": 16,
+        "AVENA_T10": 16,
+        "AVENA_T12": 20,
+        "AVENA_T14": 20,
+        "AVENA_T16": 20,
+        "AVENA_T6": 12,
+        "AVENA_T8": 16,
         "GRIS OSCURO_T10": 16,
         "GRIS OSCURO_T12": 20,
         "GRIS OSCURO_T14": 20,
         "GRIS OSCURO_T16": 20,
-        "AVENA_T6": 12,
-        "AVENA_T8": 16,
-        "AVENA_T10": 16,
-        "AVENA_T12": 20,
-        "AVENA_T14": 20,
-        "AVENA_T16": 20
+        "GRIS OSCURO_T6": 12,
+        "GRIS OSCURO_T8": 16
       },
       "categoria": "BUZOS",
       "colores": [
@@ -3764,14 +3780,27 @@
       "numero": 74,
       "referencias": [
         {
-          "nombre": "HOODIE RANGLAND PAÑO ALGODON CERRADO",
-          "ref": "1172",
+          "cantidades": {
+            "AVENA_T10": 16,
+            "AVENA_T12": 20,
+            "AVENA_T14": 20,
+            "AVENA_T16": 20,
+            "AVENA_T6": 12,
+            "AVENA_T8": 16,
+            "GRIS OSCURO_T10": 16,
+            "GRIS OSCURO_T12": 20,
+            "GRIS OSCURO_T14": 20,
+            "GRIS OSCURO_T16": 20,
+            "GRIS OSCURO_T6": 12,
+            "GRIS OSCURO_T8": 16
+          },
           "cat": "BUZOS",
-          "vmo": 1151,
           "colores": [
             "GRIS OSCURO",
             "AVENA"
           ],
+          "nombre": "HOODIE RANGLAND PAÑO ALGODON CERRADO",
+          "ref": "1172",
           "tallas": [
             "T6",
             "T8",
@@ -3780,20 +3809,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "GRIS OSCURO_T6": 12,
-            "GRIS OSCURO_T8": 16,
-            "GRIS OSCURO_T10": 16,
-            "GRIS OSCURO_T12": 20,
-            "GRIS OSCURO_T14": 20,
-            "GRIS OSCURO_T16": 20,
-            "AVENA_T6": 12,
-            "AVENA_T8": 16,
-            "AVENA_T10": 16,
-            "AVENA_T12": 20,
-            "AVENA_T14": 20,
-            "AVENA_T16": 20
-          }
+          "vmo": 1151
         }
       ],
       "tallas": [
@@ -3808,27 +3824,27 @@
     },
     {
       "cantidades": {
-        "NEGRO_T4": 6,
-        "NEGRO_T6": 16,
-        "NEGRO_T8": 20,
-        "NEGRO_T10": 20,
-        "NEGRO_T12": 20,
-        "NEGRO_T14": 20,
-        "NEGRO_T16": 20,
-        "CAFE_T4": 6,
-        "CAFE_T6": 16,
-        "CAFE_T8": 20,
         "CAFE_T10": 20,
         "CAFE_T12": 20,
         "CAFE_T14": 20,
         "CAFE_T16": 20,
-        "MARFIL_T4": 6,
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 12,
+        "CAFE_T4": 6,
+        "CAFE_T6": 16,
+        "CAFE_T8": 20,
         "MARFIL_T10": 12,
         "MARFIL_T12": 12,
         "MARFIL_T14": 12,
-        "MARFIL_T16": 12
+        "MARFIL_T16": 12,
+        "MARFIL_T4": 6,
+        "MARFIL_T6": 12,
+        "MARFIL_T8": 12,
+        "NEGRO_T10": 20,
+        "NEGRO_T12": 20,
+        "NEGRO_T14": 20,
+        "NEGRO_T16": 20,
+        "NEGRO_T4": 6,
+        "NEGRO_T6": 16,
+        "NEGRO_T8": 20
       },
       "categoria": "BUZOS",
       "colores": [
@@ -3846,15 +3862,37 @@
       "numero": 75,
       "referencias": [
         {
-          "nombre": "HOODIE RANGLAND PAÑO ALGODON ABIERTO",
-          "ref": "1177",
+          "cantidades": {
+            "CAFE_T10": 20,
+            "CAFE_T12": 20,
+            "CAFE_T14": 20,
+            "CAFE_T16": 20,
+            "CAFE_T4": 6,
+            "CAFE_T6": 16,
+            "CAFE_T8": 20,
+            "MARFIL_T10": 12,
+            "MARFIL_T12": 12,
+            "MARFIL_T14": 12,
+            "MARFIL_T16": 12,
+            "MARFIL_T4": 6,
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 12,
+            "NEGRO_T10": 20,
+            "NEGRO_T12": 20,
+            "NEGRO_T14": 20,
+            "NEGRO_T16": 20,
+            "NEGRO_T4": 6,
+            "NEGRO_T6": 16,
+            "NEGRO_T8": 20
+          },
           "cat": "BUZOS",
-          "vmo": 1151,
           "colores": [
             "NEGRO",
             "CAFE",
             "MARFIL"
           ],
+          "nombre": "HOODIE RANGLAND PAÑO ALGODON ABIERTO",
+          "ref": "1177",
           "tallas": [
             "T4",
             "T6",
@@ -3864,29 +3902,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T4": 6,
-            "NEGRO_T6": 16,
-            "NEGRO_T8": 20,
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "CAFE_T4": 6,
-            "CAFE_T6": 16,
-            "CAFE_T8": 20,
-            "CAFE_T10": 20,
-            "CAFE_T12": 20,
-            "CAFE_T14": 20,
-            "CAFE_T16": 20,
-            "MARFIL_T4": 6,
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 12,
-            "MARFIL_T10": 12,
-            "MARFIL_T12": 12,
-            "MARFIL_T14": 12,
-            "MARFIL_T16": 12
-          }
+          "vmo": 1151
         }
       ],
       "tallas": [
@@ -5091,8 +5107,8 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-089||ROSA": "POR_REVISAR",
-        "OP-2026-089||MARFIL": "POR_REVISAR"
+        "OP-2026-089||MARFIL": "POR_REVISAR",
+        "OP-2026-089||ROSA": "POR_REVISAR"
       },
       "tallas": [
         "T6",
@@ -5691,61 +5707,94 @@
       ]
     },
     {
-      "id": "OP-2026-097",
-      "numero": 97,
-      "fecha_op": "2026-07-30",
-      "cortador": "Corte Carbajal",
-      "categoria": "CAMISONES",
-      "nombre_producto": "CAMISON BERLIN",
-      "colores": [
-        "AVENA"
-      ],
-      "tallas": [
-        "T10",
-        "T12",
-        "T14"
-      ],
       "cantidades": {
         "AVENA_T10": 16,
         "AVENA_T12": 16,
         "AVENA_T14": 16
       },
+      "categoria": "CAMISONES",
+      "colores": [
+        "AVENA"
+      ],
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-07-30",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-07-30",
+      "id": "OP-2026-097",
+      "nombre_producto": "CAMISON BERLIN",
+      "numero": 97,
+      "receta_id": "rec_camison_berlin_1071",
+      "receta_nombre": "CAMISON BERLIN - REF: 1071",
       "referencias": [
         {
-          "nombre": "CAMISON BERLIN",
-          "ref": "1071",
-          "cat": "CAMISONES",
-          "vmo": 6621,
-          "colores": [
-            "AVENA"
-          ],
-          "tallas": [
-            "T10",
-            "T12",
-            "T14"
-          ],
           "cantidades": {
             "AVENA_T10": 16,
             "AVENA_T12": 16,
             "AVENA_T14": 16
           },
-          "totalUds": 48
+          "cat": "CAMISONES",
+          "colores": [
+            "AVENA"
+          ],
+          "nombre": "CAMISON BERLIN",
+          "ref": "1071",
+          "tallas": [
+            "T10",
+            "T12",
+            "T14"
+          ],
+          "totalUds": 48,
+          "vmo": 6621
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-07-30",
-      "created_by": "John Rodriguez",
-      "receta_id": "rec_camison_berlin_1071",
-      "receta_nombre": "CAMISON BERLIN - REF: 1071"
+      "tallas": [
+        "T10",
+        "T12",
+        "T14"
+      ]
     },
     {
-      "id": "OP-2026-098",
-      "numero": 98,
-      "fecha_op": "2026-07-30",
-      "cortador": "Corte Carbajal",
+      "cantidades": {
+        "AZUL OSCURO_T10": 12,
+        "AZUL OSCURO_T12": 16,
+        "AZUL OSCURO_T14": 16,
+        "AZUL OSCURO_T16": 16,
+        "AZUL OSCURO_T6": 8,
+        "AZUL OSCURO_T8": 12,
+        "FUCSIA_T10": 12,
+        "FUCSIA_T12": 12,
+        "FUCSIA_T14": 12,
+        "LILA_T10": 12,
+        "LILA_T12": 12,
+        "LILA_T14": 12,
+        "LILA_T8": 10,
+        "NEGRO_T10": 8,
+        "NEGRO_T14": 8,
+        "ROJO_T10": 12,
+        "ROJO_T12": 16,
+        "ROJO_T14": 16,
+        "ROJO_T16": 16,
+        "ROJO_T6": 8,
+        "ROJO_T8": 12,
+        "ROSA_T10": 12,
+        "ROSA_T12": 16,
+        "ROSA_T14": 16,
+        "ROSA_T16": 16,
+        "ROSA_T6": 8,
+        "ROSA_T8": 12,
+        "SALMON_T10": 12,
+        "SALMON_T12": 12,
+        "SALMON_T14": 12,
+        "SALMON_T16": 12,
+        "VERDE MILITAR_T10": 12,
+        "VERDE MILITAR_T12": 16,
+        "VERDE MILITAR_T14": 16,
+        "VERDE MILITAR_T16": 16,
+        "VERDE MILITAR_T6": 8,
+        "VERDE MILITAR_T8": 12
+      },
       "categoria": "CHAQUETAS",
-      "nombre_producto": "CHAQUETA CAZADORA",
       "colores": [
         "NEGRO",
         "FUCSIA",
@@ -5756,60 +5805,58 @@
         "ROSA",
         "ROJO"
       ],
-      "tallas": [
-        "T4",
-        "T6",
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
-      "cantidades": {
-        "NEGRO_T10": 8,
-        "NEGRO_T14": 8,
-        "FUCSIA_T10": 12,
-        "FUCSIA_T12": 12,
-        "FUCSIA_T14": 12,
-        "SALMON_T10": 12,
-        "SALMON_T12": 12,
-        "SALMON_T14": 12,
-        "SALMON_T16": 12,
-        "LILA_T8": 10,
-        "LILA_T10": 12,
-        "LILA_T12": 12,
-        "LILA_T14": 12,
-        "AZUL OSCURO_T6": 8,
-        "AZUL OSCURO_T8": 12,
-        "AZUL OSCURO_T10": 12,
-        "AZUL OSCURO_T12": 16,
-        "AZUL OSCURO_T14": 16,
-        "AZUL OSCURO_T16": 16,
-        "VERDE MILITAR_T6": 8,
-        "VERDE MILITAR_T8": 12,
-        "VERDE MILITAR_T10": 12,
-        "VERDE MILITAR_T12": 16,
-        "VERDE MILITAR_T14": 16,
-        "VERDE MILITAR_T16": 16,
-        "ROSA_T6": 8,
-        "ROSA_T8": 12,
-        "ROSA_T10": 12,
-        "ROSA_T12": 16,
-        "ROSA_T14": 16,
-        "ROSA_T16": 16,
-        "ROJO_T6": 8,
-        "ROJO_T8": 12,
-        "ROJO_T10": 12,
-        "ROJO_T12": 16,
-        "ROJO_T14": 16,
-        "ROJO_T16": 16
-      },
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-07-30",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-07-30",
+      "id": "OP-2026-098",
+      "nombre_producto": "CHAQUETA CAZADORA",
+      "numero": 98,
+      "receta_id": "rec_chaqueta_cazadora_1002",
+      "receta_nombre": "CHAQUETA CAZADORA - REF: 1002",
       "referencias": [
         {
-          "nombre": "CHAQUETA CAZADORA",
-          "ref": "1002",
+          "cantidades": {
+            "AZUL OSCURO_T10": 12,
+            "AZUL OSCURO_T12": 16,
+            "AZUL OSCURO_T14": 16,
+            "AZUL OSCURO_T16": 16,
+            "AZUL OSCURO_T6": 8,
+            "AZUL OSCURO_T8": 12,
+            "FUCSIA_T10": 12,
+            "FUCSIA_T12": 12,
+            "FUCSIA_T14": 12,
+            "LILA_T10": 12,
+            "LILA_T12": 12,
+            "LILA_T14": 12,
+            "LILA_T8": 10,
+            "NEGRO_T10": 8,
+            "NEGRO_T14": 8,
+            "ROJO_T10": 12,
+            "ROJO_T12": 16,
+            "ROJO_T14": 16,
+            "ROJO_T16": 16,
+            "ROJO_T6": 8,
+            "ROJO_T8": 12,
+            "ROSA_T10": 12,
+            "ROSA_T12": 16,
+            "ROSA_T14": 16,
+            "ROSA_T16": 16,
+            "ROSA_T6": 8,
+            "ROSA_T8": 12,
+            "SALMON_T10": 12,
+            "SALMON_T12": 12,
+            "SALMON_T14": 12,
+            "SALMON_T16": 12,
+            "VERDE MILITAR_T10": 12,
+            "VERDE MILITAR_T12": 16,
+            "VERDE MILITAR_T14": 16,
+            "VERDE MILITAR_T16": 16,
+            "VERDE MILITAR_T6": 8,
+            "VERDE MILITAR_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 11561,
           "colores": [
             "NEGRO",
             "FUCSIA",
@@ -5820,6 +5867,8 @@
             "ROSA",
             "ROJO"
           ],
+          "nombre": "CHAQUETA CAZADORA",
+          "ref": "1002",
           "tallas": [
             "T4",
             "T6",
@@ -5829,54 +5878,19 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T10": 8,
-            "NEGRO_T14": 8,
-            "FUCSIA_T10": 12,
-            "FUCSIA_T12": 12,
-            "FUCSIA_T14": 12,
-            "SALMON_T10": 12,
-            "SALMON_T12": 12,
-            "SALMON_T14": 12,
-            "SALMON_T16": 12,
-            "LILA_T8": 10,
-            "LILA_T10": 12,
-            "LILA_T12": 12,
-            "LILA_T14": 12,
-            "AZUL OSCURO_T6": 8,
-            "AZUL OSCURO_T8": 12,
-            "AZUL OSCURO_T10": 12,
-            "AZUL OSCURO_T12": 16,
-            "AZUL OSCURO_T14": 16,
-            "AZUL OSCURO_T16": 16,
-            "VERDE MILITAR_T6": 8,
-            "VERDE MILITAR_T8": 12,
-            "VERDE MILITAR_T10": 12,
-            "VERDE MILITAR_T12": 16,
-            "VERDE MILITAR_T14": 16,
-            "VERDE MILITAR_T16": 16,
-            "ROSA_T6": 8,
-            "ROSA_T8": 12,
-            "ROSA_T10": 12,
-            "ROSA_T12": 16,
-            "ROSA_T14": 16,
-            "ROSA_T16": 16,
-            "ROJO_T6": 8,
-            "ROJO_T8": 12,
-            "ROJO_T10": 12,
-            "ROJO_T12": 16,
-            "ROJO_T14": 16,
-            "ROJO_T16": 16
-          },
-          "totalUds": 466
+          "totalUds": 466,
+          "vmo": 11561
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-07-30",
-      "created_by": "John Rodriguez",
-      "receta_id": "rec_chaqueta_cazadora_1002",
-      "receta_nombre": "CHAQUETA CAZADORA - REF: 1002"
+      "tallas": [
+        "T4",
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ]
     }
   ]
 }
