@@ -3046,20 +3046,36 @@
       "user": "John Rodriguez"
     },
     {
+      "bulk": true,
+      "color": "CAFÉ",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1785534583332_18ryp",
+      "motivo": "ya salio",
+      "op_id": "OP-0054",
+      "op_nombre": "BEISBOLERA 2.0",
+      "referencia": "BEISBOLERA 2.0",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1785534583332,
+      "uds": 84,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785534623684_i6j3r",
+      "ts": 1785534623684,
       "user": "John Rodriguez",
       "tipo": "estado_ot",
       "op_id": "OP-0054",
       "op_nombre": "BEISBOLERA 2.0",
       "referencia": "BEISBOLERA 2.0",
-      "color": "CAFÉ",
+      "color": "VINOTINTO",
       "talla": "todas las tallas",
       "estado_anterior": "ENTREGADO",
       "estado_nuevo": "ENTREGADO",
       "bulk": true,
       "uds": 84,
-      "motivo": "ya salio"
+      "motivo": "ya se entrego"
     }
   ]
 }
