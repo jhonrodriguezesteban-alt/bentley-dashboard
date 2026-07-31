@@ -5596,7 +5596,7 @@ function renderOPDetalle(opId){
         });
         bk += '</div>';
       }
-      bk += '<button data-opid="'+op.id+'" onclick="generarOTsParaOP(this.dataset.opid)" style="width:100%;padding:6px;background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.3);color:#a855f7;border-radius:6px;cursor:pointer;font-size:11px;font-weight:700;">✚ Generar OTs para este color</button>';
+      bk += '<button data-opid="'+op.id+'" data-color="'+esc(color)+'" onclick="generarOTsParaColor(this.dataset.opid,this.dataset.color)" style="width:100%;padding:6px;background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.3);color:#a855f7;border-radius:6px;cursor:pointer;font-size:11px;font-weight:700;">✚ Generar OTs para este color</button>';
       bk += '</div>';
     }
 
@@ -6627,6 +6627,41 @@ async function generarOTsParaOP(opId){
   var ok=await guardarArchivo('ots',{ots:DB.ots});
   if(ok){
     toast(newOTs.length+' OTs generadas → Corte por Alistar','success');
+    document.getElementById('page-content').innerHTML=renderOPDetalle(opId);
+  }
+}
+
+// Genera OTs solo para UN color de la OP (los demás colores pueden ya tener OTs en
+// cualquier estado — a diferencia de generarOTsParaOP, aquí no se bloquea por eso).
+async function generarOTsParaColor(opId, color){
+  var op=DB.ops.find(function(o){ return o.id===opId; });
+  if(!op){ toast('OP no encontrada','error'); return; }
+  var yaTiene = DB.ots.some(function(o){ return o.op_id===opId && (o.color||'').trim().toUpperCase()===(color||'').trim().toUpperCase(); });
+  if(yaTiene){ toast('Este color ya tiene OTs generadas','warning'); return; }
+  var refs = op.referencias || [{nombre:op.nombre_producto, ref:'', cat:op.categoria, vmo:0, colores:op.colores||[], tallas:op.tallas||[], cantidades:op.cantidades||{}}];
+  var otNum=nextOTNum(), newOTs=[];
+  refs.forEach(function(ref){
+    if((ref.colores||[]).indexOf(color)<0) return;
+    (ref.tallas||[]).forEach(function(talla){
+      var qty=(ref.cantidades||{})[color+'_'+talla]; if(!qty) return;
+      newOTs.push({id:uid(), numero_ot:otNum++, op_id:opId, categoria:ref.cat, nombre:ref.nombre, referencia:(ref.ref||'')+talla, color:color, talla:talla, cantidad:qty, valor_mo:ref.vmo||0, fecha_ot:op.fecha_op||hoy(), satelite_id:null, fecha_entrega_corte_satelite:null, fecha_estimada_entrega:null, fecha_entrega_real:null, unidades_entregadas:0, unidades_novedad:0, estado:'CORTE_POR_ALISTAR', nt_corte_satelite:null, nt_ingreso_planta:null, op_effi:null, cumplió_fecha:null, motivo_incumplimiento:'', notas:'', historial:[], created_at:hoy(), created_by:getUser()});
+    });
+  });
+  if(!newOTs.length){ toast('No hay cantidades definidas para '+color+' en esta OP','error'); return; }
+  DB.ots=DB.ots.concat(newOTs);
+  _logEvt('generar_ots', {
+    op_id: opId,
+    op_nombre: op.nombre_producto,
+    categoria: op.categoria,
+    total_ots: newOTs.length,
+    total_uds: newOTs.reduce(function(s,o){ return s+(o.cantidad||0); },0),
+    colores: [color],
+    referencias: refs.map(function(r){ return r.nombre; })
+  });
+  saveLocal();
+  var ok=await guardarArchivo('ots',{ots:DB.ots});
+  if(ok){
+    toast(newOTs.length+' OTs generadas para '+color+' → Corte por Alistar','success');
     document.getElementById('page-content').innerHTML=renderOPDetalle(opId);
   }
 }
