@@ -2801,7 +2801,7 @@ function _planMiniCard(op, color){
   var costo = _planCostoColor(op, color);
   var _canPl = _canEditPlan();
   var _refTxt = ((op.nombre_producto||'')+' '+op.id+' '+color).toUpperCase();
-  var h = '<div data-plan-op="'+esc(key)+'" data-plan-ref="'+esc(_refTxt)+'" '+(_canPl?'draggable="true" ondragstart="planDragStart(event,\''+esc(key)+'\')" ondragend="planDragEnd()"':'')+' onclick="verDetalleOP(\''+op.id+'\')" style="background:#1c1c1e;border:1px solid #2c2c2e;border-radius:9px;padding:10px 12px;cursor:pointer;width:100%;box-sizing:border-box;user-select:none;transition:opacity .15s,transform .15s,border-color .15s,box-shadow .15s;position:relative;">';
+  var h = '<div data-plan-op="'+esc(key)+'" data-plan-ref="'+esc(_refTxt)+'" '+(_canPl?'draggable="true" ondragstart="planDragStart(event,\''+esc(key)+'\')" ondragend="planDragEnd()"':'')+' onclick="verDetalleOP(\''+op.id+'\')" style="background:#1c1c1e;border:1px solid #2c2c2e;border-radius:9px;padding:10px 12px;cursor:pointer;width:100%;min-width:0;max-width:100%;box-sizing:border-box;overflow:hidden;user-select:none;transition:opacity .15s,transform .15s,border-color .15s,box-shadow .15s;position:relative;">';
   h += '<div style="display:flex;align-items:center;gap:4px;margin-bottom:4px;">';
   h += '<span style="font-size:11px;font-weight:800;color:#0a84ff;flex:1;min-width:0;">'+esc(baseId)+'</span>';
   h += '<span style="font-size:8px;font-weight:700;background:rgba(148,163,184,.1);border:1px solid #2c2c2e;border-radius:4px;color:#64748b;padding:1px 5px;text-transform:uppercase;flex-shrink:0;">'+esc((op.categoria||'').substring(0,5))+'</span>';
@@ -2904,7 +2904,6 @@ function _planDisMiniCard(d, planD){
 
 function renderPlaneacion(){
   var MESES = [
-    {k:'2026-06',label:'Junio',     color:'#6366f1',bg:'rgba(99,102,241,.07)'},
     {k:'2026-07',label:'Julio',     color:'#3b82f6',bg:'rgba(59,130,246,.07)'},
     {k:'2026-08',label:'Agosto',    color:'#8b5cf6',bg:'rgba(139,92,246,.07)'},
     {k:'2026-09',label:'Septiembre',color:'#f59e0b',bg:'rgba(245,158,11,.07)'},
