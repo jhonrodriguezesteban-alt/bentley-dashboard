@@ -4310,11 +4310,13 @@ function renderOPs(){
     var otsOp = otsXop[op.id] || [];
     var colores = op.colores && op.colores.length ? op.colores : ['—'];
 
-    // Detectar si TODAS las OTs con satélite asignado van al mismo satélite único
+    // Detectar si TODAS las OTs de la OP (no solo las que ya tienen satélite) van al mismo
+    // satélite único — si un color todavía no tiene ni una OT asignada (sigue sin cortar),
+    // NO se debe consolidar, porque ese color aún no comparte de verdad el mismo satélite.
     var otsConSat = otsOp.filter(function(o){ return o.satelite_id; });
     var satUnicos = {};
     otsConSat.forEach(function(o){ satUnicos[o.satelite_id]=1; });
-    var unSoloSat = otsConSat.length > 0 && Object.keys(satUnicos).length === 1;
+    var unSoloSat = otsOp.length > 0 && otsConSat.length === otsOp.length && Object.keys(satUnicos).length === 1;
 
     if(unSoloSat && colores.length > 1){
       // Consolidar todos los colores en un único subgrupo
@@ -5203,7 +5205,7 @@ function _buildSubgs(){
     var otsConSat = otsOp.filter(function(o){ return o.satelite_id; });
     var satUnicos = {};
     otsConSat.forEach(function(o){ satUnicos[o.satelite_id]=1; });
-    var unSoloSat = otsConSat.length > 0 && Object.keys(satUnicos).length === 1;
+    var unSoloSat = otsOp.length > 0 && otsConSat.length === otsOp.length && Object.keys(satUnicos).length === 1;
     var sat = DB.satelites.find(function(s){ return s.id===op.satelite_id; });
     if(unSoloSat && colores.length > 1){
       var estadoConsolidado = null;
