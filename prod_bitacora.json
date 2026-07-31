@@ -2573,9 +2573,25 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "CAFÉ",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1785527885791_cxibd",
+      "motivo": "EN TALLER",
+      "op_id": "OP-0055",
+      "op_nombre": "COUNTRY 2.0",
+      "referencia": "COUNTRY 2.0",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1785527885791,
-      "user": "Jefa de Producción",
+      "uds": 112,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785527890528_z7lp8",
+      "ts": 1785527890528,
+      "user": "John Rodriguez",
       "tipo": "estado_ot",
       "op_id": "OP-0055",
       "op_nombre": "COUNTRY 2.0",
@@ -2586,7 +2602,7 @@
       "estado_nuevo": "ENTREGADO",
       "bulk": true,
       "uds": 112,
-      "motivo": "EN TALLER"
+      "motivo": "ya se entrego"
     }
   ]
 }
