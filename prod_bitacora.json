@@ -3229,19 +3229,30 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1785538502418_7thwy",
-      "ts": 1785538502418,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-103",
-      "op_nombre": "CHAQUETA TORERO NIÑA",
       "categoria": "CHAQUETAS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-07-31",
-      "total_uds": 180,
+      "id": "evt_1785538502418_7thwy",
+      "op_id": "OP-2026-103",
+      "op_nombre": "CHAQUETA TORERO NIÑA",
       "referencias": [
         "CHAQUETA TORERO NIÑA"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 180,
+      "ts": 1785538502418,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785539118631_10sye",
+      "ts": 1785539118631,
+      "user": "John Rodriguez",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-080",
+      "nombre": "CONJUNTO ISABELLA",
+      "categoria": "CONJUNTOS",
+      "colores": 3,
+      "refs": 1
     }
   ]
 }
