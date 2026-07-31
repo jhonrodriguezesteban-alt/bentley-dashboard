@@ -2995,12 +2995,20 @@ function renderPlaneacion(){
   var disPlan = (DB.planeacion && DB.planeacion.disenos_plan) || {};
   var MESES_SEL = [{k:'',l:'— Mes —'}].concat(MESES.map(function(m){ return {k:m.k, l:m.label}; }));
 
-  // Totales del panel
-  var dpTotalInv = 0, dpTotalUds = 0;
+  // Totales del panel — incluye Fenio (crédito diferido a diciembre) sumado en el total,
+  // pero se desglosa aparte para que cuadre visualmente con el Resumen Total Planeado de más
+  // abajo, que sí separa "inversión inmediata" de "Fenio dic.".
+  var dpTotalInv = 0, dpTotalUds = 0, dpFenioInv = 0;
   disenosActivos.forEach(function(d){
     var q = disPlan[d.id] ? (disPlan[d.id].uds||0) : 0;
     var r = _getCosteoRef(d.categoria);
-    if(q > 0){ dpTotalUds += q; if(r) dpTotalInv += q * r.total; }
+    if(q > 0){
+      dpTotalUds += q;
+      if(r){
+        dpTotalInv += q * r.total;
+        if((d.proveedor||'').toUpperCase()==='FENIO') dpFenioInv += q * r.total;
+      }
+    }
   });
 
   h += '<div style="margin-bottom:20px;">';
@@ -3016,6 +3024,9 @@ function renderPlaneacion(){
     h += '<div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;">Inversión proyectada</div>';
     h += '<div style="font-size:22px;font-weight:900;color:#34d399;line-height:1;" id="pland-total-inv">'+_fmtCOP(dpTotalInv)+'</div>';
     h += '<div style="font-size:10px;color:#475569;" id="pland-total-uds">'+dpTotalUds.toLocaleString('es-CO')+' uds</div>';
+    if(dpFenioInv > 0){
+      h += '<div style="font-size:9px;color:#94a3b8;margin-top:2px;">'+_fmtCOP(dpTotalInv-dpFenioInv)+' inmediato + <span style="color:#fbbf24;">'+_fmtCOP(dpFenioInv)+' Fenio dic.</span></div>';
+    }
     h += '</div>';
   } else {
     h += '<div style="text-align:right;margin-right:12px;">';
