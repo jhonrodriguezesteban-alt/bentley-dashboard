@@ -2508,27 +2508,27 @@
     },
     {
       "cantidades": {
+        "ROSA_T4": 17,
+        "ROSA_T6": 17,
+        "ROSA_T8": 17,
+        "ROSA_T10": 17,
+        "ROSA_T12": 17,
+        "ROSA_T14": 17,
+        "ROSA_T16": 17,
+        "CAFÉ_T4": 12,
+        "CAFÉ_T6": 12,
+        "CAFÉ_T8": 12,
         "CAFÉ_T10": 12,
         "CAFÉ_T12": 12,
         "CAFÉ_T14": 12,
         "CAFÉ_T16": 12,
-        "CAFÉ_T4": 12,
-        "CAFÉ_T6": 12,
-        "CAFÉ_T8": 12,
-        "GRIS OSCURO_T10": 12,
-        "GRIS OSCURO_T12": 12,
-        "GRIS OSCURO_T14": 12,
-        "GRIS OSCURO_T16": 12,
         "GRIS OSCURO_T4": 12,
         "GRIS OSCURO_T6": 12,
         "GRIS OSCURO_T8": 12,
-        "ROSA_T10": 22,
-        "ROSA_T12": 22,
-        "ROSA_T14": 22,
-        "ROSA_T16": 22,
-        "ROSA_T4": 22,
-        "ROSA_T6": 22,
-        "ROSA_T8": 22
+        "GRIS OSCURO_T10": 12,
+        "GRIS OSCURO_T12": 12,
+        "GRIS OSCURO_T14": 12,
+        "GRIS OSCURO_T16": 12
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -2547,37 +2547,15 @@
       "numero": 54,
       "referencias": [
         {
-          "cantidades": {
-            "CAFÉ_T10": 12,
-            "CAFÉ_T12": 12,
-            "CAFÉ_T14": 12,
-            "CAFÉ_T16": 12,
-            "CAFÉ_T4": 12,
-            "CAFÉ_T6": 12,
-            "CAFÉ_T8": 12,
-            "GRIS OSCURO_T10": 12,
-            "GRIS OSCURO_T12": 12,
-            "GRIS OSCURO_T14": 12,
-            "GRIS OSCURO_T16": 12,
-            "GRIS OSCURO_T4": 12,
-            "GRIS OSCURO_T6": 12,
-            "GRIS OSCURO_T8": 12,
-            "ROSA_T10": 22,
-            "ROSA_T12": 22,
-            "ROSA_T14": 22,
-            "ROSA_T16": 22,
-            "ROSA_T4": 22,
-            "ROSA_T6": 22,
-            "ROSA_T8": 22
-          },
+          "nombre": "BEISBOLERA 2.0",
+          "ref": "",
           "cat": "CHAQUETAS",
+          "vmo": 1151,
           "colores": [
             "ROSA",
             "CAFÉ",
             "GRIS OSCURO"
           ],
-          "nombre": "BEISBOLERA 2.0",
-          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -2587,11 +2565,33 @@
             "T14",
             "T16"
           ],
-          "vmo": 1151
+          "cantidades": {
+            "ROSA_T4": 17,
+            "ROSA_T6": 17,
+            "ROSA_T8": 17,
+            "ROSA_T10": 17,
+            "ROSA_T12": 17,
+            "ROSA_T14": 17,
+            "ROSA_T16": 17,
+            "CAFÉ_T4": 12,
+            "CAFÉ_T6": 12,
+            "CAFÉ_T8": 12,
+            "CAFÉ_T10": 12,
+            "CAFÉ_T12": 12,
+            "CAFÉ_T14": 12,
+            "CAFÉ_T16": 12,
+            "GRIS OSCURO_T4": 12,
+            "GRIS OSCURO_T6": 12,
+            "GRIS OSCURO_T8": 12,
+            "GRIS OSCURO_T10": 12,
+            "GRIS OSCURO_T12": 12,
+            "GRIS OSCURO_T14": 12,
+            "GRIS OSCURO_T16": 12
+          }
         }
       ],
       "subg_estados": {
-        "OP-0054||CAFÉ": "ALISTAMIENTO",
+        "OP-0054||CAFÉ": "PAGO_PENDIENTE",
         "OP-0054||GRIS OSCURO": "POR_REVISAR",
         "OP-0054||ROSA": "EN_CONFECCION",
         "OP-0054||BEIGE": "PENDIENTE_CORTAR"
@@ -2606,7 +2606,7 @@
         "T16"
       ],
       "total_uds": 322,
-      "updated_at": "2026-07-01"
+      "updated_at": "2026-07-31"
     },
     {
       "cantidades": {
