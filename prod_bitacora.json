@@ -2621,14 +2621,26 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1785528091246_xbf91",
-      "ts": 1785528091246,
-      "user": "John Rodriguez",
-      "tipo": "cambiar_estado_op_all",
-      "op_id": "OP-0054",
-      "estado": "ALISTAMIENTO",
       "colores": 4,
-      "nombre": "BEISBOLERA 2.0"
+      "estado": "ALISTAMIENTO",
+      "id": "evt_1785528091246_xbf91",
+      "nombre": "BEISBOLERA 2.0",
+      "op_id": "OP-0054",
+      "tipo": "cambiar_estado_op_all",
+      "ts": 1785528091246,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785528627824_y91z1",
+      "ts": 1785528627824,
+      "user": "John Rodriguez",
+      "tipo": "kanban_color",
+      "op_id": "OP-0054",
+      "op_nombre": "BEISBOLERA 2.0",
+      "color": "ROSA",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "uds": 119
     }
   ]
 }
