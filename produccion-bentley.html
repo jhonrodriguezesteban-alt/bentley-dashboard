@@ -10863,7 +10863,13 @@ async function pasarOPAPago(opId, color){
   // Marcar sub-grupo como PAGO_PENDIENTE a nivel OT
   // Nota: 'ALISTAMIENTO' es un estado AGREGADO del subgrupo (derivado cuando todas sus OTs
   // están ENTREGADO) — la OT individual nunca tiene ese valor, siempre es 'ENTREGADO'.
-  var otsOp = DB.ots.filter(function(o){ return o.op_id===opId && (!color || o.color===color); });
+  // '—' es el color placeholder que usa el Kanban cuando consolida todos los colores de la OP
+  // en una sola tarjeta (porque comparten un único satélite) — en ese caso hay que tomar TODAS
+  // las OTs de la OP, no buscar un color literal '—' que ninguna OT real tiene.
+  var colorEsTodos = !color || color==='—';
+  var otsOp = DB.ots.filter(function(o){ return o.op_id===opId && (colorEsTodos || o.color===color); });
+  var coloresAfectados = {};
+  otsOp.forEach(function(ot){ coloresAfectados[ot.color||'—']=1; });
   otsOp.forEach(function(ot){
     if(ot.estado === 'ENTREGADO'){
       ot.estado = 'PAGO_PENDIENTE';
@@ -10886,10 +10892,12 @@ async function pasarOPAPago(opId, color){
       }
     }
   });
-  // Actualizar subg_estados del color pasado a PAGO_PENDIENTE para que salga de la columna ALISTAMIENTO
+  // Actualizar subg_estados de cada color realmente afectado a PAGO_PENDIENTE
+  // (nunca del placeholder '—', que no corresponde a ningún color real)
   if(!op.subg_estados) op.subg_estados = {};
-  var colorKey = color || '';
-  op.subg_estados[_subgKey(opId, colorKey)] = 'PAGO_PENDIENTE';
+  Object.keys(coloresAfectados).forEach(function(c){
+    op.subg_estados[_subgKey(opId, c)] = 'PAGO_PENDIENTE';
+  });
   // Si TODOS los colores de la OP (incluyendo los que aún no tienen ni una OT generada,
   // es decir todavía sin cortar) quedaron en PAGO_PENDIENTE/ENTREGADO/ARCHIVADO → marcar OP completa.
   // Un color sin OTs deriva a POR_REVISAR (no completo), así que la OP no se oculta mientras
