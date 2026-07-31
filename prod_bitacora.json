@@ -3318,15 +3318,31 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1785540550294_q9a3s",
-      "ts": 1785540550294,
-      "user": "John Rodriguez",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-0149",
-      "nombre": "CONJUNTO TRENZAS",
       "categoria": "CONJUNTOS",
       "colores": 3,
-      "refs": 1
+      "id": "evt_1785540550294_q9a3s",
+      "nombre": "CONJUNTO TRENZAS",
+      "op_id": "OP-0149",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1785540550294,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785541803211_7gzo6",
+      "ts": 1785541803211,
+      "user": "John Rodriguez",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-104",
+      "op_nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS",
+      "categoria": "BUZOS",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-07-31",
+      "total_uds": 255,
+      "referencias": [
+        "BUZO CEREZAS",
+        "BUZO TEJIDO MOÑOS"
+      ]
     }
   ]
 }
