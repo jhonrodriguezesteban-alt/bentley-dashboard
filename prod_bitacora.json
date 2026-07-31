@@ -2418,16 +2418,27 @@
       "user": "John Rodriguez"
     },
     {
+      "categoria": "Chaquetas",
+      "diseno_id": "id_1782178726618_4nqy6fard",
+      "estado_anterior": "EN_CORTE_MUESTRA",
+      "estado_nuevo": "EN_REVISION_GERENCIA",
       "id": "evt_1785526570093_t5uqs",
-      "ts": 1785526570093,
-      "user": "Isabel",
+      "marca": "Bentley Kids",
+      "nombre": "CHAQUETA DISCOVERY",
       "tipo": "estado_diseno",
+      "ts": 1785526570093,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1785526788387_p78gg",
+      "ts": 1785526788387,
+      "user": "Isabel",
+      "tipo": "diseno_comentario",
       "diseno_id": "id_1782178726618_4nqy6fard",
       "nombre": "CHAQUETA DISCOVERY",
       "categoria": "Chaquetas",
-      "marca": "Bentley Kids",
-      "estado_anterior": "EN_CORTE_MUESTRA",
-      "estado_nuevo": "EN_REVISION_GERENCIA"
+      "tiene_imagen": false,
+      "extracto": "Muestra confeccionada en tela trench de vitral. \nCambiar cogotera a pieza comple"
     }
   ]
 }
