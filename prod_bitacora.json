@@ -3179,14 +3179,24 @@
       "user": "John Rodriguez"
     },
     {
+      "categoria": "CHAQUETAS",
       "id": "evt_1785538314269_8c2a7",
-      "ts": 1785538314269,
-      "user": "John Rodriguez",
-      "tipo": "duplicar_op",
       "op_id": "OP-2026-102",
-      "op_origen": "OP-2026-090",
       "op_nombre": "CHAQUETA ONION",
-      "categoria": "CHAQUETAS"
+      "op_origen": "OP-2026-090",
+      "tipo": "duplicar_op",
+      "ts": 1785538314269,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785538346299_jihhe",
+      "ts": 1785538346299,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-101",
+      "op_nombre": "CHAQUETA MARIPOSAS",
+      "color": "MARFIL",
+      "mes": "2026-10"
     }
   ]
 }
