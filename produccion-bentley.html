@@ -5564,8 +5564,12 @@ function renderOPDetalle(opId){
     otsC.forEach(function(o){ if(o.satelite_id && !satColorId) satColorId=o.satelite_id; });
     var tieneCorteActive = otsC.some(function(o){ return o.estado==='POR_REVISAR'||o.estado==='PENDIENTE_CORTAR'||o.estado==='CORTE_POR_ALISTAR'; });
     var tieneConfeccion = otsC.some(function(o){ return o.estado==='EN_CONFECCION'||o.estado==='ASIGNADO'||o.estado==='NOVEDAD'; });
+    var tieneEntregadoParaPago = otsC.some(function(o){ return o.estado==='ENTREGADO'; });
     bk += '<div style="padding:6px 14px;background:rgba(255,255,255,.02);display:flex;align-items:center;gap:8px;flex-wrap:wrap;">';
     bk += '<span style="font-size:12px;font-weight:700;color:#e2e8f0;min-width:70px;">'+esc(color)+'</span>';
+    if(!edit && tieneEntregadoParaPago){
+      bk += '<button data-opid="'+op.id+'" data-color="'+esc(color)+'" onclick="event.stopPropagation();pasarOPAPago(this.dataset.opid,this.dataset.color)" style="background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.4);color:#a855f7;border-radius:6px;padding:3px 10px;cursor:pointer;font-size:10px;font-weight:700;white-space:nowrap;" title="Pasa a Costos MO las tallas de este color que ya están Entregado (permite parciales)">💳 Pasar a Pago</button>';
+    }
     if(edit){
       bk += '<select data-color="'+esc(color)+'" data-field="sat-color" style="flex:1;background:rgba(255,200,0,.1);border:1px solid rgba(255,200,0,.4);border-radius:6px;color:var(--text);padding:3px 6px;font-size:11px;"><option value="">Sin asignar</option>'+satOpts.replace('value="'+(satColorId||'')+'"','value="'+(satColorId||'')+'" selected')+'</select>';
     } else if(tieneCorteActive){
