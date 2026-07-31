@@ -2484,15 +2484,25 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1785527606972_gd67g",
-      "ts": 1785527606972,
-      "user": "John Rodriguez",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-0054",
-      "nombre": "BEISBOLERA 2.0",
       "categoria": "CHAQUETAS",
       "colores": 4,
-      "refs": 1
+      "id": "evt_1785527606972_gd67g",
+      "nombre": "BEISBOLERA 2.0",
+      "op_id": "OP-0054",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1785527606972,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785527726261_4ncpw",
+      "ts": 1785527726261,
+      "user": "John Rodriguez",
+      "tipo": "cambiar_estado_op_all",
+      "op_id": "OP-0057",
+      "estado": "PENDIENTE_CORTAR",
+      "colores": 2,
+      "nombre": "CHAQUETA RALPH"
     }
   ]
 }
