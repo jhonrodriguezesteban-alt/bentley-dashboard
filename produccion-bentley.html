@@ -4187,13 +4187,23 @@ async function guardarSat(id){
 }
 
 function nuevoSatelite(){
-  var body = '<div class="form-group"><label class="form-label">Nombre del satélite *</label><input class="form-control" id="ns-nombre" placeholder="Ej: SOFIA SANCHEZ"></div>';
-  body += '<div class="form-group"><label class="form-label">Tipo</label><select class="form-control" id="ns-tipo"><option value="interno">Interno (persona/taller propio)</option><option value="maquila">Maquilador externo (Fenio, Mariluz, etc.)</option></select></div>';
-  body += '<div class="form-row"><div class="form-group"><label class="form-label">Personas</label><input class="form-control" type="number" id="ns-personas" value="0"></div><div class="form-group"><label class="form-label">Cap. semanal</label><input class="form-control" type="number" id="ns-cap" value="0"></div></div>';
-  body += '<div class="form-group"><label class="form-label">Teléfono</label><input class="form-control" id="ns-tel"></div>';
+  var body = '<div class="form-group"><label class="form-label">Nombre del satélite *</label><input class="form-control" id="ns-nombre" autocomplete="off" placeholder="Ej: SOFIA SANCHEZ"></div>';
+  body += '<div class="form-group"><label class="form-label">Tipo</label><select class="form-control" id="ns-tipo" autocomplete="off"><option value="interno">Interno (persona/taller propio)</option><option value="maquila">Maquilador externo (Fenio, Mariluz, etc.)</option></select></div>';
+  body += '<div class="form-row"><div class="form-group"><label class="form-label">Personas</label><input class="form-control" type="number" id="ns-personas" autocomplete="off" value="0"></div><div class="form-group"><label class="form-label">Cap. semanal</label><input class="form-control" type="number" id="ns-cap" autocomplete="off" value="0"></div></div>';
+  body += '<div class="form-group"><label class="form-label">Teléfono</label><input class="form-control" id="ns-tel" autocomplete="off"></div>';
   body += '<div class="form-group"><label class="form-label">Especialidades</label><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">' + CATEGORIAS.map(function(c){ return '<label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer;"><input type="checkbox" class="ns-esp" value="' + c + '"> ' + c + '</label>'; }).join('') + '</div></div>';
   var footer = '<button class="btn btn-primary" onclick="crearSatelite()">✚ Crear satélite</button><button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>';
   openModal('Nuevo Satélite', body, footer);
+  setTimeout(function(){
+    // Limpieza defensiva: Safari a veces re-rellena inputs reciclando el id anterior
+    // aunque el HTML se acaba de insertar de cero con valores por defecto.
+    var n=document.getElementById('ns-nombre'); if(n) n.value='';
+    var t=document.getElementById('ns-tipo'); if(t) t.value='interno';
+    var p=document.getElementById('ns-personas'); if(p) p.value='0';
+    var c=document.getElementById('ns-cap'); if(c) c.value='0';
+    var tel=document.getElementById('ns-tel'); if(tel) tel.value='';
+    document.querySelectorAll('.ns-esp').forEach(function(cb){ cb.checked=false; });
+  }, 30);
 }
 
 async function crearSatelite(){
