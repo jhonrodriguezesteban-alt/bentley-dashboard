@@ -3078,19 +3078,39 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1785535648232_rmy4n",
-      "ts": 1785535648232,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-099",
-      "op_nombre": "BEISBOLERA 2.0",
       "categoria": "CHAQUETAS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-07-31",
-      "total_uds": 240,
+      "id": "evt_1785535648232_rmy4n",
+      "op_id": "OP-2026-099",
+      "op_nombre": "BEISBOLERA 2.0",
       "referencias": [
         "BEISBOLERA 2.0"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 240,
+      "ts": 1785535648232,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785535661597_quydu",
+      "ts": 1785535661597,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-099",
+      "op_nombre": "BEISBOLERA 2.0",
+      "color": "CAFE",
+      "mes": "2026-08"
+    },
+    {
+      "id": "evt_1785535663294_htdqe",
+      "ts": 1785535663294,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-099",
+      "op_nombre": "BEISBOLERA 2.0",
+      "color": "VINOTINTO",
+      "mes": "2026-08"
     }
   ]
 }
