@@ -2950,22 +2950,32 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1785530828126_hldsm",
-      "ts": 1785530828126,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-094",
-      "op_nombre": "CONJUNTO ISABELLA",
       "categoria": "CONJUNTOS",
-      "total_ots": 10,
-      "total_uds": 65,
       "colores": [
         "MARFIL",
         "BEIGE"
       ],
+      "id": "evt_1785530828126_hldsm",
+      "op_id": "OP-2026-094",
+      "op_nombre": "CONJUNTO ISABELLA",
       "referencias": [
         "CONJUNTO ISABELLA"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 10,
+      "total_uds": 65,
+      "ts": 1785530828126,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785530920137_8y4ei",
+      "ts": 1785530920137,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-079",
+      "op_nombre": "BEISBOLERA ARMIN",
+      "color": "AVENA",
+      "mes": "2026-09"
     }
   ]
 }
