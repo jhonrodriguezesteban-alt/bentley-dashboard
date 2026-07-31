@@ -2701,6 +2701,11 @@ function _planCostoOp(op){
   var uds = _planOpUds(op);
   return {mat:res.mat*uds, mod:res.mod*uds, cif:res.cif*uds, svc:res.svc*uds, total:res.total*uds, uds:uds, costo_ud:res.total};
 }
+function _planIrAVincular(nombre){
+  _costeoTab = 'pendientes';
+  renderPage('costeo');
+  setTimeout(function(){ _vincularRecetaModal(nombre); }, 80);
+}
 function _planMiniCard(op, color){
   var uds = _planColorUds(op, color);
   var baseId = fmtOpId(op.id);
@@ -2739,9 +2744,12 @@ function _planMiniCard(op, color){
     h += '<div style="font-size:8px;color:#475569;">'+fmtCopFull(costo.costo_ud)+'/prenda · '+uds+' uds</div>';
     h += '</div>';
   } else {
-    h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px;">';
+    h += '<div style="border-top:1px solid #2c2c2e;margin:5px 0;padding-top:5px;">';
+    h += '<div style="display:flex;align-items:center;justify-content:space-between;">';
     h += '<span style="font-size:10px;font-weight:700;color:#64748b;">'+uds+' uds</span>';
-    h += '<span style="font-size:8px;color:#2c2c2e;">sin receta</span>';
+    h += '<span data-nombre="'+esc(op.nombre_producto||'')+'" onclick="event.stopPropagation();_planIrAVincular(this.dataset.nombre)" style="font-size:8px;color:#a855f7;background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.3);border-radius:3px;padding:1px 5px;cursor:pointer;font-weight:700;" title="Ir a Costeo → Pendientes a vincular receta">⚠ sin receta</span>';
+    h += '</div>';
+    h += '<div style="font-size:8px;color:#374151;margin-top:3px;">— sin costo estimado —</div>';
     h += '</div>';
   }
   h += '</div>';
