@@ -4072,7 +4072,7 @@ function renderSatelites(){
     var pct = total.length ? Math.round(onTime/total.length*100) : 0;
     var lastDel = total.sort(function(a,b){ return (b.fecha_entrega_real||'').localeCompare(a.fecha_entrega_real||''); })[0];
     h += '<div class="sat-card ' + (sat.activo?'':'inactive') + '" onclick="abrirSat(\'' + sat.id + '\')" title="Ver detalle">';
-    h += '<div class="sat-name"><div class="sat-dot ' + (sat.activo?'on':'off') + '"></div>' + sat.nombre + '</div>';
+    h += '<div class="sat-name"><div class="sat-dot ' + (sat.activo?'on':'off') + '"></div>' + sat.nombre + (sat.tipo==='maquila'?' <span style="font-size:9px;font-weight:800;background:rgba(251,146,60,.15);border:1px solid rgba(251,146,60,.4);color:#fb923c;border-radius:4px;padding:1px 5px;vertical-align:middle;">🏭 MAQUILA</span>':'') + '</div>';
     h += '<div style="font-size:11px;color:#475569;margin-top:4px;">' + enConf + ' uds · ' + pct + '% cump.</div>';
     h += '</div>';
   });
@@ -4092,6 +4092,7 @@ function abrirSat(id){
   // Ficha tab
   body += '<div id="sat-tab-ficha">';
   body += '<div class="form-group"><label class="form-label">Nombre</label><input class="form-control" id="se-nombre" value="' + esc(sat.nombre) + '"></div>';
+  body += '<div class="form-group"><label class="form-label">Tipo</label><select class="form-control" id="se-tipo"><option value="interno"' + ((sat.tipo||'interno')==='interno'?' selected':'') + '>Interno (persona/taller propio)</option><option value="maquila"' + (sat.tipo==='maquila'?' selected':'') + '>Maquilador externo (Fenio, Mariluz, etc.)</option></select></div>';
   body += '<div class="form-group"><div style="display:flex;align-items:center;justify-content:space-between;"><label class="form-label">Activo</label><input type="checkbox" class="toggle" id="se-activo" ' + (sat.activo?'checked':'') + '></div></div>';
   body += '<div class="form-row"><div class="form-group"><label class="form-label">Personas</label><input class="form-control" type="number" id="se-personas" value="' + (sat.personas||0) + '"></div><div class="form-group"><label class="form-label">Cap. semanal (uds)</label><input class="form-control" type="number" id="se-cap" value="' + (sat.capacidad_semanal||0) + '"></div></div>';
   body += '<div class="form-group"><label class="form-label">Teléfono</label><input class="form-control" id="se-tel" value="' + esc(sat.telefono||'') + '"></div>';
@@ -4151,6 +4152,7 @@ async function guardarSat(id){
   var sat = getSat(id);
   if(!sat) return;
   sat.nombre = document.getElementById('se-nombre').value.trim() || sat.nombre;
+  sat.tipo = (document.getElementById('se-tipo')||{}).value || 'interno';
   sat.activo = document.getElementById('se-activo').checked;
   sat.personas = parseInt(document.getElementById('se-personas').value)||0;
   sat.capacidad_semanal = parseInt(document.getElementById('se-cap').value)||0;
@@ -4173,6 +4175,7 @@ async function guardarSat(id){
 
 function nuevoSatelite(){
   var body = '<div class="form-group"><label class="form-label">Nombre del satélite *</label><input class="form-control" id="ns-nombre" placeholder="Ej: SOFIA SANCHEZ"></div>';
+  body += '<div class="form-group"><label class="form-label">Tipo</label><select class="form-control" id="ns-tipo"><option value="interno">Interno (persona/taller propio)</option><option value="maquila">Maquilador externo (Fenio, Mariluz, etc.)</option></select></div>';
   body += '<div class="form-row"><div class="form-group"><label class="form-label">Personas</label><input class="form-control" type="number" id="ns-personas" value="0"></div><div class="form-group"><label class="form-label">Cap. semanal</label><input class="form-control" type="number" id="ns-cap" value="0"></div></div>';
   body += '<div class="form-group"><label class="form-label">Teléfono</label><input class="form-control" id="ns-tel"></div>';
   body += '<div class="form-group"><label class="form-label">Especialidades</label><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">' + CATEGORIAS.map(function(c){ return '<label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer;"><input type="checkbox" class="ns-esp" value="' + c + '"> ' + c + '</label>'; }).join('') + '</div></div>';
@@ -4185,6 +4188,7 @@ async function crearSatelite(){
   if(!nombre){ document.getElementById('ns-nombre').style.borderColor='var(--red)'; return; }
   var sat = {
     id: uid(), nombre: nombre, activo: true,
+    tipo: (document.getElementById('ns-tipo')||{}).value || 'interno',
     personas: parseInt(document.getElementById('ns-personas').value)||0,
     capacidad_semanal: parseInt(document.getElementById('ns-cap').value)||0,
     telefono: document.getElementById('ns-tel').value.trim(),
@@ -4282,6 +4286,8 @@ function _setSubgEstado(opId, color, estado){
 
 var _opCatFiltro = null;
 var _opBusqueda = '';
+var _opFiltroMaquila = ''; // '' = todos · id de satélite tipo 'maquila'
+function setOpFiltroMaquila(satId){ _opFiltroMaquila = (_opFiltroMaquila===satId) ? '' : satId; renderPage('ops'); }
 var _opModoEntrega = null; // opId cuando modo entrega masiva está activo
 function renderOPs(){
   // FAB fijo "Nueva OP"
@@ -4371,6 +4377,32 @@ function renderOPs(){
   h += '<input id="op-search-input" type="text" value="'+esc(_opBusqueda)+'" oninput="var _q=this.value,_p=this.selectionStart;_opBusqueda=_q;renderPage(\'ops\');var _el=document.getElementById(\'op-search-input\');if(_el){_el.focus();try{_el.setSelectionRange(_p,_p);}catch(e){}}" placeholder="🔍 Buscar OP o referencia..." style="width:100%;background:#0d1117;border:1px solid #2c2c2e;border-radius:20px;color:#e2e8f0;font-size:12px;padding:5px 32px 5px 14px;outline:none;box-sizing:border-box;">';
   if(_opBusqueda) h += '<button onclick="_opBusqueda=\'\';renderPage(\'ops\')" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:#475569;cursor:pointer;font-size:14px;padding:0;line-height:1;">×</button>';
   h += '</div></div>';
+
+  // ── Filtro por maquilador externo (Fenio, Mariluz, etc.) ──────────────────────
+  var _maquilaSats = (DB.satelites||[]).filter(function(s){ return s.tipo==='maquila'; });
+  if(_maquilaSats.length){
+    var _maquilaCounts = {};
+    subgs.forEach(function(s){
+      var idsVistos = {};
+      (s.otsColor||[]).forEach(function(o){
+        if(o.satelite_id && !idsVistos[o.satelite_id]){ idsVistos[o.satelite_id]=1; _maquilaCounts[o.satelite_id]=(_maquilaCounts[o.satelite_id]||0)+1; }
+      });
+    });
+    var _maquilaConDatos = _maquilaSats.filter(function(s){ return _maquilaCounts[s.id]>0; });
+    if(_maquilaConDatos.length){
+      h += '<div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:14px;">';
+      h += '<span style="font-size:11px;color:#64748b;">🏭 Maquiladores:</span>';
+      h += '<button onclick="setOpFiltroMaquila(\'\')" style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;cursor:pointer;border:1px solid '+(!_opFiltroMaquila?'rgba(251,146,60,.6)':'#2c2c2e')+';background:'+(!_opFiltroMaquila?'rgba(251,146,60,.15)':'transparent')+';color:'+(!_opFiltroMaquila?'#fb923c':'#64748b')+';white-space:nowrap;">Todos</button>';
+      _maquilaConDatos.forEach(function(s){
+        var activo = _opFiltroMaquila===s.id;
+        h += '<button onclick="setOpFiltroMaquila(\''+s.id+'\')" style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;cursor:pointer;border:1px solid '+(activo?'#fb923c':'#2c2c2e')+';background:'+(activo?'rgba(251,146,60,.15)':'transparent')+';color:'+(activo?'#fb923c':'#64748b')+';white-space:nowrap;">'+esc(s.nombre)+' ('+_maquilaCounts[s.id]+')</button>';
+      });
+      h += '</div>';
+    }
+  }
+  if(_opFiltroMaquila){
+    subgs = subgs.filter(function(s){ return (s.otsColor||[]).some(function(o){ return o.satelite_id===_opFiltroMaquila; }); });
+  }
 
   // ── Tarjetas resumen por categoría ─────────────────────────────────────────
   if(cats.length){
