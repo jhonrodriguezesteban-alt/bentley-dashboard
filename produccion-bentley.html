@@ -2552,6 +2552,88 @@ function planVerCategoria(cat){
   openModal('📦 Referencias · '+cat, h);
 }
 
+function planVerMes(mesKey){
+  var info = (window._planMesMap||{})[mesKey];
+  if(!info) return;
+  var mes = info.mes, mesUnits = info.mesUnits, mesDisenos = info.mesDisenos, disPlanAll = info.disPlanAll, costoMes = info.costoMes;
+
+  var h = '<div style="padding:0 4px 20px;">';
+
+  // Totales del mes
+  h += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">';
+  h += '<div style="flex:1;min-width:120px;background:rgba(255,255,255,.04);border-radius:9px;padding:10px 14px;">';
+  h += '<div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;">Uds. totales</div>';
+  h += '<div style="font-size:22px;font-weight:900;color:#e2e8f0;">'+info.totalUdsCombinado.toLocaleString('es-CO')+'</div>';
+  h += '</div>';
+  h += '<div style="flex:1;min-width:120px;background:rgba(14,165,233,.07);border-radius:9px;padding:10px 14px;">';
+  h += '<div style="font-size:9px;color:#0ea5e9;text-transform:uppercase;letter-spacing:.5px;">Mat. Primas</div>';
+  h += '<div style="font-size:16px;font-weight:800;color:#0ea5e9;">'+fmtCopFull(costoMes.mat)+'</div>';
+  h += '</div>';
+  h += '<div style="flex:1;min-width:120px;background:rgba(168,85,247,.07);border-radius:9px;padding:10px 14px;">';
+  h += '<div style="font-size:9px;color:#a855f7;text-transform:uppercase;letter-spacing:.5px;">Servicios</div>';
+  h += '<div style="font-size:16px;font-weight:800;color:#a855f7;">'+fmtCopFull(costoMes.svc)+'</div>';
+  h += '</div>';
+  h += '<div style="flex:1;min-width:120px;background:rgba(52,211,153,.07);border-radius:9px;padding:10px 14px;">';
+  h += '<div style="font-size:9px;color:#34d399;text-transform:uppercase;letter-spacing:.5px;">M.O.D.</div>';
+  h += '<div style="font-size:16px;font-weight:800;color:#34d399;">'+fmtCopFull(costoMes.mod)+'</div>';
+  h += '</div>';
+  h += '<div style="flex:1;min-width:120px;background:rgba(251,191,36,.07);border-radius:9px;padding:10px 14px;">';
+  h += '<div style="font-size:9px;color:#fbbf24;text-transform:uppercase;letter-spacing:.5px;">CIF</div>';
+  h += '<div style="font-size:16px;font-weight:800;color:#fbbf24;">'+fmtCopFull(costoMes.cif)+'</div>';
+  h += '</div>';
+  h += '</div>';
+
+  // ── OPs / colores del mes ────────────────────────────────────────────────
+  h += '<div style="font-size:11px;font-weight:700;color:'+mes.color+';text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">📋 Órdenes de producción · '+mesUnits.length+' color'+(mesUnits.length!==1?'es':'')+' · '+info.totalUds.toLocaleString('es-CO')+' uds</div>';
+  if(!mesUnits.length){
+    h += '<div style="color:#2c2c2e;font-size:12px;padding:10px 0 18px;">Sin OPs asignadas a este mes.</div>';
+  } else {
+    var unitsOrdenados = mesUnits.slice().sort(function(a,b){ return _planColorUds(b.op,b.color) - _planColorUds(a.op,a.color); });
+    h += '<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:18px;">';
+    unitsOrdenados.forEach(function(u){
+      var uds = _planColorUds(u.op, u.color);
+      var costo = _planCostoColor(u.op, u.color);
+      h += '<div data-opid="'+u.op.id+'" onclick="closeModal();verDetalleOP(this.dataset.opid)" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#1c1c1e;border-radius:9px;cursor:pointer;">';
+      h += '<div style="flex:1;min-width:0;">';
+      h += '<div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">';
+      h += '<span style="font-size:11px;font-weight:800;color:#0a84ff;">'+esc(fmtOpId(u.op.id))+'</span>';
+      h += '<span style="font-size:13px;font-weight:700;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(u.op.nombre_producto||'')+'</span>';
+      h += '</div>';
+      h += '<div style="display:flex;align-items:center;gap:6px;">';
+      if(u.color && u.color!=='—') h += '<span style="font-size:9px;font-weight:700;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);border-radius:3px;color:#0a84ff;padding:1px 5px;text-transform:uppercase;">'+esc(u.color)+'</span>';
+      h += '<span style="font-size:10px;color:#475569;">'+esc(u.op.categoria||'')+'</span>';
+      h += '</div></div>';
+      h += '<div style="text-align:right;flex-shrink:0;">';
+      h += '<div style="font-size:15px;font-weight:900;color:#f1f5f9;">'+uds.toLocaleString('es-CO')+'<span style="font-size:9px;color:#64748b;margin-left:2px;">uds</span></div>';
+      if(costo) h += '<div style="font-size:10px;color:#34d399;font-weight:700;">'+fmtCopFull(costo.total)+'</div>';
+      else h += '<div style="font-size:9px;color:#2c2c2e;">sin receta</div>';
+      h += '</div></div>';
+    });
+    h += '</div>';
+  }
+
+  // ── Diseños planificados del mes ────────────────────────────────────────────
+  if(mesDisenos.length){
+    h += '<div style="font-size:11px;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">🎨 Diseños planificados · '+mesDisenos.length+' · '+info.disUds.toLocaleString('es-CO')+' uds</div>';
+    h += '<div style="display:flex;flex-direction:column;gap:6px;">';
+    mesDisenos.forEach(function(d){
+      var p = disPlanAll[d.id]||{uds:0};
+      var esFenio = (d.proveedor||'').toUpperCase()==='FENIO';
+      h += '<div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:rgba(16,185,129,.05);border:1px solid rgba(52,211,153,.15);border-radius:9px;">';
+      h += '<div style="flex:1;min-width:0;">';
+      h += '<div style="font-size:12px;font-weight:700;color:#d1fae5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(d.nombre)+'</div>';
+      h += '<div style="font-size:9px;color:#64748b;">'+esc(d.categoria||'—')+(esFenio?' · <span style="color:#fbbf24;">💳 FENIO → dic.</span>':'')+'</div>';
+      h += '</div>';
+      h += '<div style="font-size:13px;font-weight:800;color:#34d399;">'+(p.uds||0).toLocaleString('es-CO')+'<span style="font-size:9px;color:#64748b;margin-left:2px;">uds</span></div>';
+      h += '</div>';
+    });
+    h += '</div>';
+  }
+
+  h += '</div>';
+  openModal('📅 '+mes.label.toUpperCase()+' — Resumen completo', h, '', {wide:true});
+}
+
 function _planAsignar(opId, mesKey){
   if(!_canEditPlan()){ toast('Solo Jhon puede editar la planeación','warning'); return; }
   if(!DB.planeacion) DB.planeacion = {meses:{}};
@@ -3278,6 +3360,7 @@ function renderPlaneacion(){
   // Índice de diseños por mes
   var disPlanAll = (DB.planeacion && DB.planeacion.disenos_plan) || {};
   var disenosActivos2 = (DB.disenos||[]).filter(function(d){ return !d.eliminado && d.kanban_estado !== 'LISTA_PRODUCCION'; });
+  window._planMesMap = {};
 
   MESES.forEach(function(mes){
     var mesKeys = meses[mes.k]||[];
@@ -3326,13 +3409,16 @@ function renderPlaneacion(){
 
     var catEntries = Object.keys(catMap).sort(function(a,b){ return catMap[b]-catMap[a]; });
 
+    // Guardar todo lo necesario para el modal de resumen (planVerMes)
+    window._planMesMap[mes.k] = {mes:mes, mesUnits:mesUnits, mesDisenos:mesDisenos, disPlanAll:disPlanAll, costoMes:costoMes, totalUds:totalUds, disUds:disUds, disInv:disInv, disFenioInv:disFenioInv, totalUdsCombinado:totalUdsCombinado};
+
     var _mesRefs = mesOps.map(function(op){ return (op.nombre_producto||op.id); }).concat(mesDisenos.map(function(d){ return d.nombre||''; })).join('|').toUpperCase();
     h += '<div data-plan-mes="'+mes.k+'" data-refs="'+esc(_mesRefs)+'" style="background:#0a0d14;border:1px solid '+mes.color+'33;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;max-height:680px;">';
 
     // Month header
     h += '<div style="background:'+mes.bg+';border-bottom:1px solid '+mes.color+'22;padding:11px 14px;">';
     h += '<div style="display:flex;align-items:baseline;justify-content:space-between;">';
-    h += '<div style="font-size:14px;font-weight:800;color:'+mes.color+';text-transform:uppercase;letter-spacing:.5px;">'+mes.label+'</div>';
+    h += '<div data-mes="'+mes.k+'" onclick="planVerMes(this.dataset.mes)" style="font-size:14px;font-weight:800;color:'+mes.color+';text-transform:uppercase;letter-spacing:.5px;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px;" title="Ver resumen completo de '+esc(mes.label)+'">'+mes.label+'</div>';
     if(totalUdsCombinado) h += '<div style="font-size:20px;font-weight:900;color:'+mes.color+';">'+totalUdsCombinado+'<span style="font-size:9px;font-weight:500;color:'+mes.color+'88;margin-left:2px;">uds</span></div>';
     h += '</div>';
     // Subtítulo: OPs + diseños
