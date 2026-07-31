@@ -3019,14 +3019,31 @@
       "user": "John Rodriguez"
     },
     {
+      "color": "AVENA",
       "id": "evt_1785531728210_91p03",
-      "ts": 1785531728210,
-      "user": "John Rodriguez",
-      "tipo": "planeacion_asignar",
+      "mes": "2026-08",
       "op_id": "OP-2026-079",
       "op_nombre": "BEISBOLERA ARMIN",
-      "color": "AVENA",
-      "mes": "2026-08"
+      "tipo": "planeacion_asignar",
+      "ts": 1785531728210,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785534563946_zidhb",
+      "ts": 1785534563946,
+      "user": "John Rodriguez",
+      "tipo": "generar_ots",
+      "op_id": "OP-0054",
+      "op_nombre": "BEISBOLERA 2.0",
+      "categoria": "CHAQUETAS",
+      "total_ots": 7,
+      "total_uds": 84,
+      "colores": [
+        "CAFÉ"
+      ],
+      "referencias": [
+        "BEISBOLERA 2.0"
+      ]
     }
   ]
 }
