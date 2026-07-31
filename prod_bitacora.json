@@ -2457,14 +2457,41 @@
       "user": "John Rodriguez"
     },
     {
+      "categoria": "CHAQUETAS",
+      "colores": 3,
       "id": "evt_1785527314447_bkz18",
+      "nombre": "BEISBOLERA 2.0",
+      "op_id": "OP-0054",
+      "refs": 1,
+      "tipo": "editar_op_refs",
       "ts": 1785527314447,
+      "user": "John Rodriguez"
+    },
+    {
+      "bulk": true,
+      "color": "GRIS OSCURO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "id": "evt_1785527599508_080sk",
+      "motivo": "ENTREGADO",
+      "op_id": "OP-0054",
+      "op_nombre": "BEISBOLERA 2.0",
+      "referencia": "BEISBOLERA 2.0",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1785527599508,
+      "uds": 84,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785527606972_gd67g",
+      "ts": 1785527606972,
       "user": "John Rodriguez",
       "tipo": "editar_op_refs",
       "op_id": "OP-0054",
       "nombre": "BEISBOLERA 2.0",
       "categoria": "CHAQUETAS",
-      "colores": 3,
+      "colores": 4,
       "refs": 1
     }
   ]
