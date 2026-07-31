@@ -2716,13 +2716,33 @@
       "user": "Jefa de Producción"
     },
     {
+      "categoria": "CONJUNTOS",
       "id": "evt_1785529815392_i87an",
-      "ts": 1785529815392,
-      "user": "Jefa de Producción",
-      "tipo": "eliminar_op",
       "op_id": "OP-0035",
       "op_nombre": "SET FRANKY",
-      "categoria": "CONJUNTOS"
+      "tipo": "eliminar_op",
+      "ts": 1785529815392,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785529871339_fud1o",
+      "ts": 1785529871339,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-0059",
+      "op_nombre": "SET FRANKY",
+      "color": "GRIS OSCURO",
+      "mes": "2026-08"
+    },
+    {
+      "id": "evt_1785529872926_z3bi4",
+      "ts": 1785529872926,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-0059",
+      "op_nombre": "SET FRANKY",
+      "color": "VINOTINTO",
+      "mes": "2026-08"
     }
   ]
 }
