@@ -4264,18 +4264,18 @@
     },
     {
       "cantidades": {
+        "AVENA_T6": 10,
+        "AVENA_T8": 10,
         "AVENA_T10": 16,
         "AVENA_T12": 16,
         "AVENA_T14": 16,
         "AVENA_T16": 16,
-        "AVENA_T6": 16,
-        "AVENA_T8": 16,
+        "MARFIL_T6": 10,
+        "MARFIL_T8": 10,
         "MARFIL_T10": 16,
         "MARFIL_T12": 16,
         "MARFIL_T14": 16,
-        "MARFIL_T16": 16,
-        "MARFIL_T6": 16,
-        "MARFIL_T8": 16
+        "MARFIL_T16": 16
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -4292,27 +4292,14 @@
       "numero": 79,
       "referencias": [
         {
-          "cantidades": {
-            "AVENA_T10": 16,
-            "AVENA_T12": 16,
-            "AVENA_T14": 16,
-            "AVENA_T16": 16,
-            "AVENA_T6": 16,
-            "AVENA_T8": 16,
-            "MARFIL_T10": 16,
-            "MARFIL_T12": 16,
-            "MARFIL_T14": 16,
-            "MARFIL_T16": 16,
-            "MARFIL_T6": 16,
-            "MARFIL_T8": 16
-          },
+          "nombre": "BEISBOLERA ARMIN",
+          "ref": "1132",
           "cat": "CHAQUETAS",
+          "vmo": 9144,
           "colores": [
             "AVENA",
             "MARFIL"
           ],
-          "nombre": "BEISBOLERA ARMIN",
-          "ref": "1132",
           "tallas": [
             "T6",
             "T8",
@@ -4321,8 +4308,20 @@
             "T14",
             "T16"
           ],
-          "totalUds": 192,
-          "vmo": 9144
+          "cantidades": {
+            "AVENA_T6": 10,
+            "AVENA_T8": 10,
+            "AVENA_T10": 16,
+            "AVENA_T12": 16,
+            "AVENA_T14": 16,
+            "AVENA_T16": 16,
+            "MARFIL_T6": 10,
+            "MARFIL_T8": 10,
+            "MARFIL_T10": 16,
+            "MARFIL_T12": 16,
+            "MARFIL_T14": 16,
+            "MARFIL_T16": 16
+          }
         }
       ],
       "tallas": [
@@ -4333,7 +4332,8 @@
         "T14",
         "T16"
       ],
-      "subg_estados": {}
+      "subg_estados": {},
+      "updated_at": "2026-07-31"
     },
     {
       "cantidades": {
