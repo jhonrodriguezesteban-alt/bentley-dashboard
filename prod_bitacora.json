@@ -2705,15 +2705,24 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1785529773549_uhgwi",
-      "ts": 1785529773549,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-0059",
-      "nombre": "SET FRANKY",
       "categoria": "CONJUNTOS",
       "colores": 5,
-      "refs": 1
+      "id": "evt_1785529773549_uhgwi",
+      "nombre": "SET FRANKY",
+      "op_id": "OP-0059",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1785529773549,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785529815392_i87an",
+      "ts": 1785529815392,
+      "user": "Jefa de Producción",
+      "tipo": "eliminar_op",
+      "op_id": "OP-0035",
+      "op_nombre": "SET FRANKY",
+      "categoria": "CONJUNTOS"
     }
   ]
 }
