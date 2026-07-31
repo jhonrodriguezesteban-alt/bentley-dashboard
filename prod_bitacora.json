@@ -2276,36 +2276,46 @@
     },
     {
       "id": "evt_1785449240384_osiev",
-      "ts": 1785449240384,
-      "user": "John Rodriguez",
-      "tipo": "planeacion_asignar",
+      "mes": "2026-08",
       "op_id": "OP-2026-096",
       "op_nombre": "FALDA ESCOSES",
-      "mes": "2026-08"
+      "tipo": "planeacion_asignar",
+      "ts": 1785449240384,
+      "user": "John Rodriguez"
     },
     {
       "id": "evt_1785449243211_g2ghs",
-      "ts": 1785449243211,
-      "user": "John Rodriguez",
-      "tipo": "planeacion_asignar",
+      "mes": "2026-08",
       "op_id": "OP-2026-097",
       "op_nombre": "CAMISON BERLIN",
-      "mes": "2026-08"
+      "tipo": "planeacion_asignar",
+      "ts": 1785449243211,
+      "user": "John Rodriguez"
     },
     {
-      "id": "evt_1785450960767_gh5c8",
-      "ts": 1785450960767,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-098",
-      "op_nombre": "CHAQUETA CAZADORA",
       "categoria": "CHAQUETAS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-07-30",
-      "total_uds": 466,
+      "id": "evt_1785450960767_gh5c8",
+      "op_id": "OP-2026-098",
+      "op_nombre": "CHAQUETA CAZADORA",
       "referencias": [
         "CHAQUETA CAZADORA"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 466,
+      "ts": 1785450960767,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785504832205_08ess",
+      "ts": 1785504832205,
+      "user": "Jefa de Producción",
+      "tipo": "materia_prima",
+      "descripcion": "recoger trazos tehcpatron",
+      "destino": "alqueria",
+      "fecha": "2026-07-31",
+      "hora": ""
     }
   ]
 }
