@@ -3329,20 +3329,29 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1785541803211_7gzo6",
-      "ts": 1785541803211,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-104",
-      "op_nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS",
       "categoria": "BUZOS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-07-31",
-      "total_uds": 255,
+      "id": "evt_1785541803211_7gzo6",
+      "op_id": "OP-2026-104",
+      "op_nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS",
       "referencias": [
         "BUZO CEREZAS",
         "BUZO TEJIDO MOÑOS"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 255,
+      "ts": 1785541803211,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785542242803_7t0vh",
+      "ts": 1785542242803,
+      "user": "John Rodriguez",
+      "tipo": "satelite_crear",
+      "nombre": "FENIO",
+      "personas": 1,
+      "capacidad": 10
     }
   ]
 }
