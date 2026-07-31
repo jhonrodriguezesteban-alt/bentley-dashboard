@@ -2495,12 +2495,22 @@
       "user": "John Rodriguez"
     },
     {
+      "colores": 2,
+      "estado": "PENDIENTE_CORTAR",
       "id": "evt_1785527726261_4ncpw",
+      "nombre": "CHAQUETA RALPH",
+      "op_id": "OP-0057",
+      "tipo": "cambiar_estado_op_all",
       "ts": 1785527726261,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785527737955_twwk2",
+      "ts": 1785527737955,
       "user": "John Rodriguez",
       "tipo": "cambiar_estado_op_all",
       "op_id": "OP-0057",
-      "estado": "PENDIENTE_CORTAR",
+      "estado": "EN_CONFECCION",
       "colores": 2,
       "nombre": "CHAQUETA RALPH"
     }
