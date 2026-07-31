@@ -2520,17 +2520,17 @@ function planVerCategoria(cat){
   var catMap = window._planCatMap || {};
   var info = catMap[cat];
   if(!info) return;
-  var ops = info.refs;
+  var units = info.refs; // {op, color, key}
   var totalUds = info.uds;
   var h = '<div style="padding:0 4px 20px;">';
-  h += '<div style="font-size:11px;color:#64748b;margin-bottom:14px;">'+ops.length+' referencias · '+totalUds.toLocaleString('es-CO')+' unidades programadas</div>';
+  h += '<div style="font-size:11px;color:#64748b;margin-bottom:14px;">'+units.length+' referencias · '+totalUds.toLocaleString('es-CO')+' unidades programadas</div>';
   // Agrupar por nombre_producto único (puede haber múltiples colores/OPs con mismo nombre)
   var refMap = {};
-  ops.forEach(function(op){
-    var key = op.nombre_producto||op.id;
-    if(!refMap[key]) refMap[key] = {nombre:key, ops:[], uds:0, id:op.id};
-    refMap[key].ops.push(op);
-    refMap[key].uds += _planOpUds(op);
+  units.forEach(function(u){
+    var key = u.op.nombre_producto||u.op.id;
+    if(!refMap[key]) refMap[key] = {nombre:key, units:[], uds:0, id:u.op.id};
+    refMap[key].units.push(u);
+    refMap[key].uds += _planColorUds(u.op, u.color);
   });
   var refs = Object.values(refMap).sort(function(a,b){ return b.uds - a.uds; });
   refs.forEach(function(ref){
@@ -2538,9 +2538,9 @@ function planVerCategoria(cat){
     h += '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#1c1c1e;border-radius:9px;margin-bottom:6px;cursor:pointer;" onclick="verDetalleOP(\''+ref.id+'\')" onmouseover="this.style.background=\'#1c1c1e\'" onmouseout="this.style.background=\'#1c1c1e\'">';
     h += '<div style="flex:1;min-width:0;">';
     h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(ref.nombre)+'</div>';
-    if(ref.ops.length>1){
-      var colores = ref.ops.map(function(o){ return o.id; }).join(' · ');
-      h += '<div style="font-size:10px;color:#475569;">'+ref.ops.length+' OPs: '+esc(colores)+'</div>';
+    if(ref.units.length>1){
+      var colores = ref.units.map(function(u){ return u.color; }).join(' · ');
+      h += '<div style="font-size:10px;color:#475569;">'+ref.units.length+' color'+(ref.units.length!==1?'es':'')+': '+esc(colores)+'</div>';
     }
     h += '</div>';
     h += '<div style="text-align:right;flex-shrink:0;">';
@@ -2564,8 +2564,9 @@ function _planAsignar(opId, mesKey){
     if(!DB.planeacion.meses[mesKey]) DB.planeacion.meses[mesKey] = [];
     if(DB.planeacion.meses[mesKey].indexOf(opId)<0) DB.planeacion.meses[mesKey].push(opId);
   }
-  var op = (DB.ops||[]).find(function(o){ return o.id===opId; });
-  _logEvt('planeacion_asignar', {op_id:opId, op_nombre:op?op.nombre_producto:'', mes:mesKey||'sin_mes'});
+  var parsed = _planParseKey(opId);
+  var op = (DB.ops||[]).find(function(o){ return o.id===parsed.opId; });
+  _logEvt('planeacion_asignar', {op_id:parsed.opId, op_nombre:op?op.nombre_producto:'', color:parsed.color, mes:mesKey||'sin_mes'});
   guardarPlaneacion();
   renderPage('planeacion');
 }
@@ -2631,6 +2632,45 @@ function _planOpUds(op){
   return uds;
 }
 
+// ── Unidad de planeación = (OP, color) ──────────────────────────────────────
+// Permite asignar cada color de una OP a un mes distinto, en vez de la OP entera.
+function _planKey(opId, color){ return opId + '||' + (color||'—'); }
+function _planParseKey(key){
+  var i = String(key).indexOf('||');
+  return i<0 ? {opId:key, color:'—'} : {opId:key.substring(0,i), color:key.substring(i+2)};
+}
+function _planColorUds(op, color){
+  // Solo unidades del color indicado que aún NO han pasado por corte
+  var ots = (DB.ots||[]).filter(function(o){
+    return o.op_id===op.id && _PLAN_NO_CORTADO[o.estado] && (color==='—' || (o.color||'').trim().toUpperCase()===color.toUpperCase());
+  });
+  var uds = ots.reduce(function(a,o){ return a+(parseInt(o.cantidad)||0); },0);
+  if(!uds && op.referencias){
+    // OP sin OTs creadas aún: sumar desde referencias (cantidad total pendiente) del color
+    uds = op.referencias.reduce(function(a,r){
+      return a + Object.keys(r.cantidades||{}).reduce(function(b,k){
+        if(color!=='—' && k.indexOf(color+'_')!==0) return b;
+        return b + (parseInt(r.cantidades[k])||0);
+      },0);
+    },0);
+  }
+  return uds;
+}
+function _planCostoColor(op, color){
+  var rec = _planRecetaDeOp(op);
+  if(!rec) return null;
+  var res = calcResumen(rec);
+  var uds = _planColorUds(op, color);
+  return {mat:res.mat*uds, mod:res.mod*uds, cif:res.cif*uds, svc:res.svc*uds, total:res.total*uds, uds:uds, costo_ud:res.total};
+}
+// Estado efectivo del sub-grupo (op,color) — mismo criterio que el Kanban de OPs
+function _planEstadoColor(op, color){
+  var otsColor = (DB.ots||[]).filter(function(o){
+    return o.op_id===op.id && (color==='—' || (o.color||'').trim().toUpperCase()===color.toUpperCase());
+  });
+  return _estadoEfectivo(_getSubgEstado(op.id, color), _subgEstadoDerivado(otsColor), otsColor);
+}
+
 function _planRecetaDeOp(op){
   var recetas = DB.costeo && DB.costeo.recetas ? DB.costeo.recetas : [];
   if(!recetas.length || !op.nombre_producto) return null;
@@ -2654,30 +2694,29 @@ function _planCostoOp(op){
   var uds = _planOpUds(op);
   return {mat:res.mat*uds, mod:res.mod*uds, cif:res.cif*uds, svc:res.svc*uds, total:res.total*uds, uds:uds, costo_ud:res.total};
 }
-function _planMiniCard(op){
-  var uds = _planOpUds(op);
+function _planMiniCard(op, color){
+  var uds = _planColorUds(op, color);
   var baseId = fmtOpId(op.id);
-  var colores = op.colores && op.colores.length ? op.colores : [];
+  var key = _planKey(op.id, color);
   var inMes = null;
   if(DB.planeacion && DB.planeacion.meses){
     Object.keys(DB.planeacion.meses).forEach(function(m){
-      if((DB.planeacion.meses[m]||[]).indexOf(op.id)>=0) inMes = m;
+      if((DB.planeacion.meses[m]||[]).indexOf(key)>=0) inMes = m;
     });
   }
-  var costo = _planCostoOp(op);
+  var costo = _planCostoColor(op, color);
   var _canPl = _canEditPlan();
-  var _refTxt = ((op.nombre_producto||'')+' '+op.id).toUpperCase();
-  var h = '<div data-plan-op="'+op.id+'" data-plan-ref="'+esc(_refTxt)+'" '+(_canPl?'draggable="true" ondragstart="planDragStart(event,\''+op.id+'\')" ondragend="planDragEnd()"':'')+' onclick="verDetalleOP(\''+op.id+'\')" style="background:#1c1c1e;border:1px solid #2c2c2e;border-radius:9px;padding:10px 12px;cursor:pointer;width:100%;box-sizing:border-box;user-select:none;transition:opacity .15s,transform .15s,border-color .15s,box-shadow .15s;position:relative;">';
+  var _refTxt = ((op.nombre_producto||'')+' '+op.id+' '+color).toUpperCase();
+  var h = '<div data-plan-op="'+esc(key)+'" data-plan-ref="'+esc(_refTxt)+'" '+(_canPl?'draggable="true" ondragstart="planDragStart(event,\''+esc(key)+'\')" ondragend="planDragEnd()"':'')+' onclick="verDetalleOP(\''+op.id+'\')" style="background:#1c1c1e;border:1px solid #2c2c2e;border-radius:9px;padding:10px 12px;cursor:pointer;width:100%;box-sizing:border-box;user-select:none;transition:opacity .15s,transform .15s,border-color .15s,box-shadow .15s;position:relative;">';
   h += '<div style="display:flex;align-items:center;gap:4px;margin-bottom:4px;">';
   h += '<span style="font-size:11px;font-weight:800;color:#0a84ff;flex:1;min-width:0;">'+esc(baseId)+'</span>';
   h += '<span style="font-size:8px;font-weight:700;background:rgba(148,163,184,.1);border:1px solid #2c2c2e;border-radius:4px;color:#64748b;padding:1px 5px;text-transform:uppercase;flex-shrink:0;">'+esc((op.categoria||'').substring(0,5))+'</span>';
-  if(inMes && _canPl) h += '<button data-opid="'+op.id+'" onclick="event.stopPropagation();_planAsignar(this.dataset.opid,null)" title="Quitar" style="background:none;border:none;color:#475569;font-size:12px;cursor:pointer;padding:0;line-height:1;flex-shrink:0;">✕</button>';
+  if(inMes && _canPl) h += '<button data-opid="'+esc(key)+'" onclick="event.stopPropagation();_planAsignar(this.dataset.opid,null)" title="Quitar" style="background:none;border:none;color:#475569;font-size:12px;cursor:pointer;padding:0;line-height:1;flex-shrink:0;">✕</button>';
   h += '</div>';
   h += '<div style="font-size:11px;font-weight:700;color:#cbd5e1;line-height:1.3;margin-bottom:5px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;" title="'+esc(op.nombre_producto||'')+'">'+esc(op.nombre_producto||'Sin nombre')+'</div>';
-  if(colores.length){
+  if(color && color!=='—'){
     h += '<div style="display:flex;flex-wrap:wrap;gap:2px;margin-bottom:5px;">';
-    colores.slice(0,3).forEach(function(c){ h += '<span style="font-size:8px;background:rgba(148,163,184,.07);border:1px solid #2c2c2e;border-radius:3px;color:#94a3b8;padding:1px 4px;text-transform:uppercase;white-space:nowrap;overflow:hidden;max-width:60px;text-overflow:ellipsis;">'+esc(c)+'</span>'; });
-    if(colores.length>3) h += '<span style="font-size:8px;color:#475569;">+'+(colores.length-3)+'</span>';
+    h += '<span style="font-size:8px;font-weight:700;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);border-radius:3px;color:#0a84ff;padding:1px 5px;text-transform:uppercase;white-space:nowrap;">'+esc(color)+'</span>';
     h += '</div>';
   }
   // Desglose de costos si hay receta
@@ -2778,25 +2817,52 @@ function renderPlaneacion(){
   ];
   if(!DB.planeacion) DB.planeacion = {meses:{}};
   var meses = DB.planeacion.meses||{};
-  // Solo OPs con al menos un sub-grupo en las dos primeras columnas
+  // Unidad de planeación = (OP, color). Solo entran los colores que aún NO se han cortado
+  // (POR_REVISAR / PENDIENTE_CORTAR) — un color que ya avanzó a corte, confección, alistamiento
+  // o pago desaparece automáticamente de la planeación (ya es producto en proceso/disponible).
   var PLAN_ESTADOS = ['POR_REVISAR','PENDIENTE_CORTAR'];
-  var allOps = (DB.ops||[]).filter(function(op){
-    if(op.estado_op==='ARCHIVADO') return false;
+  var planUnits = []; // {op, color, key}
+  var planUnitsByKey = {};
+  (DB.ops||[]).forEach(function(op){
+    if(op.estado_op==='ARCHIVADO' || op.estado_op==='PAGO_PENDIENTE') return;
     var colores = (op.colores&&op.colores.length) ? op.colores : ['—'];
-    return colores.some(function(color){
-      var otsColor = (DB.ots||[]).filter(function(o){
-        return o.op_id===op.id && (color==='—' || (o.color||'').toUpperCase()===color.toUpperCase());
-      });
-      var override = _getSubgEstado(op.id, color);
-      var estado = _estadoEfectivo(override, _subgEstadoDerivado(otsColor), otsColor);
-      return PLAN_ESTADOS.indexOf(estado)>=0;
+    colores.forEach(function(color){
+      var estado = _planEstadoColor(op, color);
+      if(PLAN_ESTADOS.indexOf(estado)<0) return;
+      var key = _planKey(op.id, color);
+      var unit = {op:op, color:color, key:key};
+      planUnits.push(unit);
+      planUnitsByKey[key] = unit;
     });
   });
 
-  // IDs asignados a algún mes
+  // ── Migración silenciosa de asignaciones antiguas (guardadas como opId sin color) ──
+  // Si una OP entera fue asignada a un mes antes de este cambio, se expande a sus
+  // colores todavía pendientes; los colores ya cortados/entregados se descartan solos.
+  var _planMigrado = false;
+  MESES.forEach(function(m){
+    var arr = meses[m.k]||[];
+    var nuevo = [];
+    arr.forEach(function(id){
+      if(String(id).indexOf('||')>=0){ nuevo.push(id); return; } // ya es key compuesta
+      _planMigrado = true;
+      var pendientesDeEsaOP = planUnits.filter(function(u){ return u.op.id===id; });
+      pendientesDeEsaOP.forEach(function(u){ if(nuevo.indexOf(u.key)<0) nuevo.push(u.key); });
+    });
+    if(nuevo.length !== arr.length || nuevo.some(function(v,i){ return v!==arr[i]; })) meses[m.k] = nuevo;
+  });
+  if(_planMigrado){
+    DB.planeacion.meses = meses;
+    guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}});
+  }
+
+  // Keys asignadas a algún mes
   var assignedSet = {};
-  MESES.forEach(function(m){ (meses[m.k]||[]).forEach(function(id){ assignedSet[id]=m.k; }); });
-  var poolOps = allOps.filter(function(op){ return !assignedSet[op.id]; });
+  MESES.forEach(function(m){ (meses[m.k]||[]).forEach(function(key){ assignedSet[key]=m.k; }); });
+  var poolUnits = planUnits.filter(function(u){ return !assignedSet[u.key]; });
+  // Compat: código legado más abajo usa "allOps"/"poolOps" a nivel OP (conteos, costeo global, etc.)
+  var allOps = planUnits.map(function(u){ return u.op; }).filter(function(op,i,arr){ return arr.indexOf(op)===i; });
+  var poolOps = poolUnits;
 
   var h = '<style>.plan-dz{border:2px dashed transparent;border-radius:10px;transition:background .15s,border-color .15s;}</style>';
   h += '<div style="padding:16px 20px;height:100%;overflow-y:auto;box-sizing:border-box;">';
@@ -2810,14 +2876,14 @@ function renderPlaneacion(){
   }
 
   // ── Header ──────────────────────────────────────────────────────────────────
-  var totalAsig = allOps.length - poolOps.length;
-  var totalUdsAll = allOps.reduce(function(a,op){ return a+_planOpUds(op); },0);
+  var totalAsig = planUnits.length - poolUnits.length;
+  var totalUdsAll = planUnits.reduce(function(a,u){ return a+_planColorUds(u.op,u.color); },0);
   h += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap;">';
   h += '<div style="font-size:20px;font-weight:800;color:#e2e8f0;letter-spacing:.3px;">📅 Planeación de Producción</div>';
   h += '<div style="display:flex;gap:10px;margin-left:auto;flex-wrap:wrap;">';
-  h += '<span style="font-size:11px;background:rgba(10,132,255,.08);border:1px solid rgba(10,132,255,.2);border-radius:8px;color:#0a84ff;padding:4px 10px;font-weight:700;">'+allOps.length+' OPs activas</span>';
-  h += '<span style="font-size:11px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:8px;color:#34d399;padding:4px 10px;font-weight:700;">'+totalAsig+' asignadas</span>';
-  h += '<span style="font-size:11px;background:rgba(148,163,184,.08);border:1px solid #2c2c2e;border-radius:8px;color:#64748b;padding:4px 10px;font-weight:700;">'+poolOps.length+' sin asignar</span>';
+  h += '<span style="font-size:11px;background:rgba(10,132,255,.08);border:1px solid rgba(10,132,255,.2);border-radius:8px;color:#0a84ff;padding:4px 10px;font-weight:700;">'+allOps.length+' OPs activas · '+planUnits.length+' colores pendientes</span>';
+  h += '<span style="font-size:11px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:8px;color:#34d399;padding:4px 10px;font-weight:700;">'+totalAsig+' asignados</span>';
+  h += '<span style="font-size:11px;background:rgba(148,163,184,.08);border:1px solid #2c2c2e;border-radius:8px;color:#64748b;padding:4px 10px;font-weight:700;">'+poolUnits.length+' sin asignar</span>';
   h += '</div></div>';
 
   // ── Panel: Diseños en planificación ─────────────────────────────────────────
@@ -3034,12 +3100,12 @@ function renderPlaneacion(){
   // ── Tarjeta resumen global ───────────────────────────────────────────────────
   var globalMat=0,globalMod=0,globalCif=0,globalSvc=0,globalTotal=0,globalUds=0,globalOps=0;
   MESES.forEach(function(mes){
-    var opIds2 = (DB.planeacion.meses||{})[mes.k]||[];
-    var mesOps2 = opIds2.map(function(id){ return allOps.find(function(o){ return o.id===id; }); }).filter(Boolean);
-    mesOps2.forEach(function(op){
-      globalUds += _planOpUds(op);
+    var keys2 = (DB.planeacion.meses||{})[mes.k]||[];
+    var mesUnits2 = keys2.map(function(key){ return planUnitsByKey[key]; }).filter(Boolean);
+    mesUnits2.forEach(function(u){
+      globalUds += _planColorUds(u.op, u.color);
       globalOps++;
-      var c2 = _planCostoOp(op);
+      var c2 = _planCostoColor(u.op, u.color);
       if(c2){ globalMat+=c2.mat; globalMod+=c2.mod; globalCif+=c2.cif; globalSvc+=c2.svc; globalTotal+=c2.total; }
     });
   });
@@ -3064,7 +3130,7 @@ function renderPlaneacion(){
   h += '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">';
   h += '<div>';
   h += '<div style="font-size:13px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.8px;">Resumen Total Planeado</div>';
-  h += '<div style="font-size:11px;color:#475569;margin-top:2px;">'+globalOps+' OPs programadas';
+  h += '<div style="font-size:11px;color:#475569;margin-top:2px;">'+globalOps+' color'+(globalOps!==1?'es':'')+' programados';
   if(globalDisCount>0) h += ' <span style="color:#34d399;">· '+globalDisCount+' diseños planificados</span>';
   h += '</div>';
   h += '</div>';
@@ -3125,14 +3191,14 @@ function renderPlaneacion(){
   // Breakdown por categoría — ordenado de mayor a menor uds (OPs + diseños planificados)
   var catMap = {};
   MESES.forEach(function(mes){
-    var opIds3 = (DB.planeacion.meses||{})[mes.k]||[];
-    opIds3.forEach(function(id){
-      var op = allOps.find(function(o){ return o.id===id; });
-      if(!op) return;
-      var cat = (op.categoria||'Sin categoría').trim().toUpperCase();
+    var keys3 = (DB.planeacion.meses||{})[mes.k]||[];
+    keys3.forEach(function(key){
+      var u = planUnitsByKey[key];
+      if(!u) return;
+      var cat = (u.op.categoria||'Sin categoría').trim().toUpperCase();
       if(!catMap[cat]) catMap[cat] = {refs:[], uds:0, disUds:0};
-      catMap[cat].refs.push(op);
-      catMap[cat].uds += _planOpUds(op);
+      catMap[cat].refs.push(u);
+      catMap[cat].uds += _planColorUds(u.op, u.color);
     });
   });
   // Sumar diseños planificados al catMap por categoría
@@ -3171,12 +3237,12 @@ function renderPlaneacion(){
 
   // ── Pool ─────────────────────────────────────────────────────────────────────
   h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:12px;padding:12px 14px;margin-bottom:20px;">';
-  h += '<div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">📦 Sin Asignar · '+poolOps.length+' OPs</div>';
+  h += '<div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">📦 Sin Asignar · '+poolUnits.length+' colores</div>';
   h += '<div data-plan-dz="pool" class="plan-dz" ondragover="planDragOver(event,null)" ondrop="planDrop(event,null)" style="min-height:72px;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;">';
-  if(!poolOps.length){
-    h += '<div style="color:#2c2c2e;font-size:12px;padding:18px 0;width:100%;text-align:center;">✓ Todas las OPs están asignadas a un mes</div>';
+  if(!poolUnits.length){
+    h += '<div style="color:#2c2c2e;font-size:12px;padding:18px 0;width:100%;text-align:center;">✓ Todos los colores pendientes están asignados a un mes</div>';
   } else {
-    poolOps.forEach(function(op){ h += _planMiniCard(op); });
+    poolUnits.forEach(function(u){ h += _planMiniCard(u.op, u.color); });
   }
   h += '</div></div>';
 
@@ -3199,8 +3265,9 @@ function renderPlaneacion(){
   var disenosActivos2 = (DB.disenos||[]).filter(function(d){ return !d.eliminado && d.kanban_estado !== 'LISTA_PRODUCCION'; });
 
   MESES.forEach(function(mes){
-    var opIds = meses[mes.k]||[];
-    var mesOps = opIds.map(function(id){ return allOps.find(function(o){ return o.id===id; }); }).filter(Boolean);
+    var mesKeys = meses[mes.k]||[];
+    var mesUnits = mesKeys.map(function(key){ return planUnitsByKey[key]; }).filter(Boolean);
+    var mesOps = mesUnits.map(function(u){ return u.op; }); // compat: OPs (con repetición si varios colores del mismo mes)
 
     // Diseños asignados a este mes con cantidad > 0
     var mesDisenos = disenosActivos2.filter(function(d){
@@ -3211,12 +3278,13 @@ function renderPlaneacion(){
     var totalUds = 0;
     var catMap = {};
     var costoMes = {mat:0, mod:0, cif:0, svc:0, total:0};
-    mesOps.forEach(function(op){
-      var u = _planOpUds(op);
-      totalUds += u;
+    mesUnits.forEach(function(u){
+      var op = u.op;
+      var uds = _planColorUds(op, u.color);
+      totalUds += uds;
       var cat = op.categoria||'Otros';
-      catMap[cat] = (catMap[cat]||0) + u;
-      var c = _planCostoOp(op);
+      catMap[cat] = (catMap[cat]||0) + uds;
+      var c = _planCostoColor(op, u.color);
       if(c){ costoMes.mat+=c.mat; costoMes.mod+=c.mod; costoMes.cif+=c.cif; costoMes.svc+=c.svc; costoMes.total+=c.total; }
     });
 
@@ -3254,7 +3322,7 @@ function renderPlaneacion(){
     h += '</div>';
     // Subtítulo: OPs + diseños
     h += '<div style="font-size:10px;color:#64748b;margin-top:2px;">';
-    h += mesOps.length+' OP'+(mesOps.length!==1?'s':'');
+    h += mesUnits.length+' color'+(mesUnits.length!==1?'es':'');
     if(totalUds) h += ' · '+totalUds+' uds OPs';
     if(mesDisenos.length){
       var fenioCount = mesDisenos.filter(function(d){ return (d.proveedor||'').toUpperCase()==='FENIO'; }).length;
@@ -3318,12 +3386,12 @@ function renderPlaneacion(){
 
     // Drop zone con OPs + tarjetas de diseño al final
     h += '<div data-plan-dz="'+mes.k+'" class="plan-dz" ondragover="planDragOver(event,\''+mes.k+'\')" ondrop="planDrop(event,\''+mes.k+'\')" style="flex:1;overflow-y:auto;min-height:100px;padding:8px;display:grid;grid-template-columns:repeat(2,1fr);gap:6px;align-content:flex-start;-webkit-overflow-scrolling:touch;">';
-    if(!mesOps.length && !mesDisenos.length){
+    if(!mesUnits.length && !mesDisenos.length){
       h += '<div style="color:#2c2c2e;font-size:11px;grid-column:1/-1;text-align:center;padding:16px 0;pointer-events:none;">Arrastra OPs aquí</div>';
     } else {
-      mesOps.forEach(function(op){ h += _planMiniCard(op); });
+      mesUnits.forEach(function(u){ h += _planMiniCard(u.op, u.color); });
       // Separador entre OPs y diseños
-      if(mesOps.length > 0 && mesDisenos.length > 0){
+      if(mesUnits.length > 0 && mesDisenos.length > 0){
         h += '<div style="grid-column:1/-1;border-top:1px dashed rgba(52,211,153,.2);margin:4px 0;display:flex;align-items:center;gap:6px;">';
         h += '<span style="font-size:9px;color:#34d399;font-weight:700;white-space:nowrap;">🎨 Diseños planificados</span>';
         h += '</div>';
