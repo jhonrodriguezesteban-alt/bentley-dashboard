@@ -3511,15 +3511,30 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1785544382452_gbmf5",
-      "ts": 1785544382452,
-      "user": "John Rodriguez",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-0039",
-      "nombre": "BOTA ANCHA KENIA",
       "categoria": "PANTALONES",
       "colores": 2,
-      "refs": 1
+      "id": "evt_1785544382452_gbmf5",
+      "nombre": "BOTA ANCHA KENIA",
+      "op_id": "OP-0039",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1785544382452,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785546157601_x8mn9",
+      "ts": 1785546157601,
+      "user": "John Rodriguez",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-106",
+      "op_nombre": "VESTIDO NAPOLES",
+      "categoria": "VESTIDOS",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-07-31",
+      "total_uds": 174,
+      "referencias": [
+        "VESTIDO NAPOLES"
+      ]
     }
   ]
 }
