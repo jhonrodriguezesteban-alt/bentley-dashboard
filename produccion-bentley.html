@@ -6215,7 +6215,7 @@ function modalEditarOP(opId){
   // Pre-rellenar _opRefs desde op.referencias o desde campos planos
   if(op.referencias && op.referencias.length){
     _opRefs = op.referencias.map(function(r){
-      return {rid:uid(), nombre:r.nombre||'', ref:r.ref||'', cat:r.cat||'', vmo:r.vmo||1151, colores:(r.colores||[]).slice(), tallas:(r.tallas||[]).slice(), cantidades:Object.assign({},r.cantidades||{})};
+      return {rid:uid(), nombre:r.nombre||'', ref:r.ref||'', cat:r.cat||'', vmo:r.vmo||1151, colores:(r.colores||[]).slice(), tallas:(r.tallas||[]).slice(), cantidades:Object.assign({},r.cantidades||{}), maquilador_id:r.maquilador_id||''};
     });
   } else {
     _opRefsInit();
@@ -6282,12 +6282,13 @@ async function guardarEdicionOPRefs(opId){
     var nombre = ((document.getElementById('ref-nom-'+r.rid)||{}).value||'').trim().toUpperCase() || r.nombre;
     var ref    = ((document.getElementById('ref-ref-'+r.rid)||{}).value||'').trim() || r.ref;
     var vmo    = parseInt((document.getElementById('ref-vmo-'+r.rid)||{}).value)||r.vmo||0;
+    var maquiladorId = ((document.getElementById('ref-esmaquila-'+r.rid)||{}).checked) ? ((document.getElementById('ref-maquila-'+r.rid)||{}).value||'') : '';
     var tallas = Array.from(document.querySelectorAll('.ref-talla-'+r.rid+':checked')).map(function(c){ return c.value; });
     var cantidades = {};
     document.querySelectorAll('.opref-qty-inp[data-rid="'+r.rid+'"]').forEach(function(inp){
       var v=parseInt(inp.value)||0; if(v>0) cantidades[inp.dataset.color+'_'+inp.dataset.talla]=v;
     });
-    return {nombre:nombre, ref:ref, cat:cat, vmo:vmo, colores:r.colores.slice(), tallas:tallas, cantidades:cantidades};
+    return {nombre:nombre, ref:ref, cat:cat, vmo:vmo, colores:r.colores.slice(), tallas:tallas, cantidades:cantidades, maquilador_id:maquiladorId};
   });
   for(var i=0;i<refs.length;i++){
     var r=refs[i];
@@ -6322,7 +6323,7 @@ async function guardarEdicionOPRefs(opId){
             id:uid(), numero_ot:++otNumMax, op_id:opId,
             categoria:ref.cat, nombre:ref.nombre, referencia:(ref.ref||'')+talla,
             color:color, talla:talla, cantidad:qty, valor_mo:ref.vmo||0,
-            fecha_ot:op.fecha_op||hoy(), satelite_id:null,
+            fecha_ot:op.fecha_op||hoy(), satelite_id:ref.maquilador_id||null,
             fecha_entrega_corte_satelite:null, fecha_estimada_entrega:null,
             fecha_entrega_real:null, unidades_entregadas:0, unidades_novedad:0,
             estado:'POR_REVISAR', nt_corte_satelite:null, nt_ingreso_planta:null,
@@ -6536,6 +6537,7 @@ async function crearOP(){
     var nombre = ((document.getElementById('ref-nom-'+r.rid)||{}).value||'').trim().toUpperCase() || r.nombre;
     var ref    = ((document.getElementById('ref-ref-'+r.rid)||{}).value||'').trim() || r.ref;
     var vmo    = parseInt((document.getElementById('ref-vmo-'+r.rid)||{}).value)||r.vmo||0;
+    var maquiladorId = ((document.getElementById('ref-esmaquila-'+r.rid)||{}).checked) ? ((document.getElementById('ref-maquila-'+r.rid)||{}).value||'') : '';
     var tallas = Array.from(document.querySelectorAll('.ref-talla-'+r.rid+':checked')).map(function(c){ return c.value; });
     var cantidades = {};
     var totalUds = 0;
@@ -6543,7 +6545,7 @@ async function crearOP(){
       var v = parseInt(inp.value)||0;
       if(v>0){ cantidades[inp.dataset.color+'_'+inp.dataset.talla]=v; totalUds+=v; }
     });
-    return {nombre:nombre, ref:ref, cat:cat, vmo:vmo, colores:r.colores.slice(), tallas:tallas, cantidades:cantidades, totalUds:totalUds};
+    return {nombre:nombre, ref:ref, cat:cat, vmo:vmo, colores:r.colores.slice(), tallas:tallas, cantidades:cantidades, totalUds:totalUds, maquilador_id:maquiladorId};
   });
 
   // Validar cada referencia
@@ -6624,7 +6626,7 @@ async function crearOP(){
 
 // ─── Multi-referencia: estado y helpers ─────────────────────────────────────
 var _opRefs = [];
-function _opRefNew(){ return {rid:uid(), nombre:'', ref:'', cat:'', vmo:1151, colores:[], tallas:TALLAS_DEFAULT.slice(), cantidades:{}}; }
+function _opRefNew(){ return {rid:uid(), nombre:'', ref:'', cat:'', vmo:1151, colores:[], tallas:TALLAS_DEFAULT.slice(), cantidades:{}, maquilador_id:''}; }
 function _opRefsInit(){ _opRefs = [_opRefNew()]; }
 
 function _buildRefBlock(r, idx, total){
@@ -6643,6 +6645,14 @@ function _buildRefBlock(r, idx, total){
   h += '<div class="form-row op-form-row-mob">';
   h += '<div class="form-group"><label class="form-label">Ref. base (código)</label><input class="form-control" id="ref-ref-'+r.rid+'" value="'+esc(r.ref||'')+'" readonly style="background:rgba(255,255,255,.04);color:var(--dim);"></div>';
   h += '<div class="form-group"><label class="form-label">Valor M.O./unidad (COP)</label><input class="form-control" type="number" id="ref-vmo-'+r.rid+'" value="'+(r.vmo||1151)+'" oninput="opRefPreviewUpdate()"></div>';
+  h += '</div>';
+  var _maquilaSatsForm = (DB.satelites||[]).filter(function(s){ return s.tipo==='maquila'; });
+  h += '<div class="form-group"><label class="form-label" style="display:flex;align-items:center;gap:6px;"><input type="checkbox" id="ref-esmaquila-'+r.rid+'" '+(r.maquilador_id?'checked':'')+' onchange="opRefToggleMaquila(\''+r.rid+'\')"> 🏭 Es maquilador externo</label>';
+  h += '<select class="form-control" id="ref-maquila-'+r.rid+'" style="'+(r.maquilador_id?'':'display:none;')+'margin-top:6px;">';
+  h += '<option value="">Seleccionar maquilador...</option>';
+  _maquilaSatsForm.forEach(function(s){ h += '<option value="'+s.id+'"'+(r.maquilador_id===s.id?' selected':'')+'>'+esc(s.nombre)+'</option>'; });
+  h += '</select>';
+  if(!_maquilaSatsForm.length) h += '<div style="font-size:11px;color:#64748b;margin-top:4px;">No hay maquiladores registrados aún — créalos desde Satélites → + (marca el tipo "Maquilador externo").</div>';
   h += '</div>';
   h += '<div class="form-group"><label class="form-label">Colores * <button type="button" class="btn btn-ghost btn-sm" data-rid="'+r.rid+'" onclick="opRefColorAdd(this.dataset.rid)" style="margin-left:8px;">+ Color manual</button></label>';
   h += '<div id="ref-col-list-'+r.rid+'" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;min-height:32px;">';
@@ -6785,6 +6795,14 @@ function opRefSelCatalogo(el){
 
 function opRefOcultarSug(rid){ var b=document.getElementById('ref-sug-'+rid); if(b) b.style.display='none'; }
 
+function opRefToggleMaquila(rid){
+  var ck = document.getElementById('ref-esmaquila-'+rid);
+  var sel = document.getElementById('ref-maquila-'+rid);
+  if(!ck || !sel) return;
+  sel.style.display = ck.checked ? '' : 'none';
+  if(!ck.checked) sel.value = '';
+}
+
 function opRefColorAdd(rid){
   var r=_opRefs.find(function(x){ return x.rid===rid; }); if(!r) return;
   var inp=document.getElementById('ref-col-inp-'+rid);
@@ -6863,7 +6881,7 @@ async function generarOTsParaOP(opId){
     (ref.colores||[]).forEach(function(col){
       (ref.tallas||[]).forEach(function(talla){
         var qty=(ref.cantidades||{})[col+'_'+talla]; if(!qty) return;
-        newOTs.push({id:uid(), numero_ot:otNum++, op_id:opId, categoria:ref.cat, nombre:ref.nombre, referencia:(ref.ref||'')+talla, color:col, talla:talla, cantidad:qty, valor_mo:ref.vmo||0, fecha_ot:op.fecha_op||hoy(), satelite_id:null, fecha_entrega_corte_satelite:null, fecha_estimada_entrega:null, fecha_entrega_real:null, unidades_entregadas:0, unidades_novedad:0, estado:'CORTE_POR_ALISTAR', nt_corte_satelite:null, nt_ingreso_planta:null, op_effi:null, cumplió_fecha:null, motivo_incumplimiento:'', notas:'', historial:[], created_at:hoy(), created_by:getUser()});
+        newOTs.push({id:uid(), numero_ot:otNum++, op_id:opId, categoria:ref.cat, nombre:ref.nombre, referencia:(ref.ref||'')+talla, color:col, talla:talla, cantidad:qty, valor_mo:ref.vmo||0, fecha_ot:op.fecha_op||hoy(), satelite_id:ref.maquilador_id||null, fecha_entrega_corte_satelite:null, fecha_estimada_entrega:null, fecha_entrega_real:null, unidades_entregadas:0, unidades_novedad:0, estado:'CORTE_POR_ALISTAR', nt_corte_satelite:null, nt_ingreso_planta:null, op_effi:null, cumplió_fecha:null, motivo_incumplimiento:'', notas:'', historial:[], created_at:hoy(), created_by:getUser()});
       });
     });
   });
@@ -6899,7 +6917,7 @@ async function generarOTsParaColor(opId, color){
     if((ref.colores||[]).indexOf(color)<0) return;
     (ref.tallas||[]).forEach(function(talla){
       var qty=(ref.cantidades||{})[color+'_'+talla]; if(!qty) return;
-      newOTs.push({id:uid(), numero_ot:otNum++, op_id:opId, categoria:ref.cat, nombre:ref.nombre, referencia:(ref.ref||'')+talla, color:color, talla:talla, cantidad:qty, valor_mo:ref.vmo||0, fecha_ot:op.fecha_op||hoy(), satelite_id:null, fecha_entrega_corte_satelite:null, fecha_estimada_entrega:null, fecha_entrega_real:null, unidades_entregadas:0, unidades_novedad:0, estado:'CORTE_POR_ALISTAR', nt_corte_satelite:null, nt_ingreso_planta:null, op_effi:null, cumplió_fecha:null, motivo_incumplimiento:'', notas:'', historial:[], created_at:hoy(), created_by:getUser()});
+      newOTs.push({id:uid(), numero_ot:otNum++, op_id:opId, categoria:ref.cat, nombre:ref.nombre, referencia:(ref.ref||'')+talla, color:color, talla:talla, cantidad:qty, valor_mo:ref.vmo||0, fecha_ot:op.fecha_op||hoy(), satelite_id:ref.maquilador_id||null, fecha_entrega_corte_satelite:null, fecha_estimada_entrega:null, fecha_entrega_real:null, unidades_entregadas:0, unidades_novedad:0, estado:'CORTE_POR_ALISTAR', nt_corte_satelite:null, nt_ingreso_planta:null, op_effi:null, cumplió_fecha:null, motivo_incumplimiento:'', notas:'', historial:[], created_at:hoy(), created_by:getUser()});
     });
   });
   if(!newOTs.length){ toast('No hay cantidades definidas para '+color+' en esta OP','error'); return; }
