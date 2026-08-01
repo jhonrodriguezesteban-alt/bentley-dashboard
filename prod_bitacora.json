@@ -3670,20 +3670,36 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "AVENA",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1785593972929_tor9r",
-      "ts": 1785593972929,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-097",
       "op_nombre": "CAMISON BERLIN",
       "referencia": "CAMISON BERLIN",
-      "color": "AVENA",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1785593972929,
       "uds": 48,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785595285739_4hdih",
+      "ts": 1785595285739,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-077",
+      "op_nombre": "TORERO PILI",
+      "referencia": "TORERO PILI",
+      "color": "MARFIL",
+      "talla": "todas las tallas",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": true,
+      "uds": 112,
+      "motivo": "ENTREGADO"
     }
   ]
 }
