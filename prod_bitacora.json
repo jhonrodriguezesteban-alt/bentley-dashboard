@@ -3702,19 +3702,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "AZUL OSCURO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1785595347036_lc99a",
+      "motivo": "ENTREGADO",
+      "op_id": "OP-2026-088",
+      "op_nombre": "CHAQUETA BURBUJAS",
+      "referencia": "CHAQUETA BURBUJAS",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1785595347036,
+      "uds": 84,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785595361944_j6c5a",
+      "ts": 1785595361944,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-088",
       "op_nombre": "CHAQUETA BURBUJAS",
       "referencia": "CHAQUETA BURBUJAS",
-      "color": "AZUL OSCURO",
-      "talla": "todas las tallas",
+      "color": "ROJO",
+      "talla": "T4",
       "estado_anterior": "ENTREGADO",
       "estado_nuevo": "ENTREGADO",
-      "bulk": true,
-      "uds": 84,
+      "bulk": false,
+      "uds": 12,
       "motivo": "ENTREGADO"
     }
   ]
