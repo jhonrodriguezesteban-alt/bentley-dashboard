@@ -3434,15 +3434,30 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1785543600430_yjyvc",
-      "ts": 1785543600430,
-      "user": "John Rodriguez",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-086",
-      "nombre": "PANTALON CHICAGO",
       "categoria": "PANTALONES",
       "colores": 5,
-      "refs": 1
+      "id": "evt_1785543600430_yjyvc",
+      "nombre": "PANTALON CHICAGO",
+      "op_id": "OP-2026-086",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1785543600430,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785543850832_454hz",
+      "ts": 1785543850832,
+      "user": "John Rodriguez",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-105",
+      "op_nombre": "PANTALON ARIEL",
+      "categoria": "PANTALONES",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-07-31",
+      "total_uds": 232,
+      "referencias": [
+        "PANTALON ARIEL"
+      ]
     }
   ]
 }
