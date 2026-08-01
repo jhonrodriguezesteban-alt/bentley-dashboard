@@ -70685,7 +70685,7 @@
       "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "POR_REVISAR",
+      "estado": "EN_CONFECCION",
       "nt_corte_satelite": null,
       "nt_ingreso_planta": null,
       "op_effi": null,
@@ -70696,6 +70696,11 @@
         {
           "fecha": "2026-08-01T15:30:32.392Z",
           "accion": "Taller asignado: ISABEL PARRA",
+          "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-08-01T15:30:49.696Z",
+          "accion": "Estado cambiado: POR_REVISAR → EN_CONFECCION. Motivo: EN TALLER",
           "user": "Jefa de Producción"
         }
       ],
