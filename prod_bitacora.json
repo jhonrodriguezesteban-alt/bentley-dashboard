@@ -3654,19 +3654,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": false,
+      "color": "AVENA",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1785593960798_vpxfj",
+      "motivo": "EN TALLER",
+      "op_id": "OP-2026-097",
+      "op_nombre": "CAMISON BERLIN",
+      "referencia": "CAMISON BERLIN",
+      "talla": "T10",
+      "tipo": "estado_ot",
       "ts": 1785593960798,
+      "uds": 16,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785593972929_tor9r",
+      "ts": 1785593972929,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-097",
       "op_nombre": "CAMISON BERLIN",
       "referencia": "CAMISON BERLIN",
       "color": "AVENA",
-      "talla": "T10",
+      "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
-      "bulk": false,
-      "uds": 16,
+      "bulk": true,
+      "uds": 48,
       "motivo": "EN TALLER"
     }
   ]
