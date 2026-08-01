@@ -4072,24 +4072,38 @@ function kpiCard(label, val, colorClass, sub){
 // ═══════════════════════════════════════════════════════════════════════════════
 // SATÉLITES
 // ═══════════════════════════════════════════════════════════════════════════════
-function renderSatelites(){
-  var activos = DB.satelites.filter(function(s){ return s.activo; });
-  var inactivos = DB.satelites.filter(function(s){ return !s.activo; });
-  var all = activos.concat(inactivos);
-  var h = '<div class="section-title">Satélites <span>' + activos.length + ' activos</span></div>';
-  h += '<div class="sat-grid" id="sat-grid">';
-  all.forEach(function(sat){
-    var enConf = DB.ots.filter(function(o){ return o.satelite_id===sat.id && o.estado==='EN_CONFECCION'; }).reduce(function(a,o){ return a+(o.cantidad||0); },0);
-    var total = DB.ots.filter(function(o){ return o.satelite_id===sat.id && o.estado==='ENTREGADO'; });
-    var onTime = total.filter(function(o){ return o.cumplió_fecha; }).length;
-    var pct = total.length ? Math.round(onTime/total.length*100) : 0;
-    var lastDel = total.sort(function(a,b){ return (b.fecha_entrega_real||'').localeCompare(a.fecha_entrega_real||''); })[0];
-    h += '<div class="sat-card ' + (sat.activo?'':'inactive') + '" onclick="abrirSat(\'' + sat.id + '\')" title="Ver detalle">';
-    h += '<div class="sat-name"><div class="sat-dot ' + (sat.activo?'on':'off') + '"></div>' + sat.nombre + (sat.tipo==='maquila'?' <span style="font-size:9px;font-weight:800;background:rgba(251,146,60,.15);border:1px solid rgba(251,146,60,.4);color:#fb923c;border-radius:4px;padding:1px 5px;vertical-align:middle;">🏭 MAQUILA</span>':'') + '</div>';
-    h += '<div style="font-size:11px;color:#475569;margin-top:4px;">' + enConf + ' uds · ' + pct + '% cump.</div>';
-    h += '</div>';
-  });
+function _satCardHtml(sat){
+  var enConf = DB.ots.filter(function(o){ return o.satelite_id===sat.id && o.estado==='EN_CONFECCION'; }).reduce(function(a,o){ return a+(o.cantidad||0); },0);
+  var total = DB.ots.filter(function(o){ return o.satelite_id===sat.id && o.estado==='ENTREGADO'; });
+  var onTime = total.filter(function(o){ return o.cumplió_fecha; }).length;
+  var pct = total.length ? Math.round(onTime/total.length*100) : 0;
+  var h = '<div class="sat-card ' + (sat.activo?'':'inactive') + '" onclick="abrirSat(\'' + sat.id + '\')" title="Ver detalle">';
+  h += '<div class="sat-name"><div class="sat-dot ' + (sat.activo?'on':'off') + '"></div>' + sat.nombre + '</div>';
+  h += '<div style="font-size:11px;color:#475569;margin-top:4px;">' + enConf + ' uds · ' + pct + '% cump.</div>';
   h += '</div>';
+  return h;
+}
+function renderSatelites(){
+  var internos = DB.satelites.filter(function(s){ return s.tipo!=='maquila'; });
+  var maquilas = DB.satelites.filter(function(s){ return s.tipo==='maquila'; });
+  internos.sort(function(a,b){ return (b.activo?1:0)-(a.activo?1:0); });
+  maquilas.sort(function(a,b){ return (b.activo?1:0)-(a.activo?1:0); });
+  var activosTotal = DB.satelites.filter(function(s){ return s.activo; }).length;
+
+  var h = '<div class="section-title">Satélites <span>' + activosTotal + ' activos</span></div>';
+
+  h += '<div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin:4px 0 8px;">🧵 Talleres Internos <span style="color:#334155;">(' + internos.length + ')</span></div>';
+  h += '<div class="sat-grid" id="sat-grid">';
+  internos.forEach(function(sat){ h += _satCardHtml(sat); });
+  h += '</div>';
+
+  if(maquilas.length){
+    h += '<div style="font-size:11px;font-weight:700;color:#fb923c;text-transform:uppercase;letter-spacing:.5px;margin:22px 0 8px;padding-top:14px;border-top:1px solid rgba(251,146,60,.2);">🏭 Maquiladores Externos <span style="color:#7c4a1e;">(' + maquilas.length + ')</span></div>';
+    h += '<div class="sat-grid" id="sat-grid-maquila">';
+    maquilas.forEach(function(sat){ h += _satCardHtml(sat); });
+    h += '</div>';
+  }
+
   h += '<button class="fab" onclick="nuevoSatelite()" title="Nuevo satélite">+</button>';
   return h;
 }
