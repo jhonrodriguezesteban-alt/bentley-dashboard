@@ -70679,7 +70679,7 @@
       "cantidad": 30,
       "valor_mo": 1151,
       "fecha_ot": "2026-08-01",
-      "satelite_id": null,
+      "satelite_id": "sat_06",
       "fecha_entrega_corte_satelite": null,
       "fecha_estimada_entrega": null,
       "fecha_entrega_real": null,
@@ -70692,7 +70692,13 @@
       "cumplió_fecha": null,
       "motivo_incumplimiento": "",
       "notas": "",
-      "historial": [],
+      "historial": [
+        {
+          "fecha": "2026-08-01T15:30:32.392Z",
+          "accion": "Taller asignado: ISABEL PARRA",
+          "user": "Jefa de Producción"
+        }
+      ],
       "created_at": "2026-08-01",
       "created_by": "Jefa de Producción"
     },
