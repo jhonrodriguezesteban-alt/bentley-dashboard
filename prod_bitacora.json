@@ -3734,32 +3734,47 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "ROJO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1785595368434_fslw9",
-      "ts": 1785595368434,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-088",
       "op_nombre": "CHAQUETA BURBUJAS",
       "referencia": "CHAQUETA BURBUJAS",
-      "color": "ROJO",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1785595368434,
       "uds": 84,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1785595496490_yww2n",
-      "ts": 1785595496490,
-      "user": "Jefa de Producción",
-      "tipo": "kanban_color",
-      "op_id": "OP-0054",
-      "op_nombre": "BEISBOLERA 2.0",
       "color": "CAFÉ",
       "estado_anterior": "ARCHIVADO",
       "estado_nuevo": "NOVEDAD",
-      "uds": 84
+      "id": "evt_1785595496490_yww2n",
+      "op_id": "OP-0054",
+      "op_nombre": "BEISBOLERA 2.0",
+      "tipo": "kanban_color",
+      "ts": 1785595496490,
+      "uds": 84,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785598164689_qdm7k",
+      "ts": 1785598164689,
+      "user": "Jefa de Producción",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-107",
+      "op_nombre": "CONJUNTO FRANKY PRINE",
+      "categoria": "CONJUNTOS",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-08-01",
+      "total_uds": 130,
+      "referencias": [
+        "CONJUNTO FRANKY PRINE"
+      ]
     }
   ]
 }
