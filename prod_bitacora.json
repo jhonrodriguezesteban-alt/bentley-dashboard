@@ -3852,20 +3852,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": false,
+      "color": "VINOTINTO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1785598308932_400jo",
-      "ts": 1785598308932,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-107",
       "op_nombre": "CONJUNTO FRANKY PRIME",
       "referencia": "CONJUNTO FRANKY PRIME",
-      "color": "VINOTINTO",
       "talla": "M",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": false,
+      "tipo": "estado_ot",
+      "ts": 1785598308932,
       "uds": 18,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785598987370_6womt",
+      "ts": 1785598987370,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-107",
+      "nombre": "CONJUNTO FRANKY PR",
+      "categoria": "CONJUNTOS",
+      "colores": 5,
+      "refs": 1
     }
   ]
 }
