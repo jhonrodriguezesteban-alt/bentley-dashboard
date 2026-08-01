@@ -21,11 +21,11 @@
       "numero": 1,
       "op_effi": 5200,
       "subg_estados": {
-        "OP-0001||AZUL OSCURO": "ALISTAMIENTO",
-        "OP-0001||FUCSIA": "ALISTAMIENTO",
-        "OP-0001||LILA": "ALISTAMIENTO",
+        "OP-0001||AZUL OSCURO": "PAGO_PENDIENTE",
+        "OP-0001||FUCSIA": "PAGO_PENDIENTE",
+        "OP-0001||LILA": "PAGO_PENDIENTE",
         "OP-0001||NEGRO": "ALISTAMIENTO",
-        "OP-0001||ROSA": "ALISTAMIENTO",
+        "OP-0001||ROSA": "PAGO_PENDIENTE",
         "OP-0001||VERDE MILITAR": "EN_CONFECCION"
       },
       "tallas": [
@@ -114,7 +114,7 @@
       "numero": 4,
       "op_effi": 5210,
       "subg_estados": {
-        "OP-0004||CAMUFLADO AZUL": "ALISTAMIENTO",
+        "OP-0004||CAMUFLADO AZUL": "PAGO_PENDIENTE",
         "OP-0004||CAMUFLADO VERDE": "ALISTAMIENTO"
       },
       "tallas": [
@@ -314,15 +314,15 @@
       "numero": 10,
       "op_effi": 5217,
       "subg_estados": {
-        "OP-0010||ANIMAL PRINT LILA": "ALISTAMIENTO",
-        "OP-0010||ANIMAL PRINT ROSA": "ALISTAMIENTO",
+        "OP-0010||ANIMAL PRINT LILA": "PAGO_PENDIENTE",
+        "OP-0010||ANIMAL PRINT ROSA": "PAGO_PENDIENTE",
         "OP-0010||AZUL BEBE": "CORTE_POR_ALISTAR",
         "OP-0010||AZUL OSCURO": "CORTE_POR_ALISTAR",
         "OP-0010||CAMEL": "CORTE_POR_ALISTAR",
-        "OP-0010||GATOS MARFIL": "ALISTAMIENTO",
-        "OP-0010||LOVER BLANCO": "ALISTAMIENTO",
-        "OP-0010||ROSA CLARO": "ALISTAMIENTO",
-        "OP-0010||ROSADO": "ALISTAMIENTO"
+        "OP-0010||GATOS MARFIL": "PAGO_PENDIENTE",
+        "OP-0010||LOVER BLANCO": "PAGO_PENDIENTE",
+        "OP-0010||ROSA CLARO": "PAGO_PENDIENTE",
+        "OP-0010||ROSADO": "PAGO_PENDIENTE"
       },
       "tallas": [
         "T10",
@@ -783,7 +783,7 @@
         "OP-0021||BEIGE": "PENDIENTE_CORTAR",
         "OP-0021||GRIS": "PENDIENTE_CORTAR",
         "OP-0021||MARFIL": "PENDIENTE_CORTAR",
-        "OP-0021||NEGRO": "ALISTAMIENTO",
+        "OP-0021||NEGRO": "PAGO_PENDIENTE",
         "OP-0021||VERDE": "POR_REVISAR"
       },
       "tallas": [
@@ -816,7 +816,7 @@
       "op_effi": 5240,
       "subg_estados": {
         "OP-0022||BLANCO": "EN_CONFECCION",
-        "OP-0022||NEGRO": "ALISTAMIENTO",
+        "OP-0022||NEGRO": "PAGO_PENDIENTE",
         "OP-0022||VERDE MILITAR": "NOVEDAD"
       },
       "tallas": [
@@ -3579,7 +3579,7 @@
       "op_effi": 5167,
       "subg_estados": {
         "OP-0174||AVENA": "ALISTAMIENTO",
-        "OP-0174||MARFIL": "ALISTAMIENTO"
+        "OP-0174||MARFIL": "PAGO_PENDIENTE"
       },
       "tallas": [
         "T4",
@@ -6773,6 +6773,62 @@
       "created_by": "John Rodriguez",
       "receta_id": "rec_vestido_napoles_1112",
       "receta_nombre": "VESTIDO NAPOLES - REF: 1112"
+    },
+    {
+      "id": "OP-2026-107",
+      "numero": 107,
+      "fecha_op": "2026-08-01",
+      "cortador": "Corte Carbajal",
+      "categoria": "CONJUNTOS",
+      "nombre_producto": "CONJUNTO FRANKY PRINE",
+      "colores": [
+        "MARFIL",
+        "AVENA",
+        "GRIS OSCURO",
+        "CAFE",
+        "VINOTINTO"
+      ],
+      "tallas": [
+        "M"
+      ],
+      "cantidades": {
+        "MARFIL_M": 40,
+        "AVENA_M": 30,
+        "GRIS OSCURO_M": 18,
+        "CAFE_M": 24,
+        "VINOTINTO_M": 18
+      },
+      "referencias": [
+        {
+          "nombre": "CONJUNTO FRANKY PRINE",
+          "ref": "",
+          "cat": "CONJUNTOS",
+          "vmo": 1151,
+          "colores": [
+            "MARFIL",
+            "AVENA",
+            "GRIS OSCURO",
+            "CAFE",
+            "VINOTINTO"
+          ],
+          "tallas": [
+            "M"
+          ],
+          "cantidades": {
+            "MARFIL_M": 40,
+            "AVENA_M": 30,
+            "GRIS OSCURO_M": 18,
+            "CAFE_M": 24,
+            "VINOTINTO_M": 18
+          },
+          "totalUds": 130,
+          "maquilador_id": ""
+        }
+      ],
+      "op_effi": null,
+      "estado_op": "EN_PROCESO",
+      "created_at": "2026-08-01",
+      "created_by": "Jefa de Producción"
     }
   ]
 }
