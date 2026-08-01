@@ -3718,20 +3718,48 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": false,
+      "color": "ROJO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1785595361944_j6c5a",
+      "motivo": "ENTREGADO",
+      "op_id": "OP-2026-088",
+      "op_nombre": "CHAQUETA BURBUJAS",
+      "referencia": "CHAQUETA BURBUJAS",
+      "talla": "T4",
+      "tipo": "estado_ot",
       "ts": 1785595361944,
+      "uds": 12,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785595368434_fslw9",
+      "ts": 1785595368434,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-088",
       "op_nombre": "CHAQUETA BURBUJAS",
       "referencia": "CHAQUETA BURBUJAS",
       "color": "ROJO",
-      "talla": "T4",
+      "talla": "todas las tallas",
       "estado_anterior": "ENTREGADO",
       "estado_nuevo": "ENTREGADO",
-      "bulk": false,
-      "uds": 12,
+      "bulk": true,
+      "uds": 84,
       "motivo": "ENTREGADO"
+    },
+    {
+      "id": "evt_1785595496490_yww2n",
+      "ts": 1785595496490,
+      "user": "Jefa de Producción",
+      "tipo": "kanban_color",
+      "op_id": "OP-0054",
+      "op_nombre": "BEISBOLERA 2.0",
+      "color": "CAFÉ",
+      "estado_anterior": "ARCHIVADO",
+      "estado_nuevo": "NOVEDAD",
+      "uds": 84
     }
   ]
 }
