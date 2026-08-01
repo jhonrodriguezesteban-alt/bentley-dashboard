@@ -4854,16 +4854,16 @@
     },
     {
       "cantidades": {
-        "BEIGE_T10": 12,
-        "BEIGE_T12": 12,
-        "BEIGE_T14": 12,
-        "BEIGE_T16": 12,
-        "BEIGE_T8": 12,
+        "NEGRO_T8": 10,
         "NEGRO_T10": 20,
         "NEGRO_T12": 20,
         "NEGRO_T14": 20,
-        "NEGRO_T16": 20,
-        "NEGRO_T8": 20
+        "NEGRO_T16": 10,
+        "BEIGE_T8": 10,
+        "BEIGE_T10": 20,
+        "BEIGE_T12": 20,
+        "BEIGE_T14": 20,
+        "BEIGE_T16": 10
       },
       "categoria": "FALDA",
       "colores": [
@@ -4880,25 +4880,14 @@
       "numero": 84,
       "referencias": [
         {
-          "cantidades": {
-            "BEIGE_T10": 12,
-            "BEIGE_T12": 12,
-            "BEIGE_T14": 12,
-            "BEIGE_T16": 12,
-            "BEIGE_T8": 12,
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "NEGRO_T8": 20
-          },
+          "nombre": "FALDA GABY BK",
+          "ref": "1079",
           "cat": "FALDA",
+          "vmo": 4730,
           "colores": [
             "NEGRO",
             "BEIGE"
           ],
-          "nombre": "FALDA GABY BK",
-          "ref": "1079",
           "tallas": [
             "T8",
             "T10",
@@ -4906,8 +4895,18 @@
             "T14",
             "T16"
           ],
-          "totalUds": 160,
-          "vmo": 4730
+          "cantidades": {
+            "NEGRO_T8": 10,
+            "NEGRO_T10": 20,
+            "NEGRO_T12": 20,
+            "NEGRO_T14": 20,
+            "NEGRO_T16": 10,
+            "BEIGE_T8": 10,
+            "BEIGE_T10": 20,
+            "BEIGE_T12": 20,
+            "BEIGE_T14": 20,
+            "BEIGE_T16": 10
+          }
         }
       ],
       "tallas": [
@@ -4917,7 +4916,8 @@
         "T14",
         "T16"
       ],
-      "subg_estados": {}
+      "subg_estados": {},
+      "updated_at": "2026-07-31"
     },
     {
       "cantidades": {
