@@ -1762,17 +1762,25 @@
     },
     {
       "cantidades": {
+        "NEGRO_T4": 10,
+        "NEGRO_T6": 10,
+        "NEGRO_T8": 20,
         "NEGRO_T10": 20,
         "NEGRO_T12": 20,
         "NEGRO_T14": 20,
         "NEGRO_T16": 20,
-        "NEGRO_T4": 20,
-        "NEGRO_T6": 20,
-        "NEGRO_T8": 20
+        "BEIGE_T4": 10,
+        "BEIGE_T6": 10,
+        "BEIGE_T8": 20,
+        "BEIGE_T10": 20,
+        "BEIGE_T12": 20,
+        "BEIGE_T14": 20,
+        "BEIGE_T16": 20
       },
       "categoria": "PANTALONES",
       "colores": [
-        "NEGRO"
+        "NEGRO",
+        "BEIGE"
       ],
       "cortador": "Corte Carbajal",
       "created_at": "2026-03-24",
@@ -1785,21 +1793,14 @@
       "numero": 39,
       "referencias": [
         {
-          "cantidades": {
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "NEGRO_T4": 20,
-            "NEGRO_T6": 20,
-            "NEGRO_T8": 20
-          },
-          "cat": "PANTALONES",
-          "colores": [
-            "NEGRO"
-          ],
           "nombre": "BOTA ANCHA KENIA",
           "ref": "",
+          "cat": "PANTALONES",
+          "vmo": 1151,
+          "colores": [
+            "NEGRO",
+            "BEIGE"
+          ],
           "tallas": [
             "T4",
             "T6",
@@ -1809,7 +1810,22 @@
             "T14",
             "T16"
           ],
-          "vmo": 1151
+          "cantidades": {
+            "NEGRO_T4": 10,
+            "NEGRO_T6": 10,
+            "NEGRO_T8": 20,
+            "NEGRO_T10": 20,
+            "NEGRO_T12": 20,
+            "NEGRO_T14": 20,
+            "NEGRO_T16": 20,
+            "BEIGE_T4": 10,
+            "BEIGE_T6": 10,
+            "BEIGE_T8": 20,
+            "BEIGE_T10": 20,
+            "BEIGE_T12": 20,
+            "BEIGE_T14": 20,
+            "BEIGE_T16": 20
+          }
         }
       ],
       "subg_estados": {
@@ -1825,7 +1841,7 @@
         "T16"
       ],
       "total_uds": 84,
-      "updated_at": "2026-06-28"
+      "updated_at": "2026-07-31"
     },
     {
       "categoria": "PANTALONES",
