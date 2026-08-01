@@ -3601,13 +3601,24 @@
       "user": "John Rodriguez"
     },
     {
+      "categoria": "PANTALONES",
       "id": "evt_1785592787205_hkrk6",
-      "ts": 1785592787205,
-      "user": "Jefa de Producción",
-      "tipo": "eliminar_op",
       "op_id": "OP-2026-091",
       "op_nombre": "PANTALON RAVE",
-      "categoria": "PANTALONES"
+      "tipo": "eliminar_op",
+      "ts": 1785592787205,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785592820940_tqckx",
+      "ts": 1785592820940,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-085",
+      "nombre": "PANTALON RAVE",
+      "categoria": "PANTALONES",
+      "colores": 4,
+      "refs": 1
     }
   ]
 }
