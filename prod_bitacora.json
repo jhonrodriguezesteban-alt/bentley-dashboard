@@ -3788,19 +3788,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": false,
+      "color": "AVENA",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1785598249778_8pkvr",
+      "motivo": "EN TALLER",
+      "op_id": "OP-2026-107",
+      "op_nombre": "CONJUNTO FRANKY PRIME",
+      "referencia": "CONJUNTO FRANKY PRIME",
+      "talla": "M",
+      "tipo": "estado_ot",
       "ts": 1785598249778,
+      "uds": 30,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785598260179_wdkrv",
+      "ts": 1785598260179,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-107",
       "op_nombre": "CONJUNTO FRANKY PRIME",
       "referencia": "CONJUNTO FRANKY PRIME",
-      "color": "AVENA",
+      "color": "CAFE",
       "talla": "M",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": false,
-      "uds": 30,
+      "uds": 24,
       "motivo": "EN TALLER"
     }
   ]
