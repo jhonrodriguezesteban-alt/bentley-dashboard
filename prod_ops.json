@@ -4931,30 +4931,30 @@
     },
     {
       "cantidades": {
-        "BEIGE_T10": 16,
-        "BEIGE_T12": 16,
-        "BEIGE_T14": 16,
-        "BEIGE_T16": 16,
-        "BEIGE_T6": 16,
-        "BEIGE_T8": 16,
-        "CAMEL_T10": 10,
-        "CAMEL_T12": 10,
-        "CAMEL_T14": 10,
-        "CAMEL_T16": 10,
-        "CAMEL_T6": 10,
-        "CAMEL_T8": 10,
+        "NEGRO_T6": 20,
+        "NEGRO_T8": 20,
         "NEGRO_T10": 20,
         "NEGRO_T12": 20,
         "NEGRO_T14": 20,
         "NEGRO_T16": 20,
-        "NEGRO_T6": 20,
-        "NEGRO_T8": 20,
+        "CAMEL_T6": 8,
+        "CAMEL_T8": 8,
+        "CAMEL_T10": 8,
+        "CAMEL_T12": 8,
+        "CAMEL_T14": 8,
+        "CAMEL_T16": 8,
+        "BEIGE_T6": 16,
+        "BEIGE_T8": 16,
+        "BEIGE_T10": 16,
+        "BEIGE_T12": 16,
+        "BEIGE_T14": 16,
+        "BEIGE_T16": 16,
+        "VERDE MILITAR_T6": 12,
+        "VERDE MILITAR_T8": 12,
         "VERDE MILITAR_T10": 12,
         "VERDE MILITAR_T12": 12,
         "VERDE MILITAR_T14": 12,
-        "VERDE MILITAR_T16": 12,
-        "VERDE MILITAR_T6": 12,
-        "VERDE MILITAR_T8": 12
+        "VERDE MILITAR_T16": 12
       },
       "categoria": "PANTALONES",
       "colores": [
@@ -4973,41 +4973,16 @@
       "numero": 85,
       "referencias": [
         {
-          "cantidades": {
-            "BEIGE_T10": 16,
-            "BEIGE_T12": 16,
-            "BEIGE_T14": 16,
-            "BEIGE_T16": 16,
-            "BEIGE_T6": 16,
-            "BEIGE_T8": 16,
-            "CAMEL_T10": 10,
-            "CAMEL_T12": 10,
-            "CAMEL_T14": 10,
-            "CAMEL_T16": 10,
-            "CAMEL_T6": 10,
-            "CAMEL_T8": 10,
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "NEGRO_T6": 20,
-            "NEGRO_T8": 20,
-            "VERDE MILITAR_T10": 12,
-            "VERDE MILITAR_T12": 12,
-            "VERDE MILITAR_T14": 12,
-            "VERDE MILITAR_T16": 12,
-            "VERDE MILITAR_T6": 12,
-            "VERDE MILITAR_T8": 12
-          },
+          "nombre": "PANTALON RAVE",
+          "ref": "1063",
           "cat": "PANTALONES",
+          "vmo": 5255,
           "colores": [
             "NEGRO",
             "CAMEL",
             "BEIGE",
             "VERDE MILITAR"
           ],
-          "nombre": "PANTALON RAVE",
-          "ref": "1063",
           "tallas": [
             "T6",
             "T8",
@@ -5016,8 +4991,33 @@
             "T14",
             "T16"
           ],
-          "totalUds": 348,
-          "vmo": 5255
+          "cantidades": {
+            "NEGRO_T6": 20,
+            "NEGRO_T8": 20,
+            "NEGRO_T10": 20,
+            "NEGRO_T12": 20,
+            "NEGRO_T14": 20,
+            "NEGRO_T16": 20,
+            "CAMEL_T6": 8,
+            "CAMEL_T8": 8,
+            "CAMEL_T10": 8,
+            "CAMEL_T12": 8,
+            "CAMEL_T14": 8,
+            "CAMEL_T16": 8,
+            "BEIGE_T6": 16,
+            "BEIGE_T8": 16,
+            "BEIGE_T10": 16,
+            "BEIGE_T12": 16,
+            "BEIGE_T14": 16,
+            "BEIGE_T16": 16,
+            "VERDE MILITAR_T6": 12,
+            "VERDE MILITAR_T8": 12,
+            "VERDE MILITAR_T10": 12,
+            "VERDE MILITAR_T12": 12,
+            "VERDE MILITAR_T14": 12,
+            "VERDE MILITAR_T16": 12
+          },
+          "maquilador_id": ""
         }
       ],
       "tallas": [
@@ -5028,7 +5028,8 @@
         "T14",
         "T16"
       ],
-      "subg_estados": {}
+      "subg_estados": {},
+      "updated_at": "2026-08-01"
     },
     {
       "cantidades": {
