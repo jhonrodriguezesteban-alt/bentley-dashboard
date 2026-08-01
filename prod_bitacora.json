@@ -3762,19 +3762,30 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1785598164689_qdm7k",
-      "ts": 1785598164689,
-      "user": "Jefa de Producción",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-107",
-      "op_nombre": "CONJUNTO FRANKY PRINE",
       "categoria": "CONJUNTOS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-08-01",
-      "total_uds": 130,
+      "id": "evt_1785598164689_qdm7k",
+      "op_id": "OP-2026-107",
+      "op_nombre": "CONJUNTO FRANKY PRINE",
       "referencias": [
         "CONJUNTO FRANKY PRINE"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 130,
+      "ts": 1785598164689,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785598190833_3vb1t",
+      "ts": 1785598190833,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-107",
+      "nombre": "CONJUNTO FRANKY PRIME",
+      "categoria": "CONJUNTOS",
+      "colores": 5,
+      "refs": 1
     }
   ]
 }
