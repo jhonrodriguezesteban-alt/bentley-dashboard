@@ -5022,31 +5022,31 @@
     },
     {
       "cantidades": {
-        "AVENA_T10": 12,
-        "AVENA_T12": 12,
-        "AVENA_T14": 12,
-        "AVENA_T16": 12,
-        "AVENA_T8": 12,
-        "CAFE_T10": 12,
-        "CAFE_T12": 12,
-        "CAFE_T14": 12,
-        "CAFE_T16": 12,
-        "CAFE_T8": 12,
+        "GRIS OSCURO_T8": 12,
         "GRIS OSCURO_T10": 12,
         "GRIS OSCURO_T12": 12,
-        "GRIS OSCURO_T14": 12,
-        "GRIS OSCURO_T16": 12,
-        "GRIS OSCURO_T8": 12,
-        "MARFIL_T10": 12,
-        "MARFIL_T12": 12,
-        "MARFIL_T14": 12,
-        "MARFIL_T16": 12,
-        "MARFIL_T8": 12,
+        "GRIS OSCURO_T14": 16,
+        "GRIS OSCURO_T16": 16,
+        "CAFE_T8": 12,
+        "CAFE_T10": 12,
+        "CAFE_T12": 12,
+        "CAFE_T14": 16,
+        "CAFE_T16": 16,
+        "NEGRO_T8": 12,
         "NEGRO_T10": 12,
         "NEGRO_T12": 12,
-        "NEGRO_T14": 12,
-        "NEGRO_T16": 12,
-        "NEGRO_T8": 12
+        "NEGRO_T14": 16,
+        "NEGRO_T16": 16,
+        "AVENA_T8": 12,
+        "AVENA_T10": 12,
+        "AVENA_T12": 12,
+        "AVENA_T14": 16,
+        "AVENA_T16": 16,
+        "MARFIL_T8": 12,
+        "MARFIL_T10": 12,
+        "MARFIL_T12": 12,
+        "MARFIL_T14": 16,
+        "MARFIL_T16": 16
       },
       "categoria": "PANTALONES",
       "colores": [
@@ -5066,34 +5066,10 @@
       "numero": 86,
       "referencias": [
         {
-          "cantidades": {
-            "AVENA_T10": 12,
-            "AVENA_T12": 12,
-            "AVENA_T14": 12,
-            "AVENA_T16": 12,
-            "AVENA_T8": 12,
-            "CAFE_T10": 12,
-            "CAFE_T12": 12,
-            "CAFE_T14": 12,
-            "CAFE_T16": 12,
-            "CAFE_T8": 12,
-            "GRIS OSCURO_T10": 12,
-            "GRIS OSCURO_T12": 12,
-            "GRIS OSCURO_T14": 12,
-            "GRIS OSCURO_T16": 12,
-            "GRIS OSCURO_T8": 12,
-            "MARFIL_T10": 12,
-            "MARFIL_T12": 12,
-            "MARFIL_T14": 12,
-            "MARFIL_T16": 12,
-            "MARFIL_T8": 12,
-            "NEGRO_T10": 12,
-            "NEGRO_T12": 12,
-            "NEGRO_T14": 12,
-            "NEGRO_T16": 12,
-            "NEGRO_T8": 12
-          },
+          "nombre": "PANTALON CHICAGO",
+          "ref": "1179",
           "cat": "PANTALONES",
+          "vmo": 5000,
           "colores": [
             "GRIS OSCURO",
             "CAFE",
@@ -5101,8 +5077,6 @@
             "AVENA",
             "MARFIL"
           ],
-          "nombre": "PANTALON CHICAGO",
-          "ref": "1179",
           "tallas": [
             "T8",
             "T10",
@@ -5110,8 +5084,33 @@
             "T14",
             "T16"
           ],
-          "totalUds": 300,
-          "vmo": 5000
+          "cantidades": {
+            "GRIS OSCURO_T8": 12,
+            "GRIS OSCURO_T10": 12,
+            "GRIS OSCURO_T12": 12,
+            "GRIS OSCURO_T14": 16,
+            "GRIS OSCURO_T16": 16,
+            "CAFE_T8": 12,
+            "CAFE_T10": 12,
+            "CAFE_T12": 12,
+            "CAFE_T14": 16,
+            "CAFE_T16": 16,
+            "NEGRO_T8": 12,
+            "NEGRO_T10": 12,
+            "NEGRO_T12": 12,
+            "NEGRO_T14": 16,
+            "NEGRO_T16": 16,
+            "AVENA_T8": 12,
+            "AVENA_T10": 12,
+            "AVENA_T12": 12,
+            "AVENA_T14": 16,
+            "AVENA_T16": 16,
+            "MARFIL_T8": 12,
+            "MARFIL_T10": 12,
+            "MARFIL_T12": 12,
+            "MARFIL_T14": 16,
+            "MARFIL_T16": 16
+          }
         }
       ],
       "subg_estados": {
@@ -5127,7 +5126,8 @@
         "T12",
         "T14",
         "T16"
-      ]
+      ],
+      "updated_at": "2026-07-31"
     },
     {
       "cantidades": {
