@@ -5721,16 +5721,14 @@
     },
     {
       "cantidades": {
-        "BEIGE_T10": 1,
-        "BEIGE_T12": 1,
-        "BEIGE_T14": 1,
-        "BEIGE_T16": 1,
-        "BEIGE_T8": 1,
+        "MARFIL_T8": 12,
         "MARFIL_T10": 12,
         "MARFIL_T12": 12,
         "MARFIL_T14": 12,
-        "MARFIL_T16": 12,
-        "MARFIL_T8": 12
+        "BEIGE_T8": 1,
+        "BEIGE_T10": 1,
+        "BEIGE_T12": 1,
+        "BEIGE_T14": 1
       },
       "categoria": "CONJUNTOS",
       "colores": [
@@ -5749,34 +5747,31 @@
       "receta_nombre": "CONJUNTO ISABELLA - REF: 1097",
       "referencias": [
         {
-          "cantidades": {
-            "BEIGE_T10": 1,
-            "BEIGE_T12": 1,
-            "BEIGE_T14": 1,
-            "BEIGE_T16": 1,
-            "BEIGE_T8": 1,
-            "MARFIL_T10": 12,
-            "MARFIL_T12": 12,
-            "MARFIL_T14": 12,
-            "MARFIL_T16": 12,
-            "MARFIL_T8": 12
-          },
+          "nombre": "CONJUNTO ISABELLA",
+          "ref": "1097",
           "cat": "CONJUNTOS",
+          "vmo": 9985,
           "colores": [
             "MARFIL",
             "BEIGE"
           ],
-          "nombre": "CONJUNTO ISABELLA",
-          "ref": "1097",
           "tallas": [
             "T8",
             "T10",
             "T12",
-            "T14",
-            "T16"
+            "T14"
           ],
-          "totalUds": 65,
-          "vmo": 9985
+          "cantidades": {
+            "MARFIL_T8": 12,
+            "MARFIL_T10": 12,
+            "MARFIL_T12": 12,
+            "MARFIL_T14": 12,
+            "BEIGE_T8": 1,
+            "BEIGE_T10": 1,
+            "BEIGE_T12": 1,
+            "BEIGE_T14": 1
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -5787,9 +5782,9 @@
         "T8",
         "T10",
         "T12",
-        "T14",
-        "T16"
-      ]
+        "T14"
+      ],
+      "updated_at": "2026-08-01"
     },
     {
       "cantidades": {
