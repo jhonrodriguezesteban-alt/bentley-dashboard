@@ -2316,7 +2316,7 @@
       "subg_estados": {
         "OP-0049||CHOCOLATE": "ALISTAMIENTO",
         "OP-0049||MARFIL": "ALISTAMIENTO",
-        "OP-0049||NEGRO": "ALISTAMIENTO",
+        "OP-0049||NEGRO": "PAGO_PENDIENTE",
         "OP-0049||TAUPE": "ARCHIVADO"
       },
       "tallas": [
@@ -2927,7 +2927,7 @@
       "cortador": "Corte Carbajal",
       "created_at": "2026-05-25",
       "created_by": "migrado_matriz",
-      "estado_op": "EN_PROCESO",
+      "estado_op": "PAGO_PENDIENTE",
       "fecha_op": "2026-05-25",
       "id": "OP-0058",
       "migrado": true,
@@ -2963,7 +2963,7 @@
         }
       ],
       "subg_estados": {
-        "OP-0058||GRIS MEDIO": "ALISTAMIENTO"
+        "OP-0058||GRIS MEDIO": "PAGO_PENDIENTE"
       },
       "tallas": [
         "T4",
@@ -5311,9 +5311,9 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-088||AZUL OSCURO": "ALISTAMIENTO",
+        "OP-2026-088||AZUL OSCURO": "PAGO_PENDIENTE",
         "OP-2026-088||MARFIL": "EN_CONFECCION",
-        "OP-2026-088||ROJO": "ALISTAMIENTO"
+        "OP-2026-088||ROJO": "PAGO_PENDIENTE"
       },
       "tallas": [
         "T4",
@@ -5586,7 +5586,7 @@
       ],
       "subg_estados": {
         "OP-0190||AZUL OSCURO": "EN_CONFECCION",
-        "OP-0190||NEGRO": "ALISTAMIENTO",
+        "OP-0190||NEGRO": "PAGO_PENDIENTE",
         "OP-0190||VERDE": "POR_REVISAR",
         "OP-0190||VERDE MILITAR": "EN_CONFECCION",
         "OP-0190||VERDE PINO": "ALISTAMIENTO"
