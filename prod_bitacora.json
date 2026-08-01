@@ -3621,20 +3621,37 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "CAMEL",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1785592843586_qkcyi",
-      "ts": 1785592843586,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-085",
       "op_nombre": "PANTALON RAVE",
       "referencia": "PANTALON RAVE",
-      "color": "CAMEL",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1785592843586,
       "uds": 48,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785593942928_yslm2",
+      "ts": 1785593942928,
+      "user": "Jefa de Producción",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-097",
+      "op_nombre": "CAMISON BERLIN",
+      "categoria": "CAMISONES",
+      "total_ots": 3,
+      "total_uds": 48,
+      "colores": [
+        "AVENA"
+      ],
+      "referencias": [
+        "CAMISON BERLIN"
+      ]
     }
   ]
 }
