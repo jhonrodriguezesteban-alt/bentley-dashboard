@@ -70725,14 +70725,20 @@
       "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "POR_REVISAR",
+      "estado": "EN_CONFECCION",
       "nt_corte_satelite": null,
       "nt_ingreso_planta": null,
       "op_effi": null,
       "cumplió_fecha": null,
       "motivo_incumplimiento": "",
       "notas": "",
-      "historial": [],
+      "historial": [
+        {
+          "fecha": "2026-08-01T15:31:12.113Z",
+          "accion": "Estado cambiado: POR_REVISAR → EN_CONFECCION. Motivo: EN TALLER",
+          "user": "Jefa de Producción"
+        }
+      ],
       "created_at": "2026-08-01",
       "created_by": "Jefa de Producción"
     },
