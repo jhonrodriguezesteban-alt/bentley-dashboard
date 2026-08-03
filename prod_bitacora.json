@@ -3931,14 +3931,24 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1785641786274_pw1me",
-      "ts": 1785641786274,
-      "user": "John Rodriguez",
-      "tipo": "cambiar_estado_op_all",
-      "op_id": "OP-2026-106",
-      "estado": "POR_REVISAR",
       "colores": 2,
-      "nombre": "VESTIDO NAPOLES"
+      "estado": "POR_REVISAR",
+      "id": "evt_1785641786274_pw1me",
+      "nombre": "VESTIDO NAPOLES",
+      "op_id": "OP-2026-106",
+      "tipo": "cambiar_estado_op_all",
+      "ts": 1785641786274,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785762674405_h382q",
+      "ts": 1785762674405,
+      "user": "Jefa de Producción",
+      "tipo": "diligencia",
+      "descripcion": "recoger vapor",
+      "destino": "116",
+      "fecha": "2026-08-03",
+      "hora": ""
     }
   ]
 }
