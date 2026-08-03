@@ -2593,31 +2593,75 @@ function planVerMes(mesKey){
   h += '</div>';
   h += '</div>';
 
-  // ── OPs / colores del mes ────────────────────────────────────────────────
+  // ── OPs / colores del mes — agrupado por categoría, con checklist de telas ──
   h += '<div style="font-size:11px;font-weight:700;color:'+mes.color+';text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">📋 Órdenes de producción · '+mesUnits.length+' color'+(mesUnits.length!==1?'es':'')+' · '+info.totalUds.toLocaleString('es-CO')+' uds</div>';
   if(!mesUnits.length){
     h += '<div style="color:#2c2c2e;font-size:12px;padding:10px 0 18px;">Sin OPs asignadas a este mes.</div>';
   } else {
-    var unitsOrdenados = mesUnits.slice().sort(function(a,b){ return _planColorUds(b.op,b.color) - _planColorUds(a.op,a.color); });
-    h += '<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:18px;">';
-    unitsOrdenados.forEach(function(u){
-      var uds = _planColorUds(u.op, u.color);
-      var costo = _planCostoColor(u.op, u.color);
-      h += '<div data-opid="'+u.op.id+'" onclick="closeModal();verDetalleOP(this.dataset.opid)" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#1c1c1e;border-radius:9px;cursor:pointer;">';
-      h += '<div style="flex:1;min-width:0;">';
-      h += '<div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">';
-      h += '<span style="font-size:11px;font-weight:800;color:#0a84ff;">'+esc(fmtOpId(u.op.id))+'</span>';
-      h += '<span style="font-size:13px;font-weight:700;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(u.op.nombre_producto||'')+'</span>';
+    var catGroups = {};
+    mesUnits.forEach(function(u){
+      var cat = u.op.categoria || 'Sin categoría';
+      if(!catGroups[cat]) catGroups[cat] = [];
+      catGroups[cat].push(u);
+    });
+    var catOrdenMes = Object.keys(catGroups).sort(function(a,b){
+      var ua = catGroups[a].reduce(function(s,u){ return s+_planColorUds(u.op,u.color); },0);
+      var ub = catGroups[b].reduce(function(s,u){ return s+_planColorUds(u.op,u.color); },0);
+      return ub-ua;
+    });
+    h += '<div style="margin-bottom:18px;">';
+    catOrdenMes.forEach(function(cat){
+      var units = catGroups[cat].slice().sort(function(a,b){ return _planColorUds(b.op,b.color) - _planColorUds(a.op,a.color); });
+      var udsCat = units.reduce(function(s,u){ return s+_planColorUds(u.op,u.color); },0);
+      h += '<div style="display:flex;align-items:center;gap:8px;margin:14px 0 6px;padding-left:7px;border-left:3px solid '+mes.color+'55;">';
+      h += '<span style="font-size:10px;font-weight:800;color:'+mes.color+';text-transform:uppercase;letter-spacing:.1em;">'+esc(cat)+'</span>';
+      h += '<span style="font-size:10px;color:#475569;">'+units.length+' color'+(units.length!==1?'es':'')+' · '+udsCat.toLocaleString('es-CO')+' uds</span>';
       h += '</div>';
-      h += '<div style="display:flex;align-items:center;gap:6px;">';
-      if(u.color && u.color!=='—') h += '<span style="font-size:9px;font-weight:700;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);border-radius:3px;color:#0a84ff;padding:1px 5px;text-transform:uppercase;">'+esc(u.color)+'</span>';
-      h += '<span style="font-size:10px;color:#475569;">'+esc(u.op.categoria||'')+'</span>';
-      h += '</div></div>';
-      h += '<div style="text-align:right;flex-shrink:0;">';
-      h += '<div style="font-size:15px;font-weight:900;color:#f1f5f9;">'+uds.toLocaleString('es-CO')+'<span style="font-size:9px;color:#64748b;margin-left:2px;">uds</span></div>';
-      if(costo) h += '<div style="font-size:10px;color:#34d399;font-weight:700;">'+fmtCopFull(costo.total)+'</div>';
-      else h += '<div style="font-size:9px;color:#2c2c2e;">sin receta</div>';
-      h += '</div></div>';
+      h += '<div style="display:flex;flex-direction:column;gap:6px;">';
+      units.forEach(function(u){
+        var uds = _planColorUds(u.op, u.color);
+        var costo = _planCostoColor(u.op, u.color);
+        var recetaU = u.op.receta_id ? (DB.costeo.recetas||[]).find(function(x){ return x.id===u.op.receta_id; }) : _planRecetaDeOp(u.op);
+        var matsU = recetaU ? (recetaU.componentes||[]).filter(function(c){ return c.tipo==='MATERIAL'; }) : [];
+        h += '<details style="background:#1c1c1e;border-radius:9px;overflow:hidden;">';
+        h += '<summary style="display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;list-style:none;">';
+        h += '<div style="flex:1;min-width:0;">';
+        h += '<div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">';
+        h += '<span style="font-size:11px;font-weight:800;color:#0a84ff;">'+esc(fmtOpId(u.op.id))+'</span>';
+        h += '<span style="font-size:13px;font-weight:700;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(u.op.nombre_producto||'')+'</span>';
+        h += '</div>';
+        h += '<div style="display:flex;align-items:center;gap:6px;">';
+        if(u.color && u.color!=='—') h += '<span style="font-size:9px;font-weight:700;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);border-radius:3px;color:#0a84ff;padding:1px 5px;text-transform:uppercase;">'+esc(u.color)+'</span>';
+        if(matsU.length) h += '<span style="font-size:9px;color:#475569;">🧵 '+matsU.length+' tela'+(matsU.length!==1?'s':'')+' — clic para checklist</span>';
+        h += '</div></div>';
+        h += '<div style="text-align:right;flex-shrink:0;">';
+        h += '<div style="font-size:15px;font-weight:900;color:#f1f5f9;">'+uds.toLocaleString('es-CO')+'<span style="font-size:9px;color:#64748b;margin-left:2px;">uds</span></div>';
+        if(costo) h += '<div style="font-size:10px;color:#34d399;font-weight:700;">'+fmtCopFull(costo.total)+'</div>';
+        else h += '<div style="font-size:9px;color:#2c2c2e;">sin receta</div>';
+        h += '</div>';
+        h += '<button data-opid="'+u.op.id+'" onclick="event.stopPropagation();closeModal();verDetalleOP(this.dataset.opid)" style="background:none;border:none;color:#334155;font-size:13px;cursor:pointer;padding:0 2px;flex-shrink:0;" title="Ir a la OP">↗</button>';
+        h += '</summary>';
+        if(matsU.length){
+          h += '<div style="padding:4px 12px 10px;border-top:1px solid rgba(255,255,255,.05);">';
+          matsU.forEach(function(c){
+            var mp = (DB.costeo.mp||[]).find(function(x){ return x.id===c.mp_id; });
+            if(!mp) return;
+            var key = u.op.id+'__'+u.color+'__'+c.id;
+            var checked = !!((u.op.consumibles_check_color||{})[key]);
+            var totalMat = (parseFloat(c.consumo)||0)*uds;
+            h += '<label style="display:flex;align-items:center;gap:8px;padding:5px 0;cursor:pointer;'+(checked?'opacity:.5;':'')+'">';
+            h += '<input type="checkbox" data-opid="'+u.op.id+'" data-key="'+esc(key)+'" onclick="event.stopPropagation()" onchange="toggleConsumibleCheckColor(this.dataset.opid,this.dataset.key,this.checked)" '+(checked?'checked':'')+' style="width:14px;height:14px;accent-color:#34d399;cursor:pointer;flex-shrink:0;">';
+            h += '<span style="font-size:11px;color:'+(checked?'#475569':'#cbd5e1')+';'+(checked?'text-decoration:line-through;':'')+'flex:1;">'+esc(mp.nombre)+'</span>';
+            h += '<span style="font-size:11px;font-weight:700;color:#0ea5e9;white-space:nowrap;">'+totalMat.toLocaleString('es-CO',{maximumFractionDigits:2})+' '+esc(mp.unidad||'und')+'</span>';
+            h += '</label>';
+          });
+          h += '</div>';
+        } else {
+          h += '<div style="padding:8px 12px 10px;border-top:1px solid rgba(255,255,255,.05);font-size:11px;color:#475569;">Sin receta vinculada — no hay telas que listar.</div>';
+        }
+        h += '</details>';
+      });
+      h += '</div>';
     });
     h += '</div>';
   }
@@ -6134,6 +6178,26 @@ async function toggleConsumibleCheck(opId, key, checked){
   saveLocal();
   await guardarArchivo('ops', {ops: DB.ops});
   document.getElementById('page-content').innerHTML = renderOPDetalle(opId);
+}
+
+// Checklist de telas por color en el Resumen Mensual (planVerMes) — se guarda solo,
+// sin recargar el modal completo para no perder el <details> abierto ni la posición del scroll.
+async function toggleConsumibleCheckColor(opId, key, checked){
+  var op = (DB.ops||[]).find(function(o){ return o.id===opId; });
+  if(!op) return;
+  if(!op.consumibles_check_color) op.consumibles_check_color = {};
+  if(checked) op.consumibles_check_color[key] = true; else delete op.consumibles_check_color[key];
+  saveLocal();
+  guardarArchivo('ops', {ops: DB.ops});
+  var cb = document.querySelector('input[data-key="'+key.replace(/"/g,'\\"')+'"]');
+  if(cb){
+    var label = cb.closest('label');
+    if(label){
+      label.style.opacity = checked ? '.5' : '';
+      var span = label.querySelector('span');
+      if(span){ span.style.color = checked ? '#475569' : '#cbd5e1'; span.style.textDecoration = checked ? 'line-through' : ''; }
+    }
+  }
 }
 
 function copiarListaConsumibles(opId){
