@@ -2955,9 +2955,15 @@ function renderPlaneacion(){
     });
     if(nuevo.length !== arr.length || nuevo.some(function(v,i){ return v!==arr[i]; })) meses[m.k] = nuevo;
   });
+  // CRÍTICO: solo persistir esta migración si quien la disparó puede editar Planeación.
+  // Antes esto se guardaba para CUALQUIER usuario que simplemente abriera la página
+  // (aunque fuera de solo lectura), lo que provocó que asignaciones reales se vaciaran
+  // en segundo plano sin que nadie las tocara a propósito.
   if(_planMigrado){
     DB.planeacion.meses = meses;
-    guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}});
+    if(_canEditPlan()){
+      guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}});
+    }
   }
 
   // Keys asignadas a algún mes
