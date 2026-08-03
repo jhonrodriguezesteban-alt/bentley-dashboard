@@ -2924,11 +2924,17 @@ function renderPlaneacion(){
   // Unidad de planeación = (OP, color). Solo entran los colores que aún NO se han cortado
   // (POR_REVISAR / PENDIENTE_CORTAR) — un color que ya avanzó a corte, confección, alistamiento
   // o pago desaparece automáticamente de la planeación (ya es producto en proceso/disponible).
+  // REGLA DE NEGOCIO: la Planeación NO tiene nada que ver con pagos ni cronogramas de entrega —
+  // solo con si un color está sin cortar o ya cortado. Por eso NUNCA se filtra por op.estado_op
+  // === 'PAGO_PENDIENTE' aquí: eso describe el estado de PAGO de la OP (puede tener un color
+  // pagado y otro todavía sin cortar), y filtrar por ahí hacía desaparecer colores enteros de
+  // Planeación por algo que no le corresponde evaluar. Solo se excluye ARCHIVADO (OP cancelada/
+  // cerrada del todo). La decisión real de "entra o no" es 100% por color, vía _planEstadoColor.
   var PLAN_ESTADOS = ['POR_REVISAR','PENDIENTE_CORTAR'];
   var planUnits = []; // {op, color, key}
   var planUnitsByKey = {};
   (DB.ops||[]).forEach(function(op){
-    if(op.estado_op==='ARCHIVADO' || op.estado_op==='PAGO_PENDIENTE') return;
+    if(op.estado_op==='ARCHIVADO') return;
     var colores = (op.colores&&op.colores.length) ? op.colores : ['—'];
     colores.forEach(function(color){
       var estado = _planEstadoColor(op, color);
