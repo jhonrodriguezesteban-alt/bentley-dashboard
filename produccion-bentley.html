@@ -7448,6 +7448,7 @@ function setDisPrioFiltro(p){ _disPrioFiltro=p; renderPage('diseno'); }
 var _disFiltroMarca = 'Bentley Kids';
 var _disRespFiltro = '';
 var _disTelaFiltro = '';
+var _disStockFiltro = false; // true = mostrar solo diseños marcados "no hay tela física"
 var DIS_KANBAN = [
   {k:'CON_PROVEEDOR',        label:'Con Proveedor',      color:'#fb923c', bg:'rgba(251,146,60,.08)'},
   {k:'EN_DISENO_DIGITAL',    label:'Diseño Digital',     color:'#a855f7', bg:'rgba(168,85,247,.08)'},
@@ -7695,6 +7696,9 @@ function renderDiseno(){
   });
   h += '</div>';
 
+  // ── Chip: Sin tela física (independiente de si ya tiene tela asignada) ──
+  h += '<button onclick="_disStockFiltro=!_disStockFiltro;renderPage(\'diseno\')" style="display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;transition:all .15s;flex-shrink:0;border:1px solid '+(_disStockFiltro?'rgba(239,68,68,.6)':'#2c2c2e')+';background:'+(_disStockFiltro?'rgba(239,68,68,.14)':'#0f1520')+';color:'+(_disStockFiltro?'#ef4444':'#475569')+';" title="Filtrar diseños marcados como sin tela física en bodega, así ya tengan tela asignada">🚫 Sin tela física</button>';
+
   h += '</div>';
 
   // ── Kanban board horizontal ──────────────────────────────────────────────────
@@ -7712,6 +7716,7 @@ function renderDiseno(){
         if(!esDeEste && !esBuscadorTela) return false;
       }
       if(_disTelaFiltro){ var te=d.tela_estado||'sin_tela'; if(te!==_disTelaFiltro) return false; }
+      if(_disStockFiltro && d.tela_stock!==false) return false;
       if(_disBusqueda){ var q=_disBusqueda.toUpperCase(); if((d.nombre||'').toUpperCase().indexOf(q)<0 && (d.categoria||'').toUpperCase().indexOf(q)<0) return false; }
       if(_disBusquedaTela){ var qt=_disBusquedaTela.toUpperCase(); if((d.tela_nota||'').toUpperCase().indexOf(qt)<0) return false; }
       return true;
@@ -7847,8 +7852,11 @@ function renderDiseno(){
       };
       var tc = TELA_CFG[telaEst]||TELA_CFG.sin_tela;
       h += '<div style="margin-bottom:8px;">';
-      h += '<div style="display:flex;align-items:center;gap:6px;">';
+      h += '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">';
       h += '<button data-disid="'+d.id+'" onclick="event.stopPropagation();abrirTelaPopover(this.dataset.disid,this)" title="Clic para cambiar estado de tela" style="padding:3px 10px;border-radius:10px;font-size:10px;font-weight:700;cursor:pointer;border:1px solid '+tc.border+';background:'+tc.bg+';color:'+tc.color+';transition:all .15s;">'+tc.label+'</button>';
+      // Sticker independiente: ¿hay tela FÍSICA en bodega? (aparte de si ya se asignó cuál tela usar)
+      var stockOk = d.tela_stock !== false;
+      h += '<button data-disid="'+d.id+'" onclick="event.stopPropagation();toggleTelaStock(this.dataset.disid)" title="Clic para marcar si hay o no tela física en bodega" style="padding:3px 8px;border-radius:10px;font-size:10px;font-weight:700;cursor:pointer;white-space:nowrap;border:1px solid '+(stockOk?'#2c2c2e':'rgba(239,68,68,.55)')+';background:'+(stockOk?'rgba(255,255,255,.03)':'rgba(239,68,68,.18)')+';color:'+(stockOk?'#475569':'#ef4444')+';">'+(stockOk?'📦 Hay tela':'🚫 No hay tela')+'</button>';
       if(telaEst==='asignada'||telaEst==='pte_llegar'){
         var tnPreview = d.tela_nota ? (d.tela_nota.length>22?d.tela_nota.substring(0,22)+'…':d.tela_nota) : 'Agregar nota...';
         var tnColor = d.tela_nota ? '#e2e8f0' : '#475569';
@@ -8357,6 +8365,18 @@ function guardarTelaNotaModal(id){
   }
   toast('Nota de tela guardada','success');
 }
+// Sticker independiente de disponibilidad FÍSICA de tela — distinto de tela_estado
+// (que solo dice si ya se DECIDIÓ qué tela usar, no si hay existencia en bodega).
+async function toggleTelaStock(disId){
+  var d = (DB.disenos||[]).find(function(x){ return x.id===disId; });
+  if(!d) return;
+  d.tela_stock = (d.tela_stock===false) ? true : false;
+  _logEvt('diseno_tela_stock', {diseno_id:d.id, nombre:d.nombre, hay_tela:d.tela_stock});
+  saveLocal();
+  await guardarArchivo('disenos', {disenos: DB.disenos, disenos_cfg: DB.disenos_cfg});
+  renderPage('diseno');
+}
+
 function abrirTelaPopover(id, btn){
   var existing = document.getElementById('tela-popover');
   if(existing){ existing.remove(); if(existing.dataset.did===id) return; }
