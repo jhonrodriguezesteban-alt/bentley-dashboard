@@ -10151,17 +10151,21 @@ async function cronSetFechaOP(opId, nuevaFecha, motivo){
 
 var _cronFiltroSat = 'todos';
 var _cronFiltroSem = false;
-var _cronDragOpId2 = null;
+var _cronDragEntryId = null;
+var _cronAnchorOffset = 0; // desplazamiento en días del inicio de la ventana visible, vs. hoy
 
-function _cronDragStart2(e, opId){
-  _cronDragOpId2 = opId;
+function cronNav(dias){ _cronAnchorOffset += dias; renderPage('cronograma'); }
+function cronNavHoy(){ _cronAnchorOffset = 0; renderPage('cronograma'); setTimeout(function(){ var el=document.getElementById('cron-hoy-col'); if(el) el.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}); },60); }
+
+function _cronDragStart2(e, entryId){
+  _cronDragEntryId = entryId;
   e.dataTransfer.effectAllowed = 'move';
-  e.dataTransfer.setData('text/plain', opId);
-  setTimeout(function(){ var el=document.querySelector('[data-cronopid="'+opId+'"]'); if(el) el.style.opacity='0.4'; },0);
+  e.dataTransfer.setData('text/plain', entryId);
+  setTimeout(function(){ var el=document.querySelector('[data-cronentryid="'+entryId+'"]'); if(el) el.style.opacity='0.4'; },0);
 }
 function _cronDragEnd2(e){
-  var opId = _cronDragOpId2;
-  if(opId){ var el=document.querySelector('[data-cronopid="'+opId+'"]'); if(el) el.style.opacity=''; }
+  var entryId = _cronDragEntryId;
+  if(entryId){ var el=document.querySelector('[data-cronentryid="'+entryId+'"]'); if(el) el.style.opacity=''; }
 }
 function _cronDragOver2(e){
   e.preventDefault(); e.dataTransfer.dropEffect='move';
@@ -10175,74 +10179,85 @@ function _cronDragLeave2(e){
 async function _cronDrop2(e, fecha){
   e.preventDefault();
   e.currentTarget.style.background=''; e.currentTarget.style.borderColor='';
-  var opId = _cronDragOpId2 || e.dataTransfer.getData('text/plain');
-  _cronDragOpId2 = null;
-  if(!opId) return;
-  var ents = (DB.cronograma||[]).filter(function(x){ return x.op_id===opId && !x.entregado; });
-  if(!ents.length) return;
-  ents.forEach(function(x){
-    if(!x.fecha_inicial) x.fecha_inicial = fecha;
-    if(x.fecha_compromiso && x.fecha_compromiso!==fecha){
-      x.historial.push({fecha_anterior:x.fecha_compromiso, fecha_nueva:fecha, motivo:'Reubicado en tablero', by:getUser(), at:hoy()});
-    } else if(!x.fecha_compromiso){
-      x.historial.push({fecha_anterior:null, fecha_nueva:fecha, motivo:'Asignación inicial', by:getUser(), at:hoy()});
-    }
-    x.fecha_compromiso = fecha;
-  });
-  _logEvt('cronograma_fecha', {op_id:opId, fecha_nueva:fecha, motivo:'Reubicado en tablero'});
+  var entryId = _cronDragEntryId || e.dataTransfer.getData('text/plain');
+  _cronDragEntryId = null;
+  if(!entryId) return;
+  var entry = (DB.cronograma||[]).find(function(x){ return x.id===entryId && !x.entregado; });
+  if(!entry) return;
+  if(!entry.fecha_inicial) entry.fecha_inicial = fecha;
+  if(entry.fecha_compromiso && entry.fecha_compromiso!==fecha){
+    entry.historial.push({fecha_anterior:entry.fecha_compromiso, fecha_nueva:fecha, motivo:'Reubicado en tablero', by:getUser(), at:hoy()});
+  } else if(!entry.fecha_compromiso){
+    entry.historial.push({fecha_anterior:null, fecha_nueva:fecha, motivo:'Asignación inicial', by:getUser(), at:hoy()});
+  }
+  entry.fecha_compromiso = fecha;
+  _logEvt('cronograma_fecha', {entry_id:entryId, op_id:entry.op_id, color:entry.color, fecha_nueva:fecha, motivo:'Reubicado en tablero'});
   var ok = await guardarCronograma();
   if(ok) renderPage('cronograma');
 }
 async function _cronDropPool2(e){
   e.preventDefault();
   e.currentTarget.style.background=''; e.currentTarget.style.borderColor='';
-  var opId = _cronDragOpId2 || e.dataTransfer.getData('text/plain');
-  _cronDragOpId2 = null;
-  if(!opId) return;
-  var ents = (DB.cronograma||[]).filter(function(x){ return x.op_id===opId && !x.entregado; });
-  ents.forEach(function(x){
-    if(x.fecha_compromiso) x.historial.push({fecha_anterior:x.fecha_compromiso, fecha_nueva:null, motivo:'Removido del tablero', by:getUser(), at:hoy()});
-    x.fecha_compromiso = null;
-  });
+  var entryId = _cronDragEntryId || e.dataTransfer.getData('text/plain');
+  _cronDragEntryId = null;
+  if(!entryId) return;
+  var entry = (DB.cronograma||[]).find(function(x){ return x.id===entryId && !x.entregado; });
+  if(!entry) return;
+  if(entry.fecha_compromiso) entry.historial.push({fecha_anterior:entry.fecha_compromiso, fecha_nueva:null, motivo:'Removido del tablero', by:getUser(), at:hoy()});
+  entry.fecha_compromiso = null;
   var ok = await guardarCronograma();
   if(ok) renderPage('cronograma');
 }
 
-function _cronKanbanCard(opId, entries){
-  var rep = entries[0];
-  var totalUds = entries.reduce(function(a,x){ return a+(x.uds||0); },0);
-  var colores = entries.map(function(x){ return x.color; }).filter(Boolean);
-  var satNom = getSatNombre(rep.satelite_id);
+// Tarjeta de UN color de UNA OP en manos de UN taller — nunca agrupa colores entre sí,
+// porque el taller puede entregar de a color y cada uno necesita su propia fecha/estado visible.
+function _cronEntryCard(entry){
   var hoyStr = hoy();
-  var fechaComp = rep.fecha_compromiso;
+  var fechaComp = entry.fecha_compromiso;
   var esVencida = fechaComp && fechaComp < hoyStr;
   var esHoy = fechaComp === hoyStr;
-  var cambios = entries.reduce(function(a,x){ return a+(x.historial||[]).filter(function(h){ return h.fecha_anterior; }).length; },0);
+  var cambios = (entry.historial||[]).filter(function(h){ return h.fecha_anterior; }).length;
   var border = esVencida ? 'rgba(239,68,68,.45)' : '#252836';
   var bg = esVencida ? 'rgba(239,68,68,.05)' : '#141820';
-  var nombre = rep.op_nombre || opId;
   var h = '';
-  h += '<div draggable="true" data-cronopid="'+opId+'" ';
-  h += 'ondragstart="_cronDragStart2(event,this.dataset.cronopid)" ondragend="_cronDragEnd2(event)" ';
-  h += 'onclick="cronAbrirFechaOP(this.dataset.cronopid)" ';
-  h += 'style="background:'+bg+';border:1px solid '+border+';border-radius:10px;padding:9px 11px;cursor:grab;margin-bottom:6px;transition:box-shadow .12s;" ';
+  h += '<div draggable="true" data-cronentryid="'+entry.id+'" ';
+  h += 'ondragstart="_cronDragStart2(event,this.dataset.cronentryid)" ondragend="_cronDragEnd2(event)" ';
+  h += 'onclick="cronAbrirFecha(this.dataset.cronentryid)" ';
+  h += 'style="background:'+bg+';border:1px solid '+border+';border-radius:9px;padding:8px 10px;cursor:grab;margin-bottom:6px;transition:box-shadow .12s;" ';
   h += 'onmouseover="this.style.boxShadow=\'0 0 0 1px rgba(10,132,255,.5)\'" onmouseout="this.style.boxShadow=\'\'">';
-  h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">';
-  h += '<span style="font-size:9px;font-weight:800;color:var(--accent);background:rgba(10,132,255,.12);border:1px solid rgba(10,132,255,.2);border-radius:4px;padding:1px 5px;">'+esc(opId)+'</span>';
+  h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">';
+  h += '<span style="font-size:9px;font-weight:800;color:var(--accent);background:rgba(10,132,255,.12);border:1px solid rgba(10,132,255,.2);border-radius:4px;padding:1px 5px;">'+esc(fmtOpId(entry.op_id))+'</span>';
   if(esVencida) h += '<span style="font-size:8px;font-weight:800;color:#ef4444;background:rgba(239,68,68,.15);border-radius:3px;padding:1px 5px;">VENCIDA</span>';
   else if(esHoy) h += '<span style="font-size:8px;font-weight:800;color:#0a84ff;background:rgba(10,132,255,.15);border-radius:3px;padding:1px 5px;">HOY</span>';
   else if(cambios) h += '<span style="font-size:8px;color:#f59e0b;" title="'+cambios+' cambio(s)">⚠ '+cambios+'</span>';
   h += '</div>';
-  h += '<div style="font-size:11px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:4px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">'+esc(nombre)+'</div>';
-  h += '<div style="font-size:9px;color:#475569;margin-bottom:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">🏭 '+esc(satNom)+'</div>';
-  if(colores.length){
-    h += '<div style="display:flex;flex-wrap:wrap;gap:2px;margin-bottom:5px;">';
-    colores.slice(0,4).forEach(function(c){ h += '<span style="font-size:7px;background:#1c2033;border:1px solid #2c3050;border-radius:3px;padding:1px 4px;color:#64748b;max-width:55px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(c)+'</span>'; });
-    if(colores.length>4) h += '<span style="font-size:8px;color:#475569;">+'+( colores.length-4)+'</span>';
-    h += '</div>';
-  }
-  h += '<div style="font-size:10px;font-weight:700;color:#64748b;">'+totalUds.toLocaleString('es-CO')+' uds</div>';
+  h += '<div style="font-size:11px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:3px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">'+esc(entry.op_nombre||entry.op_id)+'</div>';
+  if(entry.color && entry.color!=='—') h += '<span style="font-size:8px;font-weight:700;background:rgba(10,132,255,.08);border:1px solid rgba(10,132,255,.25);color:#60a5fa;border-radius:3px;padding:1px 5px;text-transform:uppercase;">'+esc(entry.color)+'</span>';
+  h += '<div style="font-size:10px;font-weight:700;color:#64748b;margin-top:5px;">'+(entry.uds||0).toLocaleString('es-CO')+' uds</div>';
   h += '</div>';
+  return h;
+}
+
+// Agrupa una lista de entradas (una por color) por taller — así queda claro quién entrega qué,
+// color por color, sin mezclar todo bajo una sola tarjeta de OP.
+function _cronGrupoTaller(entries){
+  var grupos = {}, orden = [];
+  entries.forEach(function(e){
+    var sid = e.satelite_id || '__sin__';
+    if(!grupos[sid]){ grupos[sid]=[]; orden.push(sid); }
+    grupos[sid].push(e);
+  });
+  orden.sort(function(a,b){
+    var na = a==='__sin__' ? 'zzzz' : getSatNombre(a);
+    var nb = b==='__sin__' ? 'zzzz' : getSatNombre(b);
+    return na.localeCompare(nb);
+  });
+  var h = '';
+  orden.forEach(function(sid){
+    var nombre = sid==='__sin__' ? 'Sin taller asignado' : getSatNombre(sid);
+    h += '<div style="font-size:8px;font-weight:800;color:#64748b;text-transform:uppercase;letter-spacing:.4px;margin:8px 0 4px;padding-top:6px;border-top:1px solid #1a1f2e;">🏭 '+esc(nombre)+' <span style="color:#334155;">('+grupos[sid].length+')</span></div>';
+    grupos[sid].forEach(function(e){ h += _cronEntryCard(e); });
+  });
   return h;
 }
 
@@ -10276,17 +10291,19 @@ function renderCronograma(){
   });
   if(cronCerrados) guardarCronograma();
 
-  // Rango de días: -2 días pasados + hoy + 27 futuros = 30 columnas
+  // Rango de días: ventana de 21 columnas que se desplaza con cronNav() (◀ Hoy ▶),
+  // en vez de un rango fijo que solo dejaba ver 2 días hacia atrás.
   var hoyStr2 = hoy();
   var hoyBase = new Date(hoyStr2+'T12:00:00');
   var DIAS_LABEL2 = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
   var diasRange = [];
-  for(var di=-2; di<=27; di++){
+  for(var di=-3+_cronAnchorOffset; di<=17+_cronAnchorOffset; di++){
     var dd = new Date(hoyBase); dd.setDate(hoyBase.getDate()+di);
     diasRange.push(dd.toISOString().slice(0,10));
   }
-  var semIni = diasRange[2]; // hoy - 0 (index of today)
-  var semFin = diasRange[8]; // hoy + 6
+  var semIni = hoyStr2;
+  var dd7 = new Date(hoyBase); dd7.setDate(hoyBase.getDate()+6);
+  var semFin = dd7.toISOString().slice(0,10);
 
   var activos = (DB.cronograma||[]).filter(function(e){ return !e.entregado; });
   var todos   = DB.cronograma||[];
@@ -10346,41 +10363,31 @@ function renderCronograma(){
     h += '<button data-satid="'+s.id+'" onclick="_cronFiltroSat=this.dataset.satid;renderPage(\'cronograma\')" style="font-size:11px;padding:4px 10px;border-radius:14px;border:1px solid '+(active?'var(--accent)':'#2c2c2e')+';background:'+(active?'rgba(10,132,255,.12)':'transparent')+';color:'+(active?'var(--accent)':'#64748b')+';cursor:pointer;">'+esc(s.nombre)+'</button>';
   });
   h += '<div style="flex:1"></div>';
-  h += '<button onclick="document.getElementById(\'cron-hoy-col\').scrollIntoView({behavior:\'smooth\',block:\'nearest\',inline:\'center\'})" style="font-size:10px;padding:4px 10px;border-radius:14px;border:1px solid rgba(10,132,255,.3);background:rgba(10,132,255,.08);color:var(--accent);cursor:pointer;">📍 Ir a hoy</button>';
+  h += '<button onclick="cronNav(-7)" style="font-size:13px;padding:4px 10px;border-radius:14px;border:1px solid #2c2c2e;background:transparent;color:#94a3b8;cursor:pointer;" title="Semana anterior">◀</button>';
+  h += '<button onclick="cronNavHoy()" style="font-size:10px;padding:4px 10px;border-radius:14px;border:1px solid rgba(10,132,255,.3);background:rgba(10,132,255,.08);color:var(--accent);cursor:pointer;">📍 Hoy</button>';
+  h += '<button onclick="cronNav(7)" style="font-size:13px;padding:4px 10px;border-radius:14px;border:1px solid #2c2c2e;background:transparent;color:#94a3b8;cursor:pointer;" title="Semana siguiente">▶</button>';
   h += '</div>';
 
-  // ── Construir mapa de OPs ──
+  // ── Construir lista de entradas visibles (una por color, nunca agrupadas por OP) ──
   var filtEntries = activos.slice();
   if(_cronFiltroSat !== 'todos') filtEntries = filtEntries.filter(function(e){ return e.satelite_id===_cronFiltroSat; });
 
-  var opMap2 = {};
-  filtEntries.forEach(function(e){
-    if(!opMap2[e.op_id]) opMap2[e.op_id] = [];
-    opMap2[e.op_id].push(e);
-  });
-
-  // Pool de sin fecha — ordenar por satelite + nombre
-  var sinFechaOps = Object.keys(opMap2).filter(function(id){
-    return !opMap2[id][0].fecha_compromiso;
-  }).sort(function(a,b){
-    var sa = getSatNombre(opMap2[a][0].satelite_id);
-    var sb = getSatNombre(opMap2[b][0].satelite_id);
-    return sa.localeCompare(sb) || (opMap2[a][0].op_nombre||a).localeCompare(opMap2[b][0].op_nombre||b);
-  });
+  // Pool de sin fecha — cada color es su propia tarjeta, agrupadas por taller dentro del pool
+  var entriesSinFecha = filtEntries.filter(function(e){ return !e.fecha_compromiso; });
 
   // ── KANBAN ──
   h += '<div style="display:flex;border:1px solid #1e2235;border-radius:12px;overflow:hidden;height:560px;background:#080c14;">';
 
   // ── Columna SIN FECHA (fija, scroll-y) ──
-  h += '<div style="width:162px;flex-shrink:0;display:flex;flex-direction:column;border-right:1px solid #1e2235;">';
+  h += '<div style="width:190px;flex-shrink:0;display:flex;flex-direction:column;border-right:1px solid #1e2235;">';
   h += '<div style="padding:9px 10px;background:#0a0d14;border-bottom:1px solid #1e2235;flex-shrink:0;">';
   h += '<div style="font-size:9px;font-weight:800;color:#f59e0b;text-transform:uppercase;letter-spacing:.6px;">Sin fecha</div>';
-  h += '<div style="font-size:10px;color:#64748b;margin-top:1px;">'+sinFechaOps.length+' OPs · Arrastra al día</div>';
+  h += '<div style="font-size:10px;color:#64748b;margin-top:1px;">'+entriesSinFecha.length+' color'+(entriesSinFecha.length!==1?'es':'')+' · Arrastra al día</div>';
   h += '</div>';
   h += '<div id="cron-pool" ondragover="_cronDragOver2(event)" ondragleave="_cronDragLeave2(event)" ondrop="_cronDropPool2(event)" ';
   h += 'style="flex:1;overflow-y:auto;padding:8px;transition:background .15s;">';
-  if(sinFechaOps.length){
-    sinFechaOps.forEach(function(opId){ h += _cronKanbanCard(opId, opMap2[opId]); });
+  if(entriesSinFecha.length){
+    h += _cronGrupoTaller(entriesSinFecha);
   } else {
     h += '<div style="text-align:center;padding:20px 8px;color:#2c3050;font-size:11px;">✓ Todas asignadas</div>';
   }
@@ -10397,14 +10404,8 @@ function renderCronograma(){
     var diaNum = dObj.getDate();
     var mesNom = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'][dObj.getMonth()];
 
-    // OPs programadas para este día (agrupadas por OP, no por entrada)
-    var opsEnDia = Object.keys(opMap2).filter(function(id){
-      return opMap2[id][0].fecha_compromiso === dStr;
-    }).sort(function(a,b){
-      var va = opMap2[a][0].fecha_compromiso && opMap2[a][0].fecha_compromiso < hoyStr2;
-      var vb = opMap2[b][0].fecha_compromiso && opMap2[b][0].fecha_compromiso < hoyStr2;
-      return (vb?1:0)-(va?1:0) || (opMap2[a][0].op_nombre||a).localeCompare(opMap2[b][0].op_nombre||b);
-    });
+    // Colores (entradas) programados para este día — cada uno su propia tarjeta
+    var entriesEnDia = filtEntries.filter(function(e){ return e.fecha_compromiso === dStr; });
 
     var colBg = esHoyCol ? 'rgba(10,132,255,.05)' : esPasado ? 'rgba(0,0,0,.2)' : 'transparent';
     var headerBg = esHoyCol ? 'rgba(10,132,255,.15)' : esPasado ? '#070a10' : '#0a0d14';
@@ -10418,13 +10419,13 @@ function renderCronograma(){
     h += '<div style="font-size:8px;font-weight:800;color:'+headerAccent+';text-transform:uppercase;letter-spacing:.5px;">'+diaNom+(esHoyCol?' · HOY':'')+'</div>';
     h += '<div style="font-size:20px;font-weight:900;color:'+numColor+';line-height:1.1;">'+diaNum+'</div>';
     h += '<div style="font-size:8px;color:'+(esPasado?'#1e2235':'#2c3050')+';">'+mesNom+'</div>';
-    if(opsEnDia.length) h += '<div style="font-size:8px;color:#64748b;margin-top:2px;">'+opsEnDia.length+' OP'+(opsEnDia.length>1?'s':'')+'</div>';
+    if(entriesEnDia.length) h += '<div style="font-size:8px;color:#64748b;margin-top:2px;">'+entriesEnDia.length+' color'+(entriesEnDia.length!==1?'es':'')+'</div>';
     h += '</div>';
     // Drop zone
     h += '<div data-fecha="'+dStr+'" ondragover="_cronDragOver2(event)" ondragleave="_cronDragLeave2(event)" ondrop="_cronDrop2(event,this.dataset.fecha)" ';
     h += 'style="flex:1;overflow-y:auto;padding:6px;transition:background .15s;">';
-    if(opsEnDia.length){
-      opsEnDia.forEach(function(opId){ h += _cronKanbanCard(opId, opMap2[opId]); });
+    if(entriesEnDia.length){
+      h += _cronGrupoTaller(entriesEnDia);
     } else {
       h += '<div style="height:100%;min-height:40px;border:1px dashed '+(esHoyCol?'rgba(10,132,255,.2)':'#1a1f2e')+';border-radius:8px;"></div>';
     }
