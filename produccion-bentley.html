@@ -6091,7 +6091,16 @@ function renderOPDetalle(opId){
 
   h += '</div>'; // end flex wrapper
 
-  h += _renderConsumiblesOP(op, udsTotal, _vinculoReceta);
+  // Si la OP aún no tiene OTs generadas (recién creada, "Sin OTs"), udsTotal viene en 0 —
+  // en ese caso usar las cantidades planeadas en las referencias para poder calcular
+  // los consumibles igual, en vez de mostrar todo en cero.
+  var udsTotalConsumibles = udsTotal;
+  if(!udsTotalConsumibles && op.referencias){
+    udsTotalConsumibles = op.referencias.reduce(function(a,r){
+      return a + Object.values(r.cantidades||{}).reduce(function(b,v){ return b+(parseInt(v)||0); },0);
+    },0);
+  }
+  h += _renderConsumiblesOP(op, udsTotalConsumibles, _vinculoReceta);
 
   return h;
 }
