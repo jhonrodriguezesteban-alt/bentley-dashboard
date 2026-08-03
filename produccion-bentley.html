@@ -6135,6 +6135,14 @@ function _cambiarEstadoOT(otId){
   body += '<input type="hidden" id="cot-opid" value="'+esc(ot.op_id)+'">';
   body += '<input type="hidden" id="cot-color" value="'+esc(ot.color)+'">';
 
+  // Pasar a Pago — acción directa, aplica SOLO a este color (todas sus tallas ya entregadas),
+  // nunca al resto de colores de la OP. Solo aparece si este color ya tiene algo entregado.
+  var otsColorCompleto = otsDelMismoColor.concat([ot]);
+  var tieneEntregadoParaPago = otsColorCompleto.some(function(o){ return o.estado==='ENTREGADO'; });
+  if(tieneEntregadoParaPago){
+    body += '<button type="button" data-opid="'+esc(ot.op_id)+'" data-color="'+esc(ot.color)+'" onclick="closeModal();pasarOPAPago(this.dataset.opid,this.dataset.color)" style="width:100%;margin-bottom:14px;background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.4);color:#a855f7;border-radius:8px;padding:10px;cursor:pointer;font-size:13px;font-weight:700;">💳 Pasar a Pago — solo color '+esc(ot.color)+'</button>';
+  }
+
   if(otsDelMismoColor.length > 0){
     body += '<label style="display:flex;align-items:center;gap:10px;background:rgba(10,132,255,.10);border:1px solid rgba(10,132,255,.35);border-radius:9px;padding:10px 14px;cursor:pointer;margin-bottom:14px;">';
     body += '<input type="checkbox" id="cot-todas-tallas" style="accent-color:#0a84ff;width:16px;height:16px;">';
