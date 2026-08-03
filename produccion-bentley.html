@@ -2703,20 +2703,58 @@ function planVerMes(mesKey){
     h += '</div>';
   }
 
-  // ── Diseños planificados del mes ────────────────────────────────────────────
+  // ── Diseños planificados del mes — agrupado por categoría, con estimado de tela ──
   if(mesDisenos.length){
-    h += '<div style="font-size:11px;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">🎨 Diseños planificados · '+mesDisenos.length+' · '+info.disUds.toLocaleString('es-CO')+' uds</div>';
-    h += '<div style="display:flex;flex-direction:column;gap:6px;">';
+    var telaProm = _categoriaPromedioTela();
+    h += '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:8px;">';
+    h += '<span style="font-size:11px;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:.5px;">🎨 Diseños planificados · '+mesDisenos.length+' · '+info.disUds.toLocaleString('es-CO')+' uds</span>';
+    h += '<span style="font-size:9px;color:#475569;">🧵 mts est. = promedio de consumo real por categoría × uds planeadas</span>';
+    h += '</div>';
+
+    var catGroupsDis = {};
     mesDisenos.forEach(function(d){
-      var p = disPlanAll[d.id]||{uds:0};
-      var esFenio = (d.proveedor||'').toUpperCase()==='FENIO';
-      h += '<div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:rgba(16,185,129,.05);border:1px solid rgba(52,211,153,.15);border-radius:9px;">';
-      h += '<div style="flex:1;min-width:0;">';
-      h += '<div style="font-size:12px;font-weight:700;color:#d1fae5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(d.nombre)+'</div>';
-      h += '<div style="font-size:9px;color:#64748b;">'+esc(d.categoria||'—')+(esFenio?' · <span style="color:#fbbf24;">💳 FENIO → dic.</span>':'')+'</div>';
+      var cat = (d.categoria||'Sin categoría').trim().toUpperCase().replace(/\s+PR$/,'');
+      if(!catGroupsDis[cat]) catGroupsDis[cat] = [];
+      catGroupsDis[cat].push(d);
+    });
+    var catOrdenDis = Object.keys(catGroupsDis).sort(function(a,b){
+      var ua = catGroupsDis[a].reduce(function(s,d){ return s+((disPlanAll[d.id]||{}).uds||0); },0);
+      var ub = catGroupsDis[b].reduce(function(s,d){ return s+((disPlanAll[d.id]||{}).uds||0); },0);
+      return ub-ua;
+    });
+
+    h += '<div style="display:flex;flex-direction:column;gap:14px;">';
+    catOrdenDis.forEach(function(cat){
+      var ds = catGroupsDis[cat].slice().sort(function(a,b){ return ((disPlanAll[b.id]||{}).uds||0)-((disPlanAll[a.id]||{}).uds||0); });
+      var udsCat = ds.reduce(function(s,d){ return s+((disPlanAll[d.id]||{}).uds||0); },0);
+      var tp = telaProm[cat];
+      var mtsCat = tp ? tp.prom*udsCat : null;
+
+      h += '<div>';
+      h += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;padding-left:7px;border-left:3px solid rgba(52,211,153,.4);flex-wrap:wrap;">';
+      h += '<span style="font-size:10px;font-weight:800;color:#34d399;text-transform:uppercase;letter-spacing:.1em;">'+esc(cat)+'</span>';
+      h += '<span style="font-size:10px;color:#475569;">'+ds.length+' diseño'+(ds.length!==1?'s':'')+' · '+udsCat.toLocaleString('es-CO')+' uds</span>';
+      if(mtsCat!==null){
+        h += '<span style="font-size:10px;font-weight:700;color:#0ea5e9;background:rgba(14,165,233,.1);border:1px solid rgba(14,165,233,.3);border-radius:10px;padding:1px 8px;">🧵 ≈ '+mtsCat.toLocaleString('es-CO',{maximumFractionDigits:0})+' mts est. ('+tp.prom.toFixed(2)+' mts/u prom., '+tp.n+' receta'+(tp.n!==1?'s':'')+')</span>';
+      } else {
+        h += '<span style="font-size:10px;color:#374151;">sin recetas de referencia en esta categoría todavía</span>';
+      }
       h += '</div>';
-      h += '<div style="font-size:13px;font-weight:800;color:#34d399;">'+(p.uds||0).toLocaleString('es-CO')+'<span style="font-size:9px;color:#64748b;margin-left:2px;">uds</span></div>';
-      h += '</div>';
+
+      h += '<div style="display:flex;flex-direction:column;gap:6px;">';
+      ds.forEach(function(d){
+        var p = disPlanAll[d.id]||{uds:0};
+        var esFenio = (d.proveedor||'').toUpperCase()==='FENIO';
+        var mtsD = tp ? tp.prom*(p.uds||0) : null;
+        h += '<div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:rgba(16,185,129,.05);border:1px solid rgba(52,211,153,.15);border-radius:9px;">';
+        h += '<div style="flex:1;min-width:0;">';
+        h += '<div style="font-size:12px;font-weight:700;color:#d1fae5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(d.nombre)+'</div>';
+        h += '<div style="font-size:9px;color:#64748b;">'+(esFenio?'<span style="color:#fbbf24;">💳 FENIO → dic.</span>':(mtsD!==null?'🧵 ≈ '+mtsD.toLocaleString('es-CO',{maximumFractionDigits:1})+' mts est.':'—'))+'</div>';
+        h += '</div>';
+        h += '<div style="font-size:13px;font-weight:800;color:#34d399;">'+(p.uds||0).toLocaleString('es-CO')+'<span style="font-size:9px;color:#64748b;margin-left:2px;">uds</span></div>';
+        h += '</div>';
+      });
+      h += '</div></div>';
     });
     h += '</div>';
   }
@@ -2858,6 +2896,37 @@ function _planEstadoColor(op, color){
 // producto sí pueden tener esos caracteres (ej. "BEISBOLERA 2.0"), así que se sanitizan
 // SIEMPRE igual al leer y al escribir para que la clave nunca rompa el guardado.
 function _recSanitizeKey(s){ return (s||'').replace(/[.$#\[\]\/]/g,'_'); }
+
+// Promedio de consumo de tela (mts/prenda) por categoría, calculado a partir de las
+// recetas de costeo REALES que ya están vinculadas a OPs de esa categoría. Sirve para
+// estimar de bulto la tela que va a necesitar un diseño que todavía no tiene receta propia.
+var _catTelaPromCache = null;
+function _categoriaPromedioTela(){
+  if(_catTelaPromCache) return _catTelaPromCache;
+  var porCat = {}; // cat -> {recetaId: mtsPorPrenda}
+  (DB.ops||[]).forEach(function(op){
+    if(!op.categoria) return;
+    var rec = op.receta_id ? (DB.costeo.recetas||[]).find(function(x){ return x.id===op.receta_id; }) : _planRecetaDeOp(op);
+    if(!rec) return;
+    var mts = (rec.componentes||[]).reduce(function(s,c){
+      if(c.tipo!=='MATERIAL') return s;
+      var mp = (DB.costeo.mp||[]).find(function(x){ return x.id===c.mp_id; });
+      if(!mp || mp.familia!=='Telas') return s;
+      return s + (parseFloat(c.consumo)||0);
+    },0);
+    if(mts<=0) return;
+    var cat = op.categoria.trim().toUpperCase().replace(/\s+PR$/,'');
+    if(!porCat[cat]) porCat[cat] = {};
+    porCat[cat][rec.id] = mts;
+  });
+  var resultado = {};
+  Object.keys(porCat).forEach(function(cat){
+    var vals = Object.values(porCat[cat]);
+    resultado[cat] = {prom: vals.reduce(function(a,v){ return a+v; },0)/vals.length, n: vals.length};
+  });
+  _catTelaPromCache = resultado;
+  return resultado;
+}
 
 function _planRecetaDeOp(op){
   var recetas = DB.costeo && DB.costeo.recetas ? DB.costeo.recetas : [];
