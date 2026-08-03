@@ -415,13 +415,14 @@
     },
     {
       "color": "ROJO",
-      "entregado": false,
+      "entregado": true,
       "fecha_entrada": "2026-07-02",
       "id": "id_1783030889768_jjjfcdibs",
       "op_id": "OP-0053",
       "op_nombre": "CHAQUETA TORERO NIÑA",
       "satelite_id": "sat_04",
-      "uds": 105
+      "uds": 105,
+      "fecha_entrega_real": "2026-08-03"
     },
     {
       "color": "ROSA",
@@ -508,12 +509,12 @@
       "color": "MARFIL",
       "entregado": true,
       "fecha_entrada": "2026-07-16",
+      "fecha_entrega_real": "2026-08-01",
       "id": "id_1784241208604_u5vllykei",
       "op_id": "OP-2026-077",
       "op_nombre": "TORERO PILI",
       "satelite_id": "sat_04",
-      "uds": 84,
-      "fecha_entrega_real": "2026-08-01"
+      "uds": 84
     },
     {
       "color": "AZUL OSCURO",
@@ -689,34 +690,34 @@
       "color": "AZUL OSCURO",
       "entregado": true,
       "fecha_entrada": "2026-07-30",
+      "fecha_entrega_real": "2026-08-01",
       "id": "id_1785416603712_aa0jsj2m5",
       "op_id": "OP-2026-088",
       "op_nombre": "CHAQUETA BURBUJAS",
       "satelite_id": "sat_11",
-      "uds": 84,
-      "fecha_entrega_real": "2026-08-01"
+      "uds": 84
     },
     {
       "color": "MARFIL",
       "entregado": false,
       "fecha_entrada": "2026-07-30",
+      "fecha_inicial": "2026-08-04",
       "id": "id_1785416618415_zzcdnyhzf",
       "op_id": "OP-2026-088",
       "op_nombre": "CHAQUETA BURBUJAS",
       "satelite_id": "sat_10",
-      "uds": 84,
-      "fecha_inicial": "2026-08-04"
+      "uds": 84
     },
     {
       "color": "ROJO",
       "entregado": true,
       "fecha_entrada": "2026-07-30",
+      "fecha_entrega_real": "2026-08-01",
       "id": "id_1785416632460_79v5bcbpy",
       "op_id": "OP-2026-088",
       "op_nombre": "CHAQUETA BURBUJAS",
       "satelite_id": "sat_13",
-      "uds": 84,
-      "fecha_entrega_real": "2026-08-01"
+      "uds": 84
     },
     {
       "color": "AZUL OSCURO",
@@ -726,8 +727,7 @@
       "op_id": "OP-0057",
       "op_nombre": "CHAQUETA RALPH",
       "satelite_id": "sat_10",
-      "uds": 96,
-      "fecha_compromiso": null
+      "uds": 96
     },
     {
       "color": "BEIGE",
@@ -737,92 +737,63 @@
       "op_id": "OP-0057",
       "op_nombre": "CHAQUETA RALPH",
       "satelite_id": "sat_10",
-      "uds": 112,
-      "fecha_compromiso": null
+      "uds": 112
     },
     {
+      "color": "AVENA",
+      "entregado": false,
+      "fecha_entrada": "2026-08-01",
       "id": "id_1785593960715_gbhe0nzbr",
       "op_id": "OP-2026-097",
       "op_nombre": "CAMISON BERLIN",
-      "color": "AVENA",
       "satelite_id": "sat_04",
-      "uds": 16,
-      "fecha_entrada": "2026-08-01",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 16
     },
     {
+      "color": "AVENA",
+      "entregado": false,
+      "fecha_entrada": "2026-08-01",
       "id": "id_1785598249697_c3mj8bpbh",
       "op_id": "OP-2026-107",
       "op_nombre": "CONJUNTO FRANKY PRIME",
-      "color": "AVENA",
       "satelite_id": "sat_06",
-      "uds": 30,
-      "fecha_entrada": "2026-08-01",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 30
     },
     {
+      "color": "CAFE",
+      "entregado": false,
+      "fecha_entrada": "2026-08-01",
       "id": "id_1785598260081_z232qsqi4",
       "op_id": "OP-2026-107",
       "op_nombre": "CONJUNTO FRANKY PRIME",
-      "color": "CAFE",
-      "satelite_id": null,
-      "uds": 24,
-      "fecha_entrada": "2026-08-01",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 24
     },
     {
+      "color": "GRIS OSCURO",
+      "entregado": false,
+      "fecha_entrada": "2026-08-01",
       "id": "id_1785598272114_dsc2o5s42",
       "op_id": "OP-2026-107",
       "op_nombre": "CONJUNTO FRANKY PRIME",
-      "color": "GRIS OSCURO",
-      "satelite_id": null,
-      "uds": 18,
-      "fecha_entrada": "2026-08-01",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 18
     },
     {
+      "color": "MARFIL",
+      "entregado": false,
+      "fecha_entrada": "2026-08-01",
       "id": "id_1785598294345_n2af3nzkx",
       "op_id": "OP-2026-107",
       "op_nombre": "CONJUNTO FRANKY PRIME",
-      "color": "MARFIL",
-      "satelite_id": null,
-      "uds": 40,
-      "fecha_entrada": "2026-08-01",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 40
     },
     {
+      "color": "VINOTINTO",
+      "entregado": false,
+      "fecha_entrada": "2026-08-01",
       "id": "id_1785598308848_32dujhv2a",
       "op_id": "OP-2026-107",
       "op_nombre": "CONJUNTO FRANKY PRIME",
-      "color": "VINOTINTO",
-      "satelite_id": null,
-      "uds": 18,
-      "fecha_entrada": "2026-08-01",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 18
     }
   ]
 }
