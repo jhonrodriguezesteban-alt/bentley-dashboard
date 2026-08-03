@@ -1026,7 +1026,7 @@ function _fbApplyKey(key, d){
   }
   else if(key==='cronograma'){ DB.cronograma = d.cronograma||[]; }
   else if(key==='prog_ops')  { DB.prog_ops = d.ops_plan||[]; }
-  else if(key==='planeacion'){ DB.planeacion = {meses:d.meses||{}, disenos_plan:d.disenos_plan||{}}; }
+  else if(key==='planeacion'){ DB.planeacion = {meses:d.meses||{}, disenos_plan:d.disenos_plan||{}, historial_corte:d.historial_corte||[]}; }
   else if(key==='sim')       { DB.sim={active:d.active||[],data:d.data||{}}; _simActive=DB.sim.active; _simData=DB.sim.data; }
   else if(key==='usuarios')  { DB.usuarios = d.usuarios||[]; }
   else if(key==='costeo')    { DB.costeo = d; }
@@ -2019,6 +2019,8 @@ var _planDisOpen = false;
 var _planBusqRef = '';
 var _planDisFiltroEtapa = ''; // '' = todas
 var _planDisFiltroMarca = ''; // '' = todas · 'PRIME' | 'MAQUILA' | 'BK'
+var _planVistaHistorial = false; // false = pendientes de cortar (default) · true = ya cortado (historial)
+function setPlanVistaHistorial(v){ _planVistaHistorial = v; renderPage('planeacion'); }
 function _planMarcaBucket(d){
   var m = (d.marca||'').toLowerCase();
   if(m.indexOf('prime')>=0) return 'PRIME';
@@ -2099,7 +2101,7 @@ function _planDisSetUds(disId, uds){
   if(telTotal) telTotal.textContent = total>0 ? _fmtCOP(total) : '—';
   var telUds = document.getElementById('pland-total-uds');
   if(telUds) telUds.textContent = totalUds>0 ? totalUds.toLocaleString('es-CO')+' uds' : '—';
-  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}});
+  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[]});
 }
 
 function _planDisSetMes(disId, mes){
@@ -2109,7 +2111,7 @@ function _planDisSetMes(disId, mes){
   if(!DB.planeacion.disenos_plan[disId]) DB.planeacion.disenos_plan[disId] = {uds:0, mes:''};
   DB.planeacion.disenos_plan[disId].mes = mes;
   saveLocal();
-  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}});
+  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[]});
   renderPage('planeacion');
 }
 function _planDisRemove(disId){
@@ -2120,7 +2122,7 @@ function _planDisRemove(disId){
     DB.planeacion.disenos_plan[disId].mes = '';
   }
   saveLocal();
-  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}});
+  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[]});
   renderPage('planeacion');
 }
 
@@ -2128,7 +2130,7 @@ function limpiarPlanDis(){
   if(!DB.planeacion) return;
   DB.planeacion.disenos_plan = {};
   saveLocal();
-  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: {}});
+  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: {}, historial_corte: DB.planeacion.historial_corte||[]});
   renderPage('planeacion');
 }
 
@@ -2289,7 +2291,7 @@ async function cargarDatos(){
     var logR = await fetch(BASE_URL + 'prod_logistica.json?t=' + t);
     if(logR.ok){ var d10 = await logR.json(); DB.logistica = {tareas: d10.tareas||[]}; }
     var planR = await fetch(BASE_URL + 'prod_planeacion.json?t=' + t);
-    if(planR.ok){ var d11 = await planR.json(); DB.planeacion = {meses: d11.meses||{}, disenos_plan: d11.disenos_plan||{}}; }
+    if(planR.ok){ var d11 = await planR.json(); DB.planeacion = {meses: d11.meses||{}, disenos_plan: d11.disenos_plan||{}, historial_corte: d11.historial_corte||[]}; }
     var costeoR = await fetch(BASE_URL + 'prod_costeo.json?t=' + t);
     if(costeoR.ok){ var d12 = await costeoR.json(); DB.costeo = {mp:d12.mp||[],servicios:d12.servicios||[],puestos:d12.puestos||[],tarifas_cif:d12.tarifas_cif||[],params:d12.params||{},recetas:d12.recetas||[],precios_pt:d12.precios_pt||[],receta_map:d12.receta_map||{}}; }
     else { if(!DB.planeacion) DB.planeacion = {meses:{}}; }
@@ -2327,7 +2329,7 @@ async function cargarDatos(){
           var fbCron = await _fbGet('cronograma');
           if(fbCron) DB.cronograma = fbCron.cronograma||[];
           var fbPlan = await _fbGet('planeacion');
-          if(fbPlan) DB.planeacion = {meses: fbPlan.meses||{}, disenos_plan: fbPlan.disenos_plan||{}};
+          if(fbPlan) DB.planeacion = {meses: fbPlan.meses||{}, disenos_plan: fbPlan.disenos_plan||{}, historial_corte: fbPlan.historial_corte||[]};
           var fbBit = await _fbGet('bitacora');
           if(fbBit) DB.bitacora = {eventos: fbBit.eventos||[]};
           var fbCosteo = await _fbGet('costeo');
@@ -2519,8 +2521,8 @@ function renderPage(page){
 var _planDragOpId = null;
 
 async function guardarPlaneacion(){
-  if(!DB.planeacion) DB.planeacion = {meses:{}, disenos_plan:{}};
-  var ok = await guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}});
+  if(!DB.planeacion) DB.planeacion = {meses:{}, disenos_plan:{}, historial_corte:[]};
+  var ok = await guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[]});
   if(ok) toast('Planeación guardada','success');
 }
 
@@ -2746,6 +2748,15 @@ function _planColorUds(op, color){
   }
   return uds;
 }
+// Unidades totales de un color, sin importar su estado (para el historial de corte —
+// a diferencia de _planColorUds, aquí SÍ cuentan las OTs ya cortadas/en confección/entregadas).
+function _planColorUdsHistorico(op, color){
+  var ots = (DB.ots||[]).filter(function(o){
+    return o.op_id===op.id && (color==='—' || (o.color||'').trim().toUpperCase()===color.toUpperCase());
+  });
+  if(ots.length) return ots.reduce(function(a,o){ return a+(parseInt(o.cantidad)||0); },0);
+  return _planColorUds(op, color);
+}
 function _planCostoColor(op, color){
   var rec = _planRecetaDeOp(op);
   if(!rec) return null;
@@ -2910,6 +2921,53 @@ function _planDisMiniCard(d, planD){
   return h;
 }
 
+function _renderPlanHistorialCorte(MESES){
+  var hist = (DB.planeacion && DB.planeacion.historial_corte) || [];
+  var h = '<div style="padding:16px 20px 40px;">';
+  if(!hist.length){
+    h += '<div style="text-align:center;padding:60px 20px;color:#374151;">';
+    h += '<div style="font-size:36px;margin-bottom:10px;">✂️</div>';
+    h += '<div style="font-size:14px;font-weight:700;">Todavía no hay historial de corte</div>';
+    h += '<div style="font-size:12px;color:#475569;margin-top:4px;">Aquí va a ir quedando cada color que salga de "pendiente" porque ya se cortó.</div>';
+    h += '</div></div>';
+    return h;
+  }
+  // Agrupar por mes en que había sido planeado
+  var porMes = {};
+  hist.forEach(function(e){ (porMes[e.mes_planeado]=porMes[e.mes_planeado]||[]).push(e); });
+  var totalUds = hist.reduce(function(a,e){ return a+(e.uds||0); },0);
+  h += '<div style="font-size:12px;color:#64748b;margin-bottom:16px;">'+hist.length+' colores cortados en total · '+totalUds.toLocaleString('es-CO')+' uds</div>';
+
+  MESES.forEach(function(mes){
+    var items = (porMes[mes.k]||[]).slice().sort(function(a,b){ return (b.fecha_deteccion||'').localeCompare(a.fecha_deteccion||''); });
+    if(!items.length) return;
+    var udsMes = items.reduce(function(a,e){ return a+(e.uds||0); },0);
+    h += '<div style="margin-bottom:20px;">';
+    h += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">';
+    h += '<span style="font-size:13px;font-weight:800;color:'+mes.color+';text-transform:uppercase;letter-spacing:.5px;">'+mes.label+'</span>';
+    h += '<span style="font-size:11px;color:#475569;">'+items.length+' color'+(items.length!==1?'es':'')+' cortados · '+udsMes.toLocaleString('es-CO')+' uds</span>';
+    h += '</div>';
+    h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;">';
+    items.forEach(function(e){
+      h += '<div data-opid="'+e.op_id+'" onclick="verDetalleOP(this.dataset.opid)" style="background:#0d1117;border:1px solid rgba(52,211,153,.2);border-radius:9px;padding:10px 12px;cursor:pointer;">';
+      h += '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">';
+      h += '<span style="font-size:11px;font-weight:800;color:#0a84ff;">'+esc(fmtOpId(e.op_id))+'</span>';
+      h += '<span style="font-size:8px;font-weight:700;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);color:#34d399;border-radius:4px;padding:1px 5px;text-transform:uppercase;">'+esc(e.categoria||'')+'</span>';
+      h += '</div>';
+      h += '<div style="font-size:12px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:4px;">'+esc(e.op_nombre||'')+'</div>';
+      if(e.color && e.color!=='—') h += '<span style="font-size:9px;font-weight:700;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);border-radius:3px;color:#0a84ff;padding:1px 5px;text-transform:uppercase;">'+esc(e.color)+'</span>';
+      h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">';
+      h += '<span style="font-size:11px;color:#64748b;">'+(e.uds||0).toLocaleString('es-CO')+' uds</span>';
+      h += '<span style="font-size:9px;color:#475569;">✂ '+fmtDate(e.fecha_deteccion)+'</span>';
+      h += '</div>';
+      h += '</div>';
+    });
+    h += '</div></div>';
+  });
+  h += '</div>';
+  return h;
+}
+
 function renderPlaneacion(){
   var MESES = [
     {k:'2026-07',label:'Julio',     color:'#3b82f6',bg:'rgba(59,130,246,.07)'},
@@ -2968,8 +3026,42 @@ function renderPlaneacion(){
   if(_planMigrado){
     DB.planeacion.meses = meses;
     if(_canEditPlan()){
-      guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}});
+      guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[]});
     }
+  }
+
+  // ── Historial de corte: cuando un color asignado a un mes deja de estar "pendiente"
+  // (porque ya se cortó), se registra aquí con fecha y el mes en que había sido planeado,
+  // en vez de simplemente desaparecer. Así nunca se pierde el rastro de qué se cortó y cuándo.
+  if(!DB.planeacion.historial_corte) DB.planeacion.historial_corte = [];
+  var _histCorte = DB.planeacion.historial_corte;
+  var _histKeys = {}; _histCorte.forEach(function(h){ _histKeys[h.key]=true; });
+  var _histNuevo = false;
+  MESES.forEach(function(m){
+    var arr = meses[m.k]||[];
+    var restante = [];
+    arr.forEach(function(key){
+      if(planUnitsByKey[key]){ restante.push(key); return; } // sigue pendiente, se queda
+      var parsed = _planParseKey(key);
+      var op = (DB.ops||[]).find(function(o){ return o.id===parsed.opId; });
+      if(!op){ return; } // la OP ya no existe — se descarta sin registrar (no hay nada que rastrear)
+      if(_histKeys[key]) return; // ya estaba registrado, no duplicar (y se descarta del mes activo)
+      var estadoReal = _planEstadoColor(op, parsed.color);
+      var uds = _planColorUdsHistorico(op, parsed.color);
+      _histCorte.push({
+        key:key, op_id:op.id, op_nombre:op.nombre_producto, categoria:op.categoria,
+        color:parsed.color, uds:uds, mes_planeado:m.k, estado_al_salir:estadoReal,
+        fecha_deteccion:hoy()
+      });
+      _histKeys[key]=true;
+      _histNuevo = true;
+    });
+    if(restante.length!==arr.length) meses[m.k]=restante;
+  });
+  if(_histNuevo && _canEditPlan()){
+    DB.planeacion.meses = meses;
+    DB.planeacion.historial_corte = _histCorte;
+    guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte});
   }
 
   // Keys asignadas a algún mes
@@ -3001,6 +3093,16 @@ function renderPlaneacion(){
   h += '<span style="font-size:11px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:8px;color:#34d399;padding:4px 10px;font-weight:700;">'+totalAsig+' asignados</span>';
   h += '<span style="font-size:11px;background:rgba(148,163,184,.08);border:1px solid #2c2c2e;border-radius:8px;color:#64748b;padding:4px 10px;font-weight:700;">'+poolUnits.length+' sin asignar</span>';
   h += '</div></div>';
+
+  // ── Toggle: Pendientes de cortar vs Ya cortado (historial) ───────────────────
+  h += '<div style="display:flex;gap:6px;margin-bottom:18px;background:#0a0d14;border:1px solid #2c2c2e;border-radius:10px;padding:4px;width:fit-content;">';
+  h += '<button onclick="setPlanVistaHistorial(false)" style="font-size:12px;font-weight:700;padding:7px 16px;border-radius:7px;cursor:pointer;border:none;background:'+(!_planVistaHistorial?'#0a84ff':'transparent')+';color:'+(!_planVistaHistorial?'#fff':'#64748b')+';">📋 Pendientes de cortar</button>';
+  h += '<button onclick="setPlanVistaHistorial(true)" style="font-size:12px;font-weight:700;padding:7px 16px;border-radius:7px;cursor:pointer;border:none;background:'+(_planVistaHistorial?'#34d399':'transparent')+';color:'+(_planVistaHistorial?'#0a0d14':'#64748b')+';">✂ Ya cortado (historial)</button>';
+  h += '</div>';
+
+  if(_planVistaHistorial){
+    return h + _renderPlanHistorialCorte(MESES);
+  }
 
   // ── Panel: Diseños en planificación ─────────────────────────────────────────
   var disenosActivos = (DB.disenos||[]).filter(function(d){ return !d.eliminado && d.kanban_estado !== 'LISTA_PRODUCCION'; });
