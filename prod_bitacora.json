@@ -4785,16 +4785,25 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1785767383250_cj1rb",
-      "ts": 1785767383250,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782187755568_rc8odie8i",
-      "nombre": "CHAQUETA EMBONE CUERO",
       "categoria": "Chaquetas",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1782187755568_rc8odie8i",
       "estado_anterior": "EN_CORTE_MUESTRA",
-      "estado_nuevo": "EN_DISENO_DIGITAL"
+      "estado_nuevo": "EN_DISENO_DIGITAL",
+      "id": "evt_1785767383250_cj1rb",
+      "marca": "Bentley Kids",
+      "nombre": "CHAQUETA EMBONE CUERO",
+      "tipo": "estado_diseno",
+      "ts": 1785767383250,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1785767735975_feeii",
+      "ts": 1785767735975,
+      "user": "Isabel",
+      "tipo": "eliminar_comentario_diseno",
+      "diseno_id": "id_1782181868392_3cenll6a6",
+      "nombre": "PANTALON MARLEY",
+      "comentario_id": "c_1785766509018"
     }
   ]
 }
