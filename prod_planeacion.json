@@ -105,7 +105,6 @@
     ],
     "2026-09": [
       "OP-2026-089||MARFIL",
-      "OP-2026-090||GRIS OSCURO",
       "OP-0040||MARFIL",
       "OP-0031||AZUL BEBE",
       "OP-2026-076||BEIGE"
@@ -114,7 +113,8 @@
       "OP-2026-100||BEIGE",
       "OP-2026-100||NEGRO",
       "OP-2026-089||ROSA",
-      "OP-2026-090||VINOTINTO"
+      "OP-2026-090||VINOTINTO",
+      "OP-2026-090||GRIS OSCURO"
     ]
   },
   "disenos_plan": {
@@ -377,70 +377,70 @@
   },
   "historial_corte": [
     {
-      "key": "OP-2026-073||AZUL BEBE",
-      "op_id": "OP-2026-073",
-      "op_nombre": "BLUSA JEN + BLUSA RAYAS JEN",
       "categoria": "BLUSAS",
       "color": "AZUL BEBE",
-      "uds": 0,
-      "mes_planeado": "2026-07",
       "estado_al_salir": "POR_REVISAR",
-      "fecha_deteccion": "2026-08-03"
+      "fecha_deteccion": "2026-08-03",
+      "key": "OP-2026-073||AZUL BEBE",
+      "mes_planeado": "2026-07",
+      "op_id": "OP-2026-073",
+      "op_nombre": "BLUSA JEN + BLUSA RAYAS JEN",
+      "uds": 0
     },
     {
+      "categoria": "CONJUNTOS",
+      "color": "NEGRO",
+      "estado_al_salir": "PENDIENTE_CORTAR",
+      "fecha_deteccion": "2026-08-03",
       "key": "OP-0059||NEGRO",
+      "mes_planeado": "2026-07",
       "op_id": "OP-0059",
       "op_nombre": "SET FRANKY",
-      "categoria": "CONJUNTOS",
-      "color": "NEGRO",
-      "uds": 0,
-      "mes_planeado": "2026-07",
-      "estado_al_salir": "PENDIENTE_CORTAR",
-      "fecha_deteccion": "2026-08-03"
+      "uds": 0
     },
     {
-      "key": "OP-2026-085||CAMEL",
-      "op_id": "OP-2026-085",
-      "op_nombre": "PANTALON RAVE",
       "categoria": "PANTALONES",
       "color": "CAMEL",
-      "uds": 48,
-      "mes_planeado": "2026-07",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-08-03"
+      "fecha_deteccion": "2026-08-03",
+      "key": "OP-2026-085||CAMEL",
+      "mes_planeado": "2026-07",
+      "op_id": "OP-2026-085",
+      "op_nombre": "PANTALON RAVE",
+      "uds": 48
     },
     {
-      "key": "OP-2026-080||MARFIL",
-      "op_id": "OP-2026-080",
-      "op_nombre": "CONJUNTO ISABELLA",
       "categoria": "CONJUNTOS",
       "color": "MARFIL",
-      "uds": 0,
-      "mes_planeado": "2026-08",
       "estado_al_salir": "POR_REVISAR",
-      "fecha_deteccion": "2026-08-03"
+      "fecha_deteccion": "2026-08-03",
+      "key": "OP-2026-080||MARFIL",
+      "mes_planeado": "2026-08",
+      "op_id": "OP-2026-080",
+      "op_nombre": "CONJUNTO ISABELLA",
+      "uds": 0
     },
     {
-      "key": "OP-0034||CAMEL",
-      "op_id": "OP-0034",
-      "op_nombre": "PILOTO PANCAKE",
       "categoria": "CHAQUETAS",
       "color": "CAMEL",
-      "uds": 84,
-      "mes_planeado": "2026-08",
       "estado_al_salir": "EN_CONFECCION",
-      "fecha_deteccion": "2026-08-03"
-    },
-    {
-      "key": "OP-0034||NEGRO",
+      "fecha_deteccion": "2026-08-03",
+      "key": "OP-0034||CAMEL",
+      "mes_planeado": "2026-08",
       "op_id": "OP-0034",
       "op_nombre": "PILOTO PANCAKE",
+      "uds": 84
+    },
+    {
       "categoria": "CHAQUETAS",
       "color": "NEGRO",
-      "uds": 72,
-      "mes_planeado": "2026-08",
       "estado_al_salir": "EN_CONFECCION",
-      "fecha_deteccion": "2026-08-03"
+      "fecha_deteccion": "2026-08-03",
+      "key": "OP-0034||NEGRO",
+      "mes_planeado": "2026-08",
+      "op_id": "OP-0034",
+      "op_nombre": "PILOTO PANCAKE",
+      "uds": 72
     }
   ]
 }
