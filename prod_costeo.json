@@ -4190,8 +4190,8 @@
       "precio_detal": 199900,
       "precio_mayorista": 120000,
       "precio_web": 199900,
-      "producto": "SET FRANKY PR - REF: 3012",
-      "precios_pvp": true
+      "precios_pvp": true,
+      "producto": "SET FRANKY PR - REF: 3012"
     },
     {
       "precio_detal": 95798.32,
@@ -22260,7 +22260,7 @@
           "zona": "logisitica"
         },
         {
-          "consumo": 1.4,
+          "consumo": 1.7,
           "id": "c82_20",
           "mp_id": "mp_31010_1031011",
           "tipo": "MATERIAL"
@@ -22375,7 +22375,8 @@
         }
       ],
       "id": "rec_oversized_capota_1058",
-      "producto": "OVERSIZED CAPOTA - REF: 1058"
+      "producto": "OVERSIZED CAPOTA - REF: 1058",
+      "referencia": ""
     },
     {
       "componentes": [
@@ -26502,16 +26503,16 @@
           "tipo": "MATERIAL"
         },
         {
+          "cantidad": 1,
           "id": "cid_1785767387036_3811",
-          "tipo": "SERVICIO",
           "servicio_id": "cid_1785767361188_1430",
-          "cantidad": 1
+          "tipo": "SERVICIO"
         },
         {
+          "cantidad": 1,
           "id": "cid_1785767425863_8414",
-          "tipo": "SERVICIO",
           "servicio_id": "cid_1785767419821_4969",
-          "cantidad": 1
+          "tipo": "SERVICIO"
         }
       ],
       "id": "rec_set_franky_pr_3012",
@@ -30310,14 +30311,14 @@
       "nombre": "CONFECCION COUNTRY 2.0"
     },
     {
+      "costo_unitario": 12000,
       "id": "cid_1785767361188_1430",
-      "nombre": "CONFECCION SET FRANKY PRIME",
-      "costo_unitario": 12000
+      "nombre": "CONFECCION SET FRANKY PRIME"
     },
     {
+      "costo_unitario": 20000,
       "id": "cid_1785767419821_4969",
-      "nombre": "SERVICIO DE TEJEDURIA SET FRANKY PR",
-      "costo_unitario": 20000
+      "nombre": "SERVICIO DE TEJEDURIA SET FRANKY PR"
     }
   ],
   "tarifas_cif": [
