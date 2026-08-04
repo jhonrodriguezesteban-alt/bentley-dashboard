@@ -2727,8 +2727,14 @@ function planVerMes(mesKey){
     catOrdenDis.forEach(function(cat){
       var ds = catGroupsDis[cat].slice().sort(function(a,b){ return ((disPlanAll[b.id]||{}).uds||0)-((disPlanAll[a.id]||{}).uds||0); });
       var udsCat = ds.reduce(function(s,d){ return s+((disPlanAll[d.id]||{}).uds||0); },0);
+      // El estimado de tela excluye diseños de proveedor externo (Fenio) — ellos producen
+      // con su propia tela, no es materia prima que nosotros tengamos que programar.
+      var udsCatInterna = ds.reduce(function(s,d){
+        if((d.proveedor||'').toUpperCase()==='FENIO') return s;
+        return s+((disPlanAll[d.id]||{}).uds||0);
+      },0);
       var tp = telaProm[cat];
-      var mtsCat = tp ? tp.prom*udsCat : null;
+      var mtsCat = tp ? tp.prom*udsCatInterna : null;
 
       h += '<div>';
       h += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;padding-left:7px;border-left:3px solid rgba(52,211,153,.4);flex-wrap:wrap;">';
@@ -2744,15 +2750,43 @@ function planVerMes(mesKey){
       h += '<div style="display:flex;flex-direction:column;gap:6px;">';
       ds.forEach(function(d){
         var p = disPlanAll[d.id]||{uds:0};
+        // Los que van a proveedor externo (Fenio) no se estiman — el proveedor se encarga
+        // de su propia producción, no es tela que nosotros tengamos que programar.
         var esFenio = (d.proveedor||'').toUpperCase()==='FENIO';
-        var mtsD = tp ? tp.prom*(p.uds||0) : null;
-        h += '<div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:rgba(16,185,129,.05);border:1px solid rgba(52,211,153,.15);border-radius:9px;">';
-        h += '<div style="flex:1;min-width:0;">';
-        h += '<div style="font-size:12px;font-weight:700;color:#d1fae5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(d.nombre)+'</div>';
-        h += '<div style="font-size:9px;color:#64748b;">'+(esFenio?'<span style="color:#fbbf24;">💳 FENIO → dic.</span>':(mtsD!==null?'🧵 ≈ '+mtsD.toLocaleString('es-CO',{maximumFractionDigits:1})+' mts est.':'—'))+'</div>';
-        h += '</div>';
-        h += '<div style="font-size:13px;font-weight:800;color:#34d399;">'+(p.uds||0).toLocaleString('es-CO')+'<span style="font-size:9px;color:#64748b;margin-left:2px;">uds</span></div>';
-        h += '</div>';
+        var mtsD = (tp && !esFenio) ? tp.prom*(p.uds||0) : null;
+        var coloresD = (!esFenio && d.colores_escogidos && d.colores_escogidos.length) ? d.colores_escogidos : [];
+        var mtsPorColor = (mtsD!==null && coloresD.length) ? mtsD/coloresD.length : null;
+        var udsPorColor = coloresD.length ? (p.uds||0)/coloresD.length : null;
+
+        if(coloresD.length){
+          h += '<details style="background:rgba(16,185,129,.05);border:1px solid rgba(52,211,153,.15);border-radius:9px;overflow:hidden;">';
+          h += '<summary style="display:flex;align-items:center;gap:10px;padding:9px 12px;cursor:pointer;list-style:none;">';
+          h += '<div style="flex:1;min-width:0;">';
+          h += '<div style="font-size:12px;font-weight:700;color:#d1fae5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(d.nombre)+'</div>';
+          h += '<div style="font-size:9px;color:#64748b;">'+(mtsD!==null?'🧵 ≈ '+mtsD.toLocaleString('es-CO',{maximumFractionDigits:1})+' mts est. · '+coloresD.length+' color'+(coloresD.length!==1?'es':'')+' — clic para ver por color':coloresD.length+' color'+(coloresD.length!==1?'es':''))+'</div>';
+          h += '</div>';
+          h += '<div style="font-size:13px;font-weight:800;color:#34d399;">'+(p.uds||0).toLocaleString('es-CO')+'<span style="font-size:9px;color:#64748b;margin-left:2px;">uds</span></div>';
+          h += '</summary>';
+          h += '<div style="padding:4px 12px 10px;border-top:1px solid rgba(255,255,255,.05);display:flex;flex-direction:column;gap:4px;">';
+          coloresD.forEach(function(c){
+            h += '<div style="display:flex;align-items:center;gap:8px;padding:3px 0;">';
+            h += '<span style="width:10px;height:10px;border-radius:50%;background:'+esc(c.hex||'#6b7280')+';border:1px solid rgba(255,255,255,.2);flex-shrink:0;display:inline-block;"></span>';
+            h += '<span style="font-size:11px;color:#cbd5e1;flex:1;text-transform:uppercase;">'+esc(c.nombre||'')+'</span>';
+            if(udsPorColor!==null) h += '<span style="font-size:10px;color:#475569;white-space:nowrap;">≈'+udsPorColor.toLocaleString('es-CO',{maximumFractionDigits:0})+' uds</span>';
+            h += '<span style="font-size:11px;font-weight:700;color:#0ea5e9;white-space:nowrap;">'+(mtsPorColor!==null?'≈ '+mtsPorColor.toLocaleString('es-CO',{maximumFractionDigits:1})+' mts':'—')+'</span>';
+            h += '</div>';
+          });
+          h += '</div>';
+          h += '</details>';
+        } else {
+          h += '<div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:rgba(16,185,129,.05);border:1px solid rgba(52,211,153,.15);border-radius:9px;">';
+          h += '<div style="flex:1;min-width:0;">';
+          h += '<div style="font-size:12px;font-weight:700;color:#d1fae5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(d.nombre)+'</div>';
+          h += '<div style="font-size:9px;color:#64748b;">'+(esFenio?'<span style="color:#fbbf24;">💳 FENIO → dic. (proveedor produce, sin estimado interno)</span>':(mtsD!==null?'🧵 ≈ '+mtsD.toLocaleString('es-CO',{maximumFractionDigits:1})+' mts est.':'—'))+'</div>';
+          h += '</div>';
+          h += '<div style="font-size:13px;font-weight:800;color:#34d399;">'+(p.uds||0).toLocaleString('es-CO')+'<span style="font-size:9px;color:#64748b;margin-left:2px;">uds</span></div>';
+          h += '</div>';
+        }
       });
       h += '</div></div>';
     });
