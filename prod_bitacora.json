@@ -5047,8 +5047,24 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": false,
+      "color": "SALMON",
+      "estado_anterior": "ENTREGADO_PARCIAL",
+      "estado_nuevo": "ENTREGADO_PARCIAL",
       "id": "evt_1785863494968_x7vse",
+      "motivo": "ENTREGADO",
+      "op_id": "OP-0008",
+      "op_nombre": "BUZO YINKY",
+      "referencia": "BUZO YINKY",
+      "talla": "T6/8",
+      "tipo": "estado_ot",
       "ts": 1785863494968,
+      "uds": 7,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785863517686_c72xy",
+      "ts": 1785863517686,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-0008",
@@ -5059,7 +5075,7 @@
       "estado_anterior": "ENTREGADO_PARCIAL",
       "estado_nuevo": "ENTREGADO_PARCIAL",
       "bulk": false,
-      "uds": 7,
+      "uds": 2,
       "motivo": "ENTREGADO"
     }
   ]
