@@ -4437,23 +4437,30 @@
     },
     {
       "cantidades": {
+        "AVENA_T6": 10,
+        "AVENA_T8": 10,
         "AVENA_T10": 16,
         "AVENA_T12": 16,
         "AVENA_T14": 16,
         "AVENA_T16": 16,
-        "AVENA_T6": 10,
-        "AVENA_T8": 10,
+        "MARFIL_T6": 10,
+        "MARFIL_T8": 10,
         "MARFIL_T10": 16,
         "MARFIL_T12": 16,
         "MARFIL_T14": 16,
         "MARFIL_T16": 16,
-        "MARFIL_T6": 10,
-        "MARFIL_T8": 10
+        "NEGRO_T6": 10,
+        "NEGRO_T8": 10,
+        "NEGRO_T10": 16,
+        "NEGRO_T12": 16,
+        "NEGRO_T14": 16,
+        "NEGRO_T16": 16
       },
       "categoria": "CHAQUETAS",
       "colores": [
         "AVENA",
-        "MARFIL"
+        "MARFIL",
+        "NEGRO"
       ],
       "cortador": "Corte Carbajal",
       "created_at": "2026-06-25",
@@ -4465,27 +4472,15 @@
       "numero": 79,
       "referencias": [
         {
-          "cantidades": {
-            "AVENA_T10": 16,
-            "AVENA_T12": 16,
-            "AVENA_T14": 16,
-            "AVENA_T16": 16,
-            "AVENA_T6": 10,
-            "AVENA_T8": 10,
-            "MARFIL_T10": 16,
-            "MARFIL_T12": 16,
-            "MARFIL_T14": 16,
-            "MARFIL_T16": 16,
-            "MARFIL_T6": 10,
-            "MARFIL_T8": 10
-          },
-          "cat": "CHAQUETAS",
-          "colores": [
-            "AVENA",
-            "MARFIL"
-          ],
           "nombre": "BEISBOLERA ARMIN",
           "ref": "1132",
+          "cat": "CHAQUETAS",
+          "vmo": 9144,
+          "colores": [
+            "AVENA",
+            "MARFIL",
+            "NEGRO"
+          ],
           "tallas": [
             "T6",
             "T8",
@@ -4494,7 +4489,27 @@
             "T14",
             "T16"
           ],
-          "vmo": 9144
+          "cantidades": {
+            "AVENA_T6": 10,
+            "AVENA_T8": 10,
+            "AVENA_T10": 16,
+            "AVENA_T12": 16,
+            "AVENA_T14": 16,
+            "AVENA_T16": 16,
+            "MARFIL_T6": 10,
+            "MARFIL_T8": 10,
+            "MARFIL_T10": 16,
+            "MARFIL_T12": 16,
+            "MARFIL_T14": 16,
+            "MARFIL_T16": 16,
+            "NEGRO_T6": 10,
+            "NEGRO_T8": 10,
+            "NEGRO_T10": 16,
+            "NEGRO_T12": 16,
+            "NEGRO_T14": 16,
+            "NEGRO_T16": 16
+          },
+          "maquilador_id": ""
         }
       ],
       "tallas": [
@@ -4505,7 +4520,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-07-31",
+      "updated_at": "2026-08-04",
       "subg_estados": {}
     },
     {
