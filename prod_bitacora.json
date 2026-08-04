@@ -5127,20 +5127,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": false,
+      "color": "ROSA",
+      "estado_anterior": "ENTREGADO_PARCIAL",
+      "estado_nuevo": "ENTREGADO_PARCIAL",
       "id": "evt_1785863591333_tsxd8",
-      "ts": 1785863591333,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-0008",
       "op_nombre": "BUZO YINKY",
       "referencia": "BUZO YINKY",
-      "color": "ROSA",
       "talla": "T6/8",
-      "estado_anterior": "ENTREGADO_PARCIAL",
-      "estado_nuevo": "ENTREGADO_PARCIAL",
-      "bulk": false,
+      "tipo": "estado_ot",
+      "ts": 1785863591333,
       "uds": 3,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785867187599_wsqop",
+      "ts": 1785867187599,
+      "user": "John Rodriguez",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-0167",
+      "nombre": "CONJUNTO TRENZAS",
+      "categoria": "CONJUNTOS",
+      "colores": 1,
+      "refs": 1
     }
   ]
 }
