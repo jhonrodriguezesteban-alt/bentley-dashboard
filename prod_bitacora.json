@@ -5165,15 +5165,35 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1785867294666_s0ht2",
-      "ts": 1785867294666,
-      "user": "John Rodriguez",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-0167",
-      "nombre": "CONJUNTO TRENZAS",
       "categoria": "CONJUNTOS",
       "colores": 1,
-      "refs": 1
+      "id": "evt_1785867294666_s0ht2",
+      "nombre": "CONJUNTO TRENZAS",
+      "op_id": "OP-0167",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1785867294666,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785867336382_0adkj",
+      "ts": 1785867336382,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-0167",
+      "op_nombre": "CONJUNTO TRENZAS",
+      "color": "MARFIL",
+      "mes": "2026-08"
+    },
+    {
+      "id": "evt_1785867339244_j22nk",
+      "ts": 1785867339244,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-108",
+      "op_nombre": "COUNTRY 2.0",
+      "color": "GRIS CLARO",
+      "mes": "2026-08"
     }
   ]
 }
