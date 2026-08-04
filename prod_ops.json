@@ -6930,6 +6930,94 @@
         "OP-2026-108||AZUL BEBE": "PENDIENTE_CORTAR",
         "OP-2026-108||GRIS CLARO": "PENDIENTE_CORTAR"
       }
+    },
+    {
+      "id": "OP-2026-109",
+      "numero": 109,
+      "fecha_op": "2026-08-04",
+      "cortador": "Corte Carbajal",
+      "categoria": "CONJUNTOS",
+      "nombre_producto": "CONJUNTO OSLO",
+      "colores": [
+        "NEGRO",
+        "TAUPE",
+        "CHOCOLATE"
+      ],
+      "tallas": [
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ],
+      "cantidades": {
+        "CHOCOLATE_T10": 12,
+        "CHOCOLATE_T12": 12,
+        "CHOCOLATE_T14": 12,
+        "CHOCOLATE_T16": 12,
+        "CHOCOLATE_T6": 8,
+        "CHOCOLATE_T8": 12,
+        "NEGRO_T10": 12,
+        "NEGRO_T12": 12,
+        "NEGRO_T14": 12,
+        "NEGRO_T16": 12,
+        "NEGRO_T6": 8,
+        "NEGRO_T8": 12,
+        "TAUPE_T10": 12,
+        "TAUPE_T12": 12,
+        "TAUPE_T14": 12,
+        "TAUPE_T16": 12,
+        "TAUPE_T6": 8,
+        "TAUPE_T8": 12
+      },
+      "referencias": [
+        {
+          "cantidades": {
+            "CHOCOLATE_T10": 12,
+            "CHOCOLATE_T12": 12,
+            "CHOCOLATE_T14": 12,
+            "CHOCOLATE_T16": 12,
+            "CHOCOLATE_T6": 8,
+            "CHOCOLATE_T8": 12,
+            "NEGRO_T10": 12,
+            "NEGRO_T12": 12,
+            "NEGRO_T14": 12,
+            "NEGRO_T16": 12,
+            "NEGRO_T6": 8,
+            "NEGRO_T8": 12,
+            "TAUPE_T10": 12,
+            "TAUPE_T12": 12,
+            "TAUPE_T14": 12,
+            "TAUPE_T16": 12,
+            "TAUPE_T6": 8,
+            "TAUPE_T8": 12
+          },
+          "cat": "CONJUNTOS",
+          "colores": [
+            "NEGRO",
+            "TAUPE",
+            "CHOCOLATE"
+          ],
+          "nombre": "CONJUNTO OSLO",
+          "ref": "1176",
+          "tallas": [
+            "T6",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "totalUds": 204,
+          "vmo": 8000
+        }
+      ],
+      "op_effi": null,
+      "estado_op": "EN_PROCESO",
+      "created_at": "2026-08-04",
+      "created_by": "John Rodriguez",
+      "receta_id": "rec_conjunto_oslo_1180"
     }
   ]
 }
