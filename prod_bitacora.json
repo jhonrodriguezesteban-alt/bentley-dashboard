@@ -5267,19 +5267,49 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1785869924859_vfnd0",
-      "ts": 1785869924859,
+      "id": "evt_1785867725659_3cvkk",
+      "ts": 1785867725659,
       "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-110",
-      "op_nombre": "PANTALON RAVE",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-109",
+      "op_nombre": "CONJUNTO OSLO",
+      "color": "NEGRO",
+      "mes": "2026-08"
+    },
+    {
       "categoria": "PANTALONES",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-08-04",
-      "total_uds": 240,
+      "id": "evt_1785869924859_vfnd0",
+      "op_id": "OP-2026-110",
+      "op_nombre": "PANTALON RAVE",
       "referencias": [
         "PANTALON RAVE"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 240,
+      "ts": 1785869924859,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785869930972_9mea9",
+      "ts": 1785869930972,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-110",
+      "op_nombre": "PANTALON RAVE",
+      "color": "AZUL OSCURO",
+      "mes": "2026-08"
+    },
+    {
+      "id": "evt_1785869933543_uurnk",
+      "ts": 1785869933543,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-110",
+      "op_nombre": "PANTALON RAVE",
+      "color": "ROJO",
+      "mes": "2026-08"
     }
   ]
 }
