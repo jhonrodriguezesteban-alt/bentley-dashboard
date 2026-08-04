@@ -5227,14 +5227,14 @@
       "user": "John Rodriguez"
     },
     {
+      "color": "AVENA",
       "id": "evt_1785867414073_gkdgi",
-      "ts": 1785867414073,
-      "user": "John Rodriguez",
-      "tipo": "planeacion_asignar",
+      "mes": "2026-08",
       "op_id": "OP-0167",
       "op_nombre": "CONJUNTO TRENZAS",
-      "color": "AVENA",
-      "mes": "2026-08"
+      "tipo": "planeacion_asignar",
+      "ts": 1785867414073,
+      "user": "John Rodriguez"
     },
     {
       "categoria": "CONJUNTOS",
@@ -5247,24 +5247,39 @@
       "user": "John Rodriguez"
     },
     {
+      "color": "CHOCOLATE",
       "id": "evt_1785867722537_22h84",
-      "ts": 1785867722537,
-      "user": "John Rodriguez",
-      "tipo": "planeacion_asignar",
+      "mes": "2026-08",
       "op_id": "OP-2026-109",
       "op_nombre": "CONJUNTO OSLO",
-      "color": "CHOCOLATE",
-      "mes": "2026-08"
+      "tipo": "planeacion_asignar",
+      "ts": 1785867722537,
+      "user": "John Rodriguez"
     },
     {
+      "color": "TAUPE",
       "id": "evt_1785867723818_h3lqc",
-      "ts": 1785867723818,
-      "user": "John Rodriguez",
-      "tipo": "planeacion_asignar",
+      "mes": "2026-08",
       "op_id": "OP-2026-109",
       "op_nombre": "CONJUNTO OSLO",
-      "color": "TAUPE",
-      "mes": "2026-08"
+      "tipo": "planeacion_asignar",
+      "ts": 1785867723818,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785869924859_vfnd0",
+      "ts": 1785869924859,
+      "user": "John Rodriguez",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-110",
+      "op_nombre": "PANTALON RAVE",
+      "categoria": "PANTALONES",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-08-04",
+      "total_uds": 240,
+      "referencias": [
+        "PANTALON RAVE"
+      ]
     }
   ]
 }
