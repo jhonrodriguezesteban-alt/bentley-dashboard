@@ -4957,14 +4957,30 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1785863241205_71u69",
-      "ts": 1785863241205,
-      "user": "Jefa de Producción",
-      "tipo": "cambiar_estado_op_all",
-      "op_id": "OP-2026-108",
-      "estado": "PENDIENTE_CORTAR",
       "colores": 2,
-      "nombre": "COUNTRY 2.0"
+      "estado": "PENDIENTE_CORTAR",
+      "id": "evt_1785863241205_71u69",
+      "nombre": "COUNTRY 2.0",
+      "op_id": "OP-2026-108",
+      "tipo": "cambiar_estado_op_all",
+      "ts": 1785863241205,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785863405629_qnwol",
+      "ts": 1785863405629,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0008",
+      "op_nombre": "BUZO YINKY",
+      "referencia": "BUZO YINKY",
+      "color": "AMARILLO",
+      "talla": "T6/8",
+      "estado_anterior": "ENTREGADO_PARCIAL",
+      "estado_nuevo": "ENTREGADO_PARCIAL",
+      "bulk": false,
+      "uds": 4,
+      "motivo": "ENTREGADO"
     }
   ]
 }
