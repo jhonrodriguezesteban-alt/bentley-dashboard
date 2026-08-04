@@ -10499,11 +10499,8 @@ function _cronDragLeave2(e){
   e.currentTarget.style.background='';
   e.currentTarget.style.borderColor='';
 }
-async function _cronDrop2(e, fecha){
-  e.preventDefault();
-  e.currentTarget.style.background=''; e.currentTarget.style.borderColor='';
-  var entryId = _cronDragEntryId || e.dataTransfer.getData('text/plain');
-  _cronDragEntryId = null;
+// Lógica compartida entre el drop de mouse y el touchend táctil, para no duplicarla.
+async function _cronAsignarFecha(entryId, fecha){
   if(!entryId) return;
   var entry = (DB.cronograma||[]).find(function(x){ return x.id===entryId && !x.entregado; });
   if(!entry) return;
@@ -10518,11 +10515,7 @@ async function _cronDrop2(e, fecha){
   var ok = await guardarCronograma();
   if(ok) renderPage('cronograma');
 }
-async function _cronDropPool2(e){
-  e.preventDefault();
-  e.currentTarget.style.background=''; e.currentTarget.style.borderColor='';
-  var entryId = _cronDragEntryId || e.dataTransfer.getData('text/plain');
-  _cronDragEntryId = null;
+async function _cronQuitarFecha(entryId){
   if(!entryId) return;
   var entry = (DB.cronograma||[]).find(function(x){ return x.id===entryId && !x.entregado; });
   if(!entry) return;
@@ -10530,6 +10523,69 @@ async function _cronDropPool2(e){
   entry.fecha_compromiso = null;
   var ok = await guardarCronograma();
   if(ok) renderPage('cronograma');
+}
+async function _cronDrop2(e, fecha){
+  e.preventDefault();
+  e.currentTarget.style.background=''; e.currentTarget.style.borderColor='';
+  var entryId = _cronDragEntryId || e.dataTransfer.getData('text/plain');
+  _cronDragEntryId = null;
+  await _cronAsignarFecha(entryId, fecha);
+}
+async function _cronDropPool2(e){
+  e.preventDefault();
+  e.currentTarget.style.background=''; e.currentTarget.style.borderColor='';
+  var entryId = _cronDragEntryId || e.dataTransfer.getData('text/plain');
+  _cronDragEntryId = null;
+  await _cronQuitarFecha(entryId);
+}
+
+// ── Arrastre TÁCTIL (iPad/iPhone) — el HTML5 draggable de arriba NO responde al dedo,
+// solo al mouse, así que Cronograma necesita este sistema aparte para funcionar en tablet.
+var _cronTouchGhost = null, _cronTouchEntryId = null, _cronTouchMoved = false, _cronSuppressClickUntil = 0;
+function cronCardClick(entryId){
+  if(Date.now() < _cronSuppressClickUntil) return; // evita que el "soltar" del arrastre táctil también abra el modal
+  cronAbrirFecha(entryId);
+}
+function cronTouchStart(ev, entryId){
+  if(ev.touches.length !== 1) return;
+  _cronTouchEntryId = entryId;
+  _cronTouchMoved = false;
+  var t = ev.touches[0];
+  var src = ev.currentTarget;
+  var rect = src.getBoundingClientRect();
+  var ghost = document.createElement('div');
+  ghost.style.cssText = 'position:fixed;z-index:9999;pointer-events:none;opacity:.9;left:'+Math.round(rect.left)+'px;top:'+Math.round(rect.top)+'px;width:'+Math.round(rect.width)+'px;background:#1a2035;border:2px solid #0a84ff;border-radius:9px;padding:8px 10px;font-size:11px;font-weight:800;color:#0a84ff;box-shadow:0 8px 24px rgba(0,0,0,.6);max-height:'+Math.round(rect.height)+'px;overflow:hidden;';
+  ghost.textContent = (src.textContent||'OP').trim().slice(0,60);
+  document.body.appendChild(ghost);
+  _cronTouchGhost = ghost;
+  src.style.opacity = '.35';
+}
+function cronTouchMove(ev){
+  if(!_cronTouchGhost) return;
+  ev.preventDefault();
+  _cronTouchMoved = true;
+  var t = ev.touches[0];
+  _cronTouchGhost.style.left = (t.clientX - 70)+'px';
+  _cronTouchGhost.style.top  = (t.clientY - 22)+'px';
+  document.querySelectorAll('[data-crondz]').forEach(function(el){ el.style.background=''; el.style.borderColor=''; });
+  var under = document.elementFromPoint(t.clientX, t.clientY);
+  var dz = under ? under.closest('[data-crondz]') : null;
+  if(dz){ dz.style.background='rgba(10,132,255,.12)'; dz.style.borderColor='rgba(10,132,255,.5)'; }
+}
+async function cronTouchEnd(ev){
+  if(_cronTouchGhost){ _cronTouchGhost.remove(); _cronTouchGhost=null; }
+  document.querySelectorAll('[data-crondz]').forEach(function(el){ el.style.background=''; el.style.borderColor=''; });
+  document.querySelectorAll('[data-cronentryid]').forEach(function(el){ el.style.opacity=''; });
+  var entryId = _cronTouchEntryId; _cronTouchEntryId = null;
+  if(_cronTouchMoved) _cronSuppressClickUntil = Date.now()+400;
+  if(!entryId) return;
+  var t = ev.changedTouches[0];
+  var under = document.elementFromPoint(t.clientX, t.clientY);
+  var dz = under ? under.closest('[data-crondz]') : null;
+  if(!dz) return;
+  var fecha = dz.dataset.crondz;
+  if(fecha==='pool') await _cronQuitarFecha(entryId);
+  else await _cronAsignarFecha(entryId, fecha);
 }
 
 // Tarjeta de UN color de UNA OP en manos de UN taller — nunca agrupa colores entre sí,
@@ -10545,7 +10601,8 @@ function _cronEntryCard(entry){
   var h = '';
   h += '<div draggable="true" data-cronentryid="'+entry.id+'" ';
   h += 'ondragstart="_cronDragStart2(event,this.dataset.cronentryid)" ondragend="_cronDragEnd2(event)" ';
-  h += 'onclick="cronAbrirFecha(this.dataset.cronentryid)" ';
+  h += 'ontouchstart="cronTouchStart(event,this.dataset.cronentryid)" ontouchmove="cronTouchMove(event)" ontouchend="cronTouchEnd(event)" ';
+  h += 'onclick="cronCardClick(this.dataset.cronentryid)" ';
   h += 'style="background:'+bg+';border:1px solid '+border+';border-radius:9px;padding:8px 10px;cursor:grab;margin-bottom:6px;transition:box-shadow .12s;" ';
   h += 'onmouseover="this.style.boxShadow=\'0 0 0 1px rgba(10,132,255,.5)\'" onmouseout="this.style.boxShadow=\'\'">';
   h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">';
@@ -10707,7 +10764,7 @@ function renderCronograma(){
   h += '<div style="font-size:9px;font-weight:800;color:#f59e0b;text-transform:uppercase;letter-spacing:.6px;">Sin fecha</div>';
   h += '<div style="font-size:10px;color:#64748b;margin-top:1px;">'+entriesSinFecha.length+' color'+(entriesSinFecha.length!==1?'es':'')+' · Arrastra al día</div>';
   h += '</div>';
-  h += '<div id="cron-pool" ondragover="_cronDragOver2(event)" ondragleave="_cronDragLeave2(event)" ondrop="_cronDropPool2(event)" ';
+  h += '<div id="cron-pool" data-crondz="pool" ondragover="_cronDragOver2(event)" ondragleave="_cronDragLeave2(event)" ondrop="_cronDropPool2(event)" ';
   h += 'style="flex:1;overflow-y:auto;padding:8px;transition:background .15s;">';
   if(entriesSinFecha.length){
     h += _cronGrupoTaller(entriesSinFecha);
@@ -10745,7 +10802,7 @@ function renderCronograma(){
     if(entriesEnDia.length) h += '<div style="font-size:8px;color:#64748b;margin-top:2px;">'+entriesEnDia.length+' color'+(entriesEnDia.length!==1?'es':'')+'</div>';
     h += '</div>';
     // Drop zone
-    h += '<div data-fecha="'+dStr+'" ondragover="_cronDragOver2(event)" ondragleave="_cronDragLeave2(event)" ondrop="_cronDrop2(event,this.dataset.fecha)" ';
+    h += '<div data-fecha="'+dStr+'" data-crondz="'+dStr+'" ondragover="_cronDragOver2(event)" ondragleave="_cronDragLeave2(event)" ondrop="_cronDrop2(event,this.dataset.fecha)" ';
     h += 'style="flex:1;overflow-y:auto;padding:6px;transition:background .15s;">';
     if(entriesEnDia.length){
       h += _cronGrupoTaller(entriesEnDia);
