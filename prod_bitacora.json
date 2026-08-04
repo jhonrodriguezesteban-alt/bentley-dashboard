@@ -5196,14 +5196,14 @@
       "user": "John Rodriguez"
     },
     {
+      "color": "AZUL BEBE",
       "id": "evt_1785867342395_s61y3",
-      "ts": 1785867342395,
-      "user": "John Rodriguez",
-      "tipo": "planeacion_asignar",
+      "mes": "2026-08",
       "op_id": "OP-2026-108",
       "op_nombre": "COUNTRY 2.0",
-      "color": "AZUL BEBE",
-      "mes": "2026-08"
+      "tipo": "planeacion_asignar",
+      "ts": 1785867342395,
+      "user": "John Rodriguez"
     },
     {
       "categoria": "CONJUNTOS",
@@ -5217,14 +5217,24 @@
       "user": "John Rodriguez"
     },
     {
+      "color": "AZUL BEBE",
       "id": "evt_1785867405833_kfk9m",
-      "ts": 1785867405833,
-      "user": "John Rodriguez",
-      "tipo": "planeacion_asignar",
+      "mes": "2026-08",
       "op_id": "OP-0031",
       "op_nombre": "CONJUNTO TRENZAS",
-      "color": "AZUL BEBE",
-      "mes": "2026-08"
+      "tipo": "planeacion_asignar",
+      "ts": 1785867405833,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1785867701130_mwauw",
+      "ts": 1785867701130,
+      "user": "John Rodriguez",
+      "tipo": "duplicar_op",
+      "op_id": "OP-2026-109",
+      "op_origen": "OP-2026-082",
+      "op_nombre": "CONJUNTO OSLO",
+      "categoria": "CONJUNTOS"
     }
   ]
 }
