@@ -3463,18 +3463,10 @@
       "updated_at": "2026-07-31"
     },
     {
-      "cantidades": {
-        "CAMEL_T10": 16,
-        "CAMEL_T12": 16,
-        "CAMEL_T14": 16,
-        "CAMEL_T16": 16,
-        "CAMEL_T4": 8,
-        "CAMEL_T6": 16,
-        "CAMEL_T8": 16
-      },
+      "cantidades": {},
       "categoria": "CONJUNTOS",
       "colores": [
-        "CAMEL"
+        "MARFIL"
       ],
       "cortador": "Corte Carbajal",
       "created_at": "2025-09-19",
@@ -3487,21 +3479,13 @@
       "numero": 167,
       "referencias": [
         {
-          "cantidades": {
-            "CAMEL_T10": 16,
-            "CAMEL_T12": 16,
-            "CAMEL_T14": 16,
-            "CAMEL_T16": 16,
-            "CAMEL_T4": 8,
-            "CAMEL_T6": 16,
-            "CAMEL_T8": 16
-          },
-          "cat": "CONJUNTOS",
-          "colores": [
-            "CAMEL"
-          ],
           "nombre": "CONJUNTO TRENZAS",
           "ref": "",
+          "cat": "CONJUNTOS",
+          "vmo": 1151,
+          "colores": [
+            "MARFIL"
+          ],
           "tallas": [
             "T4",
             "T6",
@@ -3511,7 +3495,8 @@
             "T14",
             "T16"
           ],
-          "vmo": 1151
+          "cantidades": {},
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -3527,7 +3512,7 @@
         "T16"
       ],
       "total_uds": 112,
-      "updated_at": "2026-07-31"
+      "updated_at": "2026-08-04"
     },
     {
       "categoria": "BUZOS",
