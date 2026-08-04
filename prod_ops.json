@@ -3363,27 +3363,27 @@
     },
     {
       "cantidades": {
-        "AVENA_T10": 30,
-        "AVENA_T12": 30,
-        "AVENA_T14": 30,
-        "AVENA_T16": 30,
-        "AVENA_T4": 30,
-        "AVENA_T6": 30,
-        "AVENA_T8": 30,
+        "NEGRO_T4": 8,
+        "NEGRO_T6": 16,
+        "NEGRO_T8": 16,
         "NEGRO_T10": 16,
         "NEGRO_T12": 16,
         "NEGRO_T14": 16,
         "NEGRO_T16": 16,
-        "NEGRO_T4": 8,
-        "NEGRO_T6": 8,
-        "NEGRO_T8": 16,
+        "AVENA_T4": 30,
+        "AVENA_T6": 30,
+        "AVENA_T8": 30,
+        "AVENA_T10": 30,
+        "AVENA_T12": 30,
+        "AVENA_T14": 30,
+        "AVENA_T16": 30,
+        "ROSA_T4": 8,
+        "ROSA_T6": 16,
+        "ROSA_T8": 16,
         "ROSA_T10": 16,
         "ROSA_T12": 16,
         "ROSA_T14": 16,
-        "ROSA_T16": 16,
-        "ROSA_T4": 8,
-        "ROSA_T6": 16,
-        "ROSA_T8": 16
+        "ROSA_T16": 16
       },
       "categoria": "CONJUNTOS",
       "colores": [
@@ -3402,37 +3402,15 @@
       "numero": 149,
       "referencias": [
         {
-          "cantidades": {
-            "AVENA_T10": 30,
-            "AVENA_T12": 30,
-            "AVENA_T14": 30,
-            "AVENA_T16": 30,
-            "AVENA_T4": 30,
-            "AVENA_T6": 30,
-            "AVENA_T8": 30,
-            "NEGRO_T10": 16,
-            "NEGRO_T12": 16,
-            "NEGRO_T14": 16,
-            "NEGRO_T16": 16,
-            "NEGRO_T4": 8,
-            "NEGRO_T6": 8,
-            "NEGRO_T8": 16,
-            "ROSA_T10": 16,
-            "ROSA_T12": 16,
-            "ROSA_T14": 16,
-            "ROSA_T16": 16,
-            "ROSA_T4": 8,
-            "ROSA_T6": 16,
-            "ROSA_T8": 16
-          },
+          "nombre": "CONJUNTO TRENZAS",
+          "ref": "",
           "cat": "CONJUNTOS",
+          "vmo": 1151,
           "colores": [
             "NEGRO",
             "AVENA",
             "ROSA"
           ],
-          "nombre": "CONJUNTO TRENZAS",
-          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -3442,7 +3420,30 @@
             "T14",
             "T16"
           ],
-          "vmo": 1151
+          "cantidades": {
+            "NEGRO_T4": 8,
+            "NEGRO_T6": 16,
+            "NEGRO_T8": 16,
+            "NEGRO_T10": 16,
+            "NEGRO_T12": 16,
+            "NEGRO_T14": 16,
+            "NEGRO_T16": 16,
+            "AVENA_T4": 30,
+            "AVENA_T6": 30,
+            "AVENA_T8": 30,
+            "AVENA_T10": 30,
+            "AVENA_T12": 30,
+            "AVENA_T14": 30,
+            "AVENA_T16": 30,
+            "ROSA_T4": 8,
+            "ROSA_T6": 16,
+            "ROSA_T8": 16,
+            "ROSA_T10": 16,
+            "ROSA_T12": 16,
+            "ROSA_T14": 16,
+            "ROSA_T16": 16
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -3460,7 +3461,7 @@
         "T16"
       ],
       "total_uds": 434,
-      "updated_at": "2026-07-31"
+      "updated_at": "2026-08-04"
     },
     {
       "cantidades": {},
