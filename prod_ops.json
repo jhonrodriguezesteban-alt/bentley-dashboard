@@ -1762,18 +1762,18 @@
     },
     {
       "cantidades": {
+        "NEGRO_T6": 20,
+        "NEGRO_T8": 40,
+        "NEGRO_T10": 40,
+        "NEGRO_T12": 40,
+        "NEGRO_T14": 40,
+        "NEGRO_T16": 40,
+        "BEIGE_T6": 10,
+        "BEIGE_T8": 20,
         "BEIGE_T10": 20,
         "BEIGE_T12": 20,
         "BEIGE_T14": 20,
-        "BEIGE_T16": 20,
-        "BEIGE_T6": 10,
-        "BEIGE_T8": 20,
-        "NEGRO_T10": 20,
-        "NEGRO_T12": 20,
-        "NEGRO_T14": 20,
-        "NEGRO_T16": 20,
-        "NEGRO_T6": 10,
-        "NEGRO_T8": 20
+        "BEIGE_T16": 20
       },
       "categoria": "PANTALONES",
       "colores": [
@@ -1791,27 +1791,14 @@
       "numero": 39,
       "referencias": [
         {
-          "cantidades": {
-            "BEIGE_T10": 20,
-            "BEIGE_T12": 20,
-            "BEIGE_T14": 20,
-            "BEIGE_T16": 20,
-            "BEIGE_T6": 10,
-            "BEIGE_T8": 20,
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 20
-          },
+          "nombre": "BOTA ANCHA KENIA",
+          "ref": "",
           "cat": "PANTALONES",
+          "vmo": 1151,
           "colores": [
             "NEGRO",
             "BEIGE"
           ],
-          "nombre": "BOTA ANCHA KENIA",
-          "ref": "",
           "tallas": [
             "T6",
             "T8",
@@ -1820,7 +1807,21 @@
             "T14",
             "T16"
           ],
-          "vmo": 1151
+          "cantidades": {
+            "NEGRO_T6": 20,
+            "NEGRO_T8": 40,
+            "NEGRO_T10": 40,
+            "NEGRO_T12": 40,
+            "NEGRO_T14": 40,
+            "NEGRO_T16": 40,
+            "BEIGE_T6": 10,
+            "BEIGE_T8": 20,
+            "BEIGE_T10": 20,
+            "BEIGE_T12": 20,
+            "BEIGE_T14": 20,
+            "BEIGE_T16": 20
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -1835,7 +1836,7 @@
         "T16"
       ],
       "total_uds": 84,
-      "updated_at": "2026-07-31"
+      "updated_at": "2026-08-04"
     },
     {
       "categoria": "PANTALONES",
