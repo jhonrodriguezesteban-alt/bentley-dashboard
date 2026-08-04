@@ -4999,8 +4999,24 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": false,
+      "color": "AZUL BEBE",
+      "estado_anterior": "ENTREGADO_PARCIAL",
+      "estado_nuevo": "ENTREGADO_PARCIAL",
       "id": "evt_1785863435890_ru2fl",
+      "motivo": "ENTREGADO",
+      "op_id": "OP-0008",
+      "op_nombre": "BUZO YINKY",
+      "referencia": "BUZO YINKY",
+      "talla": "T6/8",
+      "tipo": "estado_ot",
       "ts": 1785863435890,
+      "uds": 4,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1785863453942_grx7g",
+      "ts": 1785863453942,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-0008",
@@ -5011,7 +5027,7 @@
       "estado_anterior": "ENTREGADO_PARCIAL",
       "estado_nuevo": "ENTREGADO_PARCIAL",
       "bulk": false,
-      "uds": 4,
+      "uds": 3,
       "motivo": "ENTREGADO"
     }
   ]
