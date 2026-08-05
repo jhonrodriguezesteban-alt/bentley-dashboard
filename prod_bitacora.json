@@ -5486,15 +5486,39 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1785950925634_87vqe",
-      "ts": 1785950925634,
-      "user": "Isabel",
-      "tipo": "diseno_comentario",
-      "diseno_id": "id_1782397563974_aiz708tzd",
-      "nombre": "CONJUNTO PASCAL",
       "categoria": "Conjuntos",
+      "diseno_id": "id_1782397563974_aiz708tzd",
+      "extracto": "Muestra confeccionada.  \nEn cuanto al trazo revisar centro de capota, ya que sal",
+      "id": "evt_1785950925634_87vqe",
+      "nombre": "CONJUNTO PASCAL",
       "tiene_imagen": false,
-      "extracto": "Muestra confeccionada.  \nEn cuanto al trazo revisar centro de capota, ya que sal"
+      "tipo": "diseno_comentario",
+      "ts": 1785950925634,
+      "user": "Isabel"
+    },
+    {
+      "categoria": "Buzos",
+      "diseno_id": "id_1785257009609_6uw22r3h7",
+      "estado_anterior": "EN_CORTE_MUESTRA",
+      "estado_nuevo": "EN_REVISION_GERENCIA",
+      "id": "evt_1785951069114_4kavq",
+      "marca": "Bentley Kids",
+      "nombre": "CAMIBUSO PASCAL",
+      "tipo": "estado_diseno",
+      "ts": 1785951069114,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1785951230674_o3rx3",
+      "ts": 1785951230674,
+      "user": "Isabel",
+      "tipo": "estado_diseno",
+      "diseno_id": "id_1785257009609_6uw22r3h7",
+      "nombre": "CAMIBUSO PASCAL",
+      "categoria": "Buzos",
+      "marca": "Bentley Kids",
+      "estado_anterior": "EN_REVISION_GERENCIA",
+      "estado_nuevo": "EN_CONFECCION_MUESTRA"
     }
   ]
 }
