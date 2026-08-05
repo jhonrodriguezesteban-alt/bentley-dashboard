@@ -10403,6 +10403,7 @@ function _cronMarcarEntregado(opId, color){
 async function cronSetFecha(entryId, nuevaFecha, motivo, sinModal){
   var entry = (DB.cronograma||[]).find(function(e){ return e.id===entryId; });
   if(!entry) return;
+  if(!entry.historial) entry.historial = []; // registros viejos migrados sin este campo
   if(!nuevaFecha){ toast('Selecciona una fecha','error'); return; }
   if(!motivo && !sinModal){ toast('Escribe el motivo del cambio','error'); return; }
   if(!entry.fecha_inicial){
@@ -10491,6 +10492,7 @@ async function cronSetFechaOP(opId, nuevaFecha, motivo){
   var esNueva = !opEntries[0].fecha_compromiso;
   if(!esNueva && !motivo){ toast('Escribe el motivo del cambio','error'); return; }
   opEntries.forEach(function(e){
+    if(!e.historial) e.historial = [];
     if(!e.fecha_inicial) e.fecha_inicial = nuevaFecha;
     if(e.fecha_compromiso && e.fecha_compromiso !== nuevaFecha){
       e.historial.push({ fecha_anterior: e.fecha_compromiso, fecha_nueva: nuevaFecha, motivo: motivo, by: getUser(), at: hoy() });
@@ -10538,6 +10540,7 @@ async function _cronAsignarFecha(entryId, fecha){
   if(!entryId) return;
   var entry = (DB.cronograma||[]).find(function(x){ return x.id===entryId && !x.entregado; });
   if(!entry) return;
+  if(!entry.historial) entry.historial = []; // registros viejos migrados sin este campo — sin esto, el push de abajo rompía el guardado en silencio
   if(!entry.fecha_inicial) entry.fecha_inicial = fecha;
   if(entry.fecha_compromiso && entry.fecha_compromiso!==fecha){
     entry.historial.push({fecha_anterior:entry.fecha_compromiso, fecha_nueva:fecha, motivo:'Reubicado en tablero', by:getUser(), at:hoy()});
@@ -10553,6 +10556,7 @@ async function _cronQuitarFecha(entryId){
   if(!entryId) return;
   var entry = (DB.cronograma||[]).find(function(x){ return x.id===entryId && !x.entregado; });
   if(!entry) return;
+  if(!entry.historial) entry.historial = [];
   if(entry.fecha_compromiso) entry.historial.push({fecha_anterior:entry.fecha_compromiso, fecha_nueva:null, motivo:'Removido del tablero', by:getUser(), at:hoy()});
   entry.fecha_compromiso = null;
   var ok = await guardarCronograma();
