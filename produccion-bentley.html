@@ -10637,7 +10637,7 @@ function _cronEntryCard(entry){
   h += 'ondragstart="_cronDragStart2(event,this.dataset.cronentryid)" ondragend="_cronDragEnd2(event)" ';
   h += 'ontouchstart="cronTouchStart(event,this.dataset.cronentryid)" ontouchmove="cronTouchMove(event)" ontouchend="cronTouchEnd(event)" ';
   h += 'onclick="cronCardClick(this.dataset.cronentryid)" ';
-  h += 'style="background:'+bg+';border:1px solid '+border+';border-radius:9px;padding:8px 10px;cursor:grab;margin-bottom:6px;transition:box-shadow .12s;" ';
+  h += 'style="background:'+bg+';border:1px solid '+border+';border-radius:9px;padding:8px 10px;cursor:grab;margin-bottom:6px;transition:box-shadow .12s;touch-action:none;user-select:none;" ';
   h += 'onmouseover="this.style.boxShadow=\'0 0 0 1px rgba(10,132,255,.5)\'" onmouseout="this.style.boxShadow=\'\'">';
   h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">';
   h += '<span style="font-size:9px;font-weight:800;color:var(--accent);background:rgba(10,132,255,.12);border:1px solid rgba(10,132,255,.2);border-radius:4px;padding:1px 5px;">'+esc(fmtOpId(entry.op_id))+'</span>';
