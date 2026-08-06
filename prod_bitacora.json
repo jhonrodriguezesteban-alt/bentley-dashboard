@@ -5800,24 +5800,35 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1786019523931_xstpw",
-      "ts": 1786019523931,
-      "user": "Isabel",
-      "tipo": "diseno_tela_stock",
       "diseno_id": "id_1782187755568_rc8odie8i",
+      "hay_tela": false,
+      "id": "evt_1786019523931_xstpw",
       "nombre": "CHAQUETA EMBONE CUERO",
-      "hay_tela": false
+      "tipo": "diseno_tela_stock",
+      "ts": 1786019523931,
+      "user": "Isabel"
     },
     {
+      "categoria": "Chaquetas",
+      "diseno_id": "id_1782187755568_rc8odie8i",
       "id": "evt_1786019526759_vsrqz",
+      "nombre": "CHAQUETA EMBONE CUERO",
+      "tela_anterior": "asignada",
+      "tela_nueva": "sin_tela",
+      "tipo": "diseno_tela",
       "ts": 1786019526759,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1786019572223_r2rkr",
+      "ts": 1786019572223,
       "user": "Isabel",
       "tipo": "diseno_tela",
       "diseno_id": "id_1782187755568_rc8odie8i",
       "nombre": "CHAQUETA EMBONE CUERO",
       "categoria": "Chaquetas",
-      "tela_anterior": "asignada",
-      "tela_nueva": "sin_tela"
+      "tela_anterior": "sin_tela",
+      "tela_nueva": "pte_llegar"
     }
   ]
 }
