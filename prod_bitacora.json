@@ -5934,24 +5934,35 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1786020612590_slcrn",
-      "ts": 1786020612590,
-      "user": "Isabel",
-      "tipo": "diseno_tela",
-      "diseno_id": "id_1782182310256_kc8h95o7m",
-      "nombre": "BUZO SHERPA ABIERTO",
       "categoria": "Buzos",
+      "diseno_id": "id_1782182310256_kc8h95o7m",
+      "id": "evt_1786020612590_slcrn",
+      "nombre": "BUZO SHERPA ABIERTO",
       "tela_anterior": "asignada",
-      "tela_nueva": "pte_llegar"
+      "tela_nueva": "pte_llegar",
+      "tipo": "diseno_tela",
+      "ts": 1786020612590,
+      "user": "Isabel"
     },
     {
+      "diseno_id": "id_1785260628045_rnvu3p492",
+      "hay_tela": false,
       "id": "evt_1786020708465_7m026",
-      "ts": 1786020708465,
-      "user": "Isabel",
+      "nombre": "PANTALON GEPARDO",
       "tipo": "diseno_tela_stock",
+      "ts": 1786020708465,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1786020712062_r5jb7",
+      "ts": 1786020712062,
+      "user": "Isabel",
+      "tipo": "diseno_tela",
       "diseno_id": "id_1785260628045_rnvu3p492",
       "nombre": "PANTALON GEPARDO",
-      "hay_tela": false
+      "categoria": "Pantalones",
+      "tela_anterior": "asignada",
+      "tela_nueva": "pte_llegar"
     }
   ]
 }
