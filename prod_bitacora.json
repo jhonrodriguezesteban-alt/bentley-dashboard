@@ -5954,15 +5954,33 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1786020712062_r5jb7",
-      "ts": 1786020712062,
-      "user": "Isabel",
-      "tipo": "diseno_tela",
-      "diseno_id": "id_1785260628045_rnvu3p492",
-      "nombre": "PANTALON GEPARDO",
       "categoria": "Pantalones",
+      "diseno_id": "id_1785260628045_rnvu3p492",
+      "id": "evt_1786020712062_r5jb7",
+      "nombre": "PANTALON GEPARDO",
       "tela_anterior": "asignada",
-      "tela_nueva": "pte_llegar"
+      "tela_nueva": "pte_llegar",
+      "tipo": "diseno_tela",
+      "ts": 1786020712062,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1786020759402_6yetu",
+      "ts": 1786020759402,
+      "user": "Isabel",
+      "tipo": "diseno_tela_stock",
+      "diseno_id": "id_1782401927717_21tmv43pe",
+      "nombre": "CONJUNTO JACOBO",
+      "hay_tela": false
+    },
+    {
+      "id": "evt_1786020760439_i40jr",
+      "ts": 1786020760439,
+      "user": "Isabel",
+      "tipo": "diseno_tela_stock",
+      "diseno_id": "id_1782401927717_21tmv43pe",
+      "nombre": "CONJUNTO JACOBO",
+      "hay_tela": true
     }
   ]
 }
