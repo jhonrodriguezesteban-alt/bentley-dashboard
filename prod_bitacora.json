@@ -5646,16 +5646,27 @@
       "user": "John Rodriguez"
     },
     {
+      "categoria": "Pantalones",
+      "diseno_id": "id_1782181868392_3cenll6a6",
+      "estado_anterior": "EN_CORTE_MUESTRA",
+      "estado_nuevo": "EN_REVISION_GERENCIA",
       "id": "evt_1786018900284_biq4v",
-      "ts": 1786018900284,
-      "user": "Isabel",
+      "marca": "Bentley Kids",
+      "nombre": "PANTALON MARLEY",
       "tipo": "estado_diseno",
+      "ts": 1786018900284,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1786019195755_vg12s",
+      "ts": 1786019195755,
+      "user": "Isabel",
+      "tipo": "diseno_comentario",
       "diseno_id": "id_1782181868392_3cenll6a6",
       "nombre": "PANTALON MARLEY",
       "categoria": "Pantalones",
-      "marca": "Bentley Kids",
-      "estado_anterior": "EN_CORTE_MUESTRA",
-      "estado_nuevo": "EN_REVISION_GERENCIA"
+      "tiene_imagen": false,
+      "extracto": "Muestra confeccionada. Tal como se hizo con la cinta falla en los costados no es"
     }
   ]
 }
