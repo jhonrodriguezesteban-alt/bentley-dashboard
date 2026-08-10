@@ -3281,8 +3281,8 @@ function _renderPlanHistorialCorte(MESES){
   return h;
 }
 
-function renderPlaneacion(){
-  var MESES = [
+function _planMesesDef(){
+  return [
     {k:'2026-07',label:'Julio',     color:'#3b82f6',bg:'rgba(59,130,246,.07)'},
     {k:'2026-08',label:'Agosto',    color:'#8b5cf6',bg:'rgba(139,92,246,.07)'},
     {k:'2026-09',label:'Septiembre',color:'#f59e0b',bg:'rgba(245,158,11,.07)'},
@@ -3290,6 +3290,9 @@ function renderPlaneacion(){
     {k:'2026-11',label:'Noviembre', color:'#ef4444',bg:'rgba(239,68,68,.07)'},
     {k:'2026-12',label:'Diciembre', color:'#f97316',bg:'rgba(249,115,22,.07)'},
   ];
+}
+function renderPlaneacion(){
+  var MESES = _planMesesDef();
   if(!DB.planeacion) DB.planeacion = {meses:{}};
   var meses = DB.planeacion.meses||{};
   // Unidad de planeación = (OP, color). Solo entran los colores que aún NO se han cortado
@@ -13039,14 +13042,23 @@ document.querySelectorAll('.nav-item').forEach(function(el){ el.classList.toggle
 // ═══════════════════════════════════════════════════════════════════════════════
 var _monFiltroCorte = '';
 var _monFiltroCategoria = '';
+var _monFiltroMes = '';
 var _monCorteActivos = {};  // key: opId+'||'+color → true
 var _monCorteQtys    = {};  // key: opId+'||'+color+'||'+talla → qty confirmada
 
-function renderMonitoreo(){
-  var TALLA_ORD = ['2','3M','6M','9M','12M','18M','24M','T2','T4','T6','T8','T10','T12','T14','T16','XS','S','M','L','XL','XXL','XXXL','UNICA','ÚNICA'];
+// Filas combinadas: OPs pendientes por cortar + diseños programados en Planeación que
+// todavía no tienen OP (tallas por definir). Compartido entre la vista y el CSV para
+// que ambos muestren exactamente lo mismo.
+function _monBuildRows(){
+  var MESES = _planMesesDef();
   var ops = DB.ops.filter(function(op){ return op.estado_op !== 'ARCHIVADO' && op.estado_op !== 'PAGO_PENDIENTE'; });
   var otsXop = {};
   DB.ots.forEach(function(ot){ if(ot.op_id){ (otsXop[ot.op_id]=otsXop[ot.op_id]||[]).push(ot); } });
+
+  // Mes asignado a cada (op,color) en Planeación
+  var assignedSet = {};
+  var mesesPlan = (DB.planeacion && DB.planeacion.meses) || {};
+  Object.keys(mesesPlan).forEach(function(mk){ (mesesPlan[mk]||[]).forEach(function(key){ assignedSet[key]=mk; }); });
 
   var rows = [];
   ops.forEach(function(op){
@@ -13060,7 +13072,7 @@ function renderMonitoreo(){
             var qty = (ref.cantidades||{})[color+'_'+talla]||0;
             if(qty>0){ tallasRow[talla]=qty; total+=qty; }
           });
-          if(total>0) rows.push({cat:ref.cat||op.categoria||'—', nombre:ref.nombre||op.nombre_producto||'—', color:color, tallas:tallasRow, total:total, opId:op.id, opNum:fmtOpId(op.id), cortador:op.cortador||'—', isAnioAnt:isOpAnioAnterior(op), hasOTs:false});
+          if(total>0) rows.push({cat:ref.cat||op.categoria||'—', nombre:ref.nombre||op.nombre_producto||'—', color:color, tallas:tallasRow, total:total, opId:op.id, opNum:fmtOpId(op.id), cortador:op.cortador||'—', isAnioAnt:isOpAnioAnterior(op), hasOTs:false, isDiseno:false, mes:assignedSet[_planKey(op.id,color)]||''});
         });
       });
     } else {
@@ -13070,7 +13082,7 @@ function renderMonitoreo(){
         var color = ot.color||'—';
         var key = (ot.nombre||op.nombre_producto||'—')+'||'+color;
         if(!coloresVistos[key]){
-          coloresVistos[key] = {cat:ot.categoria||op.categoria||'—', nombre:ot.nombre||op.nombre_producto||'—', color:color, tallas:{}, total:0, opId:op.id, opNum:fmtOpId(op.id), cortador:op.cortador||'—', isAnioAnt:isOpAnioAnterior(op), hasOTs:true};
+          coloresVistos[key] = {cat:ot.categoria||op.categoria||'—', nombre:ot.nombre||op.nombre_producto||'—', color:color, tallas:{}, total:0, opId:op.id, opNum:fmtOpId(op.id), cortador:op.cortador||'—', isAnioAnt:isOpAnioAnterior(op), hasOTs:true, isDiseno:false, mes:assignedSet[_planKey(op.id,color)]||''};
           rows.push(coloresVistos[key]);
         }
         var r = coloresVistos[key];
@@ -13080,8 +13092,39 @@ function renderMonitoreo(){
     }
   });
 
+  // Diseños programados en Planeación que aún no tienen OP creada — tallas por definir.
+  var disPlan = (DB.planeacion && DB.planeacion.disenos_plan) || {};
+  var disenosActivos = (DB.disenos||[]).filter(function(d){ return !d.eliminado && d.kanban_estado !== 'LISTA_PRODUCCION'; });
+  disenosActivos.forEach(function(d){
+    var p = disPlan[d.id];
+    if(!p || !(p.uds>0)) return;
+    var cat = (d.categoria||'Sin categoría').trim().toUpperCase().replace(/\s+PR$/,'');
+    var coloresD = (d.colores_escogidos && d.colores_escogidos.length) ? d.colores_escogidos : null;
+    if(coloresD){
+      var udsPorColor = p.uds/coloresD.length;
+      coloresD.forEach(function(c){
+        rows.push({cat:cat, nombre:d.nombre||'—', color:(c.nombre||'—').toUpperCase(), tallas:{}, total:Math.round(udsPorColor), opId:null, opNum:'', cortador:'', isAnioAnt:false, hasOTs:false, isDiseno:true, mes:p.mes||''});
+      });
+    } else {
+      rows.push({cat:cat, nombre:d.nombre||'—', color:'—', tallas:{}, total:p.uds||0, opId:null, opNum:'', cortador:'', isAnioAnt:false, hasOTs:false, isDiseno:true, mes:p.mes||''});
+    }
+  });
+
+  return {rows:rows, MESES:MESES};
+}
+
+function renderMonitoreo(){
+  var TALLA_ORD = ['2','3M','6M','9M','12M','18M','24M','T2','T4','T6','T8','T10','T12','T14','T16','XS','S','M','L','XL','XXL','XXXL','UNICA','ÚNICA'];
+  var built = _monBuildRows();
+  var MESES = built.MESES;
+  var rows = built.rows;
+
   if(_monFiltroCorte) rows = rows.filter(function(r){ return r.cortador === _monFiltroCorte; });
   if(_monFiltroCategoria) rows = rows.filter(function(r){ return r.cat === _monFiltroCategoria; });
+  if(_monFiltroMes){
+    if(_monFiltroMes==='sin_mes') rows = rows.filter(function(r){ return !r.mes; });
+    else rows = rows.filter(function(r){ return r.mes === _monFiltroMes; });
+  }
   rows.sort(function(a,b){ return (a.cat+a.nombre+a.color).localeCompare(b.cat+b.nombre+b.color,'es'); });
 
   var tallasSet = {};
@@ -13098,15 +13141,21 @@ function renderMonitoreo(){
   cortadores.sort(); categorias.sort();
 
   var totalUds = rows.reduce(function(a,r){ return a+r.total; },0);
+  var totalDisenos = rows.filter(function(r){ return r.isDiseno; }).length;
   var nActivos = Object.keys(_monCorteActivos).length;
 
   var h = '';
   h += '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:18px;">';
   h += '<div>';
   h += '<div style="font-family:var(--bebas);font-size:26px;color:var(--text);">MONITOREO DE PRODUCCIÓN</div>';
-  h += '<div style="font-size:12px;color:#fbbf24;margin-top:2px;">Pendiente por Cortar — '+rows.length+' referencias · '+totalUds.toLocaleString('es-CO')+' uds</div>';
+  h += '<div style="font-size:12px;color:#fbbf24;margin-top:2px;">Pendiente por Cortar — '+rows.length+' referencias · '+totalUds.toLocaleString('es-CO')+' uds'+(totalDisenos?' <span style="color:#34d399;">('+totalDisenos+' aún sin OP — tallas por definir)</span>':'')+'</div>';
   h += '</div>';
   h += '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">';
+  h += '<select onchange="_monFiltroMes=this.value;renderPage(\'monitoreo\')" style="background:#0d1117;border:1px solid #2c2c2e;border-radius:6px;color:var(--text);padding:5px 10px;font-size:12px;cursor:pointer;">';
+  h += '<option value="">Todos los meses</option>';
+  h += '<option value="sin_mes"'+(_monFiltroMes==='sin_mes'?' selected':'')+'>Sin mes asignado</option>';
+  MESES.forEach(function(m){ h += '<option value="'+m.k+'"'+(_monFiltroMes===m.k?' selected':'')+'>'+esc(m.label)+'</option>'; });
+  h += '</select>';
   h += '<select onchange="_monFiltroCategoria=this.value;renderPage(\'monitoreo\')" style="background:#0d1117;border:1px solid #2c2c2e;border-radius:6px;color:var(--text);padding:5px 10px;font-size:12px;cursor:pointer;">';
   h += '<option value="">Todas las categorías</option>';
   categorias.forEach(function(c){ h += '<option value="'+esc(c)+'"'+(_monFiltroCategoria===c?' selected':'')+'>'+esc(c)+'</option>'; });
@@ -13186,33 +13235,43 @@ function renderMonitoreo(){
     h += '<span style="background:rgba(10,132,255,.08);border:1px solid rgba(10,132,255,.2);border-radius:4px;padding:2px 9px;color:#e2e8f0;font-weight:600;font-size:11px;white-space:nowrap;">'+esc(r.color)+'</span>';
     h += '</td>';
 
-    // Tallas — inputs si enCorte, estático si no
-    tallasCols.forEach(function(t){
-      if(enCorte){
-        var qk = ck+'||'+t;
-        var val = (_monCorteQtys[qk]!==undefined) ? _monCorteQtys[qk] : (r.tallas[t]||0);
-        var hasProg = (r.tallas[t]||0)>0;
-        h += '<td style="text-align:center;padding:3px 4px;">';
-        h += '<input type="number" min="0" value="'+val+'" data-qk="'+esc(qk)+'" onchange="_monCorteQtys[this.dataset.qk]=+(this.value)||0" style="width:50px;text-align:center;background:'+(hasProg?'rgba(34,197,94,.1)':'rgba(255,255,255,.04)')+';border:1px solid '+(hasProg?'rgba(34,197,94,.5)':'rgba(255,255,255,.12)')+';border-radius:5px;color:#e2e8f0;font-size:12px;font-weight:700;padding:4px 2px;">';
-        h += '</td>';
-      } else {
-        var qty = r.tallas[t]||0;
-        h += '<td style="text-align:center;padding:6px 8px;color:'+(qty>0?'#e2e8f0':'rgba(255,255,255,.12)')+';font-weight:'+(qty>0?'700':'400')+';">'+(qty>0?qty:'·')+'</td>';
-      }
-    });
+    // Tallas — inputs si enCorte, estático si no; diseños sin OP: "por definir"
+    if(r.isDiseno){
+      h += '<td colspan="'+(tallasCols.length||1)+'" style="text-align:center;padding:6px 8px;color:#fbbf24;font-size:10px;font-style:italic;">Tallas por definir</td>';
+    } else {
+      tallasCols.forEach(function(t){
+        if(enCorte){
+          var qk = ck+'||'+t;
+          var val = (_monCorteQtys[qk]!==undefined) ? _monCorteQtys[qk] : (r.tallas[t]||0);
+          var hasProg = (r.tallas[t]||0)>0;
+          h += '<td style="text-align:center;padding:3px 4px;">';
+          h += '<input type="number" min="0" value="'+val+'" data-qk="'+esc(qk)+'" onchange="_monCorteQtys[this.dataset.qk]=+(this.value)||0" style="width:50px;text-align:center;background:'+(hasProg?'rgba(34,197,94,.1)':'rgba(255,255,255,.04)')+';border:1px solid '+(hasProg?'rgba(34,197,94,.5)':'rgba(255,255,255,.12)')+';border-radius:5px;color:#e2e8f0;font-size:12px;font-weight:700;padding:4px 2px;">';
+          h += '</td>';
+        } else {
+          var qty = r.tallas[t]||0;
+          h += '<td style="text-align:center;padding:6px 8px;color:'+(qty>0?'#e2e8f0':'rgba(255,255,255,.12)')+';font-weight:'+(qty>0?'700':'400')+';">'+(qty>0?qty:'·')+'</td>';
+        }
+      });
+    }
 
     // Total
     h += '<td style="text-align:center;padding:6px 10px;color:#fbbf24;font-weight:800;font-size:13px;border-left:1px solid rgba(255,255,255,.06);">'+r.total+'</td>';
 
     // OP
-    h += '<td style="padding:6px 12px;"><span data-opid="'+r.opId+'" onclick="navTo(\'ops\');setTimeout(function(){verDetalleOP(\''+r.opId+'\');},100)" style="color:var(--cyan);cursor:pointer;font-size:11px;font-weight:700;" onmouseover="this.style.textDecoration=\'underline\'" onmouseout="this.style.textDecoration=\'none\'">'+esc(r.opNum)+'</span></td>';
+    if(r.isDiseno){
+      h += '<td style="padding:6px 12px;"><span style="font-size:10px;font-weight:700;color:#34d399;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);border-radius:4px;padding:2px 7px;">🎨 Diseño</span></td>';
+    } else {
+      h += '<td style="padding:6px 12px;"><span data-opid="'+r.opId+'" onclick="navTo(\'ops\');setTimeout(function(){verDetalleOP(\''+r.opId+'\');},100)" style="color:var(--cyan);cursor:pointer;font-size:11px;font-weight:700;" onmouseover="this.style.textDecoration=\'underline\'" onmouseout="this.style.textDecoration=\'none\'">'+esc(r.opNum)+'</span></td>';
+    }
 
     // Cortador
-    h += '<td style="padding:6px 12px;color:#64748b;font-size:11px;">'+esc(r.cortador)+'</td>';
+    h += '<td style="padding:6px 12px;color:#64748b;font-size:11px;">'+(r.isDiseno?'—':esc(r.cortador))+'</td>';
 
     // Botón corte
     h += '<td style="text-align:center;padding:4px 8px;">';
-    if(!r.hasOTs){
+    if(r.isDiseno){
+      h += '<span style="font-size:10px;color:#334155;" title="Aún no tiene orden de producción">Sin OP aún</span>';
+    } else if(!r.hasOTs){
       h += '<span style="font-size:10px;color:#334155;" title="Crea OTs primero">Sin OTs</span>';
     } else if(enCorte){
       h += '<button data-opid="'+r.opId+'" data-col="'+esc(r.color)+'" onclick="monCancelarCorte(this.dataset.opid,this.dataset.col)" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#ef4444;border-radius:5px;padding:4px 9px;cursor:pointer;font-size:12px;font-weight:700;" title="Cancelar">✕</button>';
@@ -13293,33 +13352,16 @@ async function monConfirmarCortes(){
 
 function exportarMonitoreoCSV(){
   var TALLA_ORD = ['2','3M','6M','9M','12M','18M','24M','T2','T4','T6','T8','T10','T12','T14','T16','XS','S','M','L','XL','XXL','XXXL','UNICA','ÚNICA'];
-  var ops = DB.ops.filter(function(op){ return op.estado_op !== 'ARCHIVADO' && op.estado_op !== 'PAGO_PENDIENTE'; });
-  var otsXop = {};
-  DB.ots.forEach(function(ot){ if(ot.op_id){ (otsXop[ot.op_id]=otsXop[ot.op_id]||[]).push(ot); } });
-  var rows = [];
-  ops.forEach(function(op){
-    var otsOp = otsXop[op.id] || [];
-    if(otsOp.length === 0){
-      var refs = op.referencias || [{nombre:op.nombre_producto||'—', cat:op.categoria||'—', colores:op.colores||[], tallas:op.tallas||[], cantidades:op.cantidades||{}}];
-      refs.forEach(function(ref){
-        (ref.colores||[]).forEach(function(color){
-          var tallasRow = {}, total = 0;
-          (ref.tallas||[]).forEach(function(talla){ var qty=(ref.cantidades||{})[color+'_'+talla]||0; if(qty>0){ tallasRow[talla]=qty; total+=qty; } });
-          if(total>0) rows.push({cat:ref.cat||op.categoria||'—', nombre:ref.nombre||'—', color:color, tallas:tallasRow, total:total, opNum:fmtOpId(op.id), cortador:op.cortador||'—'});
-        });
-      });
-    } else {
-      var cv = {};
-      otsOp.forEach(function(ot){
-        if(ot.estado !== 'PENDIENTE_CORTAR') return;
-        var key=(ot.nombre||op.nombre_producto||'—')+'||'+(ot.color||'—');
-        if(!cv[key]) { cv[key]={cat:ot.categoria||op.categoria||'—', nombre:ot.nombre||op.nombre_producto||'—', color:ot.color||'—', tallas:{}, total:0, opNum:fmtOpId(op.id), cortador:op.cortador||'—'}; rows.push(cv[key]); }
-        cv[key].tallas[ot.talla||'—']=(cv[key].tallas[ot.talla||'—']||0)+(ot.cantidad||0); cv[key].total+=(ot.cantidad||0);
-      });
-    }
-  });
+  var built = _monBuildRows();
+  var MESES = built.MESES;
+  var mesLabel = {}; MESES.forEach(function(m){ mesLabel[m.k]=m.label; });
+  var rows = built.rows;
   if(_monFiltroCorte) rows = rows.filter(function(r){ return r.cortador===_monFiltroCorte; });
   if(_monFiltroCategoria) rows = rows.filter(function(r){ return r.cat===_monFiltroCategoria; });
+  if(_monFiltroMes){
+    if(_monFiltroMes==='sin_mes') rows = rows.filter(function(r){ return !r.mes; });
+    else rows = rows.filter(function(r){ return r.mes===_monFiltroMes; });
+  }
   rows.sort(function(a,b){ return (a.cat+a.nombre+a.color).localeCompare(b.cat+b.nombre+b.color,'es'); });
   var tallasSet = {};
   rows.forEach(function(r){ Object.keys(r.tallas).forEach(function(t){ tallasSet[t]=1; }); });
@@ -13327,10 +13369,10 @@ function exportarMonitoreoCSV(){
     var ia=TALLA_ORD.indexOf(a), ib=TALLA_ORD.indexOf(b);
     if(ia<0&&ib<0) return a.localeCompare(b); if(ia<0) return 1; if(ib<0) return -1; return ia-ib;
   });
-  var header = ['CATEGORÍA','REFERENCIA','COLOR'].concat(tallasCols).concat(['TOTAL','OP','CORTADOR']);
+  var header = ['CATEGORÍA','REFERENCIA','COLOR'].concat(tallasCols).concat(['TOTAL','OP','CORTADOR','MES','ESTADO']);
   var lines = [header.join(',')];
   rows.forEach(function(r){
-    var row = [r.cat, r.nombre, r.color].concat(tallasCols.map(function(t){ return r.tallas[t]||0; })).concat([r.total, r.opNum, r.cortador]);
+    var row = [r.cat, r.nombre, r.color].concat(tallasCols.map(function(t){ return r.isDiseno ? 'Por definir' : (r.tallas[t]||0); })).concat([r.total, r.isDiseno?'—':r.opNum, r.isDiseno?'—':r.cortador, r.mes?(mesLabel[r.mes]||r.mes):'Sin asignar', r.isDiseno?'Diseño sin OP':'OP en proceso']);
     lines.push(row.map(function(v){ return '"'+String(v).replace(/"/g,'""')+'"'; }).join(','));
   });
   var blob = new Blob(['﻿'+lines.join('\n')], {type:'text/csv;charset=utf-8;'});
