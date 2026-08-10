@@ -6530,13 +6530,24 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1786387809443_krfrl",
-      "ts": 1786387809443,
-      "user": "John Rodriguez",
-      "tipo": "eliminar_diseno",
+      "categoria": "Pantalones",
       "diseno_id": "id_1785260628045_rnvu3p492",
+      "id": "evt_1786387809443_krfrl",
       "nombre": "PANTALON GEPARDO",
-      "categoria": "Pantalones"
+      "tipo": "eliminar_diseno",
+      "ts": 1786387809443,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1786398846935_0x33s",
+      "ts": 1786398846935,
+      "user": "John Rodriguez",
+      "tipo": "diseno_prioridad",
+      "diseno_id": "id_09ecfeecb9034f65",
+      "nombre": "CAMISETA TEJIDA POPEYE",
+      "categoria": "Tejido de Punto",
+      "prio_anterior": 1,
+      "prio_nueva": 2
     }
   ]
 }
