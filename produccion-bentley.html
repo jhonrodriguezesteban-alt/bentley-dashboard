@@ -2824,8 +2824,8 @@ function _planTallasColor(op, color){
 function imprimirOrdenCorte(mesKey){
   var info = (window._planMesMap||{})[mesKey];
   if(!info) return;
-  var mes = info.mes, mesUnits = info.mesUnits;
-  if(!mesUnits.length){ toast('Este mes no tiene OPs asignadas','warning'); return; }
+  var mes = info.mes, mesUnits = info.mesUnits, mesDisenos = info.mesDisenos||[], disPlanAll = info.disPlanAll||{};
+  if(!mesUnits.length && !mesDisenos.length){ toast('Este mes no tiene nada asignado','warning'); return; }
 
   var catGroups = {};
   mesUnits.forEach(function(u){
@@ -2839,7 +2839,22 @@ function imprimirOrdenCorte(mesKey){
     return ub-ua;
   });
 
+  // Diseños programados (aún sin OP creada) — agrupados igual por categoría → referencia → color.
+  // Las tallas de estos todavía no están definidas (se definen al crear la OP).
+  var catGroupsDis = {};
+  mesDisenos.forEach(function(d){
+    var cat = (d.categoria||'Sin categoría').trim().toUpperCase().replace(/\s+PR$/,'');
+    if(!catGroupsDis[cat]) catGroupsDis[cat] = [];
+    catGroupsDis[cat].push(d);
+  });
+  var catsDis = Object.keys(catGroupsDis).sort(function(a,b){
+    var ua = catGroupsDis[a].reduce(function(s,d){ return s+((disPlanAll[d.id]||{}).uds||0); },0);
+    var ub = catGroupsDis[b].reduce(function(s,d){ return s+((disPlanAll[d.id]||{}).uds||0); },0);
+    return ub-ua;
+  });
+
   var totalGeneral = mesUnits.reduce(function(s,u){ return s+_planColorUds(u.op,u.color); },0);
+  var totalDisenos = mesDisenos.reduce(function(s,d){ return s+((disPlanAll[d.id]||{}).uds||0); },0);
 
   var doc = '<!doctype html><html><head><meta charset="utf-8">';
   doc += '<title>Orden de corte — '+esc(mes.label)+'</title>';
@@ -2861,21 +2876,47 @@ function imprimirOrdenCorte(mesKey){
   doc += '</style></head><body>';
   doc += '<div class="noprint" style="margin-bottom:14px;"><button onclick="window.print()" style="padding:8px 16px;font-size:13px;cursor:pointer;">🖨 Imprimir / Guardar PDF</button></div>';
   doc += '<h1>Orden de corte — Bentley Kids</h1>';
-  doc += '<div class="sub">'+esc(mes.label.toUpperCase())+' · '+mesUnits.length+' color'+(mesUnits.length!==1?'es':'')+' · '+totalGeneral.toLocaleString('es-CO')+' uds totales · generado '+esc(hoy())+'</div>';
+  doc += '<div class="sub">'+esc(mes.label.toUpperCase())+' · '+mesUnits.length+' color'+(mesUnits.length!==1?'es':'')+' en OP ('+totalGeneral.toLocaleString('es-CO')+' uds)'+(mesDisenos.length?' · '+mesDisenos.length+' diseño'+(mesDisenos.length!==1?'s':'')+' programado'+(mesDisenos.length!==1?'s':'')+' ('+totalDisenos.toLocaleString('es-CO')+' uds)':'')+' · generado '+esc(hoy())+'</div>';
 
-  cats.forEach(function(cat){
-    var units = catGroups[cat].slice().sort(function(a,b){ return (a.op.nombre_producto||'').localeCompare(b.op.nombre_producto||''); });
-    var udsCat = units.reduce(function(s,u){ return s+_planColorUds(u.op,u.color); },0);
-    doc += '<h2>'+esc(cat)+'<span class="catTot">'+udsCat.toLocaleString('es-CO')+' uds</span></h2>';
-    doc += '<table><thead><tr><th style="width:16%;">OP</th><th style="width:30%;">Referencia</th><th style="width:16%;">Color</th><th style="width:28%;">Tallas</th><th style="width:10%;">Total</th></tr></thead><tbody>';
-    units.forEach(function(u){
-      var tallas = _planTallasColor(u.op, u.color);
-      var uds = _planColorUds(u.op, u.color);
-      var tallasTxt = tallas.length ? tallas.map(function(t){ return t.talla+':'+t.uds; }).join('  ·  ') : '—';
-      doc += '<tr class="ref-row"><td>'+esc(fmtOpId(u.op.id))+'</td><td>'+esc(u.op.nombre_producto||'')+'</td><td>'+esc(u.color)+'</td><td class="tallas">'+esc(tallasTxt)+'</td><td class="tot">'+uds.toLocaleString('es-CO')+'</td></tr>';
+  if(cats.length){
+    doc += '<h2 style="background:#0a5fd6;">📋 Órdenes de producción</h2>';
+    cats.forEach(function(cat){
+      var units = catGroups[cat].slice().sort(function(a,b){ return (a.op.nombre_producto||'').localeCompare(b.op.nombre_producto||''); });
+      var udsCat = units.reduce(function(s,u){ return s+_planColorUds(u.op,u.color); },0);
+      doc += '<h2>'+esc(cat)+'<span class="catTot">'+udsCat.toLocaleString('es-CO')+' uds</span></h2>';
+      doc += '<table><thead><tr><th style="width:16%;">OP</th><th style="width:30%;">Referencia</th><th style="width:16%;">Color</th><th style="width:28%;">Tallas</th><th style="width:10%;">Total</th></tr></thead><tbody>';
+      units.forEach(function(u){
+        var tallas = _planTallasColor(u.op, u.color);
+        var uds = _planColorUds(u.op, u.color);
+        var tallasTxt = tallas.length ? tallas.map(function(t){ return t.talla+':'+t.uds; }).join('  ·  ') : '—';
+        doc += '<tr class="ref-row"><td>'+esc(fmtOpId(u.op.id))+'</td><td>'+esc(u.op.nombre_producto||'')+'</td><td>'+esc(u.color)+'</td><td class="tallas">'+esc(tallasTxt)+'</td><td class="tot">'+uds.toLocaleString('es-CO')+'</td></tr>';
+      });
+      doc += '</tbody></table>';
     });
-    doc += '</tbody></table>';
-  });
+  }
+
+  if(catsDis.length){
+    doc += '<h2 style="background:#0a8a5c;">🎨 Diseños programados (sin OP — tallas por definir)</h2>';
+    catsDis.forEach(function(cat){
+      var ds = catGroupsDis[cat].slice().sort(function(a,b){ return (a.nombre||'').localeCompare(b.nombre||''); });
+      var udsCat = ds.reduce(function(s,d){ return s+((disPlanAll[d.id]||{}).uds||0); },0);
+      doc += '<h2>'+esc(cat)+'<span class="catTot">'+udsCat.toLocaleString('es-CO')+' uds</span></h2>';
+      doc += '<table><thead><tr><th style="width:46%;">Referencia</th><th style="width:26%;">Color</th><th style="width:18%;">Tallas</th><th style="width:10%;">Total</th></tr></thead><tbody>';
+      ds.forEach(function(d){
+        var p = disPlanAll[d.id]||{uds:0};
+        var coloresD = (d.colores_escogidos && d.colores_escogidos.length) ? d.colores_escogidos : null;
+        if(coloresD){
+          var udsPorColor = (p.uds||0)/coloresD.length;
+          coloresD.forEach(function(c){
+            doc += '<tr class="ref-row"><td>'+esc(d.nombre||'')+'</td><td>'+esc((c.nombre||'').toUpperCase())+'</td><td class="tallas">Por definir</td><td class="tot">'+Math.round(udsPorColor).toLocaleString('es-CO')+'</td></tr>';
+          });
+        } else {
+          doc += '<tr class="ref-row"><td>'+esc(d.nombre||'')+'</td><td>—</td><td class="tallas">Por definir</td><td class="tot">'+(p.uds||0).toLocaleString('es-CO')+'</td></tr>';
+        }
+      });
+      doc += '</tbody></table>';
+    });
+  }
 
   doc += '<div class="foot">Bentley Kids · Grupo Bentley SAS — documento generado automáticamente desde el módulo de Planeación.</div>';
   doc += '</body></html>';
