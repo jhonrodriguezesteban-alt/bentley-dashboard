@@ -2794,7 +2794,95 @@ function planVerMes(mesKey){
   }
 
   h += '</div>';
-  openModal('📅 '+mes.label.toUpperCase()+' — Resumen completo', h, '', {wide:true});
+  var footerBtn = '<button data-mes="'+mesKey+'" onclick="imprimirOrdenCorte(this.dataset.mes)" style="background:#0a84ff;border:none;color:#fff;font-size:12px;font-weight:700;padding:9px 16px;border-radius:8px;cursor:pointer;">🖨 Imprimir orden de corte</button>';
+  openModal('📅 '+mes.label.toUpperCase()+' — Resumen completo', h, footerBtn, {wide:true});
+}
+
+// Talla-por-talla de un color (para la orden de corte impresa) — misma fuente que
+// _planColorUds: OTs pendientes de cortar, o si no hay OTs aún, referencias.cantidades.
+function _planTallasColor(op, color){
+  var ots = (DB.ots||[]).filter(function(o){
+    return o.op_id===op.id && _PLAN_NO_CORTADO[o.estado] && (color==='—' || (o.color||'').trim().toUpperCase()===color.toUpperCase());
+  });
+  var map = {};
+  if(ots.length){
+    ots.forEach(function(o){ var t=o.talla||'—'; map[t]=(map[t]||0)+(parseInt(o.cantidad)||0); });
+  } else if(op.referencias){
+    op.referencias.forEach(function(r){
+      Object.keys(r.cantidades||{}).forEach(function(k){
+        if(color!=='—' && k.indexOf(color+'_')!==0) return;
+        var t = k.slice((color+'_').length) || '—';
+        map[t] = (map[t]||0)+(parseInt(r.cantidades[k])||0);
+      });
+    });
+  }
+  return Object.keys(map).sort().map(function(t){ return {talla:t, uds:map[t]}; });
+}
+
+// Orden de corte imprimible del mes — agrupada por categoría → referencia → color → talla.
+// Pensada para descargar/imprimir y entregar en físico a los cortadores.
+function imprimirOrdenCorte(mesKey){
+  var info = (window._planMesMap||{})[mesKey];
+  if(!info) return;
+  var mes = info.mes, mesUnits = info.mesUnits;
+  if(!mesUnits.length){ toast('Este mes no tiene OPs asignadas','warning'); return; }
+
+  var catGroups = {};
+  mesUnits.forEach(function(u){
+    var cat = u.op.categoria || 'Sin categoría';
+    if(!catGroups[cat]) catGroups[cat] = [];
+    catGroups[cat].push(u);
+  });
+  var cats = Object.keys(catGroups).sort(function(a,b){
+    var ua = catGroups[a].reduce(function(s,u){ return s+_planColorUds(u.op,u.color); },0);
+    var ub = catGroups[b].reduce(function(s,u){ return s+_planColorUds(u.op,u.color); },0);
+    return ub-ua;
+  });
+
+  var totalGeneral = mesUnits.reduce(function(s,u){ return s+_planColorUds(u.op,u.color); },0);
+
+  var doc = '<!doctype html><html><head><meta charset="utf-8">';
+  doc += '<title>Orden de corte — '+esc(mes.label)+'</title>';
+  doc += '<style>';
+  doc += '@page{margin:14mm;}';
+  doc += 'body{font-family:Arial,Helvetica,sans-serif;color:#111;margin:0;padding:0;}';
+  doc += 'h1{font-size:18px;margin:0 0 2px;}';
+  doc += '.sub{font-size:11px;color:#555;margin:0 0 18px;}';
+  doc += 'h2{font-size:13px;text-transform:uppercase;letter-spacing:.5px;background:#111;color:#fff;padding:5px 8px;margin:20px 0 6px;page-break-after:avoid;}';
+  doc += 'table{width:100%;border-collapse:collapse;margin-bottom:4px;page-break-inside:avoid;}';
+  doc += 'th,td{border:1px solid #999;padding:4px 6px;font-size:11px;text-align:left;}';
+  doc += 'th{background:#eee;}';
+  doc += '.ref-row td{font-weight:700;background:#f5f5f5;}';
+  doc += '.tallas{color:#333;}';
+  doc += '.tot{font-weight:700;text-align:right;}';
+  doc += '.foot{margin-top:24px;font-size:10px;color:#555;}';
+  doc += '.catTot{font-size:10px;color:#555;font-weight:400;text-transform:none;float:right;}';
+  doc += '@media print{ .noprint{display:none;} }';
+  doc += '</style></head><body>';
+  doc += '<div class="noprint" style="margin-bottom:14px;"><button onclick="window.print()" style="padding:8px 16px;font-size:13px;cursor:pointer;">🖨 Imprimir / Guardar PDF</button></div>';
+  doc += '<h1>Orden de corte — Bentley Kids</h1>';
+  doc += '<div class="sub">'+esc(mes.label.toUpperCase())+' · '+mesUnits.length+' color'+(mesUnits.length!==1?'es':'')+' · '+totalGeneral.toLocaleString('es-CO')+' uds totales · generado '+esc(hoy())+'</div>';
+
+  cats.forEach(function(cat){
+    var units = catGroups[cat].slice().sort(function(a,b){ return (a.op.nombre_producto||'').localeCompare(b.op.nombre_producto||''); });
+    var udsCat = units.reduce(function(s,u){ return s+_planColorUds(u.op,u.color); },0);
+    doc += '<h2>'+esc(cat)+'<span class="catTot">'+udsCat.toLocaleString('es-CO')+' uds</span></h2>';
+    doc += '<table><thead><tr><th style="width:16%;">OP</th><th style="width:30%;">Referencia</th><th style="width:16%;">Color</th><th style="width:28%;">Tallas</th><th style="width:10%;">Total</th></tr></thead><tbody>';
+    units.forEach(function(u){
+      var tallas = _planTallasColor(u.op, u.color);
+      var uds = _planColorUds(u.op, u.color);
+      var tallasTxt = tallas.length ? tallas.map(function(t){ return t.talla+':'+t.uds; }).join('  ·  ') : '—';
+      doc += '<tr class="ref-row"><td>'+esc(fmtOpId(u.op.id))+'</td><td>'+esc(u.op.nombre_producto||'')+'</td><td>'+esc(u.color)+'</td><td class="tallas">'+esc(tallasTxt)+'</td><td class="tot">'+uds.toLocaleString('es-CO')+'</td></tr>';
+    });
+    doc += '</tbody></table>';
+  });
+
+  doc += '<div class="foot">Bentley Kids · Grupo Bentley SAS — documento generado automáticamente desde el módulo de Planeación.</div>';
+  doc += '</body></html>';
+
+  var w = window.open('', '_blank');
+  if(!w){ toast('El navegador bloqueó la ventana — habilita pop-ups para imprimir','warning'); return; }
+  w.document.open(); w.document.write(doc); w.document.close();
 }
 
 function _planAsignar(opId, mesKey){
