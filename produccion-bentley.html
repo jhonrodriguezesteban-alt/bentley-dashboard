@@ -2492,7 +2492,7 @@ function renderPage(page){
   else if(page==='costos_mo') el.innerHTML = renderCostosMO();
   else if(page==='costeo') el.innerHTML = renderCosteo();
   else if(page==='simulador'){ try{ el.innerHTML = renderSimulador(); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar el Simulador</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[Simulador]', e); } }
-  else if(page==='monitoreo') el.innerHTML = renderMonitoreo();
+  else if(page==='monitoreo'){ try{ el.innerHTML = renderMonitoreo(); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar Monitoreo de Producción</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[Monitoreo]', e); } }
   else if(page==='cronograma') el.innerHTML = renderCronograma();
   else if(page==='bitacora') el.innerHTML = renderBitacora();
   else if(page==='planeacion'){
@@ -13098,12 +13098,12 @@ function _monBuildRows(){
   disenosActivos.forEach(function(d){
     var p = disPlan[d.id];
     if(!p || !(p.uds>0)) return;
-    var cat = (d.categoria||'Sin categoría').trim().toUpperCase().replace(/\s+PR$/,'');
+    var cat = String(d.categoria||'Sin categoría').trim().toUpperCase().replace(/\s+PR$/,'');
     var coloresD = (d.colores_escogidos && d.colores_escogidos.length) ? d.colores_escogidos : null;
     if(coloresD){
       var udsPorColor = p.uds/coloresD.length;
       coloresD.forEach(function(c){
-        rows.push({cat:cat, nombre:d.nombre||'—', color:(c.nombre||'—').toUpperCase(), tallas:{}, total:Math.round(udsPorColor), opId:null, opNum:'', cortador:'', isAnioAnt:false, hasOTs:false, isDiseno:true, mes:p.mes||''});
+        rows.push({cat:cat, nombre:d.nombre||'—', color:String(c.nombre||'—').toUpperCase(), tallas:{}, total:Math.round(udsPorColor), opId:null, opNum:'', cortador:'', isAnioAnt:false, hasOTs:false, isDiseno:true, mes:p.mes||''});
       });
     } else {
       rows.push({cat:cat, nombre:d.nombre||'—', color:'—', tallas:{}, total:p.uds||0, opId:null, opNum:'', cortador:'', isAnioAnt:false, hasOTs:false, isDiseno:true, mes:p.mes||''});
