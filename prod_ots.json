@@ -40917,7 +40917,7 @@
       "created_at": "2026-03-24",
       "created_by": "migrado_matriz",
       "cumplió_fecha": false,
-      "estado": "PENDIENTE_CORTAR",
+      "estado": "EN_CONFECCION",
       "fecha_op": "2026-03-24",
       "id": "OT-auto-940",
       "migrado": true,
@@ -40936,7 +40936,14 @@
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
       "unidades_por_llegar": 7,
-      "valor_mo": 1056
+      "valor_mo": 1056,
+      "historial": [
+        {
+          "fecha": "2026-08-11T15:37:33.200Z",
+          "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "user": "Jefa de Producción"
+        }
+      ]
     },
     {
       "cantidad": 27,
@@ -40947,7 +40954,7 @@
       "created_at": "2026-03-24",
       "created_by": "migrado_matriz",
       "cumplió_fecha": false,
-      "estado": "PENDIENTE_CORTAR",
+      "estado": "EN_CONFECCION",
       "fecha_op": "2026-03-24",
       "id": "OT-auto-941",
       "migrado": true,
@@ -40966,7 +40973,14 @@
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
       "unidades_por_llegar": 7,
-      "valor_mo": 1056
+      "valor_mo": 1056,
+      "historial": [
+        {
+          "fecha": "2026-08-11T15:37:33.200Z",
+          "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "user": "Jefa de Producción"
+        }
+      ]
     },
     {
       "cantidad": 27,
@@ -40977,7 +40991,7 @@
       "created_at": "2026-03-24",
       "created_by": "migrado_matriz",
       "cumplió_fecha": false,
-      "estado": "PENDIENTE_CORTAR",
+      "estado": "EN_CONFECCION",
       "fecha_op": "2026-03-24",
       "id": "OT-auto-942",
       "migrado": true,
@@ -40996,7 +41010,14 @@
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
       "unidades_por_llegar": 7,
-      "valor_mo": 1056
+      "valor_mo": 1056,
+      "historial": [
+        {
+          "fecha": "2026-08-11T15:37:33.200Z",
+          "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "user": "Jefa de Producción"
+        }
+      ]
     },
     {
       "cantidad": 10,
@@ -61280,7 +61301,7 @@
       "color": "MARFIL",
       "created_at": "2026-06-23",
       "created_by": "John Rodriguez",
-      "estado": "PENDIENTE_CORTAR",
+      "estado": "EN_CONFECCION",
       "fecha_ot": "2026-03-24",
       "id": "id_1782258708792_d4oq8dbmf",
       "motivo_incumplimiento": "",
@@ -61292,7 +61313,14 @@
       "talla": "T12",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151
+      "valor_mo": 1151,
+      "historial": [
+        {
+          "fecha": "2026-08-11T15:37:33.200Z",
+          "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "user": "Jefa de Producción"
+        }
+      ]
     },
     {
       "cantidad": 20,
@@ -70893,14 +70921,20 @@
       "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "POR_REVISAR",
+      "estado": "EN_CONFECCION",
       "nt_corte_satelite": null,
       "nt_ingreso_planta": null,
       "op_effi": null,
       "cumplió_fecha": null,
       "motivo_incumplimiento": "",
       "notas": "",
-      "historial": [],
+      "historial": [
+        {
+          "fecha": "2026-08-11T15:37:33.200Z",
+          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → EN_CONFECCION. Motivo: EN TALLER",
+          "user": "Jefa de Producción"
+        }
+      ],
       "created_at": "2026-08-11",
       "created_by": "Jefa de Producción"
     }
