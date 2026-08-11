@@ -6776,20 +6776,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1786462670938_v7blv",
-      "ts": 1786462670938,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-0037",
       "op_nombre": "CHALECO ACOLCHADO MANY",
       "referencia": "CHALECO ACOLCHADO MANY",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1786462670938,
       "uds": 135,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1786465790186_c0yms",
+      "ts": 1786465790186,
+      "user": "Isabel",
+      "tipo": "diseno_comentario",
+      "diseno_id": "id_1785256691878_4i6dcfyfh",
+      "nombre": "CAMIBUZO NEVADO",
+      "categoria": "Buzos",
+      "tiene_imagen": false,
+      "extracto": "Para hacer prueba de tallas necesitamos más tela"
     }
   ]
 }
