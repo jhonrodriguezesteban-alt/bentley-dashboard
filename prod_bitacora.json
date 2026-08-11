@@ -6749,15 +6749,31 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1786462583820_za9xt",
-      "ts": 1786462583820,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-0037",
-      "nombre": "CHALECO ACOLCHADO MANY",
       "categoria": "CHALECOS",
       "colores": 4,
-      "refs": 1
+      "id": "evt_1786462583820_za9xt",
+      "nombre": "CHALECO ACOLCHADO MANY",
+      "op_id": "OP-0037",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1786462583820,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1786462653275_3jz5q",
+      "ts": 1786462653275,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0037",
+      "op_nombre": "CHALECO ACOLCHADO MANY",
+      "referencia": "CHALECO ACOLCHADO MANY",
+      "color": "MARFIL",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 135,
+      "motivo": "EN TALLER"
     }
   ]
 }
