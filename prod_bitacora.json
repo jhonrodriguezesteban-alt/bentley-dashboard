@@ -6641,22 +6641,34 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1786459796375_vznx5",
-      "ts": 1786459796375,
-      "user": "Isabel",
-      "tipo": "diseno_tela_stock",
       "diseno_id": "id_1782163486159_zfdud2g3z",
+      "hay_tela": false,
+      "id": "evt_1786459796375_vznx5",
       "nombre": "BLUSA MANGA BOLERO",
-      "hay_tela": false
+      "tipo": "diseno_tela_stock",
+      "ts": 1786459796375,
+      "user": "Isabel"
     },
     {
+      "diseno_id": "id_1782163486159_zfdud2g3z",
+      "hay_tela": true,
       "id": "evt_1786459798369_7f8ov",
-      "ts": 1786459798369,
-      "user": "Isabel",
+      "nombre": "BLUSA MANGA BOLERO",
       "tipo": "diseno_tela_stock",
+      "ts": 1786459798369,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1786460196853_6n7h5",
+      "ts": 1786460196853,
+      "user": "Isabel",
+      "tipo": "estado_diseno",
       "diseno_id": "id_1782163486159_zfdud2g3z",
       "nombre": "BLUSA MANGA BOLERO",
-      "hay_tela": true
+      "categoria": "Blusas",
+      "marca": "Bentley Kids",
+      "estado_anterior": "EN_DISENO_DIGITAL",
+      "estado_nuevo": "EN_CORTE_MUESTRA"
     }
   ]
 }
