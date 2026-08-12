@@ -6985,15 +6985,33 @@
       "user": "Isabel"
     },
     {
+      "categoria": "Chaquetas",
+      "diseno_id": "id_1782178726618_4nqy6fard",
       "id": "evt_1786562597690_reryz",
-      "ts": 1786562597690,
-      "user": "Isabel",
+      "nombre": "CHAQUETA DISCOVERY",
+      "tela_anterior": "pte_llegar",
+      "tela_nueva": "asignada",
       "tipo": "diseno_tela",
+      "ts": 1786562597690,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1786562610223_o4r18",
+      "ts": 1786562610223,
+      "user": "Isabel",
+      "tipo": "diseno_tela_stock",
       "diseno_id": "id_1782178726618_4nqy6fard",
       "nombre": "CHAQUETA DISCOVERY",
-      "categoria": "Chaquetas",
-      "tela_anterior": "pte_llegar",
-      "tela_nueva": "asignada"
+      "hay_tela": true
+    },
+    {
+      "id": "evt_1786562611623_ulj26",
+      "ts": 1786562611623,
+      "user": "Isabel",
+      "tipo": "diseno_tela_stock",
+      "diseno_id": "id_1782178726618_4nqy6fard",
+      "nombre": "CHAQUETA DISCOVERY",
+      "hay_tela": false
     }
   ]
 }
