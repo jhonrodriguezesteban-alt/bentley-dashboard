@@ -6945,23 +6945,34 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1786562297080_5fk7b",
-      "ts": 1786562297080,
-      "user": "Isabel",
-      "tipo": "diseno_tela_stock",
       "diseno_id": "id_1782182087591_a8je2c72b",
+      "hay_tela": false,
+      "id": "evt_1786562297080_5fk7b",
       "nombre": "conjunto dakota",
-      "hay_tela": false
+      "tipo": "diseno_tela_stock",
+      "ts": 1786562297080,
+      "user": "Isabel"
     },
     {
+      "categoria": "Conjuntos",
+      "diseno_id": "id_1782182087591_a8je2c72b",
       "id": "evt_1786562299706_8rm5h",
+      "nombre": "conjunto dakota",
+      "tela_anterior": "pte_llegar",
+      "tela_nueva": "asignada",
+      "tipo": "diseno_tela",
       "ts": 1786562299706,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1786562308864_7n45r",
+      "ts": 1786562308864,
       "user": "Isabel",
       "tipo": "diseno_tela",
       "diseno_id": "id_1782182087591_a8je2c72b",
       "nombre": "conjunto dakota",
       "categoria": "Conjuntos",
-      "tela_anterior": "pte_llegar",
+      "tela_anterior": "asignada",
       "tela_nueva": "asignada"
     }
   ]
