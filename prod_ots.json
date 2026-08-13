@@ -27799,7 +27799,7 @@
       "created_at": "2026-01-21",
       "created_by": "migrado_matriz",
       "cumplió_fecha": false,
-      "estado": "CORTE_POR_ALISTAR",
+      "estado": "EN_CONFECCION",
       "fecha_op": "2026-01-21",
       "fecha_ot": "2026-03-16",
       "id": "OT-12122",
@@ -27820,11 +27820,21 @@
       "unidades_novedad": 0,
       "unidades_por_llegar": 9,
       "valor_mo": 1072,
-      "satelite_id": "sat_17",
+      "satelite_id": "sat_18",
       "historial": [
         {
           "fecha": "2026-08-13T21:29:49.910Z",
           "accion": "Taller asignado: NIEVES CRISTANCHO",
+          "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-08-13T21:29:52.405Z",
+          "accion": "Taller asignado: YUDY CAROLINA CELIS QUINTERO",
+          "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-08-13T21:30:01.094Z",
+          "accion": "Estado cambiado: CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
           "user": "Jefa de Producción"
         }
       ]
