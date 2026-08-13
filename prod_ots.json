@@ -27819,7 +27819,15 @@
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
       "unidades_por_llegar": 9,
-      "valor_mo": 1072
+      "valor_mo": 1072,
+      "satelite_id": "sat_17",
+      "historial": [
+        {
+          "fecha": "2026-08-13T21:29:49.910Z",
+          "accion": "Taller asignado: NIEVES CRISTANCHO",
+          "user": "Jefa de Producción"
+        }
+      ]
     },
     {
       "cantidad": 8,
@@ -27861,6 +27869,11 @@
         {
           "fecha": "2026-08-13T21:29:39.120Z",
           "accion": "Estado cambiado: CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-08-13T21:29:41.861Z",
+          "accion": "Estado cambiado: EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
           "user": "Jefa de Producción"
         }
       ]
