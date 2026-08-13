@@ -7333,19 +7333,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": false,
+      "color": "CAMEL",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1786656662868_6e81v",
+      "motivo": "EN TALLER",
+      "op_id": "OP-0014",
+      "op_nombre": "LEGGIN CAMPANITA",
+      "referencia": "LEGGIN CAMPANITA",
+      "talla": "T10",
+      "tipo": "estado_ot",
       "ts": 1786656662868,
+      "uds": 3,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1786656678526_t9ey2",
+      "ts": 1786656678526,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-0014",
       "op_nombre": "LEGGIN CAMPANITA",
       "referencia": "LEGGIN CAMPANITA",
-      "color": "CAMEL",
+      "color": "MARFIL",
       "talla": "T10",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": false,
-      "uds": 3,
+      "uds": 6,
       "motivo": "EN TALLER"
     }
   ]
