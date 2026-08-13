@@ -7205,19 +7205,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "BEIGE",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1786656469627_rjia2",
+      "motivo": "EN TALLER",
+      "op_id": "OP-2026-094",
+      "op_nombre": "CONJUNTO ISABELLA",
+      "referencia": "CONJUNTO ISABELLA",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1786656469627,
+      "uds": 5,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1786656486714_v612f",
+      "ts": 1786656486714,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-094",
       "op_nombre": "CONJUNTO ISABELLA",
       "referencia": "CONJUNTO ISABELLA",
-      "color": "BEIGE",
+      "color": "MARFIL",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 5,
+      "uds": 60,
       "motivo": "EN TALLER"
     }
   ]
