@@ -7221,19 +7221,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MARFIL",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1786656486714_v612f",
-      "ts": 1786656486714,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-094",
       "op_nombre": "CONJUNTO ISABELLA",
       "referencia": "CONJUNTO ISABELLA",
-      "color": "MARFIL",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1786656486714,
+      "uds": 60,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1786656535153_3yrww",
+      "ts": 1786656535153,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-085",
+      "op_nombre": "PANTALON RAVE",
+      "referencia": "PANTALON RAVE",
+      "color": "CAMEL",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 60,
+      "uds": 48,
       "motivo": "EN TALLER"
     }
   ]
