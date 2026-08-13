@@ -7285,19 +7285,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": false,
+      "color": "NEGRO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1786656601193_2jzzf",
-      "ts": 1786656601193,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-0017",
       "op_nombre": "CHALECO OVEJERO",
       "referencia": "CHALECO OVEJERO",
-      "color": "NEGRO",
+      "talla": "T10",
+      "tipo": "estado_ot",
+      "ts": 1786656601193,
+      "uds": 9,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1786656634286_hmzkw",
+      "ts": 1786656634286,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0014",
+      "op_nombre": "LEGGIN CAMPANITA",
+      "referencia": "LEGGIN CAMPANITA",
+      "color": "BEIGE",
       "talla": "T10",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": false,
-      "uds": 9,
+      "uds": 2,
       "motivo": "EN TALLER"
     }
   ]
