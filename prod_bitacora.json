@@ -7349,20 +7349,30 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": false,
+      "color": "MARFIL",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1786656678526_t9ey2",
-      "ts": 1786656678526,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-0014",
       "op_nombre": "LEGGIN CAMPANITA",
       "referencia": "LEGGIN CAMPANITA",
-      "color": "MARFIL",
       "talla": "T10",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": false,
+      "tipo": "estado_ot",
+      "ts": 1786656678526,
       "uds": 6,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1786714013429_ab2n7",
+      "ts": 1786714013429,
+      "user": "Jefa de Producción",
+      "tipo": "mercancia",
+      "descripcion": "LLEVAR LONAS A CENTRO",
+      "destino": "NEOS- SAN- CONTENEDOR",
+      "fecha": "2026-08-14",
+      "hora": ""
     }
   ]
 }
