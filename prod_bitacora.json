@@ -7461,6 +7461,18 @@
       "user": "Isabel"
     },
     {
+      "categoria": "Conjuntos",
+      "diseno_id": "id_130ad86fcd0f4fe3",
+      "estado_anterior": "EN_DISENO_DIGITAL",
+      "estado_nuevo": "EN_CORTE_MUESTRA",
+      "id": "evt_1786719478938_2b8cz",
+      "marca": "Bentley Kids",
+      "nombre": "SUPERIOR CON CORTE RANGLAND",
+      "tipo": "estado_diseno",
+      "ts": 1786719478938,
+      "user": "Carolina"
+    },
+    {
       "categoria": "Chaquetas",
       "diseno_id": "id_1785250179914_46vws1tz3",
       "id": "evt_1786720606011_mwhwi",
@@ -7620,14 +7632,25 @@
       "user": "Elías - Conductor"
     },
     {
-      "id": "evt_1786739862956_l779q",
-      "ts": 1786739862956,
-      "user": "Elías - Conductor",
-      "tipo": "recoger_insumos",
       "descripcion": "Recoger trazos",
       "destino": "Alquería",
       "fecha": "2026-08-14",
-      "hora": ""
+      "hora": "",
+      "id": "evt_1786739862956_l779q",
+      "tipo": "recoger_insumos",
+      "ts": 1786739862956,
+      "user": "Elías - Conductor"
+    },
+    {
+      "id": "evt_1786742258840_ljbbc",
+      "ts": 1786742258840,
+      "user": "Carolina",
+      "tipo": "diseno_responsable",
+      "diseno_id": "id_1782187594493_y8zz0y0gg",
+      "nombre": "CHAQUETA FLORES",
+      "categoria": "Chaquetas",
+      "resp_anterior": "Carolina",
+      "resp_nuevo": "Isa"
     }
   ]
 }
