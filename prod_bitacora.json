@@ -7770,20 +7770,30 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MORA LECHE",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1786811623513_509gn",
-      "ts": 1786811623513,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-0033",
       "op_nombre": "OVERSIZED CAPOTA",
       "referencia": "OVERSIZED CAPOTA",
-      "color": "MORA LECHE",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1786811623513,
       "uds": 84,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1786819791715_hqvsq",
+      "ts": 1786819791715,
+      "user": "Carolina",
+      "tipo": "tela_nota",
+      "diseno_id": "id_1782168483540_jy6dh1jlz",
+      "nombre": "BUSO BALU",
+      "tiene_nota": true,
+      "precio": 0
     }
   ]
 }
