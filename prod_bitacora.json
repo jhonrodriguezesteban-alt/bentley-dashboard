@@ -7695,19 +7695,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "AVENA",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1786805393656_h8v8c",
-      "ts": 1786805393656,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-097",
       "op_nombre": "CAMISON BERLIN",
       "referencia": "CAMISON BERLIN",
-      "color": "AVENA",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1786805393656,
+      "uds": 48,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1786805444153_dfpun",
+      "ts": 1786805444153,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-088",
+      "op_nombre": "CHAQUETA BURBUJAS",
+      "referencia": "CHAQUETA BURBUJAS",
+      "color": "MARFIL",
       "talla": "todas las tallas",
       "estado_anterior": "ENTREGADO",
       "estado_nuevo": "ENTREGADO",
       "bulk": true,
-      "uds": 48,
+      "uds": 84,
       "motivo": "ENTREGADO"
     }
   ]
