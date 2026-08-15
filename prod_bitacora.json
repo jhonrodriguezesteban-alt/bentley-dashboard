@@ -7743,20 +7743,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "BEIGE",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1786805516076_g0nwx",
-      "ts": 1786805516076,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-0057",
       "op_nombre": "CHAQUETA RALPH",
       "referencia": "CHAQUETA RALPH",
-      "color": "BEIGE",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1786805516076,
       "uds": 112,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1786810944037_ukvwi",
+      "ts": 1786810944037,
+      "user": "Jefa de Producción",
+      "tipo": "satelite_editar",
+      "satelite_id": "sat_16",
+      "nombre": "VIVIANA AGUIRRE",
+      "activo": false,
+      "personas": 0,
+      "capacidad": 0
     }
   ]
 }
