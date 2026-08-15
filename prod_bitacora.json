@@ -7711,19 +7711,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MARFIL",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1786805444153_dfpun",
-      "ts": 1786805444153,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-088",
       "op_nombre": "CHAQUETA BURBUJAS",
       "referencia": "CHAQUETA BURBUJAS",
-      "color": "MARFIL",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1786805444153,
+      "uds": 84,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1786805492435_w1s14",
+      "ts": 1786805492435,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0057",
+      "op_nombre": "CHAQUETA RALPH",
+      "referencia": "CHAQUETA RALPH",
+      "color": "AZUL OSCURO",
       "talla": "todas las tallas",
       "estado_anterior": "ENTREGADO",
       "estado_nuevo": "ENTREGADO",
       "bulk": true,
-      "uds": 84,
+      "uds": 96,
       "motivo": "ENTREGADO"
     }
   ]
