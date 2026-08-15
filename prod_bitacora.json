@@ -7759,15 +7759,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1786810944037_ukvwi",
-      "ts": 1786810944037,
-      "user": "Jefa de Producción",
-      "tipo": "satelite_editar",
-      "satelite_id": "sat_16",
-      "nombre": "VIVIANA AGUIRRE",
       "activo": false,
+      "capacidad": 0,
+      "id": "evt_1786810944037_ukvwi",
+      "nombre": "VIVIANA AGUIRRE",
       "personas": 0,
-      "capacidad": 0
+      "satelite_id": "sat_16",
+      "tipo": "satelite_editar",
+      "ts": 1786810944037,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1786811623513_509gn",
+      "ts": 1786811623513,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0033",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "referencia": "OVERSIZED CAPOTA",
+      "color": "MORA LECHE",
+      "talla": "todas las tallas",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": true,
+      "uds": 84,
+      "motivo": "ENTREGADO"
     }
   ]
 }
