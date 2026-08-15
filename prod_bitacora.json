@@ -7685,14 +7685,30 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1786805296998_gb7yv",
-      "ts": 1786805296998,
-      "user": "Jefa de Producción",
-      "tipo": "taller",
       "descripcion": "LLEVAR CORTE A CAMILO HERNANDEZ",
       "destino": "carvajal kenedy",
       "fecha": "2026-08-15",
-      "hora": ""
+      "hora": "",
+      "id": "evt_1786805296998_gb7yv",
+      "tipo": "taller",
+      "ts": 1786805296998,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1786805393656_h8v8c",
+      "ts": 1786805393656,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-097",
+      "op_nombre": "CAMISON BERLIN",
+      "referencia": "CAMISON BERLIN",
+      "color": "AVENA",
+      "talla": "todas las tallas",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": true,
+      "uds": 48,
+      "motivo": "ENTREGADO"
     }
   ]
 }
