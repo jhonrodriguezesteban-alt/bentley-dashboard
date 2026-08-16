@@ -7796,19 +7796,39 @@
       "user": "Carolina"
     },
     {
-      "id": "evt_1786894504794_arhgf",
-      "ts": 1786894504794,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-113",
-      "op_nombre": "CHAQUETA RALPH",
       "categoria": "CHAQUETAS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-08-16",
-      "total_uds": 324,
+      "id": "evt_1786894504794_arhgf",
+      "op_id": "OP-2026-113",
+      "op_nombre": "CHAQUETA RALPH",
       "referencias": [
         "CHAQUETA RALPH"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 324,
+      "ts": 1786894504794,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1786894523535_h4tn2",
+      "ts": 1786894523535,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-113",
+      "op_nombre": "CHAQUETA RALPH",
+      "color": "AZUL OSCURO",
+      "mes": "2026-08"
+    },
+    {
+      "id": "evt_1786894525211_0nlus",
+      "ts": 1786894525211,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-113",
+      "op_nombre": "CHAQUETA RALPH",
+      "color": "CAMEL",
+      "mes": "2026-08"
     }
   ]
 }
