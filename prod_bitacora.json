@@ -7786,14 +7786,29 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1786819791715_hqvsq",
-      "ts": 1786819791715,
-      "user": "Carolina",
-      "tipo": "tela_nota",
       "diseno_id": "id_1782168483540_jy6dh1jlz",
+      "id": "evt_1786819791715_hqvsq",
       "nombre": "BUSO BALU",
+      "precio": 0,
       "tiene_nota": true,
-      "precio": 0
+      "tipo": "tela_nota",
+      "ts": 1786819791715,
+      "user": "Carolina"
+    },
+    {
+      "id": "evt_1786894504794_arhgf",
+      "ts": 1786894504794,
+      "user": "John Rodriguez",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-113",
+      "op_nombre": "CHAQUETA RALPH",
+      "categoria": "CHAQUETAS",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-08-16",
+      "total_uds": 324,
+      "referencias": [
+        "CHAQUETA RALPH"
+      ]
     }
   ]
 }
