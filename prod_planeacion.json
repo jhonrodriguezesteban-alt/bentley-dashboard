@@ -120,7 +120,8 @@
       "OP-2026-112||AZUL OSCURO",
       "OP-2026-112||NEGRO",
       "OP-2026-112||MARFIL",
-      "OP-2026-112||MORA LECHE"
+      "OP-2026-112||MORA LECHE",
+      "OP-2026-113||AZUL OSCURO"
     ],
     "2026-09": [
       "OP-0040||MARFIL",
@@ -510,26 +511,26 @@
       "uds": 0
     },
     {
-      "key": "OP-0037||NEGRO",
-      "op_id": "OP-0037",
-      "op_nombre": "CHALECO ACOLCHADO MANY",
       "categoria": "CHALECOS",
       "color": "NEGRO",
-      "uds": 135,
-      "mes_planeado": "2026-07",
       "estado_al_salir": "EN_CONFECCION",
-      "fecha_deteccion": "2026-08-11"
-    },
-    {
-      "key": "OP-0037||MARFIL",
+      "fecha_deteccion": "2026-08-11",
+      "key": "OP-0037||NEGRO",
+      "mes_planeado": "2026-07",
       "op_id": "OP-0037",
       "op_nombre": "CHALECO ACOLCHADO MANY",
+      "uds": 135
+    },
+    {
       "categoria": "CHALECOS",
       "color": "MARFIL",
-      "uds": 135,
-      "mes_planeado": "2026-07",
       "estado_al_salir": "EN_CONFECCION",
-      "fecha_deteccion": "2026-08-11"
+      "fecha_deteccion": "2026-08-11",
+      "key": "OP-0037||MARFIL",
+      "mes_planeado": "2026-07",
+      "op_id": "OP-0037",
+      "op_nombre": "CHALECO ACOLCHADO MANY",
+      "uds": 135
     }
   ]
 }
