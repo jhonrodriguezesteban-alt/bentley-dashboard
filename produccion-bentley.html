@@ -4031,13 +4031,23 @@ function _getDashMetricData(mk){
     DB.ots.forEach(function(o){if(o.satelite_id&&(o.fecha_ot||'').startsWith(m))ids[o.satelite_id]=1;});
     return Object.keys(ids).length;
   });
-  return ms.map(function(m){return DB.ops.filter(function(o){return(o.fecha_op||'').startsWith(m);}).length;});
+  // OPs: no cuenta órdenes — mide unidades ya cortadas de las OPs creadas ese mes
+  // (mismo criterio de "cortado" que la métrica 'cortes': fuera de POR_REVISAR/PENDIENTE_CORTAR).
+  return ms.map(function(m){
+    var opIds = {};
+    DB.ops.forEach(function(o){ if((o.fecha_op||'').startsWith(m)) opIds[o.id]=1; });
+    return DB.ots.filter(function(o){
+      if(!opIds[o.op_id]) return false;
+      if(o.estado==='PENDIENTE_CORTAR'||o.estado==='POR_REVISAR') return false;
+      return true;
+    }).reduce(function(a,o){return a+(o.cantidad||0);},0);
+  });
 }
 
 var _METCOLORS = {entregas:'#0a84ff',cortes:'#fbbf24',sats:'#a855f7',ops:'#34d399'};
 var _METBG     = {entregas:'rgba(10,132,255,.18)',cortes:'rgba(251,191,36,.18)',sats:'rgba(168,85,247,.18)',ops:'rgba(52,211,153,.18)'};
-var _METSUBS   = {entregas:'Unidades confirmadas entregadas a planta',cortes:'Unidades que pasaron a Corte por Alistar',sats:'Talleres distintos con OTs activas',ops:'Órdenes de producción creadas en el mes'};
-var _METUNITS  = {entregas:'uds',cortes:'uds',sats:'sat',ops:'ops'};
+var _METSUBS   = {entregas:'Unidades confirmadas entregadas a planta',cortes:'Unidades que pasaron a Corte por Alistar',sats:'Talleres distintos con OTs activas',ops:'Unidades cortadas de las OPs creadas ese mes'};
+var _METUNITS  = {entregas:'uds',cortes:'uds',sats:'sat',ops:'uds'};
 
 function setDashMetrica(m){
   if(_dashMetrica===m) return;
