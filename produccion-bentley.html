@@ -721,6 +721,9 @@ textarea.form-control{resize:vertical;min-height:80px;}
     <div class="nav-item" onclick="navTo('monitoreo')" data-page="monitoreo">
       <span class="icon">🔍</span><span class="nav-label"> Monitoreo Producción</span>
     </div>
+    <div class="nav-item" onclick="navTo('planconf')" data-page="planconf">
+      <span class="icon">🧵</span><span class="nav-label"> Planeación Confección</span>
+    </div>
     <div class="nav-item" onclick="navTo('entregas')" data-page="entregas">
       <span class="icon">📦</span><span class="nav-label"> Entregas</span>
     </div>
@@ -1027,6 +1030,7 @@ function _fbApplyKey(key, d){
   else if(key==='cronograma'){ DB.cronograma = d.cronograma||[]; }
   else if(key==='prog_ops')  { DB.prog_ops = d.ops_plan||[]; }
   else if(key==='planeacion'){ DB.planeacion = {meses:d.meses||{}, disenos_plan:d.disenos_plan||{}, historial_corte:d.historial_corte||[]}; }
+  else if(key==='planeacion_confeccion'){ DB.planeacion_confeccion = {por_satelite:d.por_satelite||{}}; }
   else if(key==='sim')       { DB.sim={active:d.active||[],data:d.data||{}}; _simActive=DB.sim.active; _simData=DB.sim.data; }
   else if(key==='usuarios')  { DB.usuarios = d.usuarios||[]; }
   else if(key==='costeo')    { DB.costeo = d; }
@@ -1049,6 +1053,7 @@ async function _fbMigrarSiVacio(){
       cronograma:{cronograma: DB.cronograma||[]},
       prog_ops:  {ops_plan: DB.prog_ops||[]},
       planeacion:{meses: (DB.planeacion||{}).meses||{}, disenos_plan:(DB.planeacion||{}).disenos_plan||{}},
+      planeacion_confeccion:{por_satelite: (DB.planeacion_confeccion||{}).por_satelite||{}},
       sim:       {active:(DB.sim||{}).active||[], data:(DB.sim||{}).data||{}},
       costeo:    DB.costeo||{mp:[],servicios:[],puestos:[],tarifas_cif:[],params:{},recetas:[],precios_pt:[]}
     };
@@ -1063,7 +1068,7 @@ var _fbListenersActive = false;
 function _iniciarListenersFirebase(){
   if(!_fbDb || _fbListenersActive) return;
   _fbListenersActive = true;
-  var KEYS = ['ops','ots','disenos','logistica','satelites','costos_mo','bitacora','cronograma','prog_ops','planeacion','sim','usuarios','costeo'];
+  var KEYS = ['ops','ots','disenos','logistica','satelites','costos_mo','bitacora','cronograma','prog_ops','planeacion','planeacion_confeccion','sim','usuarios','costeo'];
   KEYS.forEach(function(key){
     _fbDb.ref(FB_ROOT+'/'+key).on('value', function(snap){
       // Para bitácora: NUNCA ignorar el echo propio — el merge por ID es idempotente
@@ -1089,7 +1094,7 @@ var GT = (function(){
 
 // ─── Constants ─────────────────────────────────────────────────────────────────
 var REPO = 'jhonrodriguezesteban-alt/bentley-dashboard';
-var FILES = { satelites: 'prod_satelites.json', ops: 'prod_ops.json', ots: 'prod_ots.json', disenos: 'prod_disenos.json', prog_ops: 'prod_prog_ops.json', costos_mo: 'prod_costos_mo.json', usuarios: 'prod_usuarios.json', sim: 'prod_simulador.json', logistica: 'prod_logistica.json', planeacion: 'prod_planeacion.json', costeo: 'prod_costeo.json', cronograma: 'prod_cronograma.json', bitacora: 'prod_bitacora.json' };
+var FILES = { satelites: 'prod_satelites.json', ops: 'prod_ops.json', ots: 'prod_ots.json', disenos: 'prod_disenos.json', prog_ops: 'prod_prog_ops.json', costos_mo: 'prod_costos_mo.json', usuarios: 'prod_usuarios.json', sim: 'prod_simulador.json', logistica: 'prod_logistica.json', planeacion: 'prod_planeacion.json', planeacion_confeccion: 'prod_planeacion_confeccion.json', costeo: 'prod_costeo.json', cronograma: 'prod_cronograma.json', bitacora: 'prod_bitacora.json' };
 var BASE_URL = 'https://jhonrodriguezesteban-alt.github.io/bentley-dashboard/';
 var RAW_URL = 'https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/';
 
@@ -2292,6 +2297,9 @@ async function cargarDatos(){
     if(logR.ok){ var d10 = await logR.json(); DB.logistica = {tareas: d10.tareas||[]}; }
     var planR = await fetch(BASE_URL + 'prod_planeacion.json?t=' + t);
     if(planR.ok){ var d11 = await planR.json(); DB.planeacion = {meses: d11.meses||{}, disenos_plan: d11.disenos_plan||{}, historial_corte: d11.historial_corte||[]}; }
+    var planConfR = await fetch(BASE_URL + 'prod_planeacion_confeccion.json?t=' + t);
+    if(planConfR.ok){ var d11b = await planConfR.json(); DB.planeacion_confeccion = {por_satelite: d11b.por_satelite||{}}; }
+    else { DB.planeacion_confeccion = {por_satelite:{}}; }
     var costeoR = await fetch(BASE_URL + 'prod_costeo.json?t=' + t);
     if(costeoR.ok){ var d12 = await costeoR.json(); DB.costeo = {mp:d12.mp||[],servicios:d12.servicios||[],puestos:d12.puestos||[],tarifas_cif:d12.tarifas_cif||[],params:d12.params||{},recetas:d12.recetas||[],precios_pt:d12.precios_pt||[],receta_map:d12.receta_map||{}}; }
     else { if(!DB.planeacion) DB.planeacion = {meses:{}}; }
@@ -2330,6 +2338,8 @@ async function cargarDatos(){
           if(fbCron) DB.cronograma = fbCron.cronograma||[];
           var fbPlan = await _fbGet('planeacion');
           if(fbPlan) DB.planeacion = {meses: fbPlan.meses||{}, disenos_plan: fbPlan.disenos_plan||{}, historial_corte: fbPlan.historial_corte||[]};
+          var fbPlanConf = await _fbGet('planeacion_confeccion');
+          if(fbPlanConf) DB.planeacion_confeccion = {por_satelite: fbPlanConf.por_satelite||{}};
           var fbBit = await _fbGet('bitacora');
           if(fbBit) DB.bitacora = {eventos: fbBit.eventos||[]};
           var fbCosteo = await _fbGet('costeo');
@@ -2432,7 +2442,7 @@ function navTo(page){
   localStorage.setItem('bentley_last_page', page);
   if(page !== 'ops') _opDetalleId = null;
   document.querySelectorAll('.nav-item').forEach(function(el){ el.classList.toggle('active', el.dataset.page===page); });
-  var titles = {dashboard:'⬡ DASHBOARD',satelites:'🏭 SATÉLITES',ops:'📋 ÓRDENES DE PRODUCCIÓN',monitoreo:'🔍 MONITOREO DE PRODUCCIÓN',entregas:'📦 ENTREGAS',diseno:'🎨 DISEÑO',planeacion:'📅 PLANEACIÓN DE PRODUCCIÓN',logistica:'🚚 LOGÍSTICA',novedades:'⚠ NOVEDADES',simulador:'🧮 SIMULADOR DE PRODUCCIÓN',costos_mo:'💰 PAGOS'};
+  var titles = {dashboard:'⬡ DASHBOARD',satelites:'🏭 SATÉLITES',ops:'📋 ÓRDENES DE PRODUCCIÓN',monitoreo:'🔍 MONITOREO DE PRODUCCIÓN',entregas:'📦 ENTREGAS',diseno:'🎨 DISEÑO',planeacion:'📅 PLANEACIÓN DE PRODUCCIÓN',planconf:'🧵 PLANEACIÓN DE CONFECCIÓN',logistica:'🚚 LOGÍSTICA',novedades:'⚠ NOVEDADES',simulador:'🧮 SIMULADOR DE PRODUCCIÓN',costos_mo:'💰 PAGOS'};
   document.getElementById('topbar-title').innerHTML = titles[page] || page.toUpperCase();
   closeDrawer(); closeModal(); selectedOTs.clear();
   renderPage(page);
@@ -2492,6 +2502,7 @@ function renderPage(page){
   else if(page==='costos_mo') el.innerHTML = renderCostosMO();
   else if(page==='costeo') el.innerHTML = renderCosteo();
   else if(page==='simulador'){ try{ el.innerHTML = renderSimulador(); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar el Simulador</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[Simulador]', e); } }
+  else if(page==='planconf'){ try{ el.innerHTML = renderPlaneacionConfeccion(); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar Planeación de Confección</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[PlanConf]', e); } }
   else if(page==='monitoreo'){ try{ el.innerHTML = renderMonitoreo(); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar Monitoreo de Producción</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[Monitoreo]', e); } }
   else if(page==='cronograma') el.innerHTML = renderCronograma();
   else if(page==='bitacora') el.innerHTML = renderBitacora();
@@ -2924,6 +2935,217 @@ function imprimirOrdenCorte(mesKey){
   var w = window.open('', '_blank');
   if(!w){ toast('El navegador bloqueó la ventana — habilita pop-ups para imprimir','warning'); return; }
   w.document.open(); w.document.write(doc); w.document.close();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// PLANEACIÓN DE CONFECCIÓN — tablero tipo "cuadre" (como la matriz de Excel del taller):
+// organiza qué referencia/color le toca a cada satélite, en qué orden ("1er corte, 2do
+// corte..."), SIN tocar la asignación real de producción hasta que se confirme con el
+// botón "Asignar a producción" — ahí sí se enlaza con el Kanban (satelite_id + estado OT).
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// Unidades elegibles = (OP, color) con al menos una OT ya cortada (CORTE_POR_ALISTAR)
+// y sin satélite asignado todavía. mapByKey incluye TODAS (en pool o ya puestas en una
+// cola); pool = las que aún no están en ninguna cola de satélite.
+function _pconfPoolUnits(){
+  var porSat = (DB.planeacion_confeccion && DB.planeacion_confeccion.por_satelite) || {};
+  var placed = {};
+  Object.keys(porSat).forEach(function(sid){ (porSat[sid]||[]).forEach(function(k){ placed[k]=true; }); });
+  var mapByKey = {};
+  (DB.ots||[]).forEach(function(ot){
+    if(ot.estado!=='CORTE_POR_ALISTAR' || ot.satelite_id) return;
+    var op = (DB.ops||[]).find(function(o){ return o.id===ot.op_id; });
+    if(!op) return;
+    var color = ot.color||'—';
+    var key = _planKey(op.id, color);
+    if(!mapByKey[key]) mapByKey[key] = {op:op, color:color, uds:0, key:key};
+    mapByKey[key].uds += (ot.cantidad||0);
+  });
+  var all = Object.keys(mapByKey).map(function(k){ return mapByKey[k]; });
+  var pool = all.filter(function(u){ return !placed[u.key]; });
+  return {mapByKey:mapByKey, all:all, pool:pool};
+}
+
+function guardarPlaneacionConfeccion(){
+  if(!DB.planeacion_confeccion) DB.planeacion_confeccion = {por_satelite:{}};
+  return guardarArchivo('planeacion_confeccion', {por_satelite: DB.planeacion_confeccion.por_satelite||{}});
+}
+
+function pconfAsignarASatelite(key, satId){
+  if(!_canEditPlan()){ toast('Solo Jhon puede editar este tablero','warning'); return; }
+  if(!DB.planeacion_confeccion) DB.planeacion_confeccion = {por_satelite:{}};
+  var ps = DB.planeacion_confeccion.por_satelite;
+  Object.keys(ps).forEach(function(s){ ps[s] = (ps[s]||[]).filter(function(k){ return k!==key; }); });
+  if(satId){
+    if(!ps[satId]) ps[satId] = [];
+    if(ps[satId].indexOf(key)<0) ps[satId].push(key);
+  }
+  guardarPlaneacionConfeccion();
+  renderPage('planconf');
+}
+function pconfQuitarDeCola(key){ pconfAsignarASatelite(key, null); }
+
+function pconfMover(satId, key, dir){
+  if(!_canEditPlan()){ toast('Solo Jhon puede editar este tablero','warning'); return; }
+  var ps = (DB.planeacion_confeccion||{}).por_satelite || {};
+  var arr = ps[satId]; if(!arr) return;
+  var i = arr.indexOf(key); if(i<0) return;
+  var j = i+dir; if(j<0 || j>=arr.length) return;
+  var tmp=arr[i]; arr[i]=arr[j]; arr[j]=tmp;
+  guardarPlaneacionConfeccion();
+  renderPage('planconf');
+}
+
+// Mutación pura (sin guardar) — usada tanto por la asignación individual como la masiva
+// para poder disparar un solo guardarArchivo al final en vez de uno por color.
+function _pconfAplicarAsignacion(key, satId){
+  var parsed = _planParseKey(key);
+  var op = (DB.ops||[]).find(function(o){ return o.id===parsed.opId; });
+  if(!op) return 0;
+  var color = parsed.color;
+  var assigned = 0;
+  (DB.ots||[]).forEach(function(ot){
+    if(ot.op_id===op.id && (ot.color||'—')===color && ot.estado==='CORTE_POR_ALISTAR' && !ot.satelite_id){
+      ot.satelite_id = satId; ot.estado='ASIGNADO'; assigned++;
+    }
+  });
+  if(assigned){
+    var ps = (DB.planeacion_confeccion||{}).por_satelite || {};
+    if(ps[satId]) ps[satId] = ps[satId].filter(function(k){ return k!==key; });
+    _logEvt('planconf_asignar_produccion', {op_id:op.id, op_nombre:op.nombre_producto, color:color, satelite:getSatNombre(satId), total_ots:assigned});
+  }
+  return assigned;
+}
+
+function pconfAsignarProduccion(key, satId){
+  if(!_canEditPlan()){ toast('Solo Jhon puede asignar a producción','warning'); return; }
+  var n = _pconfAplicarAsignacion(key, satId);
+  if(!n){ toast('Sin OTs pendientes para asignar (revisa si ya se asignaron)','warning'); renderPage('planconf'); return; }
+  Promise.all([guardarArchivo('ots',{ots:DB.ots}), guardarPlaneacionConfeccion()]).then(function(res){
+    if(res[0]) toast(n+' OT'+(n!==1?'s':'')+' asignada'+(n!==1?'s':'')+' a producción — '+getSatNombre(satId),'success');
+    else toast('Error al guardar en GitHub','error');
+    renderPage('planconf');
+  });
+}
+
+function pconfAsignarTodoSatelite(satId){
+  if(!_canEditPlan()){ toast('Solo Jhon puede asignar a producción','warning'); return; }
+  var keys = (((DB.planeacion_confeccion||{}).por_satelite||{})[satId]||[]).slice();
+  if(!keys.length) return;
+  var total = 0;
+  keys.forEach(function(k){ total += _pconfAplicarAsignacion(k, satId); });
+  if(!total){ toast('Nada pendiente para asignar en este satélite','warning'); renderPage('planconf'); return; }
+  Promise.all([guardarArchivo('ots',{ots:DB.ots}), guardarPlaneacionConfeccion()]).then(function(res){
+    if(res[0]) toast(total+' OTs asignadas a producción — '+getSatNombre(satId),'success');
+    else toast('Error al guardar en GitHub','error');
+    renderPage('planconf');
+  });
+}
+
+function _pconfUnitCard(u, opts){
+  opts = opts||{};
+  var h = '<div style="background:#141820;border:1px solid #2c2c2e;border-radius:9px;padding:9px 11px;display:flex;align-items:center;gap:8px;">';
+  if(opts.pos!=null) h += '<span style="font-size:11px;font-weight:900;color:#64748b;width:18px;flex-shrink:0;text-align:center;">'+opts.pos+'</span>';
+  h += '<div style="flex:1;min-width:0;">';
+  h += '<div style="font-size:12px;font-weight:700;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(u.op.nombre_producto||u.op.id)+'</div>';
+  h += '<div style="display:flex;align-items:center;gap:6px;margin-top:2px;">';
+  h += '<span style="font-size:9px;font-weight:800;color:#0a84ff;">'+esc(fmtOpId(u.op.id))+'</span>';
+  if(u.color && u.color!=='—') h += '<span style="font-size:9px;font-weight:700;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);border-radius:3px;color:#0a84ff;padding:1px 5px;text-transform:uppercase;">'+esc(u.color)+'</span>';
+  h += '<span style="font-size:9px;color:#475569;">'+u.uds.toLocaleString('es-CO')+' uds</span>';
+  h += '</div></div>';
+  h += '<div style="display:flex;align-items:center;gap:3px;flex-shrink:0;">';
+  if(opts.buttons) h += opts.buttons;
+  h += '</div></div>';
+  return h;
+}
+
+function renderPlaneacionConfeccion(){
+  if(!DB.planeacion_confeccion) DB.planeacion_confeccion = {por_satelite:{}};
+  var porSat = DB.planeacion_confeccion.por_satelite;
+  var built = _pconfPoolUnits();
+  var mapByKey = built.mapByKey, pool = built.pool.slice().sort(function(a,b){ return (a.op.nombre_producto||'').localeCompare(b.op.nombre_producto||''); });
+  var puedeEditar = _canEditPlan();
+
+  var h = '<div style="padding:16px 20px;height:100%;overflow-y:auto;box-sizing:border-box;">';
+
+  if(!puedeEditar){
+    h += '<div style="display:flex;align-items:center;gap:10px;background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.3);border-radius:10px;padding:10px 16px;margin-bottom:14px;">';
+    h += '<span style="font-size:16px;">🔒</span>';
+    h += '<div style="font-size:12px;font-weight:700;color:#f59e0b;">Modo visualización — solo Jhon puede editar este tablero</div>';
+    h += '</div>';
+  }
+
+  var totalUdsPool = pool.reduce(function(s,u){ return s+u.uds; },0);
+  var totalUdsAsignadas = built.all.reduce(function(s,u){ return s+u.uds; },0) - totalUdsPool;
+
+  h += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:6px;flex-wrap:wrap;">';
+  h += '<div style="font-size:20px;font-weight:800;color:#e2e8f0;letter-spacing:.3px;">🧵 Planeación de Confección</div>';
+  h += '<div style="display:flex;gap:10px;margin-left:auto;flex-wrap:wrap;">';
+  h += '<span style="font-size:11px;background:rgba(10,132,255,.08);border:1px solid rgba(10,132,255,.2);border-radius:8px;color:#0a84ff;padding:4px 10px;font-weight:700;">'+built.all.length+' colores cortados sin taller</span>';
+  h += '<span style="font-size:11px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:8px;color:#34d399;padding:4px 10px;font-weight:700;">'+(built.all.length-pool.length)+' organizados</span>';
+  h += '<span style="font-size:11px;background:rgba(148,163,184,.08);border:1px solid #2c2c2e;border-radius:8px;color:#64748b;padding:4px 10px;font-weight:700;">'+pool.length+' sin organizar</span>';
+  h += '</div></div>';
+  h += '<div style="font-size:11px;color:#475569;margin-bottom:18px;">Cuadra qué taller confecciona cada referencia/color y en qué orden — esto NO cambia nada en producción hasta que le des <b style="color:#34d399;">✅ Asignar a producción</b>.</div>';
+
+  // ── Pool: colores cortados aún sin organizar ────────────────────────────────
+  h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:12px;padding:12px 14px;margin-bottom:20px;">';
+  h += '<div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">📦 Sin organizar · '+pool.length+' colores · '+totalUdsPool.toLocaleString('es-CO')+' uds</div>';
+  if(!pool.length){
+    h += '<div style="color:#2c2c2e;font-size:12px;padding:18px 0;text-align:center;">✓ No hay colores recién cortados pendientes por organizar</div>';
+  } else {
+    var satsSel = (DB.satelites||[]).filter(function(s){ return s.activo; });
+    h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px;">';
+    pool.forEach(function(u){
+      var btns = '';
+      if(puedeEditar){
+        btns += '<select data-key="'+esc(u.key)+'" onchange="if(this.value)pconfAsignarASatelite(this.dataset.key,this.value)" style="background:#0d1117;border:1px solid #2c2c2e;border-radius:5px;color:#94a3b8;font-size:10px;padding:3px 4px;max-width:110px;">';
+        btns += '<option value="">→ satélite…</option>';
+        satsSel.forEach(function(s){ btns += '<option value="'+esc(s.id)+'">'+esc(s.nombre)+'</option>'; });
+        btns += '</select>';
+      }
+      h += _pconfUnitCard(u, {buttons:btns});
+    });
+    h += '</div>';
+  }
+  h += '</div>';
+
+  // ── Grid de satélites — cada uno con su cola ordenada ───────────────────────
+  var satelites = (DB.satelites||[]).filter(function(s){ return s.activo; });
+  h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;">';
+  satelites.forEach(function(s){
+    var keys = (porSat[s.id]||[]).filter(function(k){ return mapByKey[k]; }); // limpia claves ya asignadas/obsoletas
+    var units = keys.map(function(k){ return mapByKey[k]; });
+    var udsCola = units.reduce(function(sum,u){ return sum+u.uds; },0);
+    h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;">';
+    h += '<div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">';
+    h += '<div style="font-size:12px;font-weight:800;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">🧑‍🏭 '+esc(s.nombre)+'</div>';
+    h += '<div style="font-size:9px;color:#475569;white-space:nowrap;">'+units.length+' ref · '+udsCola.toLocaleString('es-CO')+' uds</div>';
+    h += '</div>';
+    if(!units.length){
+      h += '<div style="color:#2c2c2e;font-size:11px;padding:12px 0;text-align:center;">Sin referencias en cola</div>';
+    } else {
+      h += '<div style="display:flex;flex-direction:column;gap:6px;">';
+      units.forEach(function(u,i){
+        var btns = '';
+        if(puedeEditar){
+          btns += '<button data-sat="'+esc(s.id)+'" data-key="'+esc(u.key)+'" onclick="pconfMover(this.dataset.sat,this.dataset.key,-1)" '+(i===0?'disabled':'')+' style="background:none;border:none;color:'+(i===0?'#334155':'#94a3b8')+';font-size:12px;cursor:'+(i===0?'default':'pointer')+';padding:2px 3px;" title="Subir">▲</button>';
+          btns += '<button data-sat="'+esc(s.id)+'" data-key="'+esc(u.key)+'" onclick="pconfMover(this.dataset.sat,this.dataset.key,1)" '+(i===units.length-1?'disabled':'')+' style="background:none;border:none;color:'+(i===units.length-1?'#334155':'#94a3b8')+';font-size:12px;cursor:'+(i===units.length-1?'default':'pointer')+';padding:2px 3px;" title="Bajar">▼</button>';
+          btns += '<button data-key="'+esc(u.key)+'" onclick="pconfQuitarDeCola(this.dataset.key)" style="background:none;border:none;color:#f87171;font-size:11px;cursor:pointer;padding:2px 3px;" title="Quitar de la cola">✕</button>';
+          btns += '<button data-key="'+esc(u.key)+'" data-sat="'+esc(s.id)+'" onclick="pconfAsignarProduccion(this.dataset.key,this.dataset.sat)" style="background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.4);color:#34d399;border-radius:5px;padding:3px 8px;cursor:pointer;font-size:10px;font-weight:700;white-space:nowrap;" title="Enlazar con el Kanban de producción">✅ Asignar</button>';
+        }
+        h += _pconfUnitCard(u, {pos:i+1, buttons:btns});
+      });
+      h += '</div>';
+      if(puedeEditar && units.length>1){
+        h += '<button data-sat="'+esc(s.id)+'" onclick="pconfAsignarTodoSatelite(this.dataset.sat)" style="margin-top:2px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.3);color:#34d399;border-radius:7px;padding:6px 10px;cursor:pointer;font-size:11px;font-weight:700;">✅ Asignar todo a producción ('+units.length+')</button>';
+      }
+    }
+    h += '</div>';
+  });
+  h += '</div>';
+
+  h += '</div>';
+  return h;
 }
 
 function _planAsignar(opId, mesKey){
