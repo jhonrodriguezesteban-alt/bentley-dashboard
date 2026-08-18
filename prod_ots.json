@@ -72416,6 +72416,11 @@
           "fecha": "2026-08-18T16:07:15.598Z",
           "accion": "Estado cambiado: ENTREGADO → EN_CONFECCION. Motivo: SIGUE EN CONFECCION",
           "user": "John Rodriguez"
+        },
+        {
+          "fecha": "2026-08-18T16:07:30.020Z",
+          "accion": "Estado cambiado: EN_CONFECCION → EN_CONFECCION. Motivo: SIGUE EN CONFECCION",
+          "user": "John Rodriguez"
         }
       ],
       "created_at": "2026-08-18",
@@ -72439,7 +72444,7 @@
       "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "ENTREGADO",
+      "estado": "EN_CONFECCION",
       "nt_corte_satelite": null,
       "nt_ingreso_planta": null,
       "op_effi": null,
@@ -72450,6 +72455,11 @@
         {
           "fecha": "2026-08-18T16:06:07.704Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → ENTREGADO. Motivo: se recibe todo el color",
+          "user": "John Rodriguez"
+        },
+        {
+          "fecha": "2026-08-18T16:07:56.804Z",
+          "accion": "Estado cambiado: ENTREGADO → EN_CONFECCION. Motivo: SIGUE EN CONFECCION",
           "user": "John Rodriguez"
         }
       ],
