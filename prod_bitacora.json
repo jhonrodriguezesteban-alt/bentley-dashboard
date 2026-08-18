@@ -8039,20 +8039,36 @@
       "user": "John Rodriguez"
     },
     {
+      "bulk": true,
+      "color": "MARFIL",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1787069167706_7bmln",
+      "motivo": "se recibe todo el color",
+      "op_id": "OP-2026-104",
+      "op_nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS",
+      "referencia": "BUZO TEJIDO MOÑOS",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1787069167706,
+      "uds": 176,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787069214360_mzmey",
+      "ts": 1787069214360,
       "user": "John Rodriguez",
       "tipo": "estado_ot",
       "op_id": "OP-2026-104",
       "op_nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS",
-      "referencia": "BUZO TEJIDO MOÑOS",
+      "referencia": "BUZO CEREZAS",
       "color": "MARFIL",
-      "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
-      "uds": 176,
-      "motivo": "se recibe todo el color"
+      "talla": "T4",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": false,
+      "uds": 7,
+      "motivo": "sigue en confeccion"
     }
   ]
 }
