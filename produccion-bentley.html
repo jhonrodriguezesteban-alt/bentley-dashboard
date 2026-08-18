@@ -3537,7 +3537,9 @@ function renderPlaneacionConfeccion(){
             btns += '<span style="font-size:9px;color:'+kb.color+';white-space:nowrap;" title="Todavía no se puede enlazar a producción — falta cortar">⏳ '+esc(kb.label)+'</span>';
           }
         }
-        h += _pconfUnitCard(u, {pos:i+1, buttons:btns});
+        // draggable también aquí — permite mover la tarjeta de un taller a otro arrastrándola,
+        // no solo desde el pool de arriba.
+        h += _pconfUnitCard(u, {pos:i+1, buttons:btns, draggable:puedeEditar});
       });
       h += '</div>';
       if(puedeEditar && elegiblesCount>1){
