@@ -2503,7 +2503,7 @@ function renderPage(page){
   else if(page==='costos_mo') el.innerHTML = renderCostosMO();
   else if(page==='costeo') el.innerHTML = renderCosteo();
   else if(page==='simulador'){ try{ el.innerHTML = renderSimulador(); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar el Simulador</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[Simulador]', e); } }
-  else if(page==='planconf'){ try{ el.innerHTML = renderPlaneacionConfeccion(); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar Planeación de Confección</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[PlanConf]', e); } }
+  else if(page==='planconf'){ try{ el.innerHTML = renderPlaneacionConfeccion(); if(_pconfBusq) setTimeout(_pconfFiltrarBusq, 0); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar Planeación de Confección</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[PlanConf]', e); } }
   else if(page==='monitoreo'){ try{ el.innerHTML = renderMonitoreo(); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar Monitoreo de Producción</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[Monitoreo]', e); } }
   else if(page==='cronograma') el.innerHTML = renderCronograma();
   else if(page==='bitacora') el.innerHTML = renderBitacora();
@@ -3100,6 +3100,26 @@ function pconfAsignarTodoSatelite(satId){
   });
 }
 
+// Detalle de una OP consolidada dentro de "Ya en el taller (realidad)" — abre modal
+// con el desglose real por color (estado, uds, fecha de entrega si ya la tiene).
+function verDetalleCargaSatelite(satId, opId){
+  var items = _pconfCargaRealSatelite(satId).filter(function(u){ return u.op.id===opId; });
+  if(!items.length) return;
+  var op = items[0].op;
+  var totalUds = items.reduce(function(s,u){ return s+u.uds; },0);
+  var kanbanByK = {}; OP_KANBAN.forEach(function(c){ kanbanByK[c.k]=c; });
+
+  var h = '<div style="font-size:11px;color:#64748b;margin-bottom:12px;">'+items.length+' color'+(items.length!==1?'es':'')+' · '+totalUds.toLocaleString('es-CO')+' uds · taller: <b style="color:#94a3b8;">'+esc(getSatNombre(satId))+'</b></div>';
+  h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;">';
+  items.forEach(function(u){
+    var kb = kanbanByK[u.estado] || {label:u.estado, color:'#64748b'};
+    var badge = '<span style="font-size:8px;font-weight:700;color:'+kb.color+';background:'+kb.color+'18;border:1px solid '+kb.color+'33;border-radius:3px;padding:1px 5px;white-space:nowrap;">'+esc(kb.label)+'</span>';
+    h += _pconfUnitCard(u, {badge:badge});
+  });
+  h += '</div>';
+  openModal('🏭 '+esc(fmtOpId(op.id))+' — '+esc(op.nombre_producto||''), h, '', {wide:false});
+}
+
 // Fecha de entrega ya comprometida en Cronograma para ese (op,color), si la tiene.
 function _pconfFechaEntrega(opId, color){
   var e = (DB.cronograma||[]).find(function(x){ return x.op_id===opId && (x.color||'—')===(color||'—') && !x.entregado && x.fecha_compromiso; });
@@ -3114,7 +3134,8 @@ function _pconfUnitCard(u, opts){
   var fecha = _pconfFechaEntrega(u.op.id, u.color);
   var dragAttrs = opts.draggable ? ' draggable="true" ondragstart="pconfDragStart(event,\''+esc(u.key)+'\')" ondragend="pconfDragEnd()"' : '';
   var dragStyle = opts.draggable ? 'cursor:grab;user-select:none;-webkit-user-drag:element;' : '';
-  var h = '<div data-pconf-card="'+esc(u.key)+'"'+dragAttrs+' style="background:#141820;border:1px solid '+(opts.draggable?'rgba(52,211,153,.35)':'#2c2c2e')+';border-radius:9px;padding:8px 10px;width:100%;min-width:0;box-sizing:border-box;'+dragStyle+'">';
+  var refTxt = (fmtOpId(u.op.id)+' '+(u.op.nombre_producto||'')+' '+(u.color||'')+' '+(u.op.categoria||'')).toUpperCase();
+  var h = '<div data-pconf-card="'+esc(u.key)+'" data-pconf-ref="'+esc(refTxt)+'"'+dragAttrs+' style="background:#141820;border:1px solid '+(opts.draggable?'rgba(52,211,153,.35)':'#2c2c2e')+';border-radius:9px;padding:8px 10px;width:100%;min-width:0;box-sizing:border-box;'+dragStyle+'">';
   h += '<div style="display:flex;align-items:center;gap:5px;margin-bottom:3px;">';
   if(opts.pos!=null) h += '<span style="font-size:10px;font-weight:900;color:#64748b;flex-shrink:0;">'+opts.pos+'.</span>';
   if(opts.draggable) h += '<span style="font-size:9px;color:#34d399;flex-shrink:0;" title="Arrastra a un satélite">⠿</span>';
@@ -3152,7 +3173,39 @@ function _pconfFullUnits(){
 }
 
 var _pconfFiltroMes = '';
+var _pconfBusq = '';
 function setPconfFiltroMes(m){ _pconfFiltroMes = m; renderPage('planconf'); }
+
+// Filtro de búsqueda sin re-renderizar la página completa (evita perder el foco del
+// input en cada tecla) — atenúa las tarjetas que no matchean, igual que en Planeación.
+function _pconfFiltrarBusq(){
+  var q = (_pconfBusq||'').trim().toUpperCase();
+  if(!q){
+    document.querySelectorAll('[data-pconf-ref]').forEach(function(card){
+      card.style.opacity=''; card.style.boxShadow=''; card.style.zIndex=''; card.style.position='';
+    });
+    return;
+  }
+  document.querySelectorAll('[data-pconf-ref]').forEach(function(card){
+    var refTxt = (card.dataset.pconfRef||'').toUpperCase();
+    var match = refTxt.indexOf(q) >= 0;
+    if(match){
+      card.style.opacity = '1';
+      card.style.boxShadow = '0 0 0 2px rgba(10,132,255,.45), 0 4px 16px rgba(10,132,255,.25)';
+      card.style.zIndex = '2';
+      card.style.position = 'relative';
+      // Despliega automáticamente los <details> (estado Kanban → categoría) que contienen
+      // la coincidencia, para que no toque abrirlos a mano uno por uno para encontrarla.
+      var d = card.closest('details');
+      while(d){ d.open = true; d = d.parentElement ? d.parentElement.closest('details') : null; }
+    } else {
+      card.style.opacity = '0.18';
+      card.style.boxShadow = '';
+      card.style.zIndex = '';
+      card.style.position = '';
+    }
+  });
+}
 
 function renderPlaneacionConfeccion(){
   if(!DB.planeacion_confeccion) DB.planeacion_confeccion = {por_satelite:{}};
@@ -3188,7 +3241,11 @@ function renderPlaneacionConfeccion(){
 
   h += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:6px;flex-wrap:wrap;">';
   h += '<div style="font-size:20px;font-weight:800;color:#e2e8f0;letter-spacing:.3px;">🧵 Planeación de Confección</div>';
-  h += '<select onchange="setPconfFiltroMes(this.value)" style="margin-left:auto;background:#0d1117;border:1px solid #2c2c2e;border-radius:6px;color:var(--text);padding:6px 10px;font-size:12px;cursor:pointer;">';
+  h += '<div style="position:relative;margin-left:auto;">';
+  h += '<span style="position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:12px;pointer-events:none;">🔍</span>';
+  h += '<input type="text" value="'+esc(_pconfBusq)+'" oninput="_pconfBusq=this.value;_pconfFiltrarBusq()" placeholder="Buscar referencia, color, OP..." style="background:#0d1117;border:1px solid #2c2c2e;border-radius:6px;color:var(--text);padding:6px 10px 6px 28px;font-size:12px;width:220px;outline:none;">';
+  h += '</div>';
+  h += '<select onchange="setPconfFiltroMes(this.value)" style="background:#0d1117;border:1px solid #2c2c2e;border-radius:6px;color:var(--text);padding:6px 10px;font-size:12px;cursor:pointer;">';
   h += '<option value="">Todos los meses</option>';
   h += '<option value="sin_mes"'+(_pconfFiltroMes==='sin_mes'?' selected':'')+'>Sin mes asignado</option>';
   MESES.forEach(function(m){ h += '<option value="'+m.k+'"'+(_pconfFiltroMes===m.k?' selected':'')+'>'+esc(m.label)+'</option>'; });
@@ -3231,16 +3288,17 @@ function renderPlaneacionConfeccion(){
       catsPool.forEach(function(cat){
         var units = catGroupsPool[cat];
         var udsCat = units.reduce(function(s,u){ return s+u.uds; },0);
-        h += '<div style="display:flex;align-items:center;gap:8px;margin:10px 0 6px;padding-left:7px;border-left:2px solid rgba(255,255,255,.12);">';
+        h += '<details style="margin:8px 0;">';
+        h += '<summary style="display:flex;align-items:center;gap:8px;padding:5px 0 5px 7px;cursor:pointer;list-style:none;border-left:2px solid rgba(255,255,255,.12);">';
         h += '<span style="font-size:10px;font-weight:800;color:#94a3b8;text-transform:uppercase;letter-spacing:.2em;">'+esc(cat)+'</span>';
         h += '<span style="font-size:9px;color:#475569;">'+units.length+' · '+udsCat.toLocaleString('es-CO')+' uds</span>';
-        h += '</div>';
-        h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;">';
+        h += '</summary>';
+        h += '<div style="padding:6px 0 2px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;">';
         units.forEach(function(u){
           var accionable = puedeEditar && mapByKey[u.key]; // solo lo ya cortado y sin taller se puede arrastrar
           h += _pconfUnitCard(u, {draggable:accionable});
         });
-        h += '</div>';
+        h += '</div></details>';
       });
       h += '</div></details>';
     });
@@ -3262,13 +3320,29 @@ function renderPlaneacionConfeccion(){
     h += '<div style="font-size:9px;color:#475569;white-space:nowrap;">'+units.length+' ref · '+udsCola.toLocaleString('es-CO')+' uds</div>';
     h += '</div>';
     if(cargaReal.length){
-      h += '<details style="background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.2);border-radius:8px;overflow:hidden;">';
-      h += '<summary style="display:flex;align-items:center;gap:6px;padding:6px 10px;cursor:pointer;list-style:none;font-size:10px;font-weight:700;color:#fbbf24;">🏭 Ya en el taller (realidad) · '+cargaReal.length+' ref · '+udsReal.toLocaleString('es-CO')+' uds</summary>';
-      h += '<div style="padding:4px 8px 8px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;">';
+      // Consolidado por OP — una sola tarjeta aunque tenga varios colores; clic abre el detalle.
+      var porOpReal = {}, ordenOpReal = [];
       cargaReal.forEach(function(u){
-        var kb = kanbanByK[u.estado] || null;
-        var badge = kb ? '<span style="font-size:7px;font-weight:700;color:'+kb.color+';background:'+kb.color+'18;border:1px solid '+kb.color+'33;border-radius:3px;padding:1px 4px;white-space:nowrap;">'+esc(kb.label)+'</span>' : '';
-        h += _pconfUnitCard(u, {badge:badge});
+        if(!porOpReal[u.op.id]){ porOpReal[u.op.id] = {op:u.op, items:[], uds:0}; ordenOpReal.push(u.op.id); }
+        porOpReal[u.op.id].items.push(u);
+        porOpReal[u.op.id].uds += u.uds;
+      });
+      h += '<details style="background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.2);border-radius:8px;overflow:hidden;">';
+      h += '<summary style="display:flex;align-items:center;gap:6px;padding:6px 10px;cursor:pointer;list-style:none;font-size:10px;font-weight:700;color:#fbbf24;">🏭 Ya en el taller (realidad) · '+ordenOpReal.length+' OP · '+udsReal.toLocaleString('es-CO')+' uds</summary>';
+      h += '<div style="padding:4px 8px 8px;display:flex;flex-direction:column;gap:6px;">';
+      ordenOpReal.forEach(function(opId){
+        var g = porOpReal[opId];
+        h += '<div data-sat="'+esc(s.id)+'" data-opid="'+esc(opId)+'" onclick="verDetalleCargaSatelite(this.dataset.sat,this.dataset.opid)" style="background:#141820;border:1px solid #2c2c2e;border-radius:8px;padding:8px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:border-color .15s;" onmouseover="this.style.borderColor=\'rgba(10,132,255,.4)\'" onmouseout="this.style.borderColor=\'#2c2c2e\'">';
+        h += '<div style="flex:1;min-width:0;">';
+        h += '<div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">';
+        h += '<span style="font-size:10px;font-weight:800;color:#0a84ff;">'+esc(fmtOpId(g.op.id))+'</span>';
+        h += '<span style="font-size:9px;color:#475569;">'+g.items.length+' color'+(g.items.length!==1?'es':'')+'</span>';
+        h += '</div>';
+        h += '<div style="font-size:11px;font-weight:700;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(g.op.nombre_producto||g.op.id)+'</div>';
+        h += '</div>';
+        h += '<div style="text-align:right;flex-shrink:0;"><div style="font-size:13px;font-weight:800;color:#fbbf24;">'+g.uds.toLocaleString('es-CO')+'</div><div style="font-size:8px;color:#64748b;">uds</div></div>';
+        h += '<span style="font-size:12px;color:#334155;flex-shrink:0;">›</span>';
+        h += '</div>';
       });
       h += '</div></details>';
     }
