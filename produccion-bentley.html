@@ -3113,7 +3113,7 @@ function _pconfUnitCard(u, opts){
   opts = opts||{};
   var fecha = _pconfFechaEntrega(u.op.id, u.color);
   var dragAttrs = opts.draggable ? ' draggable="true" ondragstart="pconfDragStart(event,\''+esc(u.key)+'\')" ondragend="pconfDragEnd()"' : '';
-  var dragStyle = opts.draggable ? 'cursor:grab;' : '';
+  var dragStyle = opts.draggable ? 'cursor:grab;user-select:none;-webkit-user-drag:element;' : '';
   var h = '<div data-pconf-card="'+esc(u.key)+'"'+dragAttrs+' style="background:#141820;border:1px solid '+(opts.draggable?'rgba(52,211,153,.35)':'#2c2c2e')+';border-radius:9px;padding:8px 10px;width:100%;min-width:0;box-sizing:border-box;'+dragStyle+'">';
   h += '<div style="display:flex;align-items:center;gap:5px;margin-bottom:3px;">';
   if(opts.pos!=null) h += '<span style="font-size:10px;font-weight:900;color:#64748b;flex-shrink:0;">'+opts.pos+'.</span>';
