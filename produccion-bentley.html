@@ -3227,7 +3227,12 @@ function renderPlaneacionConfeccion(){
   var fullAll = _pconfFullUnits().map(function(u){ u.mes = assignedSet[u.key]||''; return u; });
   var fullMapByKey = {}; fullAll.forEach(function(u){ fullMapByKey[u.key]=u; });
 
-  var full = fullAll;
+  // Claves ya puestas en la cola de CUALQUIER satélite — igual que en Planeación, una vez
+  // asignada una referencia sale del pool de pendientes por organizar.
+  var yaAsignadasSet = {};
+  Object.keys(porSat).forEach(function(sid){ (porSat[sid]||[]).forEach(function(k){ yaAsignadasSet[k]=sid; }); });
+
+  var full = fullAll.filter(function(u){ return !yaAsignadasSet[u.key]; });
   if(_pconfFiltroMes){
     if(_pconfFiltroMes==='sin_mes') full = full.filter(function(u){ return !u.mes; });
     else full = full.filter(function(u){ return u.mes===_pconfFiltroMes; });
@@ -3257,6 +3262,25 @@ function renderPlaneacionConfeccion(){
   h += '</select>';
   h += '</div>';
   h += '<div style="font-size:11px;color:#475569;margin-bottom:14px;">Filtra por el mes que ya cuadraste en <b style="color:#94a3b8;">Planeación</b> (corte) y mira exactamente en qué punto del Kanban va cada referencia/color. Cuadra el taller y el orden de confección — esto NO cambia nada en producción hasta que le des <b style="color:#34d399;">✅ Asignar a producción</b>.</div>';
+
+  // ── Contador general: cuánto ya se organizó (asignado a un satélite) vs. cuánto falta ──
+  var asignadasKeys = Object.keys(yaAsignadasSet);
+  var asignadasUnits = asignadasKeys.map(function(k){ return fullMapByKey[k]; }).filter(Boolean);
+  var udsAsignadas = asignadasUnits.reduce(function(s,u){ return s+u.uds; },0);
+  var listasParaProduccion = asignadasUnits.filter(function(u){ return mapByKey[u.key]; }).length;
+  var udsPendientes = full.reduce(function(s,u){ return s+u.uds; },0);
+  h += '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">';
+  h += '<div style="flex:1;min-width:150px;background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.25);border-radius:10px;padding:10px 14px;">';
+  h += '<div style="font-size:9px;color:#34d399;text-transform:uppercase;letter-spacing:.5px;font-weight:700;">✅ Organizado en talleres</div>';
+  h += '<div style="font-size:22px;font-weight:900;color:#34d399;line-height:1.3;">'+asignadasUnits.length+'<span style="font-size:11px;color:#64748b;margin-left:4px;">ref</span></div>';
+  h += '<div style="font-size:10px;color:#64748b;">'+udsAsignadas.toLocaleString('es-CO')+' uds · '+listasParaProduccion+' lista'+(listasParaProduccion!==1?'s':'')+' para producción</div>';
+  h += '</div>';
+  h += '<div style="flex:1;min-width:150px;background:rgba(148,163,184,.06);border:1px solid #2c2c2e;border-radius:10px;padding:10px 14px;">';
+  h += '<div style="font-size:9px;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;font-weight:700;">📦 Pendiente por organizar</div>';
+  h += '<div style="font-size:22px;font-weight:900;color:#e2e8f0;line-height:1.3;">'+full.length+'<span style="font-size:11px;color:#64748b;margin-left:4px;">ref</span></div>';
+  h += '<div style="font-size:10px;color:#64748b;">'+udsPendientes.toLocaleString('es-CO')+' uds</div>';
+  h += '</div>';
+  h += '</div>';
 
   // ── Vista Kanban del mes filtrado — en el MISMO ORDEN del Kanban de Órdenes de
   // Producción (Nuevas programaciones → Pte. Cortar → Corte por Alistar → ...), y dentro
@@ -3324,9 +3348,12 @@ function renderPlaneacionConfeccion(){
     var cargaReal = _pconfCargaRealSatelite(s.id);
     var udsReal = cargaReal.reduce(function(sum,u){ return sum+u.uds; },0);
     h += '<div data-pconf-dz="'+esc(s.id)+'" class="pconf-dz" ondragover="pconfDragOver(event,\''+esc(s.id)+'\')" ondrop="pconfDrop(event,\''+esc(s.id)+'\')" style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;">';
-    h += '<div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">';
-    h += '<div style="font-size:12px;font-weight:800;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">🧑‍🏭 '+esc(s.nombre)+'</div>';
-    h += '<div style="font-size:9px;color:#475569;white-space:nowrap;">'+units.length+' ref · '+udsCola.toLocaleString('es-CO')+' uds</div>';
+    h += '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">';
+    h += '<div style="font-size:12px;font-weight:800;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0;">🧑‍🏭 '+esc(s.nombre)+'</div>';
+    h += '<div style="text-align:right;flex-shrink:0;">';
+    h += '<div style="font-size:16px;font-weight:900;color:'+(units.length?'#34d399':'#334155')+';line-height:1;">'+udsCola.toLocaleString('es-CO')+'<span style="font-size:9px;font-weight:700;color:#64748b;margin-left:2px;">uds</span></div>';
+    h += '<div style="font-size:9px;color:#64748b;white-space:nowrap;">'+units.length+' ref. en cola</div>';
+    h += '</div>';
     h += '</div>';
     if(cargaReal.length){
       // Consolidado por OP — una sola tarjeta aunque tenga varios colores; clic abre el detalle.
