@@ -68,7 +68,25 @@
       "op_id": "OP-0001",
       "op_nombre": "CHAQUETA CAZADORA",
       "satelite_id": "sat_02",
-      "uds": 13
+      "uds": 13,
+      "historial": [
+        {
+          "fecha_anterior": null,
+          "fecha_nueva": "2026-08-25",
+          "motivo": "Asignación inicial",
+          "by": "John Rodriguez",
+          "at": "2026-08-18"
+        },
+        {
+          "fecha_anterior": "2026-08-25",
+          "fecha_nueva": "2026-08-24",
+          "motivo": "Reubicado en tablero",
+          "by": "John Rodriguez",
+          "at": "2026-08-18"
+        }
+      ],
+      "fecha_inicial": "2026-08-25",
+      "fecha_compromiso": "2026-08-25"
     },
     {
       "color": "SALMON",
@@ -802,10 +820,17 @@
           "motivo": "Asignación inicial",
           "by": "John Rodriguez",
           "at": "2026-08-18"
+        },
+        {
+          "fecha_anterior": "2026-08-25",
+          "fecha_nueva": "2026-08-24",
+          "motivo": "Reubicado en tablero",
+          "by": "John Rodriguez",
+          "at": "2026-08-18"
         }
       ],
       "fecha_inicial": "2026-08-25",
-      "fecha_compromiso": "2026-08-25"
+      "fecha_compromiso": "2026-08-24"
     },
     {
       "color": "ROJO",
