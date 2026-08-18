@@ -7967,13 +7967,27 @@
       "user": "John Rodriguez"
     },
     {
+      "color": "MARFIL",
       "id": "evt_1787069022141_5dcgx",
-      "ts": 1787069022141,
-      "user": "John Rodriguez",
-      "tipo": "asignar_satelite",
       "op_id": "OP-2026-104",
       "ref": "BUZO TEJIDO MOÑOS",
-      "color": "MARFIL",
+      "satelite": "MARILUZ TEJIDOS",
+      "tipo": "asignar_satelite",
+      "ts": 1787069022141,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787069080874_om725",
+      "ts": 1787069080874,
+      "user": "John Rodriguez",
+      "tipo": "entrega_inline",
+      "ot_id": "id_1787068982919_dlbvhku1h",
+      "numero_ot": 13158,
+      "op_id": "OP-2026-104",
+      "uds_entregadas": 7,
+      "pendientes": 0,
+      "estado": "ENTREGADO",
+      "talla": "T4",
       "satelite": "MARILUZ TEJIDOS"
     }
   ]
