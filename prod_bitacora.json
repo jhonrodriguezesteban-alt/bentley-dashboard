@@ -7977,18 +7977,34 @@
       "user": "John Rodriguez"
     },
     {
+      "estado": "ENTREGADO",
       "id": "evt_1787069080874_om725",
-      "ts": 1787069080874,
-      "user": "John Rodriguez",
-      "tipo": "entrega_inline",
-      "ot_id": "id_1787068982919_dlbvhku1h",
       "numero_ot": 13158,
       "op_id": "OP-2026-104",
-      "uds_entregadas": 7,
+      "ot_id": "id_1787068982919_dlbvhku1h",
       "pendientes": 0,
-      "estado": "ENTREGADO",
+      "satelite": "MARILUZ TEJIDOS",
       "talla": "T4",
-      "satelite": "MARILUZ TEJIDOS"
+      "tipo": "entrega_inline",
+      "ts": 1787069080874,
+      "uds_entregadas": 7,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787069099615_09gqx",
+      "ts": 1787069099615,
+      "user": "John Rodriguez",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-104",
+      "op_nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS",
+      "referencia": "BUZO TEJIDO MOÑOS",
+      "color": "NEGRO",
+      "talla": "T6",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": false,
+      "uds": 10,
+      "motivo": "se recibe todo el corte"
     }
   ]
 }
