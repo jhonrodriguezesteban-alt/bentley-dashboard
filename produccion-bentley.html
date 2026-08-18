@@ -3180,29 +3180,33 @@ function setPconfFiltroMes(m){ _pconfFiltroMes = m; renderPage('planconf'); }
 // input en cada tecla) — atenúa las tarjetas que no matchean, igual que en Planeación.
 function _pconfFiltrarBusq(){
   var q = (_pconfBusq||'').trim().toUpperCase();
+  var root = document.getElementById('pconf-kanban-pool');
+  if(!root) return;
+  var cards = root.querySelectorAll('[data-pconf-ref]');
   if(!q){
-    document.querySelectorAll('[data-pconf-ref]').forEach(function(card){
-      card.style.opacity=''; card.style.boxShadow=''; card.style.zIndex=''; card.style.position='';
+    cards.forEach(function(card){
+      card.style.display=''; card.style.opacity=''; card.style.boxShadow=''; card.style.zIndex=''; card.style.position='';
     });
     return;
   }
-  document.querySelectorAll('[data-pconf-ref]').forEach(function(card){
+  // Cierra TODO primero — así solo queda abierta la ruta (estado Kanban → categoría)
+  // que realmente contiene una coincidencia, en vez de regarse por todas las pestañas.
+  root.querySelectorAll('details').forEach(function(d){ d.open = false; });
+  cards.forEach(function(card){
     var refTxt = (card.dataset.pconfRef||'').toUpperCase();
     var match = refTxt.indexOf(q) >= 0;
     if(match){
+      card.style.display = '';
       card.style.opacity = '1';
       card.style.boxShadow = '0 0 0 2px rgba(10,132,255,.45), 0 4px 16px rgba(10,132,255,.25)';
       card.style.zIndex = '2';
       card.style.position = 'relative';
-      // Despliega automáticamente los <details> (estado Kanban → categoría) que contienen
-      // la coincidencia, para que no toque abrirlos a mano uno por uno para encontrarla.
       var d = card.closest('details');
       while(d){ d.open = true; d = d.parentElement ? d.parentElement.closest('details') : null; }
     } else {
-      card.style.opacity = '0.18';
-      card.style.boxShadow = '';
-      card.style.zIndex = '';
-      card.style.position = '';
+      // Se oculta del todo — no basta con atenuar, porque abrir la categoría de un match
+      // vecino la mostraba igual, "regando" tarjetas sin relación con la búsqueda.
+      card.style.display = 'none';
     }
   });
 }
@@ -3288,7 +3292,7 @@ function renderPlaneacionConfeccion(){
   // está en "Corte por Alistar" sin taller se puede ARRASTRAR a un satélite — el resto se
   // ve de solo lectura, para saber exactamente dónde va cada referencia.
   var totalUdsFull = full.reduce(function(s,u){ return s+u.uds; },0);
-  h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:12px;padding:12px 14px;margin-bottom:20px;">';
+  h += '<div id="pconf-kanban-pool" style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:12px;padding:12px 14px;margin-bottom:20px;">';
   h += '<div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">📋 '+full.length+' colores'+(_pconfFiltroMes?(_pconfFiltroMes==='sin_mes'?' sin mes asignado':' en '+esc((MESES.find(function(m){return m.k===_pconfFiltroMes;})||{}).label||'')):' en total')+' · '+totalUdsFull.toLocaleString('es-CO')+' uds</div>';
   if(!full.length){
     h += '<div style="color:#2c2c2e;font-size:12px;padding:18px 0;text-align:center;">Nada para mostrar con este filtro</div>';
