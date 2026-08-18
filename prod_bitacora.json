@@ -8449,15 +8449,27 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1787087973010_3tsd7",
-      "ts": 1787087973010,
-      "user": "John Rodriguez",
-      "tipo": "cronograma_fecha",
-      "entry_id": "id_1785259401168_hc8f7j458",
-      "op_id": "OP-0033",
       "color": "NEGRO",
+      "entry_id": "id_1785259401168_hc8f7j458",
       "fecha_nueva": "2026-08-20",
-      "motivo": "Reubicado en tablero"
+      "id": "evt_1787087973010_3tsd7",
+      "motivo": "Reubicado en tablero",
+      "op_id": "OP-0033",
+      "tipo": "cronograma_fecha",
+      "ts": 1787087973010,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787088001960_1g9hk",
+      "ts": 1787088001960,
+      "user": "John Rodriguez",
+      "tipo": "kanban_color",
+      "op_id": "OP-0022",
+      "op_nombre": "CHALECO PUFFY",
+      "color": "BLANCO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "uds": 70
     }
   ]
 }
