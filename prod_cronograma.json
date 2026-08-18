@@ -253,23 +253,29 @@
     {
       "color": "BEIGE",
       "entregado": false,
+      "fecha_compromiso": "2026-08-21",
       "fecha_entrada": "2026-07-02",
-      "id": "id_1783030889697_16o6y2hst",
-      "op_id": "OP-0009",
-      "op_nombre": "GABAN PARIS",
-      "satelite_id": "sat_03",
-      "uds": 6,
+      "fecha_inicial": "2026-08-18",
       "historial": [
         {
-          "fecha_anterior": null,
+          "at": "2026-08-18",
+          "by": "John Rodriguez",
           "fecha_nueva": "2026-08-18",
-          "motivo": "Asignación inicial",
+          "motivo": "Asignación inicial"
+        },
+        {
+          "fecha_anterior": "2026-08-18",
+          "fecha_nueva": "2026-08-21",
+          "motivo": "Reubicado en tablero",
           "by": "John Rodriguez",
           "at": "2026-08-18"
         }
       ],
-      "fecha_inicial": "2026-08-18",
-      "fecha_compromiso": "2026-08-18"
+      "id": "id_1783030889697_16o6y2hst",
+      "op_id": "OP-0009",
+      "op_nombre": "GABAN PARIS",
+      "satelite_id": "sat_03",
+      "uds": 6
     },
     {
       "color": "ROSA",
@@ -279,9 +285,7 @@
       "op_id": "OP-0009",
       "op_nombre": "GABAN PARIS",
       "satelite_id": "sat_03",
-      "uds": 3,
-      "historial": [],
-      "fecha_compromiso": null
+      "uds": 3
     },
     {
       "color": "NEGRO",
