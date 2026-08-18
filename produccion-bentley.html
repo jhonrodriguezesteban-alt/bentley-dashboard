@@ -3070,6 +3070,7 @@ function _pconfUnitCard(u, opts){
   h += '<span style="font-size:9px;font-weight:800;color:#0a84ff;">'+esc(fmtOpId(u.op.id))+'</span>';
   if(u.color && u.color!=='—') h += '<span style="font-size:9px;font-weight:700;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);border-radius:3px;color:#0a84ff;padding:1px 5px;text-transform:uppercase;">'+esc(u.color)+'</span>';
   h += '<span style="font-size:9px;color:#475569;">'+u.uds.toLocaleString('es-CO')+' uds</span>';
+  if(opts.badge) h += opts.badge;
   h += '</div></div>';
   h += '<div style="display:flex;align-items:center;gap:3px;flex-shrink:0;">';
   if(opts.buttons) h += opts.buttons;
@@ -3077,12 +3078,49 @@ function _pconfUnitCard(u, opts){
   return h;
 }
 
+// Todas las (OP,color) activas, sin importar en qué punto del Kanban están —
+// a diferencia de _pconfPoolUnits (que solo mira lo ya cortado sin taller), esto
+// es para poder ver TODO ("¿dónde está esa chaqueta?") y filtrarlo por mes.
+function _pconfFullUnits(){
+  var units = [];
+  (DB.ops||[]).forEach(function(op){
+    if(op.estado_op==='ARCHIVADO') return;
+    var colores = (op.colores&&op.colores.length) ? op.colores : ['—'];
+    colores.forEach(function(color){
+      var estado = _planEstadoColor(op, color);
+      if(estado==='ARCHIVADO') return; // ya entregado del todo — no hay nada que planear
+      var uds = _planColorUdsHistorico(op, color);
+      if(!uds) return;
+      units.push({op:op, color:color, uds:uds, key:_planKey(op.id,color), estado:estado});
+    });
+  });
+  return units;
+}
+
+var _pconfFiltroMes = '';
+function setPconfFiltroMes(m){ _pconfFiltroMes = m; renderPage('planconf'); }
+
 function renderPlaneacionConfeccion(){
   if(!DB.planeacion_confeccion) DB.planeacion_confeccion = {por_satelite:{}};
   var porSat = DB.planeacion_confeccion.por_satelite;
-  var built = _pconfPoolUnits();
-  var mapByKey = built.mapByKey, pool = built.pool.slice().sort(function(a,b){ return (a.op.nombre_producto||'').localeCompare(b.op.nombre_producto||''); });
+  var built = _pconfPoolUnits(); // universo ACCIONABLE (cortado, sin taller) — para la cola
+  var mapByKey = built.mapByKey;
   var puedeEditar = _canEditPlan();
+  var MESES = _planMesesDef();
+
+  // Mes asignado a cada (op,color) en Planeación de Corte — mismo origen que ese módulo.
+  var assignedSet = {};
+  var mesesPlan = (DB.planeacion && DB.planeacion.meses) || {};
+  Object.keys(mesesPlan).forEach(function(mk){ (mesesPlan[mk]||[]).forEach(function(key){ assignedSet[key]=mk; }); });
+
+  var kanbanByK = {}; OP_KANBAN.forEach(function(c){ kanbanByK[c.k]=c; });
+
+  var full = _pconfFullUnits().map(function(u){ u.mes = assignedSet[u.key]||''; return u; });
+  if(_pconfFiltroMes){
+    if(_pconfFiltroMes==='sin_mes') full = full.filter(function(u){ return !u.mes; });
+    else full = full.filter(function(u){ return u.mes===_pconfFiltroMes; });
+  }
+  full.sort(function(a,b){ return (a.op.nombre_producto||'').localeCompare(b.op.nombre_producto||''); });
 
   var h = '<div style="padding:16px 20px;height:100%;overflow-y:auto;box-sizing:border-box;">';
 
@@ -3093,27 +3131,26 @@ function renderPlaneacionConfeccion(){
     h += '</div>';
   }
 
-  var totalUdsPool = pool.reduce(function(s,u){ return s+u.uds; },0);
-  var totalUdsAsignadas = built.all.reduce(function(s,u){ return s+u.uds; },0) - totalUdsPool;
-
   h += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:6px;flex-wrap:wrap;">';
   h += '<div style="font-size:20px;font-weight:800;color:#e2e8f0;letter-spacing:.3px;">🧵 Planeación de Confección</div>';
-  h += '<div style="display:flex;gap:10px;margin-left:auto;flex-wrap:wrap;">';
-  h += '<span style="font-size:11px;background:rgba(10,132,255,.08);border:1px solid rgba(10,132,255,.2);border-radius:8px;color:#0a84ff;padding:4px 10px;font-weight:700;">'+built.all.length+' colores cortados sin taller</span>';
-  h += '<span style="font-size:11px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:8px;color:#34d399;padding:4px 10px;font-weight:700;">'+(built.all.length-pool.length)+' organizados</span>';
-  h += '<span style="font-size:11px;background:rgba(148,163,184,.08);border:1px solid #2c2c2e;border-radius:8px;color:#64748b;padding:4px 10px;font-weight:700;">'+pool.length+' sin organizar</span>';
-  h += '</div></div>';
-  h += '<div style="font-size:11px;color:#475569;margin-bottom:18px;">Cuadra qué taller confecciona cada referencia/color y en qué orden — esto NO cambia nada en producción hasta que le des <b style="color:#34d399;">✅ Asignar a producción</b>.</div>';
+  h += '<select onchange="setPconfFiltroMes(this.value)" style="margin-left:auto;background:#0d1117;border:1px solid #2c2c2e;border-radius:6px;color:var(--text);padding:6px 10px;font-size:12px;cursor:pointer;">';
+  h += '<option value="">Todos los meses</option>';
+  h += '<option value="sin_mes"'+(_pconfFiltroMes==='sin_mes'?' selected':'')+'>Sin mes asignado</option>';
+  MESES.forEach(function(m){ h += '<option value="'+m.k+'"'+(_pconfFiltroMes===m.k?' selected':'')+'>'+esc(m.label)+'</option>'; });
+  h += '</select>';
+  h += '</div>';
+  h += '<div style="font-size:11px;color:#475569;margin-bottom:14px;">Filtra por el mes que ya cuadraste en <b style="color:#94a3b8;">Planeación</b> (corte) y mira exactamente en qué punto del Kanban va cada referencia/color. Cuadra el taller y el orden de confección — esto NO cambia nada en producción hasta que le des <b style="color:#34d399;">✅ Asignar a producción</b>.</div>';
 
-  // ── Pool: colores cortados aún sin organizar — agrupado por categoría, como el Kanban ──
+  // ── Vista Kanban del mes filtrado — agrupada por categoría, con el estado real de cada color ──
+  var totalUdsFull = full.reduce(function(s,u){ return s+u.uds; },0);
   h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:12px;padding:12px 14px;margin-bottom:20px;">';
-  h += '<div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">📦 Sin organizar · '+pool.length+' colores · '+totalUdsPool.toLocaleString('es-CO')+' uds</div>';
-  if(!pool.length){
-    h += '<div style="color:#2c2c2e;font-size:12px;padding:18px 0;text-align:center;">✓ No hay colores recién cortados pendientes por organizar</div>';
+  h += '<div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">📋 '+full.length+' colores'+(_pconfFiltroMes?(_pconfFiltroMes==='sin_mes'?' sin mes asignado':' en '+esc((MESES.find(function(m){return m.k===_pconfFiltroMes;})||{}).label||'')):' en total')+' · '+totalUdsFull.toLocaleString('es-CO')+' uds</div>';
+  if(!full.length){
+    h += '<div style="color:#2c2c2e;font-size:12px;padding:18px 0;text-align:center;">Nada para mostrar con este filtro</div>';
   } else {
     var satsSel = (DB.satelites||[]).filter(function(s){ return s.activo; });
     var catGroupsPool = {};
-    pool.forEach(function(u){
+    full.forEach(function(u){
       var cat = u.op.categoria || 'Sin categoría';
       if(!catGroupsPool[cat]) catGroupsPool[cat] = [];
       catGroupsPool[cat].push(u);
@@ -3122,7 +3159,7 @@ function renderPlaneacionConfeccion(){
     catsPool.forEach(function(cat, ci){
       var units = catGroupsPool[cat];
       var udsCat = units.reduce(function(s,u){ return s+u.uds; },0);
-      var pct = totalUdsPool ? Math.round(udsCat/totalUdsPool*100) : 0;
+      var pct = totalUdsFull ? Math.round(udsCat/totalUdsFull*100) : 0;
       h += '<details'+(ci===0?' open':'')+' style="background:#141820;border-radius:9px;overflow:hidden;margin-bottom:8px;">';
       h += '<summary style="display:flex;align-items:center;gap:10px;padding:9px 12px;cursor:pointer;list-style:none;">';
       h += '<div style="flex:1;min-width:0;">';
@@ -3135,14 +3172,17 @@ function renderPlaneacionConfeccion(){
       h += '</summary>';
       h += '<div style="padding:4px 10px 10px;border-top:1px solid rgba(255,255,255,.05);display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;">';
       units.forEach(function(u){
+        var kb = kanbanByK[u.estado] || {label:u.estado, color:'#64748b'};
+        var badge = '<span style="font-size:8px;font-weight:700;color:'+kb.color+';background:'+kb.color+'18;border:1px solid '+kb.color+'33;border-radius:3px;padding:1px 5px;white-space:nowrap;">'+esc(kb.label)+'</span>';
         var btns = '';
-        if(puedeEditar){
+        var accionable = puedeEditar && mapByKey[u.key]; // solo lo ya cortado y sin taller se puede encolar
+        if(accionable){
           btns += '<select data-key="'+esc(u.key)+'" onchange="if(this.value)pconfAsignarASatelite(this.dataset.key,this.value)" style="background:#0d1117;border:1px solid #2c2c2e;border-radius:5px;color:#94a3b8;font-size:10px;padding:3px 4px;max-width:110px;">';
           btns += '<option value="">→ satélite…</option>';
           satsSel.forEach(function(s){ btns += '<option value="'+esc(s.id)+'">'+esc(s.nombre)+'</option>'; });
           btns += '</select>';
         }
-        h += _pconfUnitCard(u, {buttons:btns});
+        h += _pconfUnitCard(u, {buttons:btns, badge:badge});
       });
       h += '</div>';
       h += '</details>';
