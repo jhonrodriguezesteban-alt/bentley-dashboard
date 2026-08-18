@@ -2978,7 +2978,7 @@ function _pconfCargaRealSatelite(satId){
     if(!op) return;
     var color = ot.color||'—';
     var key = _planKey(op.id, color);
-    if(!map[key]) map[key] = {op:op, color:color, uds:0, key:key};
+    if(!map[key]) map[key] = {op:op, color:color, uds:0, key:key, estado:_planEstadoColor(op,color)};
     map[key].uds += (ot.cantidad||0);
   });
   return Object.keys(map).map(function(k){ return map[k]; });
@@ -3060,22 +3060,33 @@ function pconfAsignarTodoSatelite(satId){
   });
 }
 
+// Fecha de entrega ya comprometida en Cronograma para ese (op,color), si la tiene.
+function _pconfFechaEntrega(opId, color){
+  var e = (DB.cronograma||[]).find(function(x){ return x.op_id===opId && (x.color||'—')===(color||'—') && !x.entregado && x.fecha_compromiso; });
+  return e ? e.fecha_compromiso : null;
+}
+
+// Mini-tarjeta estilo Planeación (_planMiniCard) — OP, referencia, color, cantidad y
+// fecha de entrega (si ya está en Cronograma). Compacta a propósito para caber varias
+// por satélite y poder "ir contando cantidad" de un vistazo.
 function _pconfUnitCard(u, opts){
   opts = opts||{};
-  var h = '<div style="background:#141820;border:1px solid #2c2c2e;border-radius:9px;padding:9px 11px;display:flex;align-items:center;gap:8px;">';
-  if(opts.pos!=null) h += '<span style="font-size:11px;font-weight:900;color:#64748b;width:18px;flex-shrink:0;text-align:center;">'+opts.pos+'</span>';
-  h += '<div style="flex:1;min-width:0;">';
-  h += '<div style="font-size:12px;font-weight:700;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(u.op.nombre_producto||u.op.id)+'</div>';
-  h += '<div style="display:flex;align-items:center;gap:6px;margin-top:2px;">';
-  h += '<span style="font-size:9px;font-weight:800;color:#0a84ff;">'+esc(fmtOpId(u.op.id))+'</span>';
-  if(u.color && u.color!=='—') h += '<span style="font-size:9px;font-weight:700;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);border-radius:3px;color:#0a84ff;padding:1px 5px;text-transform:uppercase;">'+esc(u.color)+'</span>';
-  h += '<span style="font-size:9px;color:#475569;">'+u.uds.toLocaleString('es-CO')+' uds</span>';
+  var fecha = _pconfFechaEntrega(u.op.id, u.color);
+  var h = '<div style="background:#141820;border:1px solid #2c2c2e;border-radius:9px;padding:8px 10px;width:100%;min-width:0;box-sizing:border-box;">';
+  h += '<div style="display:flex;align-items:center;gap:5px;margin-bottom:3px;">';
+  if(opts.pos!=null) h += '<span style="font-size:10px;font-weight:900;color:#64748b;flex-shrink:0;">'+opts.pos+'.</span>';
+  h += '<span style="font-size:10px;font-weight:800;color:#0a84ff;">'+esc(fmtOpId(u.op.id))+'</span>';
+  h += '<span style="flex:1;"></span>';
   if(opts.badge) h += opts.badge;
-  h += '</div></div>';
-  h += '<div style="display:flex;align-items:center;gap:3px;flex-shrink:0;">';
-  if(opts.buttons) h += opts.buttons;
-  h += '</div></div>';
-  return h;
+  h += '</div>';
+  h += '<div style="font-size:11px;font-weight:700;color:#e2e8f0;line-height:1.25;margin-bottom:4px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;" title="'+esc(u.op.nombre_producto||'')+'">'+esc(u.op.nombre_producto||u.op.id)+'</div>';
+  if(u.color && u.color!=='—') h += '<span style="font-size:8px;font-weight:700;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);border-radius:3px;color:#0a84ff;padding:1px 5px;text-transform:uppercase;white-space:nowrap;display:inline-block;margin-bottom:5px;">'+esc(u.color)+'</span>';
+  h += '<div style="border-top:1px solid #2c2c2e;padding-top:5px;display:flex;align-items:center;justify-content:space-between;gap:6px;">';
+  h += '<span style="font-size:12px;font-weight:800;color:#fbbf24;">'+u.uds.toLocaleString('es-CO')+'<span style="font-size:8px;font-weight:600;color:#64748b;margin-left:2px;">uds</span></span>';
+  h += fecha ? '<span style="font-size:9px;font-weight:700;color:#34d399;white-space:nowrap;">📅 '+esc(fmtDate(fecha))+'</span>' : '<span style="font-size:8px;color:#374151;white-space:nowrap;">sin fecha</span>';
+  h += '</div>';
+  if(opts.buttons) h += '<div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-top:6px;">'+opts.buttons+'</div>';
+  return h+'</div>';
 }
 
 // Todas las (OP,color) activas, sin importar en qué punto del Kanban están —
@@ -3207,19 +3218,18 @@ function renderPlaneacionConfeccion(){
     if(cargaReal.length){
       h += '<details style="background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.2);border-radius:8px;overflow:hidden;">';
       h += '<summary style="display:flex;align-items:center;gap:6px;padding:6px 10px;cursor:pointer;list-style:none;font-size:10px;font-weight:700;color:#fbbf24;">🏭 Ya en el taller (realidad) · '+cargaReal.length+' ref · '+udsReal.toLocaleString('es-CO')+' uds</summary>';
-      h += '<div style="padding:4px 10px 8px;display:flex;flex-direction:column;gap:4px;">';
+      h += '<div style="padding:4px 8px 8px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;">';
       cargaReal.forEach(function(u){
-        h += '<div style="display:flex;align-items:center;gap:6px;font-size:10px;color:#94a3b8;">';
-        h += '<span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(u.op.nombre_producto||u.op.id)+' <span style="color:#0a84ff;font-weight:700;">'+esc(u.color)+'</span></span>';
-        h += '<span style="color:#fbbf24;font-weight:700;white-space:nowrap;">'+u.uds.toLocaleString('es-CO')+' uds</span>';
-        h += '</div>';
+        var kb = kanbanByK[u.estado] || null;
+        var badge = kb ? '<span style="font-size:7px;font-weight:700;color:'+kb.color+';background:'+kb.color+'18;border:1px solid '+kb.color+'33;border-radius:3px;padding:1px 4px;white-space:nowrap;">'+esc(kb.label)+'</span>' : '';
+        h += _pconfUnitCard(u, {badge:badge});
       });
       h += '</div></details>';
     }
     if(!units.length){
       h += '<div style="color:#2c2c2e;font-size:11px;padding:12px 0;text-align:center;">Sin referencias en cola</div>';
     } else {
-      h += '<div style="display:flex;flex-direction:column;gap:6px;">';
+      h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;">';
       units.forEach(function(u,i){
         var btns = '';
         if(puedeEditar){
