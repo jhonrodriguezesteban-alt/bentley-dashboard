@@ -2989,6 +2989,46 @@ function guardarPlaneacionConfeccion(){
   return guardarArchivo('planeacion_confeccion', {por_satelite: DB.planeacion_confeccion.por_satelite||{}});
 }
 
+// Drag & drop de una tarjeta (op,color) hacia la tarjeta de un satélite —
+// misma mecánica que Planeación (planDragStart/planDrop), aplicada aquí a por_satelite.
+var _pconfDragKey = null;
+function pconfDragStart(e, key){
+  if(!_canEditPlan()){ e.preventDefault(); return; }
+  _pconfDragKey = key;
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', key);
+  e.dataTransfer.setData('Text', key); // Safari
+  var el = e.currentTarget;
+  if(el && e.dataTransfer.setDragImage) e.dataTransfer.setDragImage(el, 76, 20);
+  setTimeout(function(){
+    var card = document.querySelector('[data-pconf-card="'+CSS.escape(key)+'"]');
+    if(card){ card.style.opacity='.3'; card.style.transform='scale(.94)'; }
+  },0);
+}
+function pconfDragEnd(){
+  _pconfDragKey = null;
+  document.querySelectorAll('[data-pconf-card]').forEach(function(el){ el.style.opacity=''; el.style.transform=''; });
+  document.querySelectorAll('.pconf-dz').forEach(function(el){ el.style.background=''; el.style.borderColor=''; });
+}
+function pconfDragOver(e, satId){
+  if(!_canEditPlan()){ e.dataTransfer.dropEffect='none'; return; }
+  e.preventDefault();
+  e.stopPropagation();
+  e.dataTransfer.dropEffect = 'move';
+  document.querySelectorAll('.pconf-dz').forEach(function(el){ el.style.background=''; el.style.borderColor=''; });
+  var dz = document.querySelector('[data-pconf-dz="'+CSS.escape(satId)+'"]');
+  if(dz){ dz.style.background='rgba(52,211,153,.06)'; dz.style.borderColor='rgba(52,211,153,.5)'; }
+}
+function pconfDrop(e, satId){
+  if(!_canEditPlan()) return;
+  e.preventDefault();
+  e.stopPropagation();
+  var key = e.dataTransfer.getData('text/plain') || e.dataTransfer.getData('Text') || _pconfDragKey;
+  document.querySelectorAll('.pconf-dz').forEach(function(el){ el.style.background=''; el.style.borderColor=''; });
+  if(!key) return;
+  pconfAsignarASatelite(key, satId);
+}
+
 function pconfAsignarASatelite(key, satId){
   if(!_canEditPlan()){ toast('Solo Jhon puede editar este tablero','warning'); return; }
   if(!DB.planeacion_confeccion) DB.planeacion_confeccion = {por_satelite:{}};
@@ -3072,9 +3112,12 @@ function _pconfFechaEntrega(opId, color){
 function _pconfUnitCard(u, opts){
   opts = opts||{};
   var fecha = _pconfFechaEntrega(u.op.id, u.color);
-  var h = '<div style="background:#141820;border:1px solid #2c2c2e;border-radius:9px;padding:8px 10px;width:100%;min-width:0;box-sizing:border-box;">';
+  var dragAttrs = opts.draggable ? ' draggable="true" ondragstart="pconfDragStart(event,\''+esc(u.key)+'\')" ondragend="pconfDragEnd()"' : '';
+  var dragStyle = opts.draggable ? 'cursor:grab;' : '';
+  var h = '<div data-pconf-card="'+esc(u.key)+'"'+dragAttrs+' style="background:#141820;border:1px solid '+(opts.draggable?'rgba(52,211,153,.35)':'#2c2c2e')+';border-radius:9px;padding:8px 10px;width:100%;min-width:0;box-sizing:border-box;'+dragStyle+'">';
   h += '<div style="display:flex;align-items:center;gap:5px;margin-bottom:3px;">';
   if(opts.pos!=null) h += '<span style="font-size:10px;font-weight:900;color:#64748b;flex-shrink:0;">'+opts.pos+'.</span>';
+  if(opts.draggable) h += '<span style="font-size:9px;color:#34d399;flex-shrink:0;" title="Arrastra a un satélite">⠿</span>';
   h += '<span style="font-size:10px;font-weight:800;color:#0a84ff;">'+esc(fmtOpId(u.op.id))+'</span>';
   h += '<span style="flex:1;"></span>';
   if(opts.badge) h += opts.badge;
@@ -3133,7 +3176,8 @@ function renderPlaneacionConfeccion(){
   }
   full.sort(function(a,b){ return (a.op.nombre_producto||'').localeCompare(b.op.nombre_producto||''); });
 
-  var h = '<div style="padding:16px 20px;height:100%;overflow-y:auto;box-sizing:border-box;">';
+  var h = '<style>.pconf-dz{border:2px dashed transparent;border-radius:12px;transition:background .15s,border-color .15s;}</style>';
+  h += '<div style="padding:16px 20px;height:100%;overflow-y:auto;box-sizing:border-box;">';
 
   if(!puedeEditar){
     h += '<div style="display:flex;align-items:center;gap:10px;background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.3);border-radius:10px;padding:10px 16px;margin-bottom:14px;">';
@@ -3152,51 +3196,53 @@ function renderPlaneacionConfeccion(){
   h += '</div>';
   h += '<div style="font-size:11px;color:#475569;margin-bottom:14px;">Filtra por el mes que ya cuadraste en <b style="color:#94a3b8;">Planeación</b> (corte) y mira exactamente en qué punto del Kanban va cada referencia/color. Cuadra el taller y el orden de confección — esto NO cambia nada en producción hasta que le des <b style="color:#34d399;">✅ Asignar a producción</b>.</div>';
 
-  // ── Vista Kanban del mes filtrado — agrupada por categoría, con el estado real de cada color ──
+  // ── Vista Kanban del mes filtrado — en el MISMO ORDEN del Kanban de Órdenes de
+  // Producción (Nuevas programaciones → Pte. Cortar → Corte por Alistar → ...), y dentro
+  // de cada estado, agrupado por categoría (Chaquetas, Conjuntos, Buzos...). Solo lo que
+  // está en "Corte por Alistar" sin taller se puede ARRASTRAR a un satélite — el resto se
+  // ve de solo lectura, para saber exactamente dónde va cada referencia.
   var totalUdsFull = full.reduce(function(s,u){ return s+u.uds; },0);
   h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:12px;padding:12px 14px;margin-bottom:20px;">';
   h += '<div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">📋 '+full.length+' colores'+(_pconfFiltroMes?(_pconfFiltroMes==='sin_mes'?' sin mes asignado':' en '+esc((MESES.find(function(m){return m.k===_pconfFiltroMes;})||{}).label||'')):' en total')+' · '+totalUdsFull.toLocaleString('es-CO')+' uds</div>';
   if(!full.length){
     h += '<div style="color:#2c2c2e;font-size:12px;padding:18px 0;text-align:center;">Nada para mostrar con este filtro</div>';
   } else {
-    var satsSel = (DB.satelites||[]).filter(function(s){ return s.activo; });
-    var catGroupsPool = {};
-    full.forEach(function(u){
-      var cat = u.op.categoria || 'Sin categoría';
-      if(!catGroupsPool[cat]) catGroupsPool[cat] = [];
-      catGroupsPool[cat].push(u);
-    });
-    var catsPool = Object.keys(catGroupsPool).sort(function(a,b){ return catGroupsPool[b].length - catGroupsPool[a].length; });
-    catsPool.forEach(function(cat, ci){
-      var units = catGroupsPool[cat];
-      var udsCat = units.reduce(function(s,u){ return s+u.uds; },0);
-      var pct = totalUdsFull ? Math.round(udsCat/totalUdsFull*100) : 0;
-      h += '<details'+(ci===0?' open':'')+' style="background:#141820;border-radius:9px;overflow:hidden;margin-bottom:8px;">';
+    var porEstado = {};
+    full.forEach(function(u){ (porEstado[u.estado]=porEstado[u.estado]||[]).push(u); });
+    OP_KANBAN.forEach(function(col, colIdx){
+      var itemsEstado = porEstado[col.k]||[];
+      if(!itemsEstado.length) return;
+      var udsEstado = itemsEstado.reduce(function(s,u){ return s+u.uds; },0);
+      h += '<details'+(colIdx===0?' open':'')+' style="background:#141820;border-radius:9px;overflow:hidden;margin-bottom:8px;border-left:3px solid '+col.color+';">';
       h += '<summary style="display:flex;align-items:center;gap:10px;padding:9px 12px;cursor:pointer;list-style:none;">';
-      h += '<div style="flex:1;min-width:0;">';
-      h += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">';
-      h += '<span style="font-size:12px;font-weight:800;color:#e2e8f0;text-transform:uppercase;letter-spacing:.3px;">'+esc(cat)+'</span>';
-      h += '<span style="font-size:10px;color:#475569;">'+units.length+' color'+(units.length!==1?'es':'')+' · '+udsCat.toLocaleString('es-CO')+' uds · '+pct+'%</span>';
-      h += '</div>';
-      h += '<div style="height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;"><div style="height:100%;width:'+pct+'%;background:#0a84ff;"></div></div>';
-      h += '</div>';
+      h += '<span style="width:8px;height:8px;border-radius:50%;background:'+col.color+';flex-shrink:0;"></span>';
+      h += '<span style="font-size:12px;font-weight:800;color:'+col.color+';text-transform:uppercase;letter-spacing:.3px;flex:1;">'+esc(col.label)+'</span>';
+      h += '<span style="font-size:10px;color:#475569;">'+itemsEstado.length+' color'+(itemsEstado.length!==1?'es':'')+' · '+udsEstado.toLocaleString('es-CO')+' uds</span>';
       h += '</summary>';
-      h += '<div style="padding:4px 10px 10px;border-top:1px solid rgba(255,255,255,.05);display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;">';
-      units.forEach(function(u){
-        var kb = kanbanByK[u.estado] || {label:u.estado, color:'#64748b'};
-        var badge = '<span style="font-size:8px;font-weight:700;color:'+kb.color+';background:'+kb.color+'18;border:1px solid '+kb.color+'33;border-radius:3px;padding:1px 5px;white-space:nowrap;">'+esc(kb.label)+'</span>';
-        var btns = '';
-        var accionable = puedeEditar && mapByKey[u.key]; // solo lo ya cortado y sin taller se puede encolar
-        if(accionable){
-          btns += '<select data-key="'+esc(u.key)+'" onchange="if(this.value)pconfAsignarASatelite(this.dataset.key,this.value)" style="background:#0d1117;border:1px solid #2c2c2e;border-radius:5px;color:#94a3b8;font-size:10px;padding:3px 4px;max-width:110px;">';
-          btns += '<option value="">→ satélite…</option>';
-          satsSel.forEach(function(s){ btns += '<option value="'+esc(s.id)+'">'+esc(s.nombre)+'</option>'; });
-          btns += '</select>';
-        }
-        h += _pconfUnitCard(u, {buttons:btns, badge:badge});
+      h += '<div style="padding:4px 10px 10px;border-top:1px solid rgba(255,255,255,.05);">';
+
+      var catGroupsPool = {};
+      itemsEstado.forEach(function(u){
+        var cat = u.op.categoria || 'Sin categoría';
+        if(!catGroupsPool[cat]) catGroupsPool[cat] = [];
+        catGroupsPool[cat].push(u);
       });
-      h += '</div>';
-      h += '</details>';
+      var catsPool = Object.keys(catGroupsPool).sort(function(a,b){ return catGroupsPool[b].length - catGroupsPool[a].length; });
+      catsPool.forEach(function(cat){
+        var units = catGroupsPool[cat];
+        var udsCat = units.reduce(function(s,u){ return s+u.uds; },0);
+        h += '<div style="display:flex;align-items:center;gap:8px;margin:10px 0 6px;padding-left:7px;border-left:2px solid rgba(255,255,255,.12);">';
+        h += '<span style="font-size:10px;font-weight:800;color:#94a3b8;text-transform:uppercase;letter-spacing:.2em;">'+esc(cat)+'</span>';
+        h += '<span style="font-size:9px;color:#475569;">'+units.length+' · '+udsCat.toLocaleString('es-CO')+' uds</span>';
+        h += '</div>';
+        h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;">';
+        units.forEach(function(u){
+          var accionable = puedeEditar && mapByKey[u.key]; // solo lo ya cortado y sin taller se puede arrastrar
+          h += _pconfUnitCard(u, {draggable:accionable});
+        });
+        h += '</div>';
+      });
+      h += '</div></details>';
     });
   }
   h += '</div>';
@@ -3210,7 +3256,7 @@ function renderPlaneacionConfeccion(){
     var udsCola = units.reduce(function(sum,u){ return sum+u.uds; },0);
     var cargaReal = _pconfCargaRealSatelite(s.id);
     var udsReal = cargaReal.reduce(function(sum,u){ return sum+u.uds; },0);
-    h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;">';
+    h += '<div data-pconf-dz="'+esc(s.id)+'" class="pconf-dz" ondragover="pconfDragOver(event,\''+esc(s.id)+'\')" ondrop="pconfDrop(event,\''+esc(s.id)+'\')" style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;">';
     h += '<div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">';
     h += '<div style="font-size:12px;font-weight:800;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">🧑‍🏭 '+esc(s.nombre)+'</div>';
     h += '<div style="font-size:9px;color:#475569;white-space:nowrap;">'+units.length+' ref · '+udsCola.toLocaleString('es-CO')+' uds</div>';
