@@ -7928,14 +7928,43 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1787068978258_o64dq",
-      "ts": 1787068978258,
-      "user": "John Rodriguez",
-      "tipo": "cambiar_estado_op_all",
-      "op_id": "OP-2026-104",
-      "estado": "POR_REVISAR",
       "colores": 2,
-      "nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS"
+      "estado": "POR_REVISAR",
+      "id": "evt_1787068978258_o64dq",
+      "nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS",
+      "op_id": "OP-2026-104",
+      "tipo": "cambiar_estado_op_all",
+      "ts": 1787068978258,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787068982919_ycpu2",
+      "ts": 1787068982919,
+      "user": "John Rodriguez",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-104",
+      "op_nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS",
+      "categoria": "BUZOS",
+      "total_ots": 21,
+      "total_uds": 255,
+      "colores": [
+        "MARFIL",
+        "NEGRO"
+      ],
+      "referencias": [
+        "BUZO CEREZAS",
+        "BUZO TEJIDO MOÑOS"
+      ]
+    },
+    {
+      "id": "evt_1787069007014_asie5",
+      "ts": 1787069007014,
+      "user": "John Rodriguez",
+      "tipo": "asignar_satelite",
+      "op_id": "OP-2026-104",
+      "ref": "BUZO TEJIDO MOÑOS",
+      "color": "NEGRO",
+      "satelite": "MARILUZ TEJIDOS"
     }
   ]
 }
