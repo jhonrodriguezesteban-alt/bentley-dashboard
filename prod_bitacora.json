@@ -8484,20 +8484,31 @@
       "user": "John Rodriguez"
     },
     {
+      "bulk": true,
+      "color": "BLANCO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1787088108725_vvtz6",
-      "ts": 1787088108725,
-      "user": "John Rodriguez",
-      "tipo": "estado_ot",
+      "motivo": "EENTREGADO",
       "op_id": "OP-0022",
       "op_nombre": "CHALECO PUFFY",
       "referencia": "CHALECO PUFFY",
-      "color": "BLANCO",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1787088108725,
       "uds": 70,
-      "motivo": "EENTREGADO"
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787088192258_sledc",
+      "ts": 1787088192258,
+      "user": "John Rodriguez",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1785256131194_9uceu48t1",
+      "op_id": "OP-0034",
+      "color": "NEGRO",
+      "fecha_nueva": "2026-08-28",
+      "motivo": "Reubicado en tablero"
     }
   ]
 }
