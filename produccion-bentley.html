@@ -2503,7 +2503,7 @@ function renderPage(page){
   else if(page==='costos_mo') el.innerHTML = renderCostosMO();
   else if(page==='costeo') el.innerHTML = renderCosteo();
   else if(page==='simulador'){ try{ el.innerHTML = renderSimulador(); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar el Simulador</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[Simulador]', e); } }
-  else if(page==='planconf'){ try{ el.innerHTML = renderPlaneacionConfeccion(); if(_pconfBusq) setTimeout(_pconfFiltrarBusq, 0); if(_pconfBusqSat) setTimeout(_pconfFiltrarSat, 0); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar Planeación de Confección</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[PlanConf]', e); } }
+  else if(page==='planconf'){ try{ el.innerHTML = renderPlaneacionConfeccion(); document.querySelectorAll('.pconf-scroll').forEach(function(sc){ sc.scrollTop=0; }); if(_pconfBusq) setTimeout(_pconfFiltrarBusq, 0); if(_pconfBusqSat) setTimeout(_pconfFiltrarSat, 0); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar Planeación de Confección</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[PlanConf]', e); } }
   else if(page==='monitoreo'){ try{ el.innerHTML = renderMonitoreo(); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar Monitoreo de Producción</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[Monitoreo]', e); } }
   else if(page==='cronograma') el.innerHTML = renderCronograma();
   else if(page==='bitacora') el.innerHTML = renderBitacora();
@@ -3135,7 +3135,7 @@ function _pconfUnitCard(u, opts){
   var dragAttrs = opts.draggable ? ' draggable="true" ondragstart="pconfDragStart(event,\''+esc(u.key)+'\')" ondragend="pconfDragEnd()"' : '';
   var dragStyle = opts.draggable ? 'cursor:grab;user-select:none;-webkit-user-drag:element;' : '';
   var refTxt = (fmtOpId(u.op.id)+' '+(u.op.nombre_producto||'')+' '+(u.color||'')+' '+(u.op.categoria||'')).toUpperCase();
-  var h = '<div data-pconf-card="'+esc(u.key)+'" data-pconf-ref="'+esc(refTxt)+'"'+dragAttrs+' style="background:#141820;border:1px solid '+(opts.draggable?'rgba(52,211,153,.35)':'#2c2c2e')+';border-radius:9px;padding:8px 10px;width:100%;min-width:0;box-sizing:border-box;'+dragStyle+'">';
+  var h = '<div data-pconf-card="'+esc(u.key)+'" data-pconf-ref="'+esc(refTxt)+'"'+dragAttrs+' style="background:#141820;border:1px solid '+(opts.draggable?'rgba(52,211,153,.35)':'#2c2c2e')+';border-radius:9px;padding:8px 10px;width:100%;min-width:0;box-sizing:border-box;scroll-snap-align:start;'+dragStyle+'">';
   h += '<div style="display:flex;align-items:center;gap:5px;margin-bottom:3px;">';
   if(opts.pos!=null) h += '<span style="font-size:10px;font-weight:900;color:#64748b;flex-shrink:0;">'+opts.pos+'.</span>';
   if(opts.draggable) h += '<span style="font-size:9px;color:#34d399;flex-shrink:0;" title="Arrastra a un satélite">⠿</span>';
@@ -3391,10 +3391,10 @@ function renderPlaneacionConfeccion(){
       });
       h += '<details open style="background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.2);border-radius:8px;overflow:hidden;">';
       h += '<summary style="display:flex;align-items:center;gap:6px;padding:6px 10px;cursor:pointer;list-style:none;font-size:10px;font-weight:700;color:#fbbf24;">🏭 Ya en el taller (realidad) · '+ordenOpReal.length+' OP · '+udsReal.toLocaleString('es-CO')+' uds</summary>';
-      h += '<div style="padding:4px 8px 8px;display:flex;flex-direction:column;gap:6px;max-height:168px;overflow-y:auto;">';
+      h += '<div class="pconf-scroll" style="padding:4px 8px 8px;display:flex;flex-direction:column;gap:6px;max-height:168px;overflow-y:auto;scroll-snap-type:y proximity;">';
       ordenOpReal.forEach(function(opId){
         var g = porOpReal[opId];
-        h += '<div data-sat="'+esc(s.id)+'" data-opid="'+esc(opId)+'" onclick="verDetalleCargaSatelite(this.dataset.sat,this.dataset.opid)" style="background:#141820;border:1px solid #2c2c2e;border-radius:8px;padding:8px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:border-color .15s;" onmouseover="this.style.borderColor=\'rgba(10,132,255,.4)\'" onmouseout="this.style.borderColor=\'#2c2c2e\'">';
+        h += '<div data-sat="'+esc(s.id)+'" data-opid="'+esc(opId)+'" onclick="verDetalleCargaSatelite(this.dataset.sat,this.dataset.opid)" style="background:#141820;border:1px solid #2c2c2e;border-radius:8px;padding:8px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:border-color .15s;scroll-snap-align:start;flex-shrink:0;" onmouseover="this.style.borderColor=\'rgba(10,132,255,.4)\'" onmouseout="this.style.borderColor=\'#2c2c2e\'">';
         h += '<div style="flex:1;min-width:0;">';
         h += '<div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">';
         h += '<span style="font-size:10px;font-weight:800;color:#0a84ff;">'+esc(fmtOpId(g.op.id))+'</span>';
@@ -3411,7 +3411,7 @@ function renderPlaneacionConfeccion(){
     if(!units.length){
       h += '<div style="color:#2c2c2e;font-size:11px;padding:12px 0;text-align:center;">Sin referencias en cola</div>';
     } else {
-      h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;max-height:220px;overflow-y:auto;padding-right:2px;">';
+      h += '<div class="pconf-scroll" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;max-height:220px;overflow-y:auto;padding-right:2px;scroll-snap-type:y proximity;align-content:start;">';
       var elegiblesCount = 0;
       units.forEach(function(u,i){
         var btns = '';
