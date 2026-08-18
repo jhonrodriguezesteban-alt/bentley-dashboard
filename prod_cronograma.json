@@ -589,13 +589,14 @@
     },
     {
       "color": "BLANCO",
-      "entregado": false,
+      "entregado": true,
       "fecha_entrada": "2026-07-02",
       "id": "id_1783030889746_elg3i1tqw",
       "op_id": "OP-0022",
       "op_nombre": "CHALECO PUFFY",
       "satelite_id": "sat_08",
-      "uds": 70
+      "uds": 70,
+      "fecha_entrega_real": "2026-08-18"
     },
     {
       "color": "AZUL BEBE",
@@ -877,23 +878,22 @@
     {
       "color": "NEGRO",
       "entregado": false,
+      "fecha_compromiso": "2026-08-20",
       "fecha_entrada": "2026-07-28",
+      "fecha_inicial": "2026-08-20",
+      "historial": [
+        {
+          "at": "2026-08-18",
+          "by": "John Rodriguez",
+          "fecha_nueva": "2026-08-20",
+          "motivo": "Asignación inicial"
+        }
+      ],
       "id": "id_1785259401168_hc8f7j458",
       "op_id": "OP-0033",
       "op_nombre": "OVERSIZED CAPOTA",
       "satelite_id": "sat_13",
-      "uds": 91,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-08-20",
-          "motivo": "Asignación inicial",
-          "by": "John Rodriguez",
-          "at": "2026-08-18"
-        }
-      ],
-      "fecha_compromiso": "2026-08-20",
-      "fecha_inicial": "2026-08-20"
+      "uds": 91
     },
     {
       "color": "BEIGE",
@@ -1114,44 +1114,42 @@
     {
       "color": "BEIGE",
       "entregado": false,
+      "fecha_compromiso": "2026-08-21",
       "fecha_entrada": "2026-08-13",
+      "fecha_inicial": "2026-08-21",
+      "historial": [
+        {
+          "at": "2026-08-18",
+          "by": "John Rodriguez",
+          "fecha_nueva": "2026-08-21",
+          "motivo": "Asignación inicial"
+        }
+      ],
       "id": "id_1786656469554_hwmghd8ip",
       "op_id": "OP-2026-094",
       "op_nombre": "CONJUNTO ISABELLA",
       "satelite_id": "sat_01",
-      "uds": 5,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-08-21",
-          "motivo": "Asignación inicial",
-          "by": "John Rodriguez",
-          "at": "2026-08-18"
-        }
-      ],
-      "fecha_inicial": "2026-08-21",
-      "fecha_compromiso": "2026-08-21"
+      "uds": 5
     },
     {
       "color": "MARFIL",
       "entregado": false,
+      "fecha_compromiso": "2026-08-21",
       "fecha_entrada": "2026-08-13",
+      "fecha_inicial": "2026-08-21",
+      "historial": [
+        {
+          "at": "2026-08-18",
+          "by": "John Rodriguez",
+          "fecha_nueva": "2026-08-21",
+          "motivo": "Asignación inicial"
+        }
+      ],
       "id": "id_1786656486639_7kuk6ofiu",
       "op_id": "OP-2026-094",
       "op_nombre": "CONJUNTO ISABELLA",
       "satelite_id": "sat_01",
-      "uds": 60,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-08-21",
-          "motivo": "Asignación inicial",
-          "by": "John Rodriguez",
-          "at": "2026-08-18"
-        }
-      ],
-      "fecha_inicial": "2026-08-21",
-      "fecha_compromiso": "2026-08-21"
+      "uds": 60
     },
     {
       "color": "CAMEL",
@@ -1161,9 +1159,7 @@
       "op_id": "OP-2026-085",
       "op_nombre": "PANTALON RAVE",
       "satelite_id": "sat_01",
-      "uds": 48,
-      "historial": [],
-      "fecha_compromiso": null
+      "uds": 48
     },
     {
       "color": "MARFIL",
