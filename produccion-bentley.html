@@ -3391,7 +3391,7 @@ function renderPlaneacionConfeccion(){
       });
       h += '<details open style="background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.2);border-radius:8px;overflow:hidden;">';
       h += '<summary style="display:flex;align-items:center;gap:6px;padding:6px 10px;cursor:pointer;list-style:none;font-size:10px;font-weight:700;color:#fbbf24;">🏭 Ya en el taller (realidad) · '+ordenOpReal.length+' OP · '+udsReal.toLocaleString('es-CO')+' uds</summary>';
-      h += '<div style="padding:4px 8px 8px;display:flex;flex-direction:column;gap:6px;">';
+      h += '<div style="padding:4px 8px 8px;display:flex;flex-direction:column;gap:6px;max-height:168px;overflow-y:auto;">';
       ordenOpReal.forEach(function(opId){
         var g = porOpReal[opId];
         h += '<div data-sat="'+esc(s.id)+'" data-opid="'+esc(opId)+'" onclick="verDetalleCargaSatelite(this.dataset.sat,this.dataset.opid)" style="background:#141820;border:1px solid #2c2c2e;border-radius:8px;padding:8px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:border-color .15s;" onmouseover="this.style.borderColor=\'rgba(10,132,255,.4)\'" onmouseout="this.style.borderColor=\'#2c2c2e\'">';
@@ -3411,7 +3411,7 @@ function renderPlaneacionConfeccion(){
     if(!units.length){
       h += '<div style="color:#2c2c2e;font-size:11px;padding:12px 0;text-align:center;">Sin referencias en cola</div>';
     } else {
-      h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;">';
+      h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;max-height:220px;overflow-y:auto;padding-right:2px;">';
       var elegiblesCount = 0;
       units.forEach(function(u,i){
         var btns = '';
