@@ -3100,6 +3100,98 @@ function pconfAsignarTodoSatelite(satId){
   });
 }
 
+// Número de WhatsApp normalizado (E.164 sin '+') a partir del campo telefono del satélite.
+function _waNumero(tel){
+  var d = (tel||'').replace(/\D/g,'');
+  if(!d) return '';
+  if(d.length===10) return '57'+d; // celular colombiano sin indicativo
+  return d;
+}
+
+// Resumen completo de un satélite — lo real ya en el taller + lo planeado en cola, con
+// fechas de entrega comprometidas (Cronograma), para revisar y compartir por WhatsApp.
+function verResumenSatelite(satId){
+  var sat = getSat(satId);
+  if(!sat) return;
+  var cargaReal = _pconfCargaRealSatelite(satId);
+  var keys = (((DB.planeacion_confeccion||{}).por_satelite||{})[satId]||[]);
+  var built = _pconfPoolUnits();
+  var fullU = _pconfFullUnits(); var fullMap = {}; fullU.forEach(function(u){ fullMap[u.key]=u; });
+  var cola = keys.map(function(k){ return fullMap[k] || built.mapByKey[k]; }).filter(Boolean);
+
+  var entregasSat = (DB.cronograma||[]).filter(function(e){ return e.satelite_id===satId && !e.entregado; });
+  var conFecha = entregasSat.filter(function(e){ return e.fecha_compromiso; }).sort(function(a,b){ return a.fecha_compromiso.localeCompare(b.fecha_compromiso); });
+  var sinFecha = entregasSat.filter(function(e){ return !e.fecha_compromiso; });
+  var hoyStr = hoy();
+  var vencidas = conFecha.filter(function(e){ return e.fecha_compromiso<hoyStr; });
+
+  var udsReal = cargaReal.reduce(function(s,u){ return s+u.uds; },0);
+  var udsCola = cola.reduce(function(s,u){ return s+u.uds; },0);
+  var kanbanByK = {}; OP_KANBAN.forEach(function(c){ kanbanByK[c.k]=c; });
+
+  var h = '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">';
+  h += '<div style="flex:1;min-width:120px;background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.25);border-radius:9px;padding:9px 12px;"><div style="font-size:9px;color:#fbbf24;text-transform:uppercase;font-weight:700;">En el taller</div><div style="font-size:20px;font-weight:900;color:#fbbf24;">'+udsReal.toLocaleString('es-CO')+'<span style="font-size:9px;color:#64748b;margin-left:3px;">uds</span></div><div style="font-size:9px;color:#64748b;">'+cargaReal.length+' colores</div></div>';
+  h += '<div style="flex:1;min-width:120px;background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.25);border-radius:9px;padding:9px 12px;"><div style="font-size:9px;color:#34d399;text-transform:uppercase;font-weight:700;">En cola (plan.)</div><div style="font-size:20px;font-weight:900;color:#34d399;">'+udsCola.toLocaleString('es-CO')+'<span style="font-size:9px;color:#64748b;margin-left:3px;">uds</span></div><div style="font-size:9px;color:#64748b;">'+cola.length+' colores</div></div>';
+  h += '<div style="flex:1;min-width:120px;background:'+(vencidas.length?'rgba(239,68,68,.07)':'rgba(148,163,184,.06)')+';border:1px solid '+(vencidas.length?'rgba(239,68,68,.3)':'#2c2c2e')+';border-radius:9px;padding:9px 12px;"><div style="font-size:9px;color:'+(vencidas.length?'#ef4444':'#94a3b8')+';text-transform:uppercase;font-weight:700;">Vencidas</div><div style="font-size:20px;font-weight:900;color:'+(vencidas.length?'#ef4444':'#e2e8f0')+';">'+vencidas.length+'</div><div style="font-size:9px;color:#64748b;">sin entregar</div></div>';
+  h += '<div style="flex:1;min-width:120px;background:rgba(148,163,184,.06);border:1px solid #2c2c2e;border-radius:9px;padding:9px 12px;"><div style="font-size:9px;color:#94a3b8;text-transform:uppercase;font-weight:700;">Sin fecha</div><div style="font-size:20px;font-weight:900;color:#e2e8f0;">'+sinFecha.length+'</div><div style="font-size:9px;color:#64748b;">por comprometer</div></div>';
+  h += '</div>';
+
+  if(conFecha.length){
+    h += '<div style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">📅 Compromisos de entrega</div>';
+    h += '<div style="display:flex;flex-direction:column;gap:5px;margin-bottom:16px;max-height:220px;overflow-y:auto;">';
+    conFecha.forEach(function(e){
+      var venc = e.fecha_compromiso<hoyStr;
+      h += '<div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:'+(venc?'rgba(239,68,68,.06)':'#141820')+';border:1px solid '+(venc?'rgba(239,68,68,.3)':'#2c2c2e')+';border-radius:7px;">';
+      h += '<span style="font-size:10px;font-weight:800;color:'+(venc?'#ef4444':'#0a84ff')+';white-space:nowrap;">'+esc(fmtDate(e.fecha_compromiso))+'</span>';
+      h += '<span style="font-size:9px;font-weight:800;color:#0a84ff;">'+esc(fmtOpId(e.op_id))+'</span>';
+      h += '<span style="font-size:11px;color:#cbd5e1;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(e.op_nombre||'')+(e.color&&e.color!=='—'?' · '+esc(e.color):'')+'</span>';
+      h += '<span style="font-size:10px;font-weight:700;color:#64748b;white-space:nowrap;">'+(e.uds||0).toLocaleString('es-CO')+' uds</span>';
+      if(venc) h += '<span style="font-size:8px;font-weight:800;color:#ef4444;background:rgba(239,68,68,.15);border-radius:3px;padding:1px 5px;">VENCIDA</span>';
+      h += '</div>';
+    });
+    h += '</div>';
+  }
+
+  var listar = function(titulo, items){
+    var out = '<div style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">'+titulo+'</div>';
+    out += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px;margin-bottom:16px;">';
+    items.forEach(function(u){
+      var kb = kanbanByK[u.estado] || {label:u.estado||'', color:'#64748b'};
+      var badge = u.estado ? '<span style="font-size:8px;font-weight:700;color:'+kb.color+';background:'+kb.color+'18;border:1px solid '+kb.color+'33;border-radius:3px;padding:1px 5px;white-space:nowrap;">'+esc(kb.label)+'</span>' : '';
+      out += _pconfUnitCard(u, {badge:badge});
+    });
+    out += '</div>';
+    return out;
+  };
+  if(cargaReal.length) h += listar('🏭 Ya en el taller', cargaReal);
+  if(cola.length) h += listar('📋 En cola (planeación, aún no enlazado)', cola);
+  if(!cargaReal.length && !cola.length) h += '<div style="color:#2c2c2e;font-size:12px;padding:14px 0;text-align:center;">Este satélite no tiene nada asignado todavía</div>';
+
+  // ── Texto para compartir por WhatsApp ───────────────────────────────────────
+  var lineas = ['📋 *Resumen de producción — '+sat.nombre+'*', ''];
+  lineas.push('En el taller: '+udsReal.toLocaleString('es-CO')+' uds ('+cargaReal.length+' colores)');
+  if(cola.length) lineas.push('En cola por asignar: '+udsCola.toLocaleString('es-CO')+' uds ('+cola.length+' colores)');
+  if(conFecha.length){
+    lineas.push('');
+    lineas.push('Fechas de entrega comprometidas:');
+    conFecha.slice(0,15).forEach(function(e){
+      var venc = e.fecha_compromiso<hoyStr;
+      lineas.push('• '+fmtDate(e.fecha_compromiso)+' — '+fmtOpId(e.op_id)+' '+(e.op_nombre||'')+(e.color&&e.color!=='—'?' ('+e.color+')':'')+' · '+(e.uds||0)+' uds'+(venc?' ⚠ VENCIDA':''));
+    });
+    if(conFecha.length>15) lineas.push('… y '+(conFecha.length-15)+' más');
+  }
+  if(vencidas.length) lineas.push('', '⚠ '+vencidas.length+' entrega(s) vencida(s) sin confirmar');
+  var texto = lineas.join('\n');
+  var waNum = _waNumero(sat.telefono);
+  var waUrl = 'https://wa.me/'+(waNum||'')+'?text='+encodeURIComponent(texto);
+
+  var footer = '';
+  if(waNum) footer += '<a href="'+waUrl+'" target="_blank" rel="noopener" style="text-decoration:none;background:#25D366;color:#0a0d14;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:800;display:inline-flex;align-items:center;gap:6px;">💬 Enviar resumen por WhatsApp</a>';
+  else footer += '<span style="font-size:11px;color:#f59e0b;">⚠ Este satélite no tiene teléfono registrado — agrégalo en Satélites → '+esc(sat.nombre)+' para poder compartir por WhatsApp.</span>';
+
+  openModal('🧑‍🏭 '+esc(sat.nombre)+' — Resumen de producción', h, footer, {wide:true});
+}
+
 // Detalle de una OP consolidada dentro de "Ya en el taller (realidad)" — abre modal
 // con el desglose real por color (estado, uds, fecha de entrega si ya la tiene).
 function verDetalleCargaSatelite(satId, opId){
@@ -3375,7 +3467,7 @@ function renderPlaneacionConfeccion(){
     var udsReal = cargaReal.reduce(function(sum,u){ return sum+u.uds; },0);
     h += '<div data-pconf-dz="'+esc(s.id)+'" data-pconf-sat-name="'+esc((s.nombre||'').toUpperCase())+'" class="pconf-dz" ondragover="pconfDragOver(event,\''+esc(s.id)+'\')" ondrop="pconfDrop(event,\''+esc(s.id)+'\')" style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;">';
     h += '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">';
-    h += '<div style="font-size:12px;font-weight:800;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0;">🧑‍🏭 '+esc(s.nombre)+'</div>';
+    h += '<div data-sat="'+esc(s.id)+'" onclick="verResumenSatelite(this.dataset.sat)" style="font-size:12px;font-weight:800;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0;cursor:pointer;" onmouseover="this.style.textDecoration=\'underline\'" onmouseout="this.style.textDecoration=\'none\'" title="Ver resumen completo y compartir por WhatsApp">🧑‍🏭 '+esc(s.nombre)+'</div>';
     h += '<div style="text-align:right;flex-shrink:0;">';
     h += '<div style="font-size:16px;font-weight:900;color:'+(units.length?'#34d399':'#334155')+';line-height:1;">'+udsCola.toLocaleString('es-CO')+'<span style="font-size:9px;font-weight:700;color:#64748b;margin-left:2px;">uds</span></div>';
     h += '<div style="font-size:9px;color:#64748b;white-space:nowrap;">'+units.length+' ref. en cola</div>';
