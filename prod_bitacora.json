@@ -7912,20 +7912,30 @@
       "user": "John Rodriguez"
     },
     {
+      "bulk": true,
+      "color": "VERDE MILITAR",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1787062704146_dvz7t",
-      "ts": 1787062704146,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-0033",
       "op_nombre": "OVERSIZED CAPOTA",
       "referencia": "OVERSIZED CAPOTA",
-      "color": "VERDE MILITAR",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1787062704146,
       "uds": 72,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787068978258_o64dq",
+      "ts": 1787068978258,
+      "user": "John Rodriguez",
+      "tipo": "cambiar_estado_op_all",
+      "op_id": "OP-2026-104",
+      "estado": "POR_REVISAR",
+      "colores": 2,
+      "nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS"
     }
   ]
 }
