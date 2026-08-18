@@ -3222,7 +3222,12 @@ function renderPlaneacionConfeccion(){
 
   var kanbanByK = {}; OP_KANBAN.forEach(function(c){ kanbanByK[c.k]=c; });
 
-  var full = _pconfFullUnits().map(function(u){ u.mes = assignedSet[u.key]||''; return u; });
+  // Universo COMPLETO sin filtrar por mes — necesario para poder resolver una referencia
+  // que ya está en la cola de un satélite aunque esta vista esté filtrada a otro mes.
+  var fullAll = _pconfFullUnits().map(function(u){ u.mes = assignedSet[u.key]||''; return u; });
+  var fullMapByKey = {}; fullAll.forEach(function(u){ fullMapByKey[u.key]=u; });
+
+  var full = fullAll;
   if(_pconfFiltroMes){
     if(_pconfFiltroMes==='sin_mes') full = full.filter(function(u){ return !u.mes; });
     else full = full.filter(function(u){ return u.mes===_pconfFiltroMes; });
@@ -3295,8 +3300,10 @@ function renderPlaneacionConfeccion(){
         h += '</summary>';
         h += '<div style="padding:6px 0 2px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;">';
         units.forEach(function(u){
-          var accionable = puedeEditar && mapByKey[u.key]; // solo lo ya cortado y sin taller se puede arrastrar
-          h += _pconfUnitCard(u, {draggable:accionable});
+          // Se puede arrastrar a un satélite en cualquier estado del Kanban — sirve para
+          // planear con anticipación. Solo el botón "✅ Asignar a producción" exige que ya
+          // esté cortado de verdad (eso lo valida _pconfAplicarAsignacion más abajo).
+          h += _pconfUnitCard(u, {draggable:puedeEditar});
         });
         h += '</div></details>';
       });
@@ -3309,8 +3316,10 @@ function renderPlaneacionConfeccion(){
   var satelites = (DB.satelites||[]).filter(function(s){ return s.activo; });
   h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;">';
   satelites.forEach(function(s){
-    var keys = (porSat[s.id]||[]).filter(function(k){ return mapByKey[k]; }); // limpia claves ya asignadas/obsoletas
-    var units = keys.map(function(k){ return mapByKey[k]; });
+    // Resuelve contra el universo completo (cualquier estado) — limpia solo lo que ya
+    // no existe en absoluto (OP archivada, color entregado del todo, etc.)
+    var keys = (porSat[s.id]||[]).filter(function(k){ return fullMapByKey[k] || mapByKey[k]; });
+    var units = keys.map(function(k){ return fullMapByKey[k] || mapByKey[k]; });
     var udsCola = units.reduce(function(sum,u){ return sum+u.uds; },0);
     var cargaReal = _pconfCargaRealSatelite(s.id);
     var udsReal = cargaReal.reduce(function(sum,u){ return sum+u.uds; },0);
@@ -3350,19 +3359,27 @@ function renderPlaneacionConfeccion(){
       h += '<div style="color:#2c2c2e;font-size:11px;padding:12px 0;text-align:center;">Sin referencias en cola</div>';
     } else {
       h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;">';
+      var elegiblesCount = 0;
       units.forEach(function(u,i){
         var btns = '';
+        var yaCortado = !!mapByKey[u.key]; // solo lo que ya está en Corte por Alistar sin taller se puede enlazar de verdad
+        if(yaCortado) elegiblesCount++;
         if(puedeEditar){
           btns += '<button data-sat="'+esc(s.id)+'" data-key="'+esc(u.key)+'" onclick="pconfMover(this.dataset.sat,this.dataset.key,-1)" '+(i===0?'disabled':'')+' style="background:none;border:none;color:'+(i===0?'#334155':'#94a3b8')+';font-size:12px;cursor:'+(i===0?'default':'pointer')+';padding:2px 3px;" title="Subir">▲</button>';
           btns += '<button data-sat="'+esc(s.id)+'" data-key="'+esc(u.key)+'" onclick="pconfMover(this.dataset.sat,this.dataset.key,1)" '+(i===units.length-1?'disabled':'')+' style="background:none;border:none;color:'+(i===units.length-1?'#334155':'#94a3b8')+';font-size:12px;cursor:'+(i===units.length-1?'default':'pointer')+';padding:2px 3px;" title="Bajar">▼</button>';
           btns += '<button data-key="'+esc(u.key)+'" onclick="pconfQuitarDeCola(this.dataset.key)" style="background:none;border:none;color:#f87171;font-size:11px;cursor:pointer;padding:2px 3px;" title="Quitar de la cola">✕</button>';
-          btns += '<button data-key="'+esc(u.key)+'" data-sat="'+esc(s.id)+'" onclick="pconfAsignarProduccion(this.dataset.key,this.dataset.sat)" style="background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.4);color:#34d399;border-radius:5px;padding:3px 8px;cursor:pointer;font-size:10px;font-weight:700;white-space:nowrap;" title="Enlazar con el Kanban de producción">✅ Asignar</button>';
+          if(yaCortado){
+            btns += '<button data-key="'+esc(u.key)+'" data-sat="'+esc(s.id)+'" onclick="pconfAsignarProduccion(this.dataset.key,this.dataset.sat)" style="background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.4);color:#34d399;border-radius:5px;padding:3px 8px;cursor:pointer;font-size:10px;font-weight:700;white-space:nowrap;" title="Enlazar con el Kanban de producción">✅ Asignar</button>';
+          } else {
+            var kb = kanbanByK[u.estado] || {label:u.estado, color:'#64748b'};
+            btns += '<span style="font-size:9px;color:'+kb.color+';white-space:nowrap;" title="Todavía no se puede enlazar a producción — falta cortar">⏳ '+esc(kb.label)+'</span>';
+          }
         }
         h += _pconfUnitCard(u, {pos:i+1, buttons:btns});
       });
       h += '</div>';
-      if(puedeEditar && units.length>1){
-        h += '<button data-sat="'+esc(s.id)+'" onclick="pconfAsignarTodoSatelite(this.dataset.sat)" style="margin-top:2px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.3);color:#34d399;border-radius:7px;padding:6px 10px;cursor:pointer;font-size:11px;font-weight:700;">✅ Asignar todo a producción ('+units.length+')</button>';
+      if(puedeEditar && elegiblesCount>1){
+        h += '<button data-sat="'+esc(s.id)+'" onclick="pconfAsignarTodoSatelite(this.dataset.sat)" style="margin-top:2px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.3);color:#34d399;border-radius:7px;padding:6px 10px;cursor:pointer;font-size:11px;font-weight:700;">✅ Asignar todo a producción ('+elegiblesCount+')</button>';
       }
     }
     h += '</div>';
