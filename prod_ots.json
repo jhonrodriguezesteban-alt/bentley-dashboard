@@ -72603,7 +72603,7 @@
       "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "CORTE_POR_ALISTAR",
+      "estado": "ENTREGADO",
       "nt_corte_satelite": null,
       "nt_ingreso_planta": null,
       "op_effi": null,
@@ -72614,6 +72614,11 @@
         {
           "fecha": "2026-08-18T16:03:27.014Z",
           "accion": "Taller asignado: MARILUZ TEJIDOS",
+          "user": "John Rodriguez"
+        },
+        {
+          "fecha": "2026-08-18T16:04:59.615Z",
+          "accion": "Estado cambiado: CORTE_POR_ALISTAR → ENTREGADO. Motivo: se recibe todo el corte",
           "user": "John Rodriguez"
         }
       ],
