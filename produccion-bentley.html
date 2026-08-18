@@ -12000,6 +12000,8 @@ function renderSimulador(){
 function setSimFiltroMarca(m){ _simFiltroMarca=m; renderPage('simulador'); }
 function setOpCatFiltro(cat){ _opCatFiltro = cat; renderPage('ops'); }
 
+var _prodActDetalle = null; // {byEstado, byCat} — cacheado para el drill-down por categoría
+
 function mostrarDetalleProduccionActiva(){
   var ops = DB.ops.filter(function(op){ return op.estado_op !== 'ARCHIVADO' && op.estado_op !== 'PAGO_PENDIENTE'; });
   var otsXop = {};
@@ -12009,7 +12011,8 @@ function mostrarDetalleProduccionActiva(){
   var byEstado = {};
   OP_KANBAN.forEach(function(col){ byEstado[col.k] = []; });
 
-  // Por categoría
+  // Por categoría — guarda tanto el conteo por estado como la lista real de items,
+  // para poder abrir el detalle exacto al hacer clic.
   var byCat = {};
 
   ops.forEach(function(op){
@@ -12028,13 +12031,16 @@ function mostrarDetalleProduccionActiva(){
       if(estado === 'ARCHIVADO') return;
       var uds = otsColor.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
       var udsEnt = otsColor.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+((o.unidades_entregadas||0)>0?o.unidades_entregadas:(o.cantidad||0)); }, 0);
-      if(byEstado[estado]) byEstado[estado].push({op:op, color:color, uds:uds, udsEnt:udsEnt});
+      var item = {op:op, color:color, uds:uds, udsEnt:udsEnt, estado:estado};
+      if(byEstado[estado]) byEstado[estado].push(item);
       var cat = op.categoria || 'Sin Cat.';
-      if(!byCat[cat]) byCat[cat] = {};
-      if(!byCat[cat][estado]) byCat[cat][estado] = 0;
-      byCat[cat][estado]++;
+      if(!byCat[cat]) byCat[cat] = {porEstado:{}, items:[]};
+      byCat[cat].porEstado[estado] = (byCat[cat].porEstado[estado]||0)+1;
+      byCat[cat].items.push(item);
     });
   });
+
+  _prodActDetalle = {byEstado:byEstado, byCat:byCat};
 
   var h = '<div style="display:flex;gap:20px;flex-wrap:wrap;">';
 
@@ -12054,24 +12060,22 @@ function mostrarDetalleProduccionActiva(){
   });
   h += '</div>';
 
-  // Por categoría
+  // Por categoría — cada tarjeta es clickable → abre el detalle exacto de sus items
   h += '<div style="flex:1;min-width:220px;">';
-  h += '<div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px;">Por categoría</div>';
+  h += '<div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px;">Por categoría <span style="text-transform:none;font-weight:400;color:#334155;">— clic para ver el detalle</span></div>';
   var cats = Object.keys(byCat).sort(function(a,b){
-    var ta = Object.values(byCat[a]).reduce(function(x,v){ return x+v; },0);
-    var tb = Object.values(byCat[b]).reduce(function(x,v){ return x+v; },0);
-    return tb-ta;
+    return byCat[b].items.length - byCat[a].items.length;
   });
   cats.forEach(function(cat){
-    var total = Object.values(byCat[cat]).reduce(function(a,v){ return a+v; }, 0);
-    h += '<div style="padding:8px 12px;background:rgba(255,255,255,.02);border:1px solid #2c2c2e;border-radius:8px;margin-bottom:6px;">';
+    var total = byCat[cat].items.length;
+    h += '<div data-cat="'+esc(cat)+'" onclick="verDetalleCategoriaActiva(this.dataset.cat)" style="padding:8px 12px;background:rgba(255,255,255,.02);border:1px solid #2c2c2e;border-radius:8px;margin-bottom:6px;cursor:pointer;transition:background .15s,border-color .15s;" onmouseover="this.style.background=\'rgba(10,132,255,.05)\';this.style.borderColor=\'rgba(10,132,255,.3)\'" onmouseout="this.style.background=\'rgba(255,255,255,.02)\';this.style.borderColor=\'#2c2c2e\'">';
     h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">';
     h += '<span style="font-size:12px;font-weight:700;color:#e2e8f0;">'+esc(cat)+'</span>';
-    h += '<span style="font-size:20px;font-family:\'Bebas Neue\',sans-serif;color:#e2e8f0;">'+total+'</span>';
+    h += '<span style="display:flex;align-items:center;gap:6px;"><span style="font-size:20px;font-family:\'Bebas Neue\',sans-serif;color:#e2e8f0;">'+total+'</span><span style="font-size:11px;color:#334155;">›</span></span>';
     h += '</div>';
     h += '<div style="display:flex;gap:6px;flex-wrap:wrap;">';
     OP_KANBAN.forEach(function(col){
-      var cnt = byCat[cat][col.k]||0;
+      var cnt = byCat[cat].porEstado[col.k]||0;
       if(!cnt) return;
       h += '<span style="font-size:9px;font-weight:700;color:'+col.color+';background:'+col.color+'18;border:1px solid '+col.color+'33;border-radius:4px;padding:1px 6px;">'+col.label.split(' ')[0]+' '+cnt+'</span>';
     });
@@ -12080,7 +12084,41 @@ function mostrarDetalleProduccionActiva(){
   h += '</div>';
   h += '</div>';
 
-  openDrawer('Producción Activa · Detalle', h, '');
+  openModal('📦 Producción Activa · Detalle', h, '', {wide:true});
+}
+
+function verDetalleCategoriaActiva(cat){
+  if(!_prodActDetalle || !_prodActDetalle.byCat[cat]) return;
+  var items = _prodActDetalle.byCat[cat].items.slice().sort(function(a,b){
+    return (a.op.nombre_producto||'').localeCompare(b.op.nombre_producto||'','es') || (a.color||'').localeCompare(b.color||'','es');
+  });
+  var totalUds = items.reduce(function(a,i){ return a+i.uds; }, 0);
+  var colByEstado = {}; OP_KANBAN.forEach(function(col){ colByEstado[col.k]=col; });
+
+  var h = '<button onclick="mostrarDetalleProduccionActiva()" style="background:rgba(255,255,255,.04);border:1px solid #2c2c2e;color:#94a3b8;border-radius:7px;padding:6px 12px;cursor:pointer;font-size:11px;font-weight:600;margin-bottom:14px;">← Volver al resumen</button>';
+  h += '<div style="font-size:11px;color:#64748b;margin-bottom:12px;">'+items.length+' referencia'+(items.length!==1?'s':'')+' · '+totalUds.toLocaleString('es-CO')+' uds</div>';
+  h += '<div style="overflow-x:auto;border-radius:10px;border:1px solid #2c2c2e;">';
+  h += '<table style="width:100%;border-collapse:collapse;font-size:12px;">';
+  h += '<thead><tr style="background:rgba(255,255,255,.04);">';
+  h += '<th style="text-align:left;padding:8px 12px;color:#64748b;font-weight:700;text-transform:uppercase;font-size:10px;">Referencia</th>';
+  h += '<th style="text-align:left;padding:8px 12px;color:#64748b;font-weight:700;text-transform:uppercase;font-size:10px;">Color</th>';
+  h += '<th style="text-align:left;padding:8px 12px;color:#64748b;font-weight:700;text-transform:uppercase;font-size:10px;">Estado</th>';
+  h += '<th style="text-align:center;padding:8px 12px;color:#64748b;font-weight:700;text-transform:uppercase;font-size:10px;">Uds</th>';
+  h += '<th style="text-align:left;padding:8px 12px;color:#64748b;font-weight:700;text-transform:uppercase;font-size:10px;">OP</th>';
+  h += '</tr></thead><tbody>';
+  items.forEach(function(it,i){
+    var col = colByEstado[it.estado] || {label:it.estado, color:'#64748b'};
+    h += '<tr style="border-top:1px solid rgba(255,255,255,.04);background:'+(i%2===0?'transparent':'rgba(255,255,255,.015)')+';">';
+    h += '<td style="padding:7px 12px;color:#e2e8f0;font-weight:600;">'+esc(it.op.nombre_producto||it.op.id)+'</td>';
+    h += '<td style="padding:7px 12px;"><span style="background:rgba(10,132,255,.08);border:1px solid rgba(10,132,255,.2);border-radius:4px;padding:2px 8px;color:#e2e8f0;font-weight:600;font-size:11px;white-space:nowrap;">'+esc(it.color)+'</span></td>';
+    h += '<td style="padding:7px 12px;"><span style="font-size:10px;font-weight:700;color:'+col.color+';background:'+col.color+'18;border:1px solid '+col.color+'33;border-radius:4px;padding:2px 7px;">'+esc(col.label)+'</span></td>';
+    h += '<td style="padding:7px 12px;text-align:center;font-weight:700;color:#fbbf24;">'+it.uds.toLocaleString('es-CO')+(it.udsEnt?'<div style="font-size:9px;font-weight:400;color:#34d399;">'+it.udsEnt.toLocaleString('es-CO')+' entreg.</div>':'')+'</td>';
+    h += '<td style="padding:7px 12px;"><span data-opid="'+it.op.id+'" onclick="closeModal();navTo(\'ops\');setTimeout(function(){verDetalleOP(this.dataset.opid);}.bind(this),100)" style="color:var(--cyan);cursor:pointer;font-size:11px;font-weight:700;">'+esc(fmtOpId(it.op.id))+'</span></td>';
+    h += '</tr>';
+  });
+  h += '</tbody></table></div>';
+
+  openModal('📦 '+esc(cat)+' · Detalle', h, '', {wide:true});
 }
 
 async function pasarOPAPago(opId, color){
