@@ -3375,8 +3375,15 @@ function renderPlaneacionConfeccion(){
   h += '<div style="font-size:11px;color:#475569;margin-bottom:14px;">Filtra por el mes que ya cuadraste en <b style="color:#94a3b8;">Planeación</b> (corte) y mira exactamente en qué punto del Kanban va cada referencia/color. Cuadra el taller y el orden de confección — esto NO cambia nada en producción hasta que le des <b style="color:#34d399;">✅ Asignar a producción</b>.</div>';
 
   // ── Contador general: cuánto ya se organizó (asignado a un satélite) vs. cuánto falta ──
+  // Respeta el mismo filtro de mes que el resto del tablero.
   var asignadasKeys = Object.keys(yaAsignadasSet);
   var asignadasUnits = asignadasKeys.map(function(k){ return fullMapByKey[k]; }).filter(Boolean);
+  if(_pconfFiltroMes){
+    asignadasUnits = asignadasUnits.filter(function(u){
+      var m = assignedSet[u.key]||'';
+      return _pconfFiltroMes==='sin_mes' ? !m : m===_pconfFiltroMes;
+    });
+  }
   var udsAsignadas = asignadasUnits.reduce(function(s,u){ return s+u.uds; },0);
   var listasParaProduccion = asignadasUnits.filter(function(u){ return mapByKey[u.key]; }).length;
   var udsPendientes = full.reduce(function(s,u){ return s+u.uds; },0);
@@ -3456,16 +3463,26 @@ function renderPlaneacionConfeccion(){
   h += '<input type="text" value="'+esc(_pconfBusqSat)+'" oninput="_pconfBusqSat=this.value;_pconfFiltrarSat()" placeholder="Buscar satélite..." style="background:#0d1117;border:1px solid #2c2c2e;border-radius:6px;color:var(--text);padding:6px 10px 6px 28px;font-size:12px;width:200px;outline:none;">';
   h += '</div>';
   h += '</div>';
-  h += '<div id="pconf-sat-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;">';
+  h += '<div id="pconf-sat-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;align-items:start;">';
   satelites.forEach(function(s){
     // Resuelve contra el universo completo (cualquier estado) — limpia solo lo que ya
     // no existe en absoluto (OP archivada, color entregado del todo, etc.)
     var keys = (porSat[s.id]||[]).filter(function(k){ return fullMapByKey[k] || mapByKey[k]; });
     var units = keys.map(function(k){ return fullMapByKey[k] || mapByKey[k]; });
-    var udsCola = units.reduce(function(sum,u){ return sum+u.uds; },0);
     var cargaReal = _pconfCargaRealSatelite(s.id);
+    // Mismo filtro de mes que arriba — aplicado tanto a la cola de planeación como a lo
+    // que ya está en el taller, para poder revisar por mes todo lo programado.
+    if(_pconfFiltroMes){
+      var filtroMesFn = function(u){
+        var m = assignedSet[u.key]||'';
+        return _pconfFiltroMes==='sin_mes' ? !m : m===_pconfFiltroMes;
+      };
+      units = units.filter(filtroMesFn);
+      cargaReal = cargaReal.filter(filtroMesFn);
+    }
+    var udsCola = units.reduce(function(sum,u){ return sum+u.uds; },0);
     var udsReal = cargaReal.reduce(function(sum,u){ return sum+u.uds; },0);
-    h += '<div data-pconf-dz="'+esc(s.id)+'" data-pconf-sat-name="'+esc((s.nombre||'').toUpperCase())+'" class="pconf-dz" ondragover="pconfDragOver(event,\''+esc(s.id)+'\')" ondrop="pconfDrop(event,\''+esc(s.id)+'\')" style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;">';
+    h += '<div data-pconf-dz="'+esc(s.id)+'" data-pconf-sat-name="'+esc((s.nombre||'').toUpperCase())+'" class="pconf-dz" ondragover="pconfDragOver(event,\''+esc(s.id)+'\')" ondrop="pconfDrop(event,\''+esc(s.id)+'\')" style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;align-self:start;">';
     h += '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">';
     h += '<div data-sat="'+esc(s.id)+'" onclick="verResumenSatelite(this.dataset.sat)" style="font-size:12px;font-weight:800;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0;cursor:pointer;" onmouseover="this.style.textDecoration=\'underline\'" onmouseout="this.style.textDecoration=\'none\'" title="Ver resumen completo y compartir por WhatsApp">🧑‍🏭 '+esc(s.nombre)+'</div>';
     h += '<div style="text-align:right;flex-shrink:0;">';
@@ -3481,7 +3498,7 @@ function renderPlaneacionConfeccion(){
         porOpReal[u.op.id].items.push(u);
         porOpReal[u.op.id].uds += u.uds;
       });
-      h += '<details open style="background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.2);border-radius:8px;overflow:hidden;">';
+      h += '<details open style="background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.2);border-radius:8px;overflow:hidden;flex-shrink:0;">';
       h += '<summary style="display:flex;align-items:center;gap:6px;padding:6px 10px;cursor:pointer;list-style:none;font-size:10px;font-weight:700;color:#fbbf24;">🏭 Ya en el taller (realidad) · '+ordenOpReal.length+' OP · '+udsReal.toLocaleString('es-CO')+' uds</summary>';
       h += '<div class="pconf-scroll" style="padding:4px 8px 8px;display:flex;flex-direction:column;gap:6px;max-height:168px;overflow-y:auto;scroll-snap-type:y proximity;">';
       ordenOpReal.forEach(function(opId){
@@ -3503,7 +3520,7 @@ function renderPlaneacionConfeccion(){
     if(!units.length){
       h += '<div style="color:#2c2c2e;font-size:11px;padding:12px 0;text-align:center;">Sin referencias en cola</div>';
     } else {
-      h += '<div class="pconf-scroll" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;max-height:220px;overflow-y:auto;padding-right:2px;scroll-snap-type:y proximity;align-content:start;">';
+      h += '<div class="pconf-scroll" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;max-height:220px;overflow-y:auto;padding-right:2px;scroll-snap-type:y proximity;align-content:start;flex-shrink:0;">';
       var elegiblesCount = 0;
       units.forEach(function(u,i){
         var btns = '';
@@ -4287,7 +4304,7 @@ function renderPlaneacion(){
   });
   // Sumar diseños planificados (los que tienen mes + uds asignados)
   // Fenio: uds cuentan en mes asignado, inversión se difiere a Diciembre
-  var globalDisUds=0, globalDisInv=0, globalFenioInv=0, globalDisCount=0;
+  var globalDisUds=0, globalDisInv=0, globalFenioInv=0, globalDisCount=0, globalDisMatSvc=0;
   var disPlanGlobal = (DB.planeacion && DB.planeacion.disenos_plan) || {};
   (DB.disenos||[]).filter(function(d){ return !d.eliminado && d.kanban_estado!=='LISTA_PRODUCCION'; }).forEach(function(d){
     var p = disPlanGlobal[d.id];
@@ -4297,7 +4314,7 @@ function renderPlaneacion(){
     globalDisCount++;
     if(r){
       if((d.proveedor||'').toUpperCase()==='FENIO') globalFenioInv += p.uds * r.total;
-      else globalDisInv += p.uds * r.total;
+      else { globalDisInv += p.uds * r.total; globalDisMatSvc += p.uds * (r.mat+r.svc); }
     }
   });
   var globalUdsCombinado = globalUds + globalDisUds;
@@ -4362,6 +4379,10 @@ function renderPlaneacion(){
   h += '<div style="background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.2);border-radius:7px;padding:5px 11px;display:flex;align-items:center;gap:7px;">';
   h += '<span style="font-size:9px;font-weight:700;color:#fbbf24;text-transform:uppercase;letter-spacing:.3px;">CIF</span>';
   h += '<span style="font-size:13px;font-weight:700;color:#fbbf24;">'+fmtCopFull(globalCif)+'</span>';
+  h += '</div>';
+  h += '<div style="background:rgba(148,163,184,.08);border:1px solid rgba(148,163,184,.3);border-radius:7px;padding:5px 11px;display:flex;align-items:center;gap:7px;" title="Materias Primas + Servicios — producción real más el estimado de diseños planificados (sin M.O.D. ni CIF)">';
+  h += '<span style="font-size:9px;font-weight:800;color:#e2e8f0;text-transform:uppercase;letter-spacing:.3px;">Mat.+Svc. Total</span>';
+  h += '<span style="font-size:14px;font-weight:900;color:#f1f5f9;">'+fmtCopFull(globalMatSvc+globalDisMatSvc)+'</span>';
   h += '</div>';
   h += '</div>';
   // Breakdown por categoría — ordenado de mayor a menor uds (OPs + diseños planificados)
