@@ -1175,7 +1175,7 @@ function _getHash(u){ if(_U[u]) return _U[u]; var cfg=_getCfgUsers(); return (cf
 // Devuelve nombre display
 function _getName(u){ var cfg=_getCfgUsers(); return (cfg[u]&&cfg[u].name)||_NAMES[u]||u; }
 // Módulos permitidos para un usuario (jhon = todos)
-var ALL_MODULES = ['dashboard','satelites','ops','monitoreo','entregas','cronograma','diseno','planeacion','logistica','novedades','simulador','costos_mo','costeo','bitacora'];
+var ALL_MODULES = ['dashboard','satelites','ops','monitoreo','planconf','entregas','cronograma','diseno','planeacion','logistica','novedades','simulador','costos_mo','costeo','bitacora'];
 function _getModules(u){
   if(u==='jhon') return ALL_MODULES.slice();
   var cfg=_getCfgUsers();
@@ -1304,7 +1304,8 @@ function applyModuleAccess(uid){
 }
 
 var ALL_MODULE_LABELS = {
-  dashboard:'Dashboard', satelites:'Satélites', ops:'OTs', entregas:'Entregas',
+  dashboard:'Dashboard', satelites:'Satélites', ops:'OTs', monitoreo:'Monitoreo Producción',
+  planconf:'Planeación Confección', entregas:'Entregas', cronograma:'Cronograma',
   diseno:'Diseño', planeacion:'Planeación', logistica:'Logística', novedades:'Novedades',
   simulador:'Simulador', costos_mo:'Pagos', costeo:'Costeo y Rentabilidad', bitacora:'Bitácora'
 };
