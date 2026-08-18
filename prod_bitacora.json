@@ -8087,36 +8087,47 @@
       "user": "John Rodriguez"
     },
     {
+      "bulk": false,
+      "color": "MARFIL",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1787069250021_dny7p",
-      "ts": 1787069250021,
-      "user": "John Rodriguez",
-      "tipo": "estado_ot",
+      "motivo": "SIGUE EN CONFECCION",
       "op_id": "OP-2026-104",
       "op_nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS",
       "referencia": "BUZO CEREZAS",
-      "color": "MARFIL",
       "talla": "T6",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": false,
+      "tipo": "estado_ot",
+      "ts": 1787069250021,
       "uds": 12,
-      "motivo": "SIGUE EN CONFECCION"
+      "user": "John Rodriguez"
     },
     {
+      "bulk": false,
+      "color": "MARFIL",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1787069276804_iyqnp",
-      "ts": 1787069276804,
-      "user": "John Rodriguez",
-      "tipo": "estado_ot",
+      "motivo": "SIGUE EN CONFECCION",
       "op_id": "OP-2026-104",
       "op_nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS",
       "referencia": "BUZO CEREZAS",
-      "color": "MARFIL",
       "talla": "T8",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": false,
+      "tipo": "estado_ot",
+      "ts": 1787069276804,
       "uds": 12,
-      "motivo": "SIGUE EN CONFECCION"
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787069995921_a418l",
+      "ts": 1787069995921,
+      "user": "John Rodriguez",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1783030889697_16o6y2hst",
+      "op_id": "OP-0009",
+      "color": "BEIGE",
+      "fecha_nueva": "2026-08-18",
+      "motivo": "Reubicado en tablero"
     }
   ]
 }
