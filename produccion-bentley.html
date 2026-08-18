@@ -2967,6 +2967,23 @@ function _pconfPoolUnits(){
   return {mapByKey:mapByKey, all:all, pool:pool};
 }
 
+// Carga REAL ya asignada a un satélite (lo que ya está en el taller confeccionando),
+// para que al planear se vea la realidad y no solo lo que aún falta por organizar.
+function _pconfCargaRealSatelite(satId){
+  var ESTADOS_EN_TALLER = {ASIGNADO:1, EN_CONFECCION:1, NOVEDAD:1, ALISTAMIENTO:1};
+  var map = {};
+  (DB.ots||[]).forEach(function(ot){
+    if(ot.satelite_id!==satId || !ESTADOS_EN_TALLER[ot.estado]) return;
+    var op = (DB.ops||[]).find(function(o){ return o.id===ot.op_id; });
+    if(!op) return;
+    var color = ot.color||'—';
+    var key = _planKey(op.id, color);
+    if(!map[key]) map[key] = {op:op, color:color, uds:0, key:key};
+    map[key].uds += (ot.cantidad||0);
+  });
+  return Object.keys(map).map(function(k){ return map[k]; });
+}
+
 function guardarPlaneacionConfeccion(){
   if(!DB.planeacion_confeccion) DB.planeacion_confeccion = {por_satelite:{}};
   return guardarArchivo('planeacion_confeccion', {por_satelite: DB.planeacion_confeccion.por_satelite||{}});
@@ -3088,40 +3105,77 @@ function renderPlaneacionConfeccion(){
   h += '</div></div>';
   h += '<div style="font-size:11px;color:#475569;margin-bottom:18px;">Cuadra qué taller confecciona cada referencia/color y en qué orden — esto NO cambia nada en producción hasta que le des <b style="color:#34d399;">✅ Asignar a producción</b>.</div>';
 
-  // ── Pool: colores cortados aún sin organizar ────────────────────────────────
+  // ── Pool: colores cortados aún sin organizar — agrupado por categoría, como el Kanban ──
   h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:12px;padding:12px 14px;margin-bottom:20px;">';
   h += '<div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">📦 Sin organizar · '+pool.length+' colores · '+totalUdsPool.toLocaleString('es-CO')+' uds</div>';
   if(!pool.length){
     h += '<div style="color:#2c2c2e;font-size:12px;padding:18px 0;text-align:center;">✓ No hay colores recién cortados pendientes por organizar</div>';
   } else {
     var satsSel = (DB.satelites||[]).filter(function(s){ return s.activo; });
-    h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px;">';
+    var catGroupsPool = {};
     pool.forEach(function(u){
-      var btns = '';
-      if(puedeEditar){
-        btns += '<select data-key="'+esc(u.key)+'" onchange="if(this.value)pconfAsignarASatelite(this.dataset.key,this.value)" style="background:#0d1117;border:1px solid #2c2c2e;border-radius:5px;color:#94a3b8;font-size:10px;padding:3px 4px;max-width:110px;">';
-        btns += '<option value="">→ satélite…</option>';
-        satsSel.forEach(function(s){ btns += '<option value="'+esc(s.id)+'">'+esc(s.nombre)+'</option>'; });
-        btns += '</select>';
-      }
-      h += _pconfUnitCard(u, {buttons:btns});
+      var cat = u.op.categoria || 'Sin categoría';
+      if(!catGroupsPool[cat]) catGroupsPool[cat] = [];
+      catGroupsPool[cat].push(u);
     });
-    h += '</div>';
+    var catsPool = Object.keys(catGroupsPool).sort(function(a,b){ return catGroupsPool[b].length - catGroupsPool[a].length; });
+    catsPool.forEach(function(cat, ci){
+      var units = catGroupsPool[cat];
+      var udsCat = units.reduce(function(s,u){ return s+u.uds; },0);
+      var pct = totalUdsPool ? Math.round(udsCat/totalUdsPool*100) : 0;
+      h += '<details'+(ci===0?' open':'')+' style="background:#141820;border-radius:9px;overflow:hidden;margin-bottom:8px;">';
+      h += '<summary style="display:flex;align-items:center;gap:10px;padding:9px 12px;cursor:pointer;list-style:none;">';
+      h += '<div style="flex:1;min-width:0;">';
+      h += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">';
+      h += '<span style="font-size:12px;font-weight:800;color:#e2e8f0;text-transform:uppercase;letter-spacing:.3px;">'+esc(cat)+'</span>';
+      h += '<span style="font-size:10px;color:#475569;">'+units.length+' color'+(units.length!==1?'es':'')+' · '+udsCat.toLocaleString('es-CO')+' uds · '+pct+'%</span>';
+      h += '</div>';
+      h += '<div style="height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;"><div style="height:100%;width:'+pct+'%;background:#0a84ff;"></div></div>';
+      h += '</div>';
+      h += '</summary>';
+      h += '<div style="padding:4px 10px 10px;border-top:1px solid rgba(255,255,255,.05);display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;">';
+      units.forEach(function(u){
+        var btns = '';
+        if(puedeEditar){
+          btns += '<select data-key="'+esc(u.key)+'" onchange="if(this.value)pconfAsignarASatelite(this.dataset.key,this.value)" style="background:#0d1117;border:1px solid #2c2c2e;border-radius:5px;color:#94a3b8;font-size:10px;padding:3px 4px;max-width:110px;">';
+          btns += '<option value="">→ satélite…</option>';
+          satsSel.forEach(function(s){ btns += '<option value="'+esc(s.id)+'">'+esc(s.nombre)+'</option>'; });
+          btns += '</select>';
+        }
+        h += _pconfUnitCard(u, {buttons:btns});
+      });
+      h += '</div>';
+      h += '</details>';
+    });
   }
   h += '</div>';
 
-  // ── Grid de satélites — cada uno con su cola ordenada ───────────────────────
+  // ── Grid de satélites — carga real ya en el taller + cola de planeación ─────
   var satelites = (DB.satelites||[]).filter(function(s){ return s.activo; });
   h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;">';
   satelites.forEach(function(s){
     var keys = (porSat[s.id]||[]).filter(function(k){ return mapByKey[k]; }); // limpia claves ya asignadas/obsoletas
     var units = keys.map(function(k){ return mapByKey[k]; });
     var udsCola = units.reduce(function(sum,u){ return sum+u.uds; },0);
+    var cargaReal = _pconfCargaRealSatelite(s.id);
+    var udsReal = cargaReal.reduce(function(sum,u){ return sum+u.uds; },0);
     h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;">';
     h += '<div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">';
     h += '<div style="font-size:12px;font-weight:800;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">🧑‍🏭 '+esc(s.nombre)+'</div>';
     h += '<div style="font-size:9px;color:#475569;white-space:nowrap;">'+units.length+' ref · '+udsCola.toLocaleString('es-CO')+' uds</div>';
     h += '</div>';
+    if(cargaReal.length){
+      h += '<details style="background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.2);border-radius:8px;overflow:hidden;">';
+      h += '<summary style="display:flex;align-items:center;gap:6px;padding:6px 10px;cursor:pointer;list-style:none;font-size:10px;font-weight:700;color:#fbbf24;">🏭 Ya en el taller (realidad) · '+cargaReal.length+' ref · '+udsReal.toLocaleString('es-CO')+' uds</summary>';
+      h += '<div style="padding:4px 10px 8px;display:flex;flex-direction:column;gap:4px;">';
+      cargaReal.forEach(function(u){
+        h += '<div style="display:flex;align-items:center;gap:6px;font-size:10px;color:#94a3b8;">';
+        h += '<span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(u.op.nombre_producto||u.op.id)+' <span style="color:#0a84ff;font-weight:700;">'+esc(u.color)+'</span></span>';
+        h += '<span style="color:#fbbf24;font-weight:700;white-space:nowrap;">'+u.uds.toLocaleString('es-CO')+' uds</span>';
+        h += '</div>';
+      });
+      h += '</div></details>';
+    }
     if(!units.length){
       h += '<div style="color:#2c2c2e;font-size:11px;padding:12px 0;text-align:center;">Sin referencias en cola</div>';
     } else {
