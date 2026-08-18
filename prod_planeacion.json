@@ -34,8 +34,6 @@
       "OP-2026-086||MARFIL",
       "OP-0036||BEIGE",
       "OP-0036||NEGRO",
-      "OP-2026-104||MARFIL",
-      "OP-2026-104||NEGRO",
       "OP-2026-082||NEGRO",
       "OP-2026-082||TAUPE",
       "OP-2026-082||CHOCOLATE",
@@ -135,8 +133,7 @@
       "OP-2026-089||ROSA",
       "OP-2026-089||MARFIL",
       "OP-2026-090||GRIS OSCURO"
-    ],
-    "2026-10": []
+    ]
   },
   "disenos_plan": {
     "id_130ad86fcd0f4fe3": {
@@ -533,6 +530,28 @@
       "op_id": "OP-0037",
       "op_nombre": "CHALECO ACOLCHADO MANY",
       "uds": 135
+    },
+    {
+      "key": "OP-2026-104||MARFIL",
+      "op_id": "OP-2026-104",
+      "op_nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS",
+      "categoria": "BUZOS",
+      "color": "MARFIL",
+      "uds": 176,
+      "mes_planeado": "2026-08",
+      "estado_al_salir": "EN_CONFECCION",
+      "fecha_deteccion": "2026-08-18"
+    },
+    {
+      "key": "OP-2026-104||NEGRO",
+      "op_id": "OP-2026-104",
+      "op_nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS",
+      "categoria": "BUZOS",
+      "color": "NEGRO",
+      "uds": 79,
+      "mes_planeado": "2026-08",
+      "estado_al_salir": "ALISTAMIENTO",
+      "fecha_deteccion": "2026-08-18"
     }
   ]
 }
