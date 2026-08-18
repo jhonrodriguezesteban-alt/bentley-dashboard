@@ -2503,7 +2503,7 @@ function renderPage(page){
   else if(page==='costos_mo') el.innerHTML = renderCostosMO();
   else if(page==='costeo') el.innerHTML = renderCosteo();
   else if(page==='simulador'){ try{ el.innerHTML = renderSimulador(); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar el Simulador</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[Simulador]', e); } }
-  else if(page==='planconf'){ try{ el.innerHTML = renderPlaneacionConfeccion(); if(_pconfBusq) setTimeout(_pconfFiltrarBusq, 0); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar Planeación de Confección</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[PlanConf]', e); } }
+  else if(page==='planconf'){ try{ el.innerHTML = renderPlaneacionConfeccion(); if(_pconfBusq) setTimeout(_pconfFiltrarBusq, 0); if(_pconfBusqSat) setTimeout(_pconfFiltrarSat, 0); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar Planeación de Confección</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[PlanConf]', e); } }
   else if(page==='monitoreo'){ try{ el.innerHTML = renderMonitoreo(); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar Monitoreo de Producción</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[Monitoreo]', e); } }
   else if(page==='cronograma') el.innerHTML = renderCronograma();
   else if(page==='bitacora') el.innerHTML = renderBitacora();
@@ -3173,6 +3173,16 @@ function _pconfFullUnits(){
 }
 
 var _pconfFiltroMes = '';
+var _pconfBusqSat = '';
+function _pconfFiltrarSat(){
+  var q = (_pconfBusqSat||'').trim().toUpperCase();
+  var grid = document.getElementById('pconf-sat-grid');
+  if(!grid) return;
+  grid.querySelectorAll('[data-pconf-sat-name]').forEach(function(card){
+    var match = !q || (card.dataset.pconfSatName||'').indexOf(q)>=0;
+    card.style.display = match ? '' : 'none';
+  });
+}
 var _pconfBusq = '';
 function setPconfFiltroMes(m){ _pconfFiltroMes = m; renderPage('planconf'); }
 
@@ -3236,7 +3246,12 @@ function renderPlaneacionConfeccion(){
   var yaAsignadasSet = {};
   Object.keys(porSat).forEach(function(sid){ (porSat[sid]||[]).forEach(function(k){ yaAsignadasSet[k]=sid; }); });
 
-  var full = fullAll.filter(function(u){ return !yaAsignadasSet[u.key]; });
+  // El pool de arriba es SOLO para lo que todavía no tiene taller: Nuevas programaciones,
+  // Pte. de Cortar y Corte por Alistar. En Confección/Novedad/Alistamiento ya está en un
+  // taller de verdad — eso se ve abajo en "Ya en el taller (realidad)" de cada satélite,
+  // repetirlo aquí arriba era redundante y confundía.
+  var ESTADOS_POOL = {POR_REVISAR:1, PENDIENTE_CORTAR:1, CORTE_POR_ALISTAR:1};
+  var full = fullAll.filter(function(u){ return !yaAsignadasSet[u.key] && ESTADOS_POOL[u.estado]; });
   if(_pconfFiltroMes){
     if(_pconfFiltroMes==='sin_mes') full = full.filter(function(u){ return !u.mes; });
     else full = full.filter(function(u){ return u.mes===_pconfFiltroMes; });
@@ -3342,7 +3357,14 @@ function renderPlaneacionConfeccion(){
 
   // ── Grid de satélites — carga real ya en el taller + cola de planeación ─────
   var satelites = (DB.satelites||[]).filter(function(s){ return s.activo; });
-  h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;">';
+  h += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">';
+  h += '<div style="font-size:13px;font-weight:800;color:#e2e8f0;">🧑‍🏭 Talleres</div>';
+  h += '<div style="position:relative;">';
+  h += '<span style="position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:12px;pointer-events:none;">🔍</span>';
+  h += '<input type="text" value="'+esc(_pconfBusqSat)+'" oninput="_pconfBusqSat=this.value;_pconfFiltrarSat()" placeholder="Buscar satélite..." style="background:#0d1117;border:1px solid #2c2c2e;border-radius:6px;color:var(--text);padding:6px 10px 6px 28px;font-size:12px;width:200px;outline:none;">';
+  h += '</div>';
+  h += '</div>';
+  h += '<div id="pconf-sat-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;">';
   satelites.forEach(function(s){
     // Resuelve contra el universo completo (cualquier estado) — limpia solo lo que ya
     // no existe en absoluto (OP archivada, color entregado del todo, etc.)
@@ -3351,7 +3373,7 @@ function renderPlaneacionConfeccion(){
     var udsCola = units.reduce(function(sum,u){ return sum+u.uds; },0);
     var cargaReal = _pconfCargaRealSatelite(s.id);
     var udsReal = cargaReal.reduce(function(sum,u){ return sum+u.uds; },0);
-    h += '<div data-pconf-dz="'+esc(s.id)+'" class="pconf-dz" ondragover="pconfDragOver(event,\''+esc(s.id)+'\')" ondrop="pconfDrop(event,\''+esc(s.id)+'\')" style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;">';
+    h += '<div data-pconf-dz="'+esc(s.id)+'" data-pconf-sat-name="'+esc((s.nombre||'').toUpperCase())+'" class="pconf-dz" ondragover="pconfDragOver(event,\''+esc(s.id)+'\')" ondrop="pconfDrop(event,\''+esc(s.id)+'\')" style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;">';
     h += '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">';
     h += '<div style="font-size:12px;font-weight:800;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0;">🧑‍🏭 '+esc(s.nombre)+'</div>';
     h += '<div style="text-align:right;flex-shrink:0;">';
@@ -3367,7 +3389,7 @@ function renderPlaneacionConfeccion(){
         porOpReal[u.op.id].items.push(u);
         porOpReal[u.op.id].uds += u.uds;
       });
-      h += '<details style="background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.2);border-radius:8px;overflow:hidden;">';
+      h += '<details open style="background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.2);border-radius:8px;overflow:hidden;">';
       h += '<summary style="display:flex;align-items:center;gap:6px;padding:6px 10px;cursor:pointer;list-style:none;font-size:10px;font-weight:700;color:#fbbf24;">🏭 Ya en el taller (realidad) · '+ordenOpReal.length+' OP · '+udsReal.toLocaleString('es-CO')+' uds</summary>';
       h += '<div style="padding:4px 8px 8px;display:flex;flex-direction:column;gap:6px;">';
       ordenOpReal.forEach(function(opId){
