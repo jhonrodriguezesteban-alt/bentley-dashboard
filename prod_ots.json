@@ -72359,7 +72359,7 @@
       "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "ENTREGADO",
+      "estado": "EN_CONFECCION",
       "nt_corte_satelite": null,
       "nt_ingreso_planta": null,
       "op_effi": null,
@@ -72370,6 +72370,11 @@
         {
           "fecha": "2026-08-18T16:06:07.703Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → ENTREGADO. Motivo: se recibe todo el color",
+          "user": "John Rodriguez"
+        },
+        {
+          "fecha": "2026-08-18T16:06:54.328Z",
+          "accion": "Estado cambiado: ENTREGADO → EN_CONFECCION. Motivo: sigue en confeccion",
           "user": "John Rodriguez"
         }
       ],
