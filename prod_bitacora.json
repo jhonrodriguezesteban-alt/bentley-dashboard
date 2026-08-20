@@ -9054,13 +9054,28 @@
       "user": "Jefa de Producción"
     },
     {
+      "categoria": "CHAQUETAS",
       "id": "evt_1787259903847_oczg2",
-      "ts": 1787259903847,
-      "user": "Jefa de Producción",
-      "tipo": "eliminar_op",
       "op_id": "OP-2026-114",
       "op_nombre": "BOMBON",
-      "categoria": "CHAQUETAS"
+      "tipo": "eliminar_op",
+      "ts": 1787259903847,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787260019259_zm75r",
+      "ts": 1787260019259,
+      "user": "Jefa de Producción",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-114",
+      "op_nombre": "BOMBON",
+      "categoria": "CHAQUETAS",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-08-20",
+      "total_uds": 38,
+      "referencias": [
+        "BOMBON"
+      ]
     }
   ]
 }
