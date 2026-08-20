@@ -8961,15 +8961,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1787258741057_kojdm",
-      "ts": 1787258741057,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-114",
-      "nombre": "BOMBON",
       "categoria": "CHAQUETAS",
       "colores": 6,
-      "refs": 1
+      "id": "evt_1787258741057_kojdm",
+      "nombre": "BOMBON",
+      "op_id": "OP-2026-114",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1787258741057,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787258989844_rnd59",
+      "ts": 1787258989844,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-114",
+      "op_nombre": "BOMBON",
+      "referencia": "BOMBON",
+      "color": "ROSA",
+      "talla": "T8",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": false,
+      "uds": 6,
+      "motivo": "EN TALLER"
     }
   ]
 }
