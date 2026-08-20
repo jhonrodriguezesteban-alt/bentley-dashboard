@@ -9426,23 +9426,39 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1787261422690_ngo1p",
-      "ts": 1787261422690,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-117",
-      "op_nombre": "BOMBON",
       "categoria": "CHAQUETAS",
-      "total_ots": 9,
-      "total_uds": 63,
       "colores": [
         "VERDE",
         "GRIS CLARO",
         "ROSA"
       ],
+      "id": "evt_1787261422690_ngo1p",
+      "op_id": "OP-2026-117",
+      "op_nombre": "BOMBON",
       "referencias": [
         "BOMBON"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 9,
+      "total_uds": 63,
+      "ts": 1787261422690,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787261495162_x8w03",
+      "ts": 1787261495162,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-117",
+      "op_nombre": "BOMBON",
+      "referencia": "BOMBON",
+      "color": "GRIS CLARO",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 6,
+      "motivo": "EN TALLER"
     }
   ]
 }
