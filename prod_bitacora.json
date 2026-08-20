@@ -9461,19 +9461,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "ROSA",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1787261509478_x9jgk",
+      "motivo": "EN TALLER",
+      "op_id": "OP-2026-117",
+      "op_nombre": "BOMBON",
+      "referencia": "BOMBON",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1787261509478,
+      "uds": 21,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787261759676_8jfe6",
+      "ts": 1787261759676,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-117",
       "op_nombre": "BOMBON",
       "referencia": "BOMBON",
-      "color": "ROSA",
+      "color": "VERDE",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 21,
+      "uds": 36,
       "motivo": "EN TALLER"
     }
   ]
