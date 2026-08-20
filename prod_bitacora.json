@@ -9008,16 +9008,36 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1787259285648_d09v7",
-      "ts": 1787259285648,
-      "user": "Jefa de Producción",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-114",
-      "op_nombre": "BOMBON",
       "categoria": "CHAQUETAS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-08-20",
+      "id": "evt_1787259285648_d09v7",
+      "op_id": "OP-2026-114",
+      "op_nombre": "BOMBON",
+      "referencias": [
+        "BOMBON"
+      ],
+      "tipo": "crear_op",
       "total_uds": 57,
+      "ts": 1787259285648,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787259749825_vyast",
+      "ts": 1787259749825,
+      "user": "Jefa de Producción",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-114",
+      "op_nombre": "BOMBON",
+      "categoria": "CHAQUETAS",
+      "total_ots": 12,
+      "total_uds": 57,
+      "colores": [
+        "NEGRO",
+        "LILA",
+        "ROSA",
+        "CAMEL"
+      ],
       "referencias": [
         "BOMBON"
       ]
