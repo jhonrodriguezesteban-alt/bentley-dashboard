@@ -8945,20 +8945,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1787258559386_6fhcy",
-      "ts": 1787258559386,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-114",
       "op_nombre": "BOMBON",
       "referencia": "BOMBON",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1787258559386,
       "uds": 10,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787258741057_kojdm",
+      "ts": 1787258741057,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-114",
+      "nombre": "BOMBON",
+      "categoria": "CHAQUETAS",
+      "colores": 6,
+      "refs": 1
     }
   ]
 }
