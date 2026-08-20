@@ -8860,15 +8860,7 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1787258152169_ah22r",
-      "ts": 1787258152169,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-114",
-      "op_nombre": "BOMBON",
       "categoria": "CHAQUETAS",
-      "total_ots": 10,
-      "total_uds": 66,
       "colores": [
         "NEGRO",
         "CAMEL",
@@ -8876,9 +8868,33 @@
         "AZUL BEBE",
         "LILA"
       ],
+      "id": "evt_1787258152169_ah22r",
+      "op_id": "OP-2026-114",
+      "op_nombre": "BOMBON",
       "referencias": [
         "BOMBON"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 10,
+      "total_uds": 66,
+      "ts": 1787258152169,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787258256693_mzooj",
+      "ts": 1787258256693,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-114",
+      "op_nombre": "BOMBON",
+      "referencia": "BOMBON",
+      "color": "AZUL BEBE",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 10,
+      "motivo": "EN TALLER"
     }
   ]
 }
