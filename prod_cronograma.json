@@ -63,31 +63,30 @@
     {
       "color": "VERDE MILITAR",
       "entregado": true,
+      "fecha_compromiso": "2026-08-25",
       "fecha_entrada": "2026-07-02",
+      "fecha_entrega_real": "2026-08-18",
+      "fecha_inicial": "2026-08-25",
+      "historial": [
+        {
+          "at": "2026-08-18",
+          "by": "John Rodriguez",
+          "fecha_nueva": "2026-08-25",
+          "motivo": "Asignación inicial"
+        },
+        {
+          "at": "2026-08-18",
+          "by": "John Rodriguez",
+          "fecha_anterior": "2026-08-25",
+          "fecha_nueva": "2026-08-24",
+          "motivo": "Reubicado en tablero"
+        }
+      ],
       "id": "id_1783030889586_6pn21iy1z",
       "op_id": "OP-0001",
       "op_nombre": "CHAQUETA CAZADORA",
       "satelite_id": "sat_02",
-      "uds": 13,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-08-25",
-          "motivo": "Asignación inicial",
-          "by": "John Rodriguez",
-          "at": "2026-08-18"
-        },
-        {
-          "fecha_anterior": "2026-08-25",
-          "fecha_nueva": "2026-08-24",
-          "motivo": "Reubicado en tablero",
-          "by": "John Rodriguez",
-          "at": "2026-08-18"
-        }
-      ],
-      "fecha_inicial": "2026-08-25",
-      "fecha_compromiso": "2026-08-25",
-      "fecha_entrega_real": "2026-08-18"
+      "uds": 13
     },
     {
       "color": "SALMON",
@@ -610,12 +609,12 @@
       "color": "BLANCO",
       "entregado": true,
       "fecha_entrada": "2026-07-02",
+      "fecha_entrega_real": "2026-08-18",
       "id": "id_1783030889746_elg3i1tqw",
       "op_id": "OP-0022",
       "op_nombre": "CHALECO PUFFY",
       "satelite_id": "sat_08",
-      "uds": 70,
-      "fecha_entrega_real": "2026-08-18"
+      "uds": 70
     },
     {
       "color": "AZUL BEBE",
@@ -642,23 +641,22 @@
     {
       "color": "VINOTINTO",
       "entregado": false,
+      "fecha_compromiso": "2026-08-21",
       "fecha_entrada": "2026-07-02",
+      "fecha_inicial": "2026-08-21",
+      "historial": [
+        {
+          "at": "2026-08-18",
+          "by": "John Rodriguez",
+          "fecha_nueva": "2026-08-21",
+          "motivo": "Asignación inicial"
+        }
+      ],
       "id": "id_1783030889760_vip1wc2ak",
       "op_id": "OP-0048",
       "op_nombre": "CONJUNTO MANCHESTER",
       "satelite_id": "sat_12",
-      "uds": 36,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-08-21",
-          "motivo": "Asignación inicial",
-          "by": "John Rodriguez",
-          "at": "2026-08-18"
-        }
-      ],
-      "fecha_inicial": "2026-08-21",
-      "fecha_compromiso": "2026-08-21"
+      "uds": 36
     },
     {
       "color": "MARFIL",
@@ -685,23 +683,22 @@
     {
       "color": "ROSA",
       "entregado": false,
+      "fecha_compromiso": "2026-08-19",
       "fecha_entrada": "2026-07-02",
+      "fecha_inicial": "2026-08-19",
+      "historial": [
+        {
+          "at": "2026-08-18",
+          "by": "John Rodriguez",
+          "fecha_nueva": "2026-08-19",
+          "motivo": "Asignación inicial"
+        }
+      ],
       "id": "id_1783030889773_fl2xjdrbg",
       "op_id": "OP-0054",
       "op_nombre": "BEISBOLERA 2.0",
       "satelite_id": "sat_14",
-      "uds": 70,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-08-19",
-          "motivo": "Asignación inicial",
-          "by": "John Rodriguez",
-          "at": "2026-08-18"
-        }
-      ],
-      "fecha_inicial": "2026-08-19",
-      "fecha_compromiso": "2026-08-19"
+      "uds": 70
     },
     {
       "color": "AZUL OSCURO",
@@ -808,30 +805,29 @@
     {
       "color": "LILA",
       "entregado": false,
+      "fecha_compromiso": "2026-08-24",
       "fecha_entrada": "2026-07-25",
+      "fecha_inicial": "2026-08-25",
+      "historial": [
+        {
+          "at": "2026-08-18",
+          "by": "John Rodriguez",
+          "fecha_nueva": "2026-08-25",
+          "motivo": "Asignación inicial"
+        },
+        {
+          "at": "2026-08-18",
+          "by": "John Rodriguez",
+          "fecha_anterior": "2026-08-25",
+          "fecha_nueva": "2026-08-24",
+          "motivo": "Reubicado en tablero"
+        }
+      ],
       "id": "id_1784988349782_1v690x4fx",
       "op_id": "OP-0038",
       "op_nombre": "CHAQUETA CAZADORA",
       "satelite_id": "sat_05",
-      "uds": 104,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-08-25",
-          "motivo": "Asignación inicial",
-          "by": "John Rodriguez",
-          "at": "2026-08-18"
-        },
-        {
-          "fecha_anterior": "2026-08-25",
-          "fecha_nueva": "2026-08-24",
-          "motivo": "Reubicado en tablero",
-          "by": "John Rodriguez",
-          "at": "2026-08-18"
-        }
-      ],
-      "fecha_inicial": "2026-08-25",
-      "fecha_compromiso": "2026-08-24"
+      "uds": 104
     },
     {
       "color": "ROJO",
@@ -857,23 +853,22 @@
     {
       "color": "VERDE MILITAR",
       "entregado": false,
+      "fecha_compromiso": "2026-08-24",
       "fecha_entrada": "2026-07-25",
+      "fecha_inicial": "2026-08-24",
+      "historial": [
+        {
+          "at": "2026-08-18",
+          "by": "John Rodriguez",
+          "fecha_nueva": "2026-08-24",
+          "motivo": "Asignación inicial"
+        }
+      ],
       "id": "id_1784988410480_lehahj4q1",
       "op_id": "OP-0038",
       "op_nombre": "CHAQUETA CAZADORA",
       "satelite_id": "sat_05",
-      "uds": 84,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-08-24",
-          "motivo": "Asignación inicial",
-          "by": "John Rodriguez",
-          "at": "2026-08-18"
-        }
-      ],
-      "fecha_inicial": "2026-08-24",
-      "fecha_compromiso": "2026-08-24"
+      "uds": 84
     },
     {
       "color": "CAMEL",
@@ -888,23 +883,22 @@
     {
       "color": "NEGRO",
       "entregado": false,
+      "fecha_compromiso": "2026-08-28",
       "fecha_entrada": "2026-07-28",
+      "fecha_inicial": "2026-08-28",
+      "historial": [
+        {
+          "at": "2026-08-18",
+          "by": "John Rodriguez",
+          "fecha_nueva": "2026-08-28",
+          "motivo": "Asignación inicial"
+        }
+      ],
       "id": "id_1785256131194_9uceu48t1",
       "op_id": "OP-0034",
       "op_nombre": "PILOTO PANCAKE",
       "satelite_id": "sat_11",
-      "uds": 72,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-08-28",
-          "motivo": "Asignación inicial",
-          "by": "John Rodriguez",
-          "at": "2026-08-18"
-        }
-      ],
-      "fecha_inicial": "2026-08-28",
-      "fecha_compromiso": "2026-08-28"
+      "uds": 72
     },
     {
       "color": "NEGRO",
@@ -919,44 +913,42 @@
     {
       "color": "MARFIL",
       "entregado": false,
+      "fecha_compromiso": "2026-08-19",
       "fecha_entrada": "2026-07-28",
+      "fecha_inicial": "2026-08-19",
+      "historial": [
+        {
+          "at": "2026-08-18",
+          "by": "John Rodriguez",
+          "fecha_nueva": "2026-08-19",
+          "motivo": "Asignación inicial"
+        }
+      ],
       "id": "id_1785256343133_0biry9n7j",
       "op_id": "OP-2026-093",
       "op_nombre": "CALIFORNIA",
       "satelite_id": "sat_00",
-      "uds": 152,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-08-19",
-          "motivo": "Asignación inicial",
-          "by": "John Rodriguez",
-          "at": "2026-08-18"
-        }
-      ],
-      "fecha_inicial": "2026-08-19",
-      "fecha_compromiso": "2026-08-19"
+      "uds": 152
     },
     {
       "color": "MARFIL",
       "entregado": false,
+      "fecha_compromiso": "2026-08-19",
       "fecha_entrada": "2026-07-28",
+      "fecha_inicial": "2026-08-19",
+      "historial": [
+        {
+          "at": "2026-08-18",
+          "by": "John Rodriguez",
+          "fecha_nueva": "2026-08-19",
+          "motivo": "Asignación inicial"
+        }
+      ],
       "id": "id_1785256343447_2275ozx47",
       "op_id": "OP-2026-093",
       "op_nombre": "CALIFORNIA",
       "satelite_id": "sat_00",
-      "uds": 152,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-08-19",
-          "motivo": "Asignación inicial",
-          "by": "John Rodriguez",
-          "at": "2026-08-18"
-        }
-      ],
-      "fecha_inicial": "2026-08-19",
-      "fecha_compromiso": "2026-08-19"
+      "uds": 152
     },
     {
       "color": "ROSA",
@@ -1317,22 +1309,35 @@
     {
       "color": "MARFIL",
       "entregado": false,
+      "fecha_compromiso": "2026-08-22",
       "fecha_entrada": "2026-08-18",
+      "fecha_inicial": "2026-08-22",
+      "historial": [
+        {
+          "at": "2026-08-18",
+          "by": "John Rodriguez",
+          "fecha_nueva": "2026-08-22",
+          "motivo": "Asignación inicial"
+        }
+      ],
       "id": "id_1787069214330_c22mlokm3",
       "op_id": "OP-2026-104",
       "op_nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS",
-      "uds": 7,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-08-22",
-          "motivo": "Asignación inicial",
-          "by": "John Rodriguez",
-          "at": "2026-08-18"
-        }
-      ],
-      "fecha_inicial": "2026-08-22",
-      "fecha_compromiso": "2026-08-22"
+      "uds": 7
+    },
+    {
+      "id": "id_1787258256613_w6dggw8og",
+      "op_id": "OP-2026-114",
+      "op_nombre": "BOMBON",
+      "color": "AZUL BEBE",
+      "satelite_id": "id_1786635928136_jgb934912",
+      "uds": 10,
+      "fecha_entrada": "2026-08-20",
+      "fecha_compromiso": null,
+      "fecha_inicial": null,
+      "historial": [],
+      "entregado": false,
+      "fecha_entrega_real": null
     }
   ]
 }
