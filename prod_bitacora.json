@@ -9146,20 +9146,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "ROSA",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1787260101187_kksyi",
-      "ts": 1787260101187,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-114",
       "op_nombre": "BOMBON",
       "referencia": "BOMBON",
-      "color": "ROSA",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1787260101187,
       "uds": 12,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787260274245_h2x43",
+      "ts": 1787260274245,
+      "user": "Jefa de Producción",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-115",
+      "op_nombre": "BOMBON",
+      "categoria": "CHAQUETAS",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-08-20",
+      "total_uds": 52,
+      "referencias": [
+        "BOMBON"
+      ]
     }
   ]
 }
