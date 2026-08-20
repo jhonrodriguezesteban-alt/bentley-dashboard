@@ -9023,24 +9023,35 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1787259749825_vyast",
-      "ts": 1787259749825,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-114",
-      "op_nombre": "BOMBON",
       "categoria": "CHAQUETAS",
-      "total_ots": 12,
-      "total_uds": 57,
       "colores": [
         "NEGRO",
         "LILA",
         "ROSA",
         "CAMEL"
       ],
+      "id": "evt_1787259749825_vyast",
+      "op_id": "OP-2026-114",
+      "op_nombre": "BOMBON",
       "referencias": [
         "BOMBON"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 12,
+      "total_uds": 57,
+      "ts": 1787259749825,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787259860206_z93l3",
+      "ts": 1787259860206,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-114",
+      "nombre": "BOMBON",
+      "categoria": "CHAQUETAS",
+      "colores": 4,
+      "refs": 1
     }
   ]
 }
