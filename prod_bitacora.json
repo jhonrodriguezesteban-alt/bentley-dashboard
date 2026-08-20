@@ -9379,19 +9379,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MARFIL",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1787261017149_5e5gq",
+      "motivo": "EN TALLER",
+      "op_id": "OP-2026-116",
+      "op_nombre": "BOMBON",
+      "referencia": "BOMBON",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1787261017149,
+      "uds": 6,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787261033306_7a89d",
+      "ts": 1787261033306,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-116",
       "op_nombre": "BOMBON",
       "referencia": "BOMBON",
-      "color": "MARFIL",
+      "color": "NEGRO",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 6,
+      "uds": 10,
       "motivo": "EN TALLER"
     }
   ]
