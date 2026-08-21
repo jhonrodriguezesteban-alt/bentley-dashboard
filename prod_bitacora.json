@@ -10079,13 +10079,28 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1787347772540_uhhwo",
-      "ts": 1787347772540,
-      "user": "John Rodriguez",
-      "tipo": "crear_op_desde_diseno",
+      "categoria": "Chaquetas",
       "diseno_id": "dis_9d2952b8c1c4",
+      "id": "evt_1787347772540_uhhwo",
       "nombre": "WASHMAN",
-      "categoria": "Chaquetas"
+      "tipo": "crear_op_desde_diseno",
+      "ts": 1787347772540,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787347832642_l75nt",
+      "ts": 1787347832642,
+      "user": "John Rodriguez",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-119",
+      "op_nombre": "WASHMAN",
+      "categoria": "CHAQUETAS",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-08-21",
+      "total_uds": 252,
+      "referencias": [
+        "WASHMAN"
+      ]
     }
   ]
 }
