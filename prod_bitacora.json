@@ -10024,16 +10024,27 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1787342443608_mfjp8",
-      "ts": 1787342443608,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782400152280_85zhl3nb5",
-      "nombre": "CAMISA CLASICA BK",
       "categoria": "CAMISAS",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1782400152280_85zhl3nb5",
       "estado_anterior": "EN_ESCALADO",
-      "estado_nuevo": "LISTA_PRODUCCION"
+      "estado_nuevo": "LISTA_PRODUCCION",
+      "id": "evt_1787342443608_mfjp8",
+      "marca": "Bentley Kids",
+      "nombre": "CAMISA CLASICA BK",
+      "tipo": "estado_diseno",
+      "ts": 1787342443608,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1787344702678_lxw9x",
+      "ts": 1787344702678,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-078",
+      "nombre": "CHAQUETA HARLEY",
+      "categoria": "CHAQUETAS",
+      "colores": 2,
+      "refs": 1
     }
   ]
 }
