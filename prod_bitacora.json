@@ -10036,15 +10036,31 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1787344702678_lxw9x",
-      "ts": 1787344702678,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-078",
-      "nombre": "CHAQUETA HARLEY",
       "categoria": "CHAQUETAS",
       "colores": 2,
-      "refs": 1
+      "id": "evt_1787344702678_lxw9x",
+      "nombre": "CHAQUETA HARLEY",
+      "op_id": "OP-2026-078",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1787344702678,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787344759438_yx1ck",
+      "ts": 1787344759438,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-078",
+      "op_nombre": "CHAQUETA HARLEY",
+      "referencia": "CHAQUETA HARLEY",
+      "color": "BEIGE",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 102,
+      "motivo": "EN TALLER"
     }
   ]
 }
