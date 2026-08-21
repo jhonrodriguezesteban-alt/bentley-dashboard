@@ -9931,20 +9931,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "VERDE MILITAR",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1787340930554_e7z31",
-      "ts": 1787340930554,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-085",
       "op_nombre": "PANTALON RAVE",
       "referencia": "PANTALON RAVE",
-      "color": "VERDE MILITAR",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1787340930554,
       "uds": 78,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787341166180_47xwd",
+      "ts": 1787341166180,
+      "user": "Jefa de Producción",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-119",
+      "op_nombre": "PANTALON RAVE",
+      "categoria": "PANTALONES",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-08-21",
+      "total_uds": 102,
+      "referencias": [
+        "PANTALON RAVE"
+      ]
     }
   ]
 }
