@@ -9674,28 +9674,38 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "ROSA",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1787317488314_msjj7",
-      "ts": 1787317488314,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-118",
       "op_nombre": "BOMBON",
       "referencia": "BOMBON",
-      "color": "ROSA",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1787317488314,
       "uds": 9,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1787318627921_ul8rg",
-      "ts": 1787318627921,
-      "user": "Jefa de Producción",
-      "tipo": "mercancia",
       "descripcion": "recoger en neos",
       "destino": "NEOS- SAN- CONTENEDOR",
+      "fecha": "2026-08-21",
+      "hora": "",
+      "id": "evt_1787318627921_ul8rg",
+      "tipo": "mercancia",
+      "ts": 1787318627921,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787318655041_51f0r",
+      "ts": 1787318655041,
+      "user": "Jefa de Producción",
+      "tipo": "materia_prima",
+      "descripcion": "recoger aceite de ronny",
+      "destino": "ricaurte",
       "fecha": "2026-08-21",
       "hora": ""
     }
