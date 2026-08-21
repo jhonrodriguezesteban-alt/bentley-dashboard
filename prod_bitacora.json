@@ -9768,14 +9768,24 @@
       "user": "Jefa de Producción"
     },
     {
+      "color": "MARFIL",
       "id": "evt_1787329589758_yq8ml",
-      "ts": 1787329589758,
-      "user": "John Rodriguez",
-      "tipo": "planeacion_asignar",
+      "mes": "2026-10",
       "op_id": "OP-0040",
       "op_nombre": "PANTALON DONATELLA",
-      "color": "MARFIL",
-      "mes": "2026-10"
+      "tipo": "planeacion_asignar",
+      "ts": 1787329589758,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787330726957_wbsg1",
+      "ts": 1787330726957,
+      "user": "Jefa de Producción",
+      "tipo": "cambiar_estado_op_all",
+      "op_id": "OP-2026-084",
+      "estado": "CORTE_POR_ALISTAR",
+      "colores": 2,
+      "nombre": "FALDA GABY BK"
     }
   ]
 }
