@@ -1781,6 +1781,28 @@
     {
       "_ts": "2026-06-22T22:00:42.215Z",
       "categoria": "Blusas",
+      "colores_escogidos": [
+        {
+          "hex": "#0d0d0d",
+          "id": "col_1787347525791_a53t",
+          "nombre": "NEGRO"
+        },
+        {
+          "hex": "#f5f5db",
+          "id": "col_1787347527938_9yf5",
+          "nombre": "BEIGE"
+        },
+        {
+          "hex": "#795649",
+          "id": "col_1787347532286_37sc",
+          "nombre": "TAUPE"
+        },
+        {
+          "hex": "#fffff0",
+          "id": "col_1787347537782_ele6",
+          "nombre": "MARFIL"
+        }
+      ],
       "fecha_creacion": "2026-06-22",
       "genero": "Niña",
       "id": "id_1782165545751_7o1s2haz5",
@@ -1800,29 +1822,7 @@
       "prioridad": 1,
       "responsable": "Carolina",
       "tela_estado": "asignada",
-      "tela_nota": "RIB VICTORIA UNICOLOR",
-      "colores_escogidos": [
-        {
-          "id": "col_1787347525791_a53t",
-          "nombre": "NEGRO",
-          "hex": "#0d0d0d"
-        },
-        {
-          "id": "col_1787347527938_9yf5",
-          "nombre": "BEIGE",
-          "hex": "#f5f5db"
-        },
-        {
-          "id": "col_1787347532286_37sc",
-          "nombre": "TAUPE",
-          "hex": "#795649"
-        },
-        {
-          "id": "col_1787347537782_ele6",
-          "nombre": "MARFIL",
-          "hex": "#fffff0"
-        }
-      ]
+      "tela_nota": "RIB VICTORIA UNICOLOR"
     },
     {
       "_ts": "2026-06-22T22:02:47.146Z",
@@ -3986,7 +3986,9 @@
       "nombre": "WASHMAN",
       "nota": "",
       "prioridad": 1,
-      "responsable": "John"
+      "responsable": "John",
+      "eliminado": true,
+      "_op_origen": "OP-2026-119"
     },
     {
       "_ts": "2026-06-23T00:00:00.000Z",
@@ -5582,6 +5584,23 @@
     {
       "_ts": "2026-07-28T16:16:00.615Z",
       "categoria": "Pantalones",
+      "colores_escogidos": [
+        {
+          "hex": "#f5f5db",
+          "id": "col_1787346649755_qhra",
+          "nombre": "BEIGE 130"
+        },
+        {
+          "hex": "#0d0d0d",
+          "id": "col_1787346662668_ikzd",
+          "nombre": "NEGRO"
+        },
+        {
+          "hex": "#363b16",
+          "id": "col_1787346672473_azgt",
+          "nombre": "VERDE MILITAR"
+        }
+      ],
       "comentarios": [
         {
           "autor": "Isabel",
@@ -5645,24 +5664,7 @@
       "prioridad": 1,
       "responsable": "Isa",
       "tela_estado": "asignada",
-      "tela_nota": "tela trench de vitral",
-      "colores_escogidos": [
-        {
-          "id": "col_1787346649755_qhra",
-          "nombre": "BEIGE 130",
-          "hex": "#f5f5db"
-        },
-        {
-          "id": "col_1787346662668_ikzd",
-          "nombre": "NEGRO",
-          "hex": "#0d0d0d"
-        },
-        {
-          "id": "col_1787346672473_azgt",
-          "nombre": "VERDE MILITAR",
-          "hex": "#363b16"
-        }
-      ]
+      "tela_nota": "tela trench de vitral"
     },
     {
       "_ts": "2026-07-28T16:39:05.566Z",
