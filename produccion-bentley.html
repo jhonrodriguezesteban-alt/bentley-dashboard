@@ -5382,12 +5382,15 @@ function _setSubgEstado(opId, color, estado){
   if(!op) return;
   if(!op.subg_estados) op.subg_estados = {};
   op.subg_estados[_subgKey(opId,color)] = estado;
-  // Al aprobar a Pendiente de Cortar, liberar OTs retenidas en POR_REVISAR
-  // (el guardado lo maneja siempre el caller, no esta función)
-  if(estado === 'PENDIENTE_CORTAR'){
+  // Sincroniza las OTs reales del color con el estado forzado manualmente. Sin esto, el
+  // estado DERIVADO de las OTs reales (que siempre gana cuando las OTs siguen atrás, ver
+  // _estadoEfectivo) termina pisando este override y la tarjeta "se devuelve sola" al
+  // estado anterior en el siguiente render — no toca OTs ya ENTREGADO ni en NOVEDAD.
+  var ESTADOS_SINCRONIZABLES = {PENDIENTE_CORTAR:1, CORTE_POR_ALISTAR:1, EN_CONFECCION:1, ALISTAMIENTO:1};
+  if(ESTADOS_SINCRONIZABLES[estado]){
     DB.ots.forEach(function(ot){
-      if(ot.op_id===opId && (ot.color||'').toUpperCase()===(color||'').toUpperCase() && ot.estado==='POR_REVISAR'){
-        ot.estado = 'PENDIENTE_CORTAR';
+      if(ot.op_id===opId && (ot.color||'').toUpperCase()===(color||'').toUpperCase() && ot.estado!=='ENTREGADO' && ot.estado!=='NOVEDAD'){
+        ot.estado = estado;
       }
     });
   }
