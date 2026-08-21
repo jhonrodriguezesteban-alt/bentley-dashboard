@@ -2759,9 +2759,15 @@ function planVerMes(mesKey){
       }
       h += '</div>';
 
+      var DIS_KL_MES = {EN_DISENO_DIGITAL:'Diseño',CON_PROVEEDOR:'Proveedor',EN_CORTE_MUESTRA:'Corte muestra',EN_CONFECCION_MUESTRA:'Confección muestra',EN_REVISION_GERENCIA:'Revisión gerencia',EN_ESCALADO:'Escalado','ESCALADO / ÚLTIMOS DETALLES DISEÑO':'Escalado'};
+      var DIS_KL_COLOR = {EN_DISENO_DIGITAL:'#64748b',CON_PROVEEDOR:'#fbbf24',EN_CORTE_MUESTRA:'#0ea5e9',EN_CONFECCION_MUESTRA:'#a855f7',EN_REVISION_GERENCIA:'#f97316',EN_ESCALADO:'#34d399','ESCALADO / ÚLTIMOS DETALLES DISEÑO':'#34d399'};
       h += '<div style="display:flex;flex-direction:column;gap:6px;">';
       ds.forEach(function(d){
         var p = disPlanAll[d.id]||{uds:0};
+        var estKey = d.kanban_estado;
+        var estLbl = DIS_KL_MES[estKey] || (estKey||'').replace(/_/g,' ') || 'Sin estado';
+        var estColor = DIS_KL_COLOR[estKey] || '#64748b';
+        var estBadge = '<span style="font-size:8px;font-weight:800;color:'+estColor+';background:'+estColor+'18;border:1px solid '+estColor+'44;border-radius:4px;padding:2px 6px;white-space:nowrap;text-transform:uppercase;letter-spacing:.3px;">'+esc(estLbl)+'</span>';
         // Los que van a proveedor externo (Fenio) no se estiman — el proveedor se encarga
         // de su propia producción, no es tela que nosotros tengamos que programar.
         var esFenio = (d.proveedor||'').toUpperCase()==='FENIO';
@@ -2774,7 +2780,10 @@ function planVerMes(mesKey){
           h += '<details style="background:rgba(16,185,129,.05);border:1px solid rgba(52,211,153,.15);border-radius:9px;overflow:hidden;">';
           h += '<summary style="display:flex;align-items:center;gap:10px;padding:9px 12px;cursor:pointer;list-style:none;">';
           h += '<div style="flex:1;min-width:0;">';
-          h += '<div style="font-size:12px;font-weight:700;color:#d1fae5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(d.nombre)+'</div>';
+          h += '<div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">';
+          h += '<span style="font-size:12px;font-weight:700;color:#d1fae5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(d.nombre)+'</span>';
+          h += estBadge;
+          h += '</div>';
           h += '<div style="font-size:9px;color:#64748b;">'+(mtsD!==null?'🧵 ≈ '+mtsD.toLocaleString('es-CO',{maximumFractionDigits:1})+' mts est. · '+coloresD.length+' color'+(coloresD.length!==1?'es':'')+' — clic para ver por color':coloresD.length+' color'+(coloresD.length!==1?'es':''))+'</div>';
           h += '</div>';
           h += '<div style="font-size:13px;font-weight:800;color:#34d399;">'+(p.uds||0).toLocaleString('es-CO')+'<span style="font-size:9px;color:#64748b;margin-left:2px;">uds</span></div>';
@@ -2793,7 +2802,10 @@ function planVerMes(mesKey){
         } else {
           h += '<div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:rgba(16,185,129,.05);border:1px solid rgba(52,211,153,.15);border-radius:9px;">';
           h += '<div style="flex:1;min-width:0;">';
-          h += '<div style="font-size:12px;font-weight:700;color:#d1fae5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(d.nombre)+'</div>';
+          h += '<div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">';
+          h += '<span style="font-size:12px;font-weight:700;color:#d1fae5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(d.nombre)+'</span>';
+          h += estBadge;
+          h += '</div>';
           h += '<div style="font-size:9px;color:#64748b;">'+(esFenio?'<span style="color:#fbbf24;">💳 FENIO → dic. (proveedor produce, sin estimado interno)</span>':(mtsD!==null?'🧵 ≈ '+mtsD.toLocaleString('es-CO',{maximumFractionDigits:1})+' mts est.':'—'))+'</div>';
           h += '</div>';
           h += '<div style="font-size:13px;font-weight:800;color:#34d399;">'+(p.uds||0).toLocaleString('es-CO')+'<span style="font-size:9px;color:#64748b;margin-left:2px;">uds</span></div>';
