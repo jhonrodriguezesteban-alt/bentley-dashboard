@@ -10063,20 +10063,29 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1787344781493_kjx6a",
-      "ts": 1787344781493,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-078",
       "op_nombre": "CHAQUETA HARLEY",
       "referencia": "CHAQUETA HARLEY",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1787344781493,
       "uds": 30,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787347772540_uhhwo",
+      "ts": 1787347772540,
+      "user": "John Rodriguez",
+      "tipo": "crear_op_desde_diseno",
+      "diseno_id": "dis_9d2952b8c1c4",
+      "nombre": "WASHMAN",
+      "categoria": "Chaquetas"
     }
   ]
 }
