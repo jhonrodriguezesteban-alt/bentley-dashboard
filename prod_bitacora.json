@@ -9904,20 +9904,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "BEIGE",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1787340018069_xi09d",
-      "ts": 1787340018069,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-085",
       "op_nombre": "PANTALON RAVE",
       "referencia": "PANTALON RAVE",
-      "color": "BEIGE",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1787340018069,
       "uds": 96,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787340911703_bhwpl",
+      "ts": 1787340911703,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-085",
+      "nombre": "PANTALON RAVE",
+      "categoria": "PANTALONES",
+      "colores": 4,
+      "refs": 1
     }
   ]
 }
