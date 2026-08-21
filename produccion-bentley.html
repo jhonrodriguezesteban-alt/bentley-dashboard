@@ -2574,9 +2574,13 @@ function planVerCategoria(cat){
   openModal('📦 Referencias · '+cat, h);
 }
 
+var _planDisFiltroKanban = '';
+function setPlanDisFiltroKanban(v){ _planDisFiltroKanban = (_planDisFiltroKanban===v ? '' : v); planVerMes(_planVerMesActual); }
+var _planVerMesActual = null;
 function planVerMes(mesKey){
   var info = (window._planMesMap||{})[mesKey];
   if(!info) return;
+  _planVerMesActual = mesKey;
   var mes = info.mes, mesUnits = info.mesUnits, mesDisenos = info.mesDisenos, disPlanAll = info.disPlanAll, costoMes = info.costoMes;
 
   var h = '<div style="padding:0 4px 20px;">';
@@ -2723,8 +2727,30 @@ function planVerMes(mesKey){
     h += '<span style="font-size:9px;color:#475569;">🧵 mts est. = promedio de consumo real por categoría × uds planeadas</span>';
     h += '</div>';
 
+    // Filtro por estado del pipeline de diseño — para encontrar rápido las que están quedadas.
+    var DIS_KL_FILT = {EN_DISENO_DIGITAL:'Diseño',CON_PROVEEDOR:'Proveedor',EN_CORTE_MUESTRA:'Corte muestra',EN_CONFECCION_MUESTRA:'Confección muestra',EN_REVISION_GERENCIA:'Revisión gerencia',EN_ESCALADO:'Escalado','ESCALADO / ÚLTIMOS DETALLES DISEÑO':'Escalado'};
+    var DIS_KL_FILT_COLOR = {EN_DISENO_DIGITAL:'#ef4444',CON_PROVEEDOR:'#fbbf24',EN_CORTE_MUESTRA:'#0ea5e9',EN_CONFECCION_MUESTRA:'#a855f7',EN_REVISION_GERENCIA:'#f97316',EN_ESCALADO:'#34d399','ESCALADO / ÚLTIMOS DETALLES DISEÑO':'#34d399'};
+    var estadosPresentes = {};
+    mesDisenos.forEach(function(d){ var k=d.kanban_estado||'SIN_ESTADO'; estadosPresentes[k]=(estadosPresentes[k]||0)+1; });
+    var estadosOrden = Object.keys(estadosPresentes).sort(function(a,b){ return estadosPresentes[b]-estadosPresentes[a]; });
+    if(estadosOrden.length>1){
+      h += '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">';
+      h += '<button data-k="" onclick="setPlanDisFiltroKanban(this.dataset.k)" style="font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;cursor:pointer;border:1px solid '+(!_planDisFiltroKanban?'#34d399':'#2c2c2e')+';background:'+(!_planDisFiltroKanban?'rgba(52,211,153,.15)':'transparent')+';color:'+(!_planDisFiltroKanban?'#34d399':'#64748b')+';">Todos · '+mesDisenos.length+'</button>';
+      estadosOrden.forEach(function(k){
+        var lbl = DIS_KL_FILT[k] || (k==='SIN_ESTADO' ? 'Sin estado' : k.replace(/_/g,' '));
+        var col = DIS_KL_FILT_COLOR[k] || '#64748b';
+        var activo = _planDisFiltroKanban===k;
+        h += '<button data-k="'+esc(k)+'" onclick="setPlanDisFiltroKanban(this.dataset.k)" style="font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;cursor:pointer;border:1px solid '+(activo?col:'#2c2c2e')+';background:'+(activo?col+'22':'transparent')+';color:'+(activo?col:'#64748b')+';">'+esc(lbl)+' · '+estadosPresentes[k]+'</button>';
+      });
+      h += '</div>';
+    }
+    var mesDisenosFiltrados = _planDisFiltroKanban ? mesDisenos.filter(function(d){ return (d.kanban_estado||'SIN_ESTADO')===_planDisFiltroKanban; }) : mesDisenos;
+    if(!mesDisenosFiltrados.length){
+      h += '<div style="color:#2c2c2e;font-size:12px;padding:14px 0;text-align:center;">Ningún diseño en ese estado este mes</div>';
+    }
+
     var catGroupsDis = {};
-    mesDisenos.forEach(function(d){
+    mesDisenosFiltrados.forEach(function(d){
       var cat = (d.categoria||'Sin categoría').trim().toUpperCase().replace(/\s+PR$/,'');
       if(!catGroupsDis[cat]) catGroupsDis[cat] = [];
       catGroupsDis[cat].push(d);
@@ -2760,7 +2786,7 @@ function planVerMes(mesKey){
       h += '</div>';
 
       var DIS_KL_MES = {EN_DISENO_DIGITAL:'Diseño',CON_PROVEEDOR:'Proveedor',EN_CORTE_MUESTRA:'Corte muestra',EN_CONFECCION_MUESTRA:'Confección muestra',EN_REVISION_GERENCIA:'Revisión gerencia',EN_ESCALADO:'Escalado','ESCALADO / ÚLTIMOS DETALLES DISEÑO':'Escalado'};
-      var DIS_KL_COLOR = {EN_DISENO_DIGITAL:'#64748b',CON_PROVEEDOR:'#fbbf24',EN_CORTE_MUESTRA:'#0ea5e9',EN_CONFECCION_MUESTRA:'#a855f7',EN_REVISION_GERENCIA:'#f97316',EN_ESCALADO:'#34d399','ESCALADO / ÚLTIMOS DETALLES DISEÑO':'#34d399'};
+      var DIS_KL_COLOR = {EN_DISENO_DIGITAL:'#ef4444',CON_PROVEEDOR:'#fbbf24',EN_CORTE_MUESTRA:'#0ea5e9',EN_CONFECCION_MUESTRA:'#a855f7',EN_REVISION_GERENCIA:'#f97316',EN_ESCALADO:'#34d399','ESCALADO / ÚLTIMOS DETALLES DISEÑO':'#34d399'};
       h += '<div style="display:flex;flex-direction:column;gap:6px;">';
       ds.forEach(function(d){
         var p = disPlanAll[d.id]||{uds:0};
