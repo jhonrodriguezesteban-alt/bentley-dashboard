@@ -3990,7 +3990,15 @@ function renderPlaneacion(){
       var op = (DB.ops||[]).find(function(o){ return o.id===parsed.opId; });
       if(!op){ return; } // la OP ya no existe — se descarta sin registrar (no hay nada que rastrear)
       if(_histKeys[key]) return; // ya estaba registrado, no duplicar (y se descarta del mes activo)
+      // Si el color ya no está en la OP (se corrigió/eliminó, ej. un duplicado), no fue un
+      // corte real — se descarta sin registrar, igual que cuando la OP entera desaparece.
+      var opColoresUpper = (op.colores||[]).map(function(c){ return (c||'').toUpperCase(); });
+      if(opColoresUpper.indexOf((parsed.color||'').toUpperCase())<0) return;
       var estadoReal = _planEstadoColor(op, parsed.color);
+      // Solo es "corte real" si de verdad avanzó más allá de pendiente — si salió del pool
+      // estando todavía en POR_REVISAR/PENDIENTE_CORTAR, fue por otra razón (edición de la
+      // OP, corrección de datos), no porque se haya cortado. No registrar eso como historial.
+      if(estadoReal==='POR_REVISAR' || estadoReal==='PENDIENTE_CORTAR') return;
       var uds = _planColorUdsHistorico(op, parsed.color);
       _histCorte.push({
         key:key, op_id:op.id, op_nombre:op.nombre_producto, categoria:op.categoria,
