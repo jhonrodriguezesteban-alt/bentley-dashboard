@@ -4351,18 +4351,18 @@
     },
     {
       "cantidades": {
-        "BEIGE_T10": 20,
-        "BEIGE_T12": 20,
-        "BEIGE_T14": 20,
-        "BEIGE_T16": 20,
-        "BEIGE_T6": 20,
-        "BEIGE_T8": 20,
-        "NEGRO_T10": 20,
-        "NEGRO_T12": 20,
-        "NEGRO_T14": 20,
-        "NEGRO_T16": 20,
-        "NEGRO_T6": 20,
-        "NEGRO_T8": 20
+        "NEGRO_T6": 5,
+        "NEGRO_T8": 5,
+        "NEGRO_T10": 5,
+        "NEGRO_T12": 5,
+        "NEGRO_T14": 5,
+        "NEGRO_T16": 5,
+        "BEIGE_T6": 17,
+        "BEIGE_T8": 17,
+        "BEIGE_T10": 17,
+        "BEIGE_T12": 17,
+        "BEIGE_T14": 17,
+        "BEIGE_T16": 17
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -4379,27 +4379,14 @@
       "numero": 78,
       "referencias": [
         {
-          "cantidades": {
-            "BEIGE_T10": 20,
-            "BEIGE_T12": 20,
-            "BEIGE_T14": 20,
-            "BEIGE_T16": 20,
-            "BEIGE_T6": 20,
-            "BEIGE_T8": 20,
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "NEGRO_T6": 20,
-            "NEGRO_T8": 20
-          },
+          "nombre": "CHAQUETA HARLEY",
+          "ref": "1107",
           "cat": "CHAQUETAS",
+          "vmo": 8934,
           "colores": [
             "NEGRO",
             "BEIGE"
           ],
-          "nombre": "CHAQUETA HARLEY",
-          "ref": "1107",
           "tallas": [
             "T6",
             "T8",
@@ -4408,8 +4395,21 @@
             "T14",
             "T16"
           ],
-          "totalUds": 240,
-          "vmo": 8934
+          "cantidades": {
+            "NEGRO_T6": 5,
+            "NEGRO_T8": 5,
+            "NEGRO_T10": 5,
+            "NEGRO_T12": 5,
+            "NEGRO_T14": 5,
+            "NEGRO_T16": 5,
+            "BEIGE_T6": 17,
+            "BEIGE_T8": 17,
+            "BEIGE_T10": 17,
+            "BEIGE_T12": 17,
+            "BEIGE_T14": 17,
+            "BEIGE_T16": 17
+          },
+          "maquilador_id": ""
         }
       ],
       "tallas": [
@@ -4420,7 +4420,8 @@
         "T14",
         "T16"
       ],
-      "subg_estados": {}
+      "subg_estados": {},
+      "updated_at": "2026-08-21"
     },
     {
       "cantidades": {
