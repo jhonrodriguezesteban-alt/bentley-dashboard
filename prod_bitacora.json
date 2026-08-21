@@ -9658,8 +9658,24 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "ROSA",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1787317484750_hg2q2",
+      "motivo": "EN TALLER",
+      "op_id": "OP-2026-118",
+      "op_nombre": "BOMBON",
+      "referencia": "BOMBON",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1787317484750,
+      "uds": 9,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787317488314_msjj7",
+      "ts": 1787317488314,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-118",
@@ -9672,6 +9688,16 @@
       "bulk": true,
       "uds": 9,
       "motivo": "EN TALLER"
+    },
+    {
+      "id": "evt_1787318627921_ul8rg",
+      "ts": 1787318627921,
+      "user": "Jefa de Producción",
+      "tipo": "mercancia",
+      "descripcion": "recoger en neos",
+      "destino": "NEOS- SAN- CONTENEDOR",
+      "fecha": "2026-08-21",
+      "hora": ""
     }
   ]
 }
