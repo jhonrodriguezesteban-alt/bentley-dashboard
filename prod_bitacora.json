@@ -9947,16 +9947,33 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1787341166180_47xwd",
-      "ts": 1787341166180,
-      "user": "Jefa de Producción",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-119",
-      "op_nombre": "PANTALON RAVE",
       "categoria": "PANTALONES",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-08-21",
+      "id": "evt_1787341166180_47xwd",
+      "op_id": "OP-2026-119",
+      "op_nombre": "PANTALON RAVE",
+      "referencias": [
+        "PANTALON RAVE"
+      ],
+      "tipo": "crear_op",
       "total_uds": 102,
+      "ts": 1787341166180,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787341174548_3xz8p",
+      "ts": 1787341174548,
+      "user": "Jefa de Producción",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-119",
+      "op_nombre": "PANTALON RAVE",
+      "categoria": "PANTALONES",
+      "total_ots": 6,
+      "total_uds": 102,
+      "colores": [
+        "CAMEL"
+      ],
       "referencias": [
         "PANTALON RAVE"
       ]
