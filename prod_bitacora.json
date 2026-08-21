@@ -10088,19 +10088,28 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1787347832642_l75nt",
-      "ts": 1787347832642,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-119",
-      "op_nombre": "WASHMAN",
       "categoria": "CHAQUETAS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-08-21",
-      "total_uds": 252,
+      "id": "evt_1787347832642_l75nt",
+      "op_id": "OP-2026-119",
+      "op_nombre": "WASHMAN",
       "referencias": [
         "WASHMAN"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 252,
+      "ts": 1787347832642,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787347917111_8p91z",
+      "ts": 1787347917111,
+      "user": "John Rodriguez",
+      "tipo": "crear_op_desde_diseno",
+      "diseno_id": "dis_aefddccbdb50",
+      "nombre": "ROMPEVIENTOS",
+      "categoria": "Chaquetas"
     }
   ]
 }
