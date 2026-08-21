@@ -10112,19 +10112,39 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1787348182164_r2bey",
-      "ts": 1787348182164,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-120",
-      "op_nombre": "ROMPEVIENTOS",
       "categoria": "CHAQUETAS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-08-21",
-      "total_uds": 336,
+      "id": "evt_1787348182164_r2bey",
+      "op_id": "OP-2026-120",
+      "op_nombre": "ROMPEVIENTOS",
       "referencias": [
         "ROMPEVIENTOS"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 336,
+      "ts": 1787348182164,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787348201773_2qfrv",
+      "ts": 1787348201773,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-119",
+      "op_nombre": "WASHMAN",
+      "color": "AZUL OSCURO",
+      "mes": "2026-09"
+    },
+    {
+      "id": "evt_1787348203946_adyg7",
+      "ts": 1787348203946,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-119",
+      "op_nombre": "WASHMAN",
+      "color": "VINOTINTO",
+      "mes": "2026-09"
     }
   ]
 }
