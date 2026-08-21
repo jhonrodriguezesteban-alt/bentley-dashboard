@@ -9740,22 +9740,32 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1787324457168_hqrmq",
-      "ts": 1787324457168,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-108",
-      "op_nombre": "COUNTRY 2.0",
       "categoria": "BUZOS",
-      "total_ots": 14,
-      "total_uds": 168,
       "colores": [
         "AZUL BEBE",
         "GRIS CLARO"
       ],
+      "id": "evt_1787324457168_hqrmq",
+      "op_id": "OP-2026-108",
+      "op_nombre": "COUNTRY 2.0",
       "referencias": [
         "COUNTRY 2.0"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 14,
+      "total_uds": 168,
+      "ts": 1787324457168,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787328844183_qu8al",
+      "ts": 1787328844183,
+      "user": "Jefa de Producción",
+      "tipo": "cambiar_estado_op_all",
+      "op_id": "OP-2026-084",
+      "estado": "CORTE_POR_ALISTAR",
+      "colores": 2,
+      "nombre": "FALDA GABY BK"
     }
   ]
 }
