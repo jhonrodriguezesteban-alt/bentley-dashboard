@@ -10147,16 +10147,32 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1787355580879_hi0wg",
-      "ts": 1787355580879,
-      "user": "John Rodriguez",
-      "tipo": "editar_diseno",
-      "nombre": "BUZO FLUFY ( ANTES BLUSA FLUFY)",
       "categoria": "Buzos",
-      "marca": "Bentley Kids",
-      "prioridad": 1,
+      "id": "evt_1787355580879_hi0wg",
       "kanban": "EN_REVISION_GERENCIA",
-      "proveedor": "ninguno"
+      "marca": "Bentley Kids",
+      "nombre": "BUZO FLUFY ( ANTES BLUSA FLUFY)",
+      "prioridad": 1,
+      "proveedor": "ninguno",
+      "tipo": "editar_diseno",
+      "ts": 1787355580879,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787413157857_yy6fv",
+      "ts": 1787413157857,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-086",
+      "op_nombre": "PANTALON CHICAGO",
+      "referencia": "PANTALON CHICAGO",
+      "color": "AVENA",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 68,
+      "motivo": "EN TALLER"
     }
   ]
 }
