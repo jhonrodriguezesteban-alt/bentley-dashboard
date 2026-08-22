@@ -2539,12 +2539,91 @@ async function guardarPlaneacion(){
 }
 
 var _planCatModalActual = null;
-function planToggleConfirmada(refKey, checked){
+function planToggleConfirmada(refKey, checked, meta){
   if(!DB.planeacion) DB.planeacion = {meses:{}, disenos_plan:{}, historial_corte:[], confirmadas:{}};
   if(!DB.planeacion.confirmadas) DB.planeacion.confirmadas = {};
-  if(checked) DB.planeacion.confirmadas[refKey] = true;
-  else delete DB.planeacion.confirmadas[refKey];
+  if(checked){
+    var prev = DB.planeacion.confirmadas[refKey];
+    var prevExtra = (prev && typeof prev==='object') ? (prev.extra||0) : 0;
+    DB.planeacion.confirmadas[refKey] = Object.assign({ok:true, extra:prevExtra}, meta||{});
+  } else {
+    delete DB.planeacion.confirmadas[refKey];
+  }
   guardarPlaneacion();
+  renderPage('planeacion');
+}
+// Tarjeta paralela a "Resumen total planeado" — solo referencias marcadas con el check,
+// sumando lo ya programado + la cantidad extra que se quiera agregar manualmente.
+function _planRenderConfirmados(){
+  var confirmadas = (DB.planeacion && DB.planeacion.confirmadas) || {};
+  var entries = Object.keys(confirmadas).map(function(k){ return Object.assign({refKey:k}, confirmadas[k]); });
+  var h = '<div style="background:rgba(52,211,153,.04);border:1px solid rgba(52,211,153,.25);border-radius:14px;padding:16px 18px;margin-bottom:20px;">';
+  h += '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">';
+  h += '<div><div style="font-size:15px;font-weight:900;color:#e2e8f0;">✅ Productos confirmados</div>';
+  h += '<div style="font-size:11px;color:#64748b;margin-top:2px;">'+entries.length+' referencia'+(entries.length!==1?'s':'')+' con check · se alimenta de lo que marques arriba</div></div>';
+  if(entries.length){
+    var totUds = entries.reduce(function(a,e){ return a+(e.uds||0)+(e.extra||0); },0);
+    h += '<div style="text-align:right;"><div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;">Total confirmado</div>';
+    h += '<div style="font-size:26px;font-weight:900;color:#34d399;line-height:1;">'+totUds.toLocaleString('es-CO')+'<span style="font-size:11px;color:#64748b;margin-left:4px;">uds</span></div></div>';
+  }
+  h += '</div>';
+  if(!entries.length){
+    h += '<div style="text-align:center;color:#374151;font-size:12px;padding:20px 0;">Aún no has marcado ninguna referencia. Click en el ☑ de una referencia dentro de cualquier categoría para que aparezca aquí.</div>';
+    h += '</div>';
+    return h;
+  }
+  // Agrupar por categoría igual que el resumen de arriba
+  var byCat = {};
+  entries.forEach(function(e){
+    var cat = e.cat || 'SIN CATEGORÍA';
+    if(!byCat[cat]) byCat[cat] = {uds:0, extra:0, refs:[]};
+    byCat[cat].uds += (e.uds||0);
+    byCat[cat].extra += (e.extra||0);
+    byCat[cat].refs.push(e);
+  });
+  var catKeysC = Object.keys(byCat).sort(function(a,b){ return (byCat[b].uds+byCat[b].extra)-(byCat[a].uds+byCat[a].extra); });
+  h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;">';
+  catKeysC.forEach(function(cat){
+    var info = byCat[cat];
+    var totalCat = info.uds + info.extra;
+    h += '<div style="background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.2);border-radius:10px;padding:12px 13px;">';
+    h += '<div style="font-size:9px;font-weight:700;color:#6ee7b7;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;">'+esc(cat)+'</div>';
+    h += '<div style="font-size:26px;font-weight:900;color:#f1f5f9;line-height:1;margin-bottom:4px;">'+totalCat.toLocaleString('es-CO')+'</div>';
+    h += '<div style="font-size:10px;color:#475569;">'+info.refs.length+' ref'+(info.refs.length!==1?'s':'')+(info.extra>0?' · <span style="color:#34d399;">+'+info.extra.toLocaleString('es-CO')+' extra</span>':'')+'</div>';
+    h += '</div>';
+  });
+  h += '</div>';
+  // Detalle de referencias confirmadas con casilla para cantidad extra
+  h += '<div style="margin-top:14px;border-top:1px solid rgba(52,211,153,.15);padding-top:12px;">';
+  entries.sort(function(a,b){ return ((b.uds||0)+(b.extra||0))-((a.uds||0)+(a.extra||0)); }).forEach(function(e){
+    h += '<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:rgba(255,255,255,.02);border-radius:8px;margin-bottom:5px;">';
+    h += '<div style="flex:1;min-width:0;">';
+    h += '<div style="font-size:12px;font-weight:700;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(e.nombre||'')+'</div>';
+    h += '<div style="font-size:9px;color:#64748b;">'+esc(e.cat||'')+' · programado: '+((e.uds||0).toLocaleString('es-CO'))+' uds</div>';
+    h += '</div>';
+    h += '<div style="display:flex;align-items:center;gap:5px;flex-shrink:0;">';
+    h += '<span style="font-size:9px;color:#64748b;white-space:nowrap;">+ extra</span>';
+    h += '<input type="number" min="0" step="12" value="'+(e.extra||'')+'" placeholder="0" onchange="planSetExtra(\''+esc(e.refKey)+'\',this.value)" style="width:70px;background:#0d1117;border:1px solid rgba(52,211,153,.3);border-radius:6px;color:#34d399;font-size:12px;font-weight:700;padding:5px 6px;text-align:center;outline:none;">';
+    h += '</div>';
+    h += '<div style="text-align:right;flex-shrink:0;min-width:60px;">';
+    h += '<div style="font-size:14px;font-weight:900;color:#f1f5f9;">'+(((e.uds||0)+(e.extra||0)).toLocaleString('es-CO'))+'</div>';
+    h += '</div>';
+    h += '</div>';
+  });
+  h += '</div>';
+  h += '</div>';
+  return h;
+}
+function _planConfirmarClick(chk){
+  var meta = {cat:chk.dataset.cat, nombre:chk.dataset.nombre, uds:parseInt(chk.dataset.uds)||0, tipo:chk.dataset.tipo};
+  planToggleConfirmada(chk.dataset.refkey, chk.checked, meta);
+}
+function planSetExtra(refKey, val){
+  if(!DB.planeacion || !DB.planeacion.confirmadas || !DB.planeacion.confirmadas[refKey]) return;
+  var extra = parseInt(val)||0;
+  DB.planeacion.confirmadas[refKey].extra = extra;
+  guardarPlaneacion();
+  renderPage('planeacion');
 }
 function planToggleExpandRef(rowId){
   var row = document.getElementById(rowId);
@@ -2600,7 +2679,7 @@ function planVerCategoria(cat){
     }
     h += '<div style="background:#1c1c1e;border-radius:9px;margin-bottom:6px;overflow:hidden;'+(checked?'box-shadow:inset 3px 0 0 var(--green);':'')+'">';
     h += '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;" onclick="planToggleExpandRef(\''+rowId+'\')">';
-    h += '<input type="checkbox" '+(checked?'checked':'')+' onclick="event.stopPropagation();planToggleConfirmada(\''+esc(refKey).replace(/'/g,"\\'")+'\',this.checked)" title="Confirmar que esta referencia sí va a producción" style="width:18px;height:18px;flex-shrink:0;accent-color:var(--green);cursor:pointer;">';
+    h += '<input type="checkbox" '+(checked?'checked':'')+' data-refkey="'+esc(refKey)+'" data-cat="'+esc(cat)+'" data-nombre="'+esc(ref.nombre)+'" data-uds="'+ref.uds+'" data-tipo="'+ref.tipo+'" onclick="event.stopPropagation();_planConfirmarClick(this)" title="Confirmar que esta referencia sí va a producción" style="width:18px;height:18px;flex-shrink:0;accent-color:var(--green);cursor:pointer;">';
     h += '<div style="flex:1;min-width:0;">';
     h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(ref.nombre)+(ref.tipo==='diseno'?' <span style="font-size:9px;color:#a855f7;font-weight:700;">· EN DISEÑO</span>':'')+'</div>';
     if(ref.tipo==='op' && ref.units.length>=1){
@@ -4553,6 +4632,9 @@ function renderPlaneacion(){
     h += '</div></div>';
   }
   h += '</div>';
+
+  // ── Productos confirmados (chuleados) ───────────────────────────────────────
+  h += _planRenderConfirmados();
 
   // ── Pool ─────────────────────────────────────────────────────────────────────
   h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:12px;padding:12px 14px;margin-bottom:20px;">';
