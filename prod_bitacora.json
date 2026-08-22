@@ -10191,20 +10191,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "GRIS OSCURO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1787413214391_7mpfb",
-      "ts": 1787413214391,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-086",
       "op_nombre": "PANTALON CHICAGO",
       "referencia": "PANTALON CHICAGO",
-      "color": "GRIS OSCURO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1787413214391,
       "uds": 68,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787413401726_wptob",
+      "ts": 1787413401726,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-086",
+      "nombre": "PANTALON CHICAGO",
+      "categoria": "PANTALONES",
+      "colores": 5,
+      "refs": 1
     }
   ]
 }
