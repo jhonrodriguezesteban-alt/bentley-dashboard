@@ -2582,6 +2582,22 @@ function planVerCategoria(cat){
     var refKey = 'REF||'+cat+'||'+ref.nombre.trim().toUpperCase();
     var checked = !!confirmadas[refKey];
     var rowId = 'plan-ref-expand-'+ri+'-'+cat.replace(/[^A-Za-z0-9]/g,'');
+    // Valor MP + insumos: para OP con receta real via _planCostoColor (r.mat = todos los
+    // componentes tipo MATERIAL: telas + insumos + apliques); para diseños sin OP, el precio
+    // de la tela principal ya asignada en el módulo Diseño (d.tela_precio).
+    var matInfo = null;
+    if(ref.tipo==='op'){
+      var matTotal = 0, matUdCount = 0, matSinReceta = false;
+      ref.units.forEach(function(u){
+        var c = _planCostoColor(u.op, u.color);
+        if(c){ matTotal += c.mat; matUdCount += c.uds; } else { matSinReceta = true; }
+      });
+      if(matUdCount>0) matInfo = {total:matTotal, porUd:matTotal/matUdCount, sinReceta:matSinReceta};
+      else if(matSinReceta) matInfo = {sinReceta:true};
+    } else {
+      var dz = ref.units[0].diseno;
+      if(dz && dz.tela_precio){ matInfo = {telaPrecioMt:dz.tela_precio, telaNombre:dz.tela_nombre_mp||dz.tela_nota||''}; }
+    }
     h += '<div style="background:#1c1c1e;border-radius:9px;margin-bottom:6px;overflow:hidden;'+(checked?'box-shadow:inset 3px 0 0 var(--green);':'')+'">';
     h += '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;" onclick="planToggleExpandRef(\''+rowId+'\')">';
     h += '<input type="checkbox" '+(checked?'checked':'')+' onclick="event.stopPropagation();planToggleConfirmada(\''+esc(refKey).replace(/'/g,"\\'")+'\',this.checked)" title="Confirmar que esta referencia sí va a producción" style="width:18px;height:18px;flex-shrink:0;accent-color:var(--green);cursor:pointer;">';
@@ -2593,6 +2609,16 @@ function planVerCategoria(cat){
     } else if(ref.tipo==='diseno'){
       var mesLbl = (_planMesesDef().find(function(m){ return m.k===ref.units[0].mes; })||{}).label || ref.units[0].mes;
       h += '<div style="font-size:10px;color:#475569;">sin color asignado aún · planificado para '+esc(mesLbl)+'</div>';
+    }
+    // Chip de valor MP+insumos
+    if(matInfo && matInfo.total!==undefined){
+      h += '<div style="font-size:10px;color:#fb923c;font-weight:700;margin-top:3px;">🧵 MP+insumos: $'+Math.round(matInfo.total).toLocaleString('es-CO')+' <span style="color:#78350f;font-weight:500;">($'+Math.round(matInfo.porUd).toLocaleString('es-CO')+'/ud'+(matInfo.sinReceta?' · algún color sin receta':'')+')</span></div>';
+    } else if(matInfo && matInfo.telaPrecioMt){
+      h += '<div style="font-size:10px;color:#fb923c;font-weight:700;margin-top:3px;">🧵 Tela principal: $'+Math.round(matInfo.telaPrecioMt).toLocaleString('es-CO')+'/mt'+(matInfo.telaNombre?' · '+esc(matInfo.telaNombre):'')+'</div>';
+    } else if(ref.tipo==='op' && matInfo && matInfo.sinReceta){
+      h += '<div style="font-size:10px;color:#64748b;margin-top:3px;">🧵 Sin receta de costeo vinculada — MP+insumos no calculado</div>';
+    } else if(ref.tipo==='diseno'){
+      h += '<div style="font-size:10px;color:#64748b;margin-top:3px;">🧵 Sin tela asignada aún (módulo Diseño)</div>';
     }
     h += '</div>';
     h += '<div style="text-align:right;flex-shrink:0;">';
@@ -9332,6 +9358,20 @@ function abrirTelaNotaModal(id){
   inner += '<div><div style="font-size:14px;font-weight:800;color:#e2e8f0;">'+esc(d.nombre||'')+'</div><div style="font-size:11px;color:'+tc+';font-weight:700;margin-top:2px;">Nota de tela · '+esc((d.tela_estado||'').replace(/_/g,' ').toUpperCase())+'</div></div>';
   inner += '</div>';
   inner += '<textarea id="tela-nota-ta" placeholder="Escribe la referencia o nota de tela..." style="width:100%;min-height:130px;background:rgba(255,255,255,.04);border:1px solid rgba(52,211,153,.3);border-radius:10px;color:#e2e8f0;font-size:14px;line-height:1.6;padding:12px;resize:none;outline:none;font-family:inherit;box-sizing:border-box;">'+esc(d.tela_nota||'')+'</textarea>';
+  // ── Selector de tela desde el catálogo de Costeo (precios ya cargados en MP) ──
+  var _telasCat = ((DB.costeo && DB.costeo.mp) || []).filter(function(m){ return m.familia==='Telas'; }).sort(function(a,b){ return a.nombre.localeCompare(b.nombre); });
+  if(_telasCat.length){
+    inner += '<div style="display:flex;flex-direction:column;gap:5px;">';
+    inner += '<div style="font-size:11px;color:#64748b;font-weight:600;">🧵 Elegir del catálogo de telas ('+_telasCat.length+')</div>';
+    inner += '<select id="tela-select-mp" data-disid="'+id+'" onchange="_telaSeleccionarDeCatalogo(this)" style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(52,211,153,.3);border-radius:8px;color:#e2e8f0;font-size:13px;padding:8px 10px;outline:none;box-sizing:border-box;">';
+    inner += '<option value="">— buscar / seleccionar tela —</option>';
+    _telasCat.forEach(function(m){
+      var sel = (d.tela_mp_id===m.id) ? 'selected' : '';
+      inner += '<option value="'+esc(m.id)+'" data-precio="'+m.precio_unitario+'" data-nombre="'+esc(m.nombre)+'" '+sel+'>'+esc(m.nombre)+' — $'+Math.round(m.precio_unitario).toLocaleString('es-CO')+'/'+esc(m.unidad||'und')+'</option>';
+    });
+    inner += '</select>';
+    inner += '</div>';
+  }
   inner += '<div style="display:flex;align-items:center;gap:10px;">';
   inner += '<div style="font-size:11px;color:#64748b;font-weight:600;white-space:nowrap;">💰 Precio / mt</div>';
   inner += '<div style="position:relative;flex:1;">';
@@ -9347,15 +9387,29 @@ function abrirTelaNotaModal(id){
   document.body.appendChild(overlay);
   setTimeout(function(){ var ta=document.getElementById('tela-nota-ta'); if(ta) ta.focus(); }, 60);
 }
+function _telaSeleccionarDeCatalogo(sel){
+  var opt = sel.options[sel.selectedIndex];
+  var precioIn = document.getElementById('tela-precio-in');
+  var ta = document.getElementById('tela-nota-ta');
+  if(!opt || !opt.value){ return; }
+  var precio = parseFloat(opt.dataset.precio)||0;
+  var nombre = opt.dataset.nombre||'';
+  if(precioIn) precioIn.value = Math.round(precio);
+  if(ta && !ta.value.trim()) ta.value = nombre;
+}
 function guardarTelaNotaModal(id){
   var ta = document.getElementById('tela-nota-ta');
   var nota = ta ? ta.value.trim() : '';
   var precioIn = document.getElementById('tela-precio-in');
   var precio = precioIn ? parseFloat(precioIn.value)||0 : 0;
+  var selMp = document.getElementById('tela-select-mp');
+  var mpOpt = selMp && selMp.value ? selMp.options[selMp.selectedIndex] : null;
   var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
   if(!d) return;
   d.tela_nota = nota;
   d.tela_precio = precio || null;
+  d.tela_mp_id = mpOpt ? mpOpt.value : (precio ? d.tela_mp_id : null);
+  d.tela_nombre_mp = mpOpt ? mpOpt.dataset.nombre : d.tela_nombre_mp;
   _logEvt('tela_nota', {diseno_id:d.id, nombre:d.nombre, tiene_nota:!!nota, precio:precio});
   saveLocal(); guardarDisenos();
   var modal = document.getElementById('tela-nota-modal');
