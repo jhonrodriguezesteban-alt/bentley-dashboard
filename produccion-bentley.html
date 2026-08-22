@@ -1029,7 +1029,7 @@ function _fbApplyKey(key, d){
   }
   else if(key==='cronograma'){ DB.cronograma = d.cronograma||[]; }
   else if(key==='prog_ops')  { DB.prog_ops = d.ops_plan||[]; }
-  else if(key==='planeacion'){ DB.planeacion = {meses:d.meses||{}, disenos_plan:d.disenos_plan||{}, historial_corte:d.historial_corte||[]}; }
+  else if(key==='planeacion'){ DB.planeacion = {meses:d.meses||{}, disenos_plan:d.disenos_plan||{}, historial_corte:d.historial_corte||[], confirmadas:d.confirmadas||{}}; }
   else if(key==='planeacion_confeccion'){ DB.planeacion_confeccion = {por_satelite:d.por_satelite||{}}; }
   else if(key==='sim')       { DB.sim={active:d.active||[],data:d.data||{}}; _simActive=DB.sim.active; _simData=DB.sim.data; }
   else if(key==='usuarios')  { DB.usuarios = d.usuarios||[]; }
@@ -2107,7 +2107,7 @@ function _planDisSetUds(disId, uds){
   if(telTotal) telTotal.textContent = total>0 ? _fmtCOP(total) : '—';
   var telUds = document.getElementById('pland-total-uds');
   if(telUds) telUds.textContent = totalUds>0 ? totalUds.toLocaleString('es-CO')+' uds' : '—';
-  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[]});
+  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[], confirmadas: DB.planeacion.confirmadas||{}});
 }
 
 function _planDisSetMes(disId, mes){
@@ -2117,7 +2117,7 @@ function _planDisSetMes(disId, mes){
   if(!DB.planeacion.disenos_plan[disId]) DB.planeacion.disenos_plan[disId] = {uds:0, mes:''};
   DB.planeacion.disenos_plan[disId].mes = mes;
   saveLocal();
-  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[]});
+  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[], confirmadas: DB.planeacion.confirmadas||{}});
   renderPage('planeacion');
 }
 function _planDisRemove(disId){
@@ -2128,7 +2128,7 @@ function _planDisRemove(disId){
     DB.planeacion.disenos_plan[disId].mes = '';
   }
   saveLocal();
-  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[]});
+  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[], confirmadas: DB.planeacion.confirmadas||{}});
   renderPage('planeacion');
 }
 
@@ -2136,7 +2136,7 @@ function limpiarPlanDis(){
   if(!DB.planeacion) return;
   DB.planeacion.disenos_plan = {};
   saveLocal();
-  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: {}, historial_corte: DB.planeacion.historial_corte||[]});
+  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: {}, historial_corte: DB.planeacion.historial_corte||[], confirmadas: DB.planeacion.confirmadas||{}});
   renderPage('planeacion');
 }
 
@@ -2297,7 +2297,7 @@ async function cargarDatos(){
     var logR = await fetch(BASE_URL + 'prod_logistica.json?t=' + t);
     if(logR.ok){ var d10 = await logR.json(); DB.logistica = {tareas: d10.tareas||[]}; }
     var planR = await fetch(BASE_URL + 'prod_planeacion.json?t=' + t);
-    if(planR.ok){ var d11 = await planR.json(); DB.planeacion = {meses: d11.meses||{}, disenos_plan: d11.disenos_plan||{}, historial_corte: d11.historial_corte||[]}; }
+    if(planR.ok){ var d11 = await planR.json(); DB.planeacion = {meses: d11.meses||{}, disenos_plan: d11.disenos_plan||{}, historial_corte: d11.historial_corte||[], confirmadas: d11.confirmadas||{}}; }
     var planConfR = await fetch(BASE_URL + 'prod_planeacion_confeccion.json?t=' + t);
     if(planConfR.ok){ var d11b = await planConfR.json(); DB.planeacion_confeccion = {por_satelite: d11b.por_satelite||{}}; }
     else { DB.planeacion_confeccion = {por_satelite:{}}; }
@@ -2338,7 +2338,7 @@ async function cargarDatos(){
           var fbCron = await _fbGet('cronograma');
           if(fbCron) DB.cronograma = fbCron.cronograma||[];
           var fbPlan = await _fbGet('planeacion');
-          if(fbPlan) DB.planeacion = {meses: fbPlan.meses||{}, disenos_plan: fbPlan.disenos_plan||{}, historial_corte: fbPlan.historial_corte||[]};
+          if(fbPlan) DB.planeacion = {meses: fbPlan.meses||{}, disenos_plan: fbPlan.disenos_plan||{}, historial_corte: fbPlan.historial_corte||[], confirmadas: fbPlan.confirmadas||{}};
           var fbPlanConf = await _fbGet('planeacion_confeccion');
           if(fbPlanConf) DB.planeacion_confeccion = {por_satelite: fbPlanConf.por_satelite||{}};
           var fbBit = await _fbGet('bitacora');
@@ -2533,42 +2533,89 @@ function renderPage(page){
 var _planDragOpId = null;
 
 async function guardarPlaneacion(){
-  if(!DB.planeacion) DB.planeacion = {meses:{}, disenos_plan:{}, historial_corte:[]};
-  var ok = await guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[]});
+  if(!DB.planeacion) DB.planeacion = {meses:{}, disenos_plan:{}, historial_corte:[], confirmadas:{}};
+  var ok = await guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[], confirmadas: DB.planeacion.confirmadas||{}});
   if(ok) toast('Planeación guardada','success');
 }
 
+var _planCatModalActual = null;
+function planToggleConfirmada(refKey, checked){
+  if(!DB.planeacion) DB.planeacion = {meses:{}, disenos_plan:{}, historial_corte:[], confirmadas:{}};
+  if(!DB.planeacion.confirmadas) DB.planeacion.confirmadas = {};
+  if(checked) DB.planeacion.confirmadas[refKey] = true;
+  else delete DB.planeacion.confirmadas[refKey];
+  guardarPlaneacion();
+}
+function planToggleExpandRef(rowId){
+  var row = document.getElementById(rowId);
+  if(!row) return;
+  row.style.display = (row.style.display==='none') ? 'block' : 'none';
+}
 function planVerCategoria(cat){
+  _planCatModalActual = cat;
   var catMap = window._planCatMap || {};
   var info = catMap[cat];
   if(!info) return;
-  var units = info.refs; // {op, color, key}
+  var units = info.refs; // {op, color} para OP activas, {diseno, mes, uds} para diseños en planificación
   var totalUds = info.uds;
+  var confirmadas = (DB.planeacion && DB.planeacion.confirmadas) || {};
   var h = '<div style="padding:0 4px 20px;">';
   h += '<div style="font-size:11px;color:#64748b;margin-bottom:14px;">'+units.length+' referencias · '+totalUds.toLocaleString('es-CO')+' unidades programadas</div>';
   // Agrupar por nombre_producto único (puede haber múltiples colores/OPs con mismo nombre)
   var refMap = {};
   units.forEach(function(u){
-    var key = u.op.nombre_producto||u.op.id;
-    if(!refMap[key]) refMap[key] = {nombre:key, units:[], uds:0, id:u.op.id};
-    refMap[key].units.push(u);
-    refMap[key].uds += _planColorUds(u.op, u.color);
+    if(u.diseno){
+      var key = 'DIS_'+u.diseno.id;
+      if(!refMap[key]) refMap[key] = {nombre:u.diseno.nombre||'(sin nombre)', units:[], uds:0, id:null, tipo:'diseno'};
+      refMap[key].units.push(u);
+      refMap[key].uds += u.uds;
+    } else {
+      var key2 = u.op.nombre_producto||u.op.id;
+      if(!refMap[key2]) refMap[key2] = {nombre:key2, units:[], uds:0, id:u.op.id, tipo:'op'};
+      refMap[key2].units.push(u);
+      refMap[key2].uds += _planColorUds(u.op, u.color);
+    }
   });
   var refs = Object.values(refMap).sort(function(a,b){ return b.uds - a.uds; });
-  refs.forEach(function(ref){
+  refs.forEach(function(ref, ri){
     var pct = totalUds>0 ? (ref.uds/totalUds*100) : 0;
-    h += '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#1c1c1e;border-radius:9px;margin-bottom:6px;cursor:pointer;" onclick="verDetalleOP(\''+ref.id+'\')" onmouseover="this.style.background=\'#1c1c1e\'" onmouseout="this.style.background=\'#1c1c1e\'">';
+    var refKey = 'REF||'+cat+'||'+ref.nombre.trim().toUpperCase();
+    var checked = !!confirmadas[refKey];
+    var rowId = 'plan-ref-expand-'+ri+'-'+cat.replace(/[^A-Za-z0-9]/g,'');
+    h += '<div style="background:#1c1c1e;border-radius:9px;margin-bottom:6px;overflow:hidden;'+(checked?'box-shadow:inset 3px 0 0 var(--green);':'')+'">';
+    h += '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;" onclick="planToggleExpandRef(\''+rowId+'\')">';
+    h += '<input type="checkbox" '+(checked?'checked':'')+' onclick="event.stopPropagation();planToggleConfirmada(\''+esc(refKey).replace(/'/g,"\\'")+'\',this.checked)" title="Confirmar que esta referencia sí va a producción" style="width:18px;height:18px;flex-shrink:0;accent-color:var(--green);cursor:pointer;">';
     h += '<div style="flex:1;min-width:0;">';
-    h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(ref.nombre)+'</div>';
-    if(ref.units.length>1){
+    h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(ref.nombre)+(ref.tipo==='diseno'?' <span style="font-size:9px;color:#a855f7;font-weight:700;">· EN DISEÑO</span>':'')+'</div>';
+    if(ref.tipo==='op' && ref.units.length>=1){
       var colores = ref.units.map(function(u){ return u.color; }).join(' · ');
       h += '<div style="font-size:10px;color:#475569;">'+ref.units.length+' color'+(ref.units.length!==1?'es':'')+': '+esc(colores)+'</div>';
+    } else if(ref.tipo==='diseno'){
+      var mesLbl = (_planMesesDef().find(function(m){ return m.k===ref.units[0].mes; })||{}).label || ref.units[0].mes;
+      h += '<div style="font-size:10px;color:#475569;">sin color asignado aún · planificado para '+esc(mesLbl)+'</div>';
     }
     h += '</div>';
     h += '<div style="text-align:right;flex-shrink:0;">';
     h += '<div style="font-size:16px;font-weight:900;color:#f1f5f9;">'+ref.uds.toLocaleString('es-CO')+'<span style="font-size:10px;color:#64748b;margin-left:3px;">uds</span></div>';
     h += '<div style="font-size:10px;color:#0a84ff;font-weight:700;">'+pct.toFixed(1)+'% del cat.</div>';
     h += '</div></div>';
+    // Panel expandible: colores y cantidades programadas
+    h += '<div id="'+rowId+'" style="display:none;padding:0 12px 12px 40px;">';
+    if(ref.tipo==='op'){
+      h += '<table style="width:100%;border-collapse:collapse;font-size:11px;">';
+      h += '<thead><tr style="color:#64748b;text-align:left;"><th style="padding:4px 6px;font-weight:600;">Color</th><th style="padding:4px 6px;font-weight:600;text-align:right;">Cantidad</th><th style="padding:4px 6px;font-weight:600;">Estado</th></tr></thead><tbody>';
+      ref.units.forEach(function(u){
+        var qty = _planColorUds(u.op, u.color);
+        var estColor = (u.op.subg_estados||{})[u.op.id+'||'+u.color] || '—';
+        h += '<tr style="border-top:1px solid rgba(255,255,255,.05);"><td style="padding:5px 6px;color:#cbd5e1;">'+esc(u.color)+'</td><td style="padding:5px 6px;text-align:right;color:#f1f5f9;font-weight:700;">'+qty.toLocaleString('es-CO')+'</td><td style="padding:5px 6px;color:#64748b;">'+esc(estColor)+'</td></tr>';
+      });
+      h += '</tbody></table>';
+      h += '<div style="margin-top:8px;"><button class="btn-sm" onclick="event.stopPropagation();verDetalleOP(\''+ref.id+'\')" style="background:rgba(10,132,255,.12);border:1px solid rgba(10,132,255,.3);color:#0a84ff;padding:6px 12px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;">Ver OP completa →</button></div>';
+    } else {
+      h += '<div style="font-size:11px;color:#64748b;">Este diseño todavía no tiene colores/tallas asignados — se definirán cuando pase a orden de producción. Cantidad planificada: <b style="color:#e2e8f0;">'+ref.uds.toLocaleString('es-CO')+' uds</b> para <b style="color:#e2e8f0;">'+esc((_planMesesDef().find(function(m){ return m.k===ref.units[0].mes; })||{}).label || ref.units[0].mes)+'</b>.</div>';
+    }
+    h += '</div>';
+    h += '</div>';
   });
   h += '</div>';
   openModal('📦 Referencias · '+cat, h);
@@ -4008,7 +4055,7 @@ function renderPlaneacion(){
   if(_planMigrado){
     DB.planeacion.meses = meses;
     if(_canEditPlan()){
-      guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[]});
+      guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[], confirmadas: DB.planeacion.confirmadas||{}});
     }
   }
 
@@ -4051,7 +4098,7 @@ function renderPlaneacion(){
   if(_histNuevo && _canEditPlan()){
     DB.planeacion.meses = meses;
     DB.planeacion.historial_corte = _histCorte;
-    guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte});
+    guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte, confirmadas: DB.planeacion.confirmadas||{}});
   }
 
   // Keys asignadas a algún mes
@@ -4454,6 +4501,7 @@ function renderPlaneacion(){
     if(!catMap[cat]) catMap[cat] = {refs:[], uds:0, disUds:0};
     catMap[cat].disUds = (catMap[cat].disUds||0) + p.uds;
     catMap[cat].uds += p.uds;
+    catMap[cat].refs.push({diseno:d, mes:p.mes, uds:p.uds});
   });
   window._planCatMap = catMap;
   var catKeys = Object.keys(catMap).sort(function(a,b){ return catMap[b].uds - catMap[a].uds; });
