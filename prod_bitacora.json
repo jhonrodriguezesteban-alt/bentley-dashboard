@@ -10230,19 +10230,39 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1787502440979_nn69f",
-      "ts": 1787502440979,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-121",
-      "op_nombre": "ABRIGO FROZEN",
       "categoria": "ABRIGOS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-08-23",
-      "total_uds": 296,
+      "id": "evt_1787502440979_nn69f",
+      "op_id": "OP-2026-121",
+      "op_nombre": "ABRIGO FROZEN",
       "referencias": [
         "ABRIGO FROZEN"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 296,
+      "ts": 1787502440979,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787509236700_xt40q",
+      "ts": 1787509236700,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-121",
+      "op_nombre": "ABRIGO FROZEN",
+      "color": "ROSA",
+      "mes": "2026-09"
+    },
+    {
+      "id": "evt_1787509238161_33aae",
+      "ts": 1787509238161,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-121",
+      "op_nombre": "ABRIGO FROZEN",
+      "color": "BEIGE",
+      "mes": "2026-09"
     }
   ]
 }
