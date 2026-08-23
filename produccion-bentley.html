@@ -2569,6 +2569,33 @@ function planToggleConfirmada(refKey, checked, meta){
 }
 // Tarjeta paralela a "Resumen total planeado" — solo referencias marcadas con el check,
 // sumando lo ya programado + la cantidad extra que se quiera agregar manualmente.
+// Objetivo de producción por familia (análisis venta 2025/2026 + inventario + buffer Ene-Abr 2027, 2026-08-23).
+// Nombres en mayúsculas para matchear directo contra la categoría tal como viene en las OPs/diseños.
+var OBJETIVO_PRODUCCION_FAMILIA = {
+  'CHAQUETAS':7030, 'CAMISETAS':4170, 'CONJUNTOS':3418, 'PANTALONES':2928, 'BUZOS':2816,
+  'AANAVITON':1613, 'CHALECOS':1598, 'ABRIGOS':883, 'PROMOCIONES':737, 'ACCESORIOS':469,
+  'VESTIDOS':438, 'CAMISONES':327, 'TEJIDO DE PUNTO':254, 'PANTALONETAS':242, 'FALDA':216,
+  'FALDAS':216, 'CAMIBUSOS':0, 'BLUSAS':0, 'CAMISAS':0
+};
+function _planObjetivoBadge(totalCat, objetivo){
+  if(objetivo===undefined || objetivo===null) return '';
+  var diff = totalCat - objetivo;
+  var pct = objetivo>0 ? (totalCat/objetivo*100) : (totalCat>0?999:0);
+  var color, texto;
+  if(objetivo===0){
+    color = totalCat>0 ? '#fbbf24' : '#475569';
+    texto = totalCat>0 ? 'sin objetivo (inventario ya cubre)' : 'sin objetivo';
+  } else if(diff>0){
+    color = '#f87171'; texto = '+'+diff.toLocaleString('es-CO')+' sobre el objetivo ('+Math.round(pct)+'%)';
+  } else if(diff<0){
+    color = '#fbbf24'; texto = 'faltan '+Math.abs(diff).toLocaleString('es-CO')+' para el objetivo ('+Math.round(pct)+'%)';
+  } else {
+    color = '#34d399'; texto = 'en el objetivo exacto';
+  }
+  return '<div style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,.06);">'
+    + '<div style="font-size:9px;color:#475569;">Objetivo: '+objetivo.toLocaleString('es-CO')+' uds</div>'
+    + '<div style="font-size:10px;font-weight:700;color:'+color+';">'+texto+'</div></div>';
+}
 function _planRenderConfirmados(){
   var confirmadas = (DB.planeacion && DB.planeacion.confirmadas) || {};
   var entries = Object.keys(confirmadas).map(function(k){ return Object.assign({refKey:k}, confirmadas[k]); });
@@ -2627,6 +2654,7 @@ function _planRenderConfirmados(){
     h += '<span style="font-size:9px;background:rgba(10,132,255,.12);color:#0a84ff;border-radius:5px;padding:2px 6px;font-weight:700;">'+info.nOp+' repro</span>';
     h += '<span style="font-size:9px;background:rgba(168,85,247,.12);color:#a855f7;border-radius:5px;padding:2px 6px;font-weight:700;">'+info.nDiseno+' diseño</span>';
     h += '</div>';
+    h += _planObjetivoBadge(totalCat, OBJETIVO_PRODUCCION_FAMILIA[cat]);
     h += '</div>';
   });
   h += '</div>';
