@@ -2576,10 +2576,11 @@ function _planRenderConfirmados(){
   var byCat = {};
   entries.forEach(function(e){
     var cat = e.cat || 'SIN CATEGORÍA';
-    if(!byCat[cat]) byCat[cat] = {uds:0, extra:0, refs:[]};
+    if(!byCat[cat]) byCat[cat] = {uds:0, extra:0, refs:[], nOp:0, nDiseno:0};
     byCat[cat].uds += (e.uds||0);
     byCat[cat].extra += (e.extra||0);
     byCat[cat].refs.push(e);
+    if(e.tipo==='diseno') byCat[cat].nDiseno++; else byCat[cat].nOp++;
   });
   var catKeysC = Object.keys(byCat).sort(function(a,b){ return (byCat[b].uds+byCat[b].extra)-(byCat[a].uds+byCat[a].extra); });
   window._planConfirmadosCatMap = byCat;
@@ -2591,6 +2592,10 @@ function _planRenderConfirmados(){
     h += '<div style="font-size:9px;font-weight:700;color:#6ee7b7;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;">'+esc(cat)+'</div>';
     h += '<div style="font-size:26px;font-weight:900;color:#f1f5f9;line-height:1;margin-bottom:4px;">'+totalCat.toLocaleString('es-CO')+'</div>';
     h += '<div style="font-size:10px;color:#475569;">'+info.refs.length+' ref'+(info.refs.length!==1?'s':'')+(info.extra>0?' · <span style="color:#34d399;">+'+info.extra.toLocaleString('es-CO')+' extra</span>':'')+'</div>';
+    h += '<div style="display:flex;gap:6px;margin-top:5px;">';
+    h += '<span style="font-size:9px;background:rgba(10,132,255,.12);color:#0a84ff;border-radius:5px;padding:2px 6px;font-weight:700;">'+info.nOp+' repro</span>';
+    h += '<span style="font-size:9px;background:rgba(168,85,247,.12);color:#a855f7;border-radius:5px;padding:2px 6px;font-weight:700;">'+info.nDiseno+' diseño</span>';
+    h += '</div>';
     h += '</div>';
   });
   h += '</div>';
