@@ -127,9 +127,7 @@
       "OP-2026-120||ROSA",
       "OP-2026-120||NEGRO",
       "OP-2026-120||VERDE MILITAR",
-      "OP-2026-121||ROSA",
-      "OP-2026-121||BEIGE",
-      "OP-2026-121||NEGRO"
+      "OP-2026-121||ROSA"
     ],
     "2026-10": [
       "OP-0040||MARFIL"
@@ -711,7 +709,7 @@
     },
     "REF||BUZOS||HOODIE RANGLAND PAÑO ALGODON ABIERTO": {
       "cat": "BUZOS",
-      "extra": 300,
+      "extra": 0,
       "nombre": "HOODIE RANGLAND PAÑO ALGODON ABIERTO",
       "ok": true,
       "tipo": "op",
@@ -719,7 +717,7 @@
     },
     "REF||BUZOS||HOODIE RANGLAND PAÑO ALGODON CERRADO": {
       "cat": "BUZOS",
-      "extra": 200,
+      "extra": 0,
       "nombre": "HOODIE RANGLAND PAÑO ALGODON CERRADO",
       "ok": true,
       "tipo": "op",
@@ -759,23 +757,39 @@
     },
     "REF||CHALECOS||CHALECO PUFFY": {
       "cat": "CHALECOS",
-      "extra": 500,
+      "extra": 0,
       "nombre": "CHALECO PUFFY",
       "ok": true,
       "tipo": "op",
       "uds": 112
     },
+    "REF||CHAQUETAS||BEISBOLERA ARMIN": {
+      "cat": "CHAQUETAS",
+      "extra": 0,
+      "nombre": "BEISBOLERA ARMIN",
+      "ok": true,
+      "tipo": "op",
+      "uds": 252
+    },
     "REF||CHAQUETAS||CHAQUETA CAZADORA": {
       "cat": "CHAQUETAS",
-      "extra": 400,
+      "extra": 0,
       "nombre": "CHAQUETA CAZADORA",
       "ok": true,
       "tipo": "op",
       "uds": 466
     },
+    "REF||CHAQUETAS||CHAQUETA DISCOVERY": {
+      "cat": "CHAQUETAS",
+      "extra": 0,
+      "nombre": "CHAQUETA DISCOVERY",
+      "ok": true,
+      "tipo": "diseno",
+      "uds": 300
+    },
     "REF||CHAQUETAS||CHAQUETA MARIPOSAS": {
       "cat": "CHAQUETAS",
-      "extra": 200,
+      "extra": 0,
       "nombre": "CHAQUETA MARIPOSAS",
       "ok": true,
       "tipo": "op",
@@ -783,7 +797,7 @@
     },
     "REF||CHAQUETAS||CHAQUETA ONION": {
       "cat": "CHAQUETAS",
-      "extra": 200,
+      "extra": 0,
       "nombre": "CHAQUETA ONION",
       "ok": true,
       "tipo": "op",
@@ -791,7 +805,7 @@
     },
     "REF||CHAQUETAS||CHAQUETA RALPH": {
       "cat": "CHAQUETAS",
-      "extra": 300,
+      "extra": 0,
       "nombre": "CHAQUETA RALPH",
       "ok": true,
       "tipo": "op",
@@ -799,7 +813,7 @@
     },
     "REF||CHAQUETAS||OVERSIZED CAPOTA": {
       "cat": "CHAQUETAS",
-      "extra": 300,
+      "extra": 0,
       "nombre": "OVERSIZED CAPOTA",
       "ok": true,
       "tipo": "op",
@@ -823,7 +837,7 @@
     },
     "REF||CONJUNTOS||CONJUNTO BOMBER CORTA": {
       "cat": "CONJUNTOS",
-      "extra": 200,
+      "extra": 0,
       "nombre": "CONJUNTO BOMBER CORTA",
       "ok": true,
       "tipo": "diseno",
@@ -839,7 +853,7 @@
     },
     "REF||CONJUNTOS||CONJUNTO MANCHESTER": {
       "cat": "CONJUNTOS",
-      "extra": 300,
+      "extra": 0,
       "nombre": "CONJUNTO MANCHESTER",
       "ok": true,
       "tipo": "op",
@@ -847,7 +861,7 @@
     },
     "REF||CONJUNTOS||CONJUNTO OSLO": {
       "cat": "CONJUNTOS",
-      "extra": 400,
+      "extra": 0,
       "nombre": "CONJUNTO OSLO",
       "ok": true,
       "tipo": "op",
@@ -903,7 +917,7 @@
     },
     "REF||PANTALONES||PANTALON CHICAGO": {
       "cat": "PANTALONES",
-      "extra": 300,
+      "extra": 0,
       "nombre": "PANTALON CHICAGO",
       "ok": true,
       "tipo": "op",
@@ -927,7 +941,7 @@
     },
     "REF||PANTALONES||PANTALON POLLY": {
       "cat": "PANTALONES",
-      "extra": 200,
+      "extra": 0,
       "nombre": "PANTALON POLLY",
       "ok": true,
       "tipo": "diseno",
@@ -935,7 +949,7 @@
     },
     "REF||PANTALONES||PANTALON RAVE": {
       "cat": "PANTALONES",
-      "extra": 200,
+      "extra": 0,
       "nombre": "PANTALON RAVE",
       "ok": true,
       "tipo": "op",
@@ -951,7 +965,7 @@
     },
     "REF||PANTALONES||PANTALON VENOM": {
       "cat": "PANTALONES",
-      "extra": 100,
+      "extra": 0,
       "nombre": "PANTALON VENOM",
       "ok": true,
       "tipo": "diseno",
@@ -959,11 +973,19 @@
     },
     "REF||PANTALONES||PANTALON ZAMBA": {
       "cat": "PANTALONES",
-      "extra": 100,
+      "extra": 0,
       "nombre": "PANTALON ZAMBA",
       "ok": true,
       "tipo": "op",
       "uds": 168
+    },
+    "REF||VESTIDOS||VESTIDO DONCELLA": {
+      "cat": "VESTIDOS",
+      "extra": 0,
+      "nombre": "VESTIDO DONCELLA",
+      "ok": true,
+      "tipo": "diseno",
+      "uds": 400
     },
     "REF||VESTIDOS||VESTIDO KIKI": {
       "cat": "VESTIDOS",
@@ -988,134 +1010,6 @@
       "ok": true,
       "tipo": "op",
       "uds": 174
-    },
-    "REF||CHAQUETAS||CHAQUETA DISCOVERY": {
-      "ok": true,
-      "extra": 0,
-      "cat": "CHAQUETAS",
-      "nombre": "CHAQUETA DISCOVERY",
-      "uds": 300,
-      "tipo": "diseno"
-    },
-    "REF||CHAQUETAS||BEISBOLERA ARMIN": {
-      "ok": true,
-      "extra": 200,
-      "cat": "CHAQUETAS",
-      "nombre": "BEISBOLERA ARMIN",
-      "uds": 252,
-      "tipo": "op"
-    },
-    "REF||CHAQUETAS||BEISBOLERA 2.0": {
-      "ok": true,
-      "extra": 500,
-      "cat": "CHAQUETAS",
-      "nombre": "BEISBOLERA 2.0",
-      "uds": 240,
-      "tipo": "op"
-    },
-    "REF||CHAQUETAS||CHAQUETA HARLEY": {
-      "ok": true,
-      "extra": 200,
-      "cat": "CHAQUETAS",
-      "nombre": "CHAQUETA HARLEY",
-      "uds": 240,
-      "tipo": "op"
-    },
-    "REF||CHAQUETAS||WASHMAN": {
-      "ok": true,
-      "extra": 0,
-      "cat": "CHAQUETAS",
-      "nombre": "WASHMAN",
-      "uds": 252,
-      "tipo": "op"
-    },
-    "REF||CHAQUETAS||CHAQUETA SALO": {
-      "ok": true,
-      "extra": 0,
-      "cat": "CHAQUETAS",
-      "nombre": "CHAQUETA SALO",
-      "uds": 200,
-      "tipo": "diseno"
-    },
-    "REF||CHAQUETAS||CHAQUETA TORERO NIÑA": {
-      "ok": true,
-      "extra": 0,
-      "cat": "CHAQUETAS",
-      "nombre": "CHAQUETA TORERO NIÑA",
-      "uds": 180,
-      "tipo": "op"
-    },
-    "REF||CHAQUETAS||CHAQUETA SUEDE OLD MONEY": {
-      "ok": true,
-      "extra": 0,
-      "cat": "CHAQUETAS",
-      "nombre": "CHAQUETA SUEDE OLD MONEY",
-      "uds": 96,
-      "tipo": "op"
-    },
-    "REF||CONJUNTOS||CONJUNTO RAYA TIZA": {
-      "ok": true,
-      "extra": 0,
-      "cat": "CONJUNTOS",
-      "nombre": "CONJUNTO RAYA TIZA",
-      "uds": 300,
-      "tipo": "diseno"
-    },
-    "REF||CONJUNTOS||CONJUNTO DAKOTA": {
-      "ok": true,
-      "extra": 0,
-      "cat": "CONJUNTOS",
-      "nombre": "conjunto dakota",
-      "uds": 300,
-      "tipo": "diseno"
-    },
-    "REF||CONJUNTOS||CONJUNTO JACOBO": {
-      "ok": true,
-      "extra": 0,
-      "cat": "CONJUNTOS",
-      "nombre": "CONJUNTO JACOBO",
-      "uds": 300,
-      "tipo": "diseno"
-    },
-    "REF||CONJUNTOS||CONJUNTO CHICAGO": {
-      "ok": true,
-      "extra": 0,
-      "cat": "CONJUNTOS",
-      "nombre": "CONJUNTO CHICAGO",
-      "uds": 160,
-      "tipo": "op"
-    },
-    "REF||CONJUNTOS||CONJUNTO ISABELLA": {
-      "ok": true,
-      "extra": 0,
-      "cat": "CONJUNTOS",
-      "nombre": "CONJUNTO ISABELLA",
-      "uds": 144,
-      "tipo": "op"
-    },
-    "REF||BUZOS||BUZO BOMBER ABIERTO": {
-      "ok": true,
-      "extra": 0,
-      "cat": "BUZOS",
-      "nombre": "BUZO BOMBER ABIERTO",
-      "uds": 300,
-      "tipo": "diseno"
-    },
-    "REF||CHALECOS||CHALECO KENWORT": {
-      "ok": true,
-      "extra": 0,
-      "cat": "CHALECOS",
-      "nombre": "CHALECO KENWORT",
-      "uds": 300,
-      "tipo": "diseno"
-    },
-    "REF||ABRIGOS||ABRIGO FROZEN": {
-      "ok": true,
-      "extra": 0,
-      "cat": "ABRIGOS",
-      "nombre": "ABRIGO FROZEN",
-      "uds": 296,
-      "tipo": "op"
     }
   }
 }
