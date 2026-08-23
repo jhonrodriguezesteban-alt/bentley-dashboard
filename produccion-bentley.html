@@ -2345,8 +2345,22 @@ async function cargarDatos(){
     else { var lsRaw=localStorage.getItem('bentley_sim_data'); if(lsRaw){ try{ var lsP=JSON.parse(lsRaw); DB.sim={active:lsP.active||[],data:lsP.data||lsP}; _simActive=DB.sim.active; _simData=DB.sim.data; }catch(e){} } }
     var logR = await fetch(BASE_URL + 'prod_logistica.json?t=' + t);
     if(logR.ok){ var d10 = await logR.json(); DB.logistica = {tareas: d10.tareas||[]}; }
-    var planR = await fetch(BASE_URL + 'prod_planeacion.json?t=' + t);
-    if(planR.ok){ var d11 = await planR.json(); DB.planeacion = {meses: d11.meses||{}, disenos_plan: d11.disenos_plan||{}, historial_corte: d11.historial_corte||[], confirmadas: d11.confirmadas||{}}; }
+    // Planeación en su propio try/catch — si CUALQUIER otro fetch de este bloque falla,
+    // el catch general de más abajo no debe hacer que Planeación se quede con datos viejos
+    // de localStorage; intentamos Firebase primero (más fresco) y luego Pages.
+    try {
+      var planFb = _fbDb ? await _fbGet('planeacion') : null;
+      if(planFb){ DB.planeacion = {meses: planFb.meses||{}, disenos_plan: planFb.disenos_plan||{}, historial_corte: planFb.historial_corte||[], confirmadas: planFb.confirmadas||{}}; }
+      else {
+        var planR = await fetch(BASE_URL + 'prod_planeacion.json?t=' + t);
+        if(planR.ok){ var d11 = await planR.json(); DB.planeacion = {meses: d11.meses||{}, disenos_plan: d11.disenos_plan||{}, historial_corte: d11.historial_corte||[], confirmadas: d11.confirmadas||{}}; }
+      }
+    } catch(planE){
+      try {
+        var planR2 = await fetch(BASE_URL + 'prod_planeacion.json?t=' + t);
+        if(planR2.ok){ var d11c = await planR2.json(); DB.planeacion = {meses: d11c.meses||{}, disenos_plan: d11c.disenos_plan||{}, historial_corte: d11c.historial_corte||[], confirmadas: d11c.confirmadas||{}}; }
+      } catch(planE2){ console.warn('Planeación: no se pudo cargar fresco, se mantiene lo que había en memoria', planE2); }
+    }
     var planConfR = await fetch(BASE_URL + 'prod_planeacion_confeccion.json?t=' + t);
     if(planConfR.ok){ var d11b = await planConfR.json(); DB.planeacion_confeccion = {por_satelite: d11b.por_satelite||{}}; }
     else { DB.planeacion_confeccion = {por_satelite:{}}; }
