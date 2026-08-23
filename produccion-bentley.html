@@ -2609,7 +2609,9 @@ function planVerConfirmadosCategoria(cat){
   h += '<div style="text-align:right;"><div style="font-size:9px;color:#64748b;text-transform:uppercase;">Total</div><div style="font-size:20px;font-weight:900;color:#34d399;">'+totalCat.toLocaleString('es-CO')+' uds</div></div>';
   h += '</div>';
   info.refs.sort(function(a,b){ return ((b.uds||0)+(b.extra||0))-((a.uds||0)+(a.extra||0)); }).forEach(function(e){
-    h += '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#1c1c1e;border-radius:9px;margin-bottom:6px;">';
+    var totalUdsRef = (e.uds||0)+(e.extra||0);
+    h += '<div style="padding:10px 12px;background:#1c1c1e;border-radius:9px;margin-bottom:6px;">';
+    h += '<div style="display:flex;align-items:center;gap:10px;">';
     h += '<div style="flex:1;min-width:0;">';
     h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(e.nombre||'')+'</div>';
     h += '<div style="font-size:10px;color:#475569;">programado: '+((e.uds||0).toLocaleString('es-CO'))+' uds</div>';
@@ -2619,8 +2621,23 @@ function planVerConfirmadosCategoria(cat){
     h += '<input type="number" min="0" step="12" value="'+(e.extra||'')+'" placeholder="0" data-refkey="'+esc(e.refKey)+'" data-cat="'+esc(cat)+'" onchange="_planExtraDesdeModal(this)" style="width:70px;background:#0d1117;border:1px solid rgba(52,211,153,.3);border-radius:6px;color:#34d399;font-size:12px;font-weight:700;padding:6px 6px;text-align:center;outline:none;">';
     h += '</div>';
     h += '<div style="text-align:right;flex-shrink:0;min-width:65px;">';
-    h += '<div style="font-size:15px;font-weight:900;color:#f1f5f9;">'+(((e.uds||0)+(e.extra||0)).toLocaleString('es-CO'))+'</div>';
+    h += '<div style="font-size:15px;font-weight:900;color:#f1f5f9;">'+totalUdsRef.toLocaleString('es-CO')+'</div>';
     h += '</div>';
+    h += '</div>';
+    // Desglose de costos (igual que las tarjetas de "Sin Asignar")
+    if(e.tieneReceta){
+      var matU=Math.round((e.mat||0)/(e.uds||1)), modU=Math.round((e.mod||0)/(e.uds||1)), cifU=Math.round((e.cif||0)/(e.uds||1)), svcU=Math.round((e.svc||0)/(e.uds||1)), totU=Math.round((e.costoTotal||0)/(e.uds||1));
+      var matT=Math.round(totU*totalUdsRef), modT=Math.round(modU*totalUdsRef), cifT=Math.round(cifU*totalUdsRef), svcT=Math.round(svcU*totalUdsRef), totalT=Math.round(totU*totalUdsRef);
+      h += '<div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06);font-size:10px;">';
+      h += '<div><span style="color:#64748b;">MAT&nbsp;</span><span style="color:#0ea5e9;font-weight:700;">$'+matT.toLocaleString('es-CO')+'</span></div>';
+      h += '<div><span style="color:#64748b;">MOD&nbsp;</span><span style="color:#34d399;font-weight:700;">$'+modT.toLocaleString('es-CO')+'</span></div>';
+      h += '<div><span style="color:#64748b;">CIF&nbsp;</span><span style="color:#fbbf24;font-weight:700;">$'+cifT.toLocaleString('es-CO')+'</span></div>';
+      h += '<div><span style="color:#64748b;">SVC&nbsp;</span><span style="color:#a855f7;font-weight:700;">$'+svcT.toLocaleString('es-CO')+'</span></div>';
+      h += '<div><span style="color:#64748b;">Total&nbsp;</span><span style="color:#f1f5f9;font-weight:800;">$'+totalT.toLocaleString('es-CO')+'</span></div>';
+      h += '</div>';
+    } else {
+      h += '<div style="margin-top:6px;font-size:9px;color:#374151;">Sin receta de costeo — costo no calculado</div>';
+    }
     h += '</div>';
   });
   h += '</div>';
@@ -2631,7 +2648,9 @@ function _planExtraDesdeModal(inp){
   setTimeout(function(){ planVerConfirmadosCategoria(inp.dataset.cat); }, 60);
 }
 function _planConfirmarClick(chk){
-  var meta = {cat:chk.dataset.cat, nombre:chk.dataset.nombre, uds:parseInt(chk.dataset.uds)||0, tipo:chk.dataset.tipo};
+  var meta = {cat:chk.dataset.cat, nombre:chk.dataset.nombre, uds:parseInt(chk.dataset.uds)||0, tipo:chk.dataset.tipo,
+    mat:parseInt(chk.dataset.mat)||0, mod:parseInt(chk.dataset.mod)||0, cif:parseInt(chk.dataset.cif)||0,
+    svc:parseInt(chk.dataset.svc)||0, costoTotal:parseInt(chk.dataset.total)||0, tieneReceta:chk.dataset.tienereceta==='1'};
   planToggleConfirmada(chk.dataset.refkey, chk.checked, meta);
 }
 function planSetExtra(refKey, val){
@@ -2681,11 +2700,16 @@ function planVerCategoria(cat){
     // componentes tipo MATERIAL: telas + insumos + apliques); para diseños sin OP, el precio
     // de la tela principal ya asignada en el módulo Diseño (d.tela_precio).
     var matInfo = null;
+    var costoTotales = {mat:0,mod:0,cif:0,svc:0,total:0,tieneReceta:false};
     if(ref.tipo==='op'){
       var matTotal = 0, matUdCount = 0, matSinReceta = false;
       ref.units.forEach(function(u){
         var c = _planCostoColor(u.op, u.color);
-        if(c){ matTotal += c.mat; matUdCount += c.uds; } else { matSinReceta = true; }
+        if(c){
+          matTotal += c.mat; matUdCount += c.uds;
+          costoTotales.mat += c.mat; costoTotales.mod += c.mod; costoTotales.cif += c.cif; costoTotales.svc += c.svc; costoTotales.total += c.total;
+          costoTotales.tieneReceta = true;
+        } else { matSinReceta = true; }
       });
       if(matUdCount>0) matInfo = {total:matTotal, porUd:matTotal/matUdCount, sinReceta:matSinReceta};
       else if(matSinReceta) matInfo = {sinReceta:true};
@@ -2695,7 +2719,7 @@ function planVerCategoria(cat){
     }
     h += '<div style="background:#1c1c1e;border-radius:9px;margin-bottom:6px;overflow:hidden;'+(checked?'box-shadow:inset 3px 0 0 var(--green);':'')+'">';
     h += '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;" onclick="planToggleExpandRef(\''+rowId+'\')">';
-    h += '<input type="checkbox" '+(checked?'checked':'')+' data-refkey="'+esc(refKey)+'" data-cat="'+esc(cat)+'" data-nombre="'+esc(ref.nombre)+'" data-uds="'+ref.uds+'" data-tipo="'+ref.tipo+'" onclick="event.stopPropagation();_planConfirmarClick(this)" title="Confirmar que esta referencia sí va a producción" style="width:18px;height:18px;flex-shrink:0;accent-color:var(--green);cursor:pointer;">';
+    h += '<input type="checkbox" '+(checked?'checked':'')+' data-refkey="'+esc(refKey)+'" data-cat="'+esc(cat)+'" data-nombre="'+esc(ref.nombre)+'" data-uds="'+ref.uds+'" data-tipo="'+ref.tipo+'" data-mat="'+Math.round(costoTotales.mat)+'" data-mod="'+Math.round(costoTotales.mod)+'" data-cif="'+Math.round(costoTotales.cif)+'" data-svc="'+Math.round(costoTotales.svc)+'" data-total="'+Math.round(costoTotales.total)+'" data-tienereceta="'+(costoTotales.tieneReceta?'1':'0')+'" onclick="event.stopPropagation();_planConfirmarClick(this)" title="Confirmar que esta referencia sí va a producción" style="width:18px;height:18px;flex-shrink:0;accent-color:var(--green);cursor:pointer;">';
     h += '<div style="flex:1;min-width:0;">';
     var _DIS_ETAPA_LBL = {CON_PROVEEDOR:'Con Proveedor',EN_DISENO_DIGITAL:'Diseño Digital',EN_CORTE_MUESTRA:'Corte Muestra',EN_CONFECCION_MUESTRA:'Confección Muestra',EN_REVISION_GERENCIA:'Revisión Gerencia',EN_ESCALADO:'Escalado',LISTA_PRODUCCION:'Lista para Producción'};
     var _disEtapaTxt = ref.tipo==='diseno' ? (_DIS_ETAPA_LBL[ref.units[0].diseno.kanban_estado]||'En Diseño') : '';
