@@ -2582,37 +2582,53 @@ function _planRenderConfirmados(){
     byCat[cat].refs.push(e);
   });
   var catKeysC = Object.keys(byCat).sort(function(a,b){ return (byCat[b].uds+byCat[b].extra)-(byCat[a].uds+byCat[a].extra); });
+  window._planConfirmadosCatMap = byCat;
   h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;">';
   catKeysC.forEach(function(cat){
     var info = byCat[cat];
     var totalCat = info.uds + info.extra;
-    h += '<div style="background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.2);border-radius:10px;padding:12px 13px;">';
+    h += '<div onclick="planVerConfirmadosCategoria(\''+esc(cat)+'\')" style="background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.2);border-radius:10px;padding:12px 13px;cursor:pointer;transition:border-color .15s,background .15s;" onmouseover="this.style.borderColor=\'rgba(52,211,153,.6)\';this.style.background=\'rgba(52,211,153,.1)\'" onmouseout="this.style.borderColor=\'rgba(52,211,153,.2)\';this.style.background=\'rgba(52,211,153,.05)\'">';
     h += '<div style="font-size:9px;font-weight:700;color:#6ee7b7;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;">'+esc(cat)+'</div>';
     h += '<div style="font-size:26px;font-weight:900;color:#f1f5f9;line-height:1;margin-bottom:4px;">'+totalCat.toLocaleString('es-CO')+'</div>';
     h += '<div style="font-size:10px;color:#475569;">'+info.refs.length+' ref'+(info.refs.length!==1?'s':'')+(info.extra>0?' · <span style="color:#34d399;">+'+info.extra.toLocaleString('es-CO')+' extra</span>':'')+'</div>';
     h += '</div>';
   });
   h += '</div>';
-  // Detalle de referencias confirmadas con casilla para cantidad extra
-  h += '<div style="margin-top:14px;border-top:1px solid rgba(52,211,153,.15);padding-top:12px;">';
-  entries.sort(function(a,b){ return ((b.uds||0)+(b.extra||0))-((a.uds||0)+(a.extra||0)); }).forEach(function(e){
-    h += '<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:rgba(255,255,255,.02);border-radius:8px;margin-bottom:5px;">';
+  h += '<div style="margin-top:10px;font-size:9px;color:#374151;">Click en una categoría para ver sus referencias y ajustar cantidades extra.</div>';
+  h += '</div>';
+  return h;
+}
+function planVerConfirmadosCategoria(cat){
+  var byCat = window._planConfirmadosCatMap || {};
+  var info = byCat[cat];
+  if(!info) return;
+  var h = '<div style="padding:0 4px 20px;">';
+  var totalCat = info.uds + info.extra;
+  h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">';
+  h += '<div style="font-size:11px;color:#64748b;">'+info.refs.length+' referencia'+(info.refs.length!==1?'s':'')+' confirmada'+(info.refs.length!==1?'s':'')+'</div>';
+  h += '<div style="text-align:right;"><div style="font-size:9px;color:#64748b;text-transform:uppercase;">Total</div><div style="font-size:20px;font-weight:900;color:#34d399;">'+totalCat.toLocaleString('es-CO')+' uds</div></div>';
+  h += '</div>';
+  info.refs.sort(function(a,b){ return ((b.uds||0)+(b.extra||0))-((a.uds||0)+(a.extra||0)); }).forEach(function(e){
+    h += '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#1c1c1e;border-radius:9px;margin-bottom:6px;">';
     h += '<div style="flex:1;min-width:0;">';
-    h += '<div style="font-size:12px;font-weight:700;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(e.nombre||'')+'</div>';
-    h += '<div style="font-size:9px;color:#64748b;">'+esc(e.cat||'')+' · programado: '+((e.uds||0).toLocaleString('es-CO'))+' uds</div>';
+    h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(e.nombre||'')+'</div>';
+    h += '<div style="font-size:10px;color:#475569;">programado: '+((e.uds||0).toLocaleString('es-CO'))+' uds</div>';
     h += '</div>';
     h += '<div style="display:flex;align-items:center;gap:5px;flex-shrink:0;">';
     h += '<span style="font-size:9px;color:#64748b;white-space:nowrap;">+ extra</span>';
-    h += '<input type="number" min="0" step="12" value="'+(e.extra||'')+'" placeholder="0" onchange="planSetExtra(\''+esc(e.refKey)+'\',this.value)" style="width:70px;background:#0d1117;border:1px solid rgba(52,211,153,.3);border-radius:6px;color:#34d399;font-size:12px;font-weight:700;padding:5px 6px;text-align:center;outline:none;">';
+    h += '<input type="number" min="0" step="12" value="'+(e.extra||'')+'" placeholder="0" data-refkey="'+esc(e.refKey)+'" data-cat="'+esc(cat)+'" onchange="_planExtraDesdeModal(this)" style="width:70px;background:#0d1117;border:1px solid rgba(52,211,153,.3);border-radius:6px;color:#34d399;font-size:12px;font-weight:700;padding:6px 6px;text-align:center;outline:none;">';
     h += '</div>';
-    h += '<div style="text-align:right;flex-shrink:0;min-width:60px;">';
-    h += '<div style="font-size:14px;font-weight:900;color:#f1f5f9;">'+(((e.uds||0)+(e.extra||0)).toLocaleString('es-CO'))+'</div>';
+    h += '<div style="text-align:right;flex-shrink:0;min-width:65px;">';
+    h += '<div style="font-size:15px;font-weight:900;color:#f1f5f9;">'+(((e.uds||0)+(e.extra||0)).toLocaleString('es-CO'))+'</div>';
     h += '</div>';
     h += '</div>';
   });
   h += '</div>';
-  h += '</div>';
-  return h;
+  openModal('✅ Confirmados · '+cat, h);
+}
+function _planExtraDesdeModal(inp){
+  planSetExtra(inp.dataset.refkey, inp.value);
+  setTimeout(function(){ planVerConfirmadosCategoria(inp.dataset.cat); }, 60);
 }
 function _planConfirmarClick(chk){
   var meta = {cat:chk.dataset.cat, nombre:chk.dataset.nombre, uds:parseInt(chk.dataset.uds)||0, tipo:chk.dataset.tipo};
