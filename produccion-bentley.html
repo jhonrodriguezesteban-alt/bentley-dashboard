@@ -2098,7 +2098,7 @@ function _planDisSetUds(disId, uds){
   // Recalcular total general
   var total = 0, totalUds = 0;
   var plan = DB.planeacion.disenos_plan||{};
-  (DB.disenos||[]).filter(function(d){ return d.kanban_estado!=='LISTA_PRODUCCION' && !d.eliminado; }).forEach(function(d){
+  (DB.disenos||[]).filter(function(d){ return !d.eliminado; }).forEach(function(d){
     var q = plan[d.id] ? (plan[d.id].uds||0) : 0;
     var r = _getCosteoRef(d.categoria);
     if(q>0){ totalUds+=q; if(r) total+=q*r.total; }
@@ -2681,7 +2681,9 @@ function planVerCategoria(cat){
     h += '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;" onclick="planToggleExpandRef(\''+rowId+'\')">';
     h += '<input type="checkbox" '+(checked?'checked':'')+' data-refkey="'+esc(refKey)+'" data-cat="'+esc(cat)+'" data-nombre="'+esc(ref.nombre)+'" data-uds="'+ref.uds+'" data-tipo="'+ref.tipo+'" onclick="event.stopPropagation();_planConfirmarClick(this)" title="Confirmar que esta referencia sí va a producción" style="width:18px;height:18px;flex-shrink:0;accent-color:var(--green);cursor:pointer;">';
     h += '<div style="flex:1;min-width:0;">';
-    h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(ref.nombre)+(ref.tipo==='diseno'?' <span style="font-size:9px;color:#a855f7;font-weight:700;">· EN DISEÑO</span>':'')+'</div>';
+    var _DIS_ETAPA_LBL = {CON_PROVEEDOR:'Con Proveedor',EN_DISENO_DIGITAL:'Diseño Digital',EN_CORTE_MUESTRA:'Corte Muestra',EN_CONFECCION_MUESTRA:'Confección Muestra',EN_REVISION_GERENCIA:'Revisión Gerencia',EN_ESCALADO:'Escalado',LISTA_PRODUCCION:'Lista para Producción'};
+    var _disEtapaTxt = ref.tipo==='diseno' ? (_DIS_ETAPA_LBL[ref.units[0].diseno.kanban_estado]||'En Diseño') : '';
+    h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(ref.nombre)+(ref.tipo==='diseno'?' <span style="font-size:9px;color:'+(ref.units[0].diseno.kanban_estado==='LISTA_PRODUCCION'?'#22c55e':'#a855f7')+';font-weight:700;">· '+esc(_disEtapaTxt.toUpperCase())+'</span>':'')+'</div>';
     if(ref.tipo==='op' && ref.units.length>=1){
       var colores = ref.units.map(function(u){ return u.color; }).join(' · ');
       h += '<div style="font-size:10px;color:#475569;">'+ref.units.length+' color'+(ref.units.length!==1?'es':'')+': '+esc(colores)+'</div>';
@@ -4247,7 +4249,7 @@ function renderPlaneacion(){
   }
 
   // ── Panel: Diseños en planificación ─────────────────────────────────────────
-  var disenosActivos = (DB.disenos||[]).filter(function(d){ return !d.eliminado && d.kanban_estado !== 'LISTA_PRODUCCION'; });
+  var disenosActivos = (DB.disenos||[]).filter(function(d){ return !d.eliminado; });
   var disPlan = (DB.planeacion && DB.planeacion.disenos_plan) || {};
   var MESES_SEL = [{k:'',l:'— Mes —'}].concat(MESES.map(function(m){ return {k:m.k, l:m.label}; }));
 
@@ -4506,7 +4508,7 @@ function renderPlaneacion(){
   // Fenio: uds cuentan en mes asignado, inversión se difiere a Diciembre
   var globalDisUds=0, globalDisInv=0, globalFenioInv=0, globalDisCount=0, globalDisMatSvc=0;
   var disPlanGlobal = (DB.planeacion && DB.planeacion.disenos_plan) || {};
-  (DB.disenos||[]).filter(function(d){ return !d.eliminado && d.kanban_estado!=='LISTA_PRODUCCION'; }).forEach(function(d){
+  (DB.disenos||[]).filter(function(d){ return !d.eliminado; }).forEach(function(d){
     var p = disPlanGlobal[d.id];
     if(!p || !p.mes || !(p.uds>0)) return;
     var r = _getCosteoRef(d.categoria);
@@ -4599,7 +4601,7 @@ function renderPlaneacion(){
     });
   });
   // Sumar diseños planificados al catMap por categoría
-  (DB.disenos||[]).filter(function(d){ return !d.eliminado && d.kanban_estado!=='LISTA_PRODUCCION'; }).forEach(function(d){
+  (DB.disenos||[]).filter(function(d){ return !d.eliminado; }).forEach(function(d){
     var p = disPlanGlobal[d.id];
     if(!p || !p.mes || !(p.uds>0)) return;
     var cat = (d.categoria||'Sin categoría').trim().toUpperCase();
@@ -4663,7 +4665,7 @@ function renderPlaneacion(){
 
   // Índice de diseños por mes
   var disPlanAll = (DB.planeacion && DB.planeacion.disenos_plan) || {};
-  var disenosActivos2 = (DB.disenos||[]).filter(function(d){ return !d.eliminado && d.kanban_estado !== 'LISTA_PRODUCCION'; });
+  var disenosActivos2 = (DB.disenos||[]).filter(function(d){ return !d.eliminado; });
   window._planMesMap = {};
 
   MESES.forEach(function(mes){
