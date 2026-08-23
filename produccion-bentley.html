@@ -1676,8 +1676,17 @@ function _mergePlaneacionData(remoteData, localData){
   var mesesResult = {};
   Object.keys(remMeses).forEach(function(k){ mesesResult[k]=remMeses[k]; });
   Object.keys(locMeses).forEach(function(k){ mesesResult[k]=locMeses[k]; }); // local gana en asignación de mes
+  // Confirmadas: por cada referencia, gana la versión con marca de tiempo (ts) más reciente,
+  // no simplemente "local" — así no importa si el cambio más nuevo llegó por GitHub o por Firebase.
   var remConf = remoteData.confirmadas||{}, locConf = localData.confirmadas||{};
-  var confResult = Object.assign({}, remConf, locConf); // unión — local gana solo en las claves que también tocó
+  var confResult = {};
+  Object.keys(remConf).forEach(function(k){ confResult[k]=remConf[k]; });
+  Object.keys(locConf).forEach(function(k){
+    var r = confResult[k], l = locConf[k];
+    if(!r){ confResult[k]=l; return; }
+    var rTs = r.ts||0, lTs = l.ts||0;
+    confResult[k] = (lTs>=rTs) ? l : r;
+  });
   var remDisP = remoteData.disenos_plan||{}, locDisP = localData.disenos_plan||{};
   var disPResult = Object.assign({}, remDisP, locDisP);
   var remHist = remoteData.historial_corte||[], locHist = localData.historial_corte||[];
@@ -2585,9 +2594,11 @@ function planToggleConfirmada(refKey, checked, meta){
   if(checked){
     var prev = DB.planeacion.confirmadas[refKey];
     var prevExtra = (prev && typeof prev==='object') ? (prev.extra||0) : 0;
-    DB.planeacion.confirmadas[refKey] = Object.assign({ok:true, extra:prevExtra}, meta||{});
+    DB.planeacion.confirmadas[refKey] = Object.assign({ok:true, extra:prevExtra, ts:Date.now()}, meta||{});
   } else {
-    delete DB.planeacion.confirmadas[refKey];
+    // Marca de "borrado" con su propia hora — así un merge posterior sabe que esto
+    // es más reciente que un check viejo que pueda llegar por otra vía, y no revive el check.
+    DB.planeacion.confirmadas[refKey] = {ok:false, ts:Date.now()};
   }
   guardarPlaneacion();
   renderPage('planeacion');
@@ -2623,7 +2634,7 @@ function _planObjetivoBadge(totalCat, objetivo){
 }
 function _planRenderConfirmados(){
   var confirmadas = (DB.planeacion && DB.planeacion.confirmadas) || {};
-  var entries = Object.keys(confirmadas).map(function(k){ return Object.assign({refKey:k}, confirmadas[k]); });
+  var entries = Object.keys(confirmadas).map(function(k){ return Object.assign({refKey:k}, confirmadas[k]); }).filter(function(e){ return e.ok; });
   var h = '<div style="background:rgba(52,211,153,.04);border:1px solid rgba(52,211,153,.25);border-radius:14px;padding:16px 18px;margin-bottom:20px;">';
   h += '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">';
   h += '<div><div style="font-size:15px;font-weight:900;color:#e2e8f0;">✅ Productos confirmados</div>';
@@ -2743,9 +2754,10 @@ function _planConfirmarClick(chk){
   planToggleConfirmada(chk.dataset.refkey, chk.checked, meta);
 }
 function planSetExtra(refKey, val){
-  if(!DB.planeacion || !DB.planeacion.confirmadas || !DB.planeacion.confirmadas[refKey]) return;
+  if(!DB.planeacion || !DB.planeacion.confirmadas || !DB.planeacion.confirmadas[refKey] || !DB.planeacion.confirmadas[refKey].ok) return;
   var extra = parseInt(val)||0;
   DB.planeacion.confirmadas[refKey].extra = extra;
+  DB.planeacion.confirmadas[refKey].ts = Date.now();
   guardarPlaneacion();
   renderPage('planeacion');
 }
@@ -2783,7 +2795,7 @@ function planVerCategoria(cat){
   refs.forEach(function(ref, ri){
     var pct = totalUds>0 ? (ref.uds/totalUds*100) : 0;
     var refKey = 'REF||'+cat+'||'+ref.nombre.trim().toUpperCase();
-    var checked = !!confirmadas[refKey];
+    var checked = !!(confirmadas[refKey] && confirmadas[refKey].ok);
     var rowId = 'plan-ref-expand-'+ri+'-'+cat.replace(/[^A-Za-z0-9]/g,'');
     // Valor MP + insumos: para OP con receta real via _planCostoColor (r.mat = todos los
     // componentes tipo MATERIAL: telas + insumos + apliques); para diseños sin OP, el precio
