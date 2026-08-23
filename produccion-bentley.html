@@ -2567,6 +2567,22 @@ function _planRenderConfirmados(){
     h += '<div style="font-size:26px;font-weight:900;color:#34d399;line-height:1;">'+totUds.toLocaleString('es-CO')+'<span style="font-size:11px;color:#64748b;margin-left:4px;">uds</span></div></div>';
   }
   h += '</div>';
+  if(entries.length){
+    var opEntries = entries.filter(function(e){ return e.tipo!=='diseno'; });
+    var disEntries = entries.filter(function(e){ return e.tipo==='diseno'; });
+    var opUds = opEntries.reduce(function(a,e){ return a+(e.uds||0)+(e.extra||0); },0);
+    var disUds = disEntries.reduce(function(a,e){ return a+(e.uds||0)+(e.extra||0); },0);
+    h += '<div style="display:flex;gap:8px;margin-bottom:14px;">';
+    h += '<div style="flex:1;background:rgba(10,132,255,.07);border:1px solid rgba(10,132,255,.25);border-radius:9px;padding:9px 13px;display:flex;justify-content:space-between;align-items:center;">';
+    h += '<div><div style="font-size:9px;font-weight:700;color:#0a84ff;text-transform:uppercase;letter-spacing:.4px;">Repro (ya tienen OP)</div><div style="font-size:10px;color:#64748b;">'+opEntries.length+' referencia'+(opEntries.length!==1?'s':'')+'</div></div>';
+    h += '<div style="font-size:19px;font-weight:900;color:#0a84ff;">'+opUds.toLocaleString('es-CO')+'<span style="font-size:9px;color:#64748b;margin-left:3px;">uds</span></div>';
+    h += '</div>';
+    h += '<div style="flex:1;background:rgba(168,85,247,.07);border:1px solid rgba(168,85,247,.25);border-radius:9px;padding:9px 13px;display:flex;justify-content:space-between;align-items:center;">';
+    h += '<div><div style="font-size:9px;font-weight:700;color:#a855f7;text-transform:uppercase;letter-spacing:.4px;">Diseño (nuevas)</div><div style="font-size:10px;color:#64748b;">'+disEntries.length+' referencia'+(disEntries.length!==1?'s':'')+'</div></div>';
+    h += '<div style="font-size:19px;font-weight:900;color:#a855f7;">'+disUds.toLocaleString('es-CO')+'<span style="font-size:9px;color:#64748b;margin-left:3px;">uds</span></div>';
+    h += '</div>';
+    h += '</div>';
+  }
   if(!entries.length){
     h += '<div style="text-align:center;color:#374151;font-size:12px;padding:20px 0;">Aún no has marcado ninguna referencia. Click en el ☑ de una referencia dentro de cualquier categoría para que aparezca aquí.</div>';
     h += '</div>';
