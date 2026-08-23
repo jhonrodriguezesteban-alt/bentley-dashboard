@@ -2622,7 +2622,7 @@ function _planRenderConfirmados(){
     h += '<div onclick="planVerConfirmadosCategoria(\''+esc(cat)+'\')" style="background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.2);border-radius:10px;padding:12px 13px;cursor:pointer;transition:border-color .15s,background .15s;" onmouseover="this.style.borderColor=\'rgba(52,211,153,.6)\';this.style.background=\'rgba(52,211,153,.1)\'" onmouseout="this.style.borderColor=\'rgba(52,211,153,.2)\';this.style.background=\'rgba(52,211,153,.05)\'">';
     h += '<div style="font-size:9px;font-weight:700;color:#6ee7b7;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;">'+esc(cat)+'</div>';
     h += '<div style="font-size:26px;font-weight:900;color:#f1f5f9;line-height:1;margin-bottom:4px;">'+totalCat.toLocaleString('es-CO')+'</div>';
-    h += '<div style="font-size:10px;color:#475569;">'+info.refs.length+' ref'+(info.refs.length!==1?'s':'')+(info.extra>0?' · <span style="color:#34d399;">+'+info.extra.toLocaleString('es-CO')+' extra</span>':'')+'</div>';
+    h += '<div style="font-size:10px;color:#475569;">'+info.refs.length+' ref'+(info.refs.length!==1?'s':'')+(info.extra>0?' · incluye <span style="color:#34d399;">+'+info.extra.toLocaleString('es-CO')+' extra</span>':'')+'</div>';
     h += '<div style="display:flex;gap:6px;margin-top:5px;">';
     h += '<span style="font-size:9px;background:rgba(10,132,255,.12);color:#0a84ff;border-radius:5px;padding:2px 6px;font-weight:700;">'+info.nOp+' repro</span>';
     h += '<span style="font-size:9px;background:rgba(168,85,247,.12);color:#a855f7;border-radius:5px;padding:2px 6px;font-weight:700;">'+info.nDiseno+' diseño</span>';
