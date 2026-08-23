@@ -10207,15 +10207,27 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1787413401726_wptob",
-      "ts": 1787413401726,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-086",
-      "nombre": "PANTALON CHICAGO",
       "categoria": "PANTALONES",
       "colores": 5,
-      "refs": 1
+      "id": "evt_1787413401726_wptob",
+      "nombre": "PANTALON CHICAGO",
+      "op_id": "OP-2026-086",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1787413401726,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787500547596_ak4yk",
+      "ts": 1787500547596,
+      "user": "John Rodriguez",
+      "tipo": "editar_diseno",
+      "nombre": "CAMISON SIDNEY",
+      "categoria": "Camisones",
+      "marca": "Bentley Kids",
+      "prioridad": 1,
+      "kanban": "EN_CORTE_MUESTRA",
+      "proveedor": "ninguno"
     }
   ]
 }
