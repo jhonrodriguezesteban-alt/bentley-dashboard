@@ -1748,8 +1748,23 @@ function _mergeArrayData(key, remoteData, localData){
   return localData;
 }
 
+var _savingQueue = {};
 async function guardarArchivo(key, data){
-  if(_saving[key]){ return false; }
+  if(_saving[key]){
+    // Ya hay un guardado en curso para este archivo — en vez de descartar este cambio
+    // en silencio, lo dejamos en cola y se reintenta automáticamente apenas termine.
+    _savingQueue[key] = data;
+    return false;
+  }
+  var result = await _guardarArchivoCore(key, data);
+  if(_savingQueue[key]){
+    var pendiente = _savingQueue[key];
+    delete _savingQueue[key];
+    guardarArchivo(key, pendiente);
+  }
+  return result;
+}
+async function _guardarArchivoCore(key, data){
   _saving[key] = true;
   // Escribir a Firebase PRIMERO — visible para todos los usuarios al instante.
   // Para bitácora: merge con Firebase antes de escribir para no perder eventos de otros usuarios.
