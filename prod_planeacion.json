@@ -823,6 +823,20 @@
       "tipo": "op",
       "uds": 466
     },
+    "REF||CHAQUETAS||CHAQUETA DADDY": {
+      "cat": "CHAQUETAS",
+      "cif": 0,
+      "costoTotal": 0,
+      "extra": 100,
+      "mat": 0,
+      "mod": 0,
+      "nombre": "CHAQUETA DADDY",
+      "ok": true,
+      "svc": 0,
+      "tieneReceta": false,
+      "tipo": "diseno",
+      "uds": 300
+    },
     "REF||CHAQUETAS||CHAQUETA DISCOVERY": {
       "cat": "CHAQUETAS",
       "extra": 0,
@@ -1201,23 +1215,10 @@
       "tipo": "op",
       "uds": 174
     },
-    "REF||CHAQUETAS||CHAQUETA DADDY": {
-      "ok": true,
-      "extra": 100,
-      "cat": "CHAQUETAS",
-      "nombre": "CHAQUETA DADDY",
-      "uds": 300,
-      "tipo": "diseno",
-      "mat": 0,
-      "mod": 0,
-      "cif": 0,
-      "svc": 0,
-      "costoTotal": 0,
-      "tieneReceta": false
-    },
     "REF||CHAQUETAS||BEISBOLERA 2.0": {
       "ok": true,
-      "extra": 400,
+      "extra": 0,
+      "ts": 1787523875709,
       "cat": "CHAQUETAS",
       "nombre": "BEISBOLERA 2.0",
       "uds": 240,
@@ -1227,12 +1228,12 @@
       "cif": 1365361,
       "svc": 3510000,
       "costoTotal": 10301635,
-      "tieneReceta": true,
-      "ts": 1787520612564
+      "tieneReceta": true
     },
     "REF||CHAQUETAS||CHAQUETA HARLEY": {
       "ok": true,
-      "extra": 200,
+      "extra": 0,
+      "ts": 1787523877108,
       "cat": "CHAQUETAS",
       "nombre": "CHAQUETA HARLEY",
       "uds": 240,
@@ -1242,23 +1243,7 @@
       "cif": 1136525,
       "svc": 2556000,
       "costoTotal": 10050997,
-      "tieneReceta": true,
-      "ts": 1787520612564
-    },
-    "REF||CHAQUETAS||WASHMAN": {
-      "ok": true,
-      "extra": 0,
-      "cat": "CHAQUETAS",
-      "nombre": "WASHMAN",
-      "uds": 252,
-      "tipo": "op",
-      "mat": 0,
-      "mod": 0,
-      "cif": 0,
-      "svc": 0,
-      "costoTotal": 0,
-      "tieneReceta": false,
-      "ts": 1787520612564
+      "tieneReceta": true
     }
   }
 }
