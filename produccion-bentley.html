@@ -1029,7 +1029,7 @@ function _fbApplyKey(key, d){
   }
   else if(key==='cronograma'){ DB.cronograma = d.cronograma||[]; }
   else if(key==='prog_ops')  { DB.prog_ops = d.ops_plan||[]; }
-  else if(key==='planeacion'){ DB.planeacion = {meses:d.meses||{}, disenos_plan:d.disenos_plan||{}, historial_corte:d.historial_corte||[], confirmadas:d.confirmadas||{}}; }
+  else if(key==='planeacion'){ DB.planeacion = _mergePlaneacionData(d, DB.planeacion); }
   else if(key==='planeacion_confeccion'){ DB.planeacion_confeccion = {por_satelite:d.por_satelite||{}}; }
   else if(key==='sim')       { DB.sim={active:d.active||[],data:d.data||{}}; _simActive=DB.sim.active; _simData=DB.sim.data; }
   else if(key==='usuarios')  { DB.usuarios = d.usuarios||[]; }
@@ -1667,6 +1667,27 @@ var _bc = null;
 })();
 
 // Merge inteligente por ID para ops/ots/satelites — evita que un usuario sobreescriba cambios de otro
+// Merge de Planeación: unión de meses/confirmadas/disenos_plan entre pestañas —
+// evita que una pestaña con datos viejos borre lo que guardó otra pestaña más reciente.
+// Usado tanto al guardar en GitHub (conflicto de SHA) como al recibir un update de Firebase en vivo.
+function _mergePlaneacionData(remoteData, localData){
+  remoteData = remoteData||{}; localData = localData||{};
+  var remMeses = remoteData.meses||{}, locMeses = localData.meses||{};
+  var mesesResult = {};
+  Object.keys(remMeses).forEach(function(k){ mesesResult[k]=remMeses[k]; });
+  Object.keys(locMeses).forEach(function(k){ mesesResult[k]=locMeses[k]; }); // local gana en asignación de mes
+  var remConf = remoteData.confirmadas||{}, locConf = localData.confirmadas||{};
+  var confResult = Object.assign({}, remConf, locConf); // unión — local gana solo en las claves que también tocó
+  var remDisP = remoteData.disenos_plan||{}, locDisP = localData.disenos_plan||{};
+  var disPResult = Object.assign({}, remDisP, locDisP);
+  var remHist = remoteData.historial_corte||[], locHist = localData.historial_corte||[];
+  var histSeen = {}, histResult = [];
+  remHist.concat(locHist).forEach(function(h){
+    var k = h.key || JSON.stringify(h);
+    if(!histSeen[k]){ histSeen[k]=1; histResult.push(h); }
+  });
+  return {meses:mesesResult, confirmadas:confResult, disenos_plan:disPResult, historial_corte:histResult};
+}
 function _mergeArrayData(key, remoteData, localData){
   function byId(arr, id){ for(var i=0;i<arr.length;i++){ if(arr[i].id===id) return i; } return -1; }
   function mergeOps(remArr, locArr){
@@ -1737,23 +1758,7 @@ function _mergeArrayData(key, remoteData, localData){
     return {disenos: result, disenos_cfg: localData.disenos_cfg || remoteData.disenos_cfg || {}};
   }
   if(key==='planeacion'){
-    // Merge de Planeación: unión de meses/confirmadas/disenos_plan entre pestañas —
-    // evita que una pestaña con datos viejos borre lo que guardó otra pestaña más reciente.
-    var remMeses = remoteData.meses||{}, locMeses = localData.meses||{};
-    var mesesResult = {};
-    Object.keys(remMeses).forEach(function(k){ mesesResult[k]=remMeses[k]; });
-    Object.keys(locMeses).forEach(function(k){ mesesResult[k]=locMeses[k]; }); // local gana en asignación de mes
-    var remConf = remoteData.confirmadas||{}, locConf = localData.confirmadas||{};
-    var confResult = Object.assign({}, remConf, locConf); // unión — local gana solo en las claves que también tocó
-    var remDisP = remoteData.disenos_plan||{}, locDisP = localData.disenos_plan||{};
-    var disPResult = Object.assign({}, remDisP, locDisP);
-    var remHist = remoteData.historial_corte||[], locHist = localData.historial_corte||[];
-    var histSeen = {}, histResult = [];
-    remHist.concat(locHist).forEach(function(h){
-      var k = h.key || JSON.stringify(h);
-      if(!histSeen[k]){ histSeen[k]=1; histResult.push(h); }
-    });
-    return {meses:mesesResult, confirmadas:confResult, disenos_plan:disPResult, historial_corte:histResult};
+    return _mergePlaneacionData(remoteData, localData);
   }
   if(key==='bitacora'){
     // Bitácora: unión por ID — append-only, sin conflictos de escritura simultánea
