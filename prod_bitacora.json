@@ -10218,16 +10218,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1787500547596_ak4yk",
-      "ts": 1787500547596,
-      "user": "John Rodriguez",
-      "tipo": "editar_diseno",
-      "nombre": "CAMISON SIDNEY",
       "categoria": "Camisones",
-      "marca": "Bentley Kids",
-      "prioridad": 1,
+      "id": "evt_1787500547596_ak4yk",
       "kanban": "EN_CORTE_MUESTRA",
-      "proveedor": "ninguno"
+      "marca": "Bentley Kids",
+      "nombre": "CAMISON SIDNEY",
+      "prioridad": 1,
+      "proveedor": "ninguno",
+      "tipo": "editar_diseno",
+      "ts": 1787500547596,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787502440979_nn69f",
+      "ts": 1787502440979,
+      "user": "John Rodriguez",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-121",
+      "op_nombre": "ABRIGO FROZEN",
+      "categoria": "ABRIGOS",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-08-23",
+      "total_uds": 296,
+      "referencias": [
+        "ABRIGO FROZEN"
+      ]
     }
   ]
 }
