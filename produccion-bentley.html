@@ -1736,6 +1736,25 @@ function _mergeArrayData(key, remoteData, localData){
     });
     return {disenos: result, disenos_cfg: localData.disenos_cfg || remoteData.disenos_cfg || {}};
   }
+  if(key==='planeacion'){
+    // Merge de Planeación: unión de meses/confirmadas/disenos_plan entre pestañas —
+    // evita que una pestaña con datos viejos borre lo que guardó otra pestaña más reciente.
+    var remMeses = remoteData.meses||{}, locMeses = localData.meses||{};
+    var mesesResult = {};
+    Object.keys(remMeses).forEach(function(k){ mesesResult[k]=remMeses[k]; });
+    Object.keys(locMeses).forEach(function(k){ mesesResult[k]=locMeses[k]; }); // local gana en asignación de mes
+    var remConf = remoteData.confirmadas||{}, locConf = localData.confirmadas||{};
+    var confResult = Object.assign({}, remConf, locConf); // unión — local gana solo en las claves que también tocó
+    var remDisP = remoteData.disenos_plan||{}, locDisP = localData.disenos_plan||{};
+    var disPResult = Object.assign({}, remDisP, locDisP);
+    var remHist = remoteData.historial_corte||[], locHist = localData.historial_corte||[];
+    var histSeen = {}, histResult = [];
+    remHist.concat(locHist).forEach(function(h){
+      var k = h.key || JSON.stringify(h);
+      if(!histSeen[k]){ histSeen[k]=1; histResult.push(h); }
+    });
+    return {meses:mesesResult, confirmadas:confResult, disenos_plan:disPResult, historial_corte:histResult};
+  }
   if(key==='bitacora'){
     // Bitácora: unión por ID — append-only, sin conflictos de escritura simultánea
     var evMap = {};
@@ -1800,7 +1819,7 @@ async function _guardarArchivoCore(key, data){
         sha = cur.sha || null;
         // Si el SHA remoto difiere del último que conocemos (otro usuario guardó), hacer merge
         var shaCambio = sha && _fileShas[key] && sha !== _fileShas[key];
-        if((shaCambio || needsMerge) && (key==='ops'||key==='ots'||key==='satelites'||key==='disenos'||key==='logistica'||key==='cronograma')){
+        if((shaCambio || needsMerge) && (key==='ops'||key==='ots'||key==='satelites'||key==='disenos'||key==='logistica'||key==='cronograma'||key==='planeacion')){
           try{
             var remoteRaw = JSON.parse(decodeURIComponent(escape(atob(cur.content.replace(/\n/g,'')))));
             dataToSave = _mergeArrayData(key, remoteRaw, data);
@@ -1811,6 +1830,7 @@ async function _guardarArchivoCore(key, data){
             else if(key==='disenos'){   DB.disenos               = dataToSave.disenos; DB.disenos_cfg = dataToSave.disenos_cfg||DB.disenos_cfg; }
             else if(key==='logistica')  DB.logistica.tareas      = dataToSave.tareas;
             else if(key==='cronograma') DB.cronograma            = dataToSave.cronograma;
+            else if(key==='planeacion') DB.planeacion            = dataToSave;
             saveLocal();
           }catch(e){ dataToSave = data; }
         }
