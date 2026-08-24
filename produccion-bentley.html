@@ -2741,8 +2741,9 @@ function planVerConfirmadosCategoria(cat){
   h += '<div style="font-size:11px;color:#64748b;">'+info.refs.length+' referencia'+(info.refs.length!==1?'s':'')+' confirmada'+(info.refs.length!==1?'s':'')+'</div>';
   h += '<div style="text-align:right;"><div style="font-size:9px;color:#64748b;text-transform:uppercase;">Total</div><div style="font-size:20px;font-weight:900;color:#34d399;">'+totalCat.toLocaleString('es-CO')+' uds</div></div>';
   h += '</div>';
-  info.refs.sort(function(a,b){ return ((b.uds||0)+(b.extra||0))-((a.uds||0)+(a.extra||0)); }).forEach(function(e){
+  info.refs.sort(function(a,b){ return ((b.uds||0)+(b.extra||0))-((a.uds||0)+(a.extra||0)); }).forEach(function(e, ei){
     var totalUdsRef = (e.uds||0)+(e.extra||0);
+    var detId = 'plan-conf-det-'+ei+'-'+cat.replace(/[^A-Za-z0-9]/g,'');
     h += '<div style="padding:10px 12px;background:#1c1c1e;border-radius:9px;margin-bottom:6px;">';
     h += '<div style="display:flex;align-items:center;gap:10px;">';
     h += '<div style="flex:1;min-width:0;">';
@@ -2753,10 +2754,11 @@ function planVerConfirmadosCategoria(cat){
     h += '<span style="font-size:9px;color:#64748b;white-space:nowrap;">+ extra</span>';
     h += '<input type="number" min="0" step="12" value="'+(e.extra||'')+'" placeholder="0" data-refkey="'+esc(e.refKey)+'" data-cat="'+esc(cat)+'" onchange="_planExtraDesdeModal(this)" style="width:70px;background:#0d1117;border:1px solid rgba(52,211,153,.3);border-radius:6px;color:#34d399;font-size:12px;font-weight:700;padding:6px 6px;text-align:center;outline:none;">';
     h += '</div>';
-    h += '<div style="text-align:right;flex-shrink:0;min-width:65px;">';
-    h += '<div style="font-size:15px;font-weight:900;color:#f1f5f9;">'+totalUdsRef.toLocaleString('es-CO')+'</div>';
+    h += '<div onclick="_planConfirmadoToggleDetalle(\''+detId+'\',\''+esc(e.nombre).replace(/\'/g,"\\'")+'\',\''+esc(cat)+'\')" title="Ver colores, tallas y cantidades" style="text-align:right;flex-shrink:0;min-width:65px;cursor:pointer;">';
+    h += '<div style="font-size:15px;font-weight:900;color:#f1f5f9;text-decoration:underline dotted;text-underline-offset:3px;">'+totalUdsRef.toLocaleString('es-CO')+'</div>';
     h += '</div>';
     h += '</div>';
+    h += '<div id="'+detId+'" style="display:none;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06);"></div>';
     // Desglose de costos (igual que las tarjetas de "Sin Asignar")
     if(e.tieneReceta){
       var matU=Math.round((e.mat||0)/(e.uds||1)), modU=Math.round((e.mod||0)/(e.uds||1)), cifU=Math.round((e.cif||0)/(e.uds||1)), svcU=Math.round((e.svc||0)/(e.uds||1)), totU=Math.round((e.costoTotal||0)/(e.uds||1));
@@ -2779,6 +2781,51 @@ function planVerConfirmadosCategoria(cat){
 function _planExtraDesdeModal(inp){
   planSetExtra(inp.dataset.refkey, inp.value);
   setTimeout(function(){ planVerConfirmadosCategoria(inp.dataset.cat); }, 60);
+}
+// Despliega colores/tallas/cantidades de una referencia confirmada, tomando los datos
+// de la OP real (window._planCatMap, construido al renderizar Planeación). Para diseños
+// sin OP todavía no hay color/talla que mostrar.
+function _planConfirmadoToggleDetalle(detId, nombre, cat){
+  var el = document.getElementById(detId);
+  if(!el) return;
+  if(el.style.display !== 'none'){ el.style.display = 'none'; return; }
+  el.style.display = 'block';
+  if(!el.dataset.built){
+    el.dataset.built = '1';
+    el.innerHTML = _planConfirmadoDetalleHTML(nombre, cat);
+  }
+}
+function _planConfirmadoDetalleHTML(nombre, cat){
+  var catMap = window._planCatMap || {};
+  var info = catMap[cat];
+  if(!info) return '<div style="font-size:10px;color:#64748b;">Abre primero "'+esc(cat)+'" en la sección de arriba (Unidades por categoría) para cargar el detalle.</div>';
+  var units = (info.refs||[]).filter(function(u){ return !u.diseno && (u.op.nombre_producto||u.op.id)===nombre; });
+  if(!units.length) return '<div style="font-size:10px;color:#64748b;">Sin colores/tallas asignados aún — es un diseño que todavía no tiene OP.</div>';
+  var porColor = {};
+  units.forEach(function(u){
+    var op = u.op, color = u.color;
+    var refObj = (op.referencias||[]).find(function(r){ return (r.nombre||'')===nombre; }) || (op.referencias||[])[0];
+    if(!refObj) return;
+    if(!porColor[color]) porColor[color] = {};
+    Object.keys(refObj.cantidades||{}).forEach(function(k){
+      if(k.indexOf(color+'_')!==0) return;
+      var talla = k.substring(color.length+1);
+      var v = parseInt(refObj.cantidades[k])||0;
+      if(v>0) porColor[color][talla] = (porColor[color][talla]||0) + v;
+    });
+  });
+  var colores = Object.keys(porColor);
+  if(!colores.length) return '<div style="font-size:10px;color:#64748b;">No se encontraron cantidades por talla para esta referencia.</div>';
+  var h = '<table style="width:100%;border-collapse:collapse;font-size:10.5px;">';
+  h += '<thead><tr style="color:#64748b;text-align:left;"><th style="padding:3px 6px;font-weight:600;">Color</th><th style="padding:3px 6px;font-weight:600;">Tallas × cantidad</th><th style="padding:3px 6px;text-align:right;font-weight:600;">Total</th></tr></thead><tbody>';
+  colores.forEach(function(color){
+    var tallasObj = porColor[color];
+    var tot = Object.keys(tallasObj).reduce(function(a,t){ return a+tallasObj[t]; }, 0);
+    var tallaStr = Object.keys(tallasObj).map(function(t){ return t+':&nbsp;'+tallasObj[t]; }).join('&nbsp;&nbsp;·&nbsp;&nbsp;');
+    h += '<tr style="border-top:1px solid rgba(255,255,255,.05);"><td style="padding:5px 6px;color:#cbd5e1;font-weight:600;white-space:nowrap;">'+esc(color)+'</td><td style="padding:5px 6px;color:#94a3b8;">'+tallaStr+'</td><td style="padding:5px 6px;text-align:right;color:#34d399;font-weight:700;">'+tot.toLocaleString('es-CO')+'</td></tr>';
+  });
+  h += '</tbody></table>';
+  return h;
 }
 function _planConfirmarClick(chk){
   var meta = {cat:chk.dataset.cat, nombre:chk.dataset.nombre, uds:parseInt(chk.dataset.uds)||0, tipo:chk.dataset.tipo,
