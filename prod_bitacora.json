@@ -10359,16 +10359,31 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1787579017874_kh9rk",
-      "ts": 1787579017874,
-      "user": "Carolina",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782168315610_al7ir6cd2",
-      "nombre": "POLO MAJO",
       "categoria": "Blusas",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1782168315610_al7ir6cd2",
       "estado_anterior": "EN_DISENO_DIGITAL",
-      "estado_nuevo": "EN_CORTE_MUESTRA"
+      "estado_nuevo": "EN_CORTE_MUESTRA",
+      "id": "evt_1787579017874_kh9rk",
+      "marca": "Bentley Kids",
+      "nombre": "POLO MAJO",
+      "tipo": "estado_diseno",
+      "ts": 1787579017874,
+      "user": "Carolina"
+    },
+    {
+      "id": "evt_1787579327382_g63s2",
+      "ts": 1787579327382,
+      "user": "John Rodriguez",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-122",
+      "op_nombre": "COUNTRY 2.0",
+      "categoria": "BUZOS",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-08-24",
+      "total_uds": 276,
+      "referencias": [
+        "COUNTRY 2.0"
+      ]
     }
   ]
 }
