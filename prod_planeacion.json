@@ -807,6 +807,21 @@
       "tipo": "op",
       "uds": 112
     },
+    "REF||CHAQUETAS||BEISBOLERA 2_0": {
+      "cat": "CHAQUETAS",
+      "cif": 1365361,
+      "costoTotal": 10301635,
+      "extra": 400,
+      "mat": 4384803,
+      "mod": 1041471,
+      "nombre": "BEISBOLERA 2.0",
+      "ok": true,
+      "svc": 3510000,
+      "tieneReceta": true,
+      "tipo": "op",
+      "ts": 1787524416751,
+      "uds": 240
+    },
     "REF||CHAQUETAS||BEISBOLERA ARMIN": {
       "cat": "CHAQUETAS",
       "extra": 200,
@@ -824,18 +839,8 @@
       "uds": 466
     },
     "REF||CHAQUETAS||CHAQUETA DADDY": {
-      "cat": "CHAQUETAS",
-      "cif": 0,
-      "costoTotal": 0,
-      "extra": 100,
-      "mat": 0,
-      "mod": 0,
-      "nombre": "CHAQUETA DADDY",
-      "ok": true,
-      "svc": 0,
-      "tieneReceta": false,
-      "tipo": "diseno",
-      "uds": 300
+      "ok": false,
+      "ts": 1787578717089
     },
     "REF||CHAQUETAS||CHAQUETA DISCOVERY": {
       "cat": "CHAQUETAS",
@@ -844,6 +849,21 @@
       "ok": true,
       "tipo": "diseno",
       "uds": 300
+    },
+    "REF||CHAQUETAS||CHAQUETA HARLEY": {
+      "cat": "CHAQUETAS",
+      "cif": 1136525,
+      "costoTotal": 10050997,
+      "extra": 200,
+      "mat": 5777039,
+      "mod": 581433,
+      "nombre": "CHAQUETA HARLEY",
+      "ok": true,
+      "svc": 2556000,
+      "tieneReceta": true,
+      "tipo": "op",
+      "ts": 1787524421683,
+      "uds": 240
     },
     "REF||CHAQUETAS||CHAQUETA MARIPOSAS": {
       "cat": "CHAQUETAS",
@@ -934,6 +954,21 @@
       "ok": true,
       "tipo": "op",
       "uds": 336
+    },
+    "REF||CHAQUETAS||WASHMAN": {
+      "cat": "CHAQUETAS",
+      "cif": 0,
+      "costoTotal": 0,
+      "extra": 0,
+      "mat": 0,
+      "mod": 0,
+      "nombre": "WASHMAN",
+      "ok": true,
+      "svc": 0,
+      "tieneReceta": false,
+      "tipo": "op",
+      "ts": 1787524399726,
+      "uds": 252
     },
     "REF||CONJUNTOS||CONJUNTO BOMBER CORTA": {
       "cat": "CONJUNTOS",
@@ -1214,51 +1249,6 @@
       "ok": true,
       "tipo": "op",
       "uds": 174
-    },
-    "REF||CHAQUETAS||BEISBOLERA 2_0": {
-      "ok": true,
-      "extra": 400,
-      "ts": 1787524416751,
-      "cat": "CHAQUETAS",
-      "nombre": "BEISBOLERA 2.0",
-      "uds": 240,
-      "tipo": "op",
-      "mat": 4384803,
-      "mod": 1041471,
-      "cif": 1365361,
-      "svc": 3510000,
-      "costoTotal": 10301635,
-      "tieneReceta": true
-    },
-    "REF||CHAQUETAS||CHAQUETA HARLEY": {
-      "ok": true,
-      "extra": 200,
-      "ts": 1787524421683,
-      "cat": "CHAQUETAS",
-      "nombre": "CHAQUETA HARLEY",
-      "uds": 240,
-      "tipo": "op",
-      "mat": 5777039,
-      "mod": 581433,
-      "cif": 1136525,
-      "svc": 2556000,
-      "costoTotal": 10050997,
-      "tieneReceta": true
-    },
-    "REF||CHAQUETAS||WASHMAN": {
-      "ok": true,
-      "extra": 0,
-      "ts": 1787524399726,
-      "cat": "CHAQUETAS",
-      "nombre": "WASHMAN",
-      "uds": 252,
-      "tipo": "op",
-      "mat": 0,
-      "mod": 0,
-      "cif": 0,
-      "svc": 0,
-      "costoTotal": 0,
-      "tieneReceta": false
     }
   }
 }
