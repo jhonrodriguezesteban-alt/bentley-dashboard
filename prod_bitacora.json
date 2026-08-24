@@ -10462,15 +10462,31 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1787580763926_adnpx",
-      "ts": 1787580763926,
-      "user": "John Rodriguez",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-104",
-      "nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS",
       "categoria": "TEJIDOS",
       "colores": 2,
-      "refs": 2
+      "id": "evt_1787580763926_adnpx",
+      "nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS",
+      "op_id": "OP-2026-104",
+      "refs": 2,
+      "tipo": "editar_op_refs",
+      "ts": 1787580763926,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787580805673_1k3ro",
+      "ts": 1787580805673,
+      "user": "John Rodriguez",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-104",
+      "op_nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS",
+      "referencia": "BUZO CEREZAS",
+      "color": "MARFIL",
+      "talla": "T10",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": false,
+      "uds": 12,
+      "motivo": "EL PROVEEDOR NO HA ENTREGADO"
     }
   ]
 }
