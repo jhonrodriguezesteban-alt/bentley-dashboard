@@ -6520,15 +6520,15 @@
     },
     {
       "cantidades": {
+        "MARFIL_T4": 7,
+        "MARFIL_T6": 12,
+        "MARFIL_T8": 12,
         "MARFIL_T10": 12,
         "MARFIL_T12": 18,
         "MARFIL_T14": 18,
-        "MARFIL_T16": 18,
-        "MARFIL_T4": 7,
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 12
+        "MARFIL_T16": 18
       },
-      "categoria": "BUZOS",
+      "categoria": "TEJIDOS",
       "colores": [
         "MARFIL",
         "NEGRO"
@@ -6543,21 +6543,13 @@
       "numero": 104,
       "referencias": [
         {
-          "cantidades": {
-            "MARFIL_T10": 12,
-            "MARFIL_T12": 18,
-            "MARFIL_T14": 18,
-            "MARFIL_T16": 18,
-            "MARFIL_T4": 7,
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 12
-          },
-          "cat": "BUZOS",
+          "nombre": "BUZO CEREZAS",
+          "ref": "",
+          "cat": "TEJIDOS",
+          "vmo": 1151,
           "colores": [
             "MARFIL"
           ],
-          "nombre": "BUZO CEREZAS",
-          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -6567,33 +6559,26 @@
             "T14",
             "T16"
           ],
-          "totalUds": 97,
-          "vmo": 1151
+          "cantidades": {
+            "MARFIL_T4": 7,
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 12,
+            "MARFIL_T10": 12,
+            "MARFIL_T12": 18,
+            "MARFIL_T14": 18,
+            "MARFIL_T16": 18
+          },
+          "maquilador_id": ""
         },
         {
-          "cantidades": {
-            "MARFIL_T10": 10,
-            "MARFIL_T12": 14,
-            "MARFIL_T14": 14,
-            "MARFIL_T16": 14,
-            "MARFIL_T4": 7,
-            "MARFIL_T6": 10,
-            "MARFIL_T8": 10,
-            "NEGRO_T10": 10,
-            "NEGRO_T12": 14,
-            "NEGRO_T14": 14,
-            "NEGRO_T16": 14,
-            "NEGRO_T4": 7,
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 10
-          },
+          "nombre": "BUZO TEJIDO MOÑOS",
+          "ref": "",
           "cat": "BUZOS",
+          "vmo": 1151,
           "colores": [
             "NEGRO",
             "MARFIL"
           ],
-          "nombre": "BUZO TEJIDO MOÑOS",
-          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -6603,8 +6588,23 @@
             "T14",
             "T16"
           ],
-          "totalUds": 158,
-          "vmo": 1151
+          "cantidades": {
+            "NEGRO_T4": 7,
+            "NEGRO_T6": 10,
+            "NEGRO_T8": 10,
+            "NEGRO_T10": 10,
+            "NEGRO_T12": 14,
+            "NEGRO_T14": 14,
+            "NEGRO_T16": 14,
+            "MARFIL_T4": 7,
+            "MARFIL_T6": 10,
+            "MARFIL_T8": 10,
+            "MARFIL_T10": 10,
+            "MARFIL_T12": 14,
+            "MARFIL_T14": 14,
+            "MARFIL_T16": 14
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -6619,7 +6619,8 @@
         "T12",
         "T14",
         "T16"
-      ]
+      ],
+      "updated_at": "2026-08-24"
     },
     {
       "cantidades": {
