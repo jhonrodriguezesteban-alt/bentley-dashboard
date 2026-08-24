@@ -10557,16 +10557,27 @@
       "user": "John Rodriguez"
     },
     {
+      "categoria": "Camisetas",
+      "diseno_id": "id_1782174578406_eoos12irc",
+      "estado_anterior": "EN_CORTE_MUESTRA",
+      "estado_nuevo": "EN_REVISION_GERENCIA",
       "id": "evt_1787582713151_tuzyi",
-      "ts": 1787582713151,
-      "user": "Isabel",
+      "marca": "Bentley Kids",
+      "nombre": "CAMISETA TEJIDA TRENZAS CUELLO REDONDO",
       "tipo": "estado_diseno",
+      "ts": 1787582713151,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1787582852385_a6phw",
+      "ts": 1787582852385,
+      "user": "Isabel",
+      "tipo": "diseno_responsable",
       "diseno_id": "id_1782174578406_eoos12irc",
       "nombre": "CAMISETA TEJIDA TRENZAS CUELLO REDONDO",
       "categoria": "Camisetas",
-      "marca": "Bentley Kids",
-      "estado_anterior": "EN_CORTE_MUESTRA",
-      "estado_nuevo": "EN_REVISION_GERENCIA"
+      "resp_anterior": "Isa",
+      "resp_nuevo": "John"
     }
   ]
 }
