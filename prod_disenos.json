@@ -1517,6 +1517,15 @@
           "nombre": "FUCSIA 618"
         }
       ],
+      "comentarios": [
+        {
+          "autor": "Isabel",
+          "fecha": "2026-08-24",
+          "hora": "11:10",
+          "id": "c_1787587817861",
+          "texto": "Muestras confeccionadas en ambas telas para probar y tener en cuenta lo siguiente, dependiendo de la tela que se vaya a usar:\nEn tela Scarlet:\nTrazo al hilo, el material es pesado y la se estira también hacia el largo. Por lo que es necesario probar la muestra y definir largos.\nTambién el cuello no se ve muy bien por la textura de la tela, así que se ha pensado en probar con sesgo en lugar del cuello.\nTener también en cuenta que el material tiende a enredarse en el luper de la fileteadora.\n\nEn cuanto a la tela Radiante:\nTrazo al travez por que la tela tiene más elongación hacia el largo.\nEl material es muy transparente, así que el delantero debe salir doble.\nEl cuello No es lo suficientemente elástico así que es necesario abrir el escote 1cm en hombros y 1cm en centro frente. Y cambiar cuello por sesgo?? De 3.7cm."
+        }
+      ],
       "fecha_creacion": "2026-06-22",
       "genero": "Niña",
       "id": "id_1782163486159_zfdud2g3z",
@@ -1544,17 +1553,7 @@
       "responsable": "John",
       "tela_estado": "asignada",
       "tela_nota": "TELA SCARLET DE VITRAL\nSI NO SIRVE SCARLET HACER CON TELA RADIANTE",
-      "tela_stock": true,
-      "comentarios": [
-        {
-          "id": "c_1787587817861",
-          "texto": "Muestras confeccionadas en ambas telas para probar y tener en cuenta lo siguiente, dependiendo de la tela que se vaya a usar:\nEn tela Scarlet:\nTrazo al hilo, el material es pesado y la se estira también hacia el largo. Por lo que es necesario probar la muestra y definir largos.\nTambién el cuello no se ve muy bien por la textura de la tela, así que se ha pensado en probar con sesgo en lugar del cuello.\nTener también en cuenta que el material tiende a enredarse en el luper de la fileteadora.\n\nEn cuanto a la tela Radiante:\nTrazo al travez por que la tela tiene más elongación hacia el largo.\nEl material es muy transparente, así que el delantero debe salir doble.\nEl cuello No es lo suficientemente elástico así que es necesario abrir el escote 1cm en hombros y 1cm en centro frente. Y cambiar cuello por sesgo?? De 3.7cm.",
-          "autor": "Isabel",
-          "fecha": "2026-08-24",
-          "hora": "11:10",
-          "imagenes": []
-        }
-      ]
+      "tela_stock": true
     },
     {
       "_ts": "2026-06-22T21:28:44.756Z",
@@ -5908,6 +5907,22 @@
       "tela_estado": "pte_llegar",
       "tela_nota": "TELA OLIVETO",
       "tela_stock": false
+    },
+    {
+      "id": "id_1787602844206_a4wg3bqtn",
+      "nombre": "PANTALON NEVADO",
+      "marca": "Bentley Kids",
+      "categoria": "Pantalones",
+      "responsable": "Isa",
+      "prioridad": 1,
+      "kanban_estado": "EN_CORTE_MUESTRA",
+      "nota": "",
+      "genero": "Unisex",
+      "proveedor": null,
+      "tela_estado": "asignada",
+      "tela_nota": "TELA SNOWY COMPLEMENTO DEL BUZO SUPERIOR",
+      "fecha_creacion": "2026-08-24",
+      "_ts": "2026-08-24T20:21:18.102Z"
     }
   ],
   "disenos_cfg": {
