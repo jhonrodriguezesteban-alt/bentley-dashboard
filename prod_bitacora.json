@@ -10521,20 +10521,40 @@
       "user": "John Rodriguez"
     },
     {
+      "bulk": false,
+      "color": "MARFIL",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1787580964322_rileo",
-      "ts": 1787580964322,
-      "user": "John Rodriguez",
-      "tipo": "estado_ot",
+      "motivo": ".",
       "op_id": "OP-2026-104",
       "op_nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS",
       "referencia": "BUZO CEREZAS",
-      "color": "MARFIL",
       "talla": "T16",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": false,
+      "tipo": "estado_ot",
+      "ts": 1787580964322,
       "uds": 18,
-      "motivo": "."
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787581010094_lk71g",
+      "ts": 1787581010094,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-123",
+      "op_nombre": "BUZO TEJIDO MOÑOS",
+      "color": "MARFIL",
+      "mes": "2026-09"
+    },
+    {
+      "id": "evt_1787581012628_fkazs",
+      "ts": 1787581012628,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-123",
+      "op_nombre": "BUZO TEJIDO MOÑOS",
+      "color": "NEGRO",
+      "mes": "2026-09"
     }
   ]
 }
