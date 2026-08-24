@@ -72886,12 +72886,17 @@
       "color": "MARFIL",
       "created_at": "2026-08-18",
       "created_by": "John Rodriguez",
-      "estado": "ENTREGADO",
+      "estado": "EN_CONFECCION",
       "fecha_ot": "2026-07-31",
       "historial": [
         {
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → ENTREGADO. Motivo: se recibe todo el color",
           "fecha": "2026-08-18T16:06:07.704Z",
+          "user": "John Rodriguez"
+        },
+        {
+          "fecha": "2026-08-24T14:14:31.910Z",
+          "accion": "Estado cambiado: ENTREGADO → EN_CONFECCION. Motivo: -",
           "user": "John Rodriguez"
         }
       ],
@@ -72905,7 +72910,8 @@
       "talla": "T12",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151
+      "valor_mo": 1151,
+      "fecha_entrega_real": null
     },
     {
       "cantidad": 18,
