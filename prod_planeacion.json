@@ -201,6 +201,10 @@
       "mes": "2026-09",
       "uds": 300
     },
+    "id_1782165872122_zq49y8n9x": {
+      "mes": "2026-09",
+      "uds": 300
+    },
     "id_1782165954671_rjs24e05l": {
       "mes": "2026-09",
       "uds": 300
@@ -220,6 +224,10 @@
     "id_1782168315610_al7ir6cd2": {
       "mes": "2026-09",
       "uds": 400
+    },
+    "id_1782174578406_eoos12irc": {
+      "mes": "2026-09",
+      "uds": 300
     },
     "id_1782176715936_haqr83rc3": {
       "mes": "2026-08",
@@ -421,13 +429,9 @@
       "mes": "2026-08",
       "uds": 500
     },
-    "id_1782165872122_zq49y8n9x": {
+    "id_1782240897563_3lix3vy1y": {
       "uds": 300,
-      "mes": "2026-09"
-    },
-    "id_1782174578406_eoos12irc": {
-      "uds": 300,
-      "mes": "2026-09"
+      "mes": ""
     }
   },
   "historial_corte": [
@@ -728,6 +732,21 @@
       "tipo": "diseno",
       "uds": 300
     },
+    "REF||BUZOS||COUNTRY 2_0": {
+      "cat": "BUZOS",
+      "cif": 1295975,
+      "costoTotal": 6134195,
+      "extra": 0,
+      "mat": 2249400,
+      "mod": 543659,
+      "nombre": "COUNTRY 2.0",
+      "ok": true,
+      "svc": 2045160,
+      "tieneReceta": true,
+      "tipo": "op",
+      "ts": 1787591253403,
+      "uds": 276
+    },
     "REF||BUZOS||COUNTRY POLAR": {
       "ok": false,
       "ts": 1787579362582
@@ -749,6 +768,21 @@
       "tipo": "op",
       "ts": 1787592013226,
       "uds": 208
+    },
+    "REF||BUZOS||SUPERIOR CON CORTE RANGLAND": {
+      "cat": "BUZOS",
+      "cif": 0,
+      "costoTotal": 0,
+      "extra": 0,
+      "mat": 0,
+      "mod": 0,
+      "nombre": "SUPERIOR CON CORTE RANGLAND",
+      "ok": true,
+      "svc": 0,
+      "tieneReceta": false,
+      "tipo": "diseno",
+      "ts": 1787591264950,
+      "uds": 200
     },
     "REF||CAMISAS||CAMISA CLASICA BK": {
       "cat": "CAMISAS",
@@ -841,6 +875,36 @@
       "tipo": "op",
       "uds": 252
     },
+    "REF||CHAQUETAS||BLAZER DONATELLA NIÑA CORTO": {
+      "cat": "CHAQUETAS",
+      "cif": 0,
+      "costoTotal": 0,
+      "extra": 0,
+      "mat": 0,
+      "mod": 0,
+      "nombre": "BLAZER DONATELLA NIÑA CORTO",
+      "ok": true,
+      "svc": 0,
+      "tieneReceta": false,
+      "tipo": "diseno",
+      "ts": 1787589891344,
+      "uds": 300
+    },
+    "REF||CHAQUETAS||CHAQUETA BAGGY PINZAS PR VERSION KIDS": {
+      "cat": "CHAQUETAS",
+      "cif": 0,
+      "costoTotal": 0,
+      "extra": 200,
+      "mat": 0,
+      "mod": 0,
+      "nombre": "CHAQUETA BAGGY PINZAS PR VERSION KIDS",
+      "ok": true,
+      "svc": 0,
+      "tieneReceta": false,
+      "tipo": "diseno",
+      "ts": 1787588655094,
+      "uds": 300
+    },
     "REF||CHAQUETAS||CHAQUETA CAZADORA": {
       "cat": "CHAQUETAS",
       "extra": 400,
@@ -860,6 +924,21 @@
       "ok": true,
       "tipo": "diseno",
       "uds": 300
+    },
+    "REF||CHAQUETAS||CHAQUETA FIRE": {
+      "cat": "CHAQUETAS",
+      "cif": 0,
+      "costoTotal": 0,
+      "extra": 100,
+      "mat": 0,
+      "mod": 0,
+      "nombre": "CHAQUETA FIRE",
+      "ok": true,
+      "svc": 0,
+      "tieneReceta": false,
+      "tipo": "diseno",
+      "ts": 1787589292950,
+      "uds": 200
     },
     "REF||CHAQUETAS||CHAQUETA HARLEY": {
       "cat": "CHAQUETAS",
@@ -978,8 +1057,8 @@
       "nombre": "CONJUNTO BOMBER CORTA",
       "ok": true,
       "tipo": "diseno",
-      "uds": 300,
-      "ts": 1787583880743
+      "ts": 1787583880743,
+      "uds": 300
     },
     "REF||CONJUNTOS||CONJUNTO CHELSY": {
       "cat": "CONJUNTOS",
@@ -1051,8 +1130,8 @@
       "nombre": "CONJUNTO MANCHESTER",
       "ok": true,
       "tipo": "op",
-      "uds": 460,
-      "ts": 1787583920519
+      "ts": 1787583920519,
+      "uds": 460
     },
     "REF||CONJUNTOS||CONJUNTO OSLO": {
       "cat": "CONJUNTOS",
@@ -1258,81 +1337,6 @@
       "ok": true,
       "tipo": "op",
       "uds": 174
-    },
-    "REF||CHAQUETAS||CHAQUETA BAGGY PINZAS PR VERSION KIDS": {
-      "ok": true,
-      "extra": 200,
-      "ts": 1787588655094,
-      "cat": "CHAQUETAS",
-      "nombre": "CHAQUETA BAGGY PINZAS PR VERSION KIDS",
-      "uds": 300,
-      "tipo": "diseno",
-      "mat": 0,
-      "mod": 0,
-      "cif": 0,
-      "svc": 0,
-      "costoTotal": 0,
-      "tieneReceta": false
-    },
-    "REF||CHAQUETAS||CHAQUETA FIRE": {
-      "ok": true,
-      "extra": 100,
-      "ts": 1787589292950,
-      "cat": "CHAQUETAS",
-      "nombre": "CHAQUETA FIRE",
-      "uds": 200,
-      "tipo": "diseno",
-      "mat": 0,
-      "mod": 0,
-      "cif": 0,
-      "svc": 0,
-      "costoTotal": 0,
-      "tieneReceta": false
-    },
-    "REF||CHAQUETAS||BLAZER DONATELLA NIÑA CORTO": {
-      "ok": true,
-      "extra": 0,
-      "ts": 1787589891344,
-      "cat": "CHAQUETAS",
-      "nombre": "BLAZER DONATELLA NIÑA CORTO",
-      "uds": 300,
-      "tipo": "diseno",
-      "mat": 0,
-      "mod": 0,
-      "cif": 0,
-      "svc": 0,
-      "costoTotal": 0,
-      "tieneReceta": false
-    },
-    "REF||BUZOS||COUNTRY 2_0": {
-      "ok": true,
-      "extra": 0,
-      "ts": 1787591253403,
-      "cat": "BUZOS",
-      "nombre": "COUNTRY 2.0",
-      "uds": 276,
-      "tipo": "op",
-      "mat": 2249400,
-      "mod": 543659,
-      "cif": 1295975,
-      "svc": 2045160,
-      "costoTotal": 6134195,
-      "tieneReceta": true
-    },
-    "REF||BUZOS||SUPERIOR CON CORTE RANGLAND": {
-      "ok": true,
-      "extra": 0,
-      "ts": 1787591264950,
-      "cat": "BUZOS",
-      "nombre": "SUPERIOR CON CORTE RANGLAND",
-      "uds": 200,
-      "tipo": "diseno",
-      "mat": 0,
-      "mod": 0,
-      "cif": 0,
-      "svc": 0,
-      "costoTotal": 0,
-      "tieneReceta": false
     }
   }
 }
