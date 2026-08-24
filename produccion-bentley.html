@@ -2808,7 +2808,7 @@ function planVerCategoria(cat){
   var refs = Object.values(refMap).sort(function(a,b){ return b.uds - a.uds; });
   refs.forEach(function(ref, ri){
     var pct = totalUds>0 ? (ref.uds/totalUds*100) : 0;
-    var refKey = 'REF||'+cat+'||'+ref.nombre.trim().toUpperCase();
+    var refKey = 'REF||'+cat+'||'+_recSanitizeKey(ref.nombre.trim().toUpperCase());
     var checked = !!(confirmadas[refKey] && confirmadas[refKey].ok);
     var rowId = 'plan-ref-expand-'+ri+'-'+cat.replace(/[^A-Za-z0-9]/g,'');
     // Valor MP + insumos: para OP con receta real via _planCostoColor (r.mat = todos los
