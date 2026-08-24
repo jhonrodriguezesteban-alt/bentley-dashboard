@@ -2747,7 +2747,7 @@ function planVerConfirmadosCategoria(cat){
     h += '<div style="padding:10px 12px;background:#1c1c1e;border-radius:9px;margin-bottom:6px;">';
     h += '<div style="display:flex;align-items:center;gap:10px;">';
     h += '<div style="flex:1;min-width:0;">';
-    h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(e.nombre||'')+'</div>';
+    h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;white-space:normal;word-break:break-word;">'+esc(e.nombre||'')+'</div>';
     h += '<div style="font-size:10px;color:#475569;">programado: '+((e.uds||0).toLocaleString('es-CO'))+' uds</div>';
     h += '</div>';
     h += '<div style="display:flex;align-items:center;gap:5px;flex-shrink:0;">';
