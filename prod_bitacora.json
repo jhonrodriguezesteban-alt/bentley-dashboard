@@ -10569,15 +10569,27 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1787582852385_a6phw",
-      "ts": 1787582852385,
-      "user": "Isabel",
-      "tipo": "diseno_responsable",
-      "diseno_id": "id_1782174578406_eoos12irc",
-      "nombre": "CAMISETA TEJIDA TRENZAS CUELLO REDONDO",
       "categoria": "Camisetas",
+      "diseno_id": "id_1782174578406_eoos12irc",
+      "id": "evt_1787582852385_a6phw",
+      "nombre": "CAMISETA TEJIDA TRENZAS CUELLO REDONDO",
       "resp_anterior": "Isa",
-      "resp_nuevo": "John"
+      "resp_nuevo": "John",
+      "tipo": "diseno_responsable",
+      "ts": 1787582852385,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1787584176650_jaasm",
+      "ts": 1787584176650,
+      "user": "Jefa de Producción",
+      "tipo": "editar_diseno",
+      "nombre": "SUPERIOR CON CORTE RANGLAND",
+      "categoria": "Buzos",
+      "marca": "Bentley Kids",
+      "prioridad": 1,
+      "kanban": "EN_CORTE_MUESTRA",
+      "proveedor": "ninguno"
     }
   ]
 }
