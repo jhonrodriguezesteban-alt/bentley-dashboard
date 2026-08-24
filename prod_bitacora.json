@@ -10416,19 +10416,50 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1787579999359_c3p6g",
-      "ts": 1787579999359,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-123",
-      "op_nombre": "BUZO TEJIDO MOÑOS",
       "categoria": "BUZOS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-08-24",
-      "total_uds": 158,
+      "id": "evt_1787579999359_c3p6g",
+      "op_id": "OP-2026-123",
+      "op_nombre": "BUZO TEJIDO MOÑOS",
       "referencias": [
         "BUZO TEJIDO MOÑOS"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 158,
+      "ts": 1787579999359,
+      "user": "John Rodriguez"
+    },
+    {
+      "color": "MARFIL",
+      "id": "evt_1787580140033_axc6w",
+      "mes": "2026-09",
+      "op_id": "OP-2026-123",
+      "op_nombre": "BUZO TEJIDO MOÑOS",
+      "tipo": "planeacion_asignar",
+      "ts": 1787580140033,
+      "user": "John Rodriguez"
+    },
+    {
+      "color": "NEGRO",
+      "id": "evt_1787580142287_jad06",
+      "mes": "2026-09",
+      "op_id": "OP-2026-123",
+      "op_nombre": "BUZO TEJIDO MOÑOS",
+      "tipo": "planeacion_asignar",
+      "ts": 1787580142287,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787580732056_dozc9",
+      "ts": 1787580732056,
+      "user": "John Rodriguez",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-123",
+      "nombre": "BUZO TEJIDO MOÑOS",
+      "categoria": "TEJIDOS",
+      "colores": 2,
+      "refs": 1
     }
   ]
 }
