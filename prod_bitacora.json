@@ -10647,19 +10647,39 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1787601442009_virpx",
-      "ts": 1787601442009,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-124",
-      "op_nombre": "RANGLAND SOFT",
       "categoria": "BUZOS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-08-24",
-      "total_uds": 216,
+      "id": "evt_1787601442009_virpx",
+      "op_id": "OP-2026-124",
+      "op_nombre": "RANGLAND SOFT",
       "referencias": [
         "RANGLAND SOFT"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 216,
+      "ts": 1787601442009,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787601459824_2b3iw",
+      "ts": 1787601459824,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-124",
+      "op_nombre": "RANGLAND SOFT",
+      "color": "MARFIL NASHVILLE",
+      "mes": "2026-09"
+    },
+    {
+      "id": "evt_1787601462204_8urdb",
+      "ts": 1787601462204,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-124",
+      "op_nombre": "RANGLAND SOFT",
+      "color": "MARFIL CANADA",
+      "mes": "2026-09"
     }
   ]
 }
