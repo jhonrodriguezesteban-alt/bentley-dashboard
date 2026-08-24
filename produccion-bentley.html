@@ -1100,6 +1100,25 @@ var RAW_URL = 'https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentle
 
 var CATALOGO = []; // cargado de prod_catalogo.json
 var CATEGORIAS = ['CAMISAS','CHAQUETAS','CAMISETAS','BUZOS','GABAN','CONJUNTOS','CHALECOS','PANTALONES','ABRIGOS','FALDA','BLUSAS','VESTIDOS','CAMISONES'];
+function _categoriasCustomGet(){ try{ return JSON.parse(localStorage.getItem('bentley_categorias_custom')||'[]'); }catch(e){ return []; } }
+function _categoriasCustomAdd(nombre){
+  var lista = _categoriasCustomGet();
+  if(lista.indexOf(nombre)===-1){ lista.push(nombre); localStorage.setItem('bentley_categorias_custom', JSON.stringify(lista)); }
+}
+function _categoriasTodas(){ return CATEGORIAS.concat(_categoriasCustomGet()); }
+// Maneja el "+ Nueva categoría..." de cualquier <select> de categoría: pide el nombre,
+// lo agrega a la lista guardada (persiste para la próxima vez) y lo deja seleccionado.
+function _catSelectNueva(sel){
+  if(sel.value !== '__nueva__') return;
+  var nombre = (prompt('Nombre de la nueva categoría (ej. TEJIDO DE PUNTO):')||'').trim().toUpperCase();
+  if(!nombre){ sel.value=''; return; }
+  _categoriasCustomAdd(nombre);
+  var opt = document.createElement('option');
+  opt.value = nombre; opt.textContent = nombre;
+  sel.insertBefore(opt, sel.lastElementChild);
+  sel.value = nombre;
+  sel.dispatchEvent(new Event('change', {bubbles:true}));
+}
 var TALLAS_DEFAULT = ['T4','T6','T8','T10','T12','T14','T16'];
 var TALLAS_ALL = ['T2','T4','T6','T8','T10','T12','T14','T16'];
 var TALLAS_ADULTO = ['XS','S','M','L','XL','XXL','XXXL'];
@@ -8224,7 +8243,7 @@ function _buildRefBlock(r, idx, total){
   if(total>1) h += '<button type="button" data-rid="'+r.rid+'" onclick="opRefRemove(this.dataset.rid)" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#ef4444;border-radius:5px;padding:2px 8px;font-size:11px;cursor:pointer;">× Quitar</button>';
   h += '</div>';
   h += '<div class="form-row op-form-row-mob">';
-  h += '<div class="form-group"><label class="form-label">Categoría *</label><select class="form-control" id="ref-cat-'+r.rid+'" onchange="opRefPreviewUpdate()"><option value="">Seleccionar...</option>'+CATEGORIAS.map(function(c){ return '<option'+(r.cat===c?' selected':'')+'>'+esc(c)+'</option>'; }).join('')+'</select></div>';
+  h += '<div class="form-group"><label class="form-label">Categoría *</label><select class="form-control" id="ref-cat-'+r.rid+'" onchange="_catSelectNueva(this);opRefPreviewUpdate()"><option value="">Seleccionar...</option>'+_categoriasTodas().map(function(c){ return '<option'+(r.cat===c?' selected':'')+'>'+esc(c)+'</option>'; }).join('')+'<option value="__nueva__">+ Nueva categoría...</option></select></div>';
   h += '<div class="form-group" style="position:relative;"><label class="form-label">Referencia a producir *</label>';
   h += '<input class="form-control" id="ref-nom-'+r.rid+'" value="'+esc(r.nombre)+'" placeholder="Buscar en catálogo…" autocomplete="off" oninput="opRefNombreInput(\''+r.rid+'\',this.value)" onfocus="opRefNombreInput(\''+r.rid+'\',this.value||\'\')" onblur="setTimeout(function(){opRefOcultarSug(\''+r.rid+'\');},200)">';
   h += '<div id="ref-sug-'+r.rid+'" style="display:none;position:absolute;left:0;right:0;top:100%;z-index:200;background:#1c1c1e;border:1px solid #334155;border-radius:8px;max-height:220px;overflow-y:auto;box-shadow:0 12px 32px rgba(0,0,0,.7);margin-top:4px;"></div>';
@@ -8534,7 +8553,7 @@ function renderActivas(){
   var h = '';
   h += '<div class="filter-row">';
   h += '<select id="f-estado" onchange="filtrarActivas()"><option value="">Todos los estados</option>' + ESTADOS.filter(function(e){ return e!=='ENTREGADO'; }).map(function(e){ return '<option>' + e + '</option>'; }).join('') + '</select>';
-  h += '<select id="f-cat" onchange="filtrarActivas()"><option value="">Todas las categorías</option>' + CATEGORIAS.map(function(c){ return '<option>' + c + '</option>'; }).join('') + '</select>';
+  h += '<select id="f-cat" onchange="filtrarActivas()"><option value="">Todas las categorías</option>' + _categoriasTodas().map(function(c){ return '<option>' + c + '</option>'; }).join('') + '</select>';
   h += '<select id="f-sat" onchange="filtrarActivas()"><option value="">Todos los satélites</option>' + DB.satelites.map(function(s){ return '<option value="' + s.id + '">' + s.nombre + '</option>'; }).join('') + '</select>';
   h += '<input id="f-buscar" placeholder="Buscar nombre..." oninput="filtrarActivas()" style="width:200px;">';
   h += '<button class="btn btn-ghost btn-sm" onclick="deseleccionarTodo()">Deseleccionar</button>';
