@@ -976,11 +976,12 @@
     },
     "REF||CONJUNTOS||CONJUNTO BOMBER CORTA": {
       "cat": "CONJUNTOS",
-      "extra": 200,
+      "extra": 300,
       "nombre": "CONJUNTO BOMBER CORTA",
       "ok": true,
       "tipo": "diseno",
-      "uds": 300
+      "uds": 300,
+      "ts": 1787583880743
     },
     "REF||CONJUNTOS||CONJUNTO CHELSY": {
       "cat": "CONJUNTOS",
@@ -1126,6 +1127,21 @@
       "tipo": "diseno",
       "uds": 400
     },
+    "REF||CONJUNTOS||SUPERIOR CON CORTE RANGLAND": {
+      "cat": "CONJUNTOS",
+      "cif": 0,
+      "costoTotal": 0,
+      "extra": 0,
+      "mat": 0,
+      "mod": 0,
+      "nombre": "SUPERIOR CON CORTE RANGLAND",
+      "ok": true,
+      "svc": 0,
+      "tieneReceta": false,
+      "tipo": "diseno",
+      "ts": 1787583412556,
+      "uds": 200
+    },
     "REF||FALDA||FALDA ESCOSES": {
       "cat": "FALDA",
       "extra": 0,
@@ -1243,21 +1259,6 @@
       "ok": true,
       "tipo": "op",
       "uds": 174
-    },
-    "REF||CONJUNTOS||SUPERIOR CON CORTE RANGLAND": {
-      "ok": true,
-      "extra": 0,
-      "ts": 1787583412556,
-      "cat": "CONJUNTOS",
-      "nombre": "SUPERIOR CON CORTE RANGLAND",
-      "uds": 200,
-      "tipo": "diseno",
-      "mat": 0,
-      "mod": 0,
-      "cif": 0,
-      "svc": 0,
-      "costoTotal": 0,
-      "tieneReceta": false
     }
   }
 }
