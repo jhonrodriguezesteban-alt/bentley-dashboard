@@ -11124,19 +11124,30 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1787687696560_946qk",
-      "ts": 1787687696560,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-192",
-      "op_nombre": "CHAQUETA LENTEJUELAS",
       "categoria": "CHAQUETAS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-08-25",
-      "total_uds": 400,
+      "id": "evt_1787687696560_946qk",
+      "op_id": "OP-2026-192",
+      "op_nombre": "CHAQUETA LENTEJUELAS",
       "referencias": [
         "CHAQUETA LENTEJUELAS"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 400,
+      "ts": 1787687696560,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787687874473_th7to",
+      "ts": 1787687874473,
+      "user": "John Rodriguez",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-192",
+      "nombre": "CHAQUETA LENTEJUELAS",
+      "categoria": "CHAQUETAS",
+      "colores": 4,
+      "refs": 1
     }
   ]
 }
