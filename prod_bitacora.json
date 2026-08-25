@@ -10819,19 +10819,39 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1787683466412_2zsi3",
-      "ts": 1787683466412,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-126",
-      "op_nombre": "CHAQUETA CAZADORA",
       "categoria": "CHAQUETAS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-08-25",
-      "total_uds": 352,
+      "id": "evt_1787683466412_2zsi3",
+      "op_id": "OP-2026-126",
+      "op_nombre": "CHAQUETA CAZADORA",
       "referencias": [
         "CHAQUETA CAZADORA"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 352,
+      "ts": 1787683466412,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787683496079_lowtm",
+      "ts": 1787683496079,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-125",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "color": "NEGRO",
+      "mes": "2026-09"
+    },
+    {
+      "id": "evt_1787683498030_es9qn",
+      "ts": 1787683498030,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-125",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "color": "VERDE MILITAR",
+      "mes": "2026-09"
     }
   ]
 }
