@@ -3319,8 +3319,9 @@ function planVerMes(mesKey){
         var udsPorColor = coloresD.length ? (p.uds||0)/coloresD.length : null;
 
         if(coloresD.length){
-          h += '<details style="background:rgba(16,185,129,.05);border:1px solid rgba(52,211,153,.15);border-radius:9px;overflow:hidden;">';
-          h += '<summary style="display:flex;align-items:center;gap:10px;padding:9px 12px;cursor:pointer;list-style:none;">';
+          var _disDetId = 'mes-dis-colores-'+String(d.id).replace(/[^A-Za-z0-9]/g,'');
+          h += '<div style="background:rgba(16,185,129,.05);border:1px solid rgba(52,211,153,.15);border-radius:9px;overflow:hidden;">';
+          h += '<div onclick="var _el=document.getElementById(\''+_disDetId+'\');_el.style.display=(_el.style.display===\'none\'?\'flex\':\'none\');" style="display:flex;align-items:center;gap:10px;padding:9px 12px;cursor:pointer;">';
           h += '<div style="flex:1;min-width:0;">';
           h += '<div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">';
           h += '<span style="font-size:12px;font-weight:700;color:#d1fae5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(d.nombre)+'</span>';
@@ -3329,8 +3330,8 @@ function planVerMes(mesKey){
           h += '<div style="font-size:9px;color:#64748b;">'+(mtsD!==null?'🧵 ≈ '+mtsD.toLocaleString('es-CO',{maximumFractionDigits:1})+' mts est. · '+coloresD.length+' color'+(coloresD.length!==1?'es':'')+' — clic para ver por color':coloresD.length+' color'+(coloresD.length!==1?'es':''))+'</div>';
           h += '</div>';
           h += '<div style="font-size:13px;font-weight:800;color:#34d399;">'+(p.uds||0).toLocaleString('es-CO')+'<span style="font-size:9px;color:#64748b;margin-left:2px;">uds</span></div>';
-          h += '</summary>';
-          h += '<div style="padding:4px 12px 10px;border-top:1px solid rgba(255,255,255,.05);display:flex;flex-direction:column;gap:4px;">';
+          h += '</div>';
+          h += '<div id="'+_disDetId+'" style="display:none;padding:4px 12px 10px;border-top:1px solid rgba(255,255,255,.05);flex-direction:column;gap:4px;">';
           coloresD.forEach(function(c){
             h += '<div style="display:flex;align-items:center;gap:8px;padding:3px 0;">';
             h += '<span style="width:10px;height:10px;border-radius:50%;background:'+esc(c.hex||'#6b7280')+';border:1px solid rgba(255,255,255,.2);flex-shrink:0;display:inline-block;"></span>';
@@ -3340,7 +3341,7 @@ function planVerMes(mesKey){
             h += '</div>';
           });
           h += '</div>';
-          h += '</details>';
+          h += '</div>';
         } else {
           h += '<div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:rgba(16,185,129,.05);border:1px solid rgba(52,211,153,.15);border-radius:9px;">';
           h += '<div style="flex:1;min-width:0;">';
