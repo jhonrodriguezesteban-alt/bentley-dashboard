@@ -11322,16 +11322,31 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1787691315539_ri8lf",
-      "ts": 1787691315539,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1785250630320_f75otcjcu",
-      "nombre": "BONNIE LENTEJUELAS CON RIB",
       "categoria": "Chaquetas",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1785250630320_f75otcjcu",
       "estado_anterior": "EN_REVISION_GERENCIA",
-      "estado_nuevo": "EN_CORTE_MUESTRA"
+      "estado_nuevo": "EN_CORTE_MUESTRA",
+      "id": "evt_1787691315539_ri8lf",
+      "marca": "Bentley Kids",
+      "nombre": "BONNIE LENTEJUELAS CON RIB",
+      "tipo": "estado_diseno",
+      "ts": 1787691315539,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1787693739306_7mmux",
+      "ts": 1787693739306,
+      "user": "John Rodriguez",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-193",
+      "op_nombre": "CHALECO PUFFY",
+      "categoria": "CHALECOS",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-08-25",
+      "total_uds": 396,
+      "referencias": [
+        "CHALECO PUFFY"
+      ]
     }
   ]
 }
