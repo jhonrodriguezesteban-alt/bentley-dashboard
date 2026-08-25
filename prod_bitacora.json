@@ -10746,20 +10746,30 @@
       "user": "Isabel"
     },
     {
+      "bulk": true,
+      "color": "BEIGE",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1787666940940_nfb86",
-      "ts": 1787666940940,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-0039",
       "op_nombre": "BOTA ANCHA KENIA",
       "referencia": "BOTA ANCHA KENIA",
-      "color": "BEIGE",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1787666940940,
       "uds": 110,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787668835261_pm27x",
+      "ts": 1787668835261,
+      "user": "Jefa de Producción",
+      "tipo": "diligencia",
+      "descripcion": "recoger vapor",
+      "destino": "suba",
+      "fecha": "2026-08-25",
+      "hora": ""
     }
   ]
 }
