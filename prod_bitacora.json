@@ -11686,19 +11686,39 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1787702016125_qn0f7",
-      "ts": 1787702016125,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-199",
-      "op_nombre": "CONJUNTO MANCHESTER",
       "categoria": "CONJUNTOS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-08-25",
-      "total_uds": 400,
+      "id": "evt_1787702016125_qn0f7",
+      "op_id": "OP-2026-199",
+      "op_nombre": "CONJUNTO MANCHESTER",
       "referencias": [
         "CONJUNTO MANCHESTER"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 400,
+      "ts": 1787702016125,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787702032359_ptaxw",
+      "ts": 1787702032359,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-199",
+      "op_nombre": "CONJUNTO MANCHESTER",
+      "color": "VINOTINTO",
+      "mes": "2026-09"
+    },
+    {
+      "id": "evt_1787702034197_06qi3",
+      "ts": 1787702034197,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-199",
+      "op_nombre": "CONJUNTO MANCHESTER",
+      "color": "NEGRO",
+      "mes": "2026-09"
     }
   ]
 }
