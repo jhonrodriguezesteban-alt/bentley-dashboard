@@ -2785,6 +2785,18 @@ function _planExtraDesdeModal(inp){
 // Despliega colores/tallas/cantidades de una referencia confirmada, tomando los datos
 // de la OP real (window._planCatMap, construido al renderizar Planeación). Para diseños
 // sin OP todavía no hay color/talla que mostrar.
+// Filtro global "Ver solo confirmados" para la grilla de meses (JULIO/AGOSTO/...).
+var _planSoloConfirmados = false;
+function _planToggleSoloConfirmados(){
+  _planSoloConfirmados = !_planSoloConfirmados;
+  renderPage('planeacion');
+}
+function _planEsConfirmado(nombre, catRaw){
+  var cat = (catRaw||'Sin categoría').trim().toUpperCase();
+  var refKey = 'REF||'+cat+'||'+_recSanitizeKey((nombre||'').trim().toUpperCase());
+  var c = DB.planeacion && DB.planeacion.confirmadas && DB.planeacion.confirmadas[refKey];
+  return !!(c && c.ok);
+}
 function _planConfirmadoToggleDetalle(detId, nombre, cat){
   var el = document.getElementById(detId);
   if(!el) return;
@@ -4879,6 +4891,7 @@ function renderPlaneacion(){
   if(_planBusqRef){
     h += '<button onclick="_planBusqRef=\'\';document.getElementById(\'plan-busq-ref\').value=\'\';_planFiltrarMeses()" style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);border-radius:7px;color:#f87171;font-size:11px;font-weight:700;padding:7px 12px;cursor:pointer;">✕ Limpiar</button>';
   }
+  h += '<button onclick="_planToggleSoloConfirmados()" title="Filtra las tarjetas de mes para mostrar solo lo ya confirmado (☑), respetando el mes donde ya estaba puesto" style="background:'+(_planSoloConfirmados?'rgba(52,211,153,.18)':'rgba(255,255,255,.04)')+';border:1px solid '+(_planSoloConfirmados?'rgba(52,211,153,.5)':'#2c2c2e')+';border-radius:7px;color:'+(_planSoloConfirmados?'#34d399':'#94a3b8')+';font-size:11px;font-weight:700;padding:7px 12px;cursor:pointer;white-space:nowrap;">'+(_planSoloConfirmados?'✅ Solo confirmados: ON':'☐ Ver solo confirmados')+'</button>';
   h += '</div>';
 
   // ── Grid de meses ────────────────────────────────────────────────────────────
@@ -4892,13 +4905,19 @@ function renderPlaneacion(){
   MESES.forEach(function(mes){
     var mesKeys = meses[mes.k]||[];
     var mesUnits = mesKeys.map(function(key){ return planUnitsByKey[key]; }).filter(Boolean);
-    var mesOps = mesUnits.map(function(u){ return u.op; }); // compat: OPs (con repetición si varios colores del mismo mes)
 
     // Diseños asignados a este mes con cantidad > 0
     var mesDisenos = disenosActivos2.filter(function(d){
       var p = disPlanAll[d.id];
       return p && p.mes === mes.k && (p.uds||0) > 0;
     });
+
+    // Filtro "Ver solo confirmados": respeta el mes ya asignado, solo oculta lo que no está marcado ☑
+    if(_planSoloConfirmados){
+      mesUnits = mesUnits.filter(function(u){ return _planEsConfirmado(u.op.nombre_producto||u.op.id, u.op.categoria); });
+      mesDisenos = mesDisenos.filter(function(d){ return _planEsConfirmado(d.nombre, d.categoria); });
+    }
+    var mesOps = mesUnits.map(function(u){ return u.op; }); // compat: OPs (con repetición si varios colores del mismo mes)
 
     var totalUds = 0;
     var catMap = {};
