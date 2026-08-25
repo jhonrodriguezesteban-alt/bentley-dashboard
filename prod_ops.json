@@ -4503,24 +4503,27 @@
     },
     {
       "cantidades": {
-        "AVENA_T10": 16,
-        "AVENA_T12": 16,
-        "AVENA_T14": 16,
-        "AVENA_T16": 16,
-        "AVENA_T6": 10,
-        "AVENA_T8": 10,
-        "MARFIL_T10": 16,
-        "MARFIL_T12": 16,
-        "MARFIL_T14": 16,
-        "MARFIL_T16": 16,
-        "MARFIL_T6": 10,
-        "MARFIL_T8": 10,
-        "NEGRO_T10": 16,
-        "NEGRO_T12": 16,
-        "NEGRO_T14": 16,
-        "NEGRO_T16": 16,
-        "NEGRO_T6": 10,
-        "NEGRO_T8": 10
+        "AVENA_T4": 12,
+        "AVENA_T6": 12,
+        "AVENA_T8": 24,
+        "AVENA_T10": 24,
+        "AVENA_T12": 24,
+        "AVENA_T14": 24,
+        "AVENA_T16": 24,
+        "MARFIL_T4": 12,
+        "MARFIL_T6": 12,
+        "MARFIL_T8": 24,
+        "MARFIL_T10": 24,
+        "MARFIL_T12": 24,
+        "MARFIL_T14": 24,
+        "MARFIL_T16": 24,
+        "NEGRO_T4": 12,
+        "NEGRO_T6": 12,
+        "NEGRO_T8": 24,
+        "NEGRO_T10": 24,
+        "NEGRO_T12": 24,
+        "NEGRO_T14": 24,
+        "NEGRO_T16": 24
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -4538,36 +4541,17 @@
       "numero": 79,
       "referencias": [
         {
-          "cantidades": {
-            "AVENA_T10": 16,
-            "AVENA_T12": 16,
-            "AVENA_T14": 16,
-            "AVENA_T16": 16,
-            "AVENA_T6": 10,
-            "AVENA_T8": 10,
-            "MARFIL_T10": 16,
-            "MARFIL_T12": 16,
-            "MARFIL_T14": 16,
-            "MARFIL_T16": 16,
-            "MARFIL_T6": 10,
-            "MARFIL_T8": 10,
-            "NEGRO_T10": 16,
-            "NEGRO_T12": 16,
-            "NEGRO_T14": 16,
-            "NEGRO_T16": 16,
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 10
-          },
+          "nombre": "BEISBOLERA ARMIN",
+          "ref": "1132",
           "cat": "CHAQUETAS",
+          "vmo": 9144,
           "colores": [
             "AVENA",
             "MARFIL",
             "NEGRO"
           ],
-          "maquilador_id": "",
-          "nombre": "BEISBOLERA ARMIN",
-          "ref": "1132",
           "tallas": [
+            "T4",
             "T6",
             "T8",
             "T10",
@@ -4575,10 +4559,34 @@
             "T14",
             "T16"
           ],
-          "vmo": 9144
+          "cantidades": {
+            "AVENA_T4": 12,
+            "AVENA_T6": 12,
+            "AVENA_T8": 24,
+            "AVENA_T10": 24,
+            "AVENA_T12": 24,
+            "AVENA_T14": 24,
+            "AVENA_T16": 24,
+            "MARFIL_T4": 12,
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 24,
+            "MARFIL_T10": 24,
+            "MARFIL_T12": 24,
+            "MARFIL_T14": 24,
+            "MARFIL_T16": 24,
+            "NEGRO_T4": 12,
+            "NEGRO_T6": 12,
+            "NEGRO_T8": 24,
+            "NEGRO_T10": 24,
+            "NEGRO_T12": 24,
+            "NEGRO_T14": 24,
+            "NEGRO_T16": 24
+          },
+          "maquilador_id": ""
         }
       ],
       "tallas": [
+        "T4",
         "T6",
         "T8",
         "T10",
@@ -4586,7 +4594,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-08-04",
+      "updated_at": "2026-08-25",
       "subg_estados": {}
     },
     {
