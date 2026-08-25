@@ -2904,7 +2904,9 @@ function _planConfirmadoDetalleHTML(nombre, cat){
   var colores = Object.keys(porColor);
   if(!colores.length) return '<div style="font-size:10px;color:#64748b;">No se encontraron cantidades por talla para esta referencia.</div>';
   // Orden de tallas: primero el orden estándar niño/adulto conocido, luego cualquier otra que aparezca
-  var ORDEN_TALLAS = TALLAS_DEFAULT.concat(['XS','S','M','L','XL','XXL','XXXL']);
+  // Ojo: no usar TALLAS_DEFAULT aquí — esa variable global se redeclara más abajo (módulo Simulador)
+  // con otros valores ('2','4',...) y pisa esta, dañando el orden. Orden propio y fijo:
+  var ORDEN_TALLAS = ['T2','T4','T6','T8','T10','T12','T14','T16','XS','S','M','L','XL','XXL','XXXL'];
   var tallasSet = {};
   colores.forEach(function(color){ Object.keys(porColor[color]).forEach(function(t){ tallasSet[t]=1; }); });
   var tallas = Object.keys(tallasSet).sort(function(a,b){
