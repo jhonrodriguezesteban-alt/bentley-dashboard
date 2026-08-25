@@ -2903,15 +2903,42 @@ function _planConfirmadoDetalleHTML(nombre, cat){
   });
   var colores = Object.keys(porColor);
   if(!colores.length) return '<div style="font-size:10px;color:#64748b;">No se encontraron cantidades por talla para esta referencia.</div>';
-  var h = '<table style="width:100%;border-collapse:collapse;font-size:10.5px;">';
-  h += '<thead><tr style="color:#64748b;text-align:left;"><th style="padding:3px 6px;font-weight:600;">Color</th><th style="padding:3px 6px;font-weight:600;">Tallas × cantidad</th><th style="padding:3px 6px;text-align:right;font-weight:600;">Total</th></tr></thead><tbody>';
+  // Orden de tallas: primero el orden estándar niño/adulto conocido, luego cualquier otra que aparezca
+  var ORDEN_TALLAS = TALLAS_DEFAULT.concat(['XS','S','M','L','XL','XXL','XXXL']);
+  var tallasSet = {};
+  colores.forEach(function(color){ Object.keys(porColor[color]).forEach(function(t){ tallasSet[t]=1; }); });
+  var tallas = Object.keys(tallasSet).sort(function(a,b){
+    var ia = ORDEN_TALLAS.indexOf(a), ib = ORDEN_TALLAS.indexOf(b);
+    if(ia<0) ia = 999; if(ib<0) ib = 999;
+    return ia - ib || a.localeCompare(b);
+  });
+  var totalesPorTalla = {}; tallas.forEach(function(t){ totalesPorTalla[t]=0; });
+  var granTotal = 0;
+  var h = '<div style="overflow-x:auto;"><table style="border-collapse:collapse;font-size:10.5px;min-width:100%;">';
+  h += '<thead><tr style="color:#64748b;">';
+  h += '<th style="padding:4px 8px;text-align:left;font-weight:700;position:sticky;left:0;background:#1c1c1e;">Color</th>';
+  tallas.forEach(function(t){ h += '<th style="padding:4px 8px;text-align:right;font-weight:700;white-space:nowrap;">'+esc(t)+'</th>'; });
+  h += '<th style="padding:4px 8px;text-align:right;font-weight:800;color:#34d399;border-left:1px solid rgba(52,211,153,.3);">Total</th>';
+  h += '</tr></thead><tbody>';
   colores.forEach(function(color){
     var tallasObj = porColor[color];
-    var tot = Object.keys(tallasObj).reduce(function(a,t){ return a+tallasObj[t]; }, 0);
-    var tallaStr = Object.keys(tallasObj).map(function(t){ return t+':&nbsp;'+tallasObj[t]; }).join('&nbsp;&nbsp;·&nbsp;&nbsp;');
-    h += '<tr style="border-top:1px solid rgba(255,255,255,.05);"><td style="padding:5px 6px;color:#cbd5e1;font-weight:600;white-space:nowrap;">'+esc(color)+'</td><td style="padding:5px 6px;color:#94a3b8;">'+tallaStr+'</td><td style="padding:5px 6px;text-align:right;color:#34d399;font-weight:700;">'+tot.toLocaleString('es-CO')+'</td></tr>';
+    var totColor = 0;
+    h += '<tr style="border-top:1px solid rgba(255,255,255,.05);">';
+    h += '<td style="padding:5px 8px;color:#cbd5e1;font-weight:600;white-space:nowrap;position:sticky;left:0;background:#1c1c1e;">'+esc(color)+'</td>';
+    tallas.forEach(function(t){
+      var v = tallasObj[t]||0;
+      totColor += v; totalesPorTalla[t] += v; granTotal += v;
+      h += '<td style="padding:5px 8px;text-align:right;color:'+(v>0?'#e2e8f0':'#374151')+';">'+(v>0?v.toLocaleString('es-CO'):'—')+'</td>';
+    });
+    h += '<td style="padding:5px 8px;text-align:right;color:#34d399;font-weight:800;border-left:1px solid rgba(52,211,153,.2);">'+totColor.toLocaleString('es-CO')+'</td>';
+    h += '</tr>';
   });
-  h += '</tbody></table>';
+  h += '<tr style="border-top:2px solid rgba(52,211,153,.3);background:rgba(52,211,153,.05);">';
+  h += '<td style="padding:5px 8px;color:#34d399;font-weight:800;position:sticky;left:0;background:#1f2e27;">Total</td>';
+  tallas.forEach(function(t){ h += '<td style="padding:5px 8px;text-align:right;color:#34d399;font-weight:800;">'+totalesPorTalla[t].toLocaleString('es-CO')+'</td>'; });
+  h += '<td style="padding:5px 8px;text-align:right;color:#34d399;font-weight:900;border-left:1px solid rgba(52,211,153,.3);">'+granTotal.toLocaleString('es-CO')+'</td>';
+  h += '</tr>';
+  h += '</tbody></table></div>';
   return h;
 }
 function _planConfirmarClick(chk){
