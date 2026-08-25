@@ -1719,35 +1719,52 @@ function _mergePlaneacionData(remoteData, localData){
 function _mergeArrayData(key, remoteData, localData){
   function byId(arr, id){ for(var i=0;i<arr.length;i++){ if(arr[i].id===id) return i; } return -1; }
   function mergeOps(remArr, locArr){
+    // IMPORTANTE: cuando el mismo id ya existe en remoto, el remoto GANA por defecto —
+    // acaba de llegar fresco de GitHub en este mismo merge, así que es al menos tan
+    // reciente como lo que esta sesión conocía. Antes "local siempre ganaba" completo,
+    // lo que permitía que una pestaña vieja revirtiera correcciones ya guardadas por
+    // otra sesión (op_id, colores, cantidades, etc.) — solo el AVANCE de estado por
+    // color (subg_estados) se conserva de local cuando va más adelantado, porque ese
+    // es monótono por regla de negocio (nunca retrocede).
     var result = JSON.parse(JSON.stringify(remArr));
-    var remIdSet = {};
-    remArr.forEach(function(o){ remIdSet[o.id]=true; });
     locArr.forEach(function(locOp){
       var ri = byId(result, locOp.id);
       if(ri >= 0){
-        // Merge subg_estados: gana el estado más avanzado entre remoto y local
         var remSubg = result[ri].subg_estados||{}, locSubg = locOp.subg_estados||{};
         var mergedSubg = Object.assign({}, remSubg);
         Object.keys(locSubg).forEach(function(k){
           var r=_ESTADO_PROGRESO[remSubg[k]]||0, l=_ESTADO_PROGRESO[locSubg[k]]||0;
           mergedSubg[k] = (l>=r) ? locSubg[k] : remSubg[k];
         });
-        result[ri] = Object.assign({}, result[ri], locOp);
         result[ri].subg_estados = mergedSubg;
       } else {
-        result.push(locOp); // OP nueva que creó este usuario
+        result.push(locOp); // OP nueva creada en esta sesión, sin conflicto de id
       }
     });
     return result;
   }
+  // Progreso de una OT (mismo criterio que _ESTADO_PROGRESO de OPs) — para decidir si
+  // el estado local de una OT va más avanzado que el remoto y por eso sí debe ganar.
+  var _OT_ESTADO_PROGRESO = {POR_REVISAR:0,PENDIENTE_CORTAR:1,CORTE_POR_ALISTAR:2,ASIGNADO:3,EN_CONFECCION:4,ENTREGADO_PARCIAL:5,NOVEDAD:5,ENTREGADO:6};
   function mergeById(remArr, locArr){
+    // Mismo criterio que mergeOps: el remoto gana por defecto en cualquier campo (evita
+    // que una pestaña vieja reescriba correcciones ya guardadas, como un op_id corregido).
+    // Excepción: si el estado local de una OT va más avanzado (o entregó más unidades),
+    // eso sí se conserva — es progreso real de planta que no debe perderse.
     var result = JSON.parse(JSON.stringify(remArr));
-    var remIdSet = {};
-    remArr.forEach(function(o){ remIdSet[o.id]=true; });
     locArr.forEach(function(locItem){
       var ri = byId(result, locItem.id);
-      if(ri >= 0){ result[ri] = Object.assign({}, result[ri], locItem); }
-      else { result.push(locItem); }
+      if(ri >= 0){
+        var rem = result[ri];
+        var remProg = _OT_ESTADO_PROGRESO[rem.estado]||0, locProg = _OT_ESTADO_PROGRESO[locItem.estado]||0;
+        if(locProg > remProg) rem.estado = locItem.estado;
+        var remEnt = rem.unidades_entregadas||0, locEnt = locItem.unidades_entregadas||0;
+        if(locEnt > remEnt) rem.unidades_entregadas = locEnt;
+        var remNov = rem.unidades_novedad||0, locNov = locItem.unidades_novedad||0;
+        if(locNov > remNov) rem.unidades_novedad = locNov;
+      } else {
+        result.push(locItem); // registro nuevo creado en esta sesión, sin conflicto de id
+      }
     });
     return result;
   }
@@ -1773,12 +1790,11 @@ function _mergeArrayData(key, remoteData, localData){
       if(ri >= 0){
         var remProg = disProg(result[ri].kanban_estado);
         var locProg = disProg(locD.kanban_estado);
-        var winnerEstado = (remProg >= locProg) ? result[ri].kanban_estado : locD.kanban_estado;
-        var mergedImgs = unionImagenes(result[ri].imagenes, locD.imagenes);
-        // Local gana en campos editables; remoto gana en estado si es más avanzado
-        result[ri] = Object.assign({}, result[ri], locD);
-        result[ri].kanban_estado = winnerEstado;
-        result[ri].imagenes = mergedImgs;
+        // Remoto gana por defecto en todos los campos (evita que una pestaña vieja
+        // reescriba precios de tela u otros datos ya corregidos) — solo el estado del
+        // kanban (si va más avanzado) y las imágenes (unión) se preservan de local.
+        result[ri].kanban_estado = (remProg >= locProg) ? result[ri].kanban_estado : locD.kanban_estado;
+        result[ri].imagenes = unionImagenes(result[ri].imagenes, locD.imagenes);
       } else {
         result.push(locD); // diseño nuevo creado por este usuario
       }
