@@ -11676,14 +11676,29 @@
       "user": "John Rodriguez"
     },
     {
+      "color": "AVENA",
       "id": "evt_1787701108016_gm5ge",
-      "ts": 1787701108016,
-      "user": "John Rodriguez",
-      "tipo": "planeacion_asignar",
+      "mes": "2026-09",
       "op_id": "OP-2026-197",
       "op_nombre": "CHAQUETA BAGGY PINZAS",
-      "color": "AVENA",
-      "mes": "2026-09"
+      "tipo": "planeacion_asignar",
+      "ts": 1787701108016,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787702016125_qn0f7",
+      "ts": 1787702016125,
+      "user": "John Rodriguez",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-199",
+      "op_nombre": "CONJUNTO MANCHESTER",
+      "categoria": "CONJUNTOS",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-08-25",
+      "total_uds": 400,
+      "referencias": [
+        "CONJUNTO MANCHESTER"
+      ]
     }
   ]
 }
