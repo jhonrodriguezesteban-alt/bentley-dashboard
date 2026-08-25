@@ -11389,19 +11389,39 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1787694909876_gnr4j",
-      "ts": 1787694909876,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-194",
-      "op_nombre": "HOODIE RANGLAND PAÑO ALGODON ABIERTO",
       "categoria": "BUZOS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-08-25",
-      "total_uds": 496,
+      "id": "evt_1787694909876_gnr4j",
+      "op_id": "OP-2026-194",
+      "op_nombre": "HOODIE RANGLAND PAÑO ALGODON ABIERTO",
       "referencias": [
         "HOODIE RANGLAND PAÑO ALGODON ABIERTO"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 496,
+      "ts": 1787694909876,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787695593015_c0bs4",
+      "ts": 1787695593015,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-194",
+      "op_nombre": "HOODIE RANGLAND PAÑO ALGODON ABIERTO",
+      "color": "CAFE",
+      "mes": "2026-09"
+    },
+    {
+      "id": "evt_1787695595300_vhmom",
+      "ts": 1787695595300,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-194",
+      "op_nombre": "HOODIE RANGLAND PAÑO ALGODON ABIERTO",
+      "color": "ROSA",
+      "mes": "2026-09"
     }
   ]
 }
