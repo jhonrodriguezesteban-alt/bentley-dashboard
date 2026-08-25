@@ -2688,8 +2688,8 @@ function _planRenderConfirmados(){
     h += '<div><div style="font-size:9px;font-weight:700;color:#0a84ff;text-transform:uppercase;letter-spacing:.4px;">Repro (ya tienen OP)</div><div style="font-size:10px;color:#64748b;">'+opEntries.length+' referencia'+(opEntries.length!==1?'s':'')+'</div></div>';
     h += '<div style="font-size:19px;font-weight:900;color:#0a84ff;">'+opUds.toLocaleString('es-CO')+'<span style="font-size:9px;color:#64748b;margin-left:3px;">uds</span></div>';
     h += '</div>';
-    h += '<div style="flex:1;background:rgba(168,85,247,.07);border:1px solid rgba(168,85,247,.25);border-radius:9px;padding:9px 13px;display:flex;justify-content:space-between;align-items:center;">';
-    h += '<div><div style="font-size:9px;font-weight:700;color:#a855f7;text-transform:uppercase;letter-spacing:.4px;">Diseño (nuevas)</div><div style="font-size:10px;color:#64748b;">'+disEntries.length+' referencia'+(disEntries.length!==1?'s':'')+'</div></div>';
+    h += '<div onclick="_planVerListadoDisenosConfirmados()" title="Click para ver el listado completo por categoría" style="flex:1;background:rgba(168,85,247,.07);border:1px solid rgba(168,85,247,.25);border-radius:9px;padding:9px 13px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;" onmouseover="this.style.borderColor=\'rgba(168,85,247,.6)\'" onmouseout="this.style.borderColor=\'rgba(168,85,247,.25)\'">';
+    h += '<div><div style="font-size:9px;font-weight:700;color:#a855f7;text-transform:uppercase;letter-spacing:.4px;">Diseño (nuevas) · ver listado →</div><div style="font-size:10px;color:#64748b;">'+disEntries.length+' referencia'+(disEntries.length!==1?'s':'')+'</div></div>';
     h += '<div style="font-size:19px;font-weight:900;color:#a855f7;">'+disUds.toLocaleString('es-CO')+'<span style="font-size:9px;color:#64748b;margin-left:3px;">uds</span></div>';
     h += '</div>';
     h += '</div>';
@@ -2796,6 +2796,81 @@ function _planEsConfirmado(nombre, catRaw){
   var refKey = 'REF||'+cat+'||'+_recSanitizeKey((nombre||'').trim().toUpperCase());
   var c = DB.planeacion && DB.planeacion.confirmadas && DB.planeacion.confirmadas[refKey];
   return !!(c && c.ok);
+}
+// Listado de referencias confirmadas que aún están en diseño (sin OP), agrupadas por categoría.
+function _planVerListadoDisenosConfirmados(){
+  var confirmadas = (DB.planeacion && DB.planeacion.confirmadas) || {};
+  var entries = Object.keys(confirmadas).map(function(k){ return Object.assign({refKey:k}, confirmadas[k]); }).filter(function(e){ return e.ok && e.tipo==='diseno'; });
+  var disPlanAll = (DB.planeacion && DB.planeacion.disenos_plan) || {};
+  var disenosPorNombreCat = {};
+  (DB.disenos||[]).forEach(function(d){
+    if(d.eliminado) return;
+    var k = (d.categoria||'').trim().toUpperCase()+'||'+(d.nombre||'').trim().toUpperCase();
+    disenosPorNombreCat[k] = d;
+  });
+  var porCat = {};
+  entries.forEach(function(e){
+    var cat = e.cat || 'SIN CATEGORÍA';
+    if(!porCat[cat]) porCat[cat] = [];
+    var dKey = cat.toUpperCase()+'||'+(e.nombre||'').trim().toUpperCase();
+    var d = disenosPorNombreCat[dKey];
+    var mesLbl = '';
+    if(d){
+      var p = disPlanAll[d.id];
+      if(p && p.mes){ mesLbl = (_planMesesDef().find(function(m){ return m.k===p.mes; })||{}).label || p.mes; }
+    }
+    porCat[cat].push({nombre:e.nombre, uds:(e.uds||0), extra:(e.extra||0), total:(e.uds||0)+(e.extra||0), mes:mesLbl, kanban:d?(d.kanban_estado||''):''});
+  });
+  var cats = Object.keys(porCat).sort(function(a,b){
+    var ta = porCat[a].reduce(function(s,r){return s+r.total;},0);
+    var tb = porCat[b].reduce(function(s,r){return s+r.total;},0);
+    return tb-ta;
+  });
+  window._planListadoDisenosCSV = porCat;
+  var h = '<div style="padding:0 4px 20px;">';
+  if(!entries.length){
+    h += '<div style="text-align:center;color:#374151;font-size:12px;padding:24px 0;">No hay referencias de diseño confirmadas todavía.</div>';
+  } else {
+    var totGeneral = entries.reduce(function(s,e){ return s+(e.uds||0)+(e.extra||0); },0);
+    h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">';
+    h += '<div style="font-size:11px;color:#64748b;">'+entries.length+' referencia'+(entries.length!==1?'s':'')+' en diseño confirmadas · '+cats.length+' categorías</div>';
+    h += '<div style="text-align:right;"><div style="font-size:9px;color:#64748b;text-transform:uppercase;">Total</div><div style="font-size:20px;font-weight:900;color:#a855f7;">'+totGeneral.toLocaleString('es-CO')+' uds</div></div>';
+    h += '</div>';
+    cats.forEach(function(cat){
+      var refs = porCat[cat].sort(function(a,b){ return b.total-a.total; });
+      var totCat = refs.reduce(function(s,r){ return s+r.total; },0);
+      h += '<div style="margin-bottom:14px;">';
+      h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid rgba(168,85,247,.2);">';
+      h += '<span style="font-size:12px;font-weight:800;color:#a855f7;text-transform:uppercase;letter-spacing:.4px;">'+esc(cat)+'</span>';
+      h += '<span style="font-size:12px;font-weight:800;color:#e2e8f0;">'+totCat.toLocaleString('es-CO')+' uds · '+refs.length+' ref'+(refs.length!==1?'s':'')+'</span>';
+      h += '</div>';
+      refs.forEach(function(r){
+        h += '<div style="display:flex;align-items:center;gap:10px;padding:7px 4px;">';
+        h += '<div style="flex:1;min-width:0;">';
+        h += '<div style="font-size:12.5px;font-weight:700;color:#e2e8f0;">'+esc(r.nombre)+'</div>';
+        h += '<div style="font-size:9.5px;color:#64748b;">'+(r.mes?('planificado: '+esc(r.mes)):'sin mes asignado')+(r.kanban?(' · '+esc(r.kanban.replace(/_/g,' '))):'')+(r.extra?(' · +'+r.extra.toLocaleString('es-CO')+' extra'):'')+'</div>';
+        h += '</div>';
+        h += '<div style="font-size:13px;font-weight:900;color:#f1f5f9;flex-shrink:0;">'+r.total.toLocaleString('es-CO')+'</div>';
+        h += '</div>';
+      });
+      h += '</div>';
+    });
+  }
+  h += '</div>';
+  openModal('🎨 Diseños confirmados por categoría', h, '<button onclick="_planDescargarCSVListadoDisenos()" style="background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.4);color:#a855f7;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">⬇ Descargar CSV</button>');
+}
+function _planDescargarCSVListadoDisenos(){
+  var porCat = window._planListadoDisenosCSV || {};
+  var lines = [['Categoría','Referencia','Programado','Extra','Total','Mes planificado','Estado kanban'].join(',')];
+  Object.keys(porCat).forEach(function(cat){
+    porCat[cat].forEach(function(r){
+      lines.push([cat, r.nombre, r.uds, r.extra, r.total, r.mes, r.kanban].map(function(v){ return '"'+String(v||'').replace(/"/g,'""')+'"'; }).join(','));
+    });
+  });
+  var blob = new Blob(['﻿'+lines.join('\n')], {type:'text/csv;charset=utf-8;'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a'); a.href=url; a.download='disenos_confirmados_'+hoy()+'.csv'; a.click();
+  URL.revokeObjectURL(url);
 }
 function _planConfirmadoToggleDetalle(detId, nombre, cat){
   var el = document.getElementById(detId);
