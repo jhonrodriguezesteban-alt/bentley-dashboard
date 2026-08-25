@@ -2667,7 +2667,7 @@ function _planObjetivoBadge(totalCat, objetivo){
 }
 function _planRenderConfirmados(){
   var confirmadas = (DB.planeacion && DB.planeacion.confirmadas) || {};
-  var entries = Object.keys(confirmadas).map(function(k){ return Object.assign({refKey:k}, confirmadas[k]); }).filter(function(e){ return e.ok; });
+  var entries = _planConLiveUds(Object.keys(confirmadas).map(function(k){ return Object.assign({refKey:k}, confirmadas[k]); }).filter(function(e){ return e.ok; }));
   var h = '<div style="background:rgba(52,211,153,.04);border:1px solid rgba(52,211,153,.25);border-radius:14px;padding:16px 18px;margin-bottom:20px;">';
   h += '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">';
   h += '<div><div style="font-size:15px;font-weight:900;color:#e2e8f0;">✅ Productos confirmados</div>';
@@ -2791,6 +2791,31 @@ function _planToggleSoloConfirmados(){
   _planSoloConfirmados = !_planSoloConfirmados;
   renderPage('planeacion');
 }
+// Cantidad "programada" REAL de una referencia ahora mismo (no la foto vieja que se
+// guardó al marcar el check) — se recalcula desde window._planCatMap, que ya trae
+// las últimas cantidades de OP/diseño en cada render de Planeación.
+function _planUdsLiveDeRef(nombre, catRaw, fallback){
+  var catMap = window._planCatMap || {};
+  var info = catMap[(catRaw||'').trim().toUpperCase()] || catMap[catRaw];
+  if(!info) return fallback;
+  var nombreUp = (nombre||'').trim().toUpperCase();
+  var total = 0, encontrado = false;
+  (info.refs||[]).forEach(function(u){
+    if(u.diseno){
+      if((u.diseno.nombre||'').trim().toUpperCase()===nombreUp){ total += (u.uds||0); encontrado = true; }
+    } else {
+      var nombreOp = (u.op.nombre_producto||u.op.id||'').trim().toUpperCase();
+      if(nombreOp===nombreUp){ total += _planColorUds(u.op, u.color); encontrado = true; }
+    }
+  });
+  return encontrado ? total : fallback;
+}
+// Aplica la cantidad en vivo a una lista de entries de confirmadas, sin mutar el original.
+function _planConLiveUds(entries){
+  return entries.map(function(e){
+    return Object.assign({}, e, {uds: _planUdsLiveDeRef(e.nombre, e.cat, e.uds||0)});
+  });
+}
 function _planEsConfirmado(nombre, catRaw){
   var cat = (catRaw||'Sin categoría').trim().toUpperCase();
   var refKey = 'REF||'+cat+'||'+_recSanitizeKey((nombre||'').trim().toUpperCase());
@@ -2800,7 +2825,7 @@ function _planEsConfirmado(nombre, catRaw){
 // Listado de referencias confirmadas que aún están en diseño (sin OP), agrupadas por categoría.
 function _planVerListadoDisenosConfirmados(){
   var confirmadas = (DB.planeacion && DB.planeacion.confirmadas) || {};
-  var entries = Object.keys(confirmadas).map(function(k){ return Object.assign({refKey:k}, confirmadas[k]); }).filter(function(e){ return e.ok && e.tipo==='diseno'; });
+  var entries = _planConLiveUds(Object.keys(confirmadas).map(function(k){ return Object.assign({refKey:k}, confirmadas[k]); }).filter(function(e){ return e.ok && e.tipo==='diseno'; }));
   var disPlanAll = (DB.planeacion && DB.planeacion.disenos_plan) || {};
   var disenosPorNombreCat = {};
   (DB.disenos||[]).forEach(function(d){
