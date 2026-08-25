@@ -11114,14 +11114,29 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1787686634424_3arus",
-      "ts": 1787686634424,
-      "user": "Jefa de Producción",
-      "tipo": "diligencia",
       "descripcion": "llevar bodados a bordamed",
       "destino": "alqueria",
       "fecha": "2026-08-25",
-      "hora": ""
+      "hora": "",
+      "id": "evt_1787686634424_3arus",
+      "tipo": "diligencia",
+      "ts": 1787686634424,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787687696560_946qk",
+      "ts": 1787687696560,
+      "user": "John Rodriguez",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-192",
+      "op_nombre": "CHAQUETA LENTEJUELAS",
+      "categoria": "CHAQUETAS",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-08-25",
+      "total_uds": 400,
+      "referencias": [
+        "CHAQUETA LENTEJUELAS"
+      ]
     }
   ]
 }
