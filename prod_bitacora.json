@@ -11751,14 +11751,25 @@
       "user": "John Rodriguez"
     },
     {
+      "categoria": "CONJUNTOS",
       "id": "evt_1787702118910_0xhfk",
-      "ts": 1787702118910,
-      "user": "John Rodriguez",
-      "tipo": "duplicar_op",
       "op_id": "OP-2026-200",
-      "op_origen": "OP-2026-109",
       "op_nombre": "CONJUNTO OSLO",
-      "categoria": "CONJUNTOS"
+      "op_origen": "OP-2026-109",
+      "tipo": "duplicar_op",
+      "ts": 1787702118910,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787702206696_km72p",
+      "ts": 1787702206696,
+      "user": "John Rodriguez",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-200",
+      "nombre": "CONJUNTO OSLO",
+      "categoria": "CONJUNTOS",
+      "colores": 4,
+      "refs": 1
     }
   ]
 }
