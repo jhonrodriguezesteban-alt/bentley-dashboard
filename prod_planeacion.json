@@ -417,6 +417,10 @@
       "mes": "2026-09",
       "uds": 300
     },
+    "id_1787602844206_a4wg3bqtn": {
+      "mes": "2026-09",
+      "uds": 300
+    },
     "id_32f0bbfb73af4396": {
       "mes": "2026-10",
       "uds": 200
@@ -436,10 +440,6 @@
     "id_b6ba19e4dc98431d": {
       "mes": "2026-08",
       "uds": 500
-    },
-    "id_1787602844206_a4wg3bqtn": {
-      "uds": 300,
-      "mes": "2026-09"
     }
   },
   "historial_corte": [
@@ -653,15 +653,15 @@
       "uds": 68
     },
     {
-      "key": "OP-0039||BEIGE",
-      "op_id": "OP-0039",
-      "op_nombre": "BOTA ANCHA KENIA",
       "categoria": "PANTALONES",
       "color": "BEIGE",
-      "uds": 110,
-      "mes_planeado": "2026-08",
       "estado_al_salir": "EN_CONFECCION",
-      "fecha_deteccion": "2026-08-25"
+      "fecha_deteccion": "2026-08-25",
+      "key": "OP-0039||BEIGE",
+      "mes_planeado": "2026-08",
+      "op_id": "OP-0039",
+      "op_nombre": "BOTA ANCHA KENIA",
+      "uds": 110
     }
   ],
   "confirmadas": {
@@ -727,6 +727,21 @@
       "tipo": "diseno",
       "uds": 300
     },
+    "REF||BUZOS||CAMIBUSO HOUSER": {
+      "cat": "BUZOS",
+      "cif": 0,
+      "costoTotal": 0,
+      "extra": 0,
+      "mat": 0,
+      "mod": 0,
+      "nombre": "CAMIBUSO HOUSER",
+      "ok": true,
+      "svc": 0,
+      "tieneReceta": false,
+      "tipo": "diseno",
+      "ts": 1787600347171,
+      "uds": 300
+    },
     "REF||BUZOS||CAMIBUSO PAÑO ALGODON MANGA OVERSIZED": {
       "cat": "BUZOS",
       "extra": 0,
@@ -787,6 +802,21 @@
       "tipo": "op",
       "ts": 1787592013226,
       "uds": 208
+    },
+    "REF||BUZOS||RANGLAND SOFT": {
+      "cat": "BUZOS",
+      "cif": 1017294,
+      "costoTotal": 6224059,
+      "extra": 0,
+      "mat": 2446826,
+      "mod": 448739,
+      "nombre": "RANGLAND SOFT",
+      "ok": true,
+      "svc": 2311200,
+      "tieneReceta": true,
+      "tipo": "op",
+      "ts": 1787601473148,
+      "uds": 216
     },
     "REF||BUZOS||SUPERIOR CON CORTE RANGLAND": {
       "cat": "BUZOS",
@@ -1255,14 +1285,29 @@
       "tipo": "op",
       "uds": 330
     },
+    "REF||PANTALONES||PANTALON ARIEL": {
+      "cat": "PANTALONES",
+      "cif": 1091605,
+      "costoTotal": 6664857,
+      "extra": 0,
+      "mat": 3735200,
+      "mod": 562052,
+      "nombre": "PANTALON ARIEL",
+      "ok": true,
+      "svc": 1276000,
+      "tieneReceta": true,
+      "tipo": "op",
+      "ts": 1787603010919,
+      "uds": 232
+    },
     "REF||PANTALONES||PANTALON CHICAGO": {
       "cat": "PANTALONES",
       "extra": 300,
       "nombre": "PANTALON CHICAGO",
       "ok": true,
       "tipo": "op",
-      "uds": 136,
-      "ts": 1787603573899
+      "ts": 1787603573899,
+      "uds": 136
     },
     "REF||PANTALONES||PANTALON DONATELLA": {
       "cat": "PANTALONES",
@@ -1292,6 +1337,21 @@
       "nombre": "PANTALON HOUSER",
       "ok": true,
       "tipo": "diseno",
+      "uds": 300
+    },
+    "REF||PANTALONES||PANTALON NEVADO": {
+      "cat": "PANTALONES",
+      "cif": 0,
+      "costoTotal": 0,
+      "extra": 0,
+      "mat": 0,
+      "mod": 0,
+      "nombre": "PANTALON NEVADO",
+      "ok": true,
+      "svc": 0,
+      "tieneReceta": false,
+      "tipo": "diseno",
+      "ts": 1787602910534,
       "uds": 300
     },
     "REF||PANTALONES||PANTALON POLLY": {
@@ -1358,12 +1418,12 @@
       "tipo": "op",
       "uds": 174
     },
-    "REF||BUZOS||CAMIBUSO HOUSER": {
+    "REF||CAMISETAS||CAMISETA COCOA": {
       "ok": true,
       "extra": 0,
-      "ts": 1787600347171,
-      "cat": "BUZOS",
-      "nombre": "CAMIBUSO HOUSER",
+      "ts": 1787678951379,
+      "cat": "CAMISETAS",
+      "nombre": "CAMISETA COCOA",
       "uds": 300,
       "tipo": "diseno",
       "mat": 0,
@@ -1372,51 +1432,6 @@
       "svc": 0,
       "costoTotal": 0,
       "tieneReceta": false
-    },
-    "REF||BUZOS||RANGLAND SOFT": {
-      "ok": true,
-      "extra": 0,
-      "ts": 1787601473148,
-      "cat": "BUZOS",
-      "nombre": "RANGLAND SOFT",
-      "uds": 216,
-      "tipo": "op",
-      "mat": 2446826,
-      "mod": 448739,
-      "cif": 1017294,
-      "svc": 2311200,
-      "costoTotal": 6224059,
-      "tieneReceta": true
-    },
-    "REF||PANTALONES||PANTALON NEVADO": {
-      "ok": true,
-      "extra": 0,
-      "ts": 1787602910534,
-      "cat": "PANTALONES",
-      "nombre": "PANTALON NEVADO",
-      "uds": 300,
-      "tipo": "diseno",
-      "mat": 0,
-      "mod": 0,
-      "cif": 0,
-      "svc": 0,
-      "costoTotal": 0,
-      "tieneReceta": false
-    },
-    "REF||PANTALONES||PANTALON ARIEL": {
-      "ok": true,
-      "extra": 0,
-      "ts": 1787603010919,
-      "cat": "PANTALONES",
-      "nombre": "PANTALON ARIEL",
-      "uds": 232,
-      "tipo": "op",
-      "mat": 3735200,
-      "mod": 562052,
-      "cif": 1091605,
-      "svc": 1276000,
-      "costoTotal": 6664857,
-      "tieneReceta": true
     }
   }
 }
