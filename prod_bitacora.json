@@ -11600,15 +11600,30 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1787700904032_fh0cs",
-      "ts": 1787700904032,
-      "user": "John Rodriguez",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-119",
-      "nombre": "WASHMAN",
       "categoria": "CHAQUETAS",
       "colores": 3,
-      "refs": 1
+      "id": "evt_1787700904032_fh0cs",
+      "nombre": "WASHMAN",
+      "op_id": "OP-2026-119",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1787700904032,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787701064889_6x45g",
+      "ts": 1787701064889,
+      "user": "John Rodriguez",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-198",
+      "op_nombre": "CHAQUETA FIRE",
+      "categoria": "CHAQUETAS",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-08-25",
+      "total_uds": 300,
+      "referencias": [
+        "CHAQUETA FIRE"
+      ]
     }
   ]
 }
