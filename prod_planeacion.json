@@ -178,7 +178,9 @@
       "OP-2026-196||NEGRO",
       "OP-2026-196||CAMEL",
       "OP-2026-197||MARFIL",
-      "OP-2026-197||NEGRO"
+      "OP-2026-197||NEGRO",
+      "OP-2026-197||CAFE",
+      "OP-2026-197||AVENA"
     ],
     "2026-10": [
       "OP-0040||MARFIL"
@@ -1455,21 +1457,6 @@
       "tipo": "op",
       "uds": 168
     },
-    "REF||TEJIDOS||BUZO TEJIDO MOÑOS": {
-      "cat": "TEJIDOS",
-      "cif": 0,
-      "costoTotal": 0,
-      "extra": 0,
-      "mat": 0,
-      "mod": 0,
-      "nombre": "BUZO TEJIDO MOÑOS",
-      "ok": true,
-      "svc": 0,
-      "tieneReceta": false,
-      "tipo": "op",
-      "ts": 1787699597851,
-      "uds": 158
-    },
     "REF||VESTIDOS||VESTIDO KIKI": {
       "cat": "VESTIDOS",
       "extra": 0,
@@ -1493,6 +1480,21 @@
       "ok": true,
       "tipo": "op",
       "uds": 174
+    },
+    "REF||TEJIDOS||BUZO TEJIDO MOÑOS": {
+      "cat": "TEJIDOS",
+      "cif": 0,
+      "costoTotal": 0,
+      "extra": 0,
+      "mat": 0,
+      "mod": 0,
+      "nombre": "BUZO TEJIDO MOÑOS",
+      "ok": true,
+      "svc": 0,
+      "tieneReceta": false,
+      "tipo": "op",
+      "ts": 1787699597851,
+      "uds": 158
     }
   }
 }
