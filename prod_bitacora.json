@@ -12000,16 +12000,27 @@
       "user": "Isabel"
     },
     {
+      "categoria": "Chaquetas",
+      "diseno_id": "id_1782178496030_9b5425c8t",
+      "estado_anterior": "EN_CORTE_MUESTRA",
+      "estado_nuevo": "EN_REVISION_GERENCIA",
       "id": "evt_1787746745314_2qigj",
-      "ts": 1787746745314,
-      "user": "Isabel",
+      "marca": "Bentley Kids",
+      "nombre": "CHAQUETA LIFE",
       "tipo": "estado_diseno",
+      "ts": 1787746745314,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1787746755963_nq6cf",
+      "ts": 1787746755963,
+      "user": "Isabel",
+      "tipo": "diseno_responsable",
       "diseno_id": "id_1782178496030_9b5425c8t",
       "nombre": "CHAQUETA LIFE",
       "categoria": "Chaquetas",
-      "marca": "Bentley Kids",
-      "estado_anterior": "EN_CORTE_MUESTRA",
-      "estado_nuevo": "EN_REVISION_GERENCIA"
+      "resp_anterior": "Carolina",
+      "resp_nuevo": "John"
     }
   ]
 }
