@@ -11853,19 +11853,39 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1787702655498_2u407",
-      "ts": 1787702655498,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-201",
-      "op_nombre": "SET BOMBER CORTA",
       "categoria": "CONJUNTOS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-08-25",
-      "total_uds": 610,
+      "id": "evt_1787702655498_2u407",
+      "op_id": "OP-2026-201",
+      "op_nombre": "SET BOMBER CORTA",
       "referencias": [
         "SET BOMBER CORTA"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 610,
+      "ts": 1787702655498,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1787702673053_zqrmu",
+      "ts": 1787702673053,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-201",
+      "op_nombre": "SET BOMBER CORTA",
+      "color": "ROSA",
+      "mes": "2026-09"
+    },
+    {
+      "id": "evt_1787702674636_4t6on",
+      "ts": 1787702674636,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-201",
+      "op_nombre": "SET BOMBER CORTA",
+      "color": "VINOTINTO",
+      "mes": "2026-09"
     }
   ]
 }
