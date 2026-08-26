@@ -7660,9 +7660,12 @@ function _invResumenOP(op){
       } else return;
       var key = receta.id+'__'+c.id;
       insumoTotal += costo;
-      if(checks[key]){
-        if(credito[key]) insumoCartera += costo; else insumoPagado += costo;
-      } else insumoPendiente += costo;
+      // "A crédito" es una decisión de forma de pago, no de si ya llegó el insumo —
+      // en cuanto se marca, el ítem pasa a ser una deuda conocida (cartera), esté o no
+      // marcado como recibido. Sin crédito: pagado si está recibido, si no sigue pendiente.
+      if(credito[key]) insumoCartera += costo;
+      else if(checks[key]) insumoPagado += costo;
+      else insumoPendiente += costo;
     });
   }
   var otIds = {};
@@ -7823,7 +7826,7 @@ function _renderConsumiblesOP(op, udsTotal, receta){
   items.forEach(function(it, i){
     var checked = !!checks[it.key];
     var esCredito = !!credito[it.key];
-    var rowBg = i%2===0 ? '' : 'background:rgba(255,255,255,.012);';
+    var rowBg = esCredito ? 'background:rgba(251,191,36,.06);' : (i%2===0 ? '' : 'background:rgba(255,255,255,.012);');
     h += '<tr style="'+rowBg+'border-top:1px solid rgba(255,255,255,.04);'+(checked?'opacity:.5;':'')+'">';
     h += '<td style="padding:6px 10px;text-align:center;"><input type="checkbox" data-opid="'+op.id+'" data-key="'+esc(it.key)+'" onchange="toggleConsumibleCheck(this.dataset.opid,this.dataset.key,this.checked)" '+(checked?'checked':'')+' style="width:15px;height:15px;accent-color:#34d399;cursor:pointer;"></td>';
     h += '<td style="padding:6px 10px;font-weight:600;color:'+(checked?'#475569':'#e2e8f0')+';white-space:nowrap;'+(checked?'text-decoration:line-through;':'')+'">'+esc(it.nombre)+'</td>';
