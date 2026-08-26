@@ -745,6 +745,9 @@ textarea.form-control{resize:vertical;min-height:80px;}
     <div class="nav-item" onclick="navTo('costeo')" data-page="costeo">
       <span class="icon">📊</span><span class="nav-label"> Costeo</span>
     </div>
+    <div class="nav-item" onclick="navTo('inversion')" data-page="inversion">
+      <span class="icon">🧾</span><span class="nav-label"> Resumen de Inversión</span>
+    </div>
     <div class="nav-item" onclick="navTo('simulador')" data-page="simulador">
       <span class="icon">🧮</span><span class="nav-label"> Simulador</span>
     </div>
@@ -1194,7 +1197,7 @@ function _getHash(u){ if(_U[u]) return _U[u]; var cfg=_getCfgUsers(); return (cf
 // Devuelve nombre display
 function _getName(u){ var cfg=_getCfgUsers(); return (cfg[u]&&cfg[u].name)||_NAMES[u]||u; }
 // Módulos permitidos para un usuario (jhon = todos)
-var ALL_MODULES = ['dashboard','satelites','ops','monitoreo','planconf','entregas','cronograma','diseno','planeacion','logistica','novedades','simulador','costos_mo','costeo','bitacora'];
+var ALL_MODULES = ['dashboard','satelites','ops','monitoreo','planconf','entregas','cronograma','diseno','planeacion','logistica','novedades','simulador','costos_mo','costeo','inversion','bitacora'];
 function _getModules(u){
   if(u==='jhon') return ALL_MODULES.slice();
   var cfg=_getCfgUsers();
@@ -1326,7 +1329,7 @@ var ALL_MODULE_LABELS = {
   dashboard:'Dashboard', satelites:'Satélites', ops:'OTs', monitoreo:'Monitoreo Producción',
   planconf:'Planeación Confección', entregas:'Entregas', cronograma:'Cronograma',
   diseno:'Diseño', planeacion:'Planeación', logistica:'Logística', novedades:'Novedades',
-  simulador:'Simulador', costos_mo:'Pagos', costeo:'Costeo y Rentabilidad', bitacora:'Bitácora'
+  simulador:'Simulador', costos_mo:'Pagos', costeo:'Costeo y Rentabilidad', inversion:'Resumen de Inversión', bitacora:'Bitácora'
 };
 
 function renderAdminUsers(){
@@ -1737,6 +1740,19 @@ function _mergeArrayData(key, remoteData, localData){
           mergedSubg[k] = (l>=r) ? locSubg[k] : remSubg[k];
         });
         result[ri].subg_estados = mergedSubg;
+        // Checklist de Resumen de Inversión (consumibles_check / consumibles_credito): unión de
+        // claves marcadas true en cualquiera de los dos lados. Es un checklist de compras reales
+        // hechas por Paola — perder un check por un merge sería perder plata de vista, así que
+        // "una vez marcado, no se pierde" es la regla segura aquí (a diferencia de otros campos
+        // donde el remoto gana por defecto).
+        ['consumibles_check','consumibles_credito'].forEach(function(campo){
+          var remMap = result[ri][campo]||{}, locMap = locOp[campo]||{};
+          if(Object.keys(locMap).length){
+            var mergedMap = Object.assign({}, remMap);
+            Object.keys(locMap).forEach(function(k){ if(locMap[k]) mergedMap[k]=true; });
+            result[ri][campo] = mergedMap;
+          }
+        });
       } else {
         result.push(locOp); // OP nueva creada en esta sesión, sin conflicto de id
       }
@@ -2541,7 +2557,7 @@ function navTo(page){
   localStorage.setItem('bentley_last_page', page);
   if(page !== 'ops') _opDetalleId = null;
   document.querySelectorAll('.nav-item').forEach(function(el){ el.classList.toggle('active', el.dataset.page===page); });
-  var titles = {dashboard:'⬡ DASHBOARD',satelites:'🏭 SATÉLITES',ops:'📋 ÓRDENES DE PRODUCCIÓN',monitoreo:'🔍 MONITOREO DE PRODUCCIÓN',entregas:'📦 ENTREGAS',diseno:'🎨 DISEÑO',planeacion:'📅 PLANEACIÓN DE PRODUCCIÓN',planconf:'🧵 PLANEACIÓN DE CONFECCIÓN',logistica:'🚚 LOGÍSTICA',novedades:'⚠ NOVEDADES',simulador:'🧮 SIMULADOR DE PRODUCCIÓN',costos_mo:'💰 PAGOS'};
+  var titles = {dashboard:'⬡ DASHBOARD',satelites:'🏭 SATÉLITES',ops:'📋 ÓRDENES DE PRODUCCIÓN',monitoreo:'🔍 MONITOREO DE PRODUCCIÓN',entregas:'📦 ENTREGAS',diseno:'🎨 DISEÑO',planeacion:'📅 PLANEACIÓN DE PRODUCCIÓN',planconf:'🧵 PLANEACIÓN DE CONFECCIÓN',logistica:'🚚 LOGÍSTICA',novedades:'⚠ NOVEDADES',simulador:'🧮 SIMULADOR DE PRODUCCIÓN',costos_mo:'💰 PAGOS',inversion:'🧾 RESUMEN DE INVERSIÓN'};
   document.getElementById('topbar-title').innerHTML = titles[page] || page.toUpperCase();
   closeDrawer(); closeModal(); selectedOTs.clear();
   renderPage(page);
@@ -2600,6 +2616,7 @@ function renderPage(page){
   else if(page==='novedades') el.innerHTML = renderNovedades();
   else if(page==='costos_mo') el.innerHTML = renderCostosMO();
   else if(page==='costeo') el.innerHTML = renderCosteo();
+  else if(page==='inversion') el.innerHTML = renderInversion();
   else if(page==='simulador'){ try{ el.innerHTML = renderSimulador(); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar el Simulador</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[Simulador]', e); } }
   else if(page==='planconf'){ try{ el.innerHTML = renderPlaneacionConfeccion(); document.querySelectorAll('.pconf-scroll').forEach(function(sc){ sc.scrollTop=0; }); if(_pconfBusq) setTimeout(_pconfFiltrarBusq, 0); if(_pconfBusqSat) setTimeout(_pconfFiltrarSat, 0); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar Planeación de Confección</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[PlanConf]', e); } }
   else if(page==='monitoreo'){ try{ el.innerHTML = renderMonitoreo(); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar Monitoreo de Producción</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[Monitoreo]', e); } }
@@ -7608,14 +7625,151 @@ function renderOPDetalle(opId){
     },0);
   }
   h += _renderConsumiblesOP(op, udsTotalConsumibles, _vinculoReceta);
+  h += _invBarraResumen(_invResumenOP(op), op.id);
 
+  return h;
+}
+
+// ── Resumen de Inversión: calcula inversión/pagado/cartera/pendiente de una OP ──
+// Insumos (MATERIAL+SERVICIO): sale de la receta × checklist (op.consumibles_check / op.consumibles_credito).
+// Mano de obra: sale de los pagos ya existentes en costos_mo (DB.costos_mo.pagos) ligados a las OTs de la OP —
+// así el módulo se actualiza solo cuando se marca un pago de satélite como PAGADO, sin doble registro.
+// CIF y MOD-como-receta quedan fuera del checklist a propósito (no son insumos que Paola compre).
+function _invResumenOP(op){
+  var receta = op.receta_id ? (DB.costeo&&DB.costeo.recetas?DB.costeo.recetas.find(function(x){ return x.id===op.receta_id; }):null) : null;
+  if(!receta) receta = _planRecetaDeOp(op);
+  var otsOp = (DB.ots||[]).filter(function(o){ return o.op_id===op.id; });
+  var udsTotal = otsOp.reduce(function(a,o){ return a+(o.cantidad||0); },0);
+  if(!udsTotal && op.referencias){
+    udsTotal = op.referencias.reduce(function(a,r){ return a+Object.values(r.cantidades||{}).reduce(function(b,v){ return b+(parseInt(v)||0); },0); },0);
+  }
+  var checks = op.consumibles_check || {};
+  var credito = op.consumibles_credito || {};
+  var insumoTotal=0, insumoPagado=0, insumoCartera=0, insumoPendiente=0;
+  if(receta){
+    (receta.componentes||[]).forEach(function(c){
+      var costo=0;
+      if(c.tipo==='MATERIAL'){
+        var mp=(DB.costeo.mp||[]).find(function(x){ return x.id===c.mp_id; });
+        if(!mp) return;
+        costo = (parseFloat(c.consumo)||0)*udsTotal*(parseFloat(mp.precio_unitario)||0);
+      } else if(c.tipo==='SERVICIO'){
+        var sv=(DB.costeo.servicios||[]).find(function(x){ return x.id===c.servicio_id; });
+        if(!sv) return;
+        costo = (parseFloat(c.cantidad)||0)*udsTotal*(parseFloat(sv.costo_unitario)||0);
+      } else return;
+      var key = receta.id+'__'+c.id;
+      insumoTotal += costo;
+      if(checks[key]){
+        if(credito[key]) insumoCartera += costo; else insumoPagado += costo;
+      } else insumoPendiente += costo;
+    });
+  }
+  var otIds = {};
+  otsOp.forEach(function(o){ otIds[o.id]=true; });
+  var pagosOp = (DB.costos_mo&&DB.costos_mo.pagos||[]).filter(function(p){ return otIds[p.ot_id]; });
+  var modTotal=0, modPagado=0, modPendiente=0;
+  pagosOp.forEach(function(p){
+    var tot = p.total||0;
+    var pag = p.estado==='PAGADO' ? tot : (p.total_abonado||0);
+    modTotal += tot; modPagado += pag; modPendiente += (tot-pag);
+  });
+  return {
+    op:op, receta:receta, udsTotal:udsTotal, tieneReceta:!!receta,
+    insumoTotal:insumoTotal, insumoPagado:insumoPagado, insumoCartera:insumoCartera, insumoPendiente:insumoPendiente,
+    modTotal:modTotal, modPagado:modPagado, modPendiente:modPendiente,
+    total: insumoTotal+modTotal,
+    pagado: insumoPagado+modPagado,
+    cartera: insumoCartera,
+    pendiente: insumoPendiente+modPendiente
+  };
+}
+function _invBarraResumen(r, opId){
+  var h = '<div class="card" style="padding:0;overflow:hidden;margin-top:16px;">';
+  h += '<div style="padding:10px 16px;background:rgba(255,255,255,.03);border-bottom:1px solid var(--card-border);">';
+  h += '<span style="font-size:11px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.8px;">🧾 Resumen de Inversión de esta OP</span>';
+  h += '</div>';
+  h += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0;">';
+  function box(label, val, color, borderLeft){
+    return '<div style="padding:12px 16px;'+(borderLeft?'border-left:1px solid var(--card-border);':'')+'">'
+      +'<div style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">'+label+'</div>'
+      +'<div style="font-size:16px;font-weight:800;color:'+color+';">'+fmtCopFull(val)+'</div></div>';
+  }
+  h += box('Inversión total', r.total, '#e2e8f0', false);
+  h += box('Pagado (contado)', r.pagado, '#34d399', true);
+  h += box('Cartera (crédito)', r.cartera, '#fbbf24', true);
+  h += box('Pendiente por pagar', r.pendiente, '#ef4444', true);
+  h += '</div>';
+  if(!r.tieneReceta && !r.modTotal) h += '<div style="padding:10px 16px;font-size:11px;color:#64748b;border-top:1px solid var(--card-border);">Sin receta de costeo vinculada todavía — este total solo reflejará mano de obra hasta que se vincule.</div>';
+  h += '</div>';
+  return h;
+}
+
+// ── Módulo "Resumen de Inversión" ────────────────────────────────────────────
+// Vista consolidada de todas las OPs en proceso: cuánto hay que invertir en total
+// (insumos + mano de obra), cuánto ya se pagó, cuánto quedó como cartera a crédito
+// y cuánto falta por conseguir. Todo se calcula en vivo desde ops/costeo/costos_mo,
+// no hay datos duplicados que puedan desincronizarse.
+function renderInversion(){
+  var ops = (DB.ops||[]).filter(function(o){ return o.estado_op!=='ARCHIVADO'; });
+  var filas = ops.map(function(op){ return _invResumenOP(op); });
+  filas.sort(function(a,b){ return b.pendiente - a.pendiente; });
+
+  var granTotal=0, granPagado=0, granCartera=0, granPendiente=0, sinReceta=0;
+  filas.forEach(function(r){
+    granTotal+=r.total; granPagado+=r.pagado; granCartera+=r.cartera; granPendiente+=r.pendiente;
+    if(!r.tieneReceta) sinReceta++;
+  });
+
+  var h = '<div style="padding:16px 20px;height:100%;overflow-y:auto;box-sizing:border-box;">';
+  h += '<div style="font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px;">Producción en proceso ('+ops.length+' OPs) · qué falta invertir por referencia</div>';
+
+  h += '<div class="card" style="padding:0;overflow:hidden;margin-bottom:18px;">';
+  h += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0;">';
+  function granBox(label, val, color, borderLeft){
+    return '<div style="padding:16px 18px;'+(borderLeft?'border-left:1px solid var(--card-border);':'')+'">'
+      +'<div style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;">'+label+'</div>'
+      +'<div style="font-size:20px;font-weight:800;color:'+color+';">'+fmtCopFull(val)+'</div></div>';
+  }
+  h += granBox('Inversión total', granTotal, '#e2e8f0', false);
+  h += granBox('Pagado (contado)', granPagado, '#34d399', true);
+  h += granBox('Cartera (crédito)', granCartera, '#fbbf24', true);
+  h += granBox('Pendiente por pagar', granPendiente, '#ef4444', true);
+  h += '</div></div>';
+
+  if(sinReceta) h += '<div style="background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.3);border-radius:9px;padding:10px 14px;font-size:12px;color:#fbbf24;margin-bottom:14px;">⚠ '+sinReceta+' OP(s) sin receta de costeo vinculada todavía — su checklist de insumos aparecerá automáticamente en cuanto se cree/vincule la receta en Costeo.</div>';
+
+  if(!filas.length){ h += '<div class="empty-state">No hay OPs en proceso.</div></div>'; return h; }
+
+  h += '<div class="card" style="padding:0;overflow:hidden;">';
+  h += '<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:12px;">';
+  h += '<thead><tr style="background:rgba(255,255,255,.03);">';
+  ['OP','Referencia','Uds','Receta','Inversión total','Pagado','Cartera','Pendiente'].forEach(function(col){
+    h += '<th style="padding:8px 10px;text-align:'+(col==='OP'||col==='Referencia'?'left':(col==='Receta'?'center':'right'))+';color:var(--dim);font-size:10px;font-weight:700;white-space:nowrap;border-bottom:1px solid var(--card-border);">'+col+'</th>';
+  });
+  h += '</tr></thead><tbody>';
+  filas.forEach(function(r, i){
+    var op = r.op;
+    var rowBg = i%2===0 ? '' : 'background:rgba(255,255,255,.012);';
+    h += '<tr data-opid="'+op.id+'" onclick="_opDetalleId=this.dataset.opid;navTo(\'ops\')" style="'+rowBg+'border-top:1px solid rgba(255,255,255,.04);cursor:pointer;">';
+    h += '<td style="padding:7px 10px;font-weight:700;color:var(--accent);white-space:nowrap;">'+fmtOpId(op.id)+'</td>';
+    h += '<td style="padding:7px 10px;color:#e2e8f0;">'+esc(op.nombre_producto||'—')+'</td>';
+    h += '<td style="padding:7px 10px;text-align:right;color:#94a3b8;white-space:nowrap;">'+r.udsTotal.toLocaleString('es-CO')+'</td>';
+    h += '<td style="padding:7px 10px;text-align:center;">'+(r.tieneReceta?'<span style="color:#34d399;">✓</span>':'<span style="color:#64748b;">—</span>')+'</td>';
+    h += '<td style="padding:7px 10px;text-align:right;font-weight:700;color:#e2e8f0;white-space:nowrap;">'+fmtCopFull(r.total)+'</td>';
+    h += '<td style="padding:7px 10px;text-align:right;color:#34d399;white-space:nowrap;">'+fmtCopFull(r.pagado)+'</td>';
+    h += '<td style="padding:7px 10px;text-align:right;color:#fbbf24;white-space:nowrap;">'+fmtCopFull(r.cartera)+'</td>';
+    h += '<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;white-space:nowrap;">'+fmtCopFull(r.pendiente)+'</td>';
+    h += '</tr>';
+  });
+  h += '</tbody></table></div></div></div>';
   return h;
 }
 
 // ── Consumibles requeridos (materias primas + insumos) para esta OP ──────────
 // Calcula, a partir de la receta de costeo vinculada, cuánto material real se necesita
 // para las unidades de esta OP — para que Paola pueda pedirle al proveedor sin multiplicar
-// nada a mano. Incluye un checklist por insumo que se guarda solo en la OP.
+// nada a mano. Incluye un checklist por insumo (con opción "a crédito") que se guarda solo en la OP.
 function _renderConsumiblesOP(op, udsTotal, receta){
   var h = '<div class="card" style="padding:0;overflow:hidden;margin-top:16px;">';
   h += '<div style="padding:10px 16px;background:rgba(255,255,255,.03);border-bottom:1px solid var(--card-border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">';
@@ -7657,16 +7811,18 @@ function _renderConsumiblesOP(op, udsTotal, receta){
   }
 
   var checks = op.consumibles_check || {};
+  var credito = op.consumibles_credito || {};
   var costoTotalGeneral = items.reduce(function(a,it){ return a+it.costoTotal; },0);
 
   h += '<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:12px;">';
   h += '<thead><tr style="background:rgba(255,255,255,.03);">';
-  ['✓','Insumo','Familia','Consumo/prenda','Cantidad total ('+udsTotal+' uds)','Proveedor','Costo total'].forEach(function(col){
-    h += '<th style="padding:8px 10px;text-align:'+(col==='✓'?'center':'left')+';color:var(--dim);font-size:10px;font-weight:700;white-space:nowrap;border-bottom:1px solid var(--card-border);">'+col+'</th>';
+  ['✓','Insumo','Familia','Consumo/prenda','Cantidad total ('+udsTotal+' uds)','Proveedor','Costo total','Crédito'].forEach(function(col){
+    h += '<th style="padding:8px 10px;text-align:'+(col==='✓'||col==='Crédito'?'center':'left')+';color:var(--dim);font-size:10px;font-weight:700;white-space:nowrap;border-bottom:1px solid var(--card-border);">'+col+'</th>';
   });
   h += '</tr></thead><tbody>';
   items.forEach(function(it, i){
     var checked = !!checks[it.key];
+    var esCredito = !!credito[it.key];
     var rowBg = i%2===0 ? '' : 'background:rgba(255,255,255,.012);';
     h += '<tr style="'+rowBg+'border-top:1px solid rgba(255,255,255,.04);'+(checked?'opacity:.5;':'')+'">';
     h += '<td style="padding:6px 10px;text-align:center;"><input type="checkbox" data-opid="'+op.id+'" data-key="'+esc(it.key)+'" onchange="toggleConsumibleCheck(this.dataset.opid,this.dataset.key,this.checked)" '+(checked?'checked':'')+' style="width:15px;height:15px;accent-color:#34d399;cursor:pointer;"></td>';
@@ -7676,11 +7832,13 @@ function _renderConsumiblesOP(op, udsTotal, receta){
     h += '<td style="padding:6px 10px;font-weight:700;color:#0ea5e9;white-space:nowrap;">'+it.total.toLocaleString('es-CO',{maximumFractionDigits:2})+' '+esc(it.unidad)+'</td>';
     h += '<td style="padding:6px 10px;color:#64748b;white-space:nowrap;">'+esc(it.proveedor||'—')+'</td>';
     h += '<td style="padding:6px 10px;font-weight:700;color:#fbbf24;white-space:nowrap;">'+fmtCopFull(it.costoTotal)+'</td>';
+    h += '<td style="padding:6px 10px;text-align:center;"><input type="checkbox" title="Marcar como compra a crédito (cartera a pagar)" data-opid="'+op.id+'" data-key="'+esc(it.key)+'" onchange="toggleConsumibleCredito(this.dataset.opid,this.dataset.key,this.checked)" '+(esCredito?'checked':'')+' style="width:15px;height:15px;accent-color:#fbbf24;cursor:pointer;"></td>';
     h += '</tr>';
   });
   h += '<tr style="border-top:2px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);">';
   h += '<td colspan="6" style="padding:8px 10px;text-align:right;font-weight:700;color:#fbbf24;font-size:11px;">TOTAL MATERIALES + INSUMOS</td>';
   h += '<td style="padding:8px 10px;font-weight:800;color:#fbbf24;">'+fmtCopFull(costoTotalGeneral)+'</td>';
+  h += '<td></td>';
   h += '</tr>';
   h += '</tbody></table></div></div>';
   return h;
@@ -7691,6 +7849,16 @@ async function toggleConsumibleCheck(opId, key, checked){
   if(!op) return;
   if(!op.consumibles_check) op.consumibles_check = {};
   if(checked) op.consumibles_check[key] = true; else delete op.consumibles_check[key];
+  saveLocal();
+  await guardarArchivo('ops', {ops: DB.ops});
+  document.getElementById('page-content').innerHTML = renderOPDetalle(opId);
+}
+
+async function toggleConsumibleCredito(opId, key, esCredito){
+  var op = (DB.ops||[]).find(function(o){ return o.id===opId; });
+  if(!op) return;
+  if(!op.consumibles_credito) op.consumibles_credito = {};
+  if(esCredito) op.consumibles_credito[key] = true; else delete op.consumibles_credito[key];
   saveLocal();
   await guardarArchivo('ops', {ops: DB.ops});
   document.getElementById('page-content').innerHTML = renderOPDetalle(opId);
