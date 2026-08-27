@@ -12206,6 +12206,16 @@
       "user": "Jefa de Producción"
     },
     {
+      "descripcion": "Llevar rollo de tela tu ploter",
+      "destino": "Alqueria",
+      "fecha": "2026-08-27",
+      "hora": "",
+      "id": "evt_1787845393990_yzdfs",
+      "tipo": "materia_prima",
+      "ts": 1787845393990,
+      "user": "Elías - Conductor"
+    },
+    {
       "categoria": "Chaquetas",
       "diseno_id": "id_1782178726618_4nqy6fard",
       "estado_anterior": "EN_ESCALADO",
@@ -12400,15 +12410,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1787853160513_3xc1u",
-      "ts": 1787853160513,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-102",
-      "nombre": "CHAQUETA ONION",
       "categoria": "CHAQUETAS",
       "colores": 2,
-      "refs": 1
+      "id": "evt_1787853160513_3xc1u",
+      "nombre": "CHAQUETA ONION",
+      "op_id": "OP-2026-102",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1787853160513,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787853647656_s0gpx",
+      "ts": 1787853647656,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-084",
+      "op_nombre": "FALDA GABY BK",
+      "referencia": "FALDA GABY BK",
+      "color": "BEIGE",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 80,
+      "motivo": "EN TALLER"
     }
   ]
 }
