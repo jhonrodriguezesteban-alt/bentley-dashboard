@@ -12241,16 +12241,39 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1787846260790_bzdhh",
-      "ts": 1787846260790,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782178726618_4nqy6fard",
-      "nombre": "CHAQUETA DISCOVERY",
       "categoria": "Chaquetas",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1782178726618_4nqy6fard",
       "estado_anterior": "EN_CORTE_MUESTRA",
-      "estado_nuevo": "LISTA_PRODUCCION"
+      "estado_nuevo": "LISTA_PRODUCCION",
+      "id": "evt_1787846260790_bzdhh",
+      "marca": "Bentley Kids",
+      "nombre": "CHAQUETA DISCOVERY",
+      "tipo": "estado_diseno",
+      "ts": 1787846260790,
+      "user": "Isabel"
+    },
+    {
+      "categoria": "Chaquetas",
+      "diseno_id": "id_1782178726618_4nqy6fard",
+      "estado_anterior": "EN_CORTE_MUESTRA",
+      "estado_nuevo": "LISTA_PRODUCCION",
+      "id": "evt_1787846279469_wsh9d",
+      "marca": "Bentley Kids",
+      "nombre": "CHAQUETA DISCOVERY",
+      "tipo": "estado_diseno",
+      "ts": 1787846279469,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1787850966698_rvuij",
+      "ts": 1787850966698,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-0036",
+      "nombre": "PANTALON DRILL ANCHO",
+      "categoria": "PANTALONES",
+      "colores": 2,
+      "refs": 1
     }
   ]
 }
