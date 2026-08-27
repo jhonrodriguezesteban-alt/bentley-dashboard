@@ -12308,15 +12308,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1787851817548_y3dbz",
-      "ts": 1787851817548,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-0037",
-      "nombre": "CHALECO ACOLCHADO MANY",
       "categoria": "CHALECOS",
       "colores": 4,
-      "refs": 1
+      "id": "evt_1787851817548_y3dbz",
+      "nombre": "CHALECO ACOLCHADO MANY",
+      "op_id": "OP-0037",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1787851817548,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787851837411_dxg7k",
+      "ts": 1787851837411,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0037",
+      "op_nombre": "CHALECO ACOLCHADO MANY",
+      "referencia": "CHALECO ACOLCHADO MANY",
+      "color": "ROSA",
+      "talla": "todas las tallas",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
+      "bulk": true,
+      "uds": 132,
+      "motivo": "en insumos"
     }
   ]
 }
