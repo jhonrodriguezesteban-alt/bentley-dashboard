@@ -1740,19 +1740,14 @@ function _mergeArrayData(key, remoteData, localData){
           mergedSubg[k] = (l>=r) ? locSubg[k] : remSubg[k];
         });
         result[ri].subg_estados = mergedSubg;
-        // Checklist de Resumen de Inversión (consumibles_check / consumibles_credito): unión de
-        // claves marcadas true en cualquiera de los dos lados. Es un checklist de compras reales
-        // hechas por Paola — perder un check por un merge sería perder plata de vista, así que
-        // "una vez marcado, no se pierde" es la regla segura aquí (a diferencia de otros campos
-        // donde el remoto gana por defecto).
-        ['consumibles_check','consumibles_credito'].forEach(function(campo){
-          var remMap = result[ri][campo]||{}, locMap = locOp[campo]||{};
-          if(Object.keys(locMap).length){
-            var mergedMap = Object.assign({}, remMap);
-            Object.keys(locMap).forEach(function(k){ if(locMap[k]) mergedMap[k]=true; });
-            result[ri][campo] = mergedMap;
-          }
-        });
+        // Checklist de Resumen de Inversión (consumibles_check): unión de claves por id de
+        // componente — local gana por clave cuando ambos lados la tocaron, porque es el marcado
+        // (o desmarcado) más reciente de Paola en esta sesión; las claves que solo tiene el
+        // remoto (marcadas desde otra pestaña) se conservan igual, así ningún check se pierde.
+        var remChk = result[ri].consumibles_check||{}, locChk = locOp.consumibles_check||{};
+        if(Object.keys(locChk).length){
+          result[ri].consumibles_check = Object.assign({}, remChk, locChk);
+        }
       } else {
         result.push(locOp); // OP nueva creada en esta sesión, sin conflicto de id
       }
@@ -7630,8 +7625,18 @@ function renderOPDetalle(opId){
   return h;
 }
 
-// ── Resumen de Inversión: calcula inversión/pagado/cartera/pendiente de una OP ──
-// Insumos (MATERIAL+SERVICIO): sale de la receta × checklist (op.consumibles_check / op.consumibles_credito).
+// Insumos "de rutina": empaque, marquillas y etiquetado siempre se piden junto con la OP
+// y el servicio de confección/maquila se rastrea aparte en Pagos (costos_mo) — así que estos
+// ítems arrancan marcados por defecto en el checklist para que Paola no tenga que tildarlos
+// a mano cada vez; igual se pueden desmarcar si en un caso puntual faltara alguno.
+var _INV_FAMILIAS_SIEMPRE = ['Material de empaque','Marquilla','Rotulado/ Etiquetado'];
+function _invSiempreDisponible(tipo, familia){
+  if(tipo==='SERVICIO') return true;
+  return _INV_FAMILIAS_SIEMPRE.indexOf(familia)>=0;
+}
+
+// ── Resumen de Inversión: calcula inversión/pagado/pendiente de una OP ──────────
+// Insumos (MATERIAL+SERVICIO): sale de la receta × checklist (op.consumibles_check).
 // Mano de obra: sale de los pagos ya existentes en costos_mo (DB.costos_mo.pagos) ligados a las OTs de la OP —
 // así el módulo se actualiza solo cuando se marca un pago de satélite como PAGADO, sin doble registro.
 // CIF y MOD-como-receta quedan fuera del checklist a propósito (no son insumos que Paola compre).
@@ -7644,28 +7649,25 @@ function _invResumenOP(op){
     udsTotal = op.referencias.reduce(function(a,r){ return a+Object.values(r.cantidades||{}).reduce(function(b,v){ return b+(parseInt(v)||0); },0); },0);
   }
   var checks = op.consumibles_check || {};
-  var credito = op.consumibles_credito || {};
-  var insumoTotal=0, insumoPagado=0, insumoCartera=0, insumoPendiente=0;
+  var insumoTotal=0, insumoPagado=0, insumoPendiente=0;
   if(receta){
     (receta.componentes||[]).forEach(function(c){
-      var costo=0;
+      var costo=0, familia='';
       if(c.tipo==='MATERIAL'){
         var mp=(DB.costeo.mp||[]).find(function(x){ return x.id===c.mp_id; });
         if(!mp) return;
+        familia = mp.familia||'Materia Prima';
         costo = (parseFloat(c.consumo)||0)*udsTotal*(parseFloat(mp.precio_unitario)||0);
       } else if(c.tipo==='SERVICIO'){
         var sv=(DB.costeo.servicios||[]).find(function(x){ return x.id===c.servicio_id; });
         if(!sv) return;
+        familia = 'Servicio / Insumo';
         costo = (parseFloat(c.cantidad)||0)*udsTotal*(parseFloat(sv.costo_unitario)||0);
       } else return;
       var key = receta.id+'__'+c.id;
       insumoTotal += costo;
-      // "A crédito" es una decisión de forma de pago, no de si ya llegó el insumo —
-      // en cuanto se marca, el ítem pasa a ser una deuda conocida (cartera), esté o no
-      // marcado como recibido. Sin crédito: pagado si está recibido, si no sigue pendiente.
-      if(credito[key]) insumoCartera += costo;
-      else if(checks[key]) insumoPagado += costo;
-      else insumoPendiente += costo;
+      var checked = checks.hasOwnProperty(key) ? !!checks[key] : _invSiempreDisponible(c.tipo, familia);
+      if(checked) insumoPagado += costo; else insumoPendiente += costo;
     });
   }
   var otIds = {};
@@ -7679,11 +7681,10 @@ function _invResumenOP(op){
   });
   return {
     op:op, receta:receta, udsTotal:udsTotal, tieneReceta:!!receta,
-    insumoTotal:insumoTotal, insumoPagado:insumoPagado, insumoCartera:insumoCartera, insumoPendiente:insumoPendiente,
+    insumoTotal:insumoTotal, insumoPagado:insumoPagado, insumoPendiente:insumoPendiente,
     modTotal:modTotal, modPagado:modPagado, modPendiente:modPendiente,
     total: insumoTotal+modTotal,
     pagado: insumoPagado+modPagado,
-    cartera: insumoCartera,
     pendiente: insumoPendiente+modPendiente
   };
 }
@@ -7699,8 +7700,7 @@ function _invBarraResumen(r, opId){
       +'<div style="font-size:16px;font-weight:800;color:'+color+';">'+fmtCopFull(val)+'</div></div>';
   }
   h += box('Inversión total', r.total, '#e2e8f0', false);
-  h += box('Pagado (contado)', r.pagado, '#34d399', true);
-  h += box('Cartera (crédito)', r.cartera, '#fbbf24', true);
+  h += box('Pagado', r.pagado, '#34d399', true);
   h += box('Pendiente por pagar', r.pendiente, '#ef4444', true);
   h += '</div>';
   if(!r.tieneReceta && !r.modTotal) h += '<div style="padding:10px 16px;font-size:11px;color:#64748b;border-top:1px solid var(--card-border);">Sin receta de costeo vinculada todavía — este total solo reflejará mano de obra hasta que se vincule.</div>';
@@ -7710,17 +7710,17 @@ function _invBarraResumen(r, opId){
 
 // ── Módulo "Resumen de Inversión" ────────────────────────────────────────────
 // Vista consolidada de todas las OPs en proceso: cuánto hay que invertir en total
-// (insumos + mano de obra), cuánto ya se pagó, cuánto quedó como cartera a crédito
-// y cuánto falta por conseguir. Todo se calcula en vivo desde ops/costeo/costos_mo,
-// no hay datos duplicados que puedan desincronizarse.
+// (insumos + mano de obra), cuánto ya se pagó y cuánto falta por conseguir.
+// Todo se calcula en vivo desde ops/costeo/costos_mo, no hay datos duplicados que
+// puedan desincronizarse.
 function renderInversion(){
   var ops = (DB.ops||[]).filter(function(o){ return o.estado_op!=='ARCHIVADO'; });
   var filas = ops.map(function(op){ return _invResumenOP(op); });
   filas.sort(function(a,b){ return b.pendiente - a.pendiente; });
 
-  var granTotal=0, granPagado=0, granCartera=0, granPendiente=0, sinReceta=0;
+  var granTotal=0, granPagado=0, granPendiente=0, sinReceta=0;
   filas.forEach(function(r){
-    granTotal+=r.total; granPagado+=r.pagado; granCartera+=r.cartera; granPendiente+=r.pendiente;
+    granTotal+=r.total; granPagado+=r.pagado; granPendiente+=r.pendiente;
     if(!r.tieneReceta) sinReceta++;
   });
 
@@ -7735,8 +7735,7 @@ function renderInversion(){
       +'<div style="font-size:20px;font-weight:800;color:'+color+';">'+fmtCopFull(val)+'</div></div>';
   }
   h += granBox('Inversión total', granTotal, '#e2e8f0', false);
-  h += granBox('Pagado (contado)', granPagado, '#34d399', true);
-  h += granBox('Cartera (crédito)', granCartera, '#fbbf24', true);
+  h += granBox('Pagado', granPagado, '#34d399', true);
   h += granBox('Pendiente por pagar', granPendiente, '#ef4444', true);
   h += '</div></div>';
 
@@ -7747,7 +7746,7 @@ function renderInversion(){
   h += '<div class="card" style="padding:0;overflow:hidden;">';
   h += '<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:12px;">';
   h += '<thead><tr style="background:rgba(255,255,255,.03);">';
-  ['OP','Referencia','Uds','Receta','Inversión total','Pagado','Cartera','Pendiente'].forEach(function(col){
+  ['OP','Referencia','Uds','Receta','Inversión total','Pagado','Pendiente'].forEach(function(col){
     h += '<th style="padding:8px 10px;text-align:'+(col==='OP'||col==='Referencia'?'left':(col==='Receta'?'center':'right'))+';color:var(--dim);font-size:10px;font-weight:700;white-space:nowrap;border-bottom:1px solid var(--card-border);">'+col+'</th>';
   });
   h += '</tr></thead><tbody>';
@@ -7761,7 +7760,6 @@ function renderInversion(){
     h += '<td style="padding:7px 10px;text-align:center;">'+(r.tieneReceta?'<span style="color:#34d399;">✓</span>':'<span style="color:#64748b;">—</span>')+'</td>';
     h += '<td style="padding:7px 10px;text-align:right;font-weight:700;color:#e2e8f0;white-space:nowrap;">'+fmtCopFull(r.total)+'</td>';
     h += '<td style="padding:7px 10px;text-align:right;color:#34d399;white-space:nowrap;">'+fmtCopFull(r.pagado)+'</td>';
-    h += '<td style="padding:7px 10px;text-align:right;color:#fbbf24;white-space:nowrap;">'+fmtCopFull(r.cartera)+'</td>';
     h += '<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;white-space:nowrap;">'+fmtCopFull(r.pendiente)+'</td>';
     h += '</tr>';
   });
@@ -7814,19 +7812,19 @@ function _renderConsumiblesOP(op, udsTotal, receta){
   }
 
   var checks = op.consumibles_check || {};
-  var credito = op.consumibles_credito || {};
   var costoTotalGeneral = items.reduce(function(a,it){ return a+it.costoTotal; },0);
 
   h += '<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:12px;">';
   h += '<thead><tr style="background:rgba(255,255,255,.03);">';
-  ['✓','Insumo','Familia','Consumo/prenda','Cantidad total ('+udsTotal+' uds)','Proveedor','Costo total','Crédito'].forEach(function(col){
-    h += '<th style="padding:8px 10px;text-align:'+(col==='✓'||col==='Crédito'?'center':'left')+';color:var(--dim);font-size:10px;font-weight:700;white-space:nowrap;border-bottom:1px solid var(--card-border);">'+col+'</th>';
+  ['✓','Insumo','Familia','Consumo/prenda','Cantidad total ('+udsTotal+' uds)','Proveedor','Costo total'].forEach(function(col){
+    h += '<th style="padding:8px 10px;text-align:'+(col==='✓'?'center':'left')+';color:var(--dim);font-size:10px;font-weight:700;white-space:nowrap;border-bottom:1px solid var(--card-border);">'+col+'</th>';
   });
   h += '</tr></thead><tbody>';
   items.forEach(function(it, i){
-    var checked = !!checks[it.key];
-    var esCredito = !!credito[it.key];
-    var rowBg = esCredito ? 'background:rgba(251,191,36,.06);' : (i%2===0 ? '' : 'background:rgba(255,255,255,.012);');
+    // De rutina (empaque/marquilla/etiquetado/servicio de confección): arranca marcado solo,
+    // salvo que ya se haya tocado a mano el checkbox para esta OP en particular.
+    var checked = checks.hasOwnProperty(it.key) ? !!checks[it.key] : _invSiempreDisponible(it.tipo, it.familia);
+    var rowBg = i%2===0 ? '' : 'background:rgba(255,255,255,.012);';
     h += '<tr style="'+rowBg+'border-top:1px solid rgba(255,255,255,.04);'+(checked?'opacity:.5;':'')+'">';
     h += '<td style="padding:6px 10px;text-align:center;"><input type="checkbox" data-opid="'+op.id+'" data-key="'+esc(it.key)+'" onchange="toggleConsumibleCheck(this.dataset.opid,this.dataset.key,this.checked)" '+(checked?'checked':'')+' style="width:15px;height:15px;accent-color:#34d399;cursor:pointer;"></td>';
     h += '<td style="padding:6px 10px;font-weight:600;color:'+(checked?'#475569':'#e2e8f0')+';white-space:nowrap;'+(checked?'text-decoration:line-through;':'')+'">'+esc(it.nombre)+'</td>';
@@ -7835,13 +7833,11 @@ function _renderConsumiblesOP(op, udsTotal, receta){
     h += '<td style="padding:6px 10px;font-weight:700;color:#0ea5e9;white-space:nowrap;">'+it.total.toLocaleString('es-CO',{maximumFractionDigits:2})+' '+esc(it.unidad)+'</td>';
     h += '<td style="padding:6px 10px;color:#64748b;white-space:nowrap;">'+esc(it.proveedor||'—')+'</td>';
     h += '<td style="padding:6px 10px;font-weight:700;color:#fbbf24;white-space:nowrap;">'+fmtCopFull(it.costoTotal)+'</td>';
-    h += '<td style="padding:6px 10px;text-align:center;"><input type="checkbox" title="Marcar como compra a crédito (cartera a pagar)" data-opid="'+op.id+'" data-key="'+esc(it.key)+'" onchange="toggleConsumibleCredito(this.dataset.opid,this.dataset.key,this.checked)" '+(esCredito?'checked':'')+' style="width:15px;height:15px;accent-color:#fbbf24;cursor:pointer;"></td>';
     h += '</tr>';
   });
   h += '<tr style="border-top:2px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);">';
   h += '<td colspan="6" style="padding:8px 10px;text-align:right;font-weight:700;color:#fbbf24;font-size:11px;">TOTAL MATERIALES + INSUMOS</td>';
   h += '<td style="padding:8px 10px;font-weight:800;color:#fbbf24;">'+fmtCopFull(costoTotalGeneral)+'</td>';
-  h += '<td></td>';
   h += '</tr>';
   h += '</tbody></table></div></div>';
   return h;
@@ -7851,17 +7847,11 @@ async function toggleConsumibleCheck(opId, key, checked){
   var op = (DB.ops||[]).find(function(o){ return o.id===opId; });
   if(!op) return;
   if(!op.consumibles_check) op.consumibles_check = {};
-  if(checked) op.consumibles_check[key] = true; else delete op.consumibles_check[key];
-  saveLocal();
-  await guardarArchivo('ops', {ops: DB.ops});
-  document.getElementById('page-content').innerHTML = renderOPDetalle(opId);
-}
-
-async function toggleConsumibleCredito(opId, key, esCredito){
-  var op = (DB.ops||[]).find(function(o){ return o.id===opId; });
-  if(!op) return;
-  if(!op.consumibles_credito) op.consumibles_credito = {};
-  if(esCredito) op.consumibles_credito[key] = true; else delete op.consumibles_credito[key];
+  // Se guarda el booleano explícito (nunca se borra la clave): algunos ítems arrancan
+  // marcados por defecto (_invSiempreDisponible), así que desmarcarlos tiene que quedar
+  // registrado como "false" real — si se borrara la clave, en el próximo render volvería
+  // a caer en el default y se vería marcado otra vez aunque Paola lo haya desmarcado a mano.
+  op.consumibles_check[key] = !!checked;
   saveLocal();
   await guardarArchivo('ops', {ops: DB.ops});
   document.getElementById('page-content').innerHTML = renderOPDetalle(opId);
