@@ -6450,18 +6450,18 @@
     },
     {
       "cantidades": {
-        "GRIS OSCURO_T10": 12,
-        "GRIS OSCURO_T12": 16,
-        "GRIS OSCURO_T14": 16,
-        "GRIS OSCURO_T16": 16,
-        "GRIS OSCURO_T6": 12,
-        "GRIS OSCURO_T8": 12,
+        "VINOTINTO_T6": 12,
+        "VINOTINTO_T8": 12,
         "VINOTINTO_T10": 12,
         "VINOTINTO_T12": 16,
         "VINOTINTO_T14": 16,
         "VINOTINTO_T16": 16,
-        "VINOTINTO_T6": 12,
-        "VINOTINTO_T8": 12
+        "GRIS OSCURO_T6": 12,
+        "GRIS OSCURO_T8": 12,
+        "GRIS OSCURO_T10": 12,
+        "GRIS OSCURO_T12": 18,
+        "GRIS OSCURO_T14": 18,
+        "GRIS OSCURO_T16": 18
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -6479,27 +6479,14 @@
       "receta_id": "rec_chaqueta_onion_1165",
       "referencias": [
         {
-          "cantidades": {
-            "GRIS OSCURO_T10": 12,
-            "GRIS OSCURO_T12": 16,
-            "GRIS OSCURO_T14": 16,
-            "GRIS OSCURO_T16": 16,
-            "GRIS OSCURO_T6": 12,
-            "GRIS OSCURO_T8": 12,
-            "VINOTINTO_T10": 12,
-            "VINOTINTO_T12": 16,
-            "VINOTINTO_T14": 16,
-            "VINOTINTO_T16": 16,
-            "VINOTINTO_T6": 12,
-            "VINOTINTO_T8": 12
-          },
+          "nombre": "CHAQUETA ONION",
+          "ref": "1166",
           "cat": "CHAQUETAS",
+          "vmo": 9000,
           "colores": [
             "VINOTINTO",
             "GRIS OSCURO"
           ],
-          "nombre": "CHAQUETA ONION",
-          "ref": "1166",
           "tallas": [
             "T6",
             "T8",
@@ -6508,8 +6495,21 @@
             "T14",
             "T16"
           ],
-          "totalUds": 168,
-          "vmo": 9000
+          "cantidades": {
+            "VINOTINTO_T6": 12,
+            "VINOTINTO_T8": 12,
+            "VINOTINTO_T10": 12,
+            "VINOTINTO_T12": 16,
+            "VINOTINTO_T14": 16,
+            "VINOTINTO_T16": 16,
+            "GRIS OSCURO_T6": 12,
+            "GRIS OSCURO_T8": 12,
+            "GRIS OSCURO_T10": 12,
+            "GRIS OSCURO_T12": 18,
+            "GRIS OSCURO_T14": 18,
+            "GRIS OSCURO_T16": 18
+          },
+          "maquilador_id": ""
         }
       ],
       "tallas": [
@@ -6519,7 +6519,8 @@
         "T12",
         "T14",
         "T16"
-      ]
+      ],
+      "updated_at": "2026-08-27"
     },
     {
       "cantidades": {
