@@ -12469,19 +12469,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "AZUL BEBE",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1787858009448_8la6m",
-      "ts": 1787858009448,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-108",
       "op_nombre": "COUNTRY 2.0",
       "referencia": "COUNTRY 2.0",
-      "color": "AZUL BEBE",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1787858009448,
+      "uds": 84,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787858055618_d3548",
+      "ts": 1787858055618,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-102",
+      "op_nombre": "CHAQUETA ONION",
+      "referencia": "CHAQUETA ONION",
+      "color": "VINOTINTO",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 84,
+      "uds": 90,
       "motivo": "EN TALLER"
     }
   ]
