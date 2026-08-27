@@ -12501,15 +12501,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1787858949004_0fvr0",
-      "ts": 1787858949004,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-081",
-      "nombre": "CONJUNTO MANCHESTER",
       "categoria": "CONJUNTOS",
       "colores": 5,
-      "refs": 1
+      "id": "evt_1787858949004_0fvr0",
+      "nombre": "CONJUNTO MANCHESTER",
+      "op_id": "OP-2026-081",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1787858949004,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787858964417_ia0f0",
+      "ts": 1787858964417,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-081",
+      "op_nombre": "CONJUNTO MANCHESTER",
+      "referencia": "CONJUNTO MANCHESTER",
+      "color": "CAFE",
+      "talla": "todas las tallas",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
+      "bulk": true,
+      "uds": 64,
+      "motivo": "en insumos"
     }
   ]
 }
