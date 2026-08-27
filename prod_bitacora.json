@@ -12218,16 +12218,27 @@
       "user": "Isabel"
     },
     {
+      "categoria": "Chaquetas",
+      "diseno_id": "id_1782178726618_4nqy6fard",
+      "estado_anterior": "LISTA_PRODUCCION",
+      "estado_nuevo": "EN_CORTE_MUESTRA",
       "id": "evt_1787846231255_k1xz2",
-      "ts": 1787846231255,
-      "user": "Isabel",
+      "marca": "Bentley Kids",
+      "nombre": "CHAQUETA DISCOVERY",
       "tipo": "estado_diseno",
+      "ts": 1787846231255,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1787846246275_a33y8",
+      "ts": 1787846246275,
+      "user": "Isabel",
+      "tipo": "diseno_responsable",
       "diseno_id": "id_1782178726618_4nqy6fard",
       "nombre": "CHAQUETA DISCOVERY",
       "categoria": "Chaquetas",
-      "marca": "Bentley Kids",
-      "estado_anterior": "LISTA_PRODUCCION",
-      "estado_nuevo": "EN_CORTE_MUESTRA"
+      "resp_anterior": "Carolina",
+      "resp_nuevo": "John"
     }
   ]
 }
