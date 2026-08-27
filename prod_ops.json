@@ -1414,17 +1414,17 @@
     },
     {
       "cantidades": {
-        "BEIGE_T10": 10,
+        "BEIGE_T6": 4,
+        "BEIGE_T8": 5,
+        "BEIGE_T10": 5,
         "BEIGE_T12": 20,
-        "BEIGE_T14": 20,
-        "BEIGE_T16": 20,
-        "BEIGE_T6": 10,
-        "BEIGE_T8": 10,
+        "BEIGE_T14": 5,
+        "BEIGE_T16": 5,
+        "NEGRO_T8": 10,
         "NEGRO_T10": 10,
         "NEGRO_T12": 20,
         "NEGRO_T14": 20,
-        "NEGRO_T16": 10,
-        "NEGRO_T8": 10
+        "NEGRO_T16": 10
       },
       "categoria": "PANTALONES",
       "colores": [
@@ -1442,26 +1442,14 @@
       "numero": 36,
       "referencias": [
         {
-          "cantidades": {
-            "BEIGE_T10": 10,
-            "BEIGE_T12": 20,
-            "BEIGE_T14": 20,
-            "BEIGE_T16": 20,
-            "BEIGE_T6": 10,
-            "BEIGE_T8": 10,
-            "NEGRO_T10": 10,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 10,
-            "NEGRO_T8": 10
-          },
+          "nombre": "PANTALON DRILL ANCHO",
+          "ref": "",
           "cat": "PANTALONES",
+          "vmo": 1151,
           "colores": [
             "BEIGE",
             "NEGRO"
           ],
-          "nombre": "PANTALON DRILL ANCHO",
-          "ref": "",
           "tallas": [
             "T6",
             "T8",
@@ -1470,7 +1458,20 @@
             "T14",
             "T16"
           ],
-          "vmo": 1151
+          "cantidades": {
+            "BEIGE_T6": 4,
+            "BEIGE_T8": 5,
+            "BEIGE_T10": 5,
+            "BEIGE_T12": 20,
+            "BEIGE_T14": 5,
+            "BEIGE_T16": 5,
+            "NEGRO_T8": 10,
+            "NEGRO_T10": 10,
+            "NEGRO_T12": 20,
+            "NEGRO_T14": 20,
+            "NEGRO_T16": 10
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -1486,7 +1487,7 @@
         "T16"
       ],
       "total_uds": 100,
-      "updated_at": "2026-07-31"
+      "updated_at": "2026-08-27"
     },
     {
       "cantidades": {
@@ -1837,8 +1838,8 @@
         }
       ],
       "subg_estados": {
-        "OP-0039||NEGRO": "PENDIENTE_CORTAR",
-        "OP-0039||BEIGE": "EN_CONFECCION"
+        "OP-0039||BEIGE": "EN_CONFECCION",
+        "OP-0039||NEGRO": "PENDIENTE_CORTAR"
       },
       "tallas": [
         "T6",
@@ -1852,6 +1853,32 @@
       "updated_at": "2026-08-04"
     },
     {
+      "cantidades": {
+        "CAMEL_T10": 12,
+        "CAMEL_T12": 16,
+        "CAMEL_T14": 16,
+        "CAMEL_T16": 16,
+        "CAMEL_T6": 12,
+        "CAMEL_T8": 12,
+        "MARFIL_T10": 12,
+        "MARFIL_T12": 16,
+        "MARFIL_T14": 16,
+        "MARFIL_T16": 16,
+        "MARFIL_T6": 12,
+        "MARFIL_T8": 12,
+        "NEGRO_T10": 12,
+        "NEGRO_T12": 16,
+        "NEGRO_T14": 16,
+        "NEGRO_T16": 16,
+        "NEGRO_T6": 12,
+        "NEGRO_T8": 12,
+        "ROSA 613_T10": 12,
+        "ROSA 613_T12": 16,
+        "ROSA 613_T14": 16,
+        "ROSA 613_T16": 16,
+        "ROSA 613_T6": 12,
+        "ROSA 613_T8": 12
+      },
       "categoria": "PANTALONES",
       "colores": [
         "MARFIL",
@@ -1868,6 +1895,55 @@
       "migrado": true,
       "nombre_producto": "PANTALON DONATELLA",
       "numero": 40,
+      "referencias": [
+        {
+          "cantidades": {
+            "CAMEL_T10": 12,
+            "CAMEL_T12": 16,
+            "CAMEL_T14": 16,
+            "CAMEL_T16": 16,
+            "CAMEL_T6": 12,
+            "CAMEL_T8": 12,
+            "MARFIL_T10": 12,
+            "MARFIL_T12": 16,
+            "MARFIL_T14": 16,
+            "MARFIL_T16": 16,
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 12,
+            "NEGRO_T10": 12,
+            "NEGRO_T12": 16,
+            "NEGRO_T14": 16,
+            "NEGRO_T16": 16,
+            "NEGRO_T6": 12,
+            "NEGRO_T8": 12,
+            "ROSA 613_T10": 12,
+            "ROSA 613_T12": 16,
+            "ROSA 613_T14": 16,
+            "ROSA 613_T16": 16,
+            "ROSA 613_T6": 12,
+            "ROSA 613_T8": 12
+          },
+          "cat": "PANTALONES",
+          "colores": [
+            "MARFIL",
+            "ROSA 613",
+            "CAMEL",
+            "NEGRO"
+          ],
+          "maquilador_id": "",
+          "nombre": "PANTALON DONATELLA",
+          "ref": "",
+          "tallas": [
+            "T6",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "vmo": 1151
+        }
+      ],
       "subg_estados": {
         "OP-0040||MARFIL": "PENDIENTE_CORTAR"
       },
@@ -1880,81 +1956,6 @@
         "T16"
       ],
       "total_uds": 84,
-      "referencias": [
-        {
-          "nombre": "PANTALON DONATELLA",
-          "ref": "",
-          "cat": "PANTALONES",
-          "vmo": 1151,
-          "colores": [
-            "MARFIL",
-            "ROSA 613",
-            "CAMEL",
-            "NEGRO"
-          ],
-          "tallas": [
-            "T6",
-            "T8",
-            "T10",
-            "T12",
-            "T14",
-            "T16"
-          ],
-          "cantidades": {
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 12,
-            "MARFIL_T10": 12,
-            "MARFIL_T12": 16,
-            "MARFIL_T14": 16,
-            "MARFIL_T16": 16,
-            "ROSA 613_T6": 12,
-            "ROSA 613_T8": 12,
-            "ROSA 613_T10": 12,
-            "ROSA 613_T12": 16,
-            "ROSA 613_T14": 16,
-            "ROSA 613_T16": 16,
-            "CAMEL_T6": 12,
-            "CAMEL_T8": 12,
-            "CAMEL_T10": 12,
-            "CAMEL_T12": 16,
-            "CAMEL_T14": 16,
-            "CAMEL_T16": 16,
-            "NEGRO_T6": 12,
-            "NEGRO_T8": 12,
-            "NEGRO_T10": 12,
-            "NEGRO_T12": 16,
-            "NEGRO_T14": 16,
-            "NEGRO_T16": 16
-          },
-          "maquilador_id": ""
-        }
-      ],
-      "cantidades": {
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 12,
-        "MARFIL_T10": 12,
-        "MARFIL_T12": 16,
-        "MARFIL_T14": 16,
-        "MARFIL_T16": 16,
-        "ROSA 613_T6": 12,
-        "ROSA 613_T8": 12,
-        "ROSA 613_T10": 12,
-        "ROSA 613_T12": 16,
-        "ROSA 613_T14": 16,
-        "ROSA 613_T16": 16,
-        "CAMEL_T6": 12,
-        "CAMEL_T8": 12,
-        "CAMEL_T10": 12,
-        "CAMEL_T12": 16,
-        "CAMEL_T14": 16,
-        "CAMEL_T16": 16,
-        "NEGRO_T6": 12,
-        "NEGRO_T8": 12,
-        "NEGRO_T10": 12,
-        "NEGRO_T12": 16,
-        "NEGRO_T14": 16,
-        "NEGRO_T16": 16
-      },
       "updated_at": "2026-08-24"
     },
     {
@@ -4181,8 +4182,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-07-30",
-      "subg_estados": {}
+      "updated_at": "2026-07-30"
     },
     {
       "cantidades": {
@@ -4276,8 +4276,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-07-30",
-      "subg_estados": {}
+      "updated_at": "2026-07-30"
     },
     {
       "cantidades": {
@@ -4498,32 +4497,31 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
-        "AVENA_T4": 12,
-        "AVENA_T6": 12,
-        "AVENA_T8": 24,
         "AVENA_T10": 24,
         "AVENA_T12": 24,
         "AVENA_T14": 24,
         "AVENA_T16": 24,
-        "MARFIL_T4": 12,
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 24,
+        "AVENA_T4": 12,
+        "AVENA_T6": 12,
+        "AVENA_T8": 24,
         "MARFIL_T10": 24,
         "MARFIL_T12": 24,
         "MARFIL_T14": 24,
         "MARFIL_T16": 24,
-        "NEGRO_T4": 12,
-        "NEGRO_T6": 12,
-        "NEGRO_T8": 24,
+        "MARFIL_T4": 12,
+        "MARFIL_T6": 12,
+        "MARFIL_T8": 24,
         "NEGRO_T10": 24,
         "NEGRO_T12": 24,
         "NEGRO_T14": 24,
-        "NEGRO_T16": 24
+        "NEGRO_T16": 24,
+        "NEGRO_T4": 12,
+        "NEGRO_T6": 12,
+        "NEGRO_T8": 24
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -4541,15 +4539,38 @@
       "numero": 79,
       "referencias": [
         {
-          "nombre": "BEISBOLERA ARMIN",
-          "ref": "1132",
+          "cantidades": {
+            "AVENA_T10": 24,
+            "AVENA_T12": 24,
+            "AVENA_T14": 24,
+            "AVENA_T16": 24,
+            "AVENA_T4": 12,
+            "AVENA_T6": 12,
+            "AVENA_T8": 24,
+            "MARFIL_T10": 24,
+            "MARFIL_T12": 24,
+            "MARFIL_T14": 24,
+            "MARFIL_T16": 24,
+            "MARFIL_T4": 12,
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 24,
+            "NEGRO_T10": 24,
+            "NEGRO_T12": 24,
+            "NEGRO_T14": 24,
+            "NEGRO_T16": 24,
+            "NEGRO_T4": 12,
+            "NEGRO_T6": 12,
+            "NEGRO_T8": 24
+          },
           "cat": "CHAQUETAS",
-          "vmo": 9144,
           "colores": [
             "AVENA",
             "MARFIL",
             "NEGRO"
           ],
+          "maquilador_id": "",
+          "nombre": "BEISBOLERA ARMIN",
+          "ref": "1132",
           "tallas": [
             "T4",
             "T6",
@@ -4559,30 +4580,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "AVENA_T4": 12,
-            "AVENA_T6": 12,
-            "AVENA_T8": 24,
-            "AVENA_T10": 24,
-            "AVENA_T12": 24,
-            "AVENA_T14": 24,
-            "AVENA_T16": 24,
-            "MARFIL_T4": 12,
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 24,
-            "MARFIL_T10": 24,
-            "MARFIL_T12": 24,
-            "MARFIL_T14": 24,
-            "MARFIL_T16": 24,
-            "NEGRO_T4": 12,
-            "NEGRO_T6": 12,
-            "NEGRO_T8": 24,
-            "NEGRO_T10": 24,
-            "NEGRO_T12": 24,
-            "NEGRO_T14": 24,
-            "NEGRO_T16": 24
-          },
-          "maquilador_id": ""
+          "vmo": 9144
         }
       ],
       "tallas": [
@@ -4594,8 +4592,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-08-25",
-      "subg_estados": {}
+      "updated_at": "2026-08-25"
     },
     {
       "cantidades": {
@@ -4665,8 +4662,7 @@
         "T12",
         "T14"
       ],
-      "updated_at": "2026-07-31",
-      "subg_estados": {}
+      "updated_at": "2026-07-31"
     },
     {
       "cantidades": {
@@ -4885,8 +4881,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -4964,8 +4959,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -5143,31 +5137,31 @@
     },
     {
       "cantidades": {
-        "GRIS OSCURO_T8": 10,
-        "GRIS OSCURO_T10": 10,
-        "GRIS OSCURO_T12": 10,
-        "GRIS OSCURO_T14": 10,
-        "GRIS OSCURO_T16": 10,
-        "CAFE_T8": 12,
-        "CAFE_T10": 12,
-        "CAFE_T12": 12,
-        "CAFE_T14": 16,
-        "CAFE_T16": 16,
-        "NEGRO_T8": 12,
-        "NEGRO_T10": 12,
-        "NEGRO_T12": 12,
-        "NEGRO_T14": 16,
-        "NEGRO_T16": 16,
-        "AVENA_T8": 12,
         "AVENA_T10": 12,
         "AVENA_T12": 12,
         "AVENA_T14": 16,
         "AVENA_T16": 16,
-        "MARFIL_T8": 12,
+        "AVENA_T8": 12,
+        "CAFE_T10": 12,
+        "CAFE_T12": 12,
+        "CAFE_T14": 16,
+        "CAFE_T16": 16,
+        "CAFE_T8": 12,
+        "GRIS OSCURO_T10": 10,
+        "GRIS OSCURO_T12": 10,
+        "GRIS OSCURO_T14": 10,
+        "GRIS OSCURO_T16": 10,
+        "GRIS OSCURO_T8": 10,
         "MARFIL_T10": 12,
         "MARFIL_T12": 12,
         "MARFIL_T14": 16,
-        "MARFIL_T16": 16
+        "MARFIL_T16": 16,
+        "MARFIL_T8": 12,
+        "NEGRO_T10": 12,
+        "NEGRO_T12": 12,
+        "NEGRO_T14": 16,
+        "NEGRO_T16": 16,
+        "NEGRO_T8": 12
       },
       "categoria": "PANTALONES",
       "colores": [
@@ -5187,10 +5181,34 @@
       "numero": 86,
       "referencias": [
         {
-          "nombre": "PANTALON CHICAGO",
-          "ref": "1179",
+          "cantidades": {
+            "AVENA_T10": 12,
+            "AVENA_T12": 12,
+            "AVENA_T14": 16,
+            "AVENA_T16": 16,
+            "AVENA_T8": 12,
+            "CAFE_T10": 12,
+            "CAFE_T12": 12,
+            "CAFE_T14": 16,
+            "CAFE_T16": 16,
+            "CAFE_T8": 12,
+            "GRIS OSCURO_T10": 10,
+            "GRIS OSCURO_T12": 10,
+            "GRIS OSCURO_T14": 10,
+            "GRIS OSCURO_T16": 10,
+            "GRIS OSCURO_T8": 10,
+            "MARFIL_T10": 12,
+            "MARFIL_T12": 12,
+            "MARFIL_T14": 16,
+            "MARFIL_T16": 16,
+            "MARFIL_T8": 12,
+            "NEGRO_T10": 12,
+            "NEGRO_T12": 12,
+            "NEGRO_T14": 16,
+            "NEGRO_T16": 16,
+            "NEGRO_T8": 12
+          },
           "cat": "PANTALONES",
-          "vmo": 5000,
           "colores": [
             "GRIS OSCURO",
             "CAFE",
@@ -5198,6 +5216,9 @@
             "AVENA",
             "MARFIL"
           ],
+          "maquilador_id": "",
+          "nombre": "PANTALON CHICAGO",
+          "ref": "1179",
           "tallas": [
             "T8",
             "T10",
@@ -5205,34 +5226,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "GRIS OSCURO_T8": 10,
-            "GRIS OSCURO_T10": 10,
-            "GRIS OSCURO_T12": 10,
-            "GRIS OSCURO_T14": 10,
-            "GRIS OSCURO_T16": 10,
-            "CAFE_T8": 12,
-            "CAFE_T10": 12,
-            "CAFE_T12": 12,
-            "CAFE_T14": 16,
-            "CAFE_T16": 16,
-            "NEGRO_T8": 12,
-            "NEGRO_T10": 12,
-            "NEGRO_T12": 12,
-            "NEGRO_T14": 16,
-            "NEGRO_T16": 16,
-            "AVENA_T8": 12,
-            "AVENA_T10": 12,
-            "AVENA_T12": 12,
-            "AVENA_T14": 16,
-            "AVENA_T16": 16,
-            "MARFIL_T8": 12,
-            "MARFIL_T10": 12,
-            "MARFIL_T12": 12,
-            "MARFIL_T14": 16,
-            "MARFIL_T16": 16
-          },
-          "maquilador_id": ""
+          "vmo": 5000
         }
       ],
       "subg_estados": {
@@ -5584,8 +5578,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -5957,8 +5950,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -6026,8 +6018,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -6216,8 +6207,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -6305,8 +6295,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -6380,8 +6369,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -6453,8 +6441,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -6527,8 +6514,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -6602,18 +6588,17 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
-        "MARFIL_T4": 7,
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 12,
         "MARFIL_T10": 12,
         "MARFIL_T12": 18,
         "MARFIL_T14": 18,
-        "MARFIL_T16": 18
+        "MARFIL_T16": 18,
+        "MARFIL_T4": 7,
+        "MARFIL_T6": 12,
+        "MARFIL_T8": 12
       },
       "categoria": "TEJIDOS",
       "colores": [
@@ -6630,42 +6615,22 @@
       "numero": 104,
       "referencias": [
         {
-          "nombre": "BUZO CEREZAS",
-          "ref": "",
-          "cat": "TEJIDOS",
-          "vmo": 1151,
-          "colores": [
-            "MARFIL"
-          ],
-          "tallas": [
-            "T4",
-            "T6",
-            "T8",
-            "T10",
-            "T12",
-            "T14",
-            "T16"
-          ],
           "cantidades": {
-            "MARFIL_T4": 7,
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 12,
             "MARFIL_T10": 12,
             "MARFIL_T12": 18,
             "MARFIL_T14": 18,
-            "MARFIL_T16": 18
+            "MARFIL_T16": 18,
+            "MARFIL_T4": 7,
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 12
           },
-          "maquilador_id": ""
-        },
-        {
-          "nombre": "BUZO TEJIDO MOÑOS",
-          "ref": "",
-          "cat": "BUZOS",
-          "vmo": 1151,
+          "cat": "TEJIDOS",
           "colores": [
-            "NEGRO",
             "MARFIL"
           ],
+          "maquilador_id": "",
+          "nombre": "BUZO CEREZAS",
+          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -6675,23 +6640,43 @@
             "T14",
             "T16"
           ],
+          "vmo": 1151
+        },
+        {
           "cantidades": {
-            "NEGRO_T4": 7,
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 10,
+            "MARFIL_T10": 10,
+            "MARFIL_T12": 14,
+            "MARFIL_T14": 14,
+            "MARFIL_T16": 14,
+            "MARFIL_T4": 7,
+            "MARFIL_T6": 10,
+            "MARFIL_T8": 10,
             "NEGRO_T10": 10,
             "NEGRO_T12": 14,
             "NEGRO_T14": 14,
             "NEGRO_T16": 14,
-            "MARFIL_T4": 7,
-            "MARFIL_T6": 10,
-            "MARFIL_T8": 10,
-            "MARFIL_T10": 10,
-            "MARFIL_T12": 14,
-            "MARFIL_T14": 14,
-            "MARFIL_T16": 14
+            "NEGRO_T4": 7,
+            "NEGRO_T6": 10,
+            "NEGRO_T8": 10
           },
-          "maquilador_id": ""
+          "cat": "BUZOS",
+          "colores": [
+            "NEGRO",
+            "MARFIL"
+          ],
+          "maquilador_id": "",
+          "nombre": "BUZO TEJIDO MOÑOS",
+          "ref": "",
+          "tallas": [
+            "T4",
+            "T6",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "vmo": 1151
         }
       ],
       "subg_estados": {
@@ -6795,8 +6780,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -7127,8 +7111,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-08-04",
-      "subg_estados": {}
+      "updated_at": "2026-08-04"
     },
     {
       "cantidades": {
@@ -7209,8 +7192,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -7353,8 +7335,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-08-17",
-      "subg_estados": {}
+      "updated_at": "2026-08-17"
     },
     {
       "cantidades": {
@@ -7469,8 +7450,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -7559,8 +7539,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -7952,16 +7931,83 @@
       ]
     },
     {
-      "id": "OP-2026-119",
-      "numero": 119,
-      "fecha_op": "2026-08-21",
-      "cortador": "Corte Carbajal",
+      "cantidades": {
+        "AZUL OSCURO_T10": 24,
+        "AZUL OSCURO_T12": 24,
+        "AZUL OSCURO_T14": 24,
+        "AZUL OSCURO_T16": 24,
+        "AZUL OSCURO_T6": 12,
+        "AZUL OSCURO_T8": 12,
+        "MARFIL_T10": 24,
+        "MARFIL_T12": 24,
+        "MARFIL_T14": 24,
+        "MARFIL_T16": 24,
+        "MARFIL_T6": 12,
+        "MARFIL_T8": 12,
+        "VINOTINTO_T10": 24,
+        "VINOTINTO_T12": 24,
+        "VINOTINTO_T14": 24,
+        "VINOTINTO_T16": 24,
+        "VINOTINTO_T6": 12,
+        "VINOTINTO_T8": 12
+      },
       "categoria": "CHAQUETAS",
-      "nombre_producto": "WASHMAN",
       "colores": [
         "AZUL OSCURO",
         "VINOTINTO",
         "MARFIL"
+      ],
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-08-21",
+      "created_by": "John Rodriguez",
+      "diseno_origen_id": "dis_9d2952b8c1c4",
+      "diseno_origen_nombre": "WASHMAN",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-08-21",
+      "id": "OP-2026-119",
+      "nombre_producto": "WASHMAN",
+      "numero": 119,
+      "referencias": [
+        {
+          "cantidades": {
+            "AZUL OSCURO_T10": 24,
+            "AZUL OSCURO_T12": 24,
+            "AZUL OSCURO_T14": 24,
+            "AZUL OSCURO_T16": 24,
+            "AZUL OSCURO_T6": 12,
+            "AZUL OSCURO_T8": 12,
+            "MARFIL_T10": 24,
+            "MARFIL_T12": 24,
+            "MARFIL_T14": 24,
+            "MARFIL_T16": 24,
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 12,
+            "VINOTINTO_T10": 24,
+            "VINOTINTO_T12": 24,
+            "VINOTINTO_T14": 24,
+            "VINOTINTO_T16": 24,
+            "VINOTINTO_T6": 12,
+            "VINOTINTO_T8": 12
+          },
+          "cat": "CHAQUETAS",
+          "colores": [
+            "AZUL OSCURO",
+            "VINOTINTO",
+            "MARFIL"
+          ],
+          "maquilador_id": "",
+          "nombre": "WASHMAN",
+          "ref": "",
+          "tallas": [
+            "T6",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "vmo": 1151
+        }
       ],
       "tallas": [
         "T6",
@@ -7971,141 +8017,100 @@
         "T14",
         "T16"
       ],
-      "cantidades": {
-        "AZUL OSCURO_T6": 12,
-        "AZUL OSCURO_T8": 12,
-        "AZUL OSCURO_T10": 24,
-        "AZUL OSCURO_T12": 24,
-        "AZUL OSCURO_T14": 24,
-        "AZUL OSCURO_T16": 24,
-        "VINOTINTO_T6": 12,
-        "VINOTINTO_T8": 12,
-        "VINOTINTO_T10": 24,
-        "VINOTINTO_T12": 24,
-        "VINOTINTO_T14": 24,
-        "VINOTINTO_T16": 24,
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 12,
-        "MARFIL_T10": 24,
-        "MARFIL_T12": 24,
-        "MARFIL_T14": 24,
-        "MARFIL_T16": 24
-      },
-      "referencias": [
-        {
-          "nombre": "WASHMAN",
-          "ref": "",
-          "cat": "CHAQUETAS",
-          "vmo": 1151,
-          "colores": [
-            "AZUL OSCURO",
-            "VINOTINTO",
-            "MARFIL"
-          ],
-          "tallas": [
-            "T6",
-            "T8",
-            "T10",
-            "T12",
-            "T14",
-            "T16"
-          ],
-          "cantidades": {
-            "AZUL OSCURO_T6": 12,
-            "AZUL OSCURO_T8": 12,
-            "AZUL OSCURO_T10": 24,
-            "AZUL OSCURO_T12": 24,
-            "AZUL OSCURO_T14": 24,
-            "AZUL OSCURO_T16": 24,
-            "VINOTINTO_T6": 12,
-            "VINOTINTO_T8": 12,
-            "VINOTINTO_T10": 24,
-            "VINOTINTO_T12": 24,
-            "VINOTINTO_T14": 24,
-            "VINOTINTO_T16": 24,
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 12,
-            "MARFIL_T10": 24,
-            "MARFIL_T12": 24,
-            "MARFIL_T14": 24,
-            "MARFIL_T16": 24
-          },
-          "maquilador_id": ""
-        }
-      ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-08-21",
-      "created_by": "John Rodriguez",
-      "diseno_origen_id": "dis_9d2952b8c1c4",
-      "diseno_origen_nombre": "WASHMAN",
-      "subg_estados": {},
       "updated_at": "2026-08-25"
     },
     {
-      "id": "OP-2026-120",
-      "numero": 120,
-      "fecha_op": "2026-08-21",
-      "cortador": "Corte Carbajal",
+      "cantidades": {
+        "AZUL OSCURO_T10": 12,
+        "AZUL OSCURO_T12": 12,
+        "AZUL OSCURO_T14": 12,
+        "AZUL OSCURO_T16": 12,
+        "AZUL OSCURO_T4": 12,
+        "AZUL OSCURO_T6": 12,
+        "AZUL OSCURO_T8": 12,
+        "NEGRO_T10": 12,
+        "NEGRO_T12": 12,
+        "NEGRO_T14": 12,
+        "NEGRO_T16": 12,
+        "NEGRO_T4": 12,
+        "NEGRO_T6": 12,
+        "NEGRO_T8": 12,
+        "ROSA_T10": 12,
+        "ROSA_T12": 12,
+        "ROSA_T14": 12,
+        "ROSA_T16": 12,
+        "ROSA_T4": 12,
+        "ROSA_T6": 12,
+        "ROSA_T8": 12,
+        "VERDE MILITAR_T10": 12,
+        "VERDE MILITAR_T12": 12,
+        "VERDE MILITAR_T14": 12,
+        "VERDE MILITAR_T16": 12,
+        "VERDE MILITAR_T4": 12,
+        "VERDE MILITAR_T6": 12,
+        "VERDE MILITAR_T8": 12
+      },
       "categoria": "CHAQUETAS",
-      "nombre_producto": "ROMPEVIENTOS",
       "colores": [
         "AZUL OSCURO",
         "ROSA",
         "NEGRO",
         "VERDE MILITAR"
       ],
-      "tallas": [
-        "T4",
-        "T6",
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
-      "cantidades": {
-        "AZUL OSCURO_T4": 12,
-        "AZUL OSCURO_T6": 12,
-        "AZUL OSCURO_T8": 12,
-        "AZUL OSCURO_T10": 12,
-        "AZUL OSCURO_T12": 12,
-        "AZUL OSCURO_T14": 12,
-        "AZUL OSCURO_T16": 12,
-        "ROSA_T4": 12,
-        "ROSA_T6": 12,
-        "ROSA_T8": 12,
-        "ROSA_T10": 12,
-        "ROSA_T12": 12,
-        "ROSA_T14": 12,
-        "ROSA_T16": 12,
-        "NEGRO_T4": 12,
-        "NEGRO_T6": 12,
-        "NEGRO_T8": 12,
-        "NEGRO_T10": 12,
-        "NEGRO_T12": 12,
-        "NEGRO_T14": 12,
-        "NEGRO_T16": 12,
-        "VERDE MILITAR_T4": 12,
-        "VERDE MILITAR_T6": 12,
-        "VERDE MILITAR_T8": 12,
-        "VERDE MILITAR_T10": 12,
-        "VERDE MILITAR_T12": 12,
-        "VERDE MILITAR_T14": 12,
-        "VERDE MILITAR_T16": 12
-      },
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-08-21",
+      "created_by": "John Rodriguez",
+      "diseno_origen_id": "dis_aefddccbdb50",
+      "diseno_origen_nombre": "ROMPEVIENTOS",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-08-21",
+      "id": "OP-2026-120",
+      "nombre_producto": "ROMPEVIENTOS",
+      "numero": 120,
+      "receta_id": "rec_chaqueta_rompevientos_bk_1180",
+      "receta_nombre": "CHAQUETA ROMPEVIENTOS BK - REF: 1180",
       "referencias": [
         {
-          "nombre": "ROMPEVIENTOS",
-          "ref": "",
+          "cantidades": {
+            "AZUL OSCURO_T10": 12,
+            "AZUL OSCURO_T12": 12,
+            "AZUL OSCURO_T14": 12,
+            "AZUL OSCURO_T16": 12,
+            "AZUL OSCURO_T4": 12,
+            "AZUL OSCURO_T6": 12,
+            "AZUL OSCURO_T8": 12,
+            "NEGRO_T10": 12,
+            "NEGRO_T12": 12,
+            "NEGRO_T14": 12,
+            "NEGRO_T16": 12,
+            "NEGRO_T4": 12,
+            "NEGRO_T6": 12,
+            "NEGRO_T8": 12,
+            "ROSA_T10": 12,
+            "ROSA_T12": 12,
+            "ROSA_T14": 12,
+            "ROSA_T16": 12,
+            "ROSA_T4": 12,
+            "ROSA_T6": 12,
+            "ROSA_T8": 12,
+            "VERDE MILITAR_T10": 12,
+            "VERDE MILITAR_T12": 12,
+            "VERDE MILITAR_T14": 12,
+            "VERDE MILITAR_T16": 12,
+            "VERDE MILITAR_T4": 12,
+            "VERDE MILITAR_T6": 12,
+            "VERDE MILITAR_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 1151,
           "colores": [
             "AZUL OSCURO",
             "ROSA",
             "NEGRO",
             "VERDE MILITAR"
           ],
+          "maquilador_id": "",
+          "nombre": "ROMPEVIENTOS",
+          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -8115,101 +8120,88 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "AZUL OSCURO_T4": 12,
-            "AZUL OSCURO_T6": 12,
-            "AZUL OSCURO_T8": 12,
-            "AZUL OSCURO_T10": 12,
-            "AZUL OSCURO_T12": 12,
-            "AZUL OSCURO_T14": 12,
-            "AZUL OSCURO_T16": 12,
-            "ROSA_T4": 12,
-            "ROSA_T6": 12,
-            "ROSA_T8": 12,
-            "ROSA_T10": 12,
-            "ROSA_T12": 12,
-            "ROSA_T14": 12,
-            "ROSA_T16": 12,
-            "NEGRO_T4": 12,
-            "NEGRO_T6": 12,
-            "NEGRO_T8": 12,
-            "NEGRO_T10": 12,
-            "NEGRO_T12": 12,
-            "NEGRO_T14": 12,
-            "NEGRO_T16": 12,
-            "VERDE MILITAR_T4": 12,
-            "VERDE MILITAR_T6": 12,
-            "VERDE MILITAR_T8": 12,
-            "VERDE MILITAR_T10": 12,
-            "VERDE MILITAR_T12": 12,
-            "VERDE MILITAR_T14": 12,
-            "VERDE MILITAR_T16": 12
-          },
           "totalUds": 336,
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-08-21",
-      "created_by": "John Rodriguez",
-      "diseno_origen_id": "dis_aefddccbdb50",
-      "diseno_origen_nombre": "ROMPEVIENTOS",
-      "receta_id": "rec_chaqueta_rompevientos_bk_1180",
-      "receta_nombre": "CHAQUETA ROMPEVIENTOS BK - REF: 1180",
-      "subg_estados": {}
+      "tallas": [
+        "T4",
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ]
     },
     {
-      "id": "OP-2026-121",
-      "numero": 121,
-      "fecha_op": "2026-08-23",
-      "cortador": "Corte Carbajal",
+      "cantidades": {
+        "BEIGE_T10": 20,
+        "BEIGE_T12": 20,
+        "BEIGE_T14": 20,
+        "BEIGE_T16": 20,
+        "BEIGE_T6": 12,
+        "BEIGE_T8": 12,
+        "NEGRO_T10": 20,
+        "NEGRO_T12": 20,
+        "NEGRO_T14": 20,
+        "NEGRO_T16": 20,
+        "NEGRO_T6": 12,
+        "NEGRO_T8": 12,
+        "ROSA_T10": 16,
+        "ROSA_T12": 16,
+        "ROSA_T14": 16,
+        "ROSA_T16": 16,
+        "ROSA_T6": 12,
+        "ROSA_T8": 12
+      },
       "categoria": "ABRIGOS",
-      "nombre_producto": "ABRIGO FROZEN",
       "colores": [
         "NEGRO",
         "BEIGE",
         "ROSA"
       ],
-      "tallas": [
-        "T6",
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
-      "cantidades": {
-        "NEGRO_T6": 12,
-        "NEGRO_T8": 12,
-        "NEGRO_T10": 20,
-        "NEGRO_T12": 20,
-        "NEGRO_T14": 20,
-        "NEGRO_T16": 20,
-        "BEIGE_T6": 12,
-        "BEIGE_T8": 12,
-        "BEIGE_T10": 20,
-        "BEIGE_T12": 20,
-        "BEIGE_T14": 20,
-        "BEIGE_T16": 20,
-        "ROSA_T6": 12,
-        "ROSA_T8": 12,
-        "ROSA_T10": 16,
-        "ROSA_T12": 16,
-        "ROSA_T14": 16,
-        "ROSA_T16": 16
-      },
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-08-23",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-08-23",
+      "id": "OP-2026-121",
+      "nombre_producto": "ABRIGO FROZEN",
+      "numero": 121,
+      "receta_id": "rec_abrigo_frozen_1136",
+      "receta_nombre": "ABRIGO FROZEN - REF: 1136",
       "referencias": [
         {
-          "nombre": "ABRIGO FROZEN",
-          "ref": "1136",
+          "cantidades": {
+            "BEIGE_T10": 20,
+            "BEIGE_T12": 20,
+            "BEIGE_T14": 20,
+            "BEIGE_T16": 20,
+            "BEIGE_T6": 12,
+            "BEIGE_T8": 12,
+            "NEGRO_T10": 20,
+            "NEGRO_T12": 20,
+            "NEGRO_T14": 20,
+            "NEGRO_T16": 20,
+            "NEGRO_T6": 12,
+            "NEGRO_T8": 12,
+            "ROSA_T10": 16,
+            "ROSA_T12": 16,
+            "ROSA_T14": 16,
+            "ROSA_T16": 16,
+            "ROSA_T6": 12,
+            "ROSA_T8": 12
+          },
           "cat": "ABRIGOS",
-          "vmo": 13663,
           "colores": [
             "NEGRO",
             "BEIGE",
             "ROSA"
           ],
+          "maquilador_id": "",
+          "nombre": "ABRIGO FROZEN",
+          "ref": "1136",
           "tallas": [
             "T6",
             "T8",
@@ -8218,92 +8210,93 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T6": 12,
-            "NEGRO_T8": 12,
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "BEIGE_T6": 12,
-            "BEIGE_T8": 12,
-            "BEIGE_T10": 20,
-            "BEIGE_T12": 20,
-            "BEIGE_T14": 20,
-            "BEIGE_T16": 20,
-            "ROSA_T6": 12,
-            "ROSA_T8": 12,
-            "ROSA_T10": 16,
-            "ROSA_T12": 16,
-            "ROSA_T14": 16,
-            "ROSA_T16": 16
-          },
           "totalUds": 296,
-          "maquilador_id": ""
+          "vmo": 13663
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-08-23",
-      "created_by": "John Rodriguez",
-      "receta_id": "rec_abrigo_frozen_1136",
-      "receta_nombre": "ABRIGO FROZEN - REF: 1136"
+      "tallas": [
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ]
     },
     {
-      "id": "OP-2026-122",
-      "numero": 122,
-      "fecha_op": "2026-08-24",
-      "cortador": "Corte Carbajal",
+      "cantidades": {
+        "AZUL OSCURO_T10": 12,
+        "AZUL OSCURO_T12": 16,
+        "AZUL OSCURO_T14": 16,
+        "AZUL OSCURO_T16": 16,
+        "AZUL OSCURO_T4": 8,
+        "AZUL OSCURO_T6": 12,
+        "AZUL OSCURO_T8": 12,
+        "CAFE_T10": 12,
+        "CAFE_T12": 16,
+        "CAFE_T14": 16,
+        "CAFE_T16": 16,
+        "CAFE_T4": 8,
+        "CAFE_T6": 12,
+        "CAFE_T8": 12,
+        "GRIS CLARO_T10": 12,
+        "GRIS CLARO_T12": 16,
+        "GRIS CLARO_T14": 16,
+        "GRIS CLARO_T16": 16,
+        "GRIS CLARO_T4": 8,
+        "GRIS CLARO_T6": 12,
+        "GRIS CLARO_T8": 12
+      },
       "categoria": "BUZOS",
-      "nombre_producto": "COUNTRY 2.0",
       "colores": [
         "CAFE",
         "AZUL OSCURO",
         "GRIS CLARO"
       ],
-      "tallas": [
-        "T4",
-        "T6",
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
-      "cantidades": {
-        "CAFE_T4": 8,
-        "CAFE_T6": 12,
-        "CAFE_T8": 12,
-        "CAFE_T10": 12,
-        "CAFE_T12": 16,
-        "CAFE_T14": 16,
-        "CAFE_T16": 16,
-        "AZUL OSCURO_T4": 8,
-        "AZUL OSCURO_T6": 12,
-        "AZUL OSCURO_T8": 12,
-        "AZUL OSCURO_T10": 12,
-        "AZUL OSCURO_T12": 16,
-        "AZUL OSCURO_T14": 16,
-        "AZUL OSCURO_T16": 16,
-        "GRIS CLARO_T4": 8,
-        "GRIS CLARO_T6": 12,
-        "GRIS CLARO_T8": 12,
-        "GRIS CLARO_T10": 12,
-        "GRIS CLARO_T12": 16,
-        "GRIS CLARO_T14": 16,
-        "GRIS CLARO_T16": 16
-      },
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-08-24",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-08-24",
+      "id": "OP-2026-122",
+      "nombre_producto": "COUNTRY 2.0",
+      "numero": 122,
+      "receta_id": "cid_1783378762151_5821",
+      "receta_nombre": "BUZO COUNTRY 2.0",
       "referencias": [
         {
-          "nombre": "COUNTRY 2.0",
-          "ref": "1173",
+          "cantidades": {
+            "AZUL OSCURO_T10": 12,
+            "AZUL OSCURO_T12": 16,
+            "AZUL OSCURO_T14": 16,
+            "AZUL OSCURO_T16": 16,
+            "AZUL OSCURO_T4": 8,
+            "AZUL OSCURO_T6": 12,
+            "AZUL OSCURO_T8": 12,
+            "CAFE_T10": 12,
+            "CAFE_T12": 16,
+            "CAFE_T14": 16,
+            "CAFE_T16": 16,
+            "CAFE_T4": 8,
+            "CAFE_T6": 12,
+            "CAFE_T8": 12,
+            "GRIS CLARO_T10": 12,
+            "GRIS CLARO_T12": 16,
+            "GRIS CLARO_T14": 16,
+            "GRIS CLARO_T16": 16,
+            "GRIS CLARO_T4": 8,
+            "GRIS CLARO_T6": 12,
+            "GRIS CLARO_T8": 12
+          },
           "cat": "BUZOS",
-          "vmo": 1151,
           "colores": [
             "CAFE",
             "AZUL OSCURO",
             "GRIS CLARO"
           ],
+          "maquilador_id": "",
+          "nombre": "COUNTRY 2.0",
+          "ref": "1173",
           "tallas": [
             "T4",
             "T6",
@@ -8313,50 +8306,87 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "CAFE_T4": 8,
-            "CAFE_T6": 12,
-            "CAFE_T8": 12,
-            "CAFE_T10": 12,
-            "CAFE_T12": 16,
-            "CAFE_T14": 16,
-            "CAFE_T16": 16,
-            "AZUL OSCURO_T4": 8,
-            "AZUL OSCURO_T6": 12,
-            "AZUL OSCURO_T8": 12,
-            "AZUL OSCURO_T10": 12,
-            "AZUL OSCURO_T12": 16,
-            "AZUL OSCURO_T14": 16,
-            "AZUL OSCURO_T16": 16,
-            "GRIS CLARO_T4": 8,
-            "GRIS CLARO_T6": 12,
-            "GRIS CLARO_T8": 12,
-            "GRIS CLARO_T10": 12,
-            "GRIS CLARO_T12": 16,
-            "GRIS CLARO_T14": 16,
-            "GRIS CLARO_T16": 16
-          },
           "totalUds": 276,
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-08-24",
-      "created_by": "John Rodriguez",
-      "receta_id": "cid_1783378762151_5821",
-      "receta_nombre": "BUZO COUNTRY 2.0"
+      "tallas": [
+        "T4",
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ]
     },
     {
-      "id": "OP-2026-123",
-      "numero": 123,
-      "fecha_op": "2026-08-24",
-      "cortador": "Corte Carbajal",
+      "cantidades": {
+        "MARFIL_T10": 10,
+        "MARFIL_T12": 14,
+        "MARFIL_T14": 14,
+        "MARFIL_T16": 14,
+        "MARFIL_T4": 7,
+        "MARFIL_T6": 10,
+        "MARFIL_T8": 10,
+        "NEGRO_T10": 10,
+        "NEGRO_T12": 14,
+        "NEGRO_T14": 14,
+        "NEGRO_T16": 14,
+        "NEGRO_T4": 7,
+        "NEGRO_T6": 10,
+        "NEGRO_T8": 10
+      },
       "categoria": "TEJIDOS",
-      "nombre_producto": "BUZO TEJIDO MOÑOS",
       "colores": [
         "NEGRO",
         "MARFIL"
+      ],
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-08-24",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-08-24",
+      "id": "OP-2026-123",
+      "nombre_producto": "BUZO TEJIDO MOÑOS",
+      "numero": 123,
+      "referencias": [
+        {
+          "cantidades": {
+            "MARFIL_T10": 10,
+            "MARFIL_T12": 14,
+            "MARFIL_T14": 14,
+            "MARFIL_T16": 14,
+            "MARFIL_T4": 7,
+            "MARFIL_T6": 10,
+            "MARFIL_T8": 10,
+            "NEGRO_T10": 10,
+            "NEGRO_T12": 14,
+            "NEGRO_T14": 14,
+            "NEGRO_T16": 14,
+            "NEGRO_T4": 7,
+            "NEGRO_T6": 10,
+            "NEGRO_T8": 10
+          },
+          "cat": "TEJIDOS",
+          "colores": [
+            "NEGRO",
+            "MARFIL"
+          ],
+          "maquilador_id": "id_1785542281755_ofbp4w9w9",
+          "nombre": "BUZO TEJIDO MOÑOS",
+          "ref": "",
+          "tallas": [
+            "T4",
+            "T6",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "vmo": 1151
+        }
       ],
       "tallas": [
         "T4",
@@ -8367,34 +8397,63 @@
         "T14",
         "T16"
       ],
+      "updated_at": "2026-08-24"
+    },
+    {
       "cantidades": {
-        "NEGRO_T4": 7,
-        "NEGRO_T6": 10,
-        "NEGRO_T8": 10,
-        "NEGRO_T10": 10,
-        "NEGRO_T12": 14,
-        "NEGRO_T14": 14,
-        "NEGRO_T16": 14,
-        "MARFIL_T4": 7,
-        "MARFIL_T6": 10,
-        "MARFIL_T8": 10,
-        "MARFIL_T10": 10,
-        "MARFIL_T12": 14,
-        "MARFIL_T14": 14,
-        "MARFIL_T16": 14
+        "MARFIL CANADA_T10": 12,
+        "MARFIL CANADA_T12": 24,
+        "MARFIL CANADA_T14": 24,
+        "MARFIL CANADA_T16": 24,
+        "MARFIL CANADA_T6": 12,
+        "MARFIL CANADA_T8": 12,
+        "MARFIL NASHVILLE_T10": 12,
+        "MARFIL NASHVILLE_T12": 24,
+        "MARFIL NASHVILLE_T14": 24,
+        "MARFIL NASHVILLE_T16": 24,
+        "MARFIL NASHVILLE_T6": 12,
+        "MARFIL NASHVILLE_T8": 12
       },
+      "categoria": "BUZOS",
+      "colores": [
+        "MARFIL NASHVILLE",
+        "MARFIL CANADA"
+      ],
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-08-24",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-08-24",
+      "id": "OP-2026-124",
+      "nombre_producto": "RANGLAND SOFT",
+      "numero": 124,
+      "receta_id": "rec_rangland_soft_1105",
+      "receta_nombre": "RANGLAND SOFT - REF: 1105",
       "referencias": [
         {
-          "nombre": "BUZO TEJIDO MOÑOS",
-          "ref": "",
-          "cat": "TEJIDOS",
-          "vmo": 1151,
+          "cantidades": {
+            "MARFIL CANADA_T10": 12,
+            "MARFIL CANADA_T12": 24,
+            "MARFIL CANADA_T14": 24,
+            "MARFIL CANADA_T16": 24,
+            "MARFIL CANADA_T6": 12,
+            "MARFIL CANADA_T8": 12,
+            "MARFIL NASHVILLE_T10": 12,
+            "MARFIL NASHVILLE_T12": 24,
+            "MARFIL NASHVILLE_T14": 24,
+            "MARFIL NASHVILLE_T16": 24,
+            "MARFIL NASHVILLE_T6": 12,
+            "MARFIL NASHVILLE_T8": 12
+          },
+          "cat": "BUZOS",
           "colores": [
-            "NEGRO",
-            "MARFIL"
+            "MARFIL NASHVILLE",
+            "MARFIL CANADA"
           ],
+          "maquilador_id": "",
+          "nombre": "RANGLAND SOFT",
+          "ref": "1105",
           "tallas": [
-            "T4",
             "T6",
             "T8",
             "T10",
@@ -8402,41 +8461,9 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T4": 7,
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 10,
-            "NEGRO_T10": 10,
-            "NEGRO_T12": 14,
-            "NEGRO_T14": 14,
-            "NEGRO_T16": 14,
-            "MARFIL_T4": 7,
-            "MARFIL_T6": 10,
-            "MARFIL_T8": 10,
-            "MARFIL_T10": 10,
-            "MARFIL_T12": 14,
-            "MARFIL_T14": 14,
-            "MARFIL_T16": 14
-          },
-          "maquilador_id": "id_1785542281755_ofbp4w9w9"
+          "totalUds": 216,
+          "vmo": 5781
         }
-      ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-08-24",
-      "created_by": "John Rodriguez",
-      "updated_at": "2026-08-24"
-    },
-    {
-      "id": "OP-2026-124",
-      "numero": 124,
-      "fecha_op": "2026-08-24",
-      "cortador": "Corte Carbajal",
-      "categoria": "BUZOS",
-      "nombre_producto": "RANGLAND SOFT",
-      "colores": [
-        "MARFIL NASHVILLE",
-        "MARFIL CANADA"
       ],
       "tallas": [
         "T6",
@@ -8445,71 +8472,42 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "cantidades": {
-        "MARFIL NASHVILLE_T6": 12,
-        "MARFIL NASHVILLE_T8": 12,
-        "MARFIL NASHVILLE_T10": 12,
-        "MARFIL NASHVILLE_T12": 24,
-        "MARFIL NASHVILLE_T14": 24,
-        "MARFIL NASHVILLE_T16": 24,
-        "MARFIL CANADA_T6": 12,
-        "MARFIL CANADA_T8": 12,
-        "MARFIL CANADA_T10": 12,
-        "MARFIL CANADA_T12": 24,
-        "MARFIL CANADA_T14": 24,
-        "MARFIL CANADA_T16": 24
-      },
-      "referencias": [
-        {
-          "nombre": "RANGLAND SOFT",
-          "ref": "1105",
-          "cat": "BUZOS",
-          "vmo": 5781,
-          "colores": [
-            "MARFIL NASHVILLE",
-            "MARFIL CANADA"
-          ],
-          "tallas": [
-            "T6",
-            "T8",
-            "T10",
-            "T12",
-            "T14",
-            "T16"
-          ],
-          "cantidades": {
-            "MARFIL NASHVILLE_T6": 12,
-            "MARFIL NASHVILLE_T8": 12,
-            "MARFIL NASHVILLE_T10": 12,
-            "MARFIL NASHVILLE_T12": 24,
-            "MARFIL NASHVILLE_T14": 24,
-            "MARFIL NASHVILLE_T16": 24,
-            "MARFIL CANADA_T6": 12,
-            "MARFIL CANADA_T8": 12,
-            "MARFIL CANADA_T10": 12,
-            "MARFIL CANADA_T12": 24,
-            "MARFIL CANADA_T14": 24,
-            "MARFIL CANADA_T16": 24
-          },
-          "totalUds": 216,
-          "maquilador_id": ""
-        }
-      ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-08-24",
-      "created_by": "John Rodriguez",
-      "receta_id": "rec_rangland_soft_1105",
-      "receta_nombre": "RANGLAND SOFT - REF: 1105"
+      ]
     },
     {
-      "id": "OP-2026-125",
-      "numero": 125,
-      "fecha_op": "2026-08-25",
-      "cortador": "Corte Carbajal",
+      "cantidades": {
+        "CAMEL_T10": 16,
+        "CAMEL_T12": 16,
+        "CAMEL_T14": 16,
+        "CAMEL_T16": 16,
+        "CAMEL_T6": 8,
+        "CAMEL_T8": 8,
+        "GRIS OSCURO_T10": 16,
+        "GRIS OSCURO_T12": 16,
+        "GRIS OSCURO_T14": 16,
+        "GRIS OSCURO_T16": 16,
+        "GRIS OSCURO_T6": 8,
+        "GRIS OSCURO_T8": 8,
+        "MORA LECHE_T10": 16,
+        "MORA LECHE_T12": 16,
+        "MORA LECHE_T14": 16,
+        "MORA LECHE_T16": 16,
+        "MORA LECHE_T6": 8,
+        "MORA LECHE_T8": 8,
+        "NEGRO_T10": 16,
+        "NEGRO_T12": 16,
+        "NEGRO_T14": 16,
+        "NEGRO_T16": 16,
+        "NEGRO_T6": 8,
+        "NEGRO_T8": 8,
+        "VERDE MILITAR_T10": 16,
+        "VERDE MILITAR_T12": 16,
+        "VERDE MILITAR_T14": 16,
+        "VERDE MILITAR_T16": 16,
+        "VERDE MILITAR_T6": 8,
+        "VERDE MILITAR_T8": 8
+      },
       "categoria": "CHAQUETAS",
-      "nombre_producto": "OVERSIZED CAPOTA",
       "colores": [
         "NEGRO",
         "VERDE MILITAR",
@@ -8517,52 +8515,51 @@
         "GRIS OSCURO",
         "MORA LECHE"
       ],
-      "tallas": [
-        "T6",
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
-      "cantidades": {
-        "NEGRO_T6": 8,
-        "NEGRO_T8": 8,
-        "NEGRO_T10": 16,
-        "NEGRO_T12": 16,
-        "NEGRO_T14": 16,
-        "NEGRO_T16": 16,
-        "VERDE MILITAR_T6": 8,
-        "VERDE MILITAR_T8": 8,
-        "VERDE MILITAR_T10": 16,
-        "VERDE MILITAR_T12": 16,
-        "VERDE MILITAR_T14": 16,
-        "VERDE MILITAR_T16": 16,
-        "CAMEL_T6": 8,
-        "CAMEL_T8": 8,
-        "CAMEL_T10": 16,
-        "CAMEL_T12": 16,
-        "CAMEL_T14": 16,
-        "CAMEL_T16": 16,
-        "GRIS OSCURO_T6": 8,
-        "GRIS OSCURO_T8": 8,
-        "GRIS OSCURO_T10": 16,
-        "GRIS OSCURO_T12": 16,
-        "GRIS OSCURO_T14": 16,
-        "GRIS OSCURO_T16": 16,
-        "MORA LECHE_T6": 8,
-        "MORA LECHE_T8": 8,
-        "MORA LECHE_T10": 16,
-        "MORA LECHE_T12": 16,
-        "MORA LECHE_T14": 16,
-        "MORA LECHE_T16": 16
-      },
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-08-25",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-08-25",
+      "id": "OP-2026-125",
+      "nombre_producto": "OVERSIZED CAPOTA",
+      "numero": 125,
+      "receta_id": "rec_oversized_capota_1058",
+      "receta_nombre": "OVERSIZED CAPOTA - REF: 1058",
       "referencias": [
         {
-          "nombre": "OVERSIZED CAPOTA",
-          "ref": "1058",
+          "cantidades": {
+            "CAMEL_T10": 16,
+            "CAMEL_T12": 16,
+            "CAMEL_T14": 16,
+            "CAMEL_T16": 16,
+            "CAMEL_T6": 8,
+            "CAMEL_T8": 8,
+            "GRIS OSCURO_T10": 16,
+            "GRIS OSCURO_T12": 16,
+            "GRIS OSCURO_T14": 16,
+            "GRIS OSCURO_T16": 16,
+            "GRIS OSCURO_T6": 8,
+            "GRIS OSCURO_T8": 8,
+            "MORA LECHE_T10": 16,
+            "MORA LECHE_T12": 16,
+            "MORA LECHE_T14": 16,
+            "MORA LECHE_T16": 16,
+            "MORA LECHE_T6": 8,
+            "MORA LECHE_T8": 8,
+            "NEGRO_T10": 16,
+            "NEGRO_T12": 16,
+            "NEGRO_T14": 16,
+            "NEGRO_T16": 16,
+            "NEGRO_T6": 8,
+            "NEGRO_T8": 8,
+            "VERDE MILITAR_T10": 16,
+            "VERDE MILITAR_T12": 16,
+            "VERDE MILITAR_T14": 16,
+            "VERDE MILITAR_T16": 16,
+            "VERDE MILITAR_T6": 8,
+            "VERDE MILITAR_T8": 8
+          },
           "cat": "CHAQUETAS",
-          "vmo": 10510,
           "colores": [
             "NEGRO",
             "VERDE MILITAR",
@@ -8570,6 +8567,9 @@
             "GRIS OSCURO",
             "MORA LECHE"
           ],
+          "maquilador_id": "",
+          "nombre": "OVERSIZED CAPOTA",
+          "ref": "1058",
           "tallas": [
             "T6",
             "T8",
@@ -8578,108 +8578,101 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T6": 8,
-            "NEGRO_T8": 8,
-            "NEGRO_T10": 16,
-            "NEGRO_T12": 16,
-            "NEGRO_T14": 16,
-            "NEGRO_T16": 16,
-            "VERDE MILITAR_T6": 8,
-            "VERDE MILITAR_T8": 8,
-            "VERDE MILITAR_T10": 16,
-            "VERDE MILITAR_T12": 16,
-            "VERDE MILITAR_T14": 16,
-            "VERDE MILITAR_T16": 16,
-            "CAMEL_T6": 8,
-            "CAMEL_T8": 8,
-            "CAMEL_T10": 16,
-            "CAMEL_T12": 16,
-            "CAMEL_T14": 16,
-            "CAMEL_T16": 16,
-            "GRIS OSCURO_T6": 8,
-            "GRIS OSCURO_T8": 8,
-            "GRIS OSCURO_T10": 16,
-            "GRIS OSCURO_T12": 16,
-            "GRIS OSCURO_T14": 16,
-            "GRIS OSCURO_T16": 16,
-            "MORA LECHE_T6": 8,
-            "MORA LECHE_T8": 8,
-            "MORA LECHE_T10": 16,
-            "MORA LECHE_T12": 16,
-            "MORA LECHE_T14": 16,
-            "MORA LECHE_T16": 16
-          },
           "totalUds": 400,
-          "maquilador_id": ""
+          "vmo": 10510
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-08-25",
-      "created_by": "John Rodriguez",
-      "receta_id": "rec_oversized_capota_1058",
-      "receta_nombre": "OVERSIZED CAPOTA - REF: 1058"
+      "tallas": [
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ]
     },
     {
-      "id": "OP-2026-126",
-      "numero": 126,
-      "fecha_op": "2026-08-25",
-      "cortador": "Corte Carbajal",
+      "cantidades": {
+        "AZUL OSCURO_T10": 16,
+        "AZUL OSCURO_T12": 16,
+        "AZUL OSCURO_T14": 16,
+        "AZUL OSCURO_T16": 16,
+        "AZUL OSCURO_T6": 12,
+        "AZUL OSCURO_T8": 12,
+        "LILA_T10": 16,
+        "LILA_T12": 16,
+        "LILA_T14": 16,
+        "LILA_T16": 16,
+        "LILA_T6": 12,
+        "LILA_T8": 12,
+        "ROSA_T10": 16,
+        "ROSA_T12": 16,
+        "ROSA_T14": 16,
+        "ROSA_T16": 16,
+        "ROSA_T6": 12,
+        "ROSA_T8": 12,
+        "VERDE MILITAR_T10": 16,
+        "VERDE MILITAR_T12": 16,
+        "VERDE MILITAR_T14": 16,
+        "VERDE MILITAR_T16": 16,
+        "VERDE MILITAR_T6": 12,
+        "VERDE MILITAR_T8": 12
+      },
       "categoria": "CHAQUETAS",
-      "nombre_producto": "CHAQUETA CAZADORA",
       "colores": [
         "AZUL OSCURO",
         "VERDE MILITAR",
         "ROSA",
         "LILA"
       ],
-      "tallas": [
-        "T6",
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
-      "cantidades": {
-        "AZUL OSCURO_T6": 12,
-        "AZUL OSCURO_T8": 12,
-        "AZUL OSCURO_T10": 16,
-        "AZUL OSCURO_T12": 16,
-        "AZUL OSCURO_T14": 16,
-        "AZUL OSCURO_T16": 16,
-        "VERDE MILITAR_T6": 12,
-        "VERDE MILITAR_T8": 12,
-        "VERDE MILITAR_T10": 16,
-        "VERDE MILITAR_T12": 16,
-        "VERDE MILITAR_T14": 16,
-        "VERDE MILITAR_T16": 16,
-        "ROSA_T6": 12,
-        "ROSA_T8": 12,
-        "ROSA_T10": 16,
-        "ROSA_T12": 16,
-        "ROSA_T14": 16,
-        "ROSA_T16": 16,
-        "LILA_T6": 12,
-        "LILA_T8": 12,
-        "LILA_T10": 16,
-        "LILA_T12": 16,
-        "LILA_T14": 16,
-        "LILA_T16": 16
-      },
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-08-25",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-08-25",
+      "id": "OP-2026-126",
+      "nombre_producto": "CHAQUETA CAZADORA",
+      "numero": 126,
+      "receta_id": "rec_chaqueta_cazadora_1002",
+      "receta_nombre": "CHAQUETA CAZADORA - REF: 1002",
       "referencias": [
         {
-          "nombre": "CHAQUETA CAZADORA",
-          "ref": "1002",
+          "cantidades": {
+            "AZUL OSCURO_T10": 16,
+            "AZUL OSCURO_T12": 16,
+            "AZUL OSCURO_T14": 16,
+            "AZUL OSCURO_T16": 16,
+            "AZUL OSCURO_T6": 12,
+            "AZUL OSCURO_T8": 12,
+            "LILA_T10": 16,
+            "LILA_T12": 16,
+            "LILA_T14": 16,
+            "LILA_T16": 16,
+            "LILA_T6": 12,
+            "LILA_T8": 12,
+            "ROSA_T10": 16,
+            "ROSA_T12": 16,
+            "ROSA_T14": 16,
+            "ROSA_T16": 16,
+            "ROSA_T6": 12,
+            "ROSA_T8": 12,
+            "VERDE MILITAR_T10": 16,
+            "VERDE MILITAR_T12": 16,
+            "VERDE MILITAR_T14": 16,
+            "VERDE MILITAR_T16": 16,
+            "VERDE MILITAR_T6": 12,
+            "VERDE MILITAR_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 11561,
           "colores": [
             "AZUL OSCURO",
             "VERDE MILITAR",
             "ROSA",
             "LILA"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA CAZADORA",
+          "ref": "1002",
           "tallas": [
             "T6",
             "T8",
@@ -8688,102 +8681,101 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "AZUL OSCURO_T6": 12,
-            "AZUL OSCURO_T8": 12,
-            "AZUL OSCURO_T10": 16,
-            "AZUL OSCURO_T12": 16,
-            "AZUL OSCURO_T14": 16,
-            "AZUL OSCURO_T16": 16,
-            "VERDE MILITAR_T6": 12,
-            "VERDE MILITAR_T8": 12,
-            "VERDE MILITAR_T10": 16,
-            "VERDE MILITAR_T12": 16,
-            "VERDE MILITAR_T14": 16,
-            "VERDE MILITAR_T16": 16,
-            "ROSA_T6": 12,
-            "ROSA_T8": 12,
-            "ROSA_T10": 16,
-            "ROSA_T12": 16,
-            "ROSA_T14": 16,
-            "ROSA_T16": 16,
-            "LILA_T6": 12,
-            "LILA_T8": 12,
-            "LILA_T10": 16,
-            "LILA_T12": 16,
-            "LILA_T14": 16,
-            "LILA_T16": 16
-          },
           "totalUds": 352,
-          "maquilador_id": ""
+          "vmo": 11561
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-08-25",
-      "created_by": "John Rodriguez",
-      "receta_id": "rec_chaqueta_cazadora_1002",
-      "receta_nombre": "CHAQUETA CAZADORA - REF: 1002"
+      "tallas": [
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ]
     },
     {
-      "id": "OP-2026-127",
-      "numero": 127,
-      "fecha_op": "2026-08-25",
-      "cortador": "Corte Carbajal",
+      "cantidades": {
+        "CAFE_T10": 24,
+        "CAFE_T12": 24,
+        "CAFE_T14": 24,
+        "CAFE_T16": 24,
+        "CAFE_T6": 12,
+        "CAFE_T8": 12,
+        "GRIS OSCURO_T10": 16,
+        "GRIS OSCURO_T12": 16,
+        "GRIS OSCURO_T14": 16,
+        "GRIS OSCURO_T16": 16,
+        "GRIS OSCURO_T6": 8,
+        "GRIS OSCURO_T8": 8,
+        "ROSA_T10": 24,
+        "ROSA_T12": 24,
+        "ROSA_T14": 24,
+        "ROSA_T16": 24,
+        "ROSA_T6": 12,
+        "ROSA_T8": 12,
+        "VINOTINTO_T10": 16,
+        "VINOTINTO_T12": 16,
+        "VINOTINTO_T14": 16,
+        "VINOTINTO_T16": 16,
+        "VINOTINTO_T6": 8,
+        "VINOTINTO_T8": 8
+      },
       "categoria": "CHAQUETAS",
-      "nombre_producto": "BEISBOLERA 2.0",
       "colores": [
         "CAFE",
         "GRIS OSCURO",
         "VINOTINTO",
         "ROSA"
       ],
-      "tallas": [
-        "T6",
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
-      "cantidades": {
-        "CAFE_T6": 12,
-        "CAFE_T8": 12,
-        "CAFE_T10": 24,
-        "CAFE_T12": 24,
-        "CAFE_T14": 24,
-        "CAFE_T16": 24,
-        "GRIS OSCURO_T6": 8,
-        "GRIS OSCURO_T8": 8,
-        "GRIS OSCURO_T10": 16,
-        "GRIS OSCURO_T12": 16,
-        "GRIS OSCURO_T14": 16,
-        "GRIS OSCURO_T16": 16,
-        "VINOTINTO_T6": 8,
-        "VINOTINTO_T8": 8,
-        "VINOTINTO_T10": 16,
-        "VINOTINTO_T12": 16,
-        "VINOTINTO_T14": 16,
-        "VINOTINTO_T16": 16,
-        "ROSA_T6": 12,
-        "ROSA_T8": 12,
-        "ROSA_T10": 24,
-        "ROSA_T12": 24,
-        "ROSA_T14": 24,
-        "ROSA_T16": 24
-      },
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-08-25",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-08-25",
+      "id": "OP-2026-127",
+      "nombre_producto": "BEISBOLERA 2.0",
+      "numero": 127,
+      "receta_id": "cid_1783368475768_2164",
+      "receta_nombre": "BEISBOLERA CUERO  2.0",
       "referencias": [
         {
-          "nombre": "BEISBOLERA 2.0",
-          "ref": "1171",
+          "cantidades": {
+            "CAFE_T10": 24,
+            "CAFE_T12": 24,
+            "CAFE_T14": 24,
+            "CAFE_T16": 24,
+            "CAFE_T6": 12,
+            "CAFE_T8": 12,
+            "GRIS OSCURO_T10": 16,
+            "GRIS OSCURO_T12": 16,
+            "GRIS OSCURO_T14": 16,
+            "GRIS OSCURO_T16": 16,
+            "GRIS OSCURO_T6": 8,
+            "GRIS OSCURO_T8": 8,
+            "ROSA_T10": 24,
+            "ROSA_T12": 24,
+            "ROSA_T14": 24,
+            "ROSA_T16": 24,
+            "ROSA_T6": 12,
+            "ROSA_T8": 12,
+            "VINOTINTO_T10": 16,
+            "VINOTINTO_T12": 16,
+            "VINOTINTO_T14": 16,
+            "VINOTINTO_T16": 16,
+            "VINOTINTO_T6": 8,
+            "VINOTINTO_T8": 8
+          },
           "cat": "CHAQUETAS",
-          "vmo": 10000,
           "colores": [
             "CAFE",
             "GRIS OSCURO",
             "VINOTINTO",
             "ROSA"
           ],
+          "maquilador_id": "",
+          "nombre": "BEISBOLERA 2.0",
+          "ref": "1171",
           "tallas": [
             "T6",
             "T8",
@@ -8792,94 +8784,87 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "CAFE_T6": 12,
-            "CAFE_T8": 12,
-            "CAFE_T10": 24,
-            "CAFE_T12": 24,
-            "CAFE_T14": 24,
-            "CAFE_T16": 24,
-            "GRIS OSCURO_T6": 8,
-            "GRIS OSCURO_T8": 8,
-            "GRIS OSCURO_T10": 16,
-            "GRIS OSCURO_T12": 16,
-            "GRIS OSCURO_T14": 16,
-            "GRIS OSCURO_T16": 16,
-            "VINOTINTO_T6": 8,
-            "VINOTINTO_T8": 8,
-            "VINOTINTO_T10": 16,
-            "VINOTINTO_T12": 16,
-            "VINOTINTO_T14": 16,
-            "VINOTINTO_T16": 16,
-            "ROSA_T6": 12,
-            "ROSA_T8": 12,
-            "ROSA_T10": 24,
-            "ROSA_T12": 24,
-            "ROSA_T14": 24,
-            "ROSA_T16": 24
-          },
           "totalUds": 400,
-          "maquilador_id": ""
+          "vmo": 10000
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-08-25",
-      "created_by": "John Rodriguez",
-      "receta_id": "cid_1783368475768_2164",
-      "receta_nombre": "BEISBOLERA CUERO  2.0"
+      "tallas": [
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ]
     },
     {
-      "id": "OP-2026-128",
-      "numero": 128,
-      "fecha_op": "2026-08-25",
-      "cortador": "Corte Carbajal",
+      "cantidades": {
+        "BEIGE_T10": 16,
+        "BEIGE_T12": 16,
+        "BEIGE_T14": 16,
+        "BEIGE_T16": 16,
+        "BEIGE_T6": 12,
+        "BEIGE_T8": 12,
+        "CAMEL_T10": 6,
+        "CAMEL_T12": 6,
+        "CAMEL_T14": 6,
+        "CAMEL_T16": 6,
+        "CAMEL_T6": 6,
+        "CAMEL_T8": 6,
+        "NEGRO_T10": 16,
+        "NEGRO_T12": 16,
+        "NEGRO_T14": 16,
+        "NEGRO_T16": 16,
+        "NEGRO_T6": 12,
+        "NEGRO_T8": 12
+      },
       "categoria": "CHAQUETAS",
-      "nombre_producto": "PILOTO PANCAKE",
       "colores": [
         "NEGRO",
         "BEIGE",
         "CAMEL"
       ],
-      "tallas": [
-        "T6",
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
-      "cantidades": {
-        "NEGRO_T6": 12,
-        "NEGRO_T8": 12,
-        "NEGRO_T10": 16,
-        "NEGRO_T12": 16,
-        "NEGRO_T14": 16,
-        "NEGRO_T16": 16,
-        "BEIGE_T6": 12,
-        "BEIGE_T8": 12,
-        "BEIGE_T10": 16,
-        "BEIGE_T12": 16,
-        "BEIGE_T14": 16,
-        "BEIGE_T16": 16,
-        "CAMEL_T6": 6,
-        "CAMEL_T8": 6,
-        "CAMEL_T10": 6,
-        "CAMEL_T12": 6,
-        "CAMEL_T14": 6,
-        "CAMEL_T16": 6
-      },
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-08-25",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-08-25",
+      "id": "OP-2026-128",
+      "nombre_producto": "PILOTO PANCAKE",
+      "numero": 128,
+      "receta_id": "rec_piloto_pancake_1099",
+      "receta_nombre": "PILOTO PANCAKE - REF: 1099",
       "referencias": [
         {
-          "nombre": "PILOTO PANCAKE",
-          "ref": "1099",
+          "cantidades": {
+            "BEIGE_T10": 16,
+            "BEIGE_T12": 16,
+            "BEIGE_T14": 16,
+            "BEIGE_T16": 16,
+            "BEIGE_T6": 12,
+            "BEIGE_T8": 12,
+            "CAMEL_T10": 6,
+            "CAMEL_T12": 6,
+            "CAMEL_T14": 6,
+            "CAMEL_T16": 6,
+            "CAMEL_T6": 6,
+            "CAMEL_T8": 6,
+            "NEGRO_T10": 16,
+            "NEGRO_T12": 16,
+            "NEGRO_T14": 16,
+            "NEGRO_T16": 16,
+            "NEGRO_T6": 12,
+            "NEGRO_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 9459,
           "colores": [
             "NEGRO",
             "BEIGE",
             "CAMEL"
           ],
+          "maquilador_id": "",
+          "nombre": "PILOTO PANCAKE",
+          "ref": "1099",
           "tallas": [
             "T6",
             "T8",
@@ -8888,47 +8873,9 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T6": 12,
-            "NEGRO_T8": 12,
-            "NEGRO_T10": 16,
-            "NEGRO_T12": 16,
-            "NEGRO_T14": 16,
-            "NEGRO_T16": 16,
-            "BEIGE_T6": 12,
-            "BEIGE_T8": 12,
-            "BEIGE_T10": 16,
-            "BEIGE_T12": 16,
-            "BEIGE_T14": 16,
-            "BEIGE_T16": 16,
-            "CAMEL_T6": 6,
-            "CAMEL_T8": 6,
-            "CAMEL_T10": 6,
-            "CAMEL_T12": 6,
-            "CAMEL_T14": 6,
-            "CAMEL_T16": 6
-          },
           "totalUds": 212,
-          "maquilador_id": ""
+          "vmo": 9459
         }
-      ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-08-25",
-      "created_by": "John Rodriguez",
-      "receta_id": "rec_piloto_pancake_1099",
-      "receta_nombre": "PILOTO PANCAKE - REF: 1099"
-    },
-    {
-      "id": "OP-2026-129",
-      "numero": 129,
-      "fecha_op": "2026-08-25",
-      "cortador": "Corte Carbajal",
-      "categoria": "CHAQUETAS",
-      "nombre_producto": "CHAQUETA ONION",
-      "colores": [
-        "CAFE",
-        "VERDE MILITAR"
       ],
       "tallas": [
         "T6",
@@ -8937,74 +8884,73 @@
         "T12",
         "T14",
         "T16"
-      ],
+      ]
+    },
+    {
       "cantidades": {
-        "CAFE_T6": 12,
-        "CAFE_T8": 12,
         "CAFE_T10": 20,
         "CAFE_T12": 20,
         "CAFE_T14": 20,
         "CAFE_T16": 20,
-        "VERDE MILITAR_T6": 12,
-        "VERDE MILITAR_T8": 12,
+        "CAFE_T6": 12,
+        "CAFE_T8": 12,
         "VERDE MILITAR_T10": 20,
         "VERDE MILITAR_T12": 20,
         "VERDE MILITAR_T14": 20,
-        "VERDE MILITAR_T16": 20
+        "VERDE MILITAR_T16": 20,
+        "VERDE MILITAR_T6": 12,
+        "VERDE MILITAR_T8": 12
       },
+      "categoria": "CHAQUETAS",
+      "colores": [
+        "CAFE",
+        "VERDE MILITAR"
+      ],
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-08-25",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-08-25",
+      "id": "OP-2026-129",
+      "nombre_producto": "CHAQUETA ONION",
+      "numero": 129,
+      "receta_id": "rec_chaqueta_onion_1165",
+      "receta_nombre": "CHAQUETA ONION - REF: 1165",
       "referencias": [
         {
-          "nombre": "CHAQUETA ONION",
-          "ref": "1166",
-          "cat": "CHAQUETAS",
-          "vmo": 9000,
-          "colores": [
-            "CAFE",
-            "VERDE MILITAR"
-          ],
-          "tallas": [
-            "T6",
-            "T8",
-            "T10",
-            "T12",
-            "T14",
-            "T16"
-          ],
           "cantidades": {
-            "CAFE_T6": 12,
-            "CAFE_T8": 12,
             "CAFE_T10": 20,
             "CAFE_T12": 20,
             "CAFE_T14": 20,
             "CAFE_T16": 20,
-            "VERDE MILITAR_T6": 12,
-            "VERDE MILITAR_T8": 12,
+            "CAFE_T6": 12,
+            "CAFE_T8": 12,
             "VERDE MILITAR_T10": 20,
             "VERDE MILITAR_T12": 20,
             "VERDE MILITAR_T14": 20,
-            "VERDE MILITAR_T16": 20
+            "VERDE MILITAR_T16": 20,
+            "VERDE MILITAR_T6": 12,
+            "VERDE MILITAR_T8": 12
           },
+          "cat": "CHAQUETAS",
+          "colores": [
+            "CAFE",
+            "VERDE MILITAR"
+          ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA ONION",
+          "ref": "1166",
+          "tallas": [
+            "T6",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
           "totalUds": 208,
-          "maquilador_id": ""
+          "vmo": 9000
         }
-      ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-08-25",
-      "created_by": "John Rodriguez",
-      "receta_id": "rec_chaqueta_onion_1165",
-      "receta_nombre": "CHAQUETA ONION - REF: 1165"
-    },
-    {
-      "id": "OP-2026-130",
-      "numero": 130,
-      "fecha_op": "2026-08-25",
-      "cortador": "Corte Carbajal",
-      "categoria": "CHAQUETAS",
-      "nombre_producto": "CHAQUETA MARIPOSAS",
-      "colores": [
-        "MARFIL",
-        "AZUL BEBE"
       ],
       "tallas": [
         "T6",
@@ -9013,31 +8959,62 @@
         "T12",
         "T14",
         "T16"
-      ],
+      ]
+    },
+    {
       "cantidades": {
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 12,
+        "AZUL BEBE_T10": 20,
+        "AZUL BEBE_T12": 20,
+        "AZUL BEBE_T14": 20,
+        "AZUL BEBE_T16": 20,
+        "AZUL BEBE_T6": 12,
+        "AZUL BEBE_T8": 12,
         "MARFIL_T10": 20,
         "MARFIL_T12": 20,
         "MARFIL_T14": 20,
         "MARFIL_T16": 20,
-        "AZUL BEBE_T6": 12,
-        "AZUL BEBE_T8": 12,
-        "AZUL BEBE_T10": 20,
-        "AZUL BEBE_T12": 20,
-        "AZUL BEBE_T14": 20,
-        "AZUL BEBE_T16": 20
+        "MARFIL_T6": 12,
+        "MARFIL_T8": 12
       },
+      "categoria": "CHAQUETAS",
+      "colores": [
+        "MARFIL",
+        "AZUL BEBE"
+      ],
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-08-25",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-08-25",
+      "id": "OP-2026-130",
+      "nombre_producto": "CHAQUETA MARIPOSAS",
+      "numero": 130,
+      "receta_id": "cid_1783366904861_1111",
+      "receta_nombre": "CHAQUETA MARIPOSAS",
       "referencias": [
         {
-          "nombre": "CHAQUETA MARIPOSAS",
-          "ref": "1166",
+          "cantidades": {
+            "AZUL BEBE_T10": 20,
+            "AZUL BEBE_T12": 20,
+            "AZUL BEBE_T14": 20,
+            "AZUL BEBE_T16": 20,
+            "AZUL BEBE_T6": 12,
+            "AZUL BEBE_T8": 12,
+            "MARFIL_T10": 20,
+            "MARFIL_T12": 20,
+            "MARFIL_T14": 20,
+            "MARFIL_T16": 20,
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 1151,
           "colores": [
             "MARFIL",
             "AZUL BEBE"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA MARIPOSAS",
+          "ref": "1166",
           "tallas": [
             "T6",
             "T8",
@@ -9046,40 +9023,9 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 12,
-            "MARFIL_T10": 20,
-            "MARFIL_T12": 20,
-            "MARFIL_T14": 20,
-            "MARFIL_T16": 20,
-            "AZUL BEBE_T6": 12,
-            "AZUL BEBE_T8": 12,
-            "AZUL BEBE_T10": 20,
-            "AZUL BEBE_T12": 20,
-            "AZUL BEBE_T14": 20,
-            "AZUL BEBE_T16": 20
-          },
           "totalUds": 208,
-          "maquilador_id": ""
+          "vmo": 1151
         }
-      ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-08-25",
-      "created_by": "John Rodriguez",
-      "receta_id": "cid_1783366904861_1111",
-      "receta_nombre": "CHAQUETA MARIPOSAS"
-    },
-    {
-      "id": "OP-2026-131",
-      "numero": 191,
-      "fecha_op": "2026-08-21",
-      "cortador": "Corte Carbajal",
-      "categoria": "PANTALONES",
-      "nombre_producto": "PANTALON RAVE",
-      "colores": [
-        "CAMEL"
       ],
       "tallas": [
         "T6",
@@ -9088,127 +9034,170 @@
         "T12",
         "T14",
         "T16"
-      ],
+      ]
+    },
+    {
       "cantidades": {
-        "CAMEL_T6": 17,
-        "CAMEL_T8": 17,
         "CAMEL_T10": 17,
         "CAMEL_T12": 17,
         "CAMEL_T14": 17,
-        "CAMEL_T16": 17
+        "CAMEL_T16": 17,
+        "CAMEL_T6": 17,
+        "CAMEL_T8": 17
       },
-      "referencias": [
-        {
-          "nombre": "PANTALON RAVE",
-          "ref": "1063",
-          "cat": "PANTALONES",
-          "vmo": 5255,
-          "maquilador_id": "",
-          "colores": [
-            "CAMEL"
-          ],
-          "tallas": [
-            "T6",
-            "T8",
-            "T10",
-            "T12",
-            "T14",
-            "T16"
-          ],
-          "cantidades": {
-            "CAMEL_T6": 17,
-            "CAMEL_T8": 17,
-            "CAMEL_T10": 17,
-            "CAMEL_T12": 17,
-            "CAMEL_T14": 17,
-            "CAMEL_T16": 17
-          }
-        }
+      "categoria": "PANTALONES",
+      "colores": [
+        "CAMEL"
       ],
-      "estado_op": "EN_PROCESO",
-      "subg_estados": {
-        "OP-2026-131||CAMEL": "CORTE_POR_ALISTAR"
+      "consumibles_check": {
+        "rec_pantalon_rave_1063__c96_23": true,
+        "rec_pantalon_rave_1063__c96_24": true,
+        "rec_pantalon_rave_1063__c96_25": true,
+        "rec_pantalon_rave_1063__c96_26": true,
+        "rec_pantalon_rave_1063__c96_27": true
       },
-      "created_at": "2026-08-21",
-      "created_by": "Jefa de Producción",
-      "updated_at": "2026-08-25",
       "consumibles_credito": {
         "rec_pantalon_rave_1063__c96_23": true,
         "rec_pantalon_rave_1063__c96_26": true,
         "rec_pantalon_rave_1063__c96_27": true
       },
-      "consumibles_check": {
-        "rec_pantalon_rave_1063__c96_23": true,
-        "rec_pantalon_rave_1063__c96_24": true,
-        "rec_pantalon_rave_1063__c96_25": true,
-        "rec_pantalon_rave_1063__c96_27": true,
-        "rec_pantalon_rave_1063__c96_26": true
-      }
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-08-21",
+      "created_by": "Jefa de Producción",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-08-21",
+      "id": "OP-2026-131",
+      "nombre_producto": "PANTALON RAVE",
+      "numero": 191,
+      "referencias": [
+        {
+          "cantidades": {
+            "CAMEL_T10": 17,
+            "CAMEL_T12": 17,
+            "CAMEL_T14": 17,
+            "CAMEL_T16": 17,
+            "CAMEL_T6": 17,
+            "CAMEL_T8": 17
+          },
+          "cat": "PANTALONES",
+          "colores": [
+            "CAMEL"
+          ],
+          "maquilador_id": "",
+          "nombre": "PANTALON RAVE",
+          "ref": "1063",
+          "tallas": [
+            "T6",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "vmo": 5255
+        }
+      ],
+      "subg_estados": {
+        "OP-2026-131||CAMEL": "CORTE_POR_ALISTAR"
+      },
+      "tallas": [
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ],
+      "updated_at": "2026-08-25"
     },
     {
-      "id": "OP-2026-192",
-      "numero": 192,
-      "fecha_op": "2026-08-25",
-      "cortador": "Corte Carbajal",
+      "cantidades": {
+        "AZUL BEBE_T10": 24,
+        "AZUL BEBE_T12": 24,
+        "AZUL BEBE_T14": 24,
+        "AZUL BEBE_T16": 24,
+        "AZUL BEBE_T4": 12,
+        "AZUL BEBE_T6": 12,
+        "AZUL BEBE_T8": 12,
+        "MARFIL_T10": 24,
+        "MARFIL_T12": 24,
+        "MARFIL_T14": 24,
+        "MARFIL_T16": 24,
+        "MARFIL_T4": 12,
+        "MARFIL_T6": 12,
+        "MARFIL_T8": 12,
+        "NEGRO_T10": 6,
+        "NEGRO_T12": 6,
+        "NEGRO_T14": 6,
+        "NEGRO_T16": 6,
+        "NEGRO_T4": 3,
+        "NEGRO_T6": 3,
+        "NEGRO_T8": 3,
+        "ROSA_T10": 24,
+        "ROSA_T12": 24,
+        "ROSA_T14": 24,
+        "ROSA_T16": 24,
+        "ROSA_T4": 12,
+        "ROSA_T6": 12,
+        "ROSA_T8": 12
+      },
       "categoria": "CHAQUETAS",
-      "nombre_producto": "CHAQUETA LENTEJUELAS",
       "colores": [
         "NEGRO",
         "ROSA",
         "AZUL BEBE",
         "MARFIL"
       ],
-      "tallas": [
-        "T4",
-        "T6",
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
-      "cantidades": {
-        "NEGRO_T4": 3,
-        "NEGRO_T6": 3,
-        "NEGRO_T8": 3,
-        "NEGRO_T10": 6,
-        "NEGRO_T12": 6,
-        "NEGRO_T14": 6,
-        "NEGRO_T16": 6,
-        "ROSA_T4": 12,
-        "ROSA_T6": 12,
-        "ROSA_T8": 12,
-        "ROSA_T10": 24,
-        "ROSA_T12": 24,
-        "ROSA_T14": 24,
-        "ROSA_T16": 24,
-        "AZUL BEBE_T4": 12,
-        "AZUL BEBE_T6": 12,
-        "AZUL BEBE_T8": 12,
-        "AZUL BEBE_T10": 24,
-        "AZUL BEBE_T12": 24,
-        "AZUL BEBE_T14": 24,
-        "AZUL BEBE_T16": 24,
-        "MARFIL_T4": 12,
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 12,
-        "MARFIL_T10": 24,
-        "MARFIL_T12": 24,
-        "MARFIL_T14": 24,
-        "MARFIL_T16": 24
-      },
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-08-25",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-08-25",
+      "id": "OP-2026-192",
+      "nombre_producto": "CHAQUETA LENTEJUELAS",
+      "numero": 192,
       "referencias": [
         {
-          "nombre": "CHAQUETA LENTEJUELAS",
-          "ref": "",
+          "cantidades": {
+            "AZUL BEBE_T10": 24,
+            "AZUL BEBE_T12": 24,
+            "AZUL BEBE_T14": 24,
+            "AZUL BEBE_T16": 24,
+            "AZUL BEBE_T4": 12,
+            "AZUL BEBE_T6": 12,
+            "AZUL BEBE_T8": 12,
+            "MARFIL_T10": 24,
+            "MARFIL_T12": 24,
+            "MARFIL_T14": 24,
+            "MARFIL_T16": 24,
+            "MARFIL_T4": 12,
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 12,
+            "NEGRO_T10": 6,
+            "NEGRO_T12": 6,
+            "NEGRO_T14": 6,
+            "NEGRO_T16": 6,
+            "NEGRO_T4": 3,
+            "NEGRO_T6": 3,
+            "NEGRO_T8": 3,
+            "ROSA_T10": 24,
+            "ROSA_T12": 24,
+            "ROSA_T14": 24,
+            "ROSA_T16": 24,
+            "ROSA_T4": 12,
+            "ROSA_T6": 12,
+            "ROSA_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 1151,
           "colores": [
             "NEGRO",
             "ROSA",
             "AZUL BEBE",
             "MARFIL"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA LENTEJUELAS",
+          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -9218,57 +9207,8 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T4": 3,
-            "NEGRO_T6": 3,
-            "NEGRO_T8": 3,
-            "NEGRO_T10": 6,
-            "NEGRO_T12": 6,
-            "NEGRO_T14": 6,
-            "NEGRO_T16": 6,
-            "ROSA_T4": 12,
-            "ROSA_T6": 12,
-            "ROSA_T8": 12,
-            "ROSA_T10": 24,
-            "ROSA_T12": 24,
-            "ROSA_T14": 24,
-            "ROSA_T16": 24,
-            "AZUL BEBE_T4": 12,
-            "AZUL BEBE_T6": 12,
-            "AZUL BEBE_T8": 12,
-            "AZUL BEBE_T10": 24,
-            "AZUL BEBE_T12": 24,
-            "AZUL BEBE_T14": 24,
-            "AZUL BEBE_T16": 24,
-            "MARFIL_T4": 12,
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 12,
-            "MARFIL_T10": 24,
-            "MARFIL_T12": 24,
-            "MARFIL_T14": 24,
-            "MARFIL_T16": 24
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
-      ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-08-25",
-      "created_by": "John Rodriguez",
-      "updated_at": "2026-08-25"
-    },
-    {
-      "id": "OP-2026-193",
-      "numero": 193,
-      "fecha_op": "2026-08-25",
-      "cortador": "Corte Carbajal",
-      "categoria": "CHALECOS",
-      "nombre_producto": "CHALECO PUFFY",
-      "colores": [
-        "NEGRO",
-        "BLANCO",
-        "VERDE MILITAR",
-        "AZUL OSCURO"
       ],
       "tallas": [
         "T4",
@@ -9279,46 +9219,94 @@
         "T14",
         "T16"
       ],
+      "updated_at": "2026-08-25"
+    },
+    {
       "cantidades": {
-        "NEGRO_T4": 8,
-        "NEGRO_T6": 8,
-        "NEGRO_T8": 16,
-        "NEGRO_T10": 16,
-        "NEGRO_T12": 20,
-        "NEGRO_T14": 20,
-        "NEGRO_T16": 20,
-        "BLANCO_T6": 8,
-        "BLANCO_T8": 12,
+        "AZUL OSCURO_T10": 16,
+        "AZUL OSCURO_T12": 20,
+        "AZUL OSCURO_T14": 20,
+        "AZUL OSCURO_T16": 20,
+        "AZUL OSCURO_T4": 8,
+        "AZUL OSCURO_T6": 8,
+        "AZUL OSCURO_T8": 16,
         "BLANCO_T10": 12,
         "BLANCO_T12": 16,
         "BLANCO_T14": 16,
         "BLANCO_T16": 16,
-        "VERDE MILITAR_T6": 8,
-        "VERDE MILITAR_T8": 16,
+        "BLANCO_T6": 8,
+        "BLANCO_T8": 12,
+        "NEGRO_T10": 16,
+        "NEGRO_T12": 20,
+        "NEGRO_T14": 20,
+        "NEGRO_T16": 20,
+        "NEGRO_T4": 8,
+        "NEGRO_T6": 8,
+        "NEGRO_T8": 16,
         "VERDE MILITAR_T10": 16,
         "VERDE MILITAR_T12": 20,
         "VERDE MILITAR_T14": 20,
         "VERDE MILITAR_T16": 20,
-        "AZUL OSCURO_T4": 8,
-        "AZUL OSCURO_T6": 8,
-        "AZUL OSCURO_T8": 16,
-        "AZUL OSCURO_T10": 16,
-        "AZUL OSCURO_T12": 20,
-        "AZUL OSCURO_T14": 20,
-        "AZUL OSCURO_T16": 20
+        "VERDE MILITAR_T6": 8,
+        "VERDE MILITAR_T8": 16
       },
+      "categoria": "CHALECOS",
+      "colores": [
+        "NEGRO",
+        "BLANCO",
+        "VERDE MILITAR",
+        "AZUL OSCURO"
+      ],
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-08-25",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-08-25",
+      "id": "OP-2026-193",
+      "nombre_producto": "CHALECO PUFFY",
+      "numero": 193,
+      "receta_id": "rec_chaleco_puffy_1150",
+      "receta_nombre": "CHALECO PUFFY - REF: 1150",
       "referencias": [
         {
-          "nombre": "CHALECO PUFFY",
-          "ref": "1150",
+          "cantidades": {
+            "AZUL OSCURO_T10": 16,
+            "AZUL OSCURO_T12": 20,
+            "AZUL OSCURO_T14": 20,
+            "AZUL OSCURO_T16": 20,
+            "AZUL OSCURO_T4": 8,
+            "AZUL OSCURO_T6": 8,
+            "AZUL OSCURO_T8": 16,
+            "BLANCO_T10": 12,
+            "BLANCO_T12": 16,
+            "BLANCO_T14": 16,
+            "BLANCO_T16": 16,
+            "BLANCO_T6": 8,
+            "BLANCO_T8": 12,
+            "NEGRO_T10": 16,
+            "NEGRO_T12": 20,
+            "NEGRO_T14": 20,
+            "NEGRO_T16": 20,
+            "NEGRO_T4": 8,
+            "NEGRO_T6": 8,
+            "NEGRO_T8": 16,
+            "VERDE MILITAR_T10": 16,
+            "VERDE MILITAR_T12": 20,
+            "VERDE MILITAR_T14": 20,
+            "VERDE MILITAR_T16": 20,
+            "VERDE MILITAR_T6": 8,
+            "VERDE MILITAR_T8": 16
+          },
           "cat": "CHALECOS",
-          "vmo": 8408,
           "colores": [
             "NEGRO",
             "BLANCO",
             "VERDE MILITAR",
             "AZUL OSCURO"
           ],
+          "maquilador_id": "",
+          "nombre": "CHALECO PUFFY",
+          "ref": "1150",
           "tallas": [
             "T4",
             "T6",
@@ -9328,52 +9316,56 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T4": 8,
-            "NEGRO_T6": 8,
-            "NEGRO_T8": 16,
-            "NEGRO_T10": 16,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "BLANCO_T6": 8,
-            "BLANCO_T8": 12,
-            "BLANCO_T10": 12,
-            "BLANCO_T12": 16,
-            "BLANCO_T14": 16,
-            "BLANCO_T16": 16,
-            "VERDE MILITAR_T6": 8,
-            "VERDE MILITAR_T8": 16,
-            "VERDE MILITAR_T10": 16,
-            "VERDE MILITAR_T12": 20,
-            "VERDE MILITAR_T14": 20,
-            "VERDE MILITAR_T16": 20,
-            "AZUL OSCURO_T4": 8,
-            "AZUL OSCURO_T6": 8,
-            "AZUL OSCURO_T8": 16,
-            "AZUL OSCURO_T10": 16,
-            "AZUL OSCURO_T12": 20,
-            "AZUL OSCURO_T14": 20,
-            "AZUL OSCURO_T16": 20
-          },
           "totalUds": 396,
-          "maquilador_id": ""
+          "vmo": 8408
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-08-25",
-      "created_by": "John Rodriguez",
-      "receta_id": "rec_chaleco_puffy_1150",
-      "receta_nombre": "CHALECO PUFFY - REF: 1150"
+      "tallas": [
+        "T4",
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ]
     },
     {
-      "id": "OP-2026-194",
-      "numero": 194,
-      "fecha_op": "2026-08-25",
-      "cortador": "Corte Carbajal",
+      "cantidades": {
+        "AZUL BEBE_T10": 16,
+        "AZUL BEBE_T12": 20,
+        "AZUL BEBE_T14": 20,
+        "AZUL BEBE_T16": 20,
+        "AZUL BEBE_T4": 8,
+        "AZUL BEBE_T6": 12,
+        "AZUL BEBE_T8": 16,
+        "AZUL OSCURO_T10": 16,
+        "AZUL OSCURO_T12": 20,
+        "AZUL OSCURO_T14": 20,
+        "AZUL OSCURO_T16": 20,
+        "AZUL OSCURO_T4": 8,
+        "AZUL OSCURO_T6": 12,
+        "AZUL OSCURO_T8": 16,
+        "CAFE_T10": 12,
+        "CAFE_T12": 12,
+        "CAFE_T14": 12,
+        "CAFE_T16": 12,
+        "ROJO_T10": 16,
+        "ROJO_T12": 20,
+        "ROJO_T14": 20,
+        "ROJO_T16": 20,
+        "ROJO_T4": 8,
+        "ROJO_T6": 12,
+        "ROJO_T8": 16,
+        "ROSA_T10": 16,
+        "ROSA_T12": 20,
+        "ROSA_T14": 20,
+        "ROSA_T16": 20,
+        "ROSA_T4": 8,
+        "ROSA_T6": 12,
+        "ROSA_T8": 16
+      },
       "categoria": "BUZOS",
-      "nombre_producto": "HOODIE RANGLAND PAÑO ALGODON ABIERTO",
       "colores": [
         "ROJO",
         "AZUL BEBE",
@@ -9381,55 +9373,53 @@
         "ROSA",
         "CAFE"
       ],
-      "tallas": [
-        "T4",
-        "T6",
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
-      "cantidades": {
-        "ROJO_T4": 8,
-        "ROJO_T6": 12,
-        "ROJO_T8": 16,
-        "ROJO_T10": 16,
-        "ROJO_T12": 20,
-        "ROJO_T14": 20,
-        "ROJO_T16": 20,
-        "AZUL BEBE_T4": 8,
-        "AZUL BEBE_T6": 12,
-        "AZUL BEBE_T8": 16,
-        "AZUL BEBE_T10": 16,
-        "AZUL BEBE_T12": 20,
-        "AZUL BEBE_T14": 20,
-        "AZUL BEBE_T16": 20,
-        "AZUL OSCURO_T4": 8,
-        "AZUL OSCURO_T6": 12,
-        "AZUL OSCURO_T8": 16,
-        "AZUL OSCURO_T10": 16,
-        "AZUL OSCURO_T12": 20,
-        "AZUL OSCURO_T14": 20,
-        "AZUL OSCURO_T16": 20,
-        "ROSA_T4": 8,
-        "ROSA_T6": 12,
-        "ROSA_T8": 16,
-        "ROSA_T10": 16,
-        "ROSA_T12": 20,
-        "ROSA_T14": 20,
-        "ROSA_T16": 20,
-        "CAFE_T10": 12,
-        "CAFE_T12": 12,
-        "CAFE_T14": 12,
-        "CAFE_T16": 12
-      },
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-08-25",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-08-25",
+      "id": "OP-2026-194",
+      "nombre_producto": "HOODIE RANGLAND PAÑO ALGODON ABIERTO",
+      "numero": 194,
+      "receta_id": "rec_hoodie_pa_o_algodon_abierto_1177",
+      "receta_nombre": "HOODIE PAÑO ALGODON ABIERTO - REF: 1177",
       "referencias": [
         {
-          "nombre": "HOODIE RANGLAND PAÑO ALGODON ABIERTO",
-          "ref": "1177",
+          "cantidades": {
+            "AZUL BEBE_T10": 16,
+            "AZUL BEBE_T12": 20,
+            "AZUL BEBE_T14": 20,
+            "AZUL BEBE_T16": 20,
+            "AZUL BEBE_T4": 8,
+            "AZUL BEBE_T6": 12,
+            "AZUL BEBE_T8": 16,
+            "AZUL OSCURO_T10": 16,
+            "AZUL OSCURO_T12": 20,
+            "AZUL OSCURO_T14": 20,
+            "AZUL OSCURO_T16": 20,
+            "AZUL OSCURO_T4": 8,
+            "AZUL OSCURO_T6": 12,
+            "AZUL OSCURO_T8": 16,
+            "CAFE_T10": 12,
+            "CAFE_T12": 12,
+            "CAFE_T14": 12,
+            "CAFE_T16": 12,
+            "ROJO_T10": 16,
+            "ROJO_T12": 20,
+            "ROJO_T14": 20,
+            "ROJO_T16": 20,
+            "ROJO_T4": 8,
+            "ROJO_T6": 12,
+            "ROJO_T8": 16,
+            "ROSA_T10": 16,
+            "ROSA_T12": 20,
+            "ROSA_T14": 20,
+            "ROSA_T16": 20,
+            "ROSA_T4": 8,
+            "ROSA_T6": 12,
+            "ROSA_T8": 16
+          },
           "cat": "BUZOS",
-          "vmo": 6800,
           "colores": [
             "ROJO",
             "AZUL BEBE",
@@ -9437,6 +9427,9 @@
             "ROSA",
             "CAFE"
           ],
+          "maquilador_id": "",
+          "nombre": "HOODIE RANGLAND PAÑO ALGODON ABIERTO",
+          "ref": "1177",
           "tallas": [
             "T4",
             "T6",
@@ -9446,91 +9439,70 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "ROJO_T4": 8,
-            "ROJO_T6": 12,
-            "ROJO_T8": 16,
-            "ROJO_T10": 16,
-            "ROJO_T12": 20,
-            "ROJO_T14": 20,
-            "ROJO_T16": 20,
-            "AZUL BEBE_T4": 8,
-            "AZUL BEBE_T6": 12,
-            "AZUL BEBE_T8": 16,
-            "AZUL BEBE_T10": 16,
-            "AZUL BEBE_T12": 20,
-            "AZUL BEBE_T14": 20,
-            "AZUL BEBE_T16": 20,
-            "AZUL OSCURO_T4": 8,
-            "AZUL OSCURO_T6": 12,
-            "AZUL OSCURO_T8": 16,
-            "AZUL OSCURO_T10": 16,
-            "AZUL OSCURO_T12": 20,
-            "AZUL OSCURO_T14": 20,
-            "AZUL OSCURO_T16": 20,
-            "ROSA_T4": 8,
-            "ROSA_T6": 12,
-            "ROSA_T8": 16,
-            "ROSA_T10": 16,
-            "ROSA_T12": 20,
-            "ROSA_T14": 20,
-            "ROSA_T16": 20,
-            "CAFE_T10": 12,
-            "CAFE_T12": 12,
-            "CAFE_T14": 12,
-            "CAFE_T16": 12
-          },
           "totalUds": 496,
-          "maquilador_id": ""
+          "vmo": 6800
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-08-25",
-      "created_by": "John Rodriguez",
-      "receta_id": "rec_hoodie_pa_o_algodon_abierto_1177",
-      "receta_nombre": "HOODIE PAÑO ALGODON ABIERTO - REF: 1177"
-    },
-    {
-      "id": "OP-2026-195",
-      "numero": 195,
-      "fecha_op": "2026-08-25",
-      "cortador": "Corte Carbajal",
-      "categoria": "BUZOS",
-      "nombre_producto": "HOODIE RANGLAND PAÑO ALGODON CERRADO",
-      "colores": [
-        "AVENA",
-        "GRIS OSCURO"
-      ],
       "tallas": [
+        "T4",
+        "T6",
         "T8",
         "T10",
         "T12",
         "T14",
         "T16"
-      ],
+      ]
+    },
+    {
       "cantidades": {
-        "AVENA_T8": 10,
         "AVENA_T10": 10,
         "AVENA_T12": 10,
         "AVENA_T14": 10,
         "AVENA_T16": 10,
-        "GRIS OSCURO_T8": 10,
+        "AVENA_T8": 10,
         "GRIS OSCURO_T10": 10,
         "GRIS OSCURO_T12": 10,
         "GRIS OSCURO_T14": 10,
-        "GRIS OSCURO_T16": 10
+        "GRIS OSCURO_T16": 10,
+        "GRIS OSCURO_T8": 10
       },
+      "categoria": "BUZOS",
+      "colores": [
+        "AVENA",
+        "GRIS OSCURO"
+      ],
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-08-25",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-08-25",
+      "id": "OP-2026-195",
+      "nombre_producto": "HOODIE RANGLAND PAÑO ALGODON CERRADO",
+      "numero": 195,
+      "receta_id": "rec_hoodie_pa_o_algodon_cerrado_1172",
+      "receta_nombre": "HOODIE PAÑO ALGODON CERRADO - REF: 1172",
       "referencias": [
         {
-          "nombre": "HOODIE RANGLAND PAÑO ALGODON CERRADO",
-          "ref": "1172",
+          "cantidades": {
+            "AVENA_T10": 10,
+            "AVENA_T12": 10,
+            "AVENA_T14": 10,
+            "AVENA_T16": 10,
+            "AVENA_T8": 10,
+            "GRIS OSCURO_T10": 10,
+            "GRIS OSCURO_T12": 10,
+            "GRIS OSCURO_T14": 10,
+            "GRIS OSCURO_T16": 10,
+            "GRIS OSCURO_T8": 10
+          },
           "cat": "BUZOS",
-          "vmo": 1151,
           "colores": [
             "AVENA",
             "GRIS OSCURO"
           ],
+          "maquilador_id": "",
+          "nombre": "HOODIE RANGLAND PAÑO ALGODON CERRADO",
+          "ref": "1172",
           "tallas": [
             "T8",
             "T10",
@@ -9538,80 +9510,86 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "AVENA_T8": 10,
-            "AVENA_T10": 10,
-            "AVENA_T12": 10,
-            "AVENA_T14": 10,
-            "AVENA_T16": 10,
-            "GRIS OSCURO_T8": 10,
-            "GRIS OSCURO_T10": 10,
-            "GRIS OSCURO_T12": 10,
-            "GRIS OSCURO_T14": 10,
-            "GRIS OSCURO_T16": 10
-          },
           "totalUds": 100,
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-08-25",
-      "created_by": "John Rodriguez",
-      "receta_id": "rec_hoodie_pa_o_algodon_cerrado_1172",
-      "receta_nombre": "HOODIE PAÑO ALGODON CERRADO - REF: 1172"
-    },
-    {
-      "id": "OP-2026-196",
-      "numero": 196,
-      "fecha_op": "2026-08-25",
-      "cortador": "Corte Carbajal",
-      "categoria": "CHAQUETAS",
-      "nombre_producto": "CHAQUETA RALPH",
-      "colores": [
-        "CAMEL",
-        "NEGRO",
-        "BEIGE"
-      ],
       "tallas": [
-        "T6",
         "T8",
         "T10",
         "T12",
         "T14",
         "T16"
-      ],
+      ]
+    },
+    {
       "cantidades": {
-        "CAMEL_T6": 8,
-        "CAMEL_T8": 8,
+        "BEIGE_T10": 20,
+        "BEIGE_T12": 20,
+        "BEIGE_T14": 20,
+        "BEIGE_T16": 20,
+        "BEIGE_T6": 8,
+        "BEIGE_T8": 8,
         "CAMEL_T10": 12,
         "CAMEL_T12": 12,
         "CAMEL_T14": 12,
         "CAMEL_T16": 12,
-        "NEGRO_T6": 8,
-        "NEGRO_T8": 8,
+        "CAMEL_T6": 8,
+        "CAMEL_T8": 8,
         "NEGRO_T10": 12,
         "NEGRO_T12": 12,
         "NEGRO_T14": 12,
         "NEGRO_T16": 12,
-        "BEIGE_T6": 8,
-        "BEIGE_T8": 8,
-        "BEIGE_T10": 20,
-        "BEIGE_T12": 20,
-        "BEIGE_T14": 20,
-        "BEIGE_T16": 20
+        "NEGRO_T6": 8,
+        "NEGRO_T8": 8
       },
+      "categoria": "CHAQUETAS",
+      "colores": [
+        "CAMEL",
+        "NEGRO",
+        "BEIGE"
+      ],
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-08-25",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-08-25",
+      "id": "OP-2026-196",
+      "nombre_producto": "CHAQUETA RALPH",
+      "numero": 196,
+      "receta_id": "rec_chaqueta_ralph_1155",
+      "receta_nombre": "CHAQUETA RALPH - REF: 1155",
       "referencias": [
         {
-          "nombre": "CHAQUETA RALPH",
-          "ref": "1155",
+          "cantidades": {
+            "BEIGE_T10": 20,
+            "BEIGE_T12": 20,
+            "BEIGE_T14": 20,
+            "BEIGE_T16": 20,
+            "BEIGE_T6": 8,
+            "BEIGE_T8": 8,
+            "CAMEL_T10": 12,
+            "CAMEL_T12": 12,
+            "CAMEL_T14": 12,
+            "CAMEL_T16": 12,
+            "CAMEL_T6": 8,
+            "CAMEL_T8": 8,
+            "NEGRO_T10": 12,
+            "NEGRO_T12": 12,
+            "NEGRO_T14": 12,
+            "NEGRO_T16": 12,
+            "NEGRO_T6": 8,
+            "NEGRO_T8": 8
+          },
           "cat": "CHAQUETAS",
-          "vmo": 9459,
           "colores": [
             "CAMEL",
             "NEGRO",
             "BEIGE"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA RALPH",
+          "ref": "1155",
           "tallas": [
             "T6",
             "T8",
@@ -9620,96 +9598,99 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "CAMEL_T6": 8,
-            "CAMEL_T8": 8,
-            "CAMEL_T10": 12,
-            "CAMEL_T12": 12,
-            "CAMEL_T14": 12,
-            "CAMEL_T16": 12,
-            "NEGRO_T6": 8,
-            "NEGRO_T8": 8,
-            "NEGRO_T10": 12,
-            "NEGRO_T12": 12,
-            "NEGRO_T14": 12,
-            "NEGRO_T16": 12,
-            "BEIGE_T6": 8,
-            "BEIGE_T8": 8,
-            "BEIGE_T10": 20,
-            "BEIGE_T12": 20,
-            "BEIGE_T14": 20,
-            "BEIGE_T16": 20
-          },
           "totalUds": 224,
-          "maquilador_id": ""
+          "vmo": 9459
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-08-25",
-      "created_by": "John Rodriguez",
-      "receta_id": "rec_chaqueta_ralph_1155",
-      "receta_nombre": "CHAQUETA RALPH - REF: 1155"
+      "tallas": [
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ]
     },
     {
-      "id": "OP-2026-197",
-      "numero": 197,
-      "fecha_op": "2026-08-25",
-      "cortador": "Corte Carbajal",
+      "cantidades": {
+        "AVENA_T10": 24,
+        "AVENA_T12": 24,
+        "AVENA_T14": 24,
+        "AVENA_T16": 24,
+        "AVENA_T6": 12,
+        "AVENA_T8": 16,
+        "CAFE_T10": 24,
+        "CAFE_T12": 24,
+        "CAFE_T14": 24,
+        "CAFE_T16": 24,
+        "CAFE_T6": 12,
+        "CAFE_T8": 16,
+        "MARFIL_T10": 24,
+        "MARFIL_T12": 24,
+        "MARFIL_T14": 24,
+        "MARFIL_T16": 24,
+        "MARFIL_T6": 12,
+        "MARFIL_T8": 16,
+        "NEGRO_T10": 24,
+        "NEGRO_T12": 24,
+        "NEGRO_T14": 24,
+        "NEGRO_T16": 24,
+        "NEGRO_T6": 12,
+        "NEGRO_T8": 16
+      },
       "categoria": "CHAQUETAS",
-      "nombre_producto": "CHAQUETA BAGGY PINZAS",
       "colores": [
         "AVENA",
         "CAFE",
         "NEGRO",
         "MARFIL"
       ],
-      "tallas": [
-        "T6",
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
-      "cantidades": {
-        "AVENA_T6": 12,
-        "AVENA_T8": 16,
-        "AVENA_T10": 24,
-        "AVENA_T12": 24,
-        "AVENA_T14": 24,
-        "AVENA_T16": 24,
-        "CAFE_T6": 12,
-        "CAFE_T8": 16,
-        "CAFE_T10": 24,
-        "CAFE_T12": 24,
-        "CAFE_T14": 24,
-        "CAFE_T16": 24,
-        "NEGRO_T6": 12,
-        "NEGRO_T8": 16,
-        "NEGRO_T10": 24,
-        "NEGRO_T12": 24,
-        "NEGRO_T14": 24,
-        "NEGRO_T16": 24,
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 16,
-        "MARFIL_T10": 24,
-        "MARFIL_T12": 24,
-        "MARFIL_T14": 24,
-        "MARFIL_T16": 24
-      },
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-08-25",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-08-25",
+      "id": "OP-2026-197",
+      "nombre_producto": "CHAQUETA BAGGY PINZAS",
+      "numero": 197,
       "referencias": [
         {
-          "nombre": "CHAQUETA BAGGY PINZAS",
-          "ref": "",
+          "cantidades": {
+            "AVENA_T10": 24,
+            "AVENA_T12": 24,
+            "AVENA_T14": 24,
+            "AVENA_T16": 24,
+            "AVENA_T6": 12,
+            "AVENA_T8": 16,
+            "CAFE_T10": 24,
+            "CAFE_T12": 24,
+            "CAFE_T14": 24,
+            "CAFE_T16": 24,
+            "CAFE_T6": 12,
+            "CAFE_T8": 16,
+            "MARFIL_T10": 24,
+            "MARFIL_T12": 24,
+            "MARFIL_T14": 24,
+            "MARFIL_T16": 24,
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 16,
+            "NEGRO_T10": 24,
+            "NEGRO_T12": 24,
+            "NEGRO_T14": 24,
+            "NEGRO_T16": 24,
+            "NEGRO_T6": 12,
+            "NEGRO_T8": 16
+          },
           "cat": "CHAQUETAS",
-          "vmo": 1151,
           "colores": [
             "AVENA",
             "CAFE",
             "NEGRO",
             "MARFIL"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA BAGGY PINZAS",
+          "ref": "",
           "tallas": [
             "T6",
             "T8",
@@ -9718,51 +9699,9 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "AVENA_T6": 12,
-            "AVENA_T8": 16,
-            "AVENA_T10": 24,
-            "AVENA_T12": 24,
-            "AVENA_T14": 24,
-            "AVENA_T16": 24,
-            "CAFE_T6": 12,
-            "CAFE_T8": 16,
-            "CAFE_T10": 24,
-            "CAFE_T12": 24,
-            "CAFE_T14": 24,
-            "CAFE_T16": 24,
-            "NEGRO_T6": 12,
-            "NEGRO_T8": 16,
-            "NEGRO_T10": 24,
-            "NEGRO_T12": 24,
-            "NEGRO_T14": 24,
-            "NEGRO_T16": 24,
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 16,
-            "MARFIL_T10": 24,
-            "MARFIL_T12": 24,
-            "MARFIL_T14": 24,
-            "MARFIL_T16": 24
-          },
           "totalUds": 496,
-          "maquilador_id": ""
+          "vmo": 1151
         }
-      ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-08-25",
-      "created_by": "John Rodriguez"
-    },
-    {
-      "id": "OP-2026-198",
-      "numero": 198,
-      "fecha_op": "2026-08-25",
-      "cortador": "Corte Carbajal",
-      "categoria": "CHAQUETAS",
-      "nombre_producto": "CHAQUETA FIRE",
-      "colores": [
-        "BEIGE",
-        "NEGRO"
       ],
       "tallas": [
         "T6",
@@ -9771,31 +9710,60 @@
         "T12",
         "T14",
         "T16"
-      ],
+      ]
+    },
+    {
       "cantidades": {
-        "BEIGE_T6": 15,
-        "BEIGE_T8": 15,
         "BEIGE_T10": 30,
         "BEIGE_T12": 30,
         "BEIGE_T14": 30,
         "BEIGE_T16": 30,
-        "NEGRO_T6": 15,
-        "NEGRO_T8": 15,
+        "BEIGE_T6": 15,
+        "BEIGE_T8": 15,
         "NEGRO_T10": 30,
         "NEGRO_T12": 30,
         "NEGRO_T14": 30,
-        "NEGRO_T16": 30
+        "NEGRO_T16": 30,
+        "NEGRO_T6": 15,
+        "NEGRO_T8": 15
       },
+      "categoria": "CHAQUETAS",
+      "colores": [
+        "BEIGE",
+        "NEGRO"
+      ],
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-08-25",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-08-25",
+      "id": "OP-2026-198",
+      "nombre_producto": "CHAQUETA FIRE",
+      "numero": 198,
       "referencias": [
         {
-          "nombre": "CHAQUETA FIRE",
-          "ref": "",
+          "cantidades": {
+            "BEIGE_T10": 30,
+            "BEIGE_T12": 30,
+            "BEIGE_T14": 30,
+            "BEIGE_T16": 30,
+            "BEIGE_T6": 15,
+            "BEIGE_T8": 15,
+            "NEGRO_T10": 30,
+            "NEGRO_T12": 30,
+            "NEGRO_T14": 30,
+            "NEGRO_T16": 30,
+            "NEGRO_T6": 15,
+            "NEGRO_T8": 15
+          },
           "cat": "CHAQUETAS",
-          "vmo": 1151,
           "colores": [
             "BEIGE",
             "NEGRO"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA FIRE",
+          "ref": "",
           "tallas": [
             "T6",
             "T8",
@@ -9804,36 +9772,53 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "BEIGE_T6": 15,
-            "BEIGE_T8": 15,
-            "BEIGE_T10": 30,
-            "BEIGE_T12": 30,
-            "BEIGE_T14": 30,
-            "BEIGE_T16": 30,
-            "NEGRO_T6": 15,
-            "NEGRO_T8": 15,
-            "NEGRO_T10": 30,
-            "NEGRO_T12": 30,
-            "NEGRO_T14": 30,
-            "NEGRO_T16": 30
-          },
           "totalUds": 300,
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-08-25",
-      "created_by": "John Rodriguez"
+      "tallas": [
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ]
     },
     {
-      "id": "OP-2026-199",
-      "numero": 199,
-      "fecha_op": "2026-08-25",
-      "cortador": "Corte Carbajal",
+      "cantidades": {
+        "AZUL BEBE_T10": 20,
+        "AZUL BEBE_T12": 20,
+        "AZUL BEBE_T14": 20,
+        "AZUL BEBE_T16": 20,
+        "AZUL BEBE_T6": 10,
+        "AZUL BEBE_T8": 10,
+        "CAFE_T10": 10,
+        "CAFE_T12": 10,
+        "CAFE_T14": 10,
+        "CAFE_T16": 10,
+        "CAFE_T6": 5,
+        "CAFE_T8": 5,
+        "GRIS CLARO_T10": 20,
+        "GRIS CLARO_T12": 20,
+        "GRIS CLARO_T14": 20,
+        "GRIS CLARO_T16": 20,
+        "GRIS CLARO_T6": 10,
+        "GRIS CLARO_T8": 10,
+        "NEGRO_T10": 20,
+        "NEGRO_T12": 20,
+        "NEGRO_T14": 20,
+        "NEGRO_T16": 20,
+        "NEGRO_T6": 10,
+        "NEGRO_T8": 10,
+        "VINOTINTO_T10": 10,
+        "VINOTINTO_T12": 10,
+        "VINOTINTO_T14": 10,
+        "VINOTINTO_T16": 10,
+        "VINOTINTO_T6": 5,
+        "VINOTINTO_T8": 5
+      },
       "categoria": "CONJUNTOS",
-      "nombre_producto": "CONJUNTO MANCHESTER",
       "colores": [
         "CAFE",
         "GRIS CLARO",
@@ -9841,52 +9826,51 @@
         "NEGRO",
         "VINOTINTO"
       ],
-      "tallas": [
-        "T6",
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
-      "cantidades": {
-        "CAFE_T6": 5,
-        "CAFE_T8": 5,
-        "CAFE_T10": 10,
-        "CAFE_T12": 10,
-        "CAFE_T14": 10,
-        "CAFE_T16": 10,
-        "GRIS CLARO_T6": 10,
-        "GRIS CLARO_T8": 10,
-        "GRIS CLARO_T10": 20,
-        "GRIS CLARO_T12": 20,
-        "GRIS CLARO_T14": 20,
-        "GRIS CLARO_T16": 20,
-        "AZUL BEBE_T6": 10,
-        "AZUL BEBE_T8": 10,
-        "AZUL BEBE_T10": 20,
-        "AZUL BEBE_T12": 20,
-        "AZUL BEBE_T14": 20,
-        "AZUL BEBE_T16": 20,
-        "NEGRO_T6": 10,
-        "NEGRO_T8": 10,
-        "NEGRO_T10": 20,
-        "NEGRO_T12": 20,
-        "NEGRO_T14": 20,
-        "NEGRO_T16": 20,
-        "VINOTINTO_T6": 5,
-        "VINOTINTO_T8": 5,
-        "VINOTINTO_T10": 10,
-        "VINOTINTO_T12": 10,
-        "VINOTINTO_T14": 10,
-        "VINOTINTO_T16": 10
-      },
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-08-25",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-08-25",
+      "id": "OP-2026-199",
+      "nombre_producto": "CONJUNTO MANCHESTER",
+      "numero": 199,
+      "receta_id": "rec_conjunto_hoodie_capota_p_a_1178",
+      "receta_nombre": "CONJUNTO HOODIE CAPOTA P.A - REF: 1178",
       "referencias": [
         {
-          "nombre": "CONJUNTO MANCHESTER",
-          "ref": "1178",
+          "cantidades": {
+            "AZUL BEBE_T10": 20,
+            "AZUL BEBE_T12": 20,
+            "AZUL BEBE_T14": 20,
+            "AZUL BEBE_T16": 20,
+            "AZUL BEBE_T6": 10,
+            "AZUL BEBE_T8": 10,
+            "CAFE_T10": 10,
+            "CAFE_T12": 10,
+            "CAFE_T14": 10,
+            "CAFE_T16": 10,
+            "CAFE_T6": 5,
+            "CAFE_T8": 5,
+            "GRIS CLARO_T10": 20,
+            "GRIS CLARO_T12": 20,
+            "GRIS CLARO_T14": 20,
+            "GRIS CLARO_T16": 20,
+            "GRIS CLARO_T6": 10,
+            "GRIS CLARO_T8": 10,
+            "NEGRO_T10": 20,
+            "NEGRO_T12": 20,
+            "NEGRO_T14": 20,
+            "NEGRO_T16": 20,
+            "NEGRO_T6": 10,
+            "NEGRO_T8": 10,
+            "VINOTINTO_T10": 10,
+            "VINOTINTO_T12": 10,
+            "VINOTINTO_T14": 10,
+            "VINOTINTO_T16": 10,
+            "VINOTINTO_T6": 5,
+            "VINOTINTO_T8": 5
+          },
           "cat": "CONJUNTOS",
-          "vmo": 1151,
           "colores": [
             "CAFE",
             "GRIS CLARO",
@@ -9894,6 +9878,9 @@
             "NEGRO",
             "VINOTINTO"
           ],
+          "maquilador_id": "",
+          "nombre": "CONJUNTO MANCHESTER",
+          "ref": "1178",
           "tallas": [
             "T6",
             "T8",
@@ -9902,61 +9889,110 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "CAFE_T6": 5,
-            "CAFE_T8": 5,
-            "CAFE_T10": 10,
-            "CAFE_T12": 10,
-            "CAFE_T14": 10,
-            "CAFE_T16": 10,
-            "GRIS CLARO_T6": 10,
-            "GRIS CLARO_T8": 10,
-            "GRIS CLARO_T10": 20,
-            "GRIS CLARO_T12": 20,
-            "GRIS CLARO_T14": 20,
-            "GRIS CLARO_T16": 20,
-            "AZUL BEBE_T6": 10,
-            "AZUL BEBE_T8": 10,
-            "AZUL BEBE_T10": 20,
-            "AZUL BEBE_T12": 20,
-            "AZUL BEBE_T14": 20,
-            "AZUL BEBE_T16": 20,
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 10,
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "VINOTINTO_T6": 5,
-            "VINOTINTO_T8": 5,
-            "VINOTINTO_T10": 10,
-            "VINOTINTO_T12": 10,
-            "VINOTINTO_T14": 10,
-            "VINOTINTO_T16": 10
-          },
           "totalUds": 400,
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-08-25",
-      "created_by": "John Rodriguez",
-      "receta_id": "rec_conjunto_hoodie_capota_p_a_1178",
-      "receta_nombre": "CONJUNTO HOODIE CAPOTA P.A - REF: 1178"
+      "tallas": [
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ]
     },
     {
-      "id": "OP-2026-200",
-      "numero": 200,
-      "fecha_op": "2026-08-25",
-      "cortador": "Corte Carbajal",
+      "cantidades": {
+        "CHOCOLATE_T10": 20,
+        "CHOCOLATE_T12": 20,
+        "CHOCOLATE_T14": 20,
+        "CHOCOLATE_T16": 20,
+        "CHOCOLATE_T6": 10,
+        "CHOCOLATE_T8": 20,
+        "MARFIL_T10": 20,
+        "MARFIL_T12": 20,
+        "MARFIL_T14": 20,
+        "MARFIL_T16": 20,
+        "MARFIL_T6": 10,
+        "MARFIL_T8": 20,
+        "NEGRO_T10": 20,
+        "NEGRO_T12": 20,
+        "NEGRO_T14": 20,
+        "NEGRO_T16": 20,
+        "NEGRO_T6": 10,
+        "NEGRO_T8": 20,
+        "TAUPE_T10": 20,
+        "TAUPE_T12": 20,
+        "TAUPE_T14": 20,
+        "TAUPE_T16": 20,
+        "TAUPE_T6": 10,
+        "TAUPE_T8": 20
+      },
       "categoria": "CONJUNTOS",
-      "nombre_producto": "CONJUNTO OSLO",
       "colores": [
         "NEGRO",
         "TAUPE",
         "CHOCOLATE",
         "MARFIL"
+      ],
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-08-25",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-08-25",
+      "id": "OP-2026-200",
+      "nombre_producto": "CONJUNTO OSLO",
+      "numero": 200,
+      "receta_id": "rec_conjunto_oslo_1180",
+      "referencias": [
+        {
+          "cantidades": {
+            "CHOCOLATE_T10": 20,
+            "CHOCOLATE_T12": 20,
+            "CHOCOLATE_T14": 20,
+            "CHOCOLATE_T16": 20,
+            "CHOCOLATE_T6": 10,
+            "CHOCOLATE_T8": 20,
+            "MARFIL_T10": 20,
+            "MARFIL_T12": 20,
+            "MARFIL_T14": 20,
+            "MARFIL_T16": 20,
+            "MARFIL_T6": 10,
+            "MARFIL_T8": 20,
+            "NEGRO_T10": 20,
+            "NEGRO_T12": 20,
+            "NEGRO_T14": 20,
+            "NEGRO_T16": 20,
+            "NEGRO_T6": 10,
+            "NEGRO_T8": 20,
+            "TAUPE_T10": 20,
+            "TAUPE_T12": 20,
+            "TAUPE_T14": 20,
+            "TAUPE_T16": 20,
+            "TAUPE_T6": 10,
+            "TAUPE_T8": 20
+          },
+          "cat": "CONJUNTOS",
+          "colores": [
+            "NEGRO",
+            "TAUPE",
+            "CHOCOLATE",
+            "MARFIL"
+          ],
+          "maquilador_id": "",
+          "nombre": "CONJUNTO OSLO",
+          "ref": "1176",
+          "tallas": [
+            "T6",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "vmo": 8000
+        }
       ],
       "tallas": [
         "T6",
@@ -9966,95 +10002,42 @@
         "T14",
         "T16"
       ],
-      "cantidades": {
-        "NEGRO_T6": 10,
-        "NEGRO_T8": 20,
-        "NEGRO_T10": 20,
-        "NEGRO_T12": 20,
-        "NEGRO_T14": 20,
-        "NEGRO_T16": 20,
-        "TAUPE_T6": 10,
-        "TAUPE_T8": 20,
-        "TAUPE_T10": 20,
-        "TAUPE_T12": 20,
-        "TAUPE_T14": 20,
-        "TAUPE_T16": 20,
-        "CHOCOLATE_T6": 10,
-        "CHOCOLATE_T8": 20,
-        "CHOCOLATE_T10": 20,
-        "CHOCOLATE_T12": 20,
-        "CHOCOLATE_T14": 20,
-        "CHOCOLATE_T16": 20,
-        "MARFIL_T6": 10,
-        "MARFIL_T8": 20,
-        "MARFIL_T10": 20,
-        "MARFIL_T12": 20,
-        "MARFIL_T14": 20,
-        "MARFIL_T16": 20
-      },
-      "referencias": [
-        {
-          "nombre": "CONJUNTO OSLO",
-          "ref": "1176",
-          "cat": "CONJUNTOS",
-          "vmo": 8000,
-          "colores": [
-            "NEGRO",
-            "TAUPE",
-            "CHOCOLATE",
-            "MARFIL"
-          ],
-          "tallas": [
-            "T6",
-            "T8",
-            "T10",
-            "T12",
-            "T14",
-            "T16"
-          ],
-          "cantidades": {
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 20,
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "TAUPE_T6": 10,
-            "TAUPE_T8": 20,
-            "TAUPE_T10": 20,
-            "TAUPE_T12": 20,
-            "TAUPE_T14": 20,
-            "TAUPE_T16": 20,
-            "CHOCOLATE_T6": 10,
-            "CHOCOLATE_T8": 20,
-            "CHOCOLATE_T10": 20,
-            "CHOCOLATE_T12": 20,
-            "CHOCOLATE_T14": 20,
-            "CHOCOLATE_T16": 20,
-            "MARFIL_T6": 10,
-            "MARFIL_T8": 20,
-            "MARFIL_T10": 20,
-            "MARFIL_T12": 20,
-            "MARFIL_T14": 20,
-            "MARFIL_T16": 20
-          },
-          "maquilador_id": ""
-        }
-      ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-08-25",
-      "created_by": "John Rodriguez",
-      "receta_id": "rec_conjunto_oslo_1180",
       "updated_at": "2026-08-25"
     },
     {
-      "id": "OP-2026-201",
-      "numero": 201,
-      "fecha_op": "2026-08-25",
-      "cortador": "Corte Carbajal",
+      "cantidades": {
+        "CAFE_T10": 30,
+        "CAFE_T12": 30,
+        "CAFE_T14": 30,
+        "CAFE_T16": 30,
+        "CAFE_T6": 15,
+        "CAFE_T8": 15,
+        "GRIS CLARO_T10": 30,
+        "GRIS CLARO_T12": 30,
+        "GRIS CLARO_T14": 30,
+        "GRIS CLARO_T16": 30,
+        "GRIS CLARO_T6": 15,
+        "GRIS CLARO_T8": 15,
+        "MARFIL_T10": 30,
+        "MARFIL_T12": 30,
+        "MARFIL_T14": 30,
+        "MARFIL_T16": 30,
+        "MARFIL_T6": 15,
+        "MARFIL_T8": 15,
+        "ROSA_T10": 16,
+        "ROSA_T12": 16,
+        "ROSA_T14": 16,
+        "ROSA_T16": 16,
+        "ROSA_T6": 8,
+        "ROSA_T8": 8,
+        "VINOTINTO_T10": 16,
+        "VINOTINTO_T12": 16,
+        "VINOTINTO_T14": 16,
+        "VINOTINTO_T16": 16,
+        "VINOTINTO_T6": 8,
+        "VINOTINTO_T8": 8
+      },
       "categoria": "CONJUNTOS",
-      "nombre_producto": "SET BOMBER CORTA",
       "colores": [
         "GRIS CLARO",
         "MARFIL",
@@ -10062,52 +10045,49 @@
         "VINOTINTO",
         "ROSA"
       ],
-      "tallas": [
-        "T6",
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
-      "cantidades": {
-        "GRIS CLARO_T6": 15,
-        "GRIS CLARO_T8": 15,
-        "GRIS CLARO_T10": 30,
-        "GRIS CLARO_T12": 30,
-        "GRIS CLARO_T14": 30,
-        "GRIS CLARO_T16": 30,
-        "MARFIL_T6": 15,
-        "MARFIL_T8": 15,
-        "MARFIL_T10": 30,
-        "MARFIL_T12": 30,
-        "MARFIL_T14": 30,
-        "MARFIL_T16": 30,
-        "CAFE_T6": 15,
-        "CAFE_T8": 15,
-        "CAFE_T10": 30,
-        "CAFE_T12": 30,
-        "CAFE_T14": 30,
-        "CAFE_T16": 30,
-        "VINOTINTO_T6": 8,
-        "VINOTINTO_T8": 8,
-        "VINOTINTO_T10": 16,
-        "VINOTINTO_T12": 16,
-        "VINOTINTO_T14": 16,
-        "VINOTINTO_T16": 16,
-        "ROSA_T6": 8,
-        "ROSA_T8": 8,
-        "ROSA_T10": 16,
-        "ROSA_T12": 16,
-        "ROSA_T14": 16,
-        "ROSA_T16": 16
-      },
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-08-25",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-08-25",
+      "id": "OP-2026-201",
+      "nombre_producto": "SET BOMBER CORTA",
+      "numero": 201,
       "referencias": [
         {
-          "nombre": "SET BOMBER CORTA",
-          "ref": "",
+          "cantidades": {
+            "CAFE_T10": 30,
+            "CAFE_T12": 30,
+            "CAFE_T14": 30,
+            "CAFE_T16": 30,
+            "CAFE_T6": 15,
+            "CAFE_T8": 15,
+            "GRIS CLARO_T10": 30,
+            "GRIS CLARO_T12": 30,
+            "GRIS CLARO_T14": 30,
+            "GRIS CLARO_T16": 30,
+            "GRIS CLARO_T6": 15,
+            "GRIS CLARO_T8": 15,
+            "MARFIL_T10": 30,
+            "MARFIL_T12": 30,
+            "MARFIL_T14": 30,
+            "MARFIL_T16": 30,
+            "MARFIL_T6": 15,
+            "MARFIL_T8": 15,
+            "ROSA_T10": 16,
+            "ROSA_T12": 16,
+            "ROSA_T14": 16,
+            "ROSA_T16": 16,
+            "ROSA_T6": 8,
+            "ROSA_T8": 8,
+            "VINOTINTO_T10": 16,
+            "VINOTINTO_T12": 16,
+            "VINOTINTO_T14": 16,
+            "VINOTINTO_T16": 16,
+            "VINOTINTO_T6": 8,
+            "VINOTINTO_T8": 8
+          },
           "cat": "CONJUNTOS",
-          "vmo": 1151,
           "colores": [
             "GRIS CLARO",
             "MARFIL",
@@ -10115,6 +10095,9 @@
             "VINOTINTO",
             "ROSA"
           ],
+          "maquilador_id": "",
+          "nombre": "SET BOMBER CORTA",
+          "ref": "",
           "tallas": [
             "T6",
             "T8",
@@ -10123,54 +10106,48 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "GRIS CLARO_T6": 15,
-            "GRIS CLARO_T8": 15,
-            "GRIS CLARO_T10": 30,
-            "GRIS CLARO_T12": 30,
-            "GRIS CLARO_T14": 30,
-            "GRIS CLARO_T16": 30,
-            "MARFIL_T6": 15,
-            "MARFIL_T8": 15,
-            "MARFIL_T10": 30,
-            "MARFIL_T12": 30,
-            "MARFIL_T14": 30,
-            "MARFIL_T16": 30,
-            "CAFE_T6": 15,
-            "CAFE_T8": 15,
-            "CAFE_T10": 30,
-            "CAFE_T12": 30,
-            "CAFE_T14": 30,
-            "CAFE_T16": 30,
-            "VINOTINTO_T6": 8,
-            "VINOTINTO_T8": 8,
-            "VINOTINTO_T10": 16,
-            "VINOTINTO_T12": 16,
-            "VINOTINTO_T14": 16,
-            "VINOTINTO_T16": 16,
-            "ROSA_T6": 8,
-            "ROSA_T8": 8,
-            "ROSA_T10": 16,
-            "ROSA_T12": 16,
-            "ROSA_T14": 16,
-            "ROSA_T16": 16
-          },
           "totalUds": 610,
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-08-25",
-      "created_by": "John Rodriguez"
+      "tallas": [
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ]
     },
     {
-      "id": "OP-2026-202",
-      "numero": 202,
-      "fecha_op": "2026-08-25",
-      "cortador": "Corte Carbajal",
+      "cantidades": {
+        "AVENA_T10": 12,
+        "AVENA_T12": 12,
+        "AVENA_T14": 16,
+        "AVENA_T16": 16,
+        "AVENA_T8": 12,
+        "CAFE_T10": 12,
+        "CAFE_T12": 12,
+        "CAFE_T14": 16,
+        "CAFE_T16": 16,
+        "CAFE_T8": 12,
+        "GRIS OSCURO_T10": 10,
+        "GRIS OSCURO_T12": 10,
+        "GRIS OSCURO_T14": 10,
+        "GRIS OSCURO_T16": 10,
+        "GRIS OSCURO_T8": 10,
+        "MARFIL_T10": 12,
+        "MARFIL_T12": 12,
+        "MARFIL_T14": 16,
+        "MARFIL_T16": 16,
+        "MARFIL_T8": 12,
+        "NEGRO_T10": 12,
+        "NEGRO_T12": 12,
+        "NEGRO_T14": 16,
+        "NEGRO_T16": 16,
+        "NEGRO_T8": 12
+      },
       "categoria": "PANTALONES",
-      "nombre_producto": "PANTALON CHICAGO",
       "colores": [
         "GRIS OSCURO",
         "CAFE",
@@ -10178,46 +10155,45 @@
         "AVENA",
         "MARFIL"
       ],
-      "tallas": [
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
-      "cantidades": {
-        "GRIS OSCURO_T8": 10,
-        "GRIS OSCURO_T10": 10,
-        "GRIS OSCURO_T12": 10,
-        "GRIS OSCURO_T14": 10,
-        "GRIS OSCURO_T16": 10,
-        "CAFE_T8": 12,
-        "CAFE_T10": 12,
-        "CAFE_T12": 12,
-        "CAFE_T14": 16,
-        "CAFE_T16": 16,
-        "NEGRO_T8": 12,
-        "NEGRO_T10": 12,
-        "NEGRO_T12": 12,
-        "NEGRO_T14": 16,
-        "NEGRO_T16": 16,
-        "AVENA_T8": 12,
-        "AVENA_T10": 12,
-        "AVENA_T12": 12,
-        "AVENA_T14": 16,
-        "AVENA_T16": 16,
-        "MARFIL_T8": 12,
-        "MARFIL_T10": 12,
-        "MARFIL_T12": 12,
-        "MARFIL_T14": 16,
-        "MARFIL_T16": 16
-      },
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-08-25",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-08-25",
+      "id": "OP-2026-202",
+      "nombre_producto": "PANTALON CHICAGO",
+      "numero": 202,
+      "receta_id": "rec_pantalon_chicago_1179",
       "referencias": [
         {
-          "nombre": "PANTALON CHICAGO",
-          "ref": "1179",
+          "cantidades": {
+            "AVENA_T10": 12,
+            "AVENA_T12": 12,
+            "AVENA_T14": 16,
+            "AVENA_T16": 16,
+            "AVENA_T8": 12,
+            "CAFE_T10": 12,
+            "CAFE_T12": 12,
+            "CAFE_T14": 16,
+            "CAFE_T16": 16,
+            "CAFE_T8": 12,
+            "GRIS OSCURO_T10": 10,
+            "GRIS OSCURO_T12": 10,
+            "GRIS OSCURO_T14": 10,
+            "GRIS OSCURO_T16": 10,
+            "GRIS OSCURO_T8": 10,
+            "MARFIL_T10": 12,
+            "MARFIL_T12": 12,
+            "MARFIL_T14": 16,
+            "MARFIL_T16": 16,
+            "MARFIL_T8": 12,
+            "NEGRO_T10": 12,
+            "NEGRO_T12": 12,
+            "NEGRO_T14": 16,
+            "NEGRO_T16": 16,
+            "NEGRO_T8": 12
+          },
           "cat": "PANTALONES",
-          "vmo": 5000,
           "colores": [
             "GRIS OSCURO",
             "CAFE",
@@ -10225,6 +10201,9 @@
             "AVENA",
             "MARFIL"
           ],
+          "maquilador_id": "",
+          "nombre": "PANTALON CHICAGO",
+          "ref": "1179",
           "tallas": [
             "T8",
             "T10",
@@ -10232,41 +10211,16 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "GRIS OSCURO_T8": 10,
-            "GRIS OSCURO_T10": 10,
-            "GRIS OSCURO_T12": 10,
-            "GRIS OSCURO_T14": 10,
-            "GRIS OSCURO_T16": 10,
-            "CAFE_T8": 12,
-            "CAFE_T10": 12,
-            "CAFE_T12": 12,
-            "CAFE_T14": 16,
-            "CAFE_T16": 16,
-            "NEGRO_T8": 12,
-            "NEGRO_T10": 12,
-            "NEGRO_T12": 12,
-            "NEGRO_T14": 16,
-            "NEGRO_T16": 16,
-            "AVENA_T8": 12,
-            "AVENA_T10": 12,
-            "AVENA_T12": 12,
-            "AVENA_T14": 16,
-            "AVENA_T16": 16,
-            "MARFIL_T8": 12,
-            "MARFIL_T10": 12,
-            "MARFIL_T12": 12,
-            "MARFIL_T14": 16,
-            "MARFIL_T16": 16
-          },
-          "maquilador_id": ""
+          "vmo": 5000
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-08-25",
-      "created_by": "John Rodriguez",
-      "receta_id": "rec_pantalon_chicago_1179"
+      "tallas": [
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ]
     }
   ]
 }
