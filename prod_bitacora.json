@@ -12560,20 +12560,36 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1787859697741_ckf7p",
-      "ts": 1787859697741,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-081",
       "op_nombre": "CONJUNTO MANCHESTER",
       "referencia": "CONJUNTO MANCHESTER",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1787859697741,
       "uds": 84,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787860723603_q9as5",
+      "ts": 1787860723603,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-086",
+      "op_nombre": "PANTALON CHICAGO",
+      "referencia": "PANTALON CHICAGO",
+      "color": "AVENA",
+      "talla": "todas las tallas",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": true,
+      "uds": 68,
+      "motivo": "ENTREGADO"
     }
   ]
 }
