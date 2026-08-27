@@ -12373,20 +12373,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "VINOTINTO",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1787853082869_9xrpw",
-      "ts": 1787853082869,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-102",
       "op_nombre": "CHAQUETA ONION",
       "referencia": "CHAQUETA ONION",
-      "color": "VINOTINTO",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1787853082869,
       "uds": 84,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787853128571_zbb72",
+      "ts": 1787853128571,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-102",
+      "nombre": "CHAQUETA ONION",
+      "categoria": "CHAQUETAS",
+      "colores": 2,
+      "refs": 1
     }
   ]
 }
