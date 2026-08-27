@@ -12576,20 +12576,36 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "AVENA",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1787860723603_q9as5",
+      "motivo": "ENTREGADO",
+      "op_id": "OP-2026-086",
+      "op_nombre": "PANTALON CHICAGO",
+      "referencia": "PANTALON CHICAGO",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1787860723603,
+      "uds": 68,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787860751246_rx10u",
+      "ts": 1787860751246,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-086",
       "op_nombre": "PANTALON CHICAGO",
       "referencia": "PANTALON CHICAGO",
-      "color": "AVENA",
+      "color": "MARFIL",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
       "uds": 68,
-      "motivo": "ENTREGADO"
+      "motivo": "EN TALLER"
     }
   ]
 }
