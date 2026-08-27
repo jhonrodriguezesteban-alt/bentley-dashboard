@@ -12319,20 +12319,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "ROSA",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1787851837411_dxg7k",
-      "ts": 1787851837411,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-0037",
       "op_nombre": "CHALECO ACOLCHADO MANY",
       "referencia": "CHALECO ACOLCHADO MANY",
-      "color": "ROSA",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1787851837411,
       "uds": 132,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787852534765_ixcwj",
+      "ts": 1787852534765,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-101",
+      "nombre": "CHAQUETA MARIPOSAS",
+      "categoria": "CHAQUETAS",
+      "colores": 2,
+      "refs": 1
     }
   ]
 }
