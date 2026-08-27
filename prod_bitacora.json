@@ -12292,20 +12292,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1787851190200_xtlhm",
-      "ts": 1787851190200,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-0036",
       "op_nombre": "PANTALON DRILL ANCHO",
       "referencia": "PANTALON DRILL ANCHO",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1787851190200,
       "uds": 70,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787851817548_y3dbz",
+      "ts": 1787851817548,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-0037",
+      "nombre": "CHALECO ACOLCHADO MANY",
+      "categoria": "CHALECOS",
+      "colores": 4,
+      "refs": 1
     }
   ]
 }
