@@ -12608,20 +12608,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1787860764096_5dx1c",
-      "ts": 1787860764096,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-086",
       "op_nombre": "PANTALON CHICAGO",
       "referencia": "PANTALON CHICAGO",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1787860764096,
       "uds": 68,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787933213212_0zlbq",
+      "ts": 1787933213212,
+      "user": "Isabel",
+      "tipo": "diseno_comentario",
+      "diseno_id": "id_130ad86fcd0f4fe3",
+      "nombre": "SUPERIOR CON CORTE RANGLAND",
+      "categoria": "Buzos",
+      "tiene_imagen": false,
+      "extracto": "Muestra confeccionada. En talla 14 para medir.\nEn cuanto al trazo revisar el cen"
     }
   ]
 }
