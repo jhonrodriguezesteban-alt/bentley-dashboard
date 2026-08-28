@@ -12763,20 +12763,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "BEIGE",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1787951605736_2v4fr",
-      "ts": 1787951605736,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-0124",
       "op_nombre": "CAMISA UNDERGROUND",
       "referencia": "CAMISA UNDERGROUND",
-      "color": "BEIGE",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1787951605736,
       "uds": 231,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787951719283_6qdhb",
+      "ts": 1787951719283,
+      "user": "Isabel",
+      "tipo": "diseno_comentario",
+      "diseno_id": "id_6e172690a79b4df7",
+      "nombre": "CONJUNTO BOMBER CORTA",
+      "categoria": "Conjuntos",
+      "tiene_imagen": false,
+      "extracto": "Muestra confeccionada en talla 14. Al ojo se ve pequeña. Probar \nEn cuanto al tr"
     }
   ]
 }
