@@ -12749,18 +12749,34 @@
       "user": "Jefa de Producción"
     },
     {
+      "estado": "ENTREGADO",
       "id": "evt_1787951520971_zytjs",
-      "ts": 1787951520971,
-      "user": "Jefa de Producción",
-      "tipo": "entrega_inline",
-      "ot_id": "OT-12523",
       "numero_ot": 12523,
       "op_id": "OP-0048",
-      "uds_entregadas": 12,
+      "ot_id": "OT-12523",
       "pendientes": 0,
-      "estado": "ENTREGADO",
+      "satelite": "MIRIAM PINTO",
       "talla": "T12",
-      "satelite": "MIRIAM PINTO"
+      "tipo": "entrega_inline",
+      "ts": 1787951520971,
+      "uds_entregadas": 12,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787951605736_2v4fr",
+      "ts": 1787951605736,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0124",
+      "op_nombre": "CAMISA UNDERGROUND",
+      "referencia": "CAMISA UNDERGROUND",
+      "color": "BEIGE",
+      "talla": "todas las tallas",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": true,
+      "uds": 231,
+      "motivo": "ENTREGADO"
     }
   ]
 }
