@@ -9,13 +9,10 @@
       "OP-0038"
     ],
     "2026-07": [
-      "OP-0037||ROSA",
       "OP-0037||BEIGE"
     ],
     "2026-08": [
-      "OP-2026-081||NEGRO",
       "OP-2026-081||VINOTINTO",
-      "OP-2026-081||CAFE",
       "OP-2026-081||GRIS CLARO",
       "OP-2026-080||NEGRO",
       "OP-2026-080||CAMEL",
@@ -25,10 +22,6 @@
       "OP-2026-083||AVENA",
       "OP-0149||NEGRO",
       "OP-0149||ROSA",
-      "OP-2026-086||NEGRO",
-      "OP-2026-086||MARFIL",
-      "OP-0036||BEIGE",
-      "OP-0036||NEGRO",
       "OP-2026-082||NEGRO",
       "OP-2026-082||TAUPE",
       "OP-2026-082||CHOCOLATE",
@@ -49,7 +42,6 @@
       "OP-2026-098||SALMON",
       "OP-2026-098||FUCSIA",
       "OP-2026-098||NEGRO",
-      "OP-2026-102||VINOTINTO",
       "OP-2026-102||GRIS OSCURO",
       "OP-2026-096||BEIGE",
       "OP-2026-106||NEGRO",
@@ -57,7 +49,6 @@
       "OP-2026-105||MARFIL",
       "OP-2026-105||NEGRO",
       "OP-2026-096||GRIS CLARO",
-      "OP-2026-101||ROSA",
       "OP-2026-101||MARFIL",
       "OP-2026-103||AVENA",
       "OP-2026-103||AZUL BEBE",
@@ -83,7 +74,6 @@
       "OP-2026-073||BLANCO NEGRO",
       "OP-2026-073||NEGRO",
       "OP-0059||CAFE",
-      "OP-2026-081||AZUL BEBE",
       "OP-0167||MARFIL",
       "OP-0031||AZUL BEBE",
       "OP-0167||AVENA",
@@ -725,6 +715,116 @@
       "op_id": "OP-0039",
       "op_nombre": "BOTA ANCHA KENIA",
       "uds": 110
+    },
+    {
+      "key": "OP-0037||ROSA",
+      "op_id": "OP-0037",
+      "op_nombre": "CHALECO ACOLCHADO MANY",
+      "categoria": "CHALECOS",
+      "color": "ROSA",
+      "uds": 132,
+      "mes_planeado": "2026-07",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-08-27"
+    },
+    {
+      "key": "OP-2026-081||NEGRO",
+      "op_id": "OP-2026-081",
+      "op_nombre": "CONJUNTO MANCHESTER",
+      "categoria": "CONJUNTOS",
+      "color": "NEGRO",
+      "uds": 84,
+      "mes_planeado": "2026-08",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-08-27"
+    },
+    {
+      "key": "OP-2026-081||CAFE",
+      "op_id": "OP-2026-081",
+      "op_nombre": "CONJUNTO MANCHESTER",
+      "categoria": "CONJUNTOS",
+      "color": "CAFE",
+      "uds": 64,
+      "mes_planeado": "2026-08",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-08-27"
+    },
+    {
+      "key": "OP-2026-086||NEGRO",
+      "op_id": "OP-2026-086",
+      "op_nombre": "PANTALON CHICAGO",
+      "categoria": "PANTALONES",
+      "color": "NEGRO",
+      "uds": 68,
+      "mes_planeado": "2026-08",
+      "estado_al_salir": "EN_CONFECCION",
+      "fecha_deteccion": "2026-08-27"
+    },
+    {
+      "key": "OP-2026-086||MARFIL",
+      "op_id": "OP-2026-086",
+      "op_nombre": "PANTALON CHICAGO",
+      "categoria": "PANTALONES",
+      "color": "MARFIL",
+      "uds": 68,
+      "mes_planeado": "2026-08",
+      "estado_al_salir": "EN_CONFECCION",
+      "fecha_deteccion": "2026-08-27"
+    },
+    {
+      "key": "OP-0036||BEIGE",
+      "op_id": "OP-0036",
+      "op_nombre": "PANTALON DRILL ANCHO",
+      "categoria": "PANTALONES",
+      "color": "BEIGE",
+      "uds": 44,
+      "mes_planeado": "2026-08",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-08-27"
+    },
+    {
+      "key": "OP-0036||NEGRO",
+      "op_id": "OP-0036",
+      "op_nombre": "PANTALON DRILL ANCHO",
+      "categoria": "PANTALONES",
+      "color": "NEGRO",
+      "uds": 70,
+      "mes_planeado": "2026-08",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-08-27"
+    },
+    {
+      "key": "OP-2026-102||VINOTINTO",
+      "op_id": "OP-2026-102",
+      "op_nombre": "CHAQUETA ONION",
+      "categoria": "CHAQUETAS",
+      "color": "VINOTINTO",
+      "uds": 90,
+      "mes_planeado": "2026-08",
+      "estado_al_salir": "EN_CONFECCION",
+      "fecha_deteccion": "2026-08-27"
+    },
+    {
+      "key": "OP-2026-101||ROSA",
+      "op_id": "OP-2026-101",
+      "op_nombre": "CHAQUETA MARIPOSAS",
+      "categoria": "CHAQUETAS",
+      "color": "ROSA",
+      "uds": 93,
+      "mes_planeado": "2026-08",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-08-27"
+    },
+    {
+      "key": "OP-2026-081||AZUL BEBE",
+      "op_id": "OP-2026-081",
+      "op_nombre": "CONJUNTO MANCHESTER",
+      "categoria": "CONJUNTOS",
+      "color": "AZUL BEBE",
+      "uds": 104,
+      "mes_planeado": "2026-08",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-08-27"
     }
   ],
   "confirmadas": {
@@ -1262,8 +1362,8 @@
       "nombre": "CONJUNTO OSLO",
       "ok": true,
       "tipo": "op",
-      "uds": 476,
-      "ts": 1787702411508
+      "ts": 1787702411508,
+      "uds": 476
     },
     "REF||CONJUNTOS||CONJUNTO PALOMINO": {
       "cat": "CONJUNTOS",
@@ -1300,6 +1400,21 @@
       "ok": true,
       "tipo": "op",
       "uds": 504
+    },
+    "REF||CONJUNTOS||SET BOMBER CORTA": {
+      "cat": "CONJUNTOS",
+      "cif": 0,
+      "costoTotal": 0,
+      "extra": 0,
+      "mat": 0,
+      "mod": 0,
+      "nombre": "SET BOMBER CORTA",
+      "ok": true,
+      "svc": 0,
+      "tieneReceta": false,
+      "tipo": "op",
+      "ts": 1787702696320,
+      "uds": 610
     },
     "REF||CONJUNTOS||SET CHALECO VIENA": {
       "cat": "CONJUNTOS",
@@ -1507,21 +1622,6 @@
       "ok": true,
       "tipo": "op",
       "uds": 174
-    },
-    "REF||CONJUNTOS||SET BOMBER CORTA": {
-      "ok": true,
-      "extra": 0,
-      "ts": 1787702696320,
-      "cat": "CONJUNTOS",
-      "nombre": "SET BOMBER CORTA",
-      "uds": 610,
-      "tipo": "op",
-      "mat": 0,
-      "mod": 0,
-      "cif": 0,
-      "svc": 0,
-      "costoTotal": 0,
-      "tieneReceta": false
     }
   }
 }
