@@ -1748,6 +1748,10 @@ function _mergeArrayData(key, remoteData, localData){
         if(Object.keys(locChk).length){
           result[ri].consumibles_check = Object.assign({}, remChk, locChk);
         }
+        var remDes = result[ri].consumibles_desagregado||{}, locDes = locOp.consumibles_desagregado||{};
+        if(Object.keys(locDes).length){
+          result[ri].consumibles_desagregado = Object.assign({}, remDes, locDes);
+        }
       } else {
         result.push(locOp); // OP nueva creada en esta sesión, sin conflicto de id
       }
@@ -7634,6 +7638,14 @@ function _invSiempreDisponible(tipo, familia){
   if(tipo==='SERVICIO') return true;
   return _INV_FAMILIAS_SIEMPRE.indexOf(familia)>=0;
 }
+// Unidades totales por color programado en la OP (todas las OTs, sin importar estado —
+// es lo que hay que comprar en total por color, no solo lo pendiente de cortar).
+function _invUdsPorColorOp(op){
+  var colores = (op.colores&&op.colores.length) ? op.colores : ['—'];
+  var mapa = {};
+  colores.forEach(function(color){ mapa[color] = _planColorUdsHistorico(op, color); });
+  return mapa;
+}
 
 // ── Resumen de Inversión: calcula inversión/pagado/pendiente de una OP ──────────
 // Insumos (MATERIAL+SERVICIO): sale de la receta × checklist (op.consumibles_check).
@@ -7649,25 +7661,41 @@ function _invResumenOP(op){
     udsTotal = op.referencias.reduce(function(a,r){ return a+Object.values(r.cantidades||{}).reduce(function(b,v){ return b+(parseInt(v)||0); },0); },0);
   }
   var checks = op.consumibles_check || {};
+  var desagregados = op.consumibles_desagregado || {};
+  var udsPorColor = _invUdsPorColorOp(op);
+  var colores = Object.keys(udsPorColor);
   var insumoTotal=0, insumoPagado=0, insumoPendiente=0;
   if(receta){
     (receta.componentes||[]).forEach(function(c){
-      var costo=0, familia='';
+      var costo=0, familia='', consumoUnit=0, precioUnit=0;
       if(c.tipo==='MATERIAL'){
         var mp=(DB.costeo.mp||[]).find(function(x){ return x.id===c.mp_id; });
         if(!mp) return;
         familia = mp.familia||'Materia Prima';
-        costo = (parseFloat(c.consumo)||0)*udsTotal*(parseFloat(mp.precio_unitario)||0);
+        consumoUnit = parseFloat(c.consumo)||0;
+        precioUnit = parseFloat(mp.precio_unitario)||0;
+        costo = consumoUnit*udsTotal*precioUnit;
       } else if(c.tipo==='SERVICIO'){
         var sv=(DB.costeo.servicios||[]).find(function(x){ return x.id===c.servicio_id; });
         if(!sv) return;
         familia = 'Servicio / Insumo';
-        costo = (parseFloat(c.cantidad)||0)*udsTotal*(parseFloat(sv.costo_unitario)||0);
+        consumoUnit = parseFloat(c.cantidad)||0;
+        precioUnit = parseFloat(sv.costo_unitario)||0;
+        costo = consumoUnit*udsTotal*precioUnit;
       } else return;
       var key = receta.id+'__'+c.id;
       insumoTotal += costo;
-      var checked = checks.hasOwnProperty(key) ? !!checks[key] : _invSiempreDisponible(c.tipo, familia);
-      if(checked) insumoPagado += costo; else insumoPendiente += costo;
+      if(desagregados[key] && colores.length>1){
+        colores.forEach(function(color){
+          var costoColor = consumoUnit*(udsPorColor[color]||0)*precioUnit;
+          var subKey = key+'||'+color;
+          var checkedColor = checks.hasOwnProperty(subKey) ? !!checks[subKey] : _invSiempreDisponible(c.tipo, familia);
+          if(checkedColor) insumoPagado += costoColor; else insumoPendiente += costoColor;
+        });
+      } else {
+        var checked = checks.hasOwnProperty(key) ? !!checks[key] : _invSiempreDisponible(c.tipo, familia);
+        if(checked) insumoPagado += costo; else insumoPendiente += costo;
+      }
     });
   }
   var otIds = {};
@@ -7789,19 +7817,21 @@ function _renderConsumiblesOP(op, udsTotal, receta){
       var mp = (DB.costeo.mp||[]).find(function(x){ return x.id===c.mp_id; });
       if(!mp) return;
       var consumoUnit = parseFloat(c.consumo)||0;
+      var precioUnit = parseFloat(mp.precio_unitario)||0;
       items.push({
         key: receta.id+'__'+c.id, nombre: mp.nombre, familia: mp.familia||'Materia Prima',
         unidad: mp.unidad||'und', consumoUnit: consumoUnit, total: consumoUnit*udsTotal,
-        proveedor: mp.proveedor||'', costoTotal: consumoUnit*udsTotal*(parseFloat(mp.precio_unitario)||0), tipo:'MATERIAL'
+        proveedor: mp.proveedor||'', precioUnit: precioUnit, costoTotal: consumoUnit*udsTotal*precioUnit, tipo:'MATERIAL'
       });
     } else if(c.tipo==='SERVICIO'){
       var sv = (DB.costeo.servicios||[]).find(function(x){ return x.id===c.servicio_id; });
       if(!sv) return;
       var cantUnit = parseFloat(c.cantidad)||0;
+      var precioUnitSv = parseFloat(sv.costo_unitario)||0;
       items.push({
         key: receta.id+'__'+c.id, nombre: sv.nombre, familia: 'Servicio / Insumo',
         unidad: sv.unidad||'und', consumoUnit: cantUnit, total: cantUnit*udsTotal,
-        proveedor: sv.proveedor||'', costoTotal: cantUnit*udsTotal*(parseFloat(sv.costo_unitario)||0), tipo:'SERVICIO'
+        proveedor: sv.proveedor||'', precioUnit: precioUnitSv, costoTotal: cantUnit*udsTotal*precioUnitSv, tipo:'SERVICIO'
       });
     }
   });
@@ -7812,32 +7842,70 @@ function _renderConsumiblesOP(op, udsTotal, receta){
   }
 
   var checks = op.consumibles_check || {};
+  var desagregados = op.consumibles_desagregado || {};
+  var udsPorColor = _invUdsPorColorOp(op);
+  var colores = Object.keys(udsPorColor);
   var costoTotalGeneral = items.reduce(function(a,it){ return a+it.costoTotal; },0);
 
   h += '<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:12px;">';
   h += '<thead><tr style="background:rgba(255,255,255,.03);">';
-  ['✓','Insumo','Familia','Consumo/prenda','Cantidad total ('+udsTotal+' uds)','Proveedor','Costo total'].forEach(function(col){
+  ['✓','Insumo','Familia','Consumo/prenda','Cantidad total ('+udsTotal+' uds)','Proveedor','Costo total',''].forEach(function(col){
     h += '<th style="padding:8px 10px;text-align:'+(col==='✓'?'center':'left')+';color:var(--dim);font-size:10px;font-weight:700;white-space:nowrap;border-bottom:1px solid var(--card-border);">'+col+'</th>';
   });
   h += '</tr></thead><tbody>';
   items.forEach(function(it, i){
-    // De rutina (empaque/marquilla/etiquetado/servicio de confección): arranca marcado solo,
-    // salvo que ya se haya tocado a mano el checkbox para esta OP en particular.
-    var checked = checks.hasOwnProperty(it.key) ? !!checks[it.key] : _invSiempreDisponible(it.tipo, it.familia);
     var rowBg = i%2===0 ? '' : 'background:rgba(255,255,255,.012);';
-    h += '<tr style="'+rowBg+'border-top:1px solid rgba(255,255,255,.04);'+(checked?'opacity:.5;':'')+'">';
-    h += '<td style="padding:6px 10px;text-align:center;"><input type="checkbox" data-opid="'+op.id+'" data-key="'+esc(it.key)+'" onchange="toggleConsumibleCheck(this.dataset.opid,this.dataset.key,this.checked)" '+(checked?'checked':'')+' style="width:15px;height:15px;accent-color:#34d399;cursor:pointer;"></td>';
-    h += '<td style="padding:6px 10px;font-weight:600;color:'+(checked?'#475569':'#e2e8f0')+';white-space:nowrap;'+(checked?'text-decoration:line-through;':'')+'">'+esc(it.nombre)+'</td>';
-    h += '<td style="padding:6px 10px;color:#64748b;white-space:nowrap;">'+esc(it.familia)+'</td>';
-    h += '<td style="padding:6px 10px;color:#94a3b8;white-space:nowrap;">'+it.consumoUnit.toLocaleString('es-CO',{maximumFractionDigits:4})+' '+esc(it.unidad)+'</td>';
-    h += '<td style="padding:6px 10px;font-weight:700;color:#0ea5e9;white-space:nowrap;">'+it.total.toLocaleString('es-CO',{maximumFractionDigits:2})+' '+esc(it.unidad)+'</td>';
-    h += '<td style="padding:6px 10px;color:#64748b;white-space:nowrap;">'+esc(it.proveedor||'—')+'</td>';
-    h += '<td style="padding:6px 10px;font-weight:700;color:#fbbf24;white-space:nowrap;">'+fmtCopFull(it.costoTotal)+'</td>';
-    h += '</tr>';
+    var desagregado = !!desagregados[it.key] && colores.length>1;
+    var puedeDesagregar = colores.length>1;
+    if(!desagregado){
+      // De rutina (empaque/marquilla/etiquetado/servicio de confección): arranca marcado solo,
+      // salvo que ya se haya tocado a mano el checkbox para esta OP en particular.
+      var checked = checks.hasOwnProperty(it.key) ? !!checks[it.key] : _invSiempreDisponible(it.tipo, it.familia);
+      h += '<tr style="'+rowBg+'border-top:1px solid rgba(255,255,255,.04);'+(checked?'opacity:.5;':'')+'">';
+      h += '<td style="padding:6px 10px;text-align:center;"><input type="checkbox" data-opid="'+op.id+'" data-key="'+esc(it.key)+'" onchange="toggleConsumibleCheck(this.dataset.opid,this.dataset.key,this.checked)" '+(checked?'checked':'')+' style="width:15px;height:15px;accent-color:#34d399;cursor:pointer;"></td>';
+      h += '<td style="padding:6px 10px;font-weight:600;color:'+(checked?'#475569':'#e2e8f0')+';white-space:nowrap;'+(checked?'text-decoration:line-through;':'')+'">'+esc(it.nombre)+'</td>';
+      h += '<td style="padding:6px 10px;color:#64748b;white-space:nowrap;">'+esc(it.familia)+'</td>';
+      h += '<td style="padding:6px 10px;color:#94a3b8;white-space:nowrap;">'+it.consumoUnit.toLocaleString('es-CO',{maximumFractionDigits:4})+' '+esc(it.unidad)+'</td>';
+      h += '<td style="padding:6px 10px;font-weight:700;color:#0ea5e9;white-space:nowrap;">'+it.total.toLocaleString('es-CO',{maximumFractionDigits:2})+' '+esc(it.unidad)+'</td>';
+      h += '<td style="padding:6px 10px;color:#64748b;white-space:nowrap;">'+esc(it.proveedor||'—')+'</td>';
+      h += '<td style="padding:6px 10px;font-weight:700;color:#fbbf24;white-space:nowrap;">'+fmtCopFull(it.costoTotal)+'</td>';
+      h += '<td style="padding:6px 10px;text-align:center;">'+(puedeDesagregar?'<button data-opid="'+op.id+'" data-key="'+esc(it.key)+'" onclick="toggleConsumibleDesagregado(this.dataset.opid,this.dataset.key,true)" style="font-size:9px;font-weight:700;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);color:#0a84ff;border-radius:5px;padding:3px 8px;cursor:pointer;white-space:nowrap;">↳ Desagregar</button>':'')+'</td>';
+      h += '</tr>';
+    } else {
+      // Fila cabecera del grupo (sin checkbox propio — el estado vive en las filas por color).
+      h += '<tr style="'+rowBg+'border-top:1px solid rgba(255,255,255,.04);background:rgba(10,132,255,.05);">';
+      h += '<td></td>';
+      h += '<td style="padding:6px 10px;font-weight:700;color:#e2e8f0;white-space:nowrap;">'+esc(it.nombre)+'</td>';
+      h += '<td style="padding:6px 10px;color:#64748b;white-space:nowrap;">'+esc(it.familia)+'</td>';
+      h += '<td style="padding:6px 10px;color:#94a3b8;white-space:nowrap;">'+it.consumoUnit.toLocaleString('es-CO',{maximumFractionDigits:4})+' '+esc(it.unidad)+'</td>';
+      h += '<td style="padding:6px 10px;font-weight:700;color:#0ea5e9;white-space:nowrap;">'+it.total.toLocaleString('es-CO',{maximumFractionDigits:2})+' '+esc(it.unidad)+'</td>';
+      h += '<td style="padding:6px 10px;color:#64748b;white-space:nowrap;">'+esc(it.proveedor||'—')+'</td>';
+      h += '<td style="padding:6px 10px;font-weight:700;color:#fbbf24;white-space:nowrap;">'+fmtCopFull(it.costoTotal)+'</td>';
+      h += '<td style="padding:6px 10px;text-align:center;"><button data-opid="'+op.id+'" data-key="'+esc(it.key)+'" onclick="toggleConsumibleDesagregado(this.dataset.opid,this.dataset.key,false)" style="font-size:9px;font-weight:700;background:rgba(255,255,255,.06);border:1px solid var(--card-border);color:var(--dim);border-radius:5px;padding:3px 8px;cursor:pointer;white-space:nowrap;">↰ Agrupar</button></td>';
+      h += '</tr>';
+      colores.forEach(function(color){
+        var udsColor = udsPorColor[color]||0;
+        var cantColor = it.consumoUnit*udsColor;
+        var costoColor = cantColor*it.precioUnit;
+        var subKey = it.key+'||'+color;
+        var checkedColor = checks.hasOwnProperty(subKey) ? !!checks[subKey] : _invSiempreDisponible(it.tipo, it.familia);
+        h += '<tr style="border-top:1px solid rgba(255,255,255,.03);'+(checkedColor?'opacity:.5;':'')+'">';
+        h += '<td style="padding:5px 10px;text-align:center;"><input type="checkbox" data-opid="'+op.id+'" data-key="'+esc(subKey)+'" onchange="toggleConsumibleCheck(this.dataset.opid,this.dataset.key,this.checked)" '+(checkedColor?'checked':'')+' style="width:14px;height:14px;accent-color:#34d399;cursor:pointer;"></td>';
+        h += '<td style="padding:5px 10px 5px 24px;font-size:11px;color:'+(checkedColor?'#475569':'#94a3b8')+';white-space:nowrap;'+(checkedColor?'text-decoration:line-through;':'')+'">· '+esc(color)+'</td>';
+        h += '<td></td>';
+        h += '<td></td>';
+        h += '<td style="padding:5px 10px;font-size:11px;color:#0ea5e9;white-space:nowrap;">'+cantColor.toLocaleString('es-CO',{maximumFractionDigits:2})+' '+esc(it.unidad)+' ('+udsColor+' uds)</td>';
+        h += '<td></td>';
+        h += '<td style="padding:5px 10px;font-size:11px;color:#fbbf24;white-space:nowrap;">'+fmtCopFull(costoColor)+'</td>';
+        h += '<td></td>';
+        h += '</tr>';
+      });
+    }
   });
   h += '<tr style="border-top:2px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);">';
   h += '<td colspan="6" style="padding:8px 10px;text-align:right;font-weight:700;color:#fbbf24;font-size:11px;">TOTAL MATERIALES + INSUMOS</td>';
   h += '<td style="padding:8px 10px;font-weight:800;color:#fbbf24;">'+fmtCopFull(costoTotalGeneral)+'</td>';
+  h += '<td></td>';
   h += '</tr>';
   h += '</tbody></table></div></div>';
   return h;
@@ -7852,6 +7920,21 @@ async function toggleConsumibleCheck(opId, key, checked){
   // registrado como "false" real — si se borrara la clave, en el próximo render volvería
   // a caer en el default y se vería marcado otra vez aunque Paola lo haya desmarcado a mano.
   op.consumibles_check[key] = !!checked;
+  saveLocal();
+  await guardarArchivo('ops', {ops: DB.ops});
+  document.getElementById('page-content').innerHTML = renderOPDetalle(opId);
+}
+
+// Desagregar/agrupar un insumo del checklist de Resumen de Inversión por color programado
+// en la OP — para poder ir marcando la compra de tela/cremalleras/sesgo color por color
+// en vez de solo como un total. El desmarcado ("agrupar") sí puede borrar la clave: no hay
+// checklist "de rutina" que dependa de mantenerse desagregado, así que no hace falta el
+// mismo cuidado que en toggleConsumibleCheck.
+async function toggleConsumibleDesagregado(opId, key, on){
+  var op = (DB.ops||[]).find(function(o){ return o.id===opId; });
+  if(!op) return;
+  if(!op.consumibles_desagregado) op.consumibles_desagregado = {};
+  if(on) op.consumibles_desagregado[key] = true; else delete op.consumibles_desagregado[key];
   saveLocal();
   await guardarArchivo('ops', {ops: DB.ops});
   document.getElementById('page-content').innerHTML = renderOPDetalle(opId);
