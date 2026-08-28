@@ -12790,16 +12790,27 @@
       "user": "Isabel"
     },
     {
+      "categoria": "Conjuntos",
+      "diseno_id": "id_6e172690a79b4df7",
+      "estado_anterior": "EN_CORTE_MUESTRA",
+      "estado_nuevo": "EN_REVISION_GERENCIA",
       "id": "evt_1787951734086_hco55",
-      "ts": 1787951734086,
-      "user": "Isabel",
+      "marca": "Bentley Kids",
+      "nombre": "CONJUNTO BOMBER CORTA",
       "tipo": "estado_diseno",
+      "ts": 1787951734086,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1787951744941_deu8h",
+      "ts": 1787951744941,
+      "user": "Isabel",
+      "tipo": "diseno_responsable",
       "diseno_id": "id_6e172690a79b4df7",
       "nombre": "CONJUNTO BOMBER CORTA",
       "categoria": "Conjuntos",
-      "marca": "Bentley Kids",
-      "estado_anterior": "EN_CORTE_MUESTRA",
-      "estado_nuevo": "EN_REVISION_GERENCIA"
+      "resp_anterior": "Carolina",
+      "resp_nuevo": "John"
     }
   ]
 }
