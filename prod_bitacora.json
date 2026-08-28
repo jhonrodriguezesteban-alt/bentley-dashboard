@@ -12733,20 +12733,34 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": false,
+      "color": "VINOTINTO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1787951507368_irhj9",
-      "ts": 1787951507368,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-0048",
       "op_nombre": "CONJUNTO MANCHESTER",
       "referencia": "CONJUNTO MANCHESTER",
-      "color": "VINOTINTO",
       "talla": "T10",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": false,
+      "tipo": "estado_ot",
+      "ts": 1787951507368,
       "uds": 12,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787951520971_zytjs",
+      "ts": 1787951520971,
+      "user": "Jefa de Producción",
+      "tipo": "entrega_inline",
+      "ot_id": "OT-12523",
+      "numero_ot": 12523,
+      "op_id": "OP-0048",
+      "uds_entregadas": 12,
+      "pendientes": 0,
+      "estado": "ENTREGADO",
+      "talla": "T12",
+      "satelite": "MIRIAM PINTO"
     }
   ]
 }
