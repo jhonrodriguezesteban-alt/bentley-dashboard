@@ -12703,18 +12703,34 @@
       "user": "Jefa de Producción"
     },
     {
+      "estado": "ENTREGADO",
       "id": "evt_1787950446040_16p9z",
-      "ts": 1787950446040,
-      "user": "Jefa de Producción",
-      "tipo": "entrega_inline",
-      "ot_id": "OT-12430",
       "numero_ot": 12430,
       "op_id": "OP-0022",
-      "uds_entregadas": 10,
+      "ot_id": "OT-12430",
       "pendientes": 0,
-      "estado": "ENTREGADO",
+      "satelite": "NIEVES CRISTANCHO",
       "talla": "T14",
-      "satelite": "NIEVES CRISTANCHO"
+      "tipo": "entrega_inline",
+      "ts": 1787950446040,
+      "uds_entregadas": 10,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1787951493659_gwneo",
+      "ts": 1787951493659,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0048",
+      "op_nombre": "CONJUNTO MANCHESTER",
+      "referencia": "CONJUNTO MANCHESTER",
+      "color": "VINOTINTO",
+      "talla": "T8",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": false,
+      "uds": 12,
+      "motivo": "ENTREGADO"
     }
   ]
 }
