@@ -12887,21 +12887,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1788013960512_dgmuh",
-      "ts": 1788013960512,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-098",
-      "op_nombre": "CHAQUETA CAZADORA",
       "categoria": "CHAQUETAS",
-      "total_ots": 6,
-      "total_uds": 80,
       "colores": [
         "VERDE MILITAR"
       ],
+      "id": "evt_1788013960512_dgmuh",
+      "op_id": "OP-2026-098",
+      "op_nombre": "CHAQUETA CAZADORA",
       "referencias": [
         "CHAQUETA CAZADORA"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 6,
+      "total_uds": 80,
+      "ts": 1788013960512,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788195017045_64kwc",
+      "ts": 1788195017045,
+      "user": "Jefa de Producción",
+      "tipo": "cambiar_estado_op_all",
+      "op_id": "OP-2026-201",
+      "estado": "POR_REVISAR",
+      "colores": 5,
+      "nombre": "SET BOMBER CORTA"
     }
   ]
 }
