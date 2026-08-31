@@ -12914,20 +12914,29 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "CAMEL",
+      "estado_anterior": "PENDIENTE_CORTAR",
+      "estado_nuevo": "PENDIENTE_CORTAR",
       "id": "evt_1788196052999_iemun",
-      "ts": 1788196052999,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-119",
       "op_nombre": "WASHMAN",
       "referencia": "PANTALON RAVE",
-      "color": "CAMEL",
       "talla": "todas las tallas",
-      "estado_anterior": "PENDIENTE_CORTAR",
-      "estado_nuevo": "PENDIENTE_CORTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1788196052999,
       "uds": 102,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788196448011_fay64",
+      "ts": 1788196448011,
+      "user": "Jefa de Producción",
+      "tipo": "crear_op_desde_diseno",
+      "diseno_id": "id_1782400152280_85zhl3nb5",
+      "nombre": "CAMISA CLASICA BK",
+      "categoria": "CAMISAS"
     }
   ]
 }
