@@ -12904,14 +12904,30 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1788195017045_64kwc",
-      "ts": 1788195017045,
-      "user": "Jefa de Producción",
-      "tipo": "cambiar_estado_op_all",
-      "op_id": "OP-2026-201",
-      "estado": "POR_REVISAR",
       "colores": 5,
-      "nombre": "SET BOMBER CORTA"
+      "estado": "POR_REVISAR",
+      "id": "evt_1788195017045_64kwc",
+      "nombre": "SET BOMBER CORTA",
+      "op_id": "OP-2026-201",
+      "tipo": "cambiar_estado_op_all",
+      "ts": 1788195017045,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788196052999_iemun",
+      "ts": 1788196052999,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-119",
+      "op_nombre": "WASHMAN",
+      "referencia": "PANTALON RAVE",
+      "color": "CAMEL",
+      "talla": "todas las tallas",
+      "estado_anterior": "PENDIENTE_CORTAR",
+      "estado_nuevo": "PENDIENTE_CORTAR",
+      "bulk": true,
+      "uds": 102,
+      "motivo": "en insumos"
     }
   ]
 }
