@@ -7752,8 +7752,12 @@ function _invBarraResumen(r, opId){
 // Todo se calcula en vivo desde ops/costeo/costos_mo, no hay datos duplicados que
 // puedan desincronizarse.
 function renderInversion(){
-  var ops = (DB.ops||[]).filter(function(o){ return o.estado_op!=='ARCHIVADO'; });
-  var filas = ops.map(function(op){ return _invResumenOP(op); });
+  // Solo OPs realmente activas en el kanban (EN_PROCESO / CON_NOVEDAD) — COMPLETADO,
+  // PAGO_PENDIENTE y ARCHIVADO ya salieron del proceso de producción. Y aunque una OP
+  // siga marcada EN_PROCESO (típico en OPs viejas/migradas que nunca se cerraron a mano),
+  // si ya entregó el 100% no tiene sentido seguir mostrándola acá.
+  var ops = (DB.ops||[]).filter(function(o){ return o.estado_op==='EN_PROCESO' || o.estado_op==='CON_NOVEDAD'; });
+  var filas = ops.map(function(op){ return _invResumenOP(op); }).filter(function(r){ return !r.entregadaCompleta; });
   filas.sort(function(a,b){ return b.pendiente - a.pendiente; });
 
   var granTotal=0, granPagado=0, granPendiente=0, sinReceta=0;
@@ -7763,7 +7767,7 @@ function renderInversion(){
   });
 
   var h = '<div style="padding:16px 20px;height:100%;overflow-y:auto;box-sizing:border-box;">';
-  h += '<div style="font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px;">Producción en proceso ('+ops.length+' OPs) · qué falta invertir por referencia</div>';
+  h += '<div style="font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px;">Producción en proceso ('+filas.length+' OPs) · qué falta invertir por referencia</div>';
 
   h += '<div class="card" style="padding:0;overflow:hidden;margin-bottom:18px;">';
   h += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0;">';
