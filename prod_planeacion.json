@@ -34,10 +34,7 @@
       "OP-2026-099||VINOTINTO",
       "OP-2026-099||CAFE",
       "OP-2026-099||GRIS OSCURO",
-      "OP-2026-098||ROJO",
       "OP-2026-098||ROSA",
-      "OP-2026-098||VERDE MILITAR",
-      "OP-2026-098||AZUL OSCURO",
       "OP-2026-098||LILA",
       "OP-2026-098||SALMON",
       "OP-2026-098||FUCSIA",
@@ -717,114 +714,147 @@
       "uds": 110
     },
     {
-      "key": "OP-0037||ROSA",
-      "op_id": "OP-0037",
-      "op_nombre": "CHALECO ACOLCHADO MANY",
       "categoria": "CHALECOS",
       "color": "ROSA",
-      "uds": 132,
-      "mes_planeado": "2026-07",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-08-27"
+      "fecha_deteccion": "2026-08-27",
+      "key": "OP-0037||ROSA",
+      "mes_planeado": "2026-07",
+      "op_id": "OP-0037",
+      "op_nombre": "CHALECO ACOLCHADO MANY",
+      "uds": 132
     },
     {
-      "key": "OP-2026-081||NEGRO",
-      "op_id": "OP-2026-081",
-      "op_nombre": "CONJUNTO MANCHESTER",
       "categoria": "CONJUNTOS",
       "color": "NEGRO",
-      "uds": 84,
-      "mes_planeado": "2026-08",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-08-27"
-    },
-    {
-      "key": "OP-2026-081||CAFE",
+      "fecha_deteccion": "2026-08-27",
+      "key": "OP-2026-081||NEGRO",
+      "mes_planeado": "2026-08",
       "op_id": "OP-2026-081",
       "op_nombre": "CONJUNTO MANCHESTER",
+      "uds": 84
+    },
+    {
       "categoria": "CONJUNTOS",
       "color": "CAFE",
-      "uds": 64,
-      "mes_planeado": "2026-08",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-08-27"
-    },
-    {
-      "key": "OP-2026-086||NEGRO",
-      "op_id": "OP-2026-086",
-      "op_nombre": "PANTALON CHICAGO",
-      "categoria": "PANTALONES",
-      "color": "NEGRO",
-      "uds": 68,
+      "fecha_deteccion": "2026-08-27",
+      "key": "OP-2026-081||CAFE",
       "mes_planeado": "2026-08",
-      "estado_al_salir": "EN_CONFECCION",
-      "fecha_deteccion": "2026-08-27"
-    },
-    {
-      "key": "OP-2026-086||MARFIL",
-      "op_id": "OP-2026-086",
-      "op_nombre": "PANTALON CHICAGO",
-      "categoria": "PANTALONES",
-      "color": "MARFIL",
-      "uds": 68,
-      "mes_planeado": "2026-08",
-      "estado_al_salir": "EN_CONFECCION",
-      "fecha_deteccion": "2026-08-27"
-    },
-    {
-      "key": "OP-0036||BEIGE",
-      "op_id": "OP-0036",
-      "op_nombre": "PANTALON DRILL ANCHO",
-      "categoria": "PANTALONES",
-      "color": "BEIGE",
-      "uds": 44,
-      "mes_planeado": "2026-08",
-      "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-08-27"
-    },
-    {
-      "key": "OP-0036||NEGRO",
-      "op_id": "OP-0036",
-      "op_nombre": "PANTALON DRILL ANCHO",
-      "categoria": "PANTALONES",
-      "color": "NEGRO",
-      "uds": 70,
-      "mes_planeado": "2026-08",
-      "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-08-27"
-    },
-    {
-      "key": "OP-2026-102||VINOTINTO",
-      "op_id": "OP-2026-102",
-      "op_nombre": "CHAQUETA ONION",
-      "categoria": "CHAQUETAS",
-      "color": "VINOTINTO",
-      "uds": 90,
-      "mes_planeado": "2026-08",
-      "estado_al_salir": "EN_CONFECCION",
-      "fecha_deteccion": "2026-08-27"
-    },
-    {
-      "key": "OP-2026-101||ROSA",
-      "op_id": "OP-2026-101",
-      "op_nombre": "CHAQUETA MARIPOSAS",
-      "categoria": "CHAQUETAS",
-      "color": "ROSA",
-      "uds": 93,
-      "mes_planeado": "2026-08",
-      "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-08-27"
-    },
-    {
-      "key": "OP-2026-081||AZUL BEBE",
       "op_id": "OP-2026-081",
       "op_nombre": "CONJUNTO MANCHESTER",
+      "uds": 64
+    },
+    {
+      "categoria": "PANTALONES",
+      "color": "NEGRO",
+      "estado_al_salir": "EN_CONFECCION",
+      "fecha_deteccion": "2026-08-27",
+      "key": "OP-2026-086||NEGRO",
+      "mes_planeado": "2026-08",
+      "op_id": "OP-2026-086",
+      "op_nombre": "PANTALON CHICAGO",
+      "uds": 68
+    },
+    {
+      "categoria": "PANTALONES",
+      "color": "MARFIL",
+      "estado_al_salir": "EN_CONFECCION",
+      "fecha_deteccion": "2026-08-27",
+      "key": "OP-2026-086||MARFIL",
+      "mes_planeado": "2026-08",
+      "op_id": "OP-2026-086",
+      "op_nombre": "PANTALON CHICAGO",
+      "uds": 68
+    },
+    {
+      "categoria": "PANTALONES",
+      "color": "BEIGE",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-08-27",
+      "key": "OP-0036||BEIGE",
+      "mes_planeado": "2026-08",
+      "op_id": "OP-0036",
+      "op_nombre": "PANTALON DRILL ANCHO",
+      "uds": 44
+    },
+    {
+      "categoria": "PANTALONES",
+      "color": "NEGRO",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-08-27",
+      "key": "OP-0036||NEGRO",
+      "mes_planeado": "2026-08",
+      "op_id": "OP-0036",
+      "op_nombre": "PANTALON DRILL ANCHO",
+      "uds": 70
+    },
+    {
+      "categoria": "CHAQUETAS",
+      "color": "VINOTINTO",
+      "estado_al_salir": "EN_CONFECCION",
+      "fecha_deteccion": "2026-08-27",
+      "key": "OP-2026-102||VINOTINTO",
+      "mes_planeado": "2026-08",
+      "op_id": "OP-2026-102",
+      "op_nombre": "CHAQUETA ONION",
+      "uds": 90
+    },
+    {
+      "categoria": "CHAQUETAS",
+      "color": "ROSA",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-08-27",
+      "key": "OP-2026-101||ROSA",
+      "mes_planeado": "2026-08",
+      "op_id": "OP-2026-101",
+      "op_nombre": "CHAQUETA MARIPOSAS",
+      "uds": 93
+    },
+    {
       "categoria": "CONJUNTOS",
       "color": "AZUL BEBE",
-      "uds": 104,
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-08-27",
+      "key": "OP-2026-081||AZUL BEBE",
+      "mes_planeado": "2026-08",
+      "op_id": "OP-2026-081",
+      "op_nombre": "CONJUNTO MANCHESTER",
+      "uds": 104
+    },
+    {
+      "key": "OP-2026-098||ROJO",
+      "op_id": "OP-2026-098",
+      "op_nombre": "CHAQUETA CAZADORA",
+      "categoria": "CHAQUETAS",
+      "color": "ROJO",
+      "uds": 80,
       "mes_planeado": "2026-08",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-08-27"
+      "fecha_deteccion": "2026-08-31"
+    },
+    {
+      "key": "OP-2026-098||VERDE MILITAR",
+      "op_id": "OP-2026-098",
+      "op_nombre": "CHAQUETA CAZADORA",
+      "categoria": "CHAQUETAS",
+      "color": "VERDE MILITAR",
+      "uds": 80,
+      "mes_planeado": "2026-08",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-08-31"
+    },
+    {
+      "key": "OP-2026-098||AZUL OSCURO",
+      "op_id": "OP-2026-098",
+      "op_nombre": "CHAQUETA CAZADORA",
+      "categoria": "CHAQUETAS",
+      "color": "AZUL OSCURO",
+      "uds": 80,
+      "mes_planeado": "2026-08",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-08-31"
     }
   ],
   "confirmadas": {
