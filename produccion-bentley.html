@@ -1717,7 +1717,10 @@ function _mergePlaneacionData(remoteData, localData){
     var k = h.key || JSON.stringify(h);
     if(!histSeen[k]){ histSeen[k]=1; histResult.push(h); }
   });
-  return {meses:mesesResult, confirmadas:confResult, disenos_plan:disPResult, historial_corte:histResult};
+  // Check de trazos montados: unión simple, local gana por clave si ambos lados la tocaron.
+  var remTrazos = remoteData.trazos||{}, locTrazos = localData.trazos||{};
+  var trazosResult = Object.assign({}, remTrazos, locTrazos);
+  return {meses:mesesResult, confirmadas:confResult, disenos_plan:disPResult, historial_corte:histResult, trazos:trazosResult};
 }
 function _mergeArrayData(key, remoteData, localData){
   function byId(arr, id){ for(var i=0;i<arr.length;i++){ if(arr[i].id===id) return i; } return -1; }
@@ -2206,7 +2209,7 @@ function _planDisSetUds(disId, uds){
   if(telTotal) telTotal.textContent = total>0 ? _fmtCOP(total) : '—';
   var telUds = document.getElementById('pland-total-uds');
   if(telUds) telUds.textContent = totalUds>0 ? totalUds.toLocaleString('es-CO')+' uds' : '—';
-  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[], confirmadas: DB.planeacion.confirmadas||{}});
+  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[], confirmadas: DB.planeacion.confirmadas||{}, trazos: DB.planeacion.trazos||{}});
 }
 
 function _planDisSetMes(disId, mes){
@@ -2216,7 +2219,7 @@ function _planDisSetMes(disId, mes){
   if(!DB.planeacion.disenos_plan[disId]) DB.planeacion.disenos_plan[disId] = {uds:0, mes:''};
   DB.planeacion.disenos_plan[disId].mes = mes;
   saveLocal();
-  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[], confirmadas: DB.planeacion.confirmadas||{}});
+  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[], confirmadas: DB.planeacion.confirmadas||{}, trazos: DB.planeacion.trazos||{}});
   renderPage('planeacion');
 }
 function _planDisRemove(disId){
@@ -2227,7 +2230,7 @@ function _planDisRemove(disId){
     DB.planeacion.disenos_plan[disId].mes = '';
   }
   saveLocal();
-  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[], confirmadas: DB.planeacion.confirmadas||{}});
+  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[], confirmadas: DB.planeacion.confirmadas||{}, trazos: DB.planeacion.trazos||{}});
   renderPage('planeacion');
 }
 
@@ -2235,7 +2238,7 @@ function limpiarPlanDis(){
   if(!DB.planeacion) return;
   DB.planeacion.disenos_plan = {};
   saveLocal();
-  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: {}, historial_corte: DB.planeacion.historial_corte||[], confirmadas: DB.planeacion.confirmadas||{}});
+  guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: {}, historial_corte: DB.planeacion.historial_corte||[], confirmadas: DB.planeacion.confirmadas||{}, trazos: DB.planeacion.trazos||{}});
   renderPage('planeacion');
 }
 
@@ -2400,15 +2403,15 @@ async function cargarDatos(){
     // de localStorage; intentamos Firebase primero (más fresco) y luego Pages.
     try {
       var planFb = _fbDb ? await _fbGet('planeacion') : null;
-      if(planFb){ DB.planeacion = {meses: planFb.meses||{}, disenos_plan: planFb.disenos_plan||{}, historial_corte: planFb.historial_corte||[], confirmadas: planFb.confirmadas||{}}; }
+      if(planFb){ DB.planeacion = {meses: planFb.meses||{}, disenos_plan: planFb.disenos_plan||{}, historial_corte: planFb.historial_corte||[], confirmadas: planFb.confirmadas||{}, trazos: planFb.trazos||{}}; }
       else {
         var planR = await fetch(BASE_URL + 'prod_planeacion.json?t=' + t);
-        if(planR.ok){ var d11 = await planR.json(); DB.planeacion = {meses: d11.meses||{}, disenos_plan: d11.disenos_plan||{}, historial_corte: d11.historial_corte||[], confirmadas: d11.confirmadas||{}}; }
+        if(planR.ok){ var d11 = await planR.json(); DB.planeacion = {meses: d11.meses||{}, disenos_plan: d11.disenos_plan||{}, historial_corte: d11.historial_corte||[], confirmadas: d11.confirmadas||{}, trazos: d11.trazos||{}}; }
       }
     } catch(planE){
       try {
         var planR2 = await fetch(BASE_URL + 'prod_planeacion.json?t=' + t);
-        if(planR2.ok){ var d11c = await planR2.json(); DB.planeacion = {meses: d11c.meses||{}, disenos_plan: d11c.disenos_plan||{}, historial_corte: d11c.historial_corte||[], confirmadas: d11c.confirmadas||{}}; }
+        if(planR2.ok){ var d11c = await planR2.json(); DB.planeacion = {meses: d11c.meses||{}, disenos_plan: d11c.disenos_plan||{}, historial_corte: d11c.historial_corte||[], confirmadas: d11c.confirmadas||{}, trazos: d11c.trazos||{}}; }
       } catch(planE2){ console.warn('Planeación: no se pudo cargar fresco, se mantiene lo que había en memoria', planE2); }
     }
     var planConfR = await fetch(BASE_URL + 'prod_planeacion_confeccion.json?t=' + t);
@@ -2451,7 +2454,7 @@ async function cargarDatos(){
           var fbCron = await _fbGet('cronograma');
           if(fbCron) DB.cronograma = fbCron.cronograma||[];
           var fbPlan = await _fbGet('planeacion');
-          if(fbPlan) DB.planeacion = {meses: fbPlan.meses||{}, disenos_plan: fbPlan.disenos_plan||{}, historial_corte: fbPlan.historial_corte||[], confirmadas: fbPlan.confirmadas||{}};
+          if(fbPlan) DB.planeacion = {meses: fbPlan.meses||{}, disenos_plan: fbPlan.disenos_plan||{}, historial_corte: fbPlan.historial_corte||[], confirmadas: fbPlan.confirmadas||{}, trazos: fbPlan.trazos||{}};
           var fbPlanConf = await _fbGet('planeacion_confeccion');
           if(fbPlanConf) DB.planeacion_confeccion = {por_satelite: fbPlanConf.por_satelite||{}};
           var fbBit = await _fbGet('bitacora');
@@ -2647,14 +2650,14 @@ function renderPage(page){
 var _planDragOpId = null;
 
 async function guardarPlaneacion(){
-  if(!DB.planeacion) DB.planeacion = {meses:{}, disenos_plan:{}, historial_corte:[], confirmadas:{}};
-  var ok = await guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[], confirmadas: DB.planeacion.confirmadas||{}});
+  if(!DB.planeacion) DB.planeacion = {meses:{}, disenos_plan:{}, historial_corte:[], confirmadas:{}, trazos:{}};
+  var ok = await guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[], confirmadas: DB.planeacion.confirmadas||{}, trazos: DB.planeacion.trazos||{}});
   if(ok) toast('Planeación guardada','success');
 }
 
 var _planCatModalActual = null;
 function planToggleConfirmada(refKey, checked, meta){
-  if(!DB.planeacion) DB.planeacion = {meses:{}, disenos_plan:{}, historial_corte:[], confirmadas:{}};
+  if(!DB.planeacion) DB.planeacion = {meses:{}, disenos_plan:{}, historial_corte:[], confirmadas:{}, trazos:{}};
   if(!DB.planeacion.confirmadas) DB.planeacion.confirmadas = {};
   if(checked){
     var prev = DB.planeacion.confirmadas[refKey];
@@ -2667,6 +2670,24 @@ function planToggleConfirmada(refKey, checked, meta){
   }
   guardarPlaneacion();
   renderPage('planeacion');
+}
+// Check de "trazos montados" en los listados de confirmados (repro/diseño) — marca si ya
+// se montó la programación de corte con trazos para esa referencia. Solo actualiza el
+// checkbox en el DOM (sin recargar el modal completo) para no perder el scroll.
+async function planToggleTrazos(refKey, checked, cbEl){
+  if(!DB.planeacion) DB.planeacion = {meses:{}, disenos_plan:{}, historial_corte:[], confirmadas:{}, trazos:{}};
+  if(!DB.planeacion.trazos) DB.planeacion.trazos = {};
+  if(checked) DB.planeacion.trazos[refKey] = true; else delete DB.planeacion.trazos[refKey];
+  saveLocal();
+  await guardarPlaneacion();
+  if(cbEl){
+    var row = cbEl.closest('[data-trazos-row]');
+    if(row){
+      var nombreDiv = row.querySelector('[data-trazos-nombre]');
+      if(nombreDiv) nombreDiv.style.textDecoration = checked ? 'line-through' : '';
+      row.style.opacity = checked ? '.55' : '';
+    }
+  }
 }
 // Tarjeta paralela a "Resumen total planeado" — solo referencias marcadas con el check,
 // sumando lo ya programado + la cantidad extra que se quiera agregar manualmente.
@@ -2876,7 +2897,7 @@ function _planVerListadoDisenosConfirmados(){
       var p = disPlanAll[d.id];
       if(p && p.mes){ mesLbl = (_planMesesDef().find(function(m){ return m.k===p.mes; })||{}).label || p.mes; }
     }
-    porCat[cat].push({nombre:e.nombre, uds:(e.uds||0), extra:(e.extra||0), total:(e.uds||0)+(e.extra||0), mes:mesLbl, kanban:d?(d.kanban_estado||''):''});
+    porCat[cat].push({refKey:e.refKey, nombre:e.nombre, uds:(e.uds||0), extra:(e.extra||0), total:(e.uds||0)+(e.extra||0), mes:mesLbl, kanban:d?(d.kanban_estado||''):''});
   });
   var cats = Object.keys(porCat).sort(function(a,b){
     var ta = porCat[a].reduce(function(s,r){return s+r.total;},0);
@@ -2902,9 +2923,11 @@ function _planVerListadoDisenosConfirmados(){
       h += '<span style="font-size:12px;font-weight:800;color:#e2e8f0;">'+totCat.toLocaleString('es-CO')+' uds · '+refs.length+' ref'+(refs.length!==1?'s':'')+'</span>';
       h += '</div>';
       refs.forEach(function(r){
-        h += '<div style="display:flex;align-items:center;gap:10px;padding:7px 4px;">';
+        var trazosOk = !!(((DB.planeacion&&DB.planeacion.trazos)||{})[r.refKey]);
+        h += '<div data-trazos-row style="display:flex;align-items:center;gap:10px;padding:7px 4px;'+(trazosOk?'opacity:.55;':'')+'">';
+        h += '<input type="checkbox" title="Trazos montados" data-refkey="'+esc(r.refKey)+'" onchange="planToggleTrazos(this.dataset.refkey,this.checked,this)" '+(trazosOk?'checked':'')+' style="width:15px;height:15px;accent-color:#a855f7;cursor:pointer;flex-shrink:0;">';
         h += '<div style="flex:1;min-width:0;">';
-        h += '<div style="font-size:12.5px;font-weight:700;color:#e2e8f0;">'+esc(r.nombre)+'</div>';
+        h += '<div data-trazos-nombre style="font-size:12.5px;font-weight:700;color:#e2e8f0;'+(trazosOk?'text-decoration:line-through;':'')+'">'+esc(r.nombre)+'</div>';
         h += '<div style="font-size:9.5px;color:#64748b;">'+(r.mes?('planificado: '+esc(r.mes)):'sin mes asignado')+(r.kanban?(' · '+esc(r.kanban.replace(/_/g,' '))):'')+(r.extra?(' · +'+r.extra.toLocaleString('es-CO')+' extra'):'')+'</div>';
         h += '</div>';
         h += '<div style="font-size:13px;font-weight:900;color:#f1f5f9;flex-shrink:0;">'+r.total.toLocaleString('es-CO')+'</div>';
@@ -2918,10 +2941,11 @@ function _planVerListadoDisenosConfirmados(){
 }
 function _planDescargarCSVListadoDisenos(){
   var porCat = window._planListadoDisenosCSV || {};
-  var lines = [['Categoría','Referencia','Programado','Extra','Total','Mes planificado','Estado kanban'].join(',')];
+  var lines = [['Categoría','Referencia','Programado','Extra','Total','Mes planificado','Estado kanban','Trazos montados'].join(',')];
   Object.keys(porCat).forEach(function(cat){
     porCat[cat].forEach(function(r){
-      lines.push([cat, r.nombre, r.uds, r.extra, r.total, r.mes, r.kanban].map(function(v){ return '"'+String(v||'').replace(/"/g,'""')+'"'; }).join(','));
+      var trazos = ((DB.planeacion&&DB.planeacion.trazos)||{})[r.refKey] ? 'Sí' : 'No';
+      lines.push([cat, r.nombre, r.uds, r.extra, r.total, r.mes, r.kanban, trazos].map(function(v){ return '"'+String(v||'').replace(/"/g,'""')+'"'; }).join(','));
     });
   });
   var blob = new Blob(['﻿'+lines.join('\n')], {type:'text/csv;charset=utf-8;'});
@@ -2971,7 +2995,7 @@ function _planVerListadoReproConfirmados(){
     var mesTxt = !mesesLbl.length ? '' : (mesesLbl.length===1 ? mesesLbl[0] : 'varios meses');
     var estadosSet = {}; ops.forEach(function(op){ estadosSet[op.estado_op||'EN_PROCESO']=1; });
     var estadoTxt = Object.keys(estadosSet).map(function(s){ return ESTADO_LBL[s]||s; }).join(' / ');
-    porCat[cat].push({nombre:e.nombre, uds:(e.uds||0), extra:(e.extra||0), total:(e.uds||0)+(e.extra||0), mes:mesTxt, kanban:estadoTxt, nOps:ops.length});
+    porCat[cat].push({refKey:e.refKey, nombre:e.nombre, uds:(e.uds||0), extra:(e.extra||0), total:(e.uds||0)+(e.extra||0), mes:mesTxt, kanban:estadoTxt, nOps:ops.length});
   });
   var cats = Object.keys(porCat).sort(function(a,b){
     var ta = porCat[a].reduce(function(s,r){return s+r.total;},0);
@@ -2997,9 +3021,11 @@ function _planVerListadoReproConfirmados(){
       h += '<span style="font-size:12px;font-weight:800;color:#e2e8f0;">'+totCat.toLocaleString('es-CO')+' uds · '+refs.length+' ref'+(refs.length!==1?'s':'')+'</span>';
       h += '</div>';
       refs.forEach(function(r){
-        h += '<div style="display:flex;align-items:center;gap:10px;padding:7px 4px;">';
+        var trazosOk = !!(((DB.planeacion&&DB.planeacion.trazos)||{})[r.refKey]);
+        h += '<div data-trazos-row style="display:flex;align-items:center;gap:10px;padding:7px 4px;'+(trazosOk?'opacity:.55;':'')+'">';
+        h += '<input type="checkbox" title="Trazos montados" data-refkey="'+esc(r.refKey)+'" onchange="planToggleTrazos(this.dataset.refkey,this.checked,this)" '+(trazosOk?'checked':'')+' style="width:15px;height:15px;accent-color:#0a84ff;cursor:pointer;flex-shrink:0;">';
         h += '<div style="flex:1;min-width:0;">';
-        h += '<div style="font-size:12.5px;font-weight:700;color:#e2e8f0;">'+esc(r.nombre)+'</div>';
+        h += '<div data-trazos-nombre style="font-size:12.5px;font-weight:700;color:#e2e8f0;'+(trazosOk?'text-decoration:line-through;':'')+'">'+esc(r.nombre)+'</div>';
         h += '<div style="font-size:9.5px;color:#64748b;">'+(r.mes?('planificado: '+esc(r.mes)):'sin mes asignado')+(r.kanban?(' · '+esc(r.kanban)):'')+(!r.nOps?' · sin OP activa':'')+(r.extra?(' · +'+r.extra.toLocaleString('es-CO')+' extra'):'')+'</div>';
         h += '</div>';
         h += '<div style="font-size:13px;font-weight:900;color:#f1f5f9;flex-shrink:0;">'+r.total.toLocaleString('es-CO')+'</div>';
@@ -3013,10 +3039,11 @@ function _planVerListadoReproConfirmados(){
 }
 function _planDescargarCSVListadoRepro(){
   var porCat = window._planListadoReproCSV || {};
-  var lines = [['Categoría','Referencia','Programado','Extra','Total','Mes planificado','Estado OP'].join(',')];
+  var lines = [['Categoría','Referencia','Programado','Extra','Total','Mes planificado','Estado OP','Trazos montados'].join(',')];
   Object.keys(porCat).forEach(function(cat){
     porCat[cat].forEach(function(r){
-      lines.push([cat, r.nombre, r.uds, r.extra, r.total, r.mes, r.kanban].map(function(v){ return '"'+String(v||'').replace(/"/g,'""')+'"'; }).join(','));
+      var trazos = ((DB.planeacion&&DB.planeacion.trazos)||{})[r.refKey] ? 'Sí' : 'No';
+      lines.push([cat, r.nombre, r.uds, r.extra, r.total, r.mes, r.kanban, trazos].map(function(v){ return '"'+String(v||'').replace(/"/g,'""')+'"'; }).join(','));
     });
   });
   var blob = new Blob(['﻿'+lines.join('\n')], {type:'text/csv;charset=utf-8;'});
@@ -4652,7 +4679,7 @@ function renderPlaneacion(){
   if(_planMigrado){
     DB.planeacion.meses = meses;
     if(_canEditPlan()){
-      guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[], confirmadas: DB.planeacion.confirmadas||{}});
+      guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte||[], confirmadas: DB.planeacion.confirmadas||{}, trazos: DB.planeacion.trazos||{}});
     }
   }
 
@@ -4695,7 +4722,7 @@ function renderPlaneacion(){
   if(_histNuevo && _canEditPlan()){
     DB.planeacion.meses = meses;
     DB.planeacion.historial_corte = _histCorte;
-    guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte, confirmadas: DB.planeacion.confirmadas||{}});
+    guardarArchivo('planeacion', {meses: DB.planeacion.meses||{}, disenos_plan: DB.planeacion.disenos_plan||{}, historial_corte: DB.planeacion.historial_corte, confirmadas: DB.planeacion.confirmadas||{}, trazos: DB.planeacion.trazos||{}});
   }
 
   // Keys asignadas a algún mes
