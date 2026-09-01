@@ -13131,19 +13131,35 @@
       "user": "Isabel"
     },
     {
+      "bulk": true,
+      "color": "MARFIL",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1788292764313_5bicf",
-      "ts": 1788292764313,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-093",
       "op_nombre": "CALIFORNIA",
       "referencia": "CALIFORNIA",
-      "color": "MARFIL",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1788292764313,
+      "uds": 152,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788292838777_6umbb",
+      "ts": 1788292838777,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0034",
+      "op_nombre": "PILOTO PANCAKE",
+      "referencia": "PILOTO PANCAKE",
+      "color": "NEGRO",
       "talla": "todas las tallas",
       "estado_anterior": "ENTREGADO",
       "estado_nuevo": "ENTREGADO",
       "bulk": true,
-      "uds": 152,
+      "uds": 72,
       "motivo": "ENTREGADO"
     }
   ]
