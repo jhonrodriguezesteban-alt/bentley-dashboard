@@ -13108,16 +13108,27 @@
       "user": "Jefa de Producción"
     },
     {
+      "categoria": "Chaquetas",
+      "diseno_id": "id_1785250179914_46vws1tz3",
+      "estado_anterior": "EN_CORTE_MUESTRA",
+      "estado_nuevo": "EN_REVISION_GERENCIA",
       "id": "evt_1788280942901_jajs7",
-      "ts": 1788280942901,
-      "user": "Isabel",
+      "marca": "Bentley Kids",
+      "nombre": "CHAQUETA MINI PARIS",
       "tipo": "estado_diseno",
+      "ts": 1788280942901,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1788281071019_qriw3",
+      "ts": 1788281071019,
+      "user": "Isabel",
+      "tipo": "diseno_responsable",
       "diseno_id": "id_1785250179914_46vws1tz3",
       "nombre": "CHAQUETA MINI PARIS",
       "categoria": "Chaquetas",
-      "marca": "Bentley Kids",
-      "estado_anterior": "EN_CORTE_MUESTRA",
-      "estado_nuevo": "EN_REVISION_GERENCIA"
+      "resp_anterior": "Isa",
+      "resp_nuevo": "John"
     }
   ]
 }
