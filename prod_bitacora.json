@@ -12930,13 +12930,25 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1788196448011_fay64",
-      "ts": 1788196448011,
-      "user": "Jefa de Producción",
-      "tipo": "crear_op_desde_diseno",
+      "categoria": "CAMISAS",
       "diseno_id": "id_1782400152280_85zhl3nb5",
+      "id": "evt_1788196448011_fay64",
       "nombre": "CAMISA CLASICA BK",
-      "categoria": "CAMISAS"
+      "tipo": "crear_op_desde_diseno",
+      "ts": 1788196448011,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788273461533_fwkes",
+      "ts": 1788273461533,
+      "user": "Isabel",
+      "tipo": "estado_diseno",
+      "diseno_id": "id_1782165545751_7o1s2haz5",
+      "nombre": "BLUSA POLLY",
+      "categoria": "Blusas",
+      "marca": "Bentley Kids",
+      "estado_anterior": "EN_CORTE_MUESTRA",
+      "estado_nuevo": "EN_REVISION_GERENCIA"
     }
   ]
 }
