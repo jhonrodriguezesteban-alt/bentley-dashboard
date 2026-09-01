@@ -13065,20 +13065,36 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "ROSA",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1788278604379_7gkpn",
-      "ts": 1788278604379,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-101",
       "op_nombre": "CHAQUETA MARIPOSAS",
       "referencia": "CHAQUETA MARIPOSAS",
-      "color": "ROSA",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1788278604379,
       "uds": 93,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788278641358_0dr31",
+      "ts": 1788278641358,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-092",
+      "op_nombre": "PANTALON MONIQUE",
+      "referencia": "PANTALON MONIQUE",
+      "color": "NEGRO",
+      "talla": "todas las tallas",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": true,
+      "uds": 52,
+      "motivo": "ENTREGADO"
     }
   ]
 }
