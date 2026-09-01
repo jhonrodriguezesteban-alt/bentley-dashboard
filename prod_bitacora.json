@@ -13120,15 +13120,31 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1788281071019_qriw3",
-      "ts": 1788281071019,
-      "user": "Isabel",
-      "tipo": "diseno_responsable",
-      "diseno_id": "id_1785250179914_46vws1tz3",
-      "nombre": "CHAQUETA MINI PARIS",
       "categoria": "Chaquetas",
+      "diseno_id": "id_1785250179914_46vws1tz3",
+      "id": "evt_1788281071019_qriw3",
+      "nombre": "CHAQUETA MINI PARIS",
       "resp_anterior": "Isa",
-      "resp_nuevo": "John"
+      "resp_nuevo": "John",
+      "tipo": "diseno_responsable",
+      "ts": 1788281071019,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1788292764313_5bicf",
+      "ts": 1788292764313,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-093",
+      "op_nombre": "CALIFORNIA",
+      "referencia": "CALIFORNIA",
+      "color": "MARFIL",
+      "talla": "todas las tallas",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": true,
+      "uds": 152,
+      "motivo": "ENTREGADO"
     }
   ]
 }
