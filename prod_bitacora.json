@@ -13049,20 +13049,36 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1788278539187_bkub2",
-      "ts": 1788278539187,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-080",
       "op_nombre": "CONJUNTO ISABELLA",
       "referencia": "CONJUNTO ISABELLA",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1788278539187,
       "uds": 48,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788278604379_7gkpn",
+      "ts": 1788278604379,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-101",
+      "op_nombre": "CHAQUETA MARIPOSAS",
+      "referencia": "CHAQUETA MARIPOSAS",
+      "color": "ROSA",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 93,
+      "motivo": "EN TALLER"
     }
   ]
 }
