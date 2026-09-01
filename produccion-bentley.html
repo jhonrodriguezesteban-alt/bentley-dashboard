@@ -15585,6 +15585,36 @@ var _modalRecetaId = null;
 var _modalRecetaComps = [];
 var _guardandoReceta = false; // kept for compat but no longer used as lock
 
+// Promedio histórico de tiempo_minutos ya cargado en otras recetas para ese puesto/zona —
+// así una receta nueva arranca con un estimado razonable en vez de 0, y solo hay que
+// ajustarlo si el producto es distinto al promedio, no llenarlo entero desde cero.
+// Se ignoran los componentes en 0 (sin diligenciar) para no arrastrar el promedio hacia abajo.
+function _avgTiempoMOD(puestoId){
+  var vals = [];
+  (DB.costeo.recetas||[]).forEach(function(r){
+    (r.componentes||[]).forEach(function(c){
+      if(c.tipo==='MOD' && c.puesto_id===puestoId){
+        var t = parseFloat(c.tiempo_minutos)||0;
+        if(t>0) vals.push(t);
+      }
+    });
+  });
+  if(!vals.length) return 0;
+  return Math.round((vals.reduce(function(a,b){ return a+b; },0)/vals.length)*10)/10;
+}
+function _avgTiempoCIF(zona){
+  var vals = [];
+  (DB.costeo.recetas||[]).forEach(function(r){
+    (r.componentes||[]).forEach(function(c){
+      if(c.tipo==='CIF' && c.zona===zona){
+        var t = parseFloat(c.tiempo_minutos)||0;
+        if(t>0) vals.push(t);
+      }
+    });
+  });
+  if(!vals.length) return 0;
+  return Math.round((vals.reduce(function(a,b){ return a+b; },0)/vals.length)*10)/10;
+}
 function _defaultComponentesMOD(){
   var puestos = DB.costeo.puestos||[];
   var defaults = [];
@@ -15601,7 +15631,7 @@ function _defaultComponentesMOD(){
   ];
   zonasPriority.forEach(function(z){
     var p = puestos.find(function(p){ return p.zona===z.zona && (!z.cargo||p.cargo===z.cargo); });
-    if(p) defaults.push({id:_costeoId(), tipo:'MOD', puesto_id:p.id, tiempo_minutos:0, unidades:1});
+    if(p) defaults.push({id:_costeoId(), tipo:'MOD', puesto_id:p.id, tiempo_minutos:_avgTiempoMOD(p.id), unidades:1});
   });
   return defaults;
 }
@@ -15611,7 +15641,7 @@ function _defaultComponentesCIF(){
   var zonas = ['corte','insumos/alistamiento','vapor 116','broches/ ojales','calidad','logisitica','empaque','bodega almacenamiento'];
   zonas.forEach(function(z){
     var c = cifs.find(function(c){ return c.zona===z; });
-    if(c) defaults.push({id:_costeoId(), tipo:'CIF', zona:z, tiempo_minutos:0, unidades:1});
+    if(c) defaults.push({id:_costeoId(), tipo:'CIF', zona:z, tiempo_minutos:_avgTiempoCIF(z), unidades:1});
   });
   return defaults;
 }
@@ -15621,12 +15651,15 @@ function _defaultComponentesServicios(){
   if(!svc) return [];
   return [{id:_costeoId(), tipo:'SERVICIO', servicio_id:svc.id, cantidad:1}];
 }
+// Insumos de empaque/etiquetado que van sí o sí en toda receta — por nombre exacto, no por
+// palabra clave: con keyword "bolsa" antes solo entraba BOLSA PLASTICA y BOLSA PRESENTACION
+// nunca aparecía porque la palabra ya estaba "usada". Lista fija = siempre completa.
+var _CONSUMIBLES_SIEMPRE = ['ETIQUETA','BOLSA PLASTICA','CODIGO ETIQUETA','FLECHA','STICKER TALLA','BOLSA PRESENTACION'];
 function _defaultComponentesConsumibles(){
   var mps = DB.costeo.mp||[];
-  var keywords = ['etiqueta','bolsa','codigo de barras','código de barras','marquilla','cinta','hangtag','empaque'];
   var comps = [];
-  keywords.forEach(function(kw){
-    var mp = mps.find(function(m){ return m.nombre.toLowerCase().indexOf(kw)>=0; });
+  _CONSUMIBLES_SIEMPRE.forEach(function(nombre){
+    var mp = mps.find(function(m){ return (m.nombre||'').trim().toUpperCase()===nombre; });
     if(mp && !comps.find(function(c){ return c.mp_id===mp.id; })){
       comps.push({id:_costeoId(), tipo:'MATERIAL', mp_id:mp.id, consumo:1});
     }
