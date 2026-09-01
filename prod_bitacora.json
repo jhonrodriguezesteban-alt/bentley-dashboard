@@ -13081,20 +13081,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1788278641358_0dr31",
-      "ts": 1788278641358,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-092",
       "op_nombre": "PANTALON MONIQUE",
       "referencia": "PANTALON MONIQUE",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1788278641358,
       "uds": 52,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788279241645_pol3o",
+      "ts": 1788279241645,
+      "user": "Jefa de Producción",
+      "tipo": "satelite_editar",
+      "satelite_id": "sat_02",
+      "nombre": "MELISSA MARTINEZ",
+      "activo": true,
+      "personas": 0,
+      "capacidad": 0
     }
   ]
 }
