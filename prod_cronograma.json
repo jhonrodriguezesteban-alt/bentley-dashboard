@@ -644,6 +644,7 @@
       "entregado": true,
       "fecha_compromiso": "2026-08-21",
       "fecha_entrada": "2026-07-02",
+      "fecha_entrega_real": "2026-08-28",
       "fecha_inicial": "2026-08-21",
       "historial": [
         {
@@ -657,8 +658,7 @@
       "op_id": "OP-0048",
       "op_nombre": "CONJUNTO MANCHESTER",
       "satelite_id": "sat_12",
-      "uds": 36,
-      "fecha_entrega_real": "2026-08-28"
+      "uds": 36
     },
     {
       "color": "MARFIL",
@@ -906,16 +906,16 @@
       "color": "NEGRO",
       "entregado": true,
       "fecha_entrada": "2026-07-28",
+      "fecha_entrega_real": "2026-09-01",
       "id": "id_1785256254149_u2bjqtb6e",
       "op_id": "OP-2026-092",
       "op_nombre": "PANTALON MONIQUE",
       "satelite_id": "sat_15",
-      "uds": 52,
-      "fecha_entrega_real": "2026-09-01"
+      "uds": 52
     },
     {
       "color": "MARFIL",
-      "entregado": false,
+      "entregado": true,
       "fecha_compromiso": "2026-08-19",
       "fecha_entrada": "2026-07-28",
       "fecha_inicial": "2026-08-19",
@@ -931,7 +931,8 @@
       "op_id": "OP-2026-093",
       "op_nombre": "CALIFORNIA",
       "satelite_id": "sat_00",
-      "uds": 152
+      "uds": 152,
+      "fecha_entrega_real": "2026-09-01"
     },
     {
       "color": "MARFIL",
@@ -1214,6 +1215,7 @@
       "entregado": true,
       "fecha_compromiso": "2026-08-21",
       "fecha_entrada": "2026-08-13",
+      "fecha_entrega_real": "2026-09-01",
       "fecha_inicial": "2026-08-21",
       "historial": [
         {
@@ -1227,14 +1229,14 @@
       "op_id": "OP-2026-094",
       "op_nombre": "CONJUNTO ISABELLA",
       "satelite_id": "sat_01",
-      "uds": 5,
-      "fecha_entrega_real": "2026-09-01"
+      "uds": 5
     },
     {
       "color": "MARFIL",
       "entregado": true,
       "fecha_compromiso": "2026-08-21",
       "fecha_entrada": "2026-08-13",
+      "fecha_entrega_real": "2026-09-01",
       "fecha_inicial": "2026-08-21",
       "historial": [
         {
@@ -1248,8 +1250,7 @@
       "op_id": "OP-2026-094",
       "op_nombre": "CONJUNTO ISABELLA",
       "satelite_id": "sat_01",
-      "uds": 60,
-      "fecha_entrega_real": "2026-09-01"
+      "uds": 60
     },
     {
       "color": "CAMEL",
@@ -1952,18 +1953,14 @@
       "uds": 68
     },
     {
+      "color": "ROSA",
+      "entregado": false,
+      "fecha_entrada": "2026-09-01",
       "id": "id_1788278604297_srtzlhp6h",
       "op_id": "OP-2026-101",
       "op_nombre": "CHAQUETA MARIPOSAS",
-      "color": "ROSA",
       "satelite_id": "id_1785519081675_amd8sy8h3",
-      "uds": 93,
-      "fecha_entrada": "2026-09-01",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 93
     }
   ]
 }
