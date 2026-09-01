@@ -13017,20 +13017,36 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MARFIL",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1788278472673_qszji",
-      "ts": 1788278472673,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-094",
       "op_nombre": "CONJUNTO ISABELLA",
       "referencia": "CONJUNTO ISABELLA",
-      "color": "MARFIL",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1788278472673,
       "uds": 60,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788278513096_e39og",
+      "ts": 1788278513096,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-080",
+      "op_nombre": "CONJUNTO ISABELLA",
+      "referencia": "CONJUNTO ISABELLA",
+      "color": "BEIGE",
+      "talla": "todas las tallas",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
+      "bulk": true,
+      "uds": 48,
+      "motivo": "en insumos"
     }
   ]
 }
