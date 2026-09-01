@@ -13147,20 +13147,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1788292838777_6umbb",
-      "ts": 1788292838777,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-0034",
       "op_nombre": "PILOTO PANCAKE",
       "referencia": "PILOTO PANCAKE",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1788292838777,
       "uds": 72,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788296892090_qtleq",
+      "ts": 1788296892090,
+      "user": "Isabel",
+      "tipo": "diseno_comentario",
+      "diseno_id": "id_1785250630320_f75otcjcu",
+      "nombre": "BONNIE LENTEJUELAS CON RIB",
+      "categoria": "Chaquetas",
+      "tiene_imagen": false,
+      "extracto": "En la prueba de la muestra se ve muy bonita. Me parece un poco pequeño el elásti"
     }
   ]
 }
