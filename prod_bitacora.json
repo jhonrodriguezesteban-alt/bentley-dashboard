@@ -13866,15 +13866,30 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1788390839408_469hj",
-      "ts": 1788390839408,
-      "user": "John Rodriguez",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-216",
-      "nombre": "CAMISA CLASICA BK",
       "categoria": "CAMISAS",
       "colores": 4,
-      "refs": 1
+      "id": "evt_1788390839408_469hj",
+      "nombre": "CAMISA CLASICA BK",
+      "op_id": "OP-2026-216",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1788390839408,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1788391012418_7de1x",
+      "ts": 1788391012418,
+      "user": "John Rodriguez",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-217",
+      "op_nombre": "BODY BASICO",
+      "categoria": "BLUSAS",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-09-02",
+      "total_uds": 300,
+      "referencias": [
+        "BODY BASICO"
+      ]
     }
   ]
 }
