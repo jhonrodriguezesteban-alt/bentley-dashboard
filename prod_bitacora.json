@@ -13645,19 +13645,31 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1788389008081_5hcua",
-      "ts": 1788389008081,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-208",
-      "op_nombre": "PANTALON VENOM",
       "categoria": "PANTALONES",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-09-02",
-      "total_uds": 192,
+      "id": "evt_1788389008081_5hcua",
+      "op_id": "OP-2026-208",
+      "op_nombre": "PANTALON VENOM",
       "referencias": [
         "PANTALON VENOM"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 192,
+      "ts": 1788389008081,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1788389046814_su5q0",
+      "ts": 1788389046814,
+      "user": "John Rodriguez",
+      "tipo": "estado_diseno",
+      "diseno_id": "id_1782406163926_qd8stfyg0",
+      "nombre": "BLUSA COSMO",
+      "categoria": "Blusas",
+      "marca": "Bentley Kids",
+      "estado_anterior": "LISTA_PRODUCCION",
+      "estado_nuevo": "EN_ESCALADO"
     }
   ]
 }
