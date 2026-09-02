@@ -13687,14 +13687,25 @@
       "user": "John Rodriguez"
     },
     {
+      "categoria": "PANTALONES",
       "id": "evt_1788389214279_sqgs9",
-      "ts": 1788389214279,
-      "user": "John Rodriguez",
-      "tipo": "duplicar_op",
       "op_id": "OP-2026-210",
-      "op_origen": "OP-2026-207",
       "op_nombre": "PANTALON POLLY",
-      "categoria": "PANTALONES"
+      "op_origen": "OP-2026-207",
+      "tipo": "duplicar_op",
+      "ts": 1788389214279,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1788389248116_n61mi",
+      "ts": 1788389248116,
+      "user": "John Rodriguez",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-210",
+      "nombre": "BLUSA POLLY",
+      "categoria": "BLUSAS",
+      "colores": 4,
+      "refs": 1
     }
   ]
 }
