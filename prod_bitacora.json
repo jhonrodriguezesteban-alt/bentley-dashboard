@@ -13851,19 +13851,30 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1788390799983_3v7tq",
-      "ts": 1788390799983,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-216",
-      "op_nombre": "CAMISA CLASICA",
       "categoria": "CAMISAS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-09-02",
-      "total_uds": 384,
+      "id": "evt_1788390799983_3v7tq",
+      "op_id": "OP-2026-216",
+      "op_nombre": "CAMISA CLASICA",
       "referencias": [
         "CAMISA CLASICA"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 384,
+      "ts": 1788390799983,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1788390839408_469hj",
+      "ts": 1788390839408,
+      "user": "John Rodriguez",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-216",
+      "nombre": "CAMISA CLASICA BK",
+      "categoria": "CAMISAS",
+      "colores": 4,
+      "refs": 1
     }
   ]
 }
