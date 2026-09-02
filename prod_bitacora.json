@@ -13264,16 +13264,27 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1788353115929_ve9x5",
-      "ts": 1788353115929,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782178726618_4nqy6fard",
-      "nombre": "CHAQUETA DISCOVERY",
       "categoria": "Chaquetas",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1782178726618_4nqy6fard",
       "estado_anterior": "LISTA_PRODUCCION",
-      "estado_nuevo": "EN_REVISION_GERENCIA"
+      "estado_nuevo": "EN_REVISION_GERENCIA",
+      "id": "evt_1788353115929_ve9x5",
+      "marca": "Bentley Kids",
+      "nombre": "CHAQUETA DISCOVERY",
+      "tipo": "estado_diseno",
+      "ts": 1788353115929,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1788353392149_9ds6s",
+      "ts": 1788353392149,
+      "user": "Isabel",
+      "tipo": "diseno_responsable",
+      "diseno_id": "id_1782165786544_6e86om29m",
+      "nombre": "PANTALON POLLY",
+      "categoria": "Pantalones",
+      "resp_anterior": "Isa",
+      "resp_nuevo": "John"
     }
   ]
 }
