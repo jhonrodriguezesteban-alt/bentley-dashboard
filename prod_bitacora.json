@@ -13824,19 +13824,31 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1788390685068_vyfdd",
-      "ts": 1788390685068,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-215",
-      "op_nombre": "CHAQUETA DISCOVERY",
       "categoria": "CHAQUETAS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-09-02",
-      "total_uds": 288,
+      "id": "evt_1788390685068_vyfdd",
+      "op_id": "OP-2026-215",
+      "op_nombre": "CHAQUETA DISCOVERY",
       "referencias": [
         "CHAQUETA DISCOVERY"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 288,
+      "ts": 1788390685068,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1788390731120_05iua",
+      "ts": 1788390731120,
+      "user": "John Rodriguez",
+      "tipo": "estado_diseno",
+      "diseno_id": "id_1782400152280_85zhl3nb5",
+      "nombre": "CAMISA CLASICA BK",
+      "categoria": "CAMISAS",
+      "marca": "Bentley Kids",
+      "estado_anterior": "LISTA_PRODUCCION",
+      "estado_nuevo": "EN_ESCALADO"
     }
   ]
 }
