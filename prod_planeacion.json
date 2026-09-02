@@ -14,7 +14,6 @@
     "2026-08": [
       "OP-2026-081||VINOTINTO",
       "OP-2026-081||GRIS CLARO",
-      "OP-2026-080||NEGRO",
       "OP-2026-080||CAMEL",
       "OP-2026-079||AVENA",
       "OP-2026-079||MARFIL",
@@ -38,7 +37,6 @@
       "OP-2026-098||LILA",
       "OP-2026-098||SALMON",
       "OP-2026-098||FUCSIA",
-      "OP-2026-098||NEGRO",
       "OP-2026-102||GRIS OSCURO",
       "OP-2026-096||BEIGE",
       "OP-2026-106||NEGRO",
@@ -66,7 +64,6 @@
       "OP-0059||VINOTINTO",
       "OP-0059||GRIS OSCURO",
       "OP-2026-095||CAMEL",
-      "OP-2026-080||BEIGE",
       "OP-2026-073||CAMEL",
       "OP-2026-073||BLANCO NEGRO",
       "OP-2026-073||NEGRO",
@@ -824,37 +821,70 @@
       "uds": 104
     },
     {
-      "key": "OP-2026-098||ROJO",
-      "op_id": "OP-2026-098",
-      "op_nombre": "CHAQUETA CAZADORA",
       "categoria": "CHAQUETAS",
       "color": "ROJO",
-      "uds": 80,
-      "mes_planeado": "2026-08",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-08-31"
-    },
-    {
-      "key": "OP-2026-098||VERDE MILITAR",
+      "fecha_deteccion": "2026-08-31",
+      "key": "OP-2026-098||ROJO",
+      "mes_planeado": "2026-08",
       "op_id": "OP-2026-098",
       "op_nombre": "CHAQUETA CAZADORA",
+      "uds": 80
+    },
+    {
       "categoria": "CHAQUETAS",
       "color": "VERDE MILITAR",
-      "uds": 80,
-      "mes_planeado": "2026-08",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-08-31"
+      "fecha_deteccion": "2026-08-31",
+      "key": "OP-2026-098||VERDE MILITAR",
+      "mes_planeado": "2026-08",
+      "op_id": "OP-2026-098",
+      "op_nombre": "CHAQUETA CAZADORA",
+      "uds": 80
     },
     {
+      "categoria": "CHAQUETAS",
+      "color": "AZUL OSCURO",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-08-31",
       "key": "OP-2026-098||AZUL OSCURO",
+      "mes_planeado": "2026-08",
+      "op_id": "OP-2026-098",
+      "op_nombre": "CHAQUETA CAZADORA",
+      "uds": 80
+    },
+    {
+      "categoria": "CONJUNTOS",
+      "color": "BEIGE",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-09-01",
+      "key": "OP-2026-080||BEIGE",
+      "mes_planeado": "2026-08",
+      "op_id": "OP-2026-080",
+      "op_nombre": "CONJUNTO ISABELLA",
+      "uds": 48
+    },
+    {
+      "categoria": "CONJUNTOS",
+      "color": "NEGRO",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-09-01",
+      "key": "OP-2026-080||NEGRO",
+      "mes_planeado": "2026-08",
+      "op_id": "OP-2026-080",
+      "op_nombre": "CONJUNTO ISABELLA",
+      "uds": 48
+    },
+    {
+      "key": "OP-2026-098||NEGRO",
       "op_id": "OP-2026-098",
       "op_nombre": "CHAQUETA CAZADORA",
       "categoria": "CHAQUETAS",
-      "color": "AZUL OSCURO",
-      "uds": 80,
+      "color": "NEGRO",
+      "uds": 16,
       "mes_planeado": "2026-08",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-08-31"
+      "fecha_deteccion": "2026-09-02"
     }
   ],
   "confirmadas": {
@@ -1653,5 +1683,9 @@
       "tipo": "op",
       "uds": 174
     }
+  },
+  "trazos": {
+    "REF||FALDA||FALDA ESCOSES": true,
+    "REF||PANTALONES||PANTALON RAVE": true
   }
 }
