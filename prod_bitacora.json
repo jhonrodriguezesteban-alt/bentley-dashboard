@@ -13672,19 +13672,29 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1788389151788_xpb69",
-      "ts": 1788389151788,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-209",
-      "op_nombre": "BLUSA COSMO",
       "categoria": "BLUSAS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-09-02",
-      "total_uds": 400,
+      "id": "evt_1788389151788_xpb69",
+      "op_id": "OP-2026-209",
+      "op_nombre": "BLUSA COSMO",
       "referencias": [
         "BLUSA COSMO"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 400,
+      "ts": 1788389151788,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1788389214279_sqgs9",
+      "ts": 1788389214279,
+      "user": "John Rodriguez",
+      "tipo": "duplicar_op",
+      "op_id": "OP-2026-210",
+      "op_origen": "OP-2026-207",
+      "op_nombre": "PANTALON POLLY",
+      "categoria": "PANTALONES"
     }
   ]
 }
