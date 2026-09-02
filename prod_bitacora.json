@@ -13660,16 +13660,31 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1788389046814_su5q0",
-      "ts": 1788389046814,
-      "user": "John Rodriguez",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782406163926_qd8stfyg0",
-      "nombre": "BLUSA COSMO",
       "categoria": "Blusas",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1782406163926_qd8stfyg0",
       "estado_anterior": "LISTA_PRODUCCION",
-      "estado_nuevo": "EN_ESCALADO"
+      "estado_nuevo": "EN_ESCALADO",
+      "id": "evt_1788389046814_su5q0",
+      "marca": "Bentley Kids",
+      "nombre": "BLUSA COSMO",
+      "tipo": "estado_diseno",
+      "ts": 1788389046814,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1788389151788_xpb69",
+      "ts": 1788389151788,
+      "user": "John Rodriguez",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-209",
+      "op_nombre": "BLUSA COSMO",
+      "categoria": "BLUSAS",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-09-02",
+      "total_uds": 400,
+      "referencias": [
+        "BLUSA COSMO"
+      ]
     }
   ]
 }
