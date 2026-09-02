@@ -1573,37 +1573,49 @@
       "tipo": "mercancia"
     },
     {
-      "id": "LG-1787952451577",
-      "tipo": "taller",
+      "created_by": "Jefa de Producción",
       "descripcion": "llevar corte a mery garcia",
       "destino": "multiplaza",
+      "estado": "completado",
       "fecha": "2026-08-28",
       "hora": "",
-      "orden": 2,
-      "estado": "completado",
+      "id": "LG-1787952451577",
       "nota": "",
-      "created_by": "Jefa de Producción"
+      "orden": 2,
+      "tipo": "taller"
     },
     {
-      "id": "LG-1788008401033",
-      "tipo": "diligencia",
+      "created_by": "Jefa de Producción",
       "descripcion": "llevar vapor a la 116",
       "destino": "suba",
+      "estado": "pendiente",
       "fecha": "2026-08-29",
       "hora": "",
-      "orden": 1,
-      "estado": "pendiente",
+      "id": "LG-1788008401033",
       "nota": "",
-      "created_by": "Jefa de Producción"
+      "orden": 1,
+      "tipo": "diligencia"
     },
     {
-      "id": "LG-1788008456143",
-      "tipo": "taller",
+      "created_by": "Jefa de Producción",
       "descripcion": "llevar corte a la señora stella",
       "destino": "primera de mayo con 68",
+      "estado": "pendiente",
       "fecha": "2026-08-29",
       "hora": "",
+      "id": "LG-1788008456143",
+      "nota": "",
       "orden": 2,
+      "tipo": "taller"
+    },
+    {
+      "id": "LG-1788357405966",
+      "tipo": "materia_prima",
+      "descripcion": "recoger guata en el policarpa",
+      "destino": "POLICARPA ARMO",
+      "fecha": "2026-09-01",
+      "hora": "",
+      "orden": 1,
       "estado": "pendiente",
       "nota": "",
       "created_by": "Jefa de Producción"
