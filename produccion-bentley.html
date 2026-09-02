@@ -6787,7 +6787,11 @@ function _separarReferencias(opId){
   openModal('✂ Separar referencias de '+esc(op.id), body, footer);
 }
 
+var _separandoRefs = false;
 async function _confirmarSepararRefs(){
+  if(_separandoRefs) return;
+  _separandoRefs = true;
+  try{
   var opId = ((document.getElementById('sep-opid')||{}).value||'').trim();
   var op = DB.ops.find(function(o){ return o.id===opId; });
   if(!op){ toast('OP no encontrada','error'); return; }
@@ -6869,6 +6873,9 @@ async function _confirmarSepararRefs(){
   } else {
     toast('Error al guardar','error');
   }
+  } finally {
+    _separandoRefs = false;
+  }
 }
 
 async function eliminarOP(opId){
@@ -6887,10 +6894,14 @@ async function eliminarOP(opId){
 // Duplica una OP: mismo producto, categoría, colores, tallas y cantidades — pero como
 // una OP nueva desde cero (sin OTs, sin avance de producción, sin vínculos de diseño/pago).
 // Útil para reprogramar un nuevo lote de algo que ya se produjo antes.
+var _duplicandoOP = false;
 async function duplicarOP(opId){
   var origen = (DB.ops||[]).find(function(o){ return o.id===opId; });
   if(!origen){ toast('OP no encontrada','error'); return; }
   if(!confirm('¿Duplicar '+fmtOpId(opId)+' — '+origen.nombre_producto+'? Se creará una OP nueva con la misma referencia, colores, tallas y cantidades, lista para generar sus propias OTs.')) return;
+  if(_duplicandoOP) return;
+  _duplicandoOP = true;
+  try{
 
   var numOp = nextOPNum();
   var nuevoId = 'OP-'+new Date().getFullYear()+'-'+String(numOp).padStart(3,'0');
@@ -6923,6 +6934,9 @@ async function duplicarOP(opId){
     verDetalleOP(nuevoId);
   } else {
     toast('Error al duplicar', 'error');
+  }
+  } finally {
+    _duplicandoOP = false;
   }
 }
 
@@ -8782,7 +8796,15 @@ function actualizarPreview(){
   } else { prev.style.display = 'none'; }
 }
 
+var _creandoOP = false;
 async function crearOP(){
+  // Bloqueo de doble-envío: sin esto, tocar el botón "Crear OP" varias veces seguidas
+  // (típico con lag en tablet/celular) dispara crearOP() varias veces antes de que la
+  // primera termine — cada llamada calcula el mismo próximo número de OP y empuja una
+  // copia idéntica a DB.ops, dejando la misma OP duplicada 2, 3 o 4 veces en el archivo.
+  if(_creandoOP) return;
+  _creandoOP = true;
+  try{
   var fecha    = (document.getElementById('op-fecha')||{}).value;
   var numOp    = parseInt((document.getElementById('op-num')||{}).value)||nextOPNum();
   var cortador = (document.getElementById('op-cortador')||{}).value;
@@ -8878,6 +8900,9 @@ async function crearOP(){
     }
     cerrarFormNuevaOP();
     navTo('ops');
+  }
+  } finally {
+    _creandoOP = false;
   }
 }
 
