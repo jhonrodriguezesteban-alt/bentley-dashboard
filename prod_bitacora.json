@@ -13839,16 +13839,31 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1788390731120_05iua",
-      "ts": 1788390731120,
-      "user": "John Rodriguez",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782400152280_85zhl3nb5",
-      "nombre": "CAMISA CLASICA BK",
       "categoria": "CAMISAS",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1782400152280_85zhl3nb5",
       "estado_anterior": "LISTA_PRODUCCION",
-      "estado_nuevo": "EN_ESCALADO"
+      "estado_nuevo": "EN_ESCALADO",
+      "id": "evt_1788390731120_05iua",
+      "marca": "Bentley Kids",
+      "nombre": "CAMISA CLASICA BK",
+      "tipo": "estado_diseno",
+      "ts": 1788390731120,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1788390799983_3v7tq",
+      "ts": 1788390799983,
+      "user": "John Rodriguez",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-216",
+      "op_nombre": "CAMISA CLASICA",
+      "categoria": "CAMISAS",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-09-02",
+      "total_uds": 384,
+      "referencias": [
+        "CAMISA CLASICA"
+      ]
     }
   ]
 }
