@@ -13442,20 +13442,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "ROJO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1788359027091_lvu4w",
-      "ts": 1788359027091,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-098",
       "op_nombre": "CHAQUETA CAZADORA",
       "referencia": "CHAQUETA CAZADORA",
-      "color": "ROJO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1788359027091,
       "uds": 80,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788363687012_ekw2j",
+      "ts": 1788363687012,
+      "user": "Isabel",
+      "tipo": "diseno_comentario",
+      "diseno_id": "id_1782162697893_6th3xuxlo",
+      "nombre": "VESTIDO KIKI",
+      "categoria": "Vestidos",
+      "tiene_imagen": false,
+      "extracto": "Cambios realizados. Listo para probar escote. Y prueba de tallas"
     }
   ]
 }
