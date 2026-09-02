@@ -37,7 +37,18 @@
         "T14",
         "T16"
       ],
-      "total_uds": 616
+      "total_uds": 616,
+      "consumibles_check": {
+        "rec_chaqueta_cazadora_1002__c38_19": true,
+        "rec_chaqueta_cazadora_1002__c38_20": true,
+        "rec_chaqueta_cazadora_1002__c38_21": true,
+        "rec_chaqueta_cazadora_1002__c38_22": true,
+        "rec_chaqueta_cazadora_1002__c38_25": true,
+        "rec_chaqueta_cazadora_1002__c38_27": true,
+        "rec_chaqueta_cazadora_1002__c38_26": true,
+        "rec_chaqueta_cazadora_1002__c38_28": true,
+        "rec_chaqueta_cazadora_1002__c38_29": true
+      }
     },
     {
       "categoria": "CHAQUETAS",
@@ -10399,7 +10410,8 @@
       "op_effi": null,
       "estado_op": "EN_PROCESO",
       "created_at": "2026-09-02",
-      "created_by": "John Rodriguez"
+      "created_by": "John Rodriguez",
+      "subg_estados": {}
     },
     {
       "id": "OP-2026-204",
@@ -10479,7 +10491,8 @@
       "op_effi": null,
       "estado_op": "EN_PROCESO",
       "created_at": "2026-09-02",
-      "created_by": "John Rodriguez"
+      "created_by": "John Rodriguez",
+      "subg_estados": {}
     },
     {
       "id": "OP-2026-205",
@@ -10567,7 +10580,8 @@
       "op_effi": null,
       "estado_op": "EN_PROCESO",
       "created_at": "2026-09-02",
-      "created_by": "John Rodriguez"
+      "created_by": "John Rodriguez",
+      "subg_estados": {}
     }
   ]
 }
