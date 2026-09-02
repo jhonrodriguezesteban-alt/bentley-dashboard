@@ -13877,19 +13877,29 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1788391012418_7de1x",
-      "ts": 1788391012418,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-217",
-      "op_nombre": "BODY BASICO",
       "categoria": "BLUSAS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-09-02",
-      "total_uds": 300,
+      "id": "evt_1788391012418_7de1x",
+      "op_id": "OP-2026-217",
+      "op_nombre": "BODY BASICO",
       "referencias": [
         "BODY BASICO"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 300,
+      "ts": 1788391012418,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1788391077508_ubqaz",
+      "ts": 1788391077508,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-217",
+      "op_nombre": "BODY BASICO",
+      "color": "NEGRO",
+      "mes": "2026-10"
     }
   ]
 }
