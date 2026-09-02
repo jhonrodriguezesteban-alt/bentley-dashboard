@@ -1398,7 +1398,7 @@
       ],
       "subg_estados": {
         "OP-0034||CAMEL": "EN_CONFECCION",
-        "OP-0034||NEGRO": "ALISTAMIENTO"
+        "OP-0034||NEGRO": "PAGO_PENDIENTE"
       },
       "tallas": [
         "T4",
@@ -6222,7 +6222,9 @@
         "T14",
         "T16"
       ],
-      "subg_estados": {}
+      "subg_estados": {
+        "OP-2026-098||NEGRO": "EN_CONFECCION"
+      }
     },
     {
       "cantidades": {
