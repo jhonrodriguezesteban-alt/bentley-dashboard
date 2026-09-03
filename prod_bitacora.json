@@ -14865,15 +14865,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1788455378094_1da9b",
-      "ts": 1788455378094,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-110",
-      "nombre": "PANTALON RAVE",
       "categoria": "PANTALONES",
       "colores": 2,
-      "refs": 1
+      "id": "evt_1788455378094_1da9b",
+      "nombre": "PANTALON RAVE",
+      "op_id": "OP-2026-110",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1788455378094,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788456042919_9tzd4",
+      "ts": 1788456042919,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-110",
+      "op_nombre": "PANTALON RAVE",
+      "referencia": "PANTALON RAVE",
+      "color": "AZUL OSCURO",
+      "talla": "todas las tallas",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
+      "bulk": true,
+      "uds": 139,
+      "motivo": "en insumos"
     }
   ]
 }
