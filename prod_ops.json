@@ -6255,7 +6255,10 @@
         "OP-2026-098||NEGRO": "EN_CONFECCION",
         "OP-2026-098||ROJO": "EN_CONFECCION"
       },
-      "consumibles_desagregado": {}
+      "consumibles_desagregado": {},
+      "consumibles_check": {
+        "rec_chaqueta_cazadora_1002__c38_19": true
+      }
     },
     {
       "cantidades": {
@@ -7087,7 +7090,7 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-108||AZUL BEBE": "ALISTAMIENTO",
+        "OP-2026-108||AZUL BEBE": "PAGO_PENDIENTE",
         "OP-2026-108||GRIS CLARO": "CORTE_POR_ALISTAR"
       },
       "tallas": [
