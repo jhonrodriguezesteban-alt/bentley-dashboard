@@ -14779,19 +14779,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": false,
+      "color": "ROSA",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1788449180178_w9nqn",
-      "ts": 1788449180178,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-115",
       "op_nombre": "BOMBON",
       "referencia": "BOMBON",
-      "color": "ROSA",
       "talla": "T8",
+      "tipo": "estado_ot",
+      "ts": 1788449180178,
+      "uds": 6,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788449228228_xpxs6",
+      "ts": 1788449228228,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-108",
+      "op_nombre": "COUNTRY 2.0",
+      "referencia": "COUNTRY 2.0",
+      "color": "AZUL BEBE",
+      "talla": "todas las tallas",
       "estado_anterior": "ENTREGADO",
       "estado_nuevo": "ENTREGADO",
-      "bulk": false,
-      "uds": 6,
+      "bulk": true,
+      "uds": 84,
       "motivo": "ENTREGADO"
     }
   ]
