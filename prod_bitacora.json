@@ -14582,14 +14582,30 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1788440970626_i7unm",
-      "ts": 1788440970626,
-      "user": "Jefa de Producción",
-      "tipo": "diligencia",
       "descripcion": "llevar telas para material a hernan microtextiles",
       "destino": "carvajal",
       "fecha": "2026-09-03",
-      "hora": ""
+      "hora": "",
+      "id": "evt_1788440970626_i7unm",
+      "tipo": "diligencia",
+      "ts": 1788440970626,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788448781347_lc6dc",
+      "ts": 1788448781347,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-080",
+      "op_nombre": "CONJUNTO ISABELLA",
+      "referencia": "CONJUNTO ISABELLA",
+      "color": "BEIGE",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 48,
+      "motivo": "ENTREGADO"
     }
   ]
 }
