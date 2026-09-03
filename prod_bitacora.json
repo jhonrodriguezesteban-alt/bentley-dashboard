@@ -14747,19 +14747,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": false,
+      "color": "MARFIL",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1788449139122_o2lat",
+      "motivo": "ENTREGADO",
+      "op_id": "OP-2026-115",
+      "op_nombre": "BOMBON",
+      "referencia": "BOMBON",
+      "talla": "T12",
+      "tipo": "estado_ot",
       "ts": 1788449139122,
+      "uds": 3,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788449160500_061ut",
+      "ts": 1788449160500,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-115",
       "op_nombre": "BOMBON",
       "referencia": "BOMBON",
-      "color": "MARFIL",
-      "talla": "T12",
+      "color": "NEGRO",
+      "talla": "todas las tallas",
       "estado_anterior": "ENTREGADO",
       "estado_nuevo": "ENTREGADO",
-      "bulk": false,
-      "uds": 3,
+      "bulk": true,
+      "uds": 8,
       "motivo": "ENTREGADO"
     }
   ]
