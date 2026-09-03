@@ -14656,20 +14656,47 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1788448915673_vozje",
-      "ts": 1788448915673,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-0036",
       "op_nombre": "PANTALON DRILL ANCHO",
       "referencia": "PANTALON DRILL ANCHO",
-      "color": "NEGRO",
       "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1788448915673,
+      "uds": 70,
+      "user": "Jefa de Producción"
+    },
+    {
+      "bulk": true,
+      "color": "ROSA",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
-      "uds": 70,
-      "motivo": "EN TALLER"
+      "id": "evt_1788448947163_vypdb",
+      "motivo": "EN TALLER",
+      "op_id": "OP-0037",
+      "op_nombre": "CHALECO ACOLCHADO MANY",
+      "referencia": "CHALECO ACOLCHADO MANY",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1788448947163,
+      "uds": 132,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788449029543_ojpxo",
+      "ts": 1788449029543,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-115",
+      "nombre": "BOMBON",
+      "categoria": "CHAQUETAS",
+      "colores": 6,
+      "refs": 1
     }
   ]
 }
