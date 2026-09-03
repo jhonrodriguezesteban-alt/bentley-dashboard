@@ -7716,15 +7716,15 @@
     },
     {
       "cantidades": {
-        "AZUL BEBE_T12": 5,
-        "CAMEL_T12": 3,
-        "CAMEL_T8": 1,
-        "LILA_T12": 17,
-        "LILA_T8": 9,
-        "MARFIL_T12": 3,
-        "NEGRO_T12": 5,
         "NEGRO_T8": 3,
-        "ROSA_T8": 6
+        "NEGRO_T12": 5,
+        "LILA_T8": 8,
+        "LILA_T12": 17,
+        "ROSA_T8": 6,
+        "CAMEL_T8": 1,
+        "CAMEL_T12": 3,
+        "MARFIL_T12": 3,
+        "AZUL BEBE_T12": 5
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -7747,18 +7747,10 @@
       "receta_nombre": "BOMBON - REF: 1062",
       "referencias": [
         {
-          "cantidades": {
-            "AZUL BEBE_T12": 5,
-            "CAMEL_T12": 3,
-            "CAMEL_T8": 1,
-            "LILA_T12": 17,
-            "LILA_T8": 9,
-            "MARFIL_T12": 3,
-            "NEGRO_T12": 5,
-            "NEGRO_T8": 3,
-            "ROSA_T8": 6
-          },
+          "nombre": "BOMBON",
+          "ref": "1062",
           "cat": "CHAQUETAS",
+          "vmo": 9249,
           "colores": [
             "NEGRO",
             "LILA",
@@ -7767,15 +7759,22 @@
             "MARFIL",
             "AZUL BEBE"
           ],
-          "maquilador_id": "",
-          "nombre": "BOMBON",
-          "ref": "1062",
           "tallas": [
             "T8",
             "T12"
           ],
-          "totalUds": 52,
-          "vmo": 9249
+          "cantidades": {
+            "NEGRO_T8": 3,
+            "NEGRO_T12": 5,
+            "LILA_T8": 8,
+            "LILA_T12": 17,
+            "ROSA_T8": 6,
+            "CAMEL_T8": 1,
+            "CAMEL_T12": 3,
+            "MARFIL_T12": 3,
+            "AZUL BEBE_T12": 5
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -7789,7 +7788,8 @@
       "tallas": [
         "T8",
         "T12"
-      ]
+      ],
+      "updated_at": "2026-09-03"
     },
     {
       "cantidades": {
