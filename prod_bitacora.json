@@ -14640,20 +14640,36 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "BEIGE",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1788448896757_daxf8",
+      "motivo": "ENTREGADO",
+      "op_id": "OP-0036",
+      "op_nombre": "PANTALON DRILL ANCHO",
+      "referencia": "PANTALON DRILL ANCHO",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1788448896757,
+      "uds": 44,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788448915673_vozje",
+      "ts": 1788448915673,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-0036",
       "op_nombre": "PANTALON DRILL ANCHO",
       "referencia": "PANTALON DRILL ANCHO",
-      "color": "BEIGE",
+      "color": "NEGRO",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 44,
-      "motivo": "ENTREGADO"
+      "uds": 70,
+      "motivo": "EN TALLER"
     }
   ]
 }
