@@ -887,6 +887,7 @@
       "entregado": true,
       "fecha_compromiso": "2026-08-28",
       "fecha_entrada": "2026-07-28",
+      "fecha_entrega_real": "2026-09-01",
       "fecha_inicial": "2026-08-28",
       "historial": [
         {
@@ -900,8 +901,7 @@
       "op_id": "OP-0034",
       "op_nombre": "PILOTO PANCAKE",
       "satelite_id": "sat_11",
-      "uds": 72,
-      "fecha_entrega_real": "2026-09-01"
+      "uds": 72
     },
     {
       "color": "NEGRO",
@@ -919,6 +919,7 @@
       "entregado": true,
       "fecha_compromiso": "2026-08-19",
       "fecha_entrada": "2026-07-28",
+      "fecha_entrega_real": "2026-09-01",
       "fecha_inicial": "2026-08-19",
       "historial": [
         {
@@ -932,14 +933,14 @@
       "op_id": "OP-2026-093",
       "op_nombre": "CALIFORNIA",
       "satelite_id": "sat_00",
-      "uds": 152,
-      "fecha_entrega_real": "2026-09-01"
+      "uds": 152
     },
     {
       "color": "MARFIL",
-      "entregado": false,
+      "entregado": true,
       "fecha_compromiso": "2026-08-19",
       "fecha_entrada": "2026-07-28",
+      "fecha_entrega_real": "2026-09-02",
       "fecha_inicial": "2026-08-19",
       "historial": [
         {
@@ -1964,27 +1965,33 @@
       "uds": 93
     },
     {
+      "color": "NEGRO",
+      "entregado": false,
+      "fecha_entrada": "2026-09-02",
       "id": "id_1788359010969_h2bevgbvi",
       "op_id": "OP-2026-098",
       "op_nombre": "CHAQUETA CAZADORA",
-      "color": "NEGRO",
       "satelite_id": "sat_03",
-      "uds": 16,
-      "fecha_entrada": "2026-09-02",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 16
     },
     {
+      "color": "ROJO",
+      "entregado": false,
+      "fecha_entrada": "2026-09-02",
       "id": "id_1788359026951_1393ukjrj",
       "op_id": "OP-2026-098",
       "op_nombre": "CHAQUETA CAZADORA",
-      "color": "ROJO",
       "satelite_id": "sat_11",
-      "uds": 80,
-      "fecha_entrada": "2026-09-02",
+      "uds": 80
+    },
+    {
+      "id": "id_1788448781212_2116o2xp2",
+      "op_id": "OP-2026-080",
+      "op_nombre": "CONJUNTO ISABELLA",
+      "color": "BEIGE",
+      "satelite_id": "sat_01",
+      "uds": 48,
+      "fecha_entrada": "2026-09-03",
       "fecha_compromiso": null,
       "fecha_inicial": null,
       "historial": [],
