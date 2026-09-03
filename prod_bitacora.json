@@ -14731,19 +14731,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "LILA",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1788449119277_m37l6",
+      "motivo": "ENTREGADO",
+      "op_id": "OP-2026-115",
+      "op_nombre": "BOMBON",
+      "referencia": "BOMBON",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1788449119277,
+      "uds": 25,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788449139122_o2lat",
+      "ts": 1788449139122,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-115",
       "op_nombre": "BOMBON",
       "referencia": "BOMBON",
-      "color": "LILA",
-      "talla": "todas las tallas",
+      "color": "MARFIL",
+      "talla": "T12",
       "estado_anterior": "ENTREGADO",
       "estado_nuevo": "ENTREGADO",
-      "bulk": true,
-      "uds": 25,
+      "bulk": false,
+      "uds": 3,
       "motivo": "ENTREGADO"
     }
   ]
