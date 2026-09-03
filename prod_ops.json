@@ -7227,20 +7227,20 @@
     },
     {
       "cantidades": {
-        "AZUL OSCURO_T10": 24,
-        "AZUL OSCURO_T12": 24,
-        "AZUL OSCURO_T14": 24,
-        "AZUL OSCURO_T16": 24,
-        "AZUL OSCURO_T4": 12,
-        "AZUL OSCURO_T6": 12,
-        "AZUL OSCURO_T8": 24,
+        "ROJO_T4": 8,
+        "ROJO_T6": 8,
+        "ROJO_T8": 16,
         "ROJO_T10": 16,
         "ROJO_T12": 16,
         "ROJO_T14": 16,
         "ROJO_T16": 16,
-        "ROJO_T4": 8,
-        "ROJO_T6": 8,
-        "ROJO_T8": 16
+        "AZUL OSCURO_T4": 12,
+        "AZUL OSCURO_T6": 12,
+        "AZUL OSCURO_T8": 23,
+        "AZUL OSCURO_T10": 23,
+        "AZUL OSCURO_T12": 23,
+        "AZUL OSCURO_T14": 23,
+        "AZUL OSCURO_T16": 15
       },
       "categoria": "PANTALONES",
       "colores": [
@@ -7259,30 +7259,14 @@
       "receta_nombre": "PANTALON RAVE - REF: 1063",
       "referencias": [
         {
-          "cantidades": {
-            "AZUL OSCURO_T10": 24,
-            "AZUL OSCURO_T12": 24,
-            "AZUL OSCURO_T14": 24,
-            "AZUL OSCURO_T16": 24,
-            "AZUL OSCURO_T4": 12,
-            "AZUL OSCURO_T6": 12,
-            "AZUL OSCURO_T8": 24,
-            "ROJO_T10": 16,
-            "ROJO_T12": 16,
-            "ROJO_T14": 16,
-            "ROJO_T16": 16,
-            "ROJO_T4": 8,
-            "ROJO_T6": 8,
-            "ROJO_T8": 16
-          },
+          "nombre": "PANTALON RAVE",
+          "ref": "1063",
           "cat": "PANTALONES",
+          "vmo": 5255,
           "colores": [
             "ROJO",
             "AZUL OSCURO"
           ],
-          "maquilador_id": "",
-          "nombre": "PANTALON RAVE",
-          "ref": "1063",
           "tallas": [
             "T4",
             "T6",
@@ -7292,8 +7276,23 @@
             "T14",
             "T16"
           ],
-          "totalUds": 240,
-          "vmo": 5255
+          "cantidades": {
+            "ROJO_T4": 8,
+            "ROJO_T6": 8,
+            "ROJO_T8": 16,
+            "ROJO_T10": 16,
+            "ROJO_T12": 16,
+            "ROJO_T14": 16,
+            "ROJO_T16": 16,
+            "AZUL OSCURO_T4": 12,
+            "AZUL OSCURO_T6": 12,
+            "AZUL OSCURO_T8": 23,
+            "AZUL OSCURO_T10": 23,
+            "AZUL OSCURO_T12": 23,
+            "AZUL OSCURO_T14": 23,
+            "AZUL OSCURO_T16": 15
+          },
+          "maquilador_id": ""
         }
       ],
       "tallas": [
@@ -7305,7 +7304,8 @@
         "T14",
         "T16"
       ],
-      "subg_estados": {}
+      "subg_estados": {},
+      "updated_at": "2026-09-03"
     },
     {
       "cantidades": {
