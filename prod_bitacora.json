@@ -14688,15 +14688,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1788449029543_ojpxo",
-      "ts": 1788449029543,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-115",
-      "nombre": "BOMBON",
       "categoria": "CHAQUETAS",
       "colores": 6,
-      "refs": 1
+      "id": "evt_1788449029543_ojpxo",
+      "nombre": "BOMBON",
+      "op_id": "OP-2026-115",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1788449029543,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788449058565_2h570",
+      "ts": 1788449058565,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-115",
+      "op_nombre": "BOMBON",
+      "referencia": "BOMBON",
+      "color": "AZUL BEBE",
+      "talla": "T12",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": false,
+      "uds": 5,
+      "motivo": "ENTREGADO"
     }
   ]
 }
