@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tablero de Control · Meta Ads · Grupo Bentley SAS</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0c; --panel:#131317; --panel2:#1a1a20; --line:#26262e;
+  --txt:#f2f2f4; --mut:#8e8e98; --dim:#5c5c66;
+  --ok:#30d158; --warn:#ffd60a; --bad:#ff453a; --acc:#0a84ff;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:Manrope,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding:40px 24px 80px}
+header{border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:32px}
+h1{font-size:28px;font-weight:800;letter-spacing:-.02em;margin:0 0 6px}
+.sub{color:var(--mut);font-size:14px}
+.sub b{color:var(--txt);font-weight:600}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:28px 0}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.kpi .l{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);margin-bottom:8px}
+.kpi .v{font-size:26px;font-weight:700;letter-spacing:-.02em}
+.kpi .v.bad{color:var(--bad)} .kpi .v.ok{color:var(--ok)} .kpi .v.warn{color:var(--warn)}
+h2{font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--mut);margin:40px 0 14px}
+.alertbox{background:rgba(255,69,58,.08);border:1px solid rgba(255,69,58,.35);border-radius:14px;padding:18px 20px;margin-bottom:8px}
+.alertbox h3{margin:0 0 12px;font-size:14px;color:var(--bad);text-transform:uppercase;letter-spacing:.06em}
+.alertbox ul{margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:#ffd9d6}
+.alertbox b{color:#fff}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;min-width:1080px;font-size:13px}
+th{text-align:left;padding:12px 14px;font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--dim);border-bottom:1px solid var(--line);white-space:nowrap;font-weight:700}
+td{padding:13px 14px;border-bottom:1px solid #1e1e25;vertical-align:middle;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+tr.alert td{background:rgba(255,69,58,.06)}
+.nm{font-weight:600;white-space:normal;min-width:210px}
+.nm small{display:block;color:var(--dim);font-weight:400;font-size:11px;margin-top:3px}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.pill{display:inline-block;padding:3px 9px;border-radius:999px;font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.p-ok{background:rgba(48,209,88,.15);color:var(--ok)}
+.p-warn{background:rgba(255,214,10,.15);color:var(--warn)}
+.p-bad{background:rgba(255,69,58,.16);color:var(--bad)}
+.p-dim{background:#242430;color:var(--mut)}
+.bar{height:5px;border-radius:3px;background:#242430;overflow:hidden;margin-top:5px;width:90px;margin-left:auto}
+.bar i{display:block;height:100%;border-radius:3px}
+.note{color:var(--mut);font-size:12.5px;line-height:1.75;font-family:Lora,Georgia,serif;margin-top:14px}
+.legend{display:flex;gap:22px;flex-wrap:wrap;margin-top:14px;font-size:12px;color:var(--mut)}
+.legend span{display:flex;align-items:center;gap:7px}
+.dot{width:8px;height:8px;border-radius:50%}
+footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);color:var(--dim);font-size:11.5px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Tablero de Control · Meta Ads</h1>
+  <div class="sub">Grupo Bentley SAS · Cuenta <b>320798102308066</b> · Ventana <b>últimos 7 días</b> vs. promedio 30 días de campaña padre<br>
+  Actualizado: <b>04 sep 2026, 14:10 (Bogotá)</b> · Moneda: COP</div>
+</header>
+
+<div class="kpis">
+  <div class="kpi"><div class="l">Conjuntos activos</div><div class="v">13</div></div>
+  <div class="kpi"><div class="l">Alertas de CPA</div><div class="v bad">3</div></div>
+  <div class="kpi"><div class="l">Inversión 7 días</div><div class="v">$2.546.191</div></div>
+  <div class="kpi"><div class="l">Compras 7 días</div><div class="v">44</div></div>
+  <div class="kpi"><div class="l">CPA promedio venta</div><div class="v">$52.242</div></div>
+  <div class="kpi"><div class="l">En aprendizaje limitado</div><div class="v warn">2</div></div>
+</div>
+
+<h2>Alertas activas</h2>
+<div class="alertbox">
+  <h3>3 conjuntos superaron el 120% del CPA de su campaña padre</h3>
+  <ul>
+    <li><b>DPA PREMIUM · PROSPECTING · JULIO 2026</b> — CPA $149.174 vs. umbral $45.325 (<b>329%</b>). Solo 2 compras con $298.348 invertidos y frecuencia 1,96. Además está en <b>aprendizaje limitado (FAIL)</b>. Es la fuga de presupuesto más grande de la cuenta ahora mismo.</li>
+    <li><b>RMK | CATALOGO DPA 2.0 | 28/05/26</b> — CPA $122.729 vs. umbral $42.577 (<b>288%</b>). 4 compras con $490.917. Contraste duro: el otro conjunto de la misma campaña (MIX NIÑO NIÑA 2.0) trae 16 compras a $26.634. El catálogo dejó de rendir esta semana.</li>
+    <li><b>TESTEO 1</b> — CPA $78.521 vs. umbral $57.854 (<b>136%</b>). 3 compras con $235.564. Es un conjunto de testeo, pero ya pasó el punto donde el costo justifica seguir sin cambios.</li>
+  </ul>
+</div>
+<div class="alertbox" style="background:rgba(255,214,10,.06);border-color:rgba(255,214,10,.3)">
+  <h3 style="color:var(--warn)">Señales secundarias</h3>
+  <ul style="color:#ffeeb0">
+    <li><b>Frecuencia 2,35</b> en RMK | MIX NIÑO NIÑA 2.0 — el conjunto más rentable de la cuenta ($26.634 de CPA) está saturando audiencia. Renovar creativo antes de que el CPA suba.</li>
+    <li><b>RMK | MIX ABRIGOS | SEPT</b> — 0 impresiones en 7 días con estado activo. Revisar entrega/presupuesto.</li>
+    <li><b>TESTEO 2 ONLY IG</b> y <b>RMK | MIX BUZOS</b> — $102.961 invertidos sin una sola compra.</li>
+  </ul>
+</div>
+
+<h2>Conjuntos activos · últimos 7 días</h2>
+<div class="tablewrap">
+<table>
+<thead><tr>
+  <th>Conjunto</th><th>Aprendizaje</th><th class="num">Frec.</th><th class="num">Inversión</th>
+  <th class="num">Result.</th><th class="num">CPA 7d</th><th class="num">Umbral 120%</th><th class="num">vs. umbral</th>
+  <th class="num">Hook</th><th class="num">Hold</th><th>Estado</th>
+</tr></thead>
+<tbody>
+<tr class="alert">
+  <td class="nm">DPA PREMIUM · PROSPECTING · JULIO 2026<small>F2 DPA PREMIUM BK · JULIO 2026</small></td>
+  <td><span class="pill p-bad">Limitado</span></td><td class="num">1,96</td><td class="num">$298.348</td>
+  <td class="num">2</td><td class="num">$149.174</td><td class="num">$45.325</td>
+  <td class="num" style="color:var(--bad);font-weight:700">329%<div class="bar"><i style="width:100%;background:var(--bad)"></i></div></td>
+  <td class="num">6,4%</td><td class="num">4,8%</td><td><span class="pill p-bad">Alerta</span></td>
+</tr>
+<tr class="alert">
+  <td class="nm">RMK | CATALOGO DPA 2.0 | 28/05/26<small>FASE 3 FIDELIZAR · RMKT</small></td>
+  <td><span class="pill p-ok">Completo</span></td><td class="num">1,92</td><td class="num">$490.917</td>
+  <td class="num">4</td><td class="num">$122.729</td><td class="num">$42.577</td>
+  <td class="num" style="color:var(--bad);font-weight:700">288%<div class="bar"><i style="width:100%;background:var(--bad)"></i></div></td>
+  <td class="num">—</td><td class="num">—</td><td><span class="pill p-bad">Alerta</span></td>
+</tr>
+<tr class="alert">
+  <td class="nm">TESTEO 1<small>FASE 2 SOLUCIONAR · VENTA 2.0</small></td>
+  <td><span class="pill p-dim">Sin dato</span></td><td class="num">1,41</td><td class="num">$235.564</td>
+  <td class="num">3</td><td class="num">$78.521</td><td class="num">$57.854</td>
+  <td class="num" style="color:var(--bad);font-weight:700">136%<div class="bar"><i style="width:100%;background:var(--bad)"></i></div></td>
+  <td class="num">56,4%</td><td class="num">5,2%</td><td><span class="pill p-bad">Alerta</span></td>
+</tr>
+<tr>
+  <td class="nm">RMK | MIX CONJUNTOS | SEPT<small>FASE 3 FIDELIZAR · RMKT</small></td>
+  <td><span class="pill p-warn">Aprendizaje</span></td><td class="num">1,24</td><td class="num">$40.073</td>
+  <td class="num">1</td><td class="num">$40.073</td><td class="num">$42.577</td>
+  <td class="num" style="color:var(--warn)">94%<div class="bar"><i style="width:94%;background:var(--warn)"></i></div></td>
+  <td class="num">51,4%</td><td class="num">8,3%</td><td><span class="pill p-warn">Vigilar</span></td>
+</tr>
+<tr>
+  <td class="nm">RMK | MIX NIÑO NIÑA 2.0 | CREATIVOS<small>FASE 3 FIDELIZAR · RMKT</small></td>
+  <td><span class="pill p-dim">Sin dato</span></td><td class="num" style="color:var(--warn);font-weight:700">2,35</td><td class="num">$426.148</td>
+  <td class="num">16</td><td class="num">$26.634</td><td class="num">$42.577</td>
+  <td class="num" style="color:var(--ok)">63%<div class="bar"><i style="width:63%;background:var(--ok)"></i></div></td>
+  <td class="num">0,4%</td><td class="num">15,7%</td><td><span class="pill p-warn">Frec. alta</span></td>
+</tr>
+<tr>
+  <td class="nm">RMK | MIX CHAQUETAS | SEPT<small>FASE 3 FIDELIZAR · RMKT</small></td>
+  <td><span class="pill p-dim">Sin dato</span></td><td class="num">1,35</td><td class="num">$31.527</td>
+  <td class="num">1</td><td class="num">$31.527</td><td class="num">$42.577</td>
+  <td class="num" style="color:var(--ok)">74%<div class="bar"><i style="width:74%;background:var(--ok)"></i></div></td>
+  <td class="num">86,7%</td><td class="num">8,1%</td><td><span class="pill p-ok">OK</span></td>
+</tr>
+<tr>
+  <td class="nm">F2 GANADORES<small>FASE 2 SOLUCIONAR · VENTA 2.0</small></td>
+  <td><span class="pill p-bad">Limitado</span></td><td class="num">1,71</td><td class="num">$706.043</td>
+  <td class="num">16</td><td class="num">$44.128</td><td class="num">$57.854</td>
+  <td class="num" style="color:var(--ok)">76%<div class="bar"><i style="width:76%;background:var(--ok)"></i></div></td>
+  <td class="num">—</td><td class="num">—</td><td><span class="pill p-warn">Limitado</span></td>
+</tr>
+<tr>
+  <td class="nm">RMK | MIX BUZOS | SEPT<small>FASE 3 FIDELIZAR · RMKT</small></td>
+  <td><span class="pill p-warn">Aprendizaje</span></td><td class="num">1,37</td><td class="num">$32.106</td>
+  <td class="num">0</td><td class="num">—</td><td class="num">$42.577</td>
+  <td class="num" style="color:var(--mut)">s/d</td>
+  <td class="num">67,4%</td><td class="num">9,5%</td><td><span class="pill p-warn">Sin venta</span></td>
+</tr>
+<tr>
+  <td class="nm">TESTEO 2 ONLY IG<small>FASE 2 SOLUCIONAR · VENTA 2.0</small></td>
+  <td><span class="pill p-dim">Sin dato</span></td><td class="num">1,22</td><td class="num">$70.855</td>
+  <td class="num">0</td><td class="num">—</td><td class="num">$57.854</td>
+  <td class="num" style="color:var(--mut)">s/d</td>
+  <td class="num">77,6%</td><td class="num">4,8%</td><td><span class="pill p-warn">Sin venta</span></td>
+</tr>
+<tr>
+  <td class="nm">RMK | MIX ABRIGOS | SEPT<small>FASE 3 FIDELIZAR · RMKT</small></td>
+  <td><span class="pill p-dim">Sin dato</span></td><td class="num">0,00</td><td class="num">$0</td>
+  <td class="num">0</td><td class="num">—</td><td class="num">$42.577</td>
+  <td class="num" style="color:var(--mut)">s/d</td>
+  <td class="num">—</td><td class="num">—</td><td><span class="pill p-warn">Sin entrega</span></td>
+</tr>
+<tr>
+  <td class="nm">TRAFICO WEB 2.0<small>CALENTAMIENTO WEB · costo por vista LP</small></td>
+  <td><span class="pill p-ok">Completo</span></td><td class="num">1,23</td><td class="num">$114.082</td>
+  <td class="num">2.449</td><td class="num">$47</td><td class="num">$52</td>
+  <td class="num" style="color:var(--ok)">91%<div class="bar"><i style="width:91%;background:var(--ok)"></i></div></td>
+  <td class="num">46,5%</td><td class="num">13,6%</td><td><span class="pill p-ok">OK</span></td>
+</tr>
+<tr>
+  <td class="nm">ADVANTAGE<small>FASE 1 · costo por visita a perfil IG</small></td>
+  <td><span class="pill p-dim">Sin dato</span></td><td class="num">1,19</td><td class="num">$45.613</td>
+  <td class="num">284</td><td class="num">$161</td><td class="num">$222</td>
+  <td class="num" style="color:var(--ok)">73%<div class="bar"><i style="width:73%;background:var(--ok)"></i></div></td>
+  <td class="num">94,6%</td><td class="num">9,9%</td><td><span class="pill p-ok">OK</span></td>
+</tr>
+<tr>
+  <td class="nm">Advantage · PROMT INDIRECTO<small>FASE 1 RECORDACIÓN · costo por ThruPlay</small></td>
+  <td><span class="pill p-dim">Sin dato</span></td><td class="num">1,03</td><td class="num">$54.815</td>
+  <td class="num">22.967</td><td class="num">$2</td><td class="num">$2</td>
+  <td class="num" style="color:var(--ok)">100%<div class="bar"><i style="width:100%;background:var(--ok)"></i></div></td>
+  <td class="num">98,5%</td><td class="num">48,1%</td><td><span class="pill p-ok">OK</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="legend">
+  <span><i class="dot" style="background:var(--bad)"></i> Alerta: CPA &gt; 120% del promedio 30d de la campaña padre</span>
+  <span><i class="dot" style="background:var(--warn)"></i> Vigilar: entre 90% y 120%, frecuencia alta o sin conversión</span>
+  <span><i class="dot" style="background:var(--ok)"></i> OK: dentro de umbral</span>
+</div>
+
+<p class="note">
+<b>Definiciones.</b> Hook Rate = reproducciones de video ÷ impresiones (qué tanto detiene el scroll). Hold Rate = ThruPlays ÷ reproducciones (qué tanto retiene hasta el final). Los conjuntos con “—” usan formatos de catálogo o imagen sin métricas de video. El umbral se calcula sobre el <i>costo por resultado</i> de cada campaña padre en los últimos 30 días, respetando el objetivo propio de cada una: compras en Fase 2 y Fase 3, visitas a perfil y vistas de página en Fase 1, ThruPlay en recordación. Por eso los umbrales no son comparables entre fases.
+</p>
+<p class="note">
+<b>Referencia de campañas (30 días).</b> FASE 3 FIDELIZAR $35.481/compra · FASE 2 SOLUCIONAR $48.212/compra · F2 DPA PREMIUM $37.771/compra · FASE 1 TRÁFICO $185/visita · CALENTAMIENTO WEB $43/vista LP · FASE 1 RECORDACIÓN $2/ThruPlay.
+</p>
+
+<footer>
+Datos leídos directamente del Administrador de Anuncios de Meta vía API. Un pico de un solo día no debe disparar decisiones: confirmar patrón de 3 días antes de escalar o pausar. Actualización automática programada todos los días a las 8:00 a.m. (Bogotá).
+</footer>
+</div>
+</body>
+</html>
