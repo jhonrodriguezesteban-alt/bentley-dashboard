@@ -14903,20 +14903,30 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "ROJO",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1788456145997_29tr4",
-      "ts": 1788456145997,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-110",
       "op_nombre": "PANTALON RAVE",
       "referencia": "PANTALON RAVE",
-      "color": "ROJO",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1788456145997,
       "uds": 124,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788528560909_ed1q5",
+      "ts": 1788528560909,
+      "user": "Jefa de Producción",
+      "tipo": "mercancia",
+      "descripcion": "LLEVAR LONAS A CENTRO",
+      "destino": "NEOS- SAN- CONTENEDOR",
+      "fecha": "2026-09-04",
+      "hora": ""
     }
   ]
 }
