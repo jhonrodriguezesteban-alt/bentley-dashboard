@@ -15246,20 +15246,34 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "GRIS CLARO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1788548972424_6hgwl",
-      "ts": 1788548972424,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-096",
       "op_nombre": "FALDA ESCOSES",
       "referencia": "FALDA ESCOSES",
-      "color": "GRIS CLARO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1788548972424,
       "uds": 124,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788554574782_7p70c",
+      "ts": 1788554574782,
+      "user": "John Rodriguez",
+      "tipo": "entrega_inline",
+      "ot_id": "OT-11861",
+      "numero_ot": 11861,
+      "op_id": "OP-0001",
+      "uds_entregadas": 13,
+      "pendientes": 0,
+      "estado": "ENTREGADO",
+      "talla": "T4",
+      "satelite": "MELISSA MARTINEZ"
     }
   ]
 }
