@@ -14928,9 +14928,11 @@ var _monFiltroRef = '';
 var _monFiltroColor = '';
 var _monFiltroOpTxt = '';
 var _monFiltroEstado = ''; // '', 'sin_op', 'sin_ots', 'listo', 'en_curso'
+var _monOcultarDiseno = false; // quita las filas "aún sin OP" (diseño) del listado
 // Aplica todos los filtros activos de Monitoreo (usado por el render y por el CSV, para
 // que lo que se descarga sea siempre exactamente lo que se está viendo en pantalla).
 function _monAplicarFiltros(rows){
+  if(_monOcultarDiseno) rows = rows.filter(function(r){ return !r.isDiseno; });
   if(_monFiltroCorte) rows = rows.filter(function(r){ return r.cortador === _monFiltroCorte; });
   if(_monFiltroCategoria) rows = rows.filter(function(r){ return r.cat === _monFiltroCategoria; });
   if(_monFiltroMes){
@@ -14964,7 +14966,7 @@ function _monAplicarFiltros(rows){
   return rows;
 }
 function _monLimpiarFiltros(){
-  _monFiltroCorte=''; _monFiltroCategoria=''; _monFiltroMes=''; _monFiltroRef=''; _monFiltroColor=''; _monFiltroOpTxt=''; _monFiltroEstado='';
+  _monFiltroCorte=''; _monFiltroCategoria=''; _monFiltroMes=''; _monFiltroRef=''; _monFiltroColor=''; _monFiltroOpTxt=''; _monFiltroEstado=''; _monOcultarDiseno=false;
   renderPage('monitoreo');
 }
 var _monCorteActivos = {};  // key: opId+'||'+color → true
@@ -15077,7 +15079,7 @@ function renderMonitoreo(){
   h += '</select>';
   h += '<button onclick="exportarMonitoreoCSV()" style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);color:#34d399;border-radius:6px;padding:6px 14px;cursor:pointer;font-size:12px;font-weight:600;">↓ CSV</button>';
   h += '<button onclick="imprimirMonitoreo()" style="background:rgba(148,163,184,.1);border:1px solid rgba(148,163,184,.3);color:#cbd5e1;border-radius:6px;padding:6px 14px;cursor:pointer;font-size:12px;font-weight:600;" title="Imprimir la vista filtrada actual — útil para darle su hoja a cada cortador">🖨 Imprimir</button>';
-  if(_monFiltroCorte||_monFiltroCategoria||_monFiltroMes||_monFiltroRef||_monFiltroColor||_monFiltroOpTxt||_monFiltroEstado){
+  if(_monFiltroCorte||_monFiltroCategoria||_monFiltroMes||_monFiltroRef||_monFiltroColor||_monFiltroOpTxt||_monFiltroEstado||_monOcultarDiseno){
     h += '<button onclick="_monLimpiarFiltros()" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#ef4444;border-radius:6px;padding:6px 12px;cursor:pointer;font-size:12px;">✕ Limpiar filtros</button>';
   }
   if(nActivos > 0){
@@ -15118,7 +15120,10 @@ function renderMonitoreo(){
   h += '<th style="padding:5px 10px;"><input type="text" value="'+esc(_monFiltroColor)+'" placeholder="Buscar..." oninput="_monFiltroColor=this.value;renderPage(\'monitoreo\')" style="width:100%;box-sizing:border-box;background:#0d1117;border:1px solid #2c2c2e;border-radius:5px;color:#94a3b8;padding:3px 6px;font-size:10px;"></th>';
   tallasCols.forEach(function(){ h += '<th></th>'; });
   h += '<th></th>';
-  h += '<th style="padding:5px 10px;"><input type="text" value="'+esc(_monFiltroOpTxt)+'" placeholder="OP..." oninput="_monFiltroOpTxt=this.value;renderPage(\'monitoreo\')" style="width:100%;box-sizing:border-box;background:#0d1117;border:1px solid #2c2c2e;border-radius:5px;color:#94a3b8;padding:3px 6px;font-size:10px;"></th>';
+  h += '<th style="padding:5px 10px;">';
+  h += '<input type="text" value="'+esc(_monFiltroOpTxt)+'" placeholder="OP..." oninput="_monFiltroOpTxt=this.value;renderPage(\'monitoreo\')" style="width:100%;box-sizing:border-box;background:#0d1117;border:1px solid #2c2c2e;border-radius:5px;color:#94a3b8;padding:3px 6px;font-size:10px;margin-bottom:3px;">';
+  h += '<label style="display:flex;align-items:center;gap:4px;font-size:9px;color:#64748b;font-weight:400;text-transform:none;letter-spacing:0;cursor:pointer;white-space:nowrap;"><input type="checkbox" '+(_monOcultarDiseno?'checked':'')+' onchange="_monOcultarDiseno=this.checked;renderPage(\'monitoreo\')" style="width:11px;height:11px;accent-color:#fbbf24;cursor:pointer;">Ocultar diseño</label>';
+  h += '</th>';
   h += '<th style="padding:5px 10px;">';
   h += '<select onchange="_monFiltroCorte=this.value;renderPage(\'monitoreo\')" style="width:100%;background:#0d1117;border:1px solid #2c2c2e;border-radius:5px;color:#94a3b8;padding:3px 4px;font-size:10px;">';
   h += '<option value="">Todos</option>';
