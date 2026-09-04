@@ -6289,8 +6289,11 @@ function renderOPs(){
     var totalUds = subgs.reduce(function(a,s){ return a+s.uds; }, 0);
     var totalEnt = subgs.reduce(function(a,s){ return a+s.udsEnt; }, 0);
     var pctGlobal = totalUds ? Math.round(totalEnt/totalUds*100) : 0;
+    // Unidades PENDIENTES por estado (total - ya entregado), no cantidad de sub-grupos —
+    // así "Novedad: 4" significa 4 unidades por resolver, no 4 tarjetas, y si un taller ya
+    // entregó parcial, ese remanente se refleja acá en vez de seguir contando el total original.
     var estadoCounts = {};
-    subgs.forEach(function(s){ estadoCounts[s.estado]=(estadoCounts[s.estado]||0)+1; });
+    subgs.forEach(function(s){ estadoCounts[s.estado]=(estadoCounts[s.estado]||0)+Math.max(0,s.uds-s.udsEnt); });
 
     h += '<div style="display:flex;gap:10px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px;margin-bottom:18px;">';
 
@@ -6305,7 +6308,7 @@ function renderOPs(){
       if(!cnt) return;
       h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:3px;">';
       h += '<span style="display:flex;align-items:center;gap:5px;"><span style="width:6px;height:6px;border-radius:50%;background:'+col.color+';flex-shrink:0;"></span><span style="font-size:10px;color:#94a3b8;">'+col.label+'</span></span>';
-      h += '<span style="font-size:11px;font-weight:700;color:'+col.color+';">'+cnt+'</span>';
+      h += '<span style="font-size:11px;font-weight:700;color:'+col.color+';">'+cnt.toLocaleString('es-CO')+' uds</span>';
       h += '</div>';
     });
     h += '<div style="margin-top:8px;font-size:9px;color:#3b82f644;text-align:right;">clic para detalle →</div>';
@@ -6315,9 +6318,9 @@ function renderOPs(){
     cats.forEach(function(cat){
       var info = catMap[cat];
       var isActive = _opCatFiltro === cat;
-      // contar sub-grupos por estado para esta categoría
+      // unidades pendientes por estado para esta categoría (no cantidad de sub-grupos)
       var catEstados = {};
-      subgs.forEach(function(s){ if((s.op.categoria||'Sin Cat.')===cat && s.pct<100) catEstados[s.estado]=(catEstados[s.estado]||0)+1; });
+      subgs.forEach(function(s){ if((s.op.categoria||'Sin Cat.')===cat && s.pct<100) catEstados[s.estado]=(catEstados[s.estado]||0)+Math.max(0,s.uds-s.udsEnt); });
       h += '<div onclick="setOpCatFiltro(\''+cat.replace(/\'/g,"\\'")+'\')" style="background:'+(isActive?'rgba(10,132,255,.1)':'#0d1117')+';border:1px solid '+(isActive?'#0a84ff66':'#2c2c2e')+';border-radius:12px;padding:14px 16px;min-width:145px;flex:0 0 auto;cursor:pointer;transition:all .2s;" onmouseover="this.style.borderColor=\'#0a84ff44\'" onmouseout="this.style.borderColor=\''+(isActive?'#0a84ff66':'#2c2c2e')+'\'">';
       h += '<div style="font-size:9px;font-weight:700;color:'+(isActive?'#0a84ff':'#475569')+';text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;">'+esc(cat)+'</div>';
       h += '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:52px;color:'+(isActive?'#0a84ff':'#e2e8f0')+';line-height:1;margin-bottom:2px;">'+info.total+'</div>';
@@ -6327,7 +6330,7 @@ function renderOPs(){
         if(!cnt) return;
         h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:2px;">';
         h += '<span style="font-size:9px;color:#475569;">'+col.label.split(' ')[0]+'</span>';
-        h += '<span style="font-size:10px;font-weight:700;color:'+col.color+';">'+cnt+'</span>';
+        h += '<span style="font-size:10px;font-weight:700;color:'+col.color+';">'+cnt.toLocaleString('es-CO')+'</span>';
         h += '</div>';
       });
       h += '</div>';
@@ -6395,7 +6398,7 @@ function renderOPs(){
         h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:8px;">'+esc(op.nombre_producto)+'</div>';
         if(satNames.length) h += '<div style="font-size:10px;color:#64748b;margin-bottom:6px;">'+satNames.slice(0,2).map(function(x){return esc(x.split(' ')[0]);}).join(' · ')+(satNames.length>2?'...':'')+'</div>';
         h += '<div style="display:flex;gap:8px;margin-bottom:6px;">';
-        h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">UDS</div><div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+s.uds+'</div></div>';
+        h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">'+(s.pct>0&&s.pct<100?'PEND.':'UDS')+'</div><div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+Math.max(0,s.uds-s.udsEnt)+'</div></div>';
         h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">ENTG.</div><div style="font-size:13px;font-weight:700;color:'+(s.pct>=100?'#34d399':s.pct>50?'#0a84ff':'#e2e8f0')+';">'+s.pct+'%</div></div>';
         h += '</div>';
         h += '<div style="height:3px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;"><div style="height:100%;width:'+s.pct+'%;background:'+(s.pct>=100?'#34d399':'#0a84ff')+';border-radius:4px;"></div></div>';
@@ -6417,13 +6420,17 @@ function renderOPs(){
         if(ca!==cb) return cb.localeCompare(ca);
         return (b.op.numero||0)-(a.op.numero||0);
       });
+    var colUdsPend = colSubgs.reduce(function(a,s){ return a+Math.max(0,s.uds-s.udsEnt); },0);
 
     h += '<div style="flex:1 1 200px;min-width:210px;max-width:300px;display:flex;flex-direction:column;">';
     h += '<div data-col-k="'+col.k+'" onclick="abrirResumenColumna(this.dataset.colK)" style="background:'+col.bg+';border:1px solid '+col.color+'44;border-bottom:none;border-radius:10px 10px 0 0;padding:10px 13px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;cursor:pointer;" title="Ver todas las OPs en este estado">';
+    h += '<div>';
     h += '<div style="font-size:11px;font-weight:700;color:'+col.color+';text-transform:uppercase;letter-spacing:.5px;">'+col.label+'</div>';
+    h += '<div style="font-size:9px;color:'+col.color+'99;margin-top:1px;">'+colUdsPend.toLocaleString('es-CO')+' uds pendientes</div>';
+    h += '</div>';
     h += '<div style="display:flex;align-items:center;gap:6px;">';
     h += '<span style="font-size:9px;color:'+col.color+'66;">▸ ver todo</span>';
-    h += '<span style="font-size:11px;font-weight:700;color:'+col.color+';background:'+col.color+'22;border-radius:10px;padding:1px 7px;">'+colSubgs.length+'</span>';
+    h += '<span title="'+colSubgs.length+' tarjeta'+(colSubgs.length!==1?'s':'')+'" style="font-size:11px;font-weight:700;color:'+col.color+';background:'+col.color+'22;border-radius:10px;padding:1px 7px;">'+colSubgs.length+'</span>';
     h += '</div>';
     h += '</div>';
     h += '<div data-kan-col="'+col.k+'" style="background:#0d1117;border:1px solid '+col.color+'33;border-top:none;border-radius:0 0 10px 10px;padding:10px;min-height:100px;overflow-y:auto;overflow-x:hidden;max-height:calc(100vh - 310px);transition:background .15s;" ondragover="kanDragOver(event,this)" ondragleave="this.style.background=\'\'" ondrop="kanDrop(event,this.dataset.kanCol)">';
@@ -6464,7 +6471,7 @@ function renderOPs(){
 
         h += '<div style="display:flex;gap:8px;margin-bottom:8px;">';
         h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">OTs</div><div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+totalOts+'</div></div>';
-        h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">UDS</div><div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+totalUds+'</div></div>';
+        h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">'+(pctTotal>0&&pctTotal<100?'PEND.':'UDS')+'</div><div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+Math.max(0,totalUds-totalEnt)+'</div></div>';
         h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">ENTG.</div><div style="font-size:13px;font-weight:700;color:'+(pctTotal>=100?'#34d399':pctTotal>50?'#0a84ff':'#e2e8f0')+';">'+pctTotal+'%</div></div>';
         h += '</div>';
         h += '<div style="height:3px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;margin-bottom:8px;"><div style="height:100%;width:'+pctTotal+'%;background:'+(pctTotal>=100?'#34d399':'#0a84ff')+';border-radius:4px;transition:width .4s;"></div></div>';
@@ -6641,7 +6648,7 @@ function renderOPs(){
 
       h += '<div style="display:flex;gap:8px;margin-bottom:8px;">';
       h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">OTs</div><div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+otsColor.length+'</div></div>';
-      h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">UDS</div><div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+s.uds+'</div></div>';
+      h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">'+(s.pct>0&&s.pct<100?'PEND.':'UDS')+'</div><div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+Math.max(0,s.uds-s.udsEnt)+'</div></div>';
       h += '<div style="text-align:center;flex:1;"><div style="font-size:9px;color:#475569;">ENTG.</div><div style="font-size:13px;font-weight:700;color:'+(s.pct>=100?'#34d399':s.pct>50?'#0a84ff':'#e2e8f0')+';">'+s.pct+'%</div></div>';
       h += '</div>';
       h += '<div style="height:3px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;margin-bottom:8px;"><div style="height:100%;width:'+s.pct+'%;background:'+(s.pct>=100?'#34d399':'#0a84ff')+';border-radius:4px;transition:width .4s;"></div></div>';
