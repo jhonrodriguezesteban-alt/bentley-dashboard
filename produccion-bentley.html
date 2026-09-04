@@ -7936,7 +7936,10 @@ function renderInversion(){
   // siga marcada EN_PROCESO (típico en OPs viejas/migradas que nunca se cerraron a mano),
   // si ya entregó el 100% no tiene sentido seguir mostrándola acá.
   var ops = (DB.ops||[]).filter(function(o){ return o.estado_op==='EN_PROCESO' || o.estado_op==='CON_NOVEDAD'; });
-  var filas = ops.map(function(op){ return _invResumenOP(op); }).filter(function(r){ return !r.entregadaCompleta; });
+  // Si ya no queda nada pendiente por pagar (todo el checklist quedó marcado y la mano de
+  // obra ya está paga), la OP sale de este listado — es una lista de "qué falta invertir",
+  // no un histórico de todas las OPs activas.
+  var filas = ops.map(function(op){ return _invResumenOP(op); }).filter(function(r){ return !r.entregadaCompleta && r.pendiente>0; });
   filas.sort(function(a,b){ return (a.op.numero||0) - (b.op.numero||0); });
 
   var granTotal=0, granPagado=0, granPendiente=0, sinReceta=0;
