@@ -11,6 +11,7 @@
   --txt:#f2f2f4; --mut:#9a9aa4; --dim:#5c5c66;
   --ok:#30d158; --warn:#ffd60a; --bad:#ff453a;
   --f1:#86b6ef; --f2:#3987e5; --f3:#184f95;
+  --m1:#ff9f0a; --m2:#bf5af2; --m3:#30d158;
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--txt)}
@@ -25,8 +26,7 @@ h2{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;
 .kpi .l{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);margin-bottom:7px}
 .kpi .v{font-size:24px;font-weight:700;letter-spacing:-.02em}
 .kpi .d{font-size:11.5px;color:var(--mut);margin-top:5px}
-.up{color:var(--warn)}.down{color:var(--ok)}
-
+.up{color:var(--warn)}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px}
 .ctrls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
 .seg{display:inline-flex;background:var(--panel2);border:1px solid var(--line);border-radius:9px;overflow:hidden}
@@ -49,12 +49,55 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 .tip .tot{border-top:1px solid #3a3a46;margin-top:8px;padding-top:7px;display:flex;font-weight:700}
 .tip .tot b{margin-left:auto;font-variant-numeric:tabular-nums}
 
+/* calendario */
+.cals{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+.cal h3{margin:0 0 10px;font-size:13px;font-weight:700;letter-spacing:.03em;text-transform:capitalize}
+.dow{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:5px}
+.dow span{text-align:center;font-size:9.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.day{aspect-ratio:1;border-radius:9px;border:1px solid var(--line);background:var(--panel2);
+     padding:5px 6px;font-size:10px;position:relative;cursor:default;overflow:hidden}
+.day.has{cursor:pointer}
+.day.has:hover{border-color:#4a4a58}
+.day.sel{border-color:var(--txt);box-shadow:0 0 0 1px var(--txt)}
+.day.empty{background:transparent;border-color:transparent}
+.day .n{font-weight:700;color:var(--mut)}
+.day.has .n{color:var(--txt)}
+.day .s{position:absolute;left:6px;right:6px;bottom:14px;font-size:9.5px;color:var(--mut);
+        font-variant-numeric:tabular-nums;white-space:nowrap}
+.day .bar{position:absolute;left:0;right:0;bottom:0;height:5px;display:flex}
+.day .bar i{display:block;height:100%}
+.day .flag{position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%}
+.editor{margin-top:16px;border-top:1px solid var(--line);padding-top:16px;display:none}
+.editor.on{display:block}
+.editor .hd{font-weight:700;font-size:14px;margin-bottom:4px}
+.editor .meta{font-size:12px;color:var(--mut);margin-bottom:12px}
+.marks{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.mk{display:flex;align-items:center;gap:7px;background:var(--panel2);border:1px solid var(--line);
+    border-radius:999px;padding:6px 13px;cursor:pointer;font:600 12px Manrope,sans-serif;color:var(--txt)}
+.mk[aria-pressed="true"]{border-color:var(--txt)}
+.mk i{width:9px;height:9px;border-radius:50%}
+textarea{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:10px;color:var(--txt);
+         font:400 13px Manrope,sans-serif;padding:11px 13px;resize:vertical;min-height:70px}
+.btns{display:flex;gap:9px;margin-top:11px}
+button.b{background:#2c2c38;border:1px solid var(--line);color:var(--txt);border-radius:9px;
+         padding:8px 16px;font:700 12px Manrope,sans-serif;cursor:pointer}
+button.b.pri{background:var(--f2);border-color:var(--f2);color:#fff}
+button.b.del{color:var(--bad)}
+.notelist{margin-top:16px;display:grid;gap:8px}
+.nt{display:flex;gap:11px;align-items:flex-start;background:var(--panel2);border:1px solid var(--line);
+    border-radius:10px;padding:10px 13px;font-size:12.5px}
+.nt i{width:8px;height:8px;border-radius:50%;margin-top:5px;flex:none}
+.nt .d{color:var(--mut);font-weight:700;flex:none;width:58px}
+
+/* crédito */
+label.fld{font-size:12.5px;color:var(--mut);display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:12px}
+input[type=date],input[type=text]{background:var(--panel2);border:1px solid var(--line);color:var(--txt);border-radius:8px;
+   padding:8px 11px;font:600 13px Manrope,sans-serif;color-scheme:dark}
+input[type=text]{width:150px;text-align:right;font-variant-numeric:tabular-nums}
 .gauge{height:16px;border-radius:8px;background:#242430;overflow:hidden;margin:14px 0 10px;position:relative}
 .gauge i{display:block;height:100%;border-radius:8px;transition:width .3s}
 .gline{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--mut);opacity:.5}
-label.fld{font-size:12px;color:var(--mut);display:flex;align-items:center;gap:9px;flex-wrap:wrap}
-input[type=date]{background:var(--panel2);border:1px solid var(--line);color:var(--txt);border-radius:8px;
-                 padding:7px 10px;font:600 12px Manrope,sans-serif;color-scheme:dark}
 
 .alerts{display:grid;gap:10px}
 .al{display:flex;gap:13px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);
@@ -62,6 +105,7 @@ input[type=date]{background:var(--panel2);border:1px solid var(--line);color:var
 .al.bad{border-left-color:var(--bad);background:rgba(255,69,58,.05)}
 .al.warn{border-left-color:var(--warn);background:rgba(255,214,10,.04)}
 .al.ok{border-left-color:var(--ok);background:rgba(48,209,88,.04)}
+.al.info{border-left-color:var(--mut)}
 .al .ic{font-size:15px;line-height:1.3;flex:none;width:20px;text-align:center}
 .al .bd{flex:1;min-width:0}
 .al .t{font-weight:700;font-size:13.5px;margin-bottom:3px}
@@ -73,6 +117,7 @@ input[type=date]{background:var(--panel2);border:1px solid var(--line);color:var
 .act.bajar{background:rgba(255,214,10,.15);color:var(--warn)}
 .act.escalar{background:rgba(48,209,88,.15);color:var(--ok)}
 .act.revisar{background:#2a2a35;color:var(--mut)}
+.act.ok{background:rgba(48,209,88,.15);color:var(--ok)}
 
 .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--panel)}
 table{border-collapse:collapse;width:100%;min-width:820px;font-size:12.5px}
@@ -82,7 +127,7 @@ td{padding:11px 13px;border-bottom:1px solid #1e1e25;white-space:nowrap}
 tr:last-child td{border-bottom:none}
 .num{text-align:right;font-variant-numeric:tabular-nums}
 .nm{white-space:normal;min-width:190px;font-weight:600}
-.tag{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:7px;vertical-align:baseline}
+.tag{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:7px}
 .note{color:var(--mut);font-size:12.5px;line-height:1.75;font-family:Lora,Georgia,serif;margin-top:14px}
 footer{margin-top:46px;padding-top:18px;border-top:1px solid var(--line);color:var(--dim);font-size:11.5px;line-height:1.7}
 @media(max-width:640px){.legend{margin-left:0;width:100%}}
@@ -108,34 +153,54 @@ footer{margin-top:46px;padding-top:18px;border-top:1px solid var(--line);color:v
 <div class="card">
   <div class="ctrls">
     <div class="seg" role="group" aria-label="Rango">
-      <button data-range="7">7 días</button>
-      <button data-range="14">14 días</button>
-      <button data-range="30" aria-pressed="true">30 días</button>
+      <button data-range="7">7 días</button><button data-range="14">14 días</button><button data-range="30" aria-pressed="true">30 días</button>
     </div>
     <div class="legend" id="legend"></div>
   </div>
   <div class="chartbox">
-    <svg id="chart" viewBox="0 0 900 320" preserveAspectRatio="none" role="img"
-         aria-label="Inversión diaria apilada por fase del embudo"></svg>
+    <svg id="chart" viewBox="0 0 900 320" preserveAspectRatio="none" role="img" aria-label="Inversión diaria apilada por fase"></svg>
     <div class="tip" id="tip"></div>
   </div>
 </div>
 
-<h2>Totales por fase</h2>
-<div class="kpis" id="fasekpis"></div>
-<p class="note">F1 enganche (recordación, visitas a perfil y calentamiento web) · F2 conversión en frío · F3 remarketing y fidelización. El embudo hoy está fuertemente cargado abajo: por cada peso de F1 se invierten casi trece entre F2 y F3. Eso sostiene la venta de corto plazo pero adelgaza la audiencia que alimenta las fases siguientes.</p>
-
-<h2>Cupo de crédito · umbral de facturación Meta</h2>
+<h2>Embudo de inversión</h2>
 <div class="card">
-  <label class="fld">Último cobro de Meta:
-    <input type="date" id="anchor" value="2026-09-01" min="2026-08-05" max="2026-09-03">
-    <span id="anchorHint" style="color:var(--dim)"></span>
+  <div class="chartbox">
+    <svg id="funnel" viewBox="0 0 900 330" role="img" aria-label="Embudo de inversión por fase"></svg>
+  </div>
+  <p class="note" style="margin-bottom:0">El embudo está invertido: la fase más angosta es la de arriba. F1 recibe 7,2% de la inversión y sostiene todo lo que ocurre debajo. Un embudo sano se ensancha arriba, no abajo — F2 y F3 solo pueden convertir a quien F1 ya trajo.</p>
+</div>
+
+<h2>Calendario de inversión</h2>
+<div class="card">
+  <p class="note" style="margin-top:0;margin-bottom:16px">Haz clic en cualquier día con gasto para marcarlo y dejar una nota — un cambio de presupuesto, una campaña nueva, un festivo, lo que necesites recordar. Las marcas se guardan en este navegador.</p>
+  <div class="cals" id="cals"></div>
+  <div class="editor" id="editor">
+    <div class="hd" id="edTitle"></div>
+    <div class="meta" id="edMeta"></div>
+    <div class="marks" id="edMarks"></div>
+    <textarea id="edNote" placeholder="Qué pasó ese día…"></textarea>
+    <div class="btns">
+      <button class="b pri" id="edSave">Guardar</button>
+      <button class="b del" id="edDel">Borrar marca</button>
+      <button class="b" id="edClose">Cerrar</button>
+    </div>
+  </div>
+  <div class="notelist" id="notelist"></div>
+</div>
+
+<h2>Techo de gasto · saldo por pagar</h2>
+<div class="card">
+  <label class="fld">Saldo por pagar según Facturación:
+    <input type="text" id="due" placeholder="0" inputmode="numeric">
+    <span>leído el</span><input type="date" id="dueDate" value="2026-09-04">
   </label>
   <div class="gauge"><i id="gbar"></i><div class="gline" style="left:80%"></div></div>
   <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--mut)">
-    <span id="gtxt"></span><span>Umbral $2.400.000</span>
+    <span id="gtxt"></span><span>Techo $2.400.000</span>
   </div>
   <div id="galert" style="margin-top:16px"></div>
+  <p class="note" style="margin-bottom:0">Este saldo no viene de sumar el gasto diario — esa suma no coincide con lo que Meta cobra, porque el importe facturado se ajusta por créditos, impuestos y por el desfase entre el gasto reportado y el gasto liquidado. El valor de arriba se toma de <b>Administrador de Anuncios → Facturación → Importe pendiente</b>. Escríbelo ahí y el medidor se recalcula.</p>
 </div>
 
 <h2>Alertas de presupuesto</h2>
@@ -151,15 +216,14 @@ footer{margin-top:46px;padding-top:18px;border-top:1px solid var(--line);color:v
 </div>
 
 <footer>
-Fuente: API de Meta Ads, lectura directa de la cuenta. Reglas de alerta — <b>Pausar</b>: costo por resultado &gt; 120% del promedio 30d de la campaña padre, o gasto mayor a 1,5 veces ese promedio sin una sola conversión. <b>Bajar</b>: entre 100% y 120%, o frecuencia ≥ 2,0. <b>Escalar</b>: por debajo del 80% con frecuencia menor a 1,8. Un pico de un solo día no dispara decisiones: confirmar patrón de 3 días antes de mover presupuesto.
+Fuente: API de Meta Ads, lectura directa de la cuenta. El saldo por pagar se captura a mano desde Facturación (la API de Ads no lo expone). Reglas de alerta — <b>Pausar</b>: costo por resultado &gt; 120% del promedio 30d de la campaña padre, o gasto mayor a 1,5 veces ese promedio sin una sola conversión. <b>Bajar</b>: entre 100% y 120%, o frecuencia ≥ 2,0. <b>Escalar</b>: por debajo del 80% con frecuencia menor a 1,8. Un pico de un solo día no dispara decisiones: confirmar patrón de 3 días antes de mover presupuesto.
 </footer>
 </div>
 
 <script>
-const FMT = n => '$' + Math.round(n).toLocaleString('es-CO');
-const FMTK = n => n>=1e6 ? '$'+(n/1e6).toFixed(1)+'M' : '$'+Math.round(n/1000)+'k';
-
-const DAILY = [
+const FMT=n=>'$'+Math.round(n).toLocaleString('es-CO');
+const FMTK=n=>n>=1e6?'$'+(n/1e6).toFixed(1)+'M':'$'+Math.round(n/1000)+'k';
+const DAILY=[
 ["2026-08-05",31593,134720,158837],["2026-08-06",31873,109787,195816],["2026-08-07",28833,154512,211409],
 ["2026-08-08",29867,112883,159321],["2026-08-09",34020,148892,209786],["2026-08-10",30966,126259,132991],
 ["2026-08-11",30483,130471,176548],["2026-08-12",25564,121376,166946],["2026-08-13",28830,166830,237803],
@@ -169,14 +233,12 @@ const DAILY = [
 ["2026-08-23",32122,276725,199942],["2026-08-24",26724,217520,143009],["2026-08-25",27545,245776,139577],
 ["2026-08-26",30397,255932,142525],["2026-08-27",30557,274256,181943],["2026-08-28",28813,274141,200548],
 ["2026-08-29",27429,262156,163128],["2026-08-30",34705,313233,223566],["2026-08-31",28851,262994,175413],
-["2026-09-01",33867,331435,249849],["2026-09-02",34079,242488,210679],["2026-09-03",26768,184521,151301]
-];
-const SERIES = [
-  {k:'F1', label:'F1 · Enganchar', color:'var(--f1)', hex:'#86b6ef', i:1},
-  {k:'F2', label:'F2 · Solucionar', color:'var(--f2)', hex:'#3987e5', i:2},
-  {k:'F3', label:'F3 · Fidelizar',  color:'var(--f3)', hex:'#184f95', i:3}
-];
-const ADSETS = [
+["2026-09-01",33867,331435,249849],["2026-09-02",34079,242488,210679],["2026-09-03",26768,184521,151301]];
+const SERIES=[{k:'F1',label:'F1 · Enganchar',hex:'#86b6ef',i:1},
+              {k:'F2',label:'F2 · Solucionar',hex:'#3987e5',i:2},
+              {k:'F3',label:'F3 · Fidelizar',hex:'#184f95',i:3}];
+const HEX={F1:'#86b6ef',F2:'#3987e5',F3:'#184f95'};
+const ADSETS=[
  {n:'F2 GANADORES',f:'F2',b:100000,s:706062,r:16,cpa:44129,base:48213,u:'compras',fr:1.71,note:'aprendizaje limitado'},
  {n:'RMK | CATALOGO DPA 2.0',f:'F3',b:70500,s:490917,r:4,cpa:122729,base:35481,u:'compras',fr:1.92,note:''},
  {n:'RMK | MIX NIÑO NIÑA 2.0',f:'F3',b:62166,s:426154,r:16,cpa:26635,base:35481,u:'compras',fr:2.35,note:''},
@@ -188,144 +250,214 @@ const ADSETS = [
  {n:'RMK | MIX ABRIGOS | SEPT',f:'F3',b:20000,s:0,r:0,cpa:null,base:35481,u:'compras',fr:0,note:'sin entrega'},
  {n:'TRAFICO WEB 2.0',f:'F1',b:16000,s:114083,r:2449,cpa:47,base:43,u:'vistas LP',fr:1.23,note:''},
  {n:'ADVANTAGE (visitas perfil)',f:'F1',b:8000,s:45616,r:284,cpa:161,base:185,u:'visitas',fr:1.19,note:''},
- {n:'Advantage · PROMT INDIRECTO',f:'F1',b:6400,s:54815,r:22967,cpa:2,base:2,u:'ThruPlays',fr:1.03,note:''}
-];
+ {n:'Advantage · PROMT INDIRECTO',f:'F1',b:6400,s:54815,r:22967,cpa:2,base:2,u:'ThruPlays',fr:1.03,note:''}];
+const MARKS=[{k:'ajuste',label:'Ajuste de presupuesto',c:'#ff9f0a'},
+             {k:'lanzamiento',label:'Lanzamiento',c:'#bf5af2'},
+             {k:'nota',label:'Nota',c:'#30d158'}];
+const MAP={}; DAILY.forEach(d=>MAP[d[0]]=d);
+let range=30, off={F1:true,F2:true,F3:true};
 
-let range = 30, off = {F1:true,F2:true,F3:true};
+/* ---- almacenamiento tolerante ---- */
+const store={
+  get(){ try{ return JSON.parse(localStorage.getItem('bk_meta_marcas')||'{}'); }catch(e){ return {}; } },
+  set(v){ try{ localStorage.setItem('bk_meta_marcas',JSON.stringify(v)); }catch(e){} }
+};
+let marcas=store.get();
 
-/* ---------- leyenda ---------- */
-const legend = document.getElementById('legend');
+/* ---- leyenda ---- */
+const legend=document.getElementById('legend');
 SERIES.forEach(s=>{
   const b=document.createElement('button');
-  b.className='lg'; b.setAttribute('aria-pressed','true'); b.dataset.k=s.k;
-  b.innerHTML=`<i style="background:${s.color}"></i>${s.label} <span class="pct" data-pct="${s.k}"></span>`;
+  b.className='lg'; b.setAttribute('aria-pressed','true');
+  b.innerHTML=`<i style="background:${s.hex}"></i>${s.label} <span class="pct" data-pct="${s.k}"></span>`;
   b.onclick=()=>{ off[s.k]=!off[s.k]; b.setAttribute('aria-pressed',off[s.k]); draw(); };
   legend.appendChild(b);
 });
 
-/* ---------- gráfico ---------- */
+/* ---- barras diarias ---- */
 const svg=document.getElementById('chart'), tip=document.getElementById('tip');
 const W=900,H=320,PL=58,PR=12,PT=14,PB=34;
-
-function rows(){ return DAILY.slice(-range); }
-
 function draw(){
-  const data=rows(), n=data.length;
+  const data=DAILY.slice(-range), n=data.length;
   const act=SERIES.filter(s=>off[s.k]);
-  const totals=data.map(d=>act.reduce((a,s)=>a+d[s.i],0));
-  const max=Math.max(...totals,1), top=Math.ceil(max/100000)*100000;
-  const iw=W-PL-PR, ih=H-PT-PB;
-  const bw=Math.max(3,(iw/n)-(n>20?3:6)), step=iw/n;
-  const y=v=>PT+ih-(v/top)*ih;
+  const max=Math.max(...data.map(d=>act.reduce((a,s)=>a+d[s.i],0)),1);
+  const top=Math.ceil(max/100000)*100000, iw=W-PL-PR, ih=H-PT-PB;
+  const step=iw/n, bw=Math.max(3,step-(n>20?3:6)), y=v=>PT+ih-(v/top)*ih;
   let g='';
-  for(let i=0;i<=4;i++){
-    const v=top*i/4, yy=y(v);
+  for(let i=0;i<=4;i++){ const v=top*i/4, yy=y(v);
     g+=`<line x1="${PL}" x2="${W-PR}" y1="${yy}" y2="${yy}" stroke="var(--grid)" stroke-width="1"/>`;
-    g+=`<text x="${PL-10}" y="${yy+4}" text-anchor="end" fill="var(--dim)" font-size="10.5" font-family="Manrope">${FMTK(v)}</text>`;
-  }
+    g+=`<text x="${PL-10}" y="${yy+4}" text-anchor="end" fill="var(--dim)" font-size="10.5" font-family="Manrope">${FMTK(v)}</text>`; }
   data.forEach((d,i)=>{
     const x=PL+i*step+(step-bw)/2; let acc=0;
-    act.forEach(s=>{
-      const v=d[s.i]; if(v<=0) return;
-      const h=(v/top)*ih-2; if(h<=0) return;
-      const yy=y(acc+v);
-      g+=`<rect x="${x}" y="${yy}" width="${bw}" height="${Math.max(h,1)}" fill="${s.hex}" rx="2"/>`;
-      acc+=v;
-    });
-    const lbl=d[0].slice(8)+'/'+d[0].slice(5,7);
-    if(n<=14 || i%Math.ceil(n/10)===0)
-      g+=`<text x="${x+bw/2}" y="${H-12}" text-anchor="middle" fill="var(--dim)" font-size="10" font-family="Manrope">${lbl}</text>`;
+    act.forEach(s=>{ const v=d[s.i]; if(v<=0)return;
+      const h=(v/top)*ih-2; if(h<=0)return;
+      g+=`<rect x="${x}" y="${y(acc+v)}" width="${bw}" height="${Math.max(h,1)}" fill="${s.hex}" rx="2"/>`; acc+=v; });
+    if(n<=14||i%Math.ceil(n/10)===0)
+      g+=`<text x="${x+bw/2}" y="${H-12}" text-anchor="middle" fill="var(--dim)" font-size="10" font-family="Manrope">${d[0].slice(8)}/${d[0].slice(5,7)}</text>`;
     g+=`<rect class="hit" data-i="${i}" x="${PL+i*step}" y="${PT}" width="${step}" height="${ih}" fill="transparent"/>`;
   });
   svg.innerHTML=g;
   svg.querySelectorAll('.hit').forEach(r=>{
-    r.onmouseenter=e=>show(+r.dataset.i,data);
+    r.onmouseenter=()=>show(+r.dataset.i,data);
     r.onmousemove=e=>place(e);
     r.onmouseleave=()=>tip.style.opacity=0;
   });
   const tot={F1:0,F2:0,F3:0}; data.forEach(d=>SERIES.forEach(s=>tot[s.k]+=d[s.i]));
   const sum=tot.F1+tot.F2+tot.F3;
-  SERIES.forEach(s=>{
-    document.querySelector(`[data-pct="${s.k}"]`).textContent=(tot[s.k]/sum*100).toFixed(1)+'%';
-  });
-  renderFases(tot,sum,data.length);
+  SERIES.forEach(s=>document.querySelector(`[data-pct="${s.k}"]`).textContent=(tot[s.k]/sum*100).toFixed(1)+'%');
+  drawFunnel(tot,sum,data.length);
 }
 function show(i,data){
-  const d=data[i];
-  let h=`<h4>${new Date(d[0]+'T12:00').toLocaleDateString('es-CO',{weekday:'short',day:'numeric',month:'short'})}</h4>`;
-  let t=0;
+  const d=data[i]; let h=`<h4>${new Date(d[0]+'T12:00').toLocaleDateString('es-CO',{weekday:'short',day:'numeric',month:'short'})}</h4>`,t=0;
   SERIES.forEach(s=>{ if(!off[s.k])return; t+=d[s.i];
     h+=`<div class="r"><i style="background:${s.hex}"></i>${s.k}<b>${FMT(d[s.i])}</b></div>`; });
-  h+=`<div class="tot">Total<b>${FMT(t)}</b></div>`;
-  tip.innerHTML=h; tip.style.opacity=1;
+  h+=`<div class="tot">Total<b>${FMT(t)}</b></div>`; tip.innerHTML=h; tip.style.opacity=1;
 }
 function place(e){
   const box=svg.parentElement.getBoundingClientRect();
-  let x=e.clientX-box.left+14, y=e.clientY-box.top-10;
+  let x=e.clientX-box.left+14;
   if(x+195>box.width) x=e.clientX-box.left-195;
-  tip.style.left=x+'px'; tip.style.top=Math.max(0,y)+'px';
+  tip.style.left=x+'px'; tip.style.top=Math.max(0,e.clientY-box.top-10)+'px';
 }
 document.querySelectorAll('.seg button').forEach(b=>{
   b.onclick=()=>{ document.querySelectorAll('.seg button').forEach(o=>o.setAttribute('aria-pressed','false'));
     b.setAttribute('aria-pressed','true'); range=+b.dataset.range; draw(); };
 });
 
-/* ---------- totales por fase ---------- */
-function renderFases(tot,sum,nd){
-  const box=document.getElementById('fasekpis');
-  box.innerHTML=SERIES.map(s=>{
+/* ---- embudo ---- */
+function drawFunnel(tot,sum,nd){
+  const FW=900, BAND=88, GAP=8, X=560, MAXW=440, LEFT=300;
+  const max=Math.max(tot.F1,tot.F2,tot.F3);
+  const w=k=>Math.max((tot[k]/max)*MAXW,60);
+  let g='', y=18;
+  SERIES.forEach((s,idx)=>{
+    const wTop=w(s.k), wBot=idx<2?w(SERIES[idx+1].k):wTop*0.72;
+    const yb=y+BAND;
+    g+=`<path d="M ${X-wTop/2} ${y} L ${X+wTop/2} ${y} L ${X+wBot/2} ${yb} L ${X-wBot/2} ${yb} Z" fill="${s.hex}"/>`;
     const p=(tot[s.k]/sum*100).toFixed(1);
-    return `<div class="kpi"><div class="l"><span class="tag" style="background:${s.hex}"></span>${s.label}</div>
-      <div class="v">${FMT(tot[s.k])}</div>
-      <div class="d">${p}% del total · ${FMT(tot[s.k]/nd)}/día</div></div>`;
-  }).join('') + `<div class="kpi"><div class="l">Total ${nd} días</div><div class="v">${FMT(sum)}</div>
-      <div class="d">${FMT(sum/nd)}/día promedio</div></div>`;
+    g+=`<text x="${LEFT-24}" y="${y+BAND/2-4}" text-anchor="end" fill="var(--txt)" font-size="14" font-weight="700" font-family="Manrope">${s.label}</text>`;
+    g+=`<text x="${LEFT-24}" y="${y+BAND/2+16}" text-anchor="end" fill="var(--mut)" font-size="12" font-family="Manrope">${FMT(tot[s.k]/nd)} / día</text>`;
+    g+=`<text x="${X}" y="${y+BAND/2+2}" text-anchor="middle" fill="#fff" font-size="17" font-weight="800" font-family="Manrope">${FMT(tot[s.k])}</text>`;
+    g+=`<text x="${X}" y="${y+BAND/2+21}" text-anchor="middle" fill="rgba(255,255,255,.75)" font-size="12" font-weight="600" font-family="Manrope">${p}%</text>`;
+    y=yb+GAP;
+  });
+  g+=`<text x="${X}" y="${y+22}" text-anchor="middle" fill="var(--mut)" font-size="12" font-family="Manrope">Total ${nd} días · ${FMT(sum)}</text>`;
+  document.getElementById('funnel').innerHTML=g;
 }
 
-/* ---------- crédito ---------- */
-const anchor=document.getElementById('anchor');
+/* ---- calendario ---- */
+const DOW=['L','M','X','J','V','S','D'];
+function buildCals(){
+  const meses={};
+  DAILY.forEach(d=>{ const m=d[0].slice(0,7); (meses[m]=meses[m]||[]).push(d[0]); });
+  const maxSpend=Math.max(...DAILY.map(d=>d[1]+d[2]+d[3]));
+  document.getElementById('cals').innerHTML=Object.keys(meses).sort().map(m=>{
+    const [Y,M]=m.split('-').map(Number);
+    const first=new Date(Y,M-1,1), dim=new Date(Y,M,0).getDate();
+    let lead=(first.getDay()+6)%7, cells='';
+    for(let i=0;i<lead;i++) cells+='<div class="day empty"></div>';
+    for(let d=1;d<=dim;d++){
+      const key=`${Y}-${String(M).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const row=MAP[key];
+      if(!row){ cells+=`<div class="day"><div class="n">${d}</div></div>`; continue; }
+      const t=row[1]+row[2]+row[3];
+      const bar=SERIES.map(s=>`<i style="width:${(row[s.i]/t*100).toFixed(1)}%;background:${s.hex}"></i>`).join('');
+      const mk=marcas[key];
+      const flag=mk?`<div class="flag" style="background:${(MARKS.find(x=>x.k===mk.tipo)||MARKS[2]).c}"></div>`:'';
+      const alpha=(0.10+0.28*(t/maxSpend)).toFixed(2);
+      cells+=`<div class="day has" data-k="${key}" style="background:rgba(57,135,229,${alpha})">
+        <div class="n">${d}</div>${flag}<div class="s">${FMTK(t)}</div><div class="bar">${bar}</div></div>`;
+    }
+    const nombre=first.toLocaleDateString('es-CO',{month:'long',year:'numeric'});
+    return `<div class="cal"><h3>${nombre}</h3>
+      <div class="dow">${DOW.map(x=>`<span>${x}</span>`).join('')}</div>
+      <div class="days">${cells}</div></div>`;
+  }).join('');
+  document.querySelectorAll('.day.has').forEach(el=>el.onclick=()=>abrir(el.dataset.k));
+  renderNotas();
+}
+let sel=null, selTipo='nota';
+const ed=document.getElementById('editor');
+function abrir(k){
+  sel=k; const row=MAP[k], t=row[1]+row[2]+row[3];
+  const m=marcas[k]; selTipo=m?m.tipo:'nota';
+  document.getElementById('edTitle').textContent=
+    new Date(k+'T12:00').toLocaleDateString('es-CO',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('edMeta').innerHTML=
+    `Inversión <b style="color:var(--txt)">${FMT(t)}</b> · F1 ${FMT(row[1])} · F2 ${FMT(row[2])} · F3 ${FMT(row[3])}`;
+  document.getElementById('edMarks').innerHTML=MARKS.map(x=>
+    `<button class="mk" data-t="${x.k}" aria-pressed="${x.k===selTipo}"><i style="background:${x.c}"></i>${x.label}</button>`).join('');
+  document.querySelectorAll('.mk').forEach(b=>b.onclick=()=>{
+    selTipo=b.dataset.t;
+    document.querySelectorAll('.mk').forEach(o=>o.setAttribute('aria-pressed',o.dataset.t===selTipo));
+  });
+  document.getElementById('edNote').value=m?m.nota:'';
+  ed.classList.add('on');
+  document.querySelectorAll('.day').forEach(d=>d.classList.toggle('sel',d.dataset.k===k));
+  ed.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+document.getElementById('edSave').onclick=()=>{
+  if(!sel)return;
+  marcas[sel]={tipo:selTipo,nota:document.getElementById('edNote').value.trim()};
+  store.set(marcas); cerrar(); buildCals();
+};
+document.getElementById('edDel').onclick=()=>{ if(!sel)return; delete marcas[sel]; store.set(marcas); cerrar(); buildCals(); };
+document.getElementById('edClose').onclick=cerrar;
+function cerrar(){ ed.classList.remove('on'); sel=null; document.querySelectorAll('.day').forEach(d=>d.classList.remove('sel')); }
+function renderNotas(){
+  const ks=Object.keys(marcas).sort().reverse();
+  document.getElementById('notelist').innerHTML=ks.length?ks.map(k=>{
+    const m=marcas[k], c=(MARKS.find(x=>x.k===m.tipo)||MARKS[2]);
+    return `<div class="nt"><i style="background:${c.c}"></i><div class="d">${k.slice(8)}/${k.slice(5,7)}</div>
+      <div><b>${c.label}</b>${m.nota?' — '+m.nota.replace(/</g,'&lt;'):''}</div></div>`;
+  }).join(''):'';
+}
+
+/* ---- crédito ---- */
+const LIM=2400000;
+const due=document.getElementById('due');
+function parseNum(s){ const d=String(s).replace(/[^0-9]/g,''); return d?+d:0; }
 function credito(){
-  const a=anchor.value;
-  const acc=DAILY.filter(d=>d[0]>=a).reduce((s,d)=>s+d[1]+d[2]+d[3],0);
-  const LIM=2400000, pct=Math.min(acc/LIM*100,100);
-  const rate=423066, falta=LIM-acc, dias=falta>0?falta/rate:0;
-  const col = pct>=100?'var(--bad)':pct>=80?'var(--warn)':'var(--ok)';
-  document.getElementById('gbar').style.width=pct+'%';
-  document.getElementById('gbar').style.background=col;
-  document.getElementById('gtxt').innerHTML=
-    `<b style="color:${col}">${FMT(acc)}</b> acumulados · ${pct.toFixed(0)}% del cupo`;
-  const nd=DAILY.filter(d=>d[0]>=a).length;
-  document.getElementById('anchorHint').textContent=`(${nd} día${nd===1?'':'s'} acumulados)`;
+  const v=parseNum(due.value);
+  const pct=Math.min(v/LIM*100,100), rate=423066, falta=LIM-v, dias=falta>0?falta/rate:0;
+  const col=v===0?'var(--mut)':pct>=100?'var(--bad)':pct>=80?'var(--warn)':'var(--ok)';
+  const bar=document.getElementById('gbar');
+  bar.style.width=pct+'%'; bar.style.background=col;
+  document.getElementById('gtxt').innerHTML=v===0?'Sin dato — escribe el importe pendiente':
+    `<b style="color:${col}">${FMT(v)}</b> por pagar · ${pct.toFixed(0)}% del techo`;
   let al;
-  if(pct>=100) al={c:'bad',ic:'🔴',t:'Cupo superado',
-      m:`Ya acumulaste <b>${FMT(acc)}</b> sobre un umbral de $2.400.000. Meta debió generar el cobro; si no entró, la cuenta puede quedar suspendida. Verifica el medio de pago hoy.`};
-  else if(pct>=80) al={c:'warn',ic:'🟡',t:'Cupo por agotarse',
-      m:`Vas en <b>${FMT(acc)}</b> (${pct.toFixed(0)}%). Al ritmo actual de $423.066/día quedan <b>${dias.toFixed(1)} días</b> antes del cobro. Asegura fondos en el medio de pago.`};
-  else al={c:'ok',ic:'🟢',t:'Cupo con margen',
-      m:`Vas en <b>${FMT(acc)}</b> (${pct.toFixed(0)}%). Al ritmo actual quedan <b>${dias.toFixed(1)} días</b> antes de tocar el umbral de facturación.`};
+  if(v===0) al={c:'info',ic:'⚪',t:'Falta el dato de facturación',
+    m:'Abre <b>Administrador de Anuncios → Facturación</b>, copia el <b>importe pendiente</b> y escríbelo arriba. El medidor no inventa el saldo a partir del gasto diario porque ese número no coincide con lo que Meta cobra.'};
+  else if(pct>=100) al={c:'bad',ic:'🔴',t:'Techo superado',
+    m:`<b>${FMT(v)}</b> por pagar sobre un techo de ${FMT(LIM)}. Meta debió generar el cobro; si no entró, la cuenta puede quedar suspendida. Verifica el medio de pago hoy.`};
+  else if(pct>=80) al={c:'warn',ic:'🟡',t:'Techo por alcanzarse',
+    m:`<b>${FMT(v)}</b> por pagar (${pct.toFixed(0)}%). Al ritmo de $423.066/día quedan <b>${dias.toFixed(1)} días</b> antes del cobro. Asegura fondos en el medio de pago.`};
+  else al={c:'ok',ic:'🟢',t:'Techo con margen',
+    m:`<b>${FMT(v)}</b> por pagar (${pct.toFixed(0)}%). Al ritmo de $423.066/día quedan <b>${dias.toFixed(1)} días</b> antes de tocar el techo.`};
   document.getElementById('galert').innerHTML=
     `<div class="al ${al.c}"><div class="ic">${al.ic}</div><div class="bd"><div class="t">${al.t}</div><div class="m">${al.m}</div></div></div>`;
+  if(v) due.value=v.toLocaleString('es-CO');
 }
-anchor.oninput=credito;
+due.oninput=()=>{ const p=parseNum(due.value); due.value=p?p.toLocaleString('es-CO'):''; credito(); };
 
-/* ---------- motor de alertas ---------- */
+/* ---- alertas ---- */
 function evaluar(a){
-  if(a.b===0 || (a.s===0)) return {k:'revisar',w:'warn',ic:'⚪',
-    t:'Sin entrega', m:`Activo con presupuesto de <b>${FMT(a.b)}/día</b> pero 0 gasto en 7 días. Revisa entrega, superposición de audiencias o rechazo de anuncios.`};
+  if(a.b===0||a.s===0) return {k:'revisar',w:'warn',ic:'⚪',t:'Sin entrega',
+    m:`Activo con presupuesto de <b>${FMT(a.b)}/día</b> pero 0 gasto en 7 días. Revisa entrega, superposición de audiencias o rechazo de anuncios.`};
   if(a.cpa===null){
-    if(a.s > a.base*1.5) return {k:'pausar',w:'bad',ic:'🔴',
-      t:'Gasto sin conversión', m:`<b>${FMT(a.s)}</b> gastados sin una sola ${a.u.slice(0,-1)}. Ya superaste 1,5 veces el costo objetivo de la campaña (${FMT(a.base)}).`};
+    if(a.s>a.base*1.5) return {k:'pausar',w:'bad',ic:'🔴',t:'Gasto sin conversión',
+      m:`<b>${FMT(a.s)}</b> gastados sin una sola conversión. Ya superaste 1,5 veces el costo objetivo de la campaña (${FMT(a.base)}).`};
     return {k:'revisar',w:'warn',ic:'⚪',t:'Aún sin conversión',
       m:`<b>${FMT(a.s)}</b> gastados, todavía por debajo del umbral de decisión (${FMT(a.base*1.5)}). Dale margen.`};
   }
   const r=a.cpa/a.base;
   if(r>1.2) return {k:'pausar',w:'bad',ic:'🔴',t:'Costo fuera de umbral',
-    m:`${FMT(a.cpa)} por ${a.u.slice(0,-1)} contra ${FMT(a.base)} de la campaña (<b>${(r*100).toFixed(0)}%</b>). Pausar o reconstruir con método relevo.`};
+    m:`${FMT(a.cpa)} por resultado contra ${FMT(a.base)} de la campaña (<b>${(r*100).toFixed(0)}%</b>). Pausar o reconstruir con método relevo.`};
   if(a.fr>=2.0) return {k:'bajar',w:'warn',ic:'🟡',t:'Frecuencia saturada',
     m:`Frecuencia <b>${a.fr.toFixed(2)}</b>. El costo aún rinde (${(r*100).toFixed(0)}% del umbral) pero la audiencia se está quemando: renueva creativo antes de que suba.`};
   if(r>1.0) return {k:'bajar',w:'warn',ic:'🟡',t:'Costo por encima del promedio',
     m:`${(r*100).toFixed(0)}% del costo de su campaña. Bajar presupuesto ~20% (a ${FMT(a.b*0.8)}/día) y revisar en 3 días.`};
-  if(r<0.8 && a.fr<1.8) return {k:'escalar',w:'ok',ic:'🟢',t:'Espacio para escalar',
+  if(r<0.8&&a.fr<1.8) return {k:'escalar',w:'ok',ic:'🟢',t:'Espacio para escalar',
     m:`${(r*100).toFixed(0)}% del costo de su campaña con frecuencia ${a.fr.toFixed(2)}. Subir presupuesto 20-30% (a ${FMT(a.b*1.25)}/día), un solo cambio por semana.`};
   return {k:'ok',w:'ok',ic:'🟢',t:'En rango',m:`${(r*100).toFixed(0)}% del costo de su campaña. Sin acción.`};
 }
@@ -333,20 +465,14 @@ const ORD={pausar:0,bajar:1,revisar:2,escalar:3,ok:4};
 const evals=ADSETS.map(a=>({a,e:evaluar(a)})).sort((x,y)=>ORD[x.e.k]-ORD[y.e.k]);
 document.getElementById('alerts').innerHTML=evals.filter(v=>v.e.k!=='ok').map(v=>
   `<div class="al ${v.e.w}"><div class="ic">${v.e.ic}</div><div class="bd">
-     <div class="t">${v.a.n} — ${v.e.t}</div><div class="m">${v.e.m}</div></div>
-   <div class="act ${v.e.k}">${v.e.k}</div></div>`).join('')
-  || '<div class="al ok"><div class="ic">🟢</div><div class="bd"><div class="t">Sin alertas</div><div class="m">Todos los conjuntos dentro de rango.</div></div></div>';
-
-/* ---------- tabla ---------- */
-const HEX={F1:'#86b6ef',F2:'#3987e5',F3:'#184f95'};
+    <div class="t">${v.a.n} — ${v.e.t}</div><div class="m">${v.e.m}</div></div>
+   <div class="act ${v.e.k}">${v.e.k}</div></div>`).join('');
 document.getElementById('tbody').innerHTML=evals.map(({a,e})=>{
   const r=a.cpa!==null?a.cpa/a.base:null;
   const col=r===null?'var(--mut)':r>1.2?'var(--bad)':r>1?'var(--warn)':'var(--ok)';
-  return `<tr>
-    <td class="nm">${a.n}${a.note?`<div style="color:var(--dim);font-weight:400;font-size:11px;margin-top:3px">${a.note}</div>`:''}</td>
+  return `<tr><td class="nm">${a.n}${a.note?`<div style="color:var(--dim);font-weight:400;font-size:11px;margin-top:3px">${a.note}</div>`:''}</td>
     <td><span class="tag" style="background:${HEX[a.f]}"></span>${a.f}</td>
-    <td class="num">${a.b?FMT(a.b):'—'}</td>
-    <td class="num">${FMT(a.s)}</td>
+    <td class="num">${a.b?FMT(a.b):'—'}</td><td class="num">${FMT(a.s)}</td>
     <td class="num">${a.r.toLocaleString('es-CO')}</td>
     <td class="num">${a.cpa!==null?FMT(a.cpa):'—'}</td>
     <td class="num" style="color:${col};font-weight:700">${r!==null?(r*100).toFixed(0)+'%':'s/d'}</td>
@@ -354,7 +480,7 @@ document.getElementById('tbody').innerHTML=evals.map(({a,e})=>{
     <td><span class="act ${e.k}">${e.k}</span></td></tr>`;
 }).join('');
 
-draw(); credito();
+draw(); buildCals(); credito();
 </script>
 </body>
 </html>
