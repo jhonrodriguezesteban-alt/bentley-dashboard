@@ -15013,16 +15013,25 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1788531042125_jrh6z",
-      "ts": 1788531042125,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782165545751_7o1s2haz5",
-      "nombre": "BLUSA POLLY",
       "categoria": "Blusas",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1782165545751_7o1s2haz5",
       "estado_anterior": "EN_REVISION_GERENCIA",
-      "estado_nuevo": "EN_ESCALADO"
+      "estado_nuevo": "EN_ESCALADO",
+      "id": "evt_1788531042125_jrh6z",
+      "marca": "Bentley Kids",
+      "nombre": "BLUSA POLLY",
+      "tipo": "estado_diseno",
+      "ts": 1788531042125,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1788532493854_fgs2c",
+      "ts": 1788532493854,
+      "user": "Jefa de Producción",
+      "tipo": "satelite_crear",
+      "nombre": "LUZ MARINA VERGEL",
+      "personas": 1,
+      "capacidad": 0
     }
   ]
 }
