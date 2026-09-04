@@ -17138,7 +17138,7 @@
       "created_at": "2026-01-21",
       "created_by": "migrado_matriz",
       "cumplió_fecha": true,
-      "estado": "EN_CONFECCION",
+      "estado": "ENTREGADO",
       "fecha_entrega_corte_satelite": "2026-02-11",
       "fecha_estimada_entrega": "2026-02-23",
       "fecha_op": "2026-01-21",
@@ -17160,10 +17160,19 @@
       "satelite_nombre": "MELISSA MARTINEZ",
       "talla": "T4",
       "total_mayorista": 726700,
-      "unidades_entregadas": 0,
+      "unidades_entregadas": 13,
       "unidades_novedad": 0,
       "unidades_por_llegar": 13,
-      "valor_mo": 1002
+      "valor_mo": 1002,
+      "fecha_entrega_real": "2026-09-04",
+      "total_costo_mo": 13026,
+      "historial": [
+        {
+          "fecha": "2026-09-04T20:42:44.464Z",
+          "accion": "Entrega completa: 13 uds → ENTREGADO",
+          "user": "John Rodriguez"
+        }
+      ]
     },
     {
       "cantidad": 13,
@@ -40833,13 +40842,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:21:27.196Z",
           "accion": "Taller asignado: SOFIA SANCHEZ",
+          "fecha": "2026-09-03T15:21:27.196Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:21:36.626Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:21:36.626Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -40853,13 +40862,13 @@
       "pv_detal": 89000,
       "pv_mayorista": 55000,
       "referencia": "1095PT16T6",
+      "satelite_id": "sat_00",
       "talla": "T6",
       "total_mayorista": 550000.03,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
       "unidades_por_llegar": 10,
-      "valor_mo": 1095,
-      "satelite_id": "sat_00"
+      "valor_mo": 1095
     },
     {
       "cantidad": 5,
@@ -40879,13 +40888,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:21:27.196Z",
           "accion": "Taller asignado: SOFIA SANCHEZ",
+          "fecha": "2026-09-03T15:21:27.196Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:21:36.626Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:21:36.626Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -40899,13 +40908,13 @@
       "pv_detal": 89000,
       "pv_mayorista": 55000,
       "referencia": "1095PT16T8",
+      "satelite_id": "sat_00",
       "talla": "T8",
       "total_mayorista": 550000.03,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
       "unidades_por_llegar": 10,
-      "valor_mo": 1095,
-      "satelite_id": "sat_00"
+      "valor_mo": 1095
     },
     {
       "cantidad": 5,
@@ -40925,13 +40934,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:21:27.196Z",
           "accion": "Taller asignado: SOFIA SANCHEZ",
+          "fecha": "2026-09-03T15:21:27.196Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:21:36.626Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:21:36.626Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -40945,13 +40954,13 @@
       "pv_detal": 89000,
       "pv_mayorista": 55000,
       "referencia": "1095PT16T10",
+      "satelite_id": "sat_00",
       "talla": "T10",
       "total_mayorista": 550000.03,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
       "unidades_por_llegar": 10,
-      "valor_mo": 1095,
-      "satelite_id": "sat_00"
+      "valor_mo": 1095
     },
     {
       "cantidad": 20,
@@ -40971,13 +40980,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:21:27.196Z",
           "accion": "Taller asignado: SOFIA SANCHEZ",
+          "fecha": "2026-09-03T15:21:27.196Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:21:36.626Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:21:36.626Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -40991,13 +41000,13 @@
       "pv_detal": 89000,
       "pv_mayorista": 55000,
       "referencia": "1095PT16T12",
+      "satelite_id": "sat_00",
       "talla": "T12",
       "total_mayorista": 550000.03,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
       "unidades_por_llegar": 10,
-      "valor_mo": 1095,
-      "satelite_id": "sat_00"
+      "valor_mo": 1095
     },
     {
       "cantidad": 5,
@@ -41017,13 +41026,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:21:27.196Z",
           "accion": "Taller asignado: SOFIA SANCHEZ",
+          "fecha": "2026-09-03T15:21:27.196Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:21:36.626Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:21:36.626Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -41037,13 +41046,13 @@
       "pv_detal": 89000,
       "pv_mayorista": 55000,
       "referencia": "1095PT16T14",
+      "satelite_id": "sat_00",
       "talla": "T14",
       "total_mayorista": 550000.03,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
       "unidades_por_llegar": 10,
-      "valor_mo": 1095,
-      "satelite_id": "sat_00"
+      "valor_mo": 1095
     },
     {
       "cantidad": 5,
@@ -41063,13 +41072,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:21:27.196Z",
           "accion": "Taller asignado: SOFIA SANCHEZ",
+          "fecha": "2026-09-03T15:21:27.196Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:21:36.626Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:21:36.626Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -41083,13 +41092,13 @@
       "pv_detal": 89000,
       "pv_mayorista": 55000,
       "referencia": "1095PT16T16",
+      "satelite_id": "sat_00",
       "talla": "T16",
       "total_mayorista": 550000.03,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
       "unidades_por_llegar": 10,
-      "valor_mo": 1095,
-      "satelite_id": "sat_00"
+      "valor_mo": 1095
     },
     {
       "cantidad": 10,
@@ -41109,8 +41118,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:21:55.545Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-03T15:21:55.545Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -41149,8 +41158,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:21:55.545Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-03T15:21:55.545Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -41189,8 +41198,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:21:55.545Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-03T15:21:55.545Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -41229,8 +41238,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:21:55.545Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-03T15:21:55.545Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -41528,8 +41537,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:22:27.049Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-03T15:22:27.049Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -41570,8 +41579,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:22:27.049Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-03T15:22:27.049Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -41612,8 +41621,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:22:27.049Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-03T15:22:27.049Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -41654,8 +41663,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:22:27.049Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-03T15:22:27.049Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -41696,8 +41705,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:22:27.049Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-03T15:22:27.049Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -62093,8 +62102,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:22:27.049Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-03T15:22:27.049Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -68001,8 +68010,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:21:55.545Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-03T15:21:55.545Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -68544,13 +68553,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:20:01.812Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:20:01.812Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:20:04.459Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:20:04.459Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -68587,13 +68596,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:20:01.812Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:20:01.812Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:20:04.459Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:20:04.459Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -68630,13 +68639,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:20:01.812Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:20:01.812Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:20:04.459Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:20:04.459Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -68673,13 +68682,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:20:01.812Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:20:01.812Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:20:04.459Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:20:04.459Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -68796,8 +68805,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:19:41.204Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:19:41.204Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -68834,8 +68843,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:19:41.204Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:19:41.204Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -68872,8 +68881,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:19:41.204Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:19:41.204Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -68910,8 +68919,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:19:41.204Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:19:41.204Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -73527,6 +73536,13 @@
       "created_by": "John Rodriguez",
       "estado": "CORTE_POR_ALISTAR",
       "fecha_ot": "2026-08-10",
+      "historial": [
+        {
+          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T16:47:29.033Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1786987567371_ya9j0hkso",
       "motivo_incumplimiento": "",
       "nombre": "OVERSIZED CAPOTA",
@@ -73537,14 +73553,7 @@
       "talla": "T4",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 10510,
-      "historial": [
-        {
-          "fecha": "2026-09-03T16:47:29.033Z",
-          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
-          "user": "Jefa de Producción"
-        }
-      ]
+      "valor_mo": 10510
     },
     {
       "cantidad": 12,
@@ -73554,6 +73563,13 @@
       "created_by": "John Rodriguez",
       "estado": "CORTE_POR_ALISTAR",
       "fecha_ot": "2026-08-10",
+      "historial": [
+        {
+          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T16:47:29.033Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1786987567371_oc5fzgymb",
       "motivo_incumplimiento": "",
       "nombre": "OVERSIZED CAPOTA",
@@ -73564,14 +73580,7 @@
       "talla": "T6",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 10510,
-      "historial": [
-        {
-          "fecha": "2026-09-03T16:47:29.033Z",
-          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
-          "user": "Jefa de Producción"
-        }
-      ]
+      "valor_mo": 10510
     },
     {
       "cantidad": 12,
@@ -73581,6 +73590,13 @@
       "created_by": "John Rodriguez",
       "estado": "CORTE_POR_ALISTAR",
       "fecha_ot": "2026-08-10",
+      "historial": [
+        {
+          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T16:47:29.033Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1786987567371_x8mrxdhmr",
       "motivo_incumplimiento": "",
       "nombre": "OVERSIZED CAPOTA",
@@ -73591,14 +73607,7 @@
       "talla": "T8",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 10510,
-      "historial": [
-        {
-          "fecha": "2026-09-03T16:47:29.033Z",
-          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
-          "user": "Jefa de Producción"
-        }
-      ]
+      "valor_mo": 10510
     },
     {
       "cantidad": 16,
@@ -73608,6 +73617,13 @@
       "created_by": "John Rodriguez",
       "estado": "CORTE_POR_ALISTAR",
       "fecha_ot": "2026-08-10",
+      "historial": [
+        {
+          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T16:47:29.033Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1786987567371_mqcm66zwt",
       "motivo_incumplimiento": "",
       "nombre": "OVERSIZED CAPOTA",
@@ -73618,14 +73634,7 @@
       "talla": "T10",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 10510,
-      "historial": [
-        {
-          "fecha": "2026-09-03T16:47:29.033Z",
-          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
-          "user": "Jefa de Producción"
-        }
-      ]
+      "valor_mo": 10510
     },
     {
       "cantidad": 16,
@@ -73635,6 +73644,13 @@
       "created_by": "John Rodriguez",
       "estado": "CORTE_POR_ALISTAR",
       "fecha_ot": "2026-08-10",
+      "historial": [
+        {
+          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T16:47:29.033Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1786987567371_ugagyhlti",
       "motivo_incumplimiento": "",
       "nombre": "OVERSIZED CAPOTA",
@@ -73645,14 +73661,7 @@
       "talla": "T12",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 10510,
-      "historial": [
-        {
-          "fecha": "2026-09-03T16:47:29.033Z",
-          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
-          "user": "Jefa de Producción"
-        }
-      ]
+      "valor_mo": 10510
     },
     {
       "cantidad": 24,
@@ -73662,6 +73671,13 @@
       "created_by": "John Rodriguez",
       "estado": "CORTE_POR_ALISTAR",
       "fecha_ot": "2026-08-10",
+      "historial": [
+        {
+          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T16:47:29.033Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1786987567371_vosp6pztc",
       "motivo_incumplimiento": "",
       "nombre": "OVERSIZED CAPOTA",
@@ -73672,14 +73688,7 @@
       "talla": "T14",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 10510,
-      "historial": [
-        {
-          "fecha": "2026-09-03T16:47:29.033Z",
-          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
-          "user": "Jefa de Producción"
-        }
-      ]
+      "valor_mo": 10510
     },
     {
       "cantidad": 24,
@@ -73689,6 +73698,13 @@
       "created_by": "John Rodriguez",
       "estado": "CORTE_POR_ALISTAR",
       "fecha_ot": "2026-08-10",
+      "historial": [
+        {
+          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T16:47:29.033Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1786987567371_e0jh0ra2z",
       "motivo_incumplimiento": "",
       "nombre": "OVERSIZED CAPOTA",
@@ -73699,14 +73715,7 @@
       "talla": "T16",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 10510,
-      "historial": [
-        {
-          "fecha": "2026-09-03T16:47:29.033Z",
-          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
-          "user": "Jefa de Producción"
-        }
-      ]
+      "valor_mo": 10510
     },
     {
       "cantidad": 14,
@@ -73716,6 +73725,13 @@
       "created_by": "John Rodriguez",
       "estado": "CORTE_POR_ALISTAR",
       "fecha_ot": "2026-08-10",
+      "historial": [
+        {
+          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T16:37:47.468Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1786987567371_rn0efw49q",
       "motivo_incumplimiento": "",
       "nombre": "OVERSIZED CAPOTA",
@@ -73726,14 +73742,7 @@
       "talla": "T8",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 10510,
-      "historial": [
-        {
-          "fecha": "2026-09-03T16:37:47.468Z",
-          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
-          "user": "Jefa de Producción"
-        }
-      ]
+      "valor_mo": 10510
     },
     {
       "cantidad": 14,
@@ -73743,6 +73752,13 @@
       "created_by": "John Rodriguez",
       "estado": "CORTE_POR_ALISTAR",
       "fecha_ot": "2026-08-10",
+      "historial": [
+        {
+          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T16:37:47.468Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1786987567371_uf26vtvw0",
       "motivo_incumplimiento": "",
       "nombre": "OVERSIZED CAPOTA",
@@ -73753,14 +73769,7 @@
       "talla": "T10",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 10510,
-      "historial": [
-        {
-          "fecha": "2026-09-03T16:37:47.468Z",
-          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
-          "user": "Jefa de Producción"
-        }
-      ]
+      "valor_mo": 10510
     },
     {
       "cantidad": 14,
@@ -73770,6 +73779,13 @@
       "created_by": "John Rodriguez",
       "estado": "CORTE_POR_ALISTAR",
       "fecha_ot": "2026-08-10",
+      "historial": [
+        {
+          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T16:37:47.468Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1786987567371_20s7v6t6k",
       "motivo_incumplimiento": "",
       "nombre": "OVERSIZED CAPOTA",
@@ -73780,14 +73796,7 @@
       "talla": "T12",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 10510,
-      "historial": [
-        {
-          "fecha": "2026-09-03T16:37:47.468Z",
-          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
-          "user": "Jefa de Producción"
-        }
-      ]
+      "valor_mo": 10510
     },
     {
       "cantidad": 14,
@@ -73797,6 +73806,13 @@
       "created_by": "John Rodriguez",
       "estado": "CORTE_POR_ALISTAR",
       "fecha_ot": "2026-08-10",
+      "historial": [
+        {
+          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T16:37:47.468Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1786987567371_7hbaquzdx",
       "motivo_incumplimiento": "",
       "nombre": "OVERSIZED CAPOTA",
@@ -73807,14 +73823,7 @@
       "talla": "T16",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 10510,
-      "historial": [
-        {
-          "fecha": "2026-09-03T16:37:47.468Z",
-          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
-          "user": "Jefa de Producción"
-        }
-      ]
+      "valor_mo": 10510
     },
     {
       "cantidad": 12,
@@ -75726,13 +75735,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:26:00.367Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → ENTREGADO. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:26:00.367Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:26:10.964Z",
           "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-03T15:26:10.964Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -75769,13 +75778,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:26:00.368Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → ENTREGADO. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:26:00.368Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:26:10.964Z",
           "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-03T15:26:10.964Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -75812,13 +75821,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:25:19.152Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → ENTREGADO. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:25:19.152Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:25:27.596Z",
           "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-03T15:25:27.596Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -75855,13 +75864,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:25:19.152Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → ENTREGADO. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:25:19.152Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:25:27.596Z",
           "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-03T15:25:27.596Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -75898,13 +75907,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:26:20.053Z",
           "accion": "Estado cambiado: EN_CONFECCION → ENTREGADO. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:26:20.053Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:26:36.523Z",
           "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-03T15:26:36.523Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -75941,13 +75950,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:24:53.468Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → ENTREGADO. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:24:53.468Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:25:09.717Z",
           "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-03T15:25:09.717Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -75984,13 +75993,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:24:53.469Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → ENTREGADO. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:24:53.469Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:25:09.717Z",
           "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-03T15:25:09.717Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -76027,13 +76036,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:25:39.005Z",
           "accion": "Estado cambiado: EN_CONFECCION → ENTREGADO. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:25:39.005Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:25:49.695Z",
           "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-03T15:25:49.695Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -76070,13 +76079,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:24:18.433Z",
           "accion": "Estado cambiado: EN_CONFECCION → ENTREGADO. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:24:18.433Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:24:44.341Z",
           "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-03T15:24:44.341Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -77404,13 +77413,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:27:08.092Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → ENTREGADO. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:27:08.092Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:27:26.903Z",
           "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-03T15:27:26.903Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -77447,13 +77456,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:27:08.093Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → ENTREGADO. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:27:08.093Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:27:26.903Z",
           "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-03T15:27:26.903Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -77490,13 +77499,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:27:08.093Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → ENTREGADO. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:27:08.093Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:27:26.903Z",
           "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-03T15:27:26.903Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -77533,13 +77542,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:27:08.093Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → ENTREGADO. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:27:08.093Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:27:26.903Z",
           "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-03T15:27:26.903Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -77576,13 +77585,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:27:08.093Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → ENTREGADO. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:27:08.093Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:27:26.903Z",
           "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-03T15:27:26.903Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -77619,13 +77628,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:27:08.093Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → ENTREGADO. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:27:08.093Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:27:26.903Z",
           "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-03T15:27:26.903Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -77662,13 +77671,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:27:08.093Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → ENTREGADO. Motivo: ENTREGADO",
+          "fecha": "2026-09-03T15:27:08.093Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-03T15:27:26.903Z",
           "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-03T15:27:26.903Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -81149,8 +81158,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-04T14:37:23.676Z",
           "accion": "Taller asignado: LUZ MARINA VERGEL",
+          "fecha": "2026-09-04T14:37:23.676Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -81187,8 +81196,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-04T14:37:23.677Z",
           "accion": "Taller asignado: LUZ MARINA VERGEL",
+          "fecha": "2026-09-04T14:37:23.677Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -82246,1147 +82255,902 @@
       "valor_mo": 1151
     },
     {
+      "cantidad": 12,
+      "categoria": "PANTALONES",
+      "color": "ROJO",
+      "created_at": "2026-09-03",
+      "created_by": "Jefa de Producción",
+      "estado": "CORTE_POR_ALISTAR",
+      "fecha_ot": "2026-08-04",
+      "historial": [
+        {
+          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T17:22:25.995Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1788454157884_pjrueiv5e",
+      "motivo_incumplimiento": "",
+      "nombre": "PANTALON RAVE",
+      "notas": "",
       "numero_ot": 13441,
       "op_id": "OP-2026-110",
-      "categoria": "PANTALONES",
-      "nombre": "PANTALON RAVE",
       "referencia": "1063T4",
-      "color": "ROJO",
       "talla": "T4",
-      "cantidad": 12,
-      "valor_mo": 5255,
-      "fecha_ot": "2026-08-04",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 5255
+    },
+    {
+      "cantidad": 12,
+      "categoria": "PANTALONES",
+      "color": "ROJO",
+      "created_at": "2026-09-03",
+      "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_ot": "2026-08-04",
       "historial": [
         {
-          "fecha": "2026-09-03T17:22:25.995Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T17:22:25.995Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-03",
-      "created_by": "Jefa de Producción"
-    },
-    {
       "id": "id_1788454157884_eav4wgfdr",
+      "motivo_incumplimiento": "",
+      "nombre": "PANTALON RAVE",
+      "notas": "",
       "numero_ot": 13442,
       "op_id": "OP-2026-110",
-      "categoria": "PANTALONES",
-      "nombre": "PANTALON RAVE",
       "referencia": "1063T6",
-      "color": "ROJO",
       "talla": "T6",
-      "cantidad": 12,
-      "valor_mo": 5255,
-      "fecha_ot": "2026-08-04",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 5255
+    },
+    {
+      "cantidad": 20,
+      "categoria": "PANTALONES",
+      "color": "ROJO",
+      "created_at": "2026-09-03",
+      "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_ot": "2026-08-04",
       "historial": [
         {
-          "fecha": "2026-09-03T17:22:25.995Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T17:22:25.995Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-03",
-      "created_by": "Jefa de Producción"
-    },
-    {
       "id": "id_1788454157884_z0g6yvy2m",
+      "motivo_incumplimiento": "",
+      "nombre": "PANTALON RAVE",
+      "notas": "",
       "numero_ot": 13443,
       "op_id": "OP-2026-110",
-      "categoria": "PANTALONES",
-      "nombre": "PANTALON RAVE",
       "referencia": "1063T8",
-      "color": "ROJO",
       "talla": "T8",
-      "cantidad": 20,
-      "valor_mo": 5255,
-      "fecha_ot": "2026-08-04",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 5255
+    },
+    {
+      "cantidad": 20,
+      "categoria": "PANTALONES",
+      "color": "ROJO",
+      "created_at": "2026-09-03",
+      "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_ot": "2026-08-04",
       "historial": [
         {
-          "fecha": "2026-09-03T17:22:25.995Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T17:22:25.995Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-03",
-      "created_by": "Jefa de Producción"
-    },
-    {
       "id": "id_1788454157884_nl0i66oku",
+      "motivo_incumplimiento": "",
+      "nombre": "PANTALON RAVE",
+      "notas": "",
       "numero_ot": 13444,
       "op_id": "OP-2026-110",
-      "categoria": "PANTALONES",
-      "nombre": "PANTALON RAVE",
       "referencia": "1063T10",
-      "color": "ROJO",
       "talla": "T10",
-      "cantidad": 20,
-      "valor_mo": 5255,
-      "fecha_ot": "2026-08-04",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 5255
+    },
+    {
+      "cantidad": 20,
+      "categoria": "PANTALONES",
+      "color": "ROJO",
+      "created_at": "2026-09-03",
+      "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_ot": "2026-08-04",
       "historial": [
         {
-          "fecha": "2026-09-03T17:22:25.995Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T17:22:25.995Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-03",
-      "created_by": "Jefa de Producción"
-    },
-    {
       "id": "id_1788454157884_ik7gekuly",
+      "motivo_incumplimiento": "",
+      "nombre": "PANTALON RAVE",
+      "notas": "",
       "numero_ot": 13445,
       "op_id": "OP-2026-110",
-      "categoria": "PANTALONES",
-      "nombre": "PANTALON RAVE",
       "referencia": "1063T12",
-      "color": "ROJO",
       "talla": "T12",
-      "cantidad": 20,
-      "valor_mo": 5255,
-      "fecha_ot": "2026-08-04",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 5255
+    },
+    {
+      "cantidad": 20,
+      "categoria": "PANTALONES",
+      "color": "ROJO",
+      "created_at": "2026-09-03",
+      "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_ot": "2026-08-04",
       "historial": [
         {
-          "fecha": "2026-09-03T17:22:25.995Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T17:22:25.995Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-03",
-      "created_by": "Jefa de Producción"
-    },
-    {
       "id": "id_1788454157884_52w2modqg",
+      "motivo_incumplimiento": "",
+      "nombre": "PANTALON RAVE",
+      "notas": "",
       "numero_ot": 13446,
       "op_id": "OP-2026-110",
-      "categoria": "PANTALONES",
-      "nombre": "PANTALON RAVE",
       "referencia": "1063T14",
-      "color": "ROJO",
       "talla": "T14",
-      "cantidad": 20,
-      "valor_mo": 5255,
-      "fecha_ot": "2026-08-04",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 5255
+    },
+    {
+      "cantidad": 20,
+      "categoria": "PANTALONES",
+      "color": "ROJO",
+      "created_at": "2026-09-03",
+      "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_ot": "2026-08-04",
       "historial": [
         {
-          "fecha": "2026-09-03T17:22:25.995Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T17:22:25.996Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-03",
-      "created_by": "Jefa de Producción"
-    },
-    {
       "id": "id_1788454157884_1ax5lwbln",
+      "motivo_incumplimiento": "",
+      "nombre": "PANTALON RAVE",
+      "notas": "",
       "numero_ot": 13447,
       "op_id": "OP-2026-110",
-      "categoria": "PANTALONES",
-      "nombre": "PANTALON RAVE",
       "referencia": "1063T16",
-      "color": "ROJO",
       "talla": "T16",
-      "cantidad": 20,
-      "valor_mo": 5255,
-      "fecha_ot": "2026-08-04",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 5255
+    },
+    {
+      "cantidad": 12,
+      "categoria": "PANTALONES",
+      "color": "AZUL OSCURO",
+      "created_at": "2026-09-03",
+      "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_ot": "2026-08-04",
       "historial": [
         {
-          "fecha": "2026-09-03T17:22:25.996Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T17:20:42.918Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-03",
-      "created_by": "Jefa de Producción"
-    },
-    {
       "id": "id_1788454157884_d0evszwm1",
+      "motivo_incumplimiento": "",
+      "nombre": "PANTALON RAVE",
+      "notas": "",
       "numero_ot": 13448,
       "op_id": "OP-2026-110",
-      "categoria": "PANTALONES",
-      "nombre": "PANTALON RAVE",
       "referencia": "1063T4",
-      "color": "AZUL OSCURO",
       "talla": "T4",
-      "cantidad": 12,
-      "valor_mo": 5255,
-      "fecha_ot": "2026-08-04",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 5255
+    },
+    {
+      "cantidad": 12,
+      "categoria": "PANTALONES",
+      "color": "AZUL OSCURO",
+      "created_at": "2026-09-03",
+      "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_ot": "2026-08-04",
       "historial": [
         {
-          "fecha": "2026-09-03T17:20:42.918Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T17:20:42.918Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-03",
-      "created_by": "Jefa de Producción"
-    },
-    {
       "id": "id_1788454157884_hxd4z9qza",
+      "motivo_incumplimiento": "",
+      "nombre": "PANTALON RAVE",
+      "notas": "",
       "numero_ot": 13449,
       "op_id": "OP-2026-110",
-      "categoria": "PANTALONES",
-      "nombre": "PANTALON RAVE",
       "referencia": "1063T6",
-      "color": "AZUL OSCURO",
       "talla": "T6",
-      "cantidad": 12,
-      "valor_mo": 5255,
-      "fecha_ot": "2026-08-04",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 5255
+    },
+    {
+      "cantidad": 23,
+      "categoria": "PANTALONES",
+      "color": "AZUL OSCURO",
+      "created_at": "2026-09-03",
+      "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_ot": "2026-08-04",
       "historial": [
         {
-          "fecha": "2026-09-03T17:20:42.918Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T17:20:42.918Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-03",
-      "created_by": "Jefa de Producción"
-    },
-    {
       "id": "id_1788454157884_kla93vpu3",
+      "motivo_incumplimiento": "",
+      "nombre": "PANTALON RAVE",
+      "notas": "",
       "numero_ot": 13450,
       "op_id": "OP-2026-110",
-      "categoria": "PANTALONES",
-      "nombre": "PANTALON RAVE",
       "referencia": "1063T8",
-      "color": "AZUL OSCURO",
       "talla": "T8",
-      "cantidad": 23,
-      "valor_mo": 5255,
-      "fecha_ot": "2026-08-04",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 5255
+    },
+    {
+      "cantidad": 23,
+      "categoria": "PANTALONES",
+      "color": "AZUL OSCURO",
+      "created_at": "2026-09-03",
+      "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_ot": "2026-08-04",
       "historial": [
         {
-          "fecha": "2026-09-03T17:20:42.918Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T17:20:42.918Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-03",
-      "created_by": "Jefa de Producción"
-    },
-    {
       "id": "id_1788454157884_x5cjdiu9i",
+      "motivo_incumplimiento": "",
+      "nombre": "PANTALON RAVE",
+      "notas": "",
       "numero_ot": 13451,
       "op_id": "OP-2026-110",
-      "categoria": "PANTALONES",
-      "nombre": "PANTALON RAVE",
       "referencia": "1063T10",
-      "color": "AZUL OSCURO",
       "talla": "T10",
-      "cantidad": 23,
-      "valor_mo": 5255,
-      "fecha_ot": "2026-08-04",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 5255
+    },
+    {
+      "cantidad": 23,
+      "categoria": "PANTALONES",
+      "color": "AZUL OSCURO",
+      "created_at": "2026-09-03",
+      "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_ot": "2026-08-04",
       "historial": [
         {
-          "fecha": "2026-09-03T17:20:42.918Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T17:20:42.918Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-03",
-      "created_by": "Jefa de Producción"
-    },
-    {
       "id": "id_1788454157884_lozr2xmde",
+      "motivo_incumplimiento": "",
+      "nombre": "PANTALON RAVE",
+      "notas": "",
       "numero_ot": 13452,
       "op_id": "OP-2026-110",
-      "categoria": "PANTALONES",
-      "nombre": "PANTALON RAVE",
       "referencia": "1063T12",
-      "color": "AZUL OSCURO",
       "talla": "T12",
-      "cantidad": 23,
-      "valor_mo": 5255,
-      "fecha_ot": "2026-08-04",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 5255
+    },
+    {
+      "cantidad": 23,
+      "categoria": "PANTALONES",
+      "color": "AZUL OSCURO",
+      "created_at": "2026-09-03",
+      "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_ot": "2026-08-04",
       "historial": [
         {
-          "fecha": "2026-09-03T17:20:42.918Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T17:20:42.918Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-03",
-      "created_by": "Jefa de Producción"
-    },
-    {
       "id": "id_1788454157884_t4lqti46p",
+      "motivo_incumplimiento": "",
+      "nombre": "PANTALON RAVE",
+      "notas": "",
       "numero_ot": 13453,
       "op_id": "OP-2026-110",
-      "categoria": "PANTALONES",
-      "nombre": "PANTALON RAVE",
       "referencia": "1063T14",
-      "color": "AZUL OSCURO",
       "talla": "T14",
-      "cantidad": 23,
-      "valor_mo": 5255,
-      "fecha_ot": "2026-08-04",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 5255
+    },
+    {
+      "cantidad": 23,
+      "categoria": "PANTALONES",
+      "color": "AZUL OSCURO",
+      "created_at": "2026-09-03",
+      "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_ot": "2026-08-04",
       "historial": [
         {
-          "fecha": "2026-09-03T17:20:42.918Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-03T17:20:42.918Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-03",
-      "created_by": "Jefa de Producción"
-    },
-    {
       "id": "id_1788454157884_jz6cao5bv",
+      "motivo_incumplimiento": "",
+      "nombre": "PANTALON RAVE",
+      "notas": "",
       "numero_ot": 13454,
       "op_id": "OP-2026-110",
-      "categoria": "PANTALONES",
-      "nombre": "PANTALON RAVE",
       "referencia": "1063T16",
-      "color": "AZUL OSCURO",
       "talla": "T16",
-      "cantidad": 23,
-      "valor_mo": 5255,
-      "fecha_ot": "2026-08-04",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [
-        {
-          "fecha": "2026-09-03T17:20:42.918Z",
-          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "created_at": "2026-09-03",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 5255
     },
     {
+      "cantidad": 8,
+      "categoria": "CHAQUETAS",
+      "color": "CAMEL",
+      "created_at": "2026-09-04",
+      "created_by": "Jefa de Producción",
+      "estado": "CORTE_POR_ALISTAR",
+      "fecha_ot": "2026-07-28",
       "id": "id_1788534249998_dfzewnkqq",
+      "motivo_incumplimiento": "",
+      "nombre": "CHAQUETA SUEDE OLD MONEY",
+      "notas": "",
       "numero_ot": 13455,
       "op_id": "OP-2026-095",
-      "categoria": "CHAQUETAS",
-      "nombre": "CHAQUETA SUEDE OLD MONEY",
       "referencia": "1119T4",
-      "color": "CAMEL",
       "talla": "T4",
-      "cantidad": 8,
-      "valor_mo": 8934,
-      "fecha_ot": "2026-07-28",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [],
-      "created_at": "2026-09-04",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 8934
     },
     {
+      "cantidad": 8,
+      "categoria": "CHAQUETAS",
+      "color": "CAMEL",
+      "created_at": "2026-09-04",
+      "created_by": "Jefa de Producción",
+      "estado": "CORTE_POR_ALISTAR",
+      "fecha_ot": "2026-07-28",
       "id": "id_1788534249998_ntu5vrf0x",
+      "motivo_incumplimiento": "",
+      "nombre": "CHAQUETA SUEDE OLD MONEY",
+      "notas": "",
       "numero_ot": 13456,
       "op_id": "OP-2026-095",
-      "categoria": "CHAQUETAS",
-      "nombre": "CHAQUETA SUEDE OLD MONEY",
       "referencia": "1119T6",
-      "color": "CAMEL",
       "talla": "T6",
-      "cantidad": 8,
-      "valor_mo": 8934,
-      "fecha_ot": "2026-07-28",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [],
-      "created_at": "2026-09-04",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 8934
     },
     {
+      "cantidad": 12,
+      "categoria": "CHAQUETAS",
+      "color": "CAMEL",
+      "created_at": "2026-09-04",
+      "created_by": "Jefa de Producción",
+      "estado": "CORTE_POR_ALISTAR",
+      "fecha_ot": "2026-07-28",
       "id": "id_1788534249998_k5tmhwybp",
+      "motivo_incumplimiento": "",
+      "nombre": "CHAQUETA SUEDE OLD MONEY",
+      "notas": "",
       "numero_ot": 13457,
       "op_id": "OP-2026-095",
-      "categoria": "CHAQUETAS",
-      "nombre": "CHAQUETA SUEDE OLD MONEY",
       "referencia": "1119T8",
-      "color": "CAMEL",
       "talla": "T8",
-      "cantidad": 12,
-      "valor_mo": 8934,
-      "fecha_ot": "2026-07-28",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [],
-      "created_at": "2026-09-04",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 8934
     },
     {
+      "cantidad": 12,
+      "categoria": "CHAQUETAS",
+      "color": "CAMEL",
+      "created_at": "2026-09-04",
+      "created_by": "Jefa de Producción",
+      "estado": "CORTE_POR_ALISTAR",
+      "fecha_ot": "2026-07-28",
       "id": "id_1788534249998_477v09gkb",
+      "motivo_incumplimiento": "",
+      "nombre": "CHAQUETA SUEDE OLD MONEY",
+      "notas": "",
       "numero_ot": 13458,
       "op_id": "OP-2026-095",
-      "categoria": "CHAQUETAS",
-      "nombre": "CHAQUETA SUEDE OLD MONEY",
       "referencia": "1119T10",
-      "color": "CAMEL",
       "talla": "T10",
-      "cantidad": 12,
-      "valor_mo": 8934,
-      "fecha_ot": "2026-07-28",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [],
-      "created_at": "2026-09-04",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 8934
     },
     {
+      "cantidad": 16,
+      "categoria": "CHAQUETAS",
+      "color": "CAMEL",
+      "created_at": "2026-09-04",
+      "created_by": "Jefa de Producción",
+      "estado": "CORTE_POR_ALISTAR",
+      "fecha_ot": "2026-07-28",
       "id": "id_1788534249998_428s3dz49",
+      "motivo_incumplimiento": "",
+      "nombre": "CHAQUETA SUEDE OLD MONEY",
+      "notas": "",
       "numero_ot": 13459,
       "op_id": "OP-2026-095",
-      "categoria": "CHAQUETAS",
-      "nombre": "CHAQUETA SUEDE OLD MONEY",
       "referencia": "1119T12",
-      "color": "CAMEL",
       "talla": "T12",
-      "cantidad": 16,
-      "valor_mo": 8934,
-      "fecha_ot": "2026-07-28",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [],
-      "created_at": "2026-09-04",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 8934
     },
     {
+      "cantidad": 20,
+      "categoria": "CHAQUETAS",
+      "color": "CAMEL",
+      "created_at": "2026-09-04",
+      "created_by": "Jefa de Producción",
+      "estado": "CORTE_POR_ALISTAR",
+      "fecha_ot": "2026-07-28",
       "id": "id_1788534249998_6voe7j1ak",
+      "motivo_incumplimiento": "",
+      "nombre": "CHAQUETA SUEDE OLD MONEY",
+      "notas": "",
       "numero_ot": 13460,
       "op_id": "OP-2026-095",
-      "categoria": "CHAQUETAS",
-      "nombre": "CHAQUETA SUEDE OLD MONEY",
       "referencia": "1119T14",
-      "color": "CAMEL",
       "talla": "T14",
-      "cantidad": 20,
-      "valor_mo": 8934,
-      "fecha_ot": "2026-07-28",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [],
-      "created_at": "2026-09-04",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 8934
     },
     {
+      "cantidad": 20,
+      "categoria": "CHAQUETAS",
+      "color": "CAMEL",
+      "created_at": "2026-09-04",
+      "created_by": "Jefa de Producción",
+      "estado": "CORTE_POR_ALISTAR",
+      "fecha_ot": "2026-07-28",
       "id": "id_1788534249998_yhu9bq4oj",
+      "motivo_incumplimiento": "",
+      "nombre": "CHAQUETA SUEDE OLD MONEY",
+      "notas": "",
       "numero_ot": 13461,
       "op_id": "OP-2026-095",
-      "categoria": "CHAQUETAS",
-      "nombre": "CHAQUETA SUEDE OLD MONEY",
       "referencia": "1119T16",
-      "color": "CAMEL",
       "talla": "T16",
-      "cantidad": 20,
-      "valor_mo": 8934,
-      "fecha_ot": "2026-07-28",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [],
-      "created_at": "2026-09-04",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 8934
     },
     {
+      "cantidad": 17,
+      "categoria": "FALDA",
+      "color": "BEIGE",
+      "created_at": "2026-09-04",
+      "created_by": "Jefa de Producción",
+      "estado": "EN_CONFECCION",
+      "fecha_ot": "2026-07-29",
+      "historial": [
+        {
+          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-04T15:07:47.357Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Taller asignado: NATHALY BOSA",
+          "fecha": "2026-09-04T19:09:04.882Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-04T19:09:13.813Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1788534434439_986jek1ve",
+      "motivo_incumplimiento": "",
+      "nombre": "FALDA ESCOSES",
+      "notas": "",
       "numero_ot": 13462,
       "op_id": "OP-2026-096",
-      "categoria": "FALDA",
-      "nombre": "FALDA ESCOSES",
       "referencia": "1130T8",
-      "color": "BEIGE",
-      "talla": "T8",
-      "cantidad": 17,
-      "valor_mo": 1151,
-      "fecha_ot": "2026-07-29",
       "satelite_id": "sat_14",
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
+      "talla": "T8",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 1151
+    },
+    {
+      "cantidad": 17,
+      "categoria": "FALDA",
+      "color": "BEIGE",
+      "created_at": "2026-09-04",
+      "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_ot": "2026-07-29",
       "historial": [
         {
-          "fecha": "2026-09-04T15:07:47.357Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-04T15:07:47.357Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-04T19:09:04.882Z",
           "accion": "Taller asignado: NATHALY BOSA",
+          "fecha": "2026-09-04T19:09:04.882Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-04T19:09:13.813Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-04T19:09:13.813Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-04",
-      "created_by": "Jefa de Producción"
-    },
-    {
       "id": "id_1788534434439_405oxga42",
+      "motivo_incumplimiento": "",
+      "nombre": "FALDA ESCOSES",
+      "notas": "",
       "numero_ot": 13463,
       "op_id": "OP-2026-096",
-      "categoria": "FALDA",
-      "nombre": "FALDA ESCOSES",
       "referencia": "1130T10",
-      "color": "BEIGE",
-      "talla": "T10",
-      "cantidad": 17,
-      "valor_mo": 1151,
-      "fecha_ot": "2026-07-29",
       "satelite_id": "sat_14",
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
+      "talla": "T10",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 1151
+    },
+    {
+      "cantidad": 24,
+      "categoria": "FALDA",
+      "color": "BEIGE",
+      "created_at": "2026-09-04",
+      "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_ot": "2026-07-29",
       "historial": [
         {
-          "fecha": "2026-09-04T15:07:47.357Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-04T15:07:47.357Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-04T19:09:04.882Z",
           "accion": "Taller asignado: NATHALY BOSA",
+          "fecha": "2026-09-04T19:09:04.882Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-04T19:09:13.813Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-04T19:09:13.813Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-04",
-      "created_by": "Jefa de Producción"
-    },
-    {
       "id": "id_1788534434439_oxc9to4uq",
+      "motivo_incumplimiento": "",
+      "nombre": "FALDA ESCOSES",
+      "notas": "",
       "numero_ot": 13464,
       "op_id": "OP-2026-096",
-      "categoria": "FALDA",
-      "nombre": "FALDA ESCOSES",
       "referencia": "1130T12",
-      "color": "BEIGE",
-      "talla": "T12",
-      "cantidad": 24,
-      "valor_mo": 1151,
-      "fecha_ot": "2026-07-29",
       "satelite_id": "sat_14",
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
+      "talla": "T12",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 1151
+    },
+    {
+      "cantidad": 24,
+      "categoria": "FALDA",
+      "color": "BEIGE",
+      "created_at": "2026-09-04",
+      "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_ot": "2026-07-29",
       "historial": [
         {
-          "fecha": "2026-09-04T15:07:47.357Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-04T15:07:47.357Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-04T19:09:04.882Z",
           "accion": "Taller asignado: NATHALY BOSA",
+          "fecha": "2026-09-04T19:09:04.882Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-04T19:09:13.813Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-04T19:09:13.813Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-04",
-      "created_by": "Jefa de Producción"
-    },
-    {
       "id": "id_1788534434439_noxxm53fo",
+      "motivo_incumplimiento": "",
+      "nombre": "FALDA ESCOSES",
+      "notas": "",
       "numero_ot": 13465,
       "op_id": "OP-2026-096",
-      "categoria": "FALDA",
-      "nombre": "FALDA ESCOSES",
       "referencia": "1130T14",
-      "color": "BEIGE",
-      "talla": "T14",
-      "cantidad": 24,
-      "valor_mo": 1151,
-      "fecha_ot": "2026-07-29",
       "satelite_id": "sat_14",
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
+      "talla": "T14",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 1151
+    },
+    {
+      "cantidad": 24,
+      "categoria": "FALDA",
+      "color": "BEIGE",
+      "created_at": "2026-09-04",
+      "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_ot": "2026-07-29",
       "historial": [
         {
-          "fecha": "2026-09-04T15:07:47.357Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-04T15:07:47.357Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-04T19:09:04.882Z",
           "accion": "Taller asignado: NATHALY BOSA",
+          "fecha": "2026-09-04T19:09:04.882Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-04T19:09:13.813Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-04T19:09:13.813Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-04",
-      "created_by": "Jefa de Producción"
-    },
-    {
       "id": "id_1788534434439_dj82x0qn3",
+      "motivo_incumplimiento": "",
+      "nombre": "FALDA ESCOSES",
+      "notas": "",
       "numero_ot": 13466,
       "op_id": "OP-2026-096",
-      "categoria": "FALDA",
-      "nombre": "FALDA ESCOSES",
       "referencia": "1130T16",
-      "color": "BEIGE",
-      "talla": "T16",
-      "cantidad": 24,
-      "valor_mo": 1151,
-      "fecha_ot": "2026-07-29",
       "satelite_id": "sat_14",
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
+      "talla": "T16",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 1151
+    },
+    {
+      "cantidad": 20,
+      "categoria": "FALDA",
+      "color": "GRIS CLARO",
+      "created_at": "2026-09-04",
+      "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_ot": "2026-07-29",
       "historial": [
         {
-          "fecha": "2026-09-04T15:07:47.357Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-04T15:08:02.348Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-04T19:09:04.882Z",
           "accion": "Taller asignado: NATHALY BOSA",
+          "fecha": "2026-09-04T19:09:25.437Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-04T19:09:13.813Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-04T19:09:32.318Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-04",
-      "created_by": "Jefa de Producción"
-    },
-    {
       "id": "id_1788534434439_zvoths76d",
+      "motivo_incumplimiento": "",
+      "nombre": "FALDA ESCOSES",
+      "notas": "",
       "numero_ot": 13467,
       "op_id": "OP-2026-096",
-      "categoria": "FALDA",
-      "nombre": "FALDA ESCOSES",
       "referencia": "1130T8",
-      "color": "GRIS CLARO",
-      "talla": "T8",
-      "cantidad": 20,
-      "valor_mo": 1151,
-      "fecha_ot": "2026-07-29",
       "satelite_id": "sat_14",
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
+      "talla": "T8",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 1151
+    },
+    {
+      "cantidad": 20,
+      "categoria": "FALDA",
+      "color": "GRIS CLARO",
+      "created_at": "2026-09-04",
+      "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_ot": "2026-07-29",
       "historial": [
         {
-          "fecha": "2026-09-04T15:08:02.348Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-04T15:08:02.348Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-04T19:09:25.437Z",
           "accion": "Taller asignado: NATHALY BOSA",
+          "fecha": "2026-09-04T19:09:25.438Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-04T19:09:32.318Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-04T19:09:32.319Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-04",
-      "created_by": "Jefa de Producción"
-    },
-    {
       "id": "id_1788534434439_z4ri1q1lg",
+      "motivo_incumplimiento": "",
+      "nombre": "FALDA ESCOSES",
+      "notas": "",
       "numero_ot": 13468,
       "op_id": "OP-2026-096",
-      "categoria": "FALDA",
-      "nombre": "FALDA ESCOSES",
       "referencia": "1130T10",
-      "color": "GRIS CLARO",
-      "talla": "T10",
-      "cantidad": 20,
-      "valor_mo": 1151,
-      "fecha_ot": "2026-07-29",
       "satelite_id": "sat_14",
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
+      "talla": "T10",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 1151
+    },
+    {
+      "cantidad": 28,
+      "categoria": "FALDA",
+      "color": "GRIS CLARO",
+      "created_at": "2026-09-04",
+      "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_ot": "2026-07-29",
       "historial": [
         {
-          "fecha": "2026-09-04T15:08:02.348Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-04T15:08:02.348Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-04T19:09:25.438Z",
           "accion": "Taller asignado: NATHALY BOSA",
+          "fecha": "2026-09-04T19:09:25.438Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-04T19:09:32.319Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-04T19:09:32.319Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-04",
-      "created_by": "Jefa de Producción"
-    },
-    {
       "id": "id_1788534434439_ylyx7fr2r",
+      "motivo_incumplimiento": "",
+      "nombre": "FALDA ESCOSES",
+      "notas": "",
       "numero_ot": 13469,
       "op_id": "OP-2026-096",
-      "categoria": "FALDA",
-      "nombre": "FALDA ESCOSES",
       "referencia": "1130T12",
-      "color": "GRIS CLARO",
-      "talla": "T12",
-      "cantidad": 28,
-      "valor_mo": 1151,
-      "fecha_ot": "2026-07-29",
       "satelite_id": "sat_14",
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
+      "talla": "T12",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 1151
+    },
+    {
+      "cantidad": 28,
+      "categoria": "FALDA",
+      "color": "GRIS CLARO",
+      "created_at": "2026-09-04",
+      "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_ot": "2026-07-29",
       "historial": [
         {
-          "fecha": "2026-09-04T15:08:02.348Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-04T15:08:02.348Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-04T19:09:25.438Z",
           "accion": "Taller asignado: NATHALY BOSA",
+          "fecha": "2026-09-04T19:09:25.438Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-04T19:09:32.319Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-04T19:09:32.319Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-04",
-      "created_by": "Jefa de Producción"
-    },
-    {
       "id": "id_1788534434439_il5rg37mo",
+      "motivo_incumplimiento": "",
+      "nombre": "FALDA ESCOSES",
+      "notas": "",
       "numero_ot": 13470,
       "op_id": "OP-2026-096",
-      "categoria": "FALDA",
-      "nombre": "FALDA ESCOSES",
       "referencia": "1130T14",
-      "color": "GRIS CLARO",
-      "talla": "T14",
-      "cantidad": 28,
-      "valor_mo": 1151,
-      "fecha_ot": "2026-07-29",
       "satelite_id": "sat_14",
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
+      "talla": "T14",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "EN_CONFECCION",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [
-        {
-          "fecha": "2026-09-04T15:08:02.348Z",
-          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-04T19:09:25.438Z",
-          "accion": "Taller asignado: NATHALY BOSA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-04T19:09:32.319Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "created_at": "2026-09-04",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 1151
     },
     {
-      "id": "id_1788534434439_yr1cuyfzs",
-      "numero_ot": 13471,
-      "op_id": "OP-2026-096",
-      "categoria": "FALDA",
-      "nombre": "FALDA ESCOSES",
-      "referencia": "1130T16",
-      "color": "GRIS CLARO",
-      "talla": "T16",
       "cantidad": 28,
-      "valor_mo": 1151,
-      "fecha_ot": "2026-07-29",
-      "satelite_id": "sat_14",
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
-      "unidades_entregadas": 0,
-      "unidades_novedad": 0,
+      "categoria": "FALDA",
+      "color": "GRIS CLARO",
+      "created_at": "2026-09-04",
+      "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_ot": "2026-07-29",
       "historial": [
         {
-          "fecha": "2026-09-04T15:08:02.348Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-09-04T15:08:02.348Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-04T19:09:25.438Z",
           "accion": "Taller asignado: NATHALY BOSA",
+          "fecha": "2026-09-04T19:09:25.438Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-04T19:09:32.319Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-04T19:09:32.319Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-04",
-      "created_by": "Jefa de Producción"
+      "id": "id_1788534434439_yr1cuyfzs",
+      "motivo_incumplimiento": "",
+      "nombre": "FALDA ESCOSES",
+      "notas": "",
+      "numero_ot": 13471,
+      "op_id": "OP-2026-096",
+      "referencia": "1130T16",
+      "satelite_id": "sat_14",
+      "talla": "T16",
+      "unidades_entregadas": 0,
+      "unidades_novedad": 0,
+      "valor_mo": 1151
     }
   ]
 }
