@@ -7184,11 +7184,15 @@ function _opMatrizDetalleHTML(op){
   });
   return _matrizTablaHTML(porColor, 'Sin colores/tallas registrados para esta OP.');
 }
-// Cuánto de una OT específica está realmente en novedad — unidades_novedad si está diligenciado,
-// si no y la OT completa está en estado NOVEDAD se asume toda su cantidad como novedad.
+// Cuánto de una OT específica está realmente en novedad — SOLO si la OT sigue hoy en estado
+// NOVEDAD (una OT que ya pasó a ENTREGADO no cuenta, sin importar lo que diga su campo
+// unidades_novedad: en la práctica ese campo se queda con la cantidad total desde que se marcó
+// la novedad y nunca se limpia al resolverse, así que confiar en él infla muchísimo el conteo).
+// Lo que realmente falta es cantidad - unidades_entregadas (ej. "14 de 15" → falta 1).
 function _otNovedadUds(ot){
-  if((ot.unidades_novedad||0) > 0) return ot.unidades_novedad;
-  return ot.estado==='NOVEDAD' ? (ot.cantidad||0) : 0;
+  if(ot.estado !== 'NOVEDAD') return 0;
+  var pend = (ot.cantidad||0) - (ot.unidades_entregadas||0);
+  return pend > 0 ? pend : (ot.cantidad||0);
 }
 // Unidades a mostrar para un sub-grupo (op,color) del kanban: si está en Novedad, solo lo que
 // de verdad está trabado (no todo el lote, que puede tener la mayoría de unidades sin problema);
@@ -7200,15 +7204,22 @@ function _subUdsPorEstado(s){
 // Matriz color × talla SOLO de lo que está en novedad — a diferencia de _opMatrizDetalleHTML
 // (que muestra el pedido completo de la OP), esto sale de las OTs reales marcadas con
 // unidades_novedad, para no confundir "cuánto se pidió" con "cuánto está trabado".
+// IMPORTANTE: se restringe a los sub-grupos (op,color) cuyo estado efectivo YA es 'NOVEDAD'
+// (el mismo _buildSubgs() que arma el resumen de arriba) — así el total y los colores del
+// detalle coinciden siempre con la tarjeta que se hizo clic; un color que tenga alguna OT
+// con novedad pero cuyo grupo esté clasificado en otra columna (ej. En Confección) no se
+// mezcla acá, porque no pertenece a lo que este modal de "Novedad" está mostrando.
 function _opMatrizNovedadHTML(op){
-  var ots = (DB.ots||[]).filter(function(o){ return o.op_id===op.id; });
+  var sgNov = _buildSubgs().filter(function(s){ return s.op.id===op.id && s.estado==='NOVEDAD'; });
   var porColor = {};
-  ots.forEach(function(ot){
-    var nov = _otNovedadUds(ot);
-    if(nov<=0) return;
-    var color = ot.color||'—', talla = ot.talla||'—';
-    if(!porColor[color]) porColor[color] = {};
-    porColor[color][talla] = (porColor[color][talla]||0) + nov;
+  sgNov.forEach(function(s){
+    (s.otsColor||[]).forEach(function(ot){
+      var nov = _otNovedadUds(ot);
+      if(nov<=0) return;
+      var color = ot.color||'—', talla = ot.talla||'—';
+      if(!porColor[color]) porColor[color] = {};
+      porColor[color][talla] = (porColor[color][talla]||0) + nov;
+    });
   });
   return _matrizTablaHTML(porColor, 'No se encontraron unidades en novedad para esta OP (puede que ya se hayan resuelto).');
 }
@@ -7308,56 +7319,98 @@ function abrirResumenColumna(colK){
   body += '<div style="font-size:22px;font-weight:900;color:'+meta.color+';">'+totalUds.toLocaleString('es-CO')+'</div></div>';
   body += '</div>';
 
+  function opCardHTML(oid){
+    var item = byOp[oid];
+    var op   = item.op;
+    var sg   = item.subgs;
+    var udsOp = sg.reduce(function(a,s){ return a+sUds(s); },0);
+    var novedades = sg.filter(function(s){ return s.estado==='NOVEDAD'; }).length;
+    var detId = 'op-col-det-'+colK+'-'+oid.replace(/[^A-Za-z0-9]/g,'');
+    var c = '';
+    c += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-left:3px solid '+meta.color+';border-radius:8px;padding:12px 14px;">';
+    // Header OP
+    c += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;gap:10px;">';
+    c += '<div style="flex:1;min-width:0;">';
+    c += '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">';
+    c += '<span style="font-family:var(--bebas);font-size:14px;color:'+meta.color+';">'+esc(fmtOpId(op.id))+'</span>';
+    if(novedades) c += '<span style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);color:#ef4444;border-radius:10px;font-size:9px;padding:1px 6px;font-weight:700;">'+novedades+' NOV</span>';
+    c += '</div>';
+    c += '<div style="font-size:10px;color:#64748b;margin-top:2px;">'+esc(op.categoria||'—')+'</div>';
+    c += '</div>';
+    c += '<div data-detid="'+detId+'" data-opid="'+esc(oid)+'" data-modo="'+(esNovedad?'novedad':'')+'" onclick="_opToggleMatriz(this.dataset.detid,this.dataset.opid,this.dataset.modo)" title="Ver colores, tallas y totales" style="text-align:right;flex-shrink:0;cursor:pointer;">';
+    c += '<div style="font-family:var(--bebas);font-size:30px;line-height:1;color:'+meta.color+';text-decoration:underline dotted;text-underline-offset:4px;">'+udsOp.toLocaleString('es-CO')+'</div>';
+    c += '<div style="font-size:9px;color:'+meta.color+'99;text-transform:uppercase;letter-spacing:.4px;">'+(esNovedad?'uds en novedad':'uds')+' · ver detalle</div>';
+    c += '</div>';
+    c += '</div>';
+    c += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;margin-bottom:8px;">'+esc(op.nombre_producto||'—')+'</div>';
+    // Sub-grupos (colores)
+    c += '<div style="display:flex;flex-wrap:wrap;gap:5px;">';
+    sg.forEach(function(s){
+      var _CH={'NEGRO':'#1a1a1a','BLANCO':'#f8fafc','CAFE':'#92400e','CAMEL':'#b45309','BEIGE':'#d4b896','ROJO':'#dc2626','AZUL':'#2563eb','VERDE':'#16a34a','GRIS':'#6b7280','ROSA':'#ec4899','NARANJA':'#f97316','MORADO':'#7c3aed','MARFIL':'#fffbeb','MOSTAZA':'#ca8a04','TAUPE':'#78716c','CHOCOLATE':'#78350f','MILITAR':'#4d7c0f','CAMUFLADO':'#65a30d'};
+      var dotColor = s.color ? (_CH[s.color.toUpperCase().split(' ')[0]]||meta.color) : meta.color;
+      c += '<span style="display:inline-flex;align-items:center;gap:4px;background:#0d1117;border:1px solid #2c2c2e;border-radius:12px;padding:3px 9px;font-size:10px;color:#94a3b8;">';
+      c += '<span style="width:6px;height:6px;border-radius:50%;background:'+dotColor+';flex-shrink:0;"></span>';
+      c += esc(s.color||'—')+' · '+sUds(s)+' uds';
+      if(op.cortador && colK==='PENDIENTE_CORTAR') c += ' · <span style="color:#60a5fa;">'+esc(op.cortador)+'</span>';
+      c += '</span>';
+    });
+    c += '</div>';
+    if(op.satelite_nombre){
+      c += '<div style="margin-top:6px;font-size:10px;color:#475569;">🏭 '+esc(op.satelite_nombre)+'</div>';
+    }
+    c += '<div id="'+detId+'" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);"></div>';
+    c += '</div>';
+    return c;
+  }
+
   if(!opOrder.length){
     body += '<div style="text-align:center;padding:30px;color:#475569;">No hay OPs en este estado</div>';
   } else {
-    body += '<div style="display:flex;flex-direction:column;gap:10px;">';
+    // Agrupar por categoría — clic en la categoría despliega sus OPs, con subtotal de
+    // unidades arriba para poder revisar de un vistazo cuánto hay de cada familia.
+    var byCat = {};
+    var catOrder = [];
     opOrder.forEach(function(oid){
       var item = byOp[oid];
-      var op   = item.op;
-      var sg   = item.subgs;
-      var udsOp = sg.reduce(function(a,s){ return a+sUds(s); },0);
-      var novedades = sg.filter(function(s){ return s.estado==='NOVEDAD'; }).length;
-      var detId = 'op-col-det-'+colK+'-'+oid.replace(/[^A-Za-z0-9]/g,'');
-      body += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-left:3px solid '+meta.color+';border-radius:8px;padding:12px 14px;">';
-      // Header OP
-      body += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;gap:10px;">';
-      body += '<div style="flex:1;min-width:0;">';
-      body += '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">';
-      body += '<span style="font-family:var(--bebas);font-size:14px;color:'+meta.color+';">'+esc(fmtOpId(op.id))+'</span>';
-      if(novedades) body += '<span style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);color:#ef4444;border-radius:10px;font-size:9px;padding:1px 6px;font-weight:700;">'+novedades+' NOV</span>';
+      var cat = item.op.categoria || 'Sin categoría';
+      if(!byCat[cat]){ byCat[cat] = {ops:[], uds:0}; catOrder.push(cat); }
+      byCat[cat].ops.push(oid);
+      byCat[cat].uds += item.subgs.reduce(function(a,s){ return a+sUds(s); },0);
+    });
+    catOrder.sort(function(a,b){ return byCat[b].uds - byCat[a].uds; });
+
+    var modalUid = 'rescol'+colK.replace(/[^A-Za-z0-9]/g,'');
+    body += '<div style="display:flex;flex-direction:column;gap:8px;">';
+    catOrder.forEach(function(cat, ci){
+      var catId = modalUid+'cat'+ci;
+      var info = byCat[cat];
+      body += '<div>';
+      body += '<div data-catid="'+catId+'" onclick="_toggleResumenCat(this.dataset.catid)" style="display:flex;align-items:center;justify-content:space-between;background:'+meta.bg+';border:1px solid '+meta.color+'33;border-radius:8px;padding:10px 14px;cursor:pointer;">';
+      body += '<div style="display:flex;align-items:center;gap:8px;">';
+      body += '<span id="'+catId+'-icon" style="font-size:9px;color:'+meta.color+';">▸</span>';
+      body += '<span style="font-size:12px;font-weight:800;color:'+meta.color+';text-transform:uppercase;letter-spacing:.4px;">'+esc(cat)+'</span>';
+      body += '<span style="font-size:10px;color:#64748b;">'+info.ops.length+' OP'+(info.ops.length!==1?'s':'')+'</span>';
       body += '</div>';
-      body += '<div style="font-size:10px;color:#64748b;margin-top:2px;">'+esc(op.categoria||'—')+'</div>';
+      body += '<span style="font-family:var(--bebas);font-size:18px;color:'+meta.color+';">'+info.uds.toLocaleString('es-CO')+' <span style="font-size:9px;color:#64748b;text-transform:uppercase;font-family:inherit;">uds</span></span>';
       body += '</div>';
-      body += '<div data-detid="'+detId+'" data-opid="'+esc(oid)+'" data-modo="'+(esNovedad?'novedad':'')+'" onclick="_opToggleMatriz(this.dataset.detid,this.dataset.opid,this.dataset.modo)" title="Ver colores, tallas y totales" style="text-align:right;flex-shrink:0;cursor:pointer;">';
-      body += '<div style="font-family:var(--bebas);font-size:30px;line-height:1;color:'+meta.color+';text-decoration:underline dotted;text-underline-offset:4px;">'+udsOp.toLocaleString('es-CO')+'</div>';
-      body += '<div style="font-size:9px;color:'+meta.color+'99;text-transform:uppercase;letter-spacing:.4px;">'+(esNovedad?'uds en novedad':'uds')+' · ver detalle</div>';
+      body += '<div id="'+catId+'" style="display:none;flex-direction:column;gap:10px;margin-top:8px;">';
+      info.ops.forEach(function(oid){ body += opCardHTML(oid); });
       body += '</div>';
-      body += '</div>';
-      body += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;margin-bottom:8px;">'+esc(op.nombre_producto||'—')+'</div>';
-      // Sub-grupos (colores)
-      body += '<div style="display:flex;flex-wrap:wrap;gap:5px;">';
-      sg.forEach(function(s){
-        var _CH={'NEGRO':'#1a1a1a','BLANCO':'#f8fafc','CAFE':'#92400e','CAMEL':'#b45309','BEIGE':'#d4b896','ROJO':'#dc2626','AZUL':'#2563eb','VERDE':'#16a34a','GRIS':'#6b7280','ROSA':'#ec4899','NARANJA':'#f97316','MORADO':'#7c3aed','MARFIL':'#fffbeb','MOSTAZA':'#ca8a04','TAUPE':'#78716c','CHOCOLATE':'#78350f','MILITAR':'#4d7c0f','CAMUFLADO':'#65a30d'};
-        var dotColor = s.color ? (_CH[s.color.toUpperCase().split(' ')[0]]||meta.color) : meta.color;
-        body += '<span style="display:inline-flex;align-items:center;gap:4px;background:#0d1117;border:1px solid #2c2c2e;border-radius:12px;padding:3px 9px;font-size:10px;color:#94a3b8;">';
-        body += '<span style="width:6px;height:6px;border-radius:50%;background:'+dotColor+';flex-shrink:0;"></span>';
-        body += esc(s.color||'—')+' · '+sUds(s)+' uds';
-        if(op.cortador && colK==='PENDIENTE_CORTAR') body += ' · <span style="color:#60a5fa;">'+esc(op.cortador)+'</span>';
-        body += '</span>';
-      });
-      body += '</div>';
-      if(op.satelite_nombre){
-        body += '<div style="margin-top:6px;font-size:10px;color:#475569;">🏭 '+esc(op.satelite_nombre)+'</div>';
-      }
-      body += '<div id="'+detId+'" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);"></div>';
       body += '</div>';
     });
     body += '</div>';
   }
 
   var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cerrar</button>';
-  openModal(meta.label.toUpperCase()+' — '+totalOPs+' OPs', body, footer, {wide:true});
+  openModal(meta.label.toUpperCase()+' — '+totalOPs+' OPs · '+totalUds.toLocaleString('es-CO')+' uds', body, footer, {wide:true});
+}
+function _toggleResumenCat(catId){
+  var el = document.getElementById(catId);
+  var icon = document.getElementById(catId+'-icon');
+  if(!el) return;
+  var open = el.style.display === 'flex';
+  el.style.display = open ? 'none' : 'flex';
+  if(icon) icon.textContent = open ? '▸' : '▾';
 }
 
 var _archOpen = false;
