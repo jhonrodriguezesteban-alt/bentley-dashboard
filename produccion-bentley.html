@@ -14843,6 +14843,49 @@ document.querySelectorAll('.nav-item').forEach(function(el){ el.classList.toggle
 var _monFiltroCorte = '';
 var _monFiltroCategoria = '';
 var _monFiltroMes = '';
+var _monFiltroRef = '';
+var _monFiltroColor = '';
+var _monFiltroOpTxt = '';
+var _monFiltroEstado = ''; // '', 'sin_op', 'sin_ots', 'listo', 'en_curso'
+// Aplica todos los filtros activos de Monitoreo (usado por el render y por el CSV, para
+// que lo que se descarga sea siempre exactamente lo que se está viendo en pantalla).
+function _monAplicarFiltros(rows){
+  if(_monFiltroCorte) rows = rows.filter(function(r){ return r.cortador === _monFiltroCorte; });
+  if(_monFiltroCategoria) rows = rows.filter(function(r){ return r.cat === _monFiltroCategoria; });
+  if(_monFiltroMes){
+    if(_monFiltroMes==='sin_mes') rows = rows.filter(function(r){ return !r.mes; });
+    else rows = rows.filter(function(r){ return r.mes === _monFiltroMes; });
+  }
+  if(_monFiltroRef){
+    var qRef = _monFiltroRef.trim().toUpperCase();
+    rows = rows.filter(function(r){ return (r.nombre||'').toUpperCase().indexOf(qRef)>=0; });
+  }
+  if(_monFiltroColor){
+    var qCol = _monFiltroColor.trim().toUpperCase();
+    rows = rows.filter(function(r){ return (r.color||'').toUpperCase().indexOf(qCol)>=0; });
+  }
+  if(_monFiltroOpTxt){
+    var qOp = _monFiltroOpTxt.trim().toUpperCase();
+    rows = rows.filter(function(r){ return !r.isDiseno && (r.opNum||'').toUpperCase().indexOf(qOp)>=0; });
+  }
+  if(_monFiltroEstado){
+    rows = rows.filter(function(r){
+      if(_monFiltroEstado==='sin_op') return r.isDiseno;
+      if(r.isDiseno) return false;
+      if(_monFiltroEstado==='sin_ots') return !r.hasOTs;
+      if(!r.hasOTs) return false;
+      var enCorte = !!_monCorteActivos[r.opId+'||'+r.color];
+      if(_monFiltroEstado==='en_curso') return enCorte;
+      if(_monFiltroEstado==='listo') return !enCorte;
+      return true;
+    });
+  }
+  return rows;
+}
+function _monLimpiarFiltros(){
+  _monFiltroCorte=''; _monFiltroCategoria=''; _monFiltroMes=''; _monFiltroRef=''; _monFiltroColor=''; _monFiltroOpTxt=''; _monFiltroEstado='';
+  renderPage('monitoreo');
+}
 var _monCorteActivos = {};  // key: opId+'||'+color → true
 var _monCorteQtys    = {};  // key: opId+'||'+color+'||'+talla → qty confirmada
 
@@ -14919,12 +14962,7 @@ function renderMonitoreo(){
   var MESES = built.MESES;
   var rows = built.rows;
 
-  if(_monFiltroCorte) rows = rows.filter(function(r){ return r.cortador === _monFiltroCorte; });
-  if(_monFiltroCategoria) rows = rows.filter(function(r){ return r.cat === _monFiltroCategoria; });
-  if(_monFiltroMes){
-    if(_monFiltroMes==='sin_mes') rows = rows.filter(function(r){ return !r.mes; });
-    else rows = rows.filter(function(r){ return r.mes === _monFiltroMes; });
-  }
+  rows = _monAplicarFiltros(rows);
   rows.sort(function(a,b){ return (a.cat+a.nombre+a.color).localeCompare(b.cat+b.nombre+b.color,'es'); });
 
   var tallasSet = {};
@@ -14956,15 +14994,11 @@ function renderMonitoreo(){
   h += '<option value="sin_mes"'+(_monFiltroMes==='sin_mes'?' selected':'')+'>Sin mes asignado</option>';
   MESES.forEach(function(m){ h += '<option value="'+m.k+'"'+(_monFiltroMes===m.k?' selected':'')+'>'+esc(m.label)+'</option>'; });
   h += '</select>';
-  h += '<select onchange="_monFiltroCategoria=this.value;renderPage(\'monitoreo\')" style="background:#0d1117;border:1px solid #2c2c2e;border-radius:6px;color:var(--text);padding:5px 10px;font-size:12px;cursor:pointer;">';
-  h += '<option value="">Todas las categorías</option>';
-  categorias.forEach(function(c){ h += '<option value="'+esc(c)+'"'+(_monFiltroCategoria===c?' selected':'')+'>'+esc(c)+'</option>'; });
-  h += '</select>';
-  h += '<select onchange="_monFiltroCorte=this.value;renderPage(\'monitoreo\')" style="background:#0d1117;border:1px solid #2c2c2e;border-radius:6px;color:var(--text);padding:5px 10px;font-size:12px;cursor:pointer;">';
-  h += '<option value="">Todos los cortadores</option>';
-  cortadores.forEach(function(c){ h += '<option value="'+esc(c)+'"'+(_monFiltroCorte===c?' selected':'')+'>'+esc(c)+'</option>'; });
-  h += '</select>';
   h += '<button onclick="exportarMonitoreoCSV()" style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);color:#34d399;border-radius:6px;padding:6px 14px;cursor:pointer;font-size:12px;font-weight:600;">↓ CSV</button>';
+  h += '<button onclick="imprimirMonitoreo()" style="background:rgba(148,163,184,.1);border:1px solid rgba(148,163,184,.3);color:#cbd5e1;border-radius:6px;padding:6px 14px;cursor:pointer;font-size:12px;font-weight:600;" title="Imprimir la vista filtrada actual — útil para darle su hoja a cada cortador">🖨 Imprimir</button>';
+  if(_monFiltroCorte||_monFiltroCategoria||_monFiltroMes||_monFiltroRef||_monFiltroColor||_monFiltroOpTxt||_monFiltroEstado){
+    h += '<button onclick="_monLimpiarFiltros()" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#ef4444;border-radius:6px;padding:6px 12px;cursor:pointer;font-size:12px;">✕ Limpiar filtros</button>';
+  }
   if(nActivos > 0){
     h += '<button id="btnConfirmarCortes" onclick="monConfirmarCortes()" style="background:rgba(34,197,94,.18);border:1px solid rgba(34,197,94,.6);color:#22c55e;border-radius:6px;padding:7px 18px;cursor:pointer;font-size:13px;font-weight:800;box-shadow:0 0 12px rgba(34,197,94,.25);">✓ Confirmar Corte y OTs ('+nActivos+')</button>';
   }
@@ -14990,6 +15024,33 @@ function renderMonitoreo(){
   h += '<th style="text-align:left;padding:10px 12px;color:#fbbf24;font-weight:700;min-width:100px;">OP</th>';
   h += '<th style="text-align:left;padding:10px 12px;color:#fbbf24;font-weight:700;min-width:100px;">Cortador</th>';
   h += '<th style="text-align:center;padding:10px 10px;color:#fbbf24;font-weight:700;min-width:64px;">Corte</th>';
+  h += '</tr>';
+  // Fila de filtros por columna — se aplican en vivo (oninput/onchange) y también
+  // se reflejan en el CSV, así lo que se descarga siempre coincide con lo que se ve.
+  h += '<tr style="background:#0a0d14;border-bottom:1px solid rgba(251,191,36,.15);">';
+  h += '<th style="padding:5px 10px;">';
+  h += '<select onchange="_monFiltroCategoria=this.value;renderPage(\'monitoreo\')" style="width:100%;background:#0d1117;border:1px solid #2c2c2e;border-radius:5px;color:#94a3b8;padding:3px 4px;font-size:10px;">';
+  h += '<option value="">Todas</option>';
+  categorias.forEach(function(c){ h += '<option value="'+esc(c)+'"'+(_monFiltroCategoria===c?' selected':'')+'>'+esc(c)+'</option>'; });
+  h += '</select></th>';
+  h += '<th style="padding:5px 10px;"><input type="text" value="'+esc(_monFiltroRef)+'" placeholder="Buscar..." oninput="_monFiltroRef=this.value;renderPage(\'monitoreo\')" style="width:100%;box-sizing:border-box;background:#0d1117;border:1px solid #2c2c2e;border-radius:5px;color:#94a3b8;padding:3px 6px;font-size:10px;"></th>';
+  h += '<th style="padding:5px 10px;"><input type="text" value="'+esc(_monFiltroColor)+'" placeholder="Buscar..." oninput="_monFiltroColor=this.value;renderPage(\'monitoreo\')" style="width:100%;box-sizing:border-box;background:#0d1117;border:1px solid #2c2c2e;border-radius:5px;color:#94a3b8;padding:3px 6px;font-size:10px;"></th>';
+  tallasCols.forEach(function(){ h += '<th></th>'; });
+  h += '<th></th>';
+  h += '<th style="padding:5px 10px;"><input type="text" value="'+esc(_monFiltroOpTxt)+'" placeholder="OP..." oninput="_monFiltroOpTxt=this.value;renderPage(\'monitoreo\')" style="width:100%;box-sizing:border-box;background:#0d1117;border:1px solid #2c2c2e;border-radius:5px;color:#94a3b8;padding:3px 6px;font-size:10px;"></th>';
+  h += '<th style="padding:5px 10px;">';
+  h += '<select onchange="_monFiltroCorte=this.value;renderPage(\'monitoreo\')" style="width:100%;background:#0d1117;border:1px solid #2c2c2e;border-radius:5px;color:#94a3b8;padding:3px 4px;font-size:10px;">';
+  h += '<option value="">Todos</option>';
+  cortadores.forEach(function(c){ h += '<option value="'+esc(c)+'"'+(_monFiltroCorte===c?' selected':'')+'>'+esc(c)+'</option>'; });
+  h += '</select></th>';
+  h += '<th style="padding:5px 10px;">';
+  h += '<select onchange="_monFiltroEstado=this.value;renderPage(\'monitoreo\')" style="width:100%;background:#0d1117;border:1px solid #2c2c2e;border-radius:5px;color:#94a3b8;padding:3px 4px;font-size:10px;">';
+  h += '<option value="">Todos</option>';
+  h += '<option value="listo"'+(_monFiltroEstado==='listo'?' selected':'')+'>Listo p/cortar</option>';
+  h += '<option value="en_curso"'+(_monFiltroEstado==='en_curso'?' selected':'')+'>En curso</option>';
+  h += '<option value="sin_ots"'+(_monFiltroEstado==='sin_ots'?' selected':'')+'>Sin OTs</option>';
+  h += '<option value="sin_op"'+(_monFiltroEstado==='sin_op'?' selected':'')+'>Sin OP (diseño)</option>';
+  h += '</select></th>';
   h += '</tr>';
   h += '</thead>';
   h += '<tbody>';
@@ -15155,13 +15216,7 @@ function exportarMonitoreoCSV(){
   var built = _monBuildRows();
   var MESES = built.MESES;
   var mesLabel = {}; MESES.forEach(function(m){ mesLabel[m.k]=m.label; });
-  var rows = built.rows;
-  if(_monFiltroCorte) rows = rows.filter(function(r){ return r.cortador===_monFiltroCorte; });
-  if(_monFiltroCategoria) rows = rows.filter(function(r){ return r.cat===_monFiltroCategoria; });
-  if(_monFiltroMes){
-    if(_monFiltroMes==='sin_mes') rows = rows.filter(function(r){ return !r.mes; });
-    else rows = rows.filter(function(r){ return r.mes===_monFiltroMes; });
-  }
+  var rows = _monAplicarFiltros(built.rows);
   rows.sort(function(a,b){ return (a.cat+a.nombre+a.color).localeCompare(b.cat+b.nombre+b.color,'es'); });
   var tallasSet = {};
   rows.forEach(function(r){ Object.keys(r.tallas).forEach(function(t){ tallasSet[t]=1; }); });
@@ -15179,6 +15234,78 @@ function exportarMonitoreoCSV(){
   var url = URL.createObjectURL(blob);
   var a = document.createElement('a'); a.href=url; a.download='monitoreo_produccion_'+hoy()+'.csv'; a.click();
   URL.revokeObjectURL(url);
+}
+
+// Imprime exactamente lo que está filtrado en pantalla — pensado para darle su propia
+// hoja a cada cortador (filtra por "Cortador" arriba y luego imprime). Sin inputs ni
+// botones de acción, solo los valores, en blanco y negro para ahorrar tinta.
+function imprimirMonitoreo(){
+  var TALLA_ORD = ['2','3M','6M','9M','12M','18M','24M','T2','T4','T6','T8','T10','T12','T14','T16','XS','S','M','L','XL','XXL','XXXL','UNICA','ÚNICA'];
+  var built = _monBuildRows();
+  var MESES = built.MESES;
+  var mesLabel = {}; MESES.forEach(function(m){ mesLabel[m.k]=m.label; });
+  var rows = _monAplicarFiltros(built.rows);
+  rows.sort(function(a,b){ return (a.cat+a.nombre+a.color).localeCompare(b.cat+b.nombre+b.color,'es'); });
+  if(!rows.length){ toast('No hay filas para imprimir con los filtros actuales','warning'); return; }
+
+  var tallasSet = {};
+  rows.forEach(function(r){ Object.keys(r.tallas).forEach(function(t){ tallasSet[t]=1; }); });
+  var tallasCols = Object.keys(tallasSet).sort(function(a,b){
+    var ia=TALLA_ORD.indexOf(a), ib=TALLA_ORD.indexOf(b);
+    if(ia<0&&ib<0) return a.localeCompare(b); if(ia<0) return 1; if(ib<0) return -1; return ia-ib;
+  });
+  var totalUds = rows.reduce(function(a,r){ return a+r.total; },0);
+
+  var filtrosTxt = [];
+  if(_monFiltroCorte) filtrosTxt.push('Cortador: '+_monFiltroCorte);
+  if(_monFiltroCategoria) filtrosTxt.push('Categoría: '+_monFiltroCategoria);
+  if(_monFiltroMes) filtrosTxt.push('Mes: '+(_monFiltroMes==='sin_mes'?'Sin asignar':(mesLabel[_monFiltroMes]||_monFiltroMes)));
+  if(_monFiltroRef) filtrosTxt.push('Referencia: "'+_monFiltroRef+'"');
+  if(_monFiltroColor) filtrosTxt.push('Color: "'+_monFiltroColor+'"');
+  if(_monFiltroOpTxt) filtrosTxt.push('OP: "'+_monFiltroOpTxt+'"');
+  if(_monFiltroEstado) filtrosTxt.push('Estado: '+_monFiltroEstado);
+
+  var doc = '<!doctype html><html><head><meta charset="utf-8">';
+  doc += '<title>Monitoreo de producción — pendiente por cortar</title>';
+  doc += '<style>';
+  doc += '@page{margin:12mm;size:landscape;}';
+  doc += 'body{font-family:Arial,Helvetica,sans-serif;color:#111;margin:0;padding:0;}';
+  doc += 'h1{font-size:18px;margin:0 0 2px;}';
+  doc += '.sub{font-size:11px;color:#555;margin:0 0 4px;}';
+  doc += '.filtros{font-size:10px;color:#0a5fd6;margin:0 0 14px;font-weight:700;}';
+  doc += 'table{width:100%;border-collapse:collapse;margin-bottom:4px;}';
+  doc += 'th,td{border:1px solid #999;padding:4px 6px;font-size:10.5px;text-align:left;}';
+  doc += 'th{background:#eee;}';
+  doc += 'td.num,th.num{text-align:center;}';
+  doc += 'tr.tot td{font-weight:700;background:#f5f5f5;}';
+  doc += '.foot{margin-top:16px;font-size:9px;color:#555;}';
+  doc += '@media print{ .noprint{display:none;} }';
+  doc += '</style></head><body>';
+  doc += '<div class="noprint" style="margin-bottom:14px;"><button onclick="window.print()" style="padding:8px 16px;font-size:13px;cursor:pointer;">🖨 Imprimir / Guardar PDF</button></div>';
+  doc += '<h1>Monitoreo de producción — Pendiente por cortar</h1>';
+  doc += '<div class="sub">'+rows.length+' referencia'+(rows.length!==1?'s':'')+' · '+totalUds.toLocaleString('es-CO')+' uds · generado '+esc(hoy())+'</div>';
+  if(filtrosTxt.length) doc += '<div class="filtros">Filtros aplicados: '+esc(filtrosTxt.join(' · '))+'</div>';
+  doc += '<table><thead><tr><th>Categoría</th><th>Referencia</th><th>Color</th>';
+  tallasCols.forEach(function(t){ doc += '<th class="num">'+esc(t)+'</th>'; });
+  doc += '<th class="num">Total</th><th>OP</th><th>Cortador</th></tr></thead><tbody>';
+  rows.forEach(function(r){
+    doc += '<tr><td>'+esc(r.cat)+'</td><td>'+esc(r.nombre)+'</td><td>'+esc(r.color)+'</td>';
+    tallasCols.forEach(function(t){ doc += '<td class="num">'+(r.isDiseno?'—':(r.tallas[t]||'·'))+'</td>'; });
+    doc += '<td class="num">'+r.total+'</td><td>'+(r.isDiseno?'—':esc(r.opNum))+'</td><td>'+(r.isDiseno?'—':esc(r.cortador))+'</td></tr>';
+  });
+  doc += '<tr class="tot"><td colspan="3">TOTALES</td>';
+  tallasCols.forEach(function(t){
+    var tot = rows.reduce(function(a,r){ return a+(r.tallas[t]||0); },0);
+    doc += '<td class="num">'+(tot||'·')+'</td>';
+  });
+  doc += '<td class="num">'+totalUds+'</td><td colspan="2"></td></tr>';
+  doc += '</tbody></table>';
+  doc += '<div class="foot">Bentley Kids · Grupo Bentley SAS — documento generado automáticamente desde Monitoreo de Producción.</div>';
+  doc += '</body></html>';
+
+  var w = window.open('', '_blank');
+  if(!w){ toast('El navegador bloqueó la ventana — habilita pop-ups para imprimir','warning'); return; }
+  w.document.open(); w.document.write(doc); w.document.close();
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
