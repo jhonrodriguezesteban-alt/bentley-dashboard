@@ -8,9 +8,7 @@
       "OP-0033",
       "OP-0038"
     ],
-    "2026-07": [
-      "OP-0037||BEIGE"
-    ],
+    "2026-07": [],
     "2026-08": [
       "OP-2026-081||VINOTINTO",
       "OP-2026-081||GRIS CLARO",
@@ -208,7 +206,8 @@
       "OP-2026-209||NEGRO",
       "OP-2026-206||NEGRO",
       "OP-2026-206||BEIGE",
-      "OP-2026-205||ROSA"
+      "OP-2026-205||ROSA",
+      "OP-0037||BEIGE"
     ],
     "2026-10": [
       "OP-2026-200||NEGRO",
@@ -1049,9 +1048,39 @@
       "tipo": "diseno",
       "uds": 300
     },
+    "REF||BLUSAS||BLUSA MANGA LARGA SELENA": {
+      "cat": "BLUSAS",
+      "cif": 2308409,
+      "costoTotal": 9027207,
+      "extra": 0,
+      "mat": 4703028,
+      "mod": 884170,
+      "nombre": "BLUSA MANGA LARGA SELENA",
+      "ok": true,
+      "svc": 1131600,
+      "tieneReceta": true,
+      "tipo": "op",
+      "ts": 1788544247241,
+      "uds": 492
+    },
     "REF||BLUSAS||BLUSA POLLY": {
       "ok": false,
       "ts": 1788544312340
+    },
+    "REF||BLUSAS||BODY BASICO": {
+      "cat": "BLUSAS",
+      "cif": 0,
+      "costoTotal": 0,
+      "extra": 0,
+      "mat": 0,
+      "mod": 0,
+      "nombre": "BODY BASICO",
+      "ok": true,
+      "svc": 0,
+      "tieneReceta": false,
+      "tipo": "op",
+      "ts": 1788544240680,
+      "uds": 300
     },
     "REF||BLUSAS||POLO MAJO": {
       "cat": "BLUSAS",
@@ -1081,19 +1110,19 @@
       "uds": 300
     },
     "REF||BUZOS||CAMIBUSO PAÑO ALGODON MANGA OVERSIZED": {
-      "ok": true,
-      "extra": 0,
-      "ts": 1788544358932,
       "cat": "BUZOS",
-      "nombre": "CAMIBUSO PAÑO ALGODON MANGA OVERSIZED",
-      "uds": 500,
-      "tipo": "diseno",
+      "cif": 0,
+      "costoTotal": 0,
+      "extra": 0,
       "mat": 0,
       "mod": 0,
-      "cif": 0,
+      "nombre": "CAMIBUSO PAÑO ALGODON MANGA OVERSIZED",
+      "ok": true,
       "svc": 0,
-      "costoTotal": 0,
-      "tieneReceta": false
+      "tieneReceta": false,
+      "tipo": "diseno",
+      "ts": 1788544358932,
+      "uds": 500
     },
     "REF||BUZOS||CAMIBUSO PAÑO ALGODON RANGLAND": {
       "cat": "BUZOS",
@@ -1125,6 +1154,21 @@
     "REF||BUZOS||COUNTRY POLAR": {
       "ok": false,
       "ts": 1787579362582
+    },
+    "REF||BUZOS||HOODIE CAROLINA": {
+      "cat": "BUZOS",
+      "cif": 0,
+      "costoTotal": 0,
+      "extra": 0,
+      "mat": 0,
+      "mod": 0,
+      "nombre": "HOODIE CAROLINA",
+      "ok": true,
+      "svc": 0,
+      "tieneReceta": false,
+      "tipo": "op",
+      "ts": 1788544228131,
+      "uds": 192
     },
     "REF||BUZOS||HOODIE RANGLAND PAÑO ALGODON ABIERTO": {
       "cat": "BUZOS",
@@ -1242,6 +1286,21 @@
       "ts": 1787700495944,
       "uds": 252
     },
+    "REF||CHAQUETAS||BLAZER DONATELLA": {
+      "cat": "CHAQUETAS",
+      "cif": 0,
+      "costoTotal": 0,
+      "extra": 0,
+      "mat": 0,
+      "mod": 0,
+      "nombre": "BLAZER DONATELLA",
+      "ok": true,
+      "svc": 0,
+      "tieneReceta": false,
+      "tipo": "op",
+      "ts": 1788544211900,
+      "uds": 320
+    },
     "REF||CHAQUETAS||BLAZER DONATELLA NIÑA CORTO": {
       "ok": false,
       "ts": 1788544304390
@@ -1311,6 +1370,21 @@
       "tipo": "op",
       "ts": 1787588484506,
       "uds": 240
+    },
+    "REF||CHAQUETAS||CHAQUETA LENTEJUELAS": {
+      "cat": "CHAQUETAS",
+      "cif": 0,
+      "costoTotal": 0,
+      "extra": 0,
+      "mat": 0,
+      "mod": 0,
+      "nombre": "CHAQUETA LENTEJUELAS",
+      "ok": true,
+      "svc": 0,
+      "tieneReceta": false,
+      "tipo": "op",
+      "ts": 1788544213431,
+      "uds": 429
     },
     "REF||CHAQUETAS||CHAQUETA MARIPOSAS": {
       "cat": "CHAQUETAS",
@@ -1714,81 +1788,6 @@
       "ok": true,
       "tipo": "op",
       "uds": 174
-    },
-    "REF||CHAQUETAS||BLAZER DONATELLA": {
-      "ok": true,
-      "extra": 0,
-      "ts": 1788544211900,
-      "cat": "CHAQUETAS",
-      "nombre": "BLAZER DONATELLA",
-      "uds": 320,
-      "tipo": "op",
-      "mat": 0,
-      "mod": 0,
-      "cif": 0,
-      "svc": 0,
-      "costoTotal": 0,
-      "tieneReceta": false
-    },
-    "REF||CHAQUETAS||CHAQUETA LENTEJUELAS": {
-      "ok": true,
-      "extra": 0,
-      "ts": 1788544213431,
-      "cat": "CHAQUETAS",
-      "nombre": "CHAQUETA LENTEJUELAS",
-      "uds": 429,
-      "tipo": "op",
-      "mat": 0,
-      "mod": 0,
-      "cif": 0,
-      "svc": 0,
-      "costoTotal": 0,
-      "tieneReceta": false
-    },
-    "REF||BUZOS||HOODIE CAROLINA": {
-      "ok": true,
-      "extra": 0,
-      "ts": 1788544228131,
-      "cat": "BUZOS",
-      "nombre": "HOODIE CAROLINA",
-      "uds": 192,
-      "tipo": "op",
-      "mat": 0,
-      "mod": 0,
-      "cif": 0,
-      "svc": 0,
-      "costoTotal": 0,
-      "tieneReceta": false
-    },
-    "REF||BLUSAS||BLUSA MANGA LARGA SELENA": {
-      "ok": true,
-      "extra": 0,
-      "ts": 1788544247241,
-      "cat": "BLUSAS",
-      "nombre": "BLUSA MANGA LARGA SELENA",
-      "uds": 492,
-      "tipo": "op",
-      "mat": 4703028,
-      "mod": 884170,
-      "cif": 2308409,
-      "svc": 1131600,
-      "costoTotal": 9027207,
-      "tieneReceta": true
-    },
-    "REF||BLUSAS||BODY BASICO": {
-      "ok": true,
-      "extra": 0,
-      "ts": 1788544240680,
-      "cat": "BLUSAS",
-      "nombre": "BODY BASICO",
-      "uds": 300,
-      "tipo": "op",
-      "mat": 0,
-      "mod": 0,
-      "cif": 0,
-      "svc": 0,
-      "costoTotal": 0,
-      "tieneReceta": false
     }
   },
   "trazos": {
