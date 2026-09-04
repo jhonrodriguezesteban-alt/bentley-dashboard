@@ -724,9 +724,6 @@ textarea.form-control{resize:vertical;min-height:80px;}
     <div class="nav-item" onclick="navTo('planconf')" data-page="planconf">
       <span class="icon">🧵</span><span class="nav-label"> Planeación Confección</span>
     </div>
-    <div class="nav-item" onclick="navTo('entregas')" data-page="entregas">
-      <span class="icon">📦</span><span class="nav-label"> Entregas</span>
-    </div>
     <div class="nav-item" onclick="navTo('cronograma')" data-page="cronograma">
       <span class="icon">🎯</span><span class="nav-label"> Cronograma</span>
     </div>
@@ -747,9 +744,6 @@ textarea.form-control{resize:vertical;min-height:80px;}
     </div>
     <div class="nav-item" onclick="navTo('inversion')" data-page="inversion">
       <span class="icon">🧾</span><span class="nav-label"> Resumen de Inversión</span>
-    </div>
-    <div class="nav-item" onclick="navTo('simulador')" data-page="simulador">
-      <span class="icon">🧮</span><span class="nav-label"> Simulador</span>
     </div>
     <div class="nav-item" onclick="navTo('bitacora')" data-page="bitacora">
       <span class="icon">📒</span><span class="nav-label"> Bitácora</span>
@@ -1197,7 +1191,7 @@ function _getHash(u){ if(_U[u]) return _U[u]; var cfg=_getCfgUsers(); return (cf
 // Devuelve nombre display
 function _getName(u){ var cfg=_getCfgUsers(); return (cfg[u]&&cfg[u].name)||_NAMES[u]||u; }
 // Módulos permitidos para un usuario (jhon = todos)
-var ALL_MODULES = ['dashboard','satelites','ops','monitoreo','planconf','entregas','cronograma','diseno','planeacion','logistica','novedades','simulador','costos_mo','costeo','inversion','bitacora'];
+var ALL_MODULES = ['dashboard','satelites','ops','monitoreo','planconf','cronograma','diseno','planeacion','logistica','novedades','costos_mo','costeo','inversion','bitacora'];
 function _getModules(u){
   if(u==='jhon') return ALL_MODULES.slice();
   var cfg=_getCfgUsers();
@@ -1327,9 +1321,9 @@ function applyModuleAccess(uid){
 
 var ALL_MODULE_LABELS = {
   dashboard:'Dashboard', satelites:'Satélites', ops:'OTs', monitoreo:'Monitoreo Producción',
-  planconf:'Planeación Confección', entregas:'Entregas', cronograma:'Cronograma',
+  planconf:'Planeación Confección', cronograma:'Cronograma',
   diseno:'Diseño', planeacion:'Planeación', logistica:'Logística', novedades:'Novedades',
-  simulador:'Simulador', costos_mo:'Pagos', costeo:'Costeo y Rentabilidad', inversion:'Resumen de Inversión', bitacora:'Bitácora'
+  costos_mo:'Pagos', costeo:'Costeo y Rentabilidad', inversion:'Resumen de Inversión', bitacora:'Bitácora'
 };
 
 function renderAdminUsers(){
