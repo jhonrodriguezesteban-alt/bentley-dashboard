@@ -7166,23 +7166,32 @@ function _buildSubgs(){
   });
   return result;
 }
-// Matriz color × talla para una OP — misma idea visual que el detalle de "confirmados" en
-// Planeación, pero autosuficiente: sale directo de op.referencias/cantidades, así sirve para
-// cualquier estado del kanban (nuevas, corte, confección, novedad, alistamiento...), no solo
-// para lo que ya está en Planeación.
-function _opMatrizDetalleHTML(op){
-  var refs = (op.referencias && op.referencias.length) ? op.referencias : [{colores:op.colores||[], tallas:op.tallas||[], cantidades:op.cantidades||{}}];
+// Matriz color × talla de lo REALMENTE pendiente en un estado específico del kanban (corte,
+// confección, alistamiento...) — no el pedido completo de la OP. Se restringe a los sub-grupos
+// (op,color) que hoy están clasificados en esa columna (mismo _buildSubgs() que arma las
+// tarjetas), y dentro de esos, solo la cantidad aún no entregada por OT — así si el taller ya
+// entregó un parcial (ej. 40 de 80), el detalle muestra 40, no el lote original completo.
+function _opMatrizDetalleHTML(op, colK){
+  var sg = _buildSubgs().filter(function(s){ return s.op.id===op.id && s.estado===colK; });
   var porColor = {};
-  refs.forEach(function(ref){
-    (ref.colores||[]).forEach(function(color){
+  sg.forEach(function(s){
+    (s.otsColor||[]).forEach(function(ot){
+      var pend = _otPendienteUds(ot);
+      if(pend<=0) return;
+      var color = ot.color||'—', talla = ot.talla||'—';
       if(!porColor[color]) porColor[color] = {};
-      (ref.tallas||[]).forEach(function(talla){
-        var v = parseInt((ref.cantidades||{})[color+'_'+talla])||0;
-        if(v>0) porColor[color][talla] = (porColor[color][talla]||0)+v;
-      });
+      porColor[color][talla] = (porColor[color][talla]||0) + pend;
     });
   });
-  return _matrizTablaHTML(porColor, 'Sin colores/tallas registrados para esta OP.');
+  return _matrizTablaHTML(porColor, 'No hay unidades pendientes en este estado para esta OP.');
+}
+// Cuánto de una OT falta por entregar — 0 si ya está ENTREGADO, si no cantidad menos lo ya
+// entregado (una OT puede tener entregas parciales sin haber cambiado todavía de estado,
+// ej. "14 de 15" en Novedad o en Confección).
+function _otPendienteUds(ot){
+  if(ot.estado==='ENTREGADO') return 0;
+  var pend = (ot.cantidad||0) - (ot.unidades_entregadas||0);
+  return pend>0 ? pend : 0;
 }
 // Cuánto de una OT específica está realmente en novedad — SOLO si la OT sigue hoy en estado
 // NOVEDAD (una OT que ya pasó a ENTREGADO no cuenta, sin importar lo que diga su campo
@@ -7264,7 +7273,7 @@ function _matrizTablaHTML(porColor, msgVacio){
   h += '</tbody></table></div>';
   return h;
 }
-function _opToggleMatriz(detId, opId, modo){
+function _opToggleMatriz(detId, opId, colK){
   var el = document.getElementById(detId);
   if(!el) return;
   if(el.style.display !== 'none'){ el.style.display = 'none'; return; }
@@ -7273,7 +7282,7 @@ function _opToggleMatriz(detId, opId, modo){
     el.dataset.built = '1';
     var op = (DB.ops||[]).find(function(o){ return o.id===opId; });
     el.innerHTML = !op ? '<div style="font-size:11px;color:#64748b;">OP no encontrada.</div>'
-      : (modo==='novedad' ? _opMatrizNovedadHTML(op) : _opMatrizDetalleHTML(op));
+      : (colK==='NOVEDAD' ? _opMatrizNovedadHTML(op) : _opMatrizDetalleHTML(op, colK));
   }
 }
 function abrirResumenColumna(colK){
@@ -7337,7 +7346,7 @@ function abrirResumenColumna(colK){
     c += '</div>';
     c += '<div style="font-size:10px;color:#64748b;margin-top:2px;">'+esc(op.categoria||'—')+'</div>';
     c += '</div>';
-    c += '<div data-detid="'+detId+'" data-opid="'+esc(oid)+'" data-modo="'+(esNovedad?'novedad':'')+'" onclick="_opToggleMatriz(this.dataset.detid,this.dataset.opid,this.dataset.modo)" title="Ver colores, tallas y totales" style="text-align:right;flex-shrink:0;cursor:pointer;">';
+    c += '<div data-detid="'+detId+'" data-opid="'+esc(oid)+'" data-colk="'+esc(colK)+'" onclick="_opToggleMatriz(this.dataset.detid,this.dataset.opid,this.dataset.colk)" title="Ver colores, tallas y totales" style="text-align:right;flex-shrink:0;cursor:pointer;">';
     c += '<div style="font-family:var(--bebas);font-size:30px;line-height:1;color:'+meta.color+';text-decoration:underline dotted;text-underline-offset:4px;">'+udsOp.toLocaleString('es-CO')+'</div>';
     c += '<div style="font-size:9px;color:'+meta.color+'99;text-transform:uppercase;letter-spacing:.4px;">'+(esNovedad?'uds en novedad':'uds')+' · ver detalle</div>';
     c += '</div>';
