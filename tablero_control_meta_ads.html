@@ -3,209 +3,527 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tablero de Control · Meta Ads · Grupo Bentley SAS</title>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<title>Tablero Meta Ads · Grupo Bentley</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0a0a0c; --panel:#131317; --panel2:#1a1a20; --line:#26262e;
-  --txt:#f2f2f4; --mut:#8e8e98; --dim:#5c5c66;
-  --ok:#30d158; --warn:#ffd60a; --bad:#ff453a; --acc:#0a84ff;
+  --bg:#0a0a0c; --panel:#131317; --panel2:#1a1a20; --line:#26262e; --grid:#1f1f27;
+  --txt:#f2f2f4; --mut:#9a9aa4; --dim:#5c5c66;
+  --ok:#30d158; --warn:#ffd60a; --bad:#ff453a;
+  --f1:#86b6ef; --f2:#3987e5; --f3:#184f95;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--txt);font-family:Manrope,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
-.wrap{max-width:1240px;margin:0 auto;padding:40px 24px 80px}
-header{border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:32px}
-h1{font-size:28px;font-weight:800;letter-spacing:-.02em;margin:0 0 6px}
-.sub{color:var(--mut);font-size:14px}
-.sub b{color:var(--txt);font-weight:600}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:28px 0}
-.kpi{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
-.kpi .l{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);margin-bottom:8px}
-.kpi .v{font-size:26px;font-weight:700;letter-spacing:-.02em}
-.kpi .v.bad{color:var(--bad)} .kpi .v.ok{color:var(--ok)} .kpi .v.warn{color:var(--warn)}
-h2{font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--mut);margin:40px 0 14px}
-.alertbox{background:rgba(255,69,58,.08);border:1px solid rgba(255,69,58,.35);border-radius:14px;padding:18px 20px;margin-bottom:8px}
-.alertbox h3{margin:0 0 12px;font-size:14px;color:var(--bad);text-transform:uppercase;letter-spacing:.06em}
-.alertbox ul{margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:#ffd9d6}
-.alertbox b{color:#fff}
+html,body{margin:0;background:var(--bg);color:var(--txt)}
+body{font-family:Manrope,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1200px;margin:0 auto;padding:36px 24px 80px}
+header{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:22px}
+h1{font-size:27px;font-weight:800;letter-spacing:-.02em;margin:0 0 6px}
+.sub{color:var(--mut);font-size:13.5px}.sub b{color:var(--txt);font-weight:600}
+h2{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--mut);margin:36px 0 14px}
+h2:first-of-type{margin-top:26px}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:20px 0 4px;border-bottom:1px solid var(--line);padding-bottom:0}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;color:var(--mut);
+  font:700 13.5px Manrope,sans-serif;padding:11px 16px;cursor:pointer;margin-bottom:-1px}
+.tabs button[aria-selected="true"]{color:var(--txt);border-bottom-color:var(--f2)}
+.tabs button .cnt{display:inline-block;margin-left:7px;background:rgba(255,69,58,.18);color:var(--bad);
+  border-radius:999px;padding:1px 7px;font-size:11px}
+section[role=tabpanel]{display:none}
+section[role=tabpanel].on{display:block}
+
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 17px}
+.kpi .l{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);margin-bottom:7px}
+.kpi .v{font-size:24px;font-weight:700;letter-spacing:-.02em}
+.kpi .v.bad{color:var(--bad)}.kpi .v.warn{color:var(--warn)}
+.kpi .d{font-size:11.5px;color:var(--mut);margin-top:5px}
+.up{color:var(--warn)}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px}
+.ctrls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.seg{display:inline-flex;background:var(--panel2);border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.seg button{background:none;border:0;color:var(--mut);font:600 12px Manrope,sans-serif;padding:7px 14px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:#2c2c38;color:var(--txt)}
+.legend{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+.lg{display:flex;align-items:center;gap:7px;background:var(--panel2);border:1px solid var(--line);
+  border-radius:999px;padding:5px 12px;cursor:pointer;font:600 12px Manrope,sans-serif;color:var(--txt)}
+.lg[aria-pressed="false"]{opacity:.4}
+.lg i{width:10px;height:10px;border-radius:3px;display:block}
+.lg span.pct{color:var(--mut);font-weight:500}
+.chartbox{position:relative}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.tip{position:absolute;pointer-events:none;background:#22222b;border:1px solid #3a3a46;border-radius:11px;
+  padding:11px 13px;font-size:12px;min-width:170px;box-shadow:0 10px 32px rgba(0,0,0,.6);opacity:0;transition:opacity .12s;z-index:5}
+.tip h4{margin:0 0 8px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);font-weight:700}
+.tip .r{display:flex;align-items:center;gap:8px;margin:4px 0}
+.tip .r i{width:9px;height:9px;border-radius:2px;flex:none}
+.tip .r b{margin-left:auto;font-variant-numeric:tabular-nums}
+.tip .tot{border-top:1px solid #3a3a46;margin-top:8px;padding-top:7px;display:flex;font-weight:700}
+.tip .tot b{margin-left:auto;font-variant-numeric:tabular-nums}
+
+.cals{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+.cal h3{margin:0 0 10px;font-size:13px;font-weight:700;text-transform:capitalize}
+.dow{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:5px}
+.dow span{text-align:center;font-size:9.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.day{aspect-ratio:1;border-radius:9px;border:1px solid var(--line);background:var(--panel2);
+  padding:5px 6px;font-size:10px;position:relative;overflow:hidden}
+.day.has{cursor:pointer}.day.has:hover{border-color:#4a4a58}
+.day.sel{border-color:var(--txt);box-shadow:0 0 0 1px var(--txt)}
+.day.empty{background:transparent;border-color:transparent}
+.day .n{font-weight:700;color:var(--mut)}.day.has .n{color:var(--txt)}
+.day .s{position:absolute;left:6px;right:6px;bottom:14px;font-size:9.5px;color:var(--mut);
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.day .bar{position:absolute;left:0;right:0;bottom:0;height:5px;display:flex}
+.day .bar i{display:block;height:100%}
+.day .flag{position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%}
+.editor{margin-top:16px;border-top:1px solid var(--line);padding-top:16px;display:none}
+.editor.on{display:block}
+.editor .hd{font-weight:700;font-size:14px;margin-bottom:4px}
+.editor .meta{font-size:12px;color:var(--mut);margin-bottom:12px}
+.marks{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.mk{display:flex;align-items:center;gap:7px;background:var(--panel2);border:1px solid var(--line);
+  border-radius:999px;padding:6px 13px;cursor:pointer;font:600 12px Manrope,sans-serif;color:var(--txt)}
+.mk[aria-pressed="true"]{border-color:var(--txt)}
+.mk i{width:9px;height:9px;border-radius:50%}
+textarea{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:10px;color:var(--txt);
+  font:400 13px Manrope,sans-serif;padding:11px 13px;resize:vertical;min-height:70px}
+.btns{display:flex;gap:9px;margin-top:11px}
+button.b{background:#2c2c38;border:1px solid var(--line);color:var(--txt);border-radius:9px;
+  padding:8px 16px;font:700 12px Manrope,sans-serif;cursor:pointer}
+button.b.pri{background:var(--f2);border-color:var(--f2);color:#fff}
+button.b.del{color:var(--bad)}
+.notelist{margin-top:16px;display:grid;gap:8px}
+.nt{display:flex;gap:11px;align-items:flex-start;background:var(--panel2);border:1px solid var(--line);
+  border-radius:10px;padding:10px 13px;font-size:12.5px}
+.nt i{width:8px;height:8px;border-radius:50%;margin-top:5px;flex:none}
+.nt .d{color:var(--mut);font-weight:700;flex:none;width:58px}
+
+label.fld{font-size:12.5px;color:var(--mut);display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:12px}
+input[type=date],input[type=text]{background:var(--panel2);border:1px solid var(--line);color:var(--txt);
+  border-radius:8px;padding:8px 11px;font:600 13px Manrope,sans-serif;color-scheme:dark}
+input[type=text]{width:150px;text-align:right;font-variant-numeric:tabular-nums}
+.gauge{height:16px;border-radius:8px;background:#242430;overflow:hidden;margin:14px 0 10px;position:relative}
+.gauge i{display:block;height:100%;border-radius:8px;transition:width .3s}
+.gline{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--mut);opacity:.5}
+
+.alerts{display:grid;gap:10px}
+.al{display:flex;gap:13px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);
+  border-left-width:3px;border-radius:12px;padding:14px 16px}
+.al.bad{border-left-color:var(--bad);background:rgba(255,69,58,.05)}
+.al.warn{border-left-color:var(--warn);background:rgba(255,214,10,.04)}
+.al.ok{border-left-color:var(--ok);background:rgba(48,209,88,.04)}
+.al.info{border-left-color:var(--mut)}
+.al .ic{font-size:15px;line-height:1.3;flex:none;width:20px;text-align:center}
+.al .bd{flex:1;min-width:0}
+.al .t{font-weight:700;font-size:13.5px;margin-bottom:3px}
+.al .m{font-size:12.5px;color:var(--mut);line-height:1.6}
+.al .m b{color:var(--txt)}
+.al .act{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:4px 10px;
+  border-radius:999px;flex:none;align-self:center}
+.act.pausar{background:rgba(255,69,58,.16);color:var(--bad)}
+.act.bajar{background:rgba(255,214,10,.15);color:var(--warn)}
+.act.escalar{background:rgba(48,209,88,.15);color:var(--ok)}
+.act.revisar{background:#2a2a35;color:var(--mut)}
+.act.ok{background:rgba(48,209,88,.15);color:var(--ok)}
+
 .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--panel)}
-table{border-collapse:collapse;width:100%;min-width:1080px;font-size:13px}
-th{text-align:left;padding:12px 14px;font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--dim);border-bottom:1px solid var(--line);white-space:nowrap;font-weight:700}
-td{padding:13px 14px;border-bottom:1px solid #1e1e25;vertical-align:middle;white-space:nowrap}
+table{border-collapse:collapse;width:100%;min-width:900px;font-size:12.5px}
+th{text-align:left;padding:11px 13px;font-size:10px;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--dim);border-bottom:1px solid var(--line);white-space:nowrap;font-weight:700}
+td{padding:11px 13px;border-bottom:1px solid #1e1e25;white-space:nowrap}
 tr:last-child td{border-bottom:none}
-tr.alert td{background:rgba(255,69,58,.06)}
-.nm{font-weight:600;white-space:normal;min-width:210px}
-.nm small{display:block;color:var(--dim);font-weight:400;font-size:11px;margin-top:3px}
 .num{text-align:right;font-variant-numeric:tabular-nums}
-.pill{display:inline-block;padding:3px 9px;border-radius:999px;font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.nm{white-space:normal;min-width:190px;font-weight:600}
+.tag{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:7px}
+.pill{display:inline-block;padding:3px 9px;border-radius:999px;font-size:10.5px;font-weight:700;
+  letter-spacing:.04em;text-transform:uppercase}
 .p-ok{background:rgba(48,209,88,.15);color:var(--ok)}
 .p-warn{background:rgba(255,214,10,.15);color:var(--warn)}
 .p-bad{background:rgba(255,69,58,.16);color:var(--bad)}
 .p-dim{background:#242430;color:var(--mut)}
-.bar{height:5px;border-radius:3px;background:#242430;overflow:hidden;margin-top:5px;width:90px;margin-left:auto}
-.bar i{display:block;height:100%;border-radius:3px}
 .note{color:var(--mut);font-size:12.5px;line-height:1.75;font-family:Lora,Georgia,serif;margin-top:14px}
-.legend{display:flex;gap:22px;flex-wrap:wrap;margin-top:14px;font-size:12px;color:var(--mut)}
-.legend span{display:flex;align-items:center;gap:7px}
-.dot{width:8px;height:8px;border-radius:50%}
-footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);color:var(--dim);font-size:11.5px;line-height:1.7}
+footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--dim);font-size:11.5px;line-height:1.7}
+@media(max-width:640px){.legend{margin-left:0;width:100%}.tabs button{padding:10px 11px;font-size:12.5px}}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
-  <h1>Tablero de Control · Meta Ads</h1>
-  <div class="sub">Grupo Bentley SAS · Cuenta <b>320798102308066</b> · Ventana <b>últimos 7 días</b> vs. promedio 30 días de campaña padre<br>
-  Actualizado: <b>04 sep 2026, 14:10 (Bogotá)</b> · Moneda: COP</div>
+  <h1>Tablero Meta Ads</h1>
+  <div class="sub">Grupo Bentley SAS · Cuenta <b>320798102308066</b> · Datos hasta <b>03 sep 2026</b> ·
+  Actualizado <b>04 sep 2026, 16:05 (Bogotá)</b> · COP</div>
 </header>
 
 <div class="kpis">
-  <div class="kpi"><div class="l">Conjuntos activos</div><div class="v">13</div></div>
-  <div class="kpi"><div class="l">Alertas de CPA</div><div class="v bad">3</div></div>
-  <div class="kpi"><div class="l">Inversión 7 días</div><div class="v">$2.546.191</div></div>
-  <div class="kpi"><div class="l">Compras 7 días</div><div class="v">44</div></div>
-  <div class="kpi"><div class="l">CPA promedio venta</div><div class="v">$52.242</div></div>
-  <div class="kpi"><div class="l">En aprendizaje limitado</div><div class="v warn">2</div></div>
+  <div class="kpi"><div class="l">Inversión ayer</div><div class="v">$362.590</div><div class="d">−25,6% vs. día anterior</div></div>
+  <div class="kpi"><div class="l">Promedio 7 días</div><div class="v">$494.281</div><div class="d up">+10,2% vs. semana previa</div></div>
+  <div class="kpi"><div class="l">Total 30 días</div><div class="v">$12.316.420</div><div class="d">6 campañas con gasto</div></div>
+  <div class="kpi"><div class="l">Presupuesto diario</div><div class="v">$423.066</div><div class="d">tras pausar DPA Premium</div></div>
+  <div class="kpi"><div class="l">Compras 7 días</div><div class="v">63</div><div class="d">CPA mezclado $47.020</div></div>
+  <div class="kpi"><div class="l">Alertas activas</div><div class="v bad" id="kAlert">—</div><div class="d">conjuntos fuera de rango</div></div>
 </div>
 
-<h2>Alertas activas</h2>
-<div class="alertbox">
-  <h3>3 conjuntos superaron el 120% del CPA de su campaña padre</h3>
-  <ul>
-    <li><b>DPA PREMIUM · PROSPECTING · JULIO 2026</b> — CPA $149.174 vs. umbral $45.325 (<b>329%</b>). Solo 2 compras con $298.348 invertidos y frecuencia 1,96. Además está en <b>aprendizaje limitado (FAIL)</b>. Es la fuga de presupuesto más grande de la cuenta ahora mismo.</li>
-    <li><b>RMK | CATALOGO DPA 2.0 | 28/05/26</b> — CPA $122.729 vs. umbral $42.577 (<b>288%</b>). 4 compras con $490.917. Contraste duro: el otro conjunto de la misma campaña (MIX NIÑO NIÑA 2.0) trae 16 compras a $26.634. El catálogo dejó de rendir esta semana.</li>
-    <li><b>TESTEO 1</b> — CPA $78.521 vs. umbral $57.854 (<b>136%</b>). 3 compras con $235.564. Es un conjunto de testeo, pero ya pasó el punto donde el costo justifica seguir sin cambios.</li>
-  </ul>
-</div>
-<div class="alertbox" style="background:rgba(255,214,10,.06);border-color:rgba(255,214,10,.3)">
-  <h3 style="color:var(--warn)">Señales secundarias</h3>
-  <ul style="color:#ffeeb0">
-    <li><b>Frecuencia 2,35</b> en RMK | MIX NIÑO NIÑA 2.0 — el conjunto más rentable de la cuenta ($26.634 de CPA) está saturando audiencia. Renovar creativo antes de que el CPA suba.</li>
-    <li><b>RMK | MIX ABRIGOS | SEPT</b> — 0 impresiones en 7 días con estado activo. Revisar entrega/presupuesto.</li>
-    <li><b>TESTEO 2 ONLY IG</b> y <b>RMK | MIX BUZOS</b> — $102.961 invertidos sin una sola compra.</li>
-  </ul>
+<div class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-tab="rend">Rendimiento <span class="cnt" id="cntRend"></span></button>
+  <button role="tab" aria-selected="false" data-tab="inv">Inversión</button>
+  <button role="tab" aria-selected="false" data-tab="cal">Calendario</button>
+  <button role="tab" aria-selected="false" data-tab="techo">Techo de gasto</button>
 </div>
 
-<h2>Conjuntos activos · últimos 7 días</h2>
-<div class="tablewrap">
-<table>
-<thead><tr>
-  <th>Conjunto</th><th>Aprendizaje</th><th class="num">Frec.</th><th class="num">Inversión</th>
-  <th class="num">Result.</th><th class="num">CPA 7d</th><th class="num">Umbral 120%</th><th class="num">vs. umbral</th>
-  <th class="num">Hook</th><th class="num">Hold</th><th>Estado</th>
-</tr></thead>
-<tbody>
-<tr class="alert">
-  <td class="nm">DPA PREMIUM · PROSPECTING · JULIO 2026<small>F2 DPA PREMIUM BK · JULIO 2026</small></td>
-  <td><span class="pill p-bad">Limitado</span></td><td class="num">1,96</td><td class="num">$298.348</td>
-  <td class="num">2</td><td class="num">$149.174</td><td class="num">$45.325</td>
-  <td class="num" style="color:var(--bad);font-weight:700">329%<div class="bar"><i style="width:100%;background:var(--bad)"></i></div></td>
-  <td class="num">6,4%</td><td class="num">4,8%</td><td><span class="pill p-bad">Alerta</span></td>
-</tr>
-<tr class="alert">
-  <td class="nm">RMK | CATALOGO DPA 2.0 | 28/05/26<small>FASE 3 FIDELIZAR · RMKT</small></td>
-  <td><span class="pill p-ok">Completo</span></td><td class="num">1,92</td><td class="num">$490.917</td>
-  <td class="num">4</td><td class="num">$122.729</td><td class="num">$42.577</td>
-  <td class="num" style="color:var(--bad);font-weight:700">288%<div class="bar"><i style="width:100%;background:var(--bad)"></i></div></td>
-  <td class="num">—</td><td class="num">—</td><td><span class="pill p-bad">Alerta</span></td>
-</tr>
-<tr class="alert">
-  <td class="nm">TESTEO 1<small>FASE 2 SOLUCIONAR · VENTA 2.0</small></td>
-  <td><span class="pill p-dim">Sin dato</span></td><td class="num">1,41</td><td class="num">$235.564</td>
-  <td class="num">3</td><td class="num">$78.521</td><td class="num">$57.854</td>
-  <td class="num" style="color:var(--bad);font-weight:700">136%<div class="bar"><i style="width:100%;background:var(--bad)"></i></div></td>
-  <td class="num">56,4%</td><td class="num">5,2%</td><td><span class="pill p-bad">Alerta</span></td>
-</tr>
-<tr>
-  <td class="nm">RMK | MIX CONJUNTOS | SEPT<small>FASE 3 FIDELIZAR · RMKT</small></td>
-  <td><span class="pill p-warn">Aprendizaje</span></td><td class="num">1,24</td><td class="num">$40.073</td>
-  <td class="num">1</td><td class="num">$40.073</td><td class="num">$42.577</td>
-  <td class="num" style="color:var(--warn)">94%<div class="bar"><i style="width:94%;background:var(--warn)"></i></div></td>
-  <td class="num">51,4%</td><td class="num">8,3%</td><td><span class="pill p-warn">Vigilar</span></td>
-</tr>
-<tr>
-  <td class="nm">RMK | MIX NIÑO NIÑA 2.0 | CREATIVOS<small>FASE 3 FIDELIZAR · RMKT</small></td>
-  <td><span class="pill p-dim">Sin dato</span></td><td class="num" style="color:var(--warn);font-weight:700">2,35</td><td class="num">$426.148</td>
-  <td class="num">16</td><td class="num">$26.634</td><td class="num">$42.577</td>
-  <td class="num" style="color:var(--ok)">63%<div class="bar"><i style="width:63%;background:var(--ok)"></i></div></td>
-  <td class="num">0,4%</td><td class="num">15,7%</td><td><span class="pill p-warn">Frec. alta</span></td>
-</tr>
-<tr>
-  <td class="nm">RMK | MIX CHAQUETAS | SEPT<small>FASE 3 FIDELIZAR · RMKT</small></td>
-  <td><span class="pill p-dim">Sin dato</span></td><td class="num">1,35</td><td class="num">$31.527</td>
-  <td class="num">1</td><td class="num">$31.527</td><td class="num">$42.577</td>
-  <td class="num" style="color:var(--ok)">74%<div class="bar"><i style="width:74%;background:var(--ok)"></i></div></td>
-  <td class="num">86,7%</td><td class="num">8,1%</td><td><span class="pill p-ok">OK</span></td>
-</tr>
-<tr>
-  <td class="nm">F2 GANADORES<small>FASE 2 SOLUCIONAR · VENTA 2.0</small></td>
-  <td><span class="pill p-bad">Limitado</span></td><td class="num">1,71</td><td class="num">$706.043</td>
-  <td class="num">16</td><td class="num">$44.128</td><td class="num">$57.854</td>
-  <td class="num" style="color:var(--ok)">76%<div class="bar"><i style="width:76%;background:var(--ok)"></i></div></td>
-  <td class="num">—</td><td class="num">—</td><td><span class="pill p-warn">Limitado</span></td>
-</tr>
-<tr>
-  <td class="nm">RMK | MIX BUZOS | SEPT<small>FASE 3 FIDELIZAR · RMKT</small></td>
-  <td><span class="pill p-warn">Aprendizaje</span></td><td class="num">1,37</td><td class="num">$32.106</td>
-  <td class="num">0</td><td class="num">—</td><td class="num">$42.577</td>
-  <td class="num" style="color:var(--mut)">s/d</td>
-  <td class="num">67,4%</td><td class="num">9,5%</td><td><span class="pill p-warn">Sin venta</span></td>
-</tr>
-<tr>
-  <td class="nm">TESTEO 2 ONLY IG<small>FASE 2 SOLUCIONAR · VENTA 2.0</small></td>
-  <td><span class="pill p-dim">Sin dato</span></td><td class="num">1,22</td><td class="num">$70.855</td>
-  <td class="num">0</td><td class="num">—</td><td class="num">$57.854</td>
-  <td class="num" style="color:var(--mut)">s/d</td>
-  <td class="num">77,6%</td><td class="num">4,8%</td><td><span class="pill p-warn">Sin venta</span></td>
-</tr>
-<tr>
-  <td class="nm">RMK | MIX ABRIGOS | SEPT<small>FASE 3 FIDELIZAR · RMKT</small></td>
-  <td><span class="pill p-dim">Sin dato</span></td><td class="num">0,00</td><td class="num">$0</td>
-  <td class="num">0</td><td class="num">—</td><td class="num">$42.577</td>
-  <td class="num" style="color:var(--mut)">s/d</td>
-  <td class="num">—</td><td class="num">—</td><td><span class="pill p-warn">Sin entrega</span></td>
-</tr>
-<tr>
-  <td class="nm">TRAFICO WEB 2.0<small>CALENTAMIENTO WEB · costo por vista LP</small></td>
-  <td><span class="pill p-ok">Completo</span></td><td class="num">1,23</td><td class="num">$114.082</td>
-  <td class="num">2.449</td><td class="num">$47</td><td class="num">$52</td>
-  <td class="num" style="color:var(--ok)">91%<div class="bar"><i style="width:91%;background:var(--ok)"></i></div></td>
-  <td class="num">46,5%</td><td class="num">13,6%</td><td><span class="pill p-ok">OK</span></td>
-</tr>
-<tr>
-  <td class="nm">ADVANTAGE<small>FASE 1 · costo por visita a perfil IG</small></td>
-  <td><span class="pill p-dim">Sin dato</span></td><td class="num">1,19</td><td class="num">$45.613</td>
-  <td class="num">284</td><td class="num">$161</td><td class="num">$222</td>
-  <td class="num" style="color:var(--ok)">73%<div class="bar"><i style="width:73%;background:var(--ok)"></i></div></td>
-  <td class="num">94,6%</td><td class="num">9,9%</td><td><span class="pill p-ok">OK</span></td>
-</tr>
-<tr>
-  <td class="nm">Advantage · PROMT INDIRECTO<small>FASE 1 RECORDACIÓN · costo por ThruPlay</small></td>
-  <td><span class="pill p-dim">Sin dato</span></td><td class="num">1,03</td><td class="num">$54.815</td>
-  <td class="num">22.967</td><td class="num">$2</td><td class="num">$2</td>
-  <td class="num" style="color:var(--ok)">100%<div class="bar"><i style="width:100%;background:var(--ok)"></i></div></td>
-  <td class="num">98,5%</td><td class="num">48,1%</td><td><span class="pill p-ok">OK</span></td>
-</tr>
-</tbody>
-</table>
-</div>
+<!-- ============ RENDIMIENTO ============ -->
+<section role="tabpanel" id="tab-rend" class="on">
+  <h2>Alertas activas</h2>
+  <div class="alerts" id="alerts"></div>
 
-<div class="legend">
-  <span><i class="dot" style="background:var(--bad)"></i> Alerta: CPA &gt; 120% del promedio 30d de la campaña padre</span>
-  <span><i class="dot" style="background:var(--warn)"></i> Vigilar: entre 90% y 120%, frecuencia alta o sin conversión</span>
-  <span><i class="dot" style="background:var(--ok)"></i> OK: dentro de umbral</span>
-</div>
+  <h2>Conjuntos activos · últimos 7 días</h2>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Conjunto</th><th>Fase</th><th>Aprendizaje</th><th class="num">Frec.</th>
+    <th class="num">Presup./día</th><th class="num">Gasto 7d</th><th class="num">Result.</th>
+    <th class="num">Costo/result.</th><th class="num">vs. campaña</th><th class="num">Hook</th><th class="num">Hold</th>
+    <th>Acción</th></tr></thead>
+    <tbody id="tbody"></tbody>
+  </table>
+  </div>
+  <p class="note">Hook Rate = reproducciones de video ÷ impresiones (qué tanto detiene el scroll). Hold Rate = ThruPlays ÷ reproducciones (qué tanto retiene). Los conjuntos con “—” usan catálogo o imagen, sin métricas de video. La columna <b>vs. campaña</b> compara el costo por resultado de 7 días contra el promedio de 30 días de la campaña padre; se marca alerta por encima de 120%. Cada campaña se mide contra su propio objetivo — compras en F2 y F3, visitas y vistas de página en F1 — así que los porcentajes no son comparables entre fases.</p>
+  <p class="note"><b>Referencia de campañas (30 días).</b> FASE 3 FIDELIZAR $35.481/compra · FASE 2 SOLUCIONAR $48.213/compra · FASE 1 TRÁFICO $185/visita · CALENTAMIENTO WEB $43/vista LP · FASE 1 RECORDACIÓN $2/ThruPlay.</p>
+</section>
 
-<p class="note">
-<b>Definiciones.</b> Hook Rate = reproducciones de video ÷ impresiones (qué tanto detiene el scroll). Hold Rate = ThruPlays ÷ reproducciones (qué tanto retiene hasta el final). Los conjuntos con “—” usan formatos de catálogo o imagen sin métricas de video. El umbral se calcula sobre el <i>costo por resultado</i> de cada campaña padre en los últimos 30 días, respetando el objetivo propio de cada una: compras en Fase 2 y Fase 3, visitas a perfil y vistas de página en Fase 1, ThruPlay en recordación. Por eso los umbrales no son comparables entre fases.
-</p>
-<p class="note">
-<b>Referencia de campañas (30 días).</b> FASE 3 FIDELIZAR $35.481/compra · FASE 2 SOLUCIONAR $48.212/compra · F2 DPA PREMIUM $37.771/compra · FASE 1 TRÁFICO $185/visita · CALENTAMIENTO WEB $43/vista LP · FASE 1 RECORDACIÓN $2/ThruPlay.
-</p>
+<!-- ============ INVERSIÓN ============ -->
+<section role="tabpanel" id="tab-inv">
+  <h2>Inversión diaria por fase del embudo</h2>
+  <div class="card">
+    <div class="ctrls">
+      <div class="seg" role="group" aria-label="Rango">
+        <button data-range="7">7 días</button><button data-range="14">14 días</button><button data-range="30" aria-pressed="true">30 días</button>
+      </div>
+      <div class="legend" id="legend"></div>
+    </div>
+    <div class="chartbox">
+      <svg id="chart" viewBox="0 0 900 320" preserveAspectRatio="none" role="img" aria-label="Inversión diaria apilada por fase"></svg>
+      <div class="tip" id="tip"></div>
+    </div>
+  </div>
+
+  <h2>Embudo de inversión</h2>
+  <div class="card">
+    <svg id="funnel" viewBox="0 0 900 330" role="img" aria-label="Embudo de inversión por fase"></svg>
+    <p class="note" style="margin-bottom:0">El embudo está invertido: la fase más angosta es la de arriba. F1 recibe 7,2% de la inversión y sostiene todo lo que ocurre debajo. Un embudo sano se ensancha arriba, no abajo — F2 y F3 solo pueden convertir a quien F1 ya trajo.</p>
+  </div>
+</section>
+
+<!-- ============ CALENDARIO ============ -->
+<section role="tabpanel" id="tab-cal">
+  <h2>Calendario de inversión</h2>
+  <div class="card">
+    <p class="note" style="margin-top:0;margin-bottom:16px">Haz clic en cualquier día con gasto para marcarlo y dejar una nota — un cambio de presupuesto, una campaña nueva, un festivo, lo que necesites recordar. Las marcas se guardan en este navegador.</p>
+    <div class="cals" id="cals"></div>
+    <div class="editor" id="editor">
+      <div class="hd" id="edTitle"></div>
+      <div class="meta" id="edMeta"></div>
+      <div class="marks" id="edMarks"></div>
+      <textarea id="edNote" placeholder="Qué pasó ese día…"></textarea>
+      <div class="btns">
+        <button class="b pri" id="edSave">Guardar</button>
+        <button class="b del" id="edDel">Borrar marca</button>
+        <button class="b" id="edClose">Cerrar</button>
+      </div>
+    </div>
+    <div class="notelist" id="notelist"></div>
+  </div>
+</section>
+
+<!-- ============ TECHO ============ -->
+<section role="tabpanel" id="tab-techo">
+  <h2>Techo de gasto · saldo por pagar</h2>
+  <div class="card">
+    <label class="fld">Saldo por pagar según Facturación:
+      <input type="text" id="due" placeholder="0" inputmode="numeric">
+      <span>leído el</span><input type="date" id="dueDate" value="2026-09-04">
+    </label>
+    <div class="gauge"><i id="gbar"></i><div class="gline" style="left:80%"></div></div>
+    <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--mut)">
+      <span id="gtxt"></span><span>Techo $2.400.000</span>
+    </div>
+    <div id="galert" style="margin-top:16px"></div>
+    <p class="note" style="margin-bottom:0">Este saldo no viene de sumar el gasto diario — esa suma no coincide con lo que Meta cobra, porque el importe facturado se ajusta por créditos, impuestos y por el desfase entre el gasto reportado y el liquidado. El valor se toma de <b>Administrador de Anuncios → Facturación → Importe pendiente</b>. Escríbelo ahí y el medidor se recalcula.</p>
+  </div>
+</section>
 
 <footer>
-Datos leídos directamente del Administrador de Anuncios de Meta vía API. Un pico de un solo día no debe disparar decisiones: confirmar patrón de 3 días antes de escalar o pausar. Actualización automática programada todos los días a las 8:00 a.m. (Bogotá).
+Fuente: API de Meta Ads, lectura directa de la cuenta. El saldo por pagar se captura a mano desde Facturación (la API de Ads no lo expone). Reglas de alerta — <b>Pausar</b>: costo por resultado &gt; 120% del promedio 30d de la campaña padre, o gasto mayor a 1,5 veces ese promedio sin una sola conversión. <b>Bajar</b>: entre 100% y 120%, o frecuencia ≥ 2,0. <b>Escalar</b>: por debajo del 80% con frecuencia menor a 1,8. Un pico de un solo día no dispara decisiones: confirmar patrón de 3 días antes de mover presupuesto. Actualización automática todos los días a las 8:00 a.m. (Bogotá).
 </footer>
 </div>
+
+<script>
+const FMT=n=>'$'+Math.round(n).toLocaleString('es-CO');
+const FMTK=n=>n>=1e6?'$'+(n/1e6).toFixed(1)+'M':'$'+Math.round(n/1000)+'k';
+const DAILY=[
+["2026-08-05",31593,134720,158837],["2026-08-06",31873,109787,195816],["2026-08-07",28833,154512,211409],
+["2026-08-08",29867,112883,159321],["2026-08-09",34020,148892,209786],["2026-08-10",30966,126259,132991],
+["2026-08-11",30483,130471,176548],["2026-08-12",25564,121376,166946],["2026-08-13",28830,166830,237803],
+["2026-08-14",24259,139430,186206],["2026-08-15",27140,124571,168330],["2026-08-16",25459,128209,166209],
+["2026-08-17",28313,161118,213458],["2026-08-18",28013,140410,190872],["2026-08-19",28088,214501,158819],
+["2026-08-20",30598,230526,175144],["2026-08-21",26485,249167,194121],["2026-08-22",28873,236421,179950],
+["2026-08-23",32122,276725,199942],["2026-08-24",26724,217520,143009],["2026-08-25",27545,245776,139577],
+["2026-08-26",30397,255932,142525],["2026-08-27",30557,274256,181943],["2026-08-28",28813,274141,200548],
+["2026-08-29",27429,262156,163128],["2026-08-30",34705,313233,223566],["2026-08-31",28851,262994,175413],
+["2026-09-01",33867,331435,249849],["2026-09-02",34079,242488,210679],["2026-09-03",26768,184521,151301]];
+const SERIES=[{k:'F1',label:'F1 · Enganchar',hex:'#86b6ef',i:1},
+              {k:'F2',label:'F2 · Solucionar',hex:'#3987e5',i:2},
+              {k:'F3',label:'F3 · Fidelizar',hex:'#184f95',i:3}];
+const HEX={F1:'#86b6ef',F2:'#3987e5',F3:'#184f95'};
+const ADSETS=[
+ {n:'F2 GANADORES',f:'F2',ap:'FAIL',b:100000,s:706062,r:16,cpa:44129,base:48213,u:'compras',fr:1.71,hook:null,hold:null,note:''},
+ {n:'RMK | CATALOGO DPA 2.0',f:'F3',ap:'SUCCESS',b:70500,s:490917,r:4,cpa:122729,base:35481,u:'compras',fr:1.92,hook:null,hold:null,note:''},
+ {n:'RMK | MIX NIÑO NIÑA 2.0',f:'F3',ap:null,b:62166,s:426154,r:16,cpa:26635,base:35481,u:'compras',fr:2.35,hook:0.4,hold:15.7,note:''},
+ {n:'TESTEO 1',f:'F2',ap:null,b:40000,s:235575,r:3,cpa:78525,base:48213,u:'compras',fr:1.41,hook:56.4,hold:5.2,note:''},
+ {n:'TESTEO 2 ONLY IG',f:'F2',ap:null,b:40000,s:70855,r:0,cpa:null,base:48213,u:'compras',fr:1.22,hook:77.6,hold:4.8,note:''},
+ {n:'RMK | MIX CONJUNTOS | SEPT',f:'F3',ap:'LEARNING',b:20000,s:40075,r:1,cpa:40075,base:35481,u:'compras',fr:1.24,hook:51.4,hold:8.3,note:''},
+ {n:'RMK | MIX BUZOS | SEPT',f:'F3',ap:'LEARNING',b:20000,s:32106,r:0,cpa:null,base:35481,u:'compras',fr:1.37,hook:67.4,hold:9.5,note:''},
+ {n:'RMK | MIX CHAQUETAS | SEPT',f:'F3',ap:null,b:20000,s:31527,r:1,cpa:31527,base:35481,u:'compras',fr:1.35,hook:86.7,hold:8.1,note:''},
+ {n:'RMK | MIX ABRIGOS | SEPT',f:'F3',ap:null,b:20000,s:0,r:0,cpa:null,base:35481,u:'compras',fr:0,hook:null,hold:null,note:'sin entrega'},
+ {n:'TRAFICO WEB 2.0',f:'F1',ap:'SUCCESS',b:16000,s:114083,r:2449,cpa:47,base:43,u:'vistas LP',fr:1.23,hook:46.5,hold:13.6,note:''},
+ {n:'ADVANTAGE (visitas perfil)',f:'F1',ap:null,b:8000,s:45616,r:284,cpa:161,base:185,u:'visitas',fr:1.19,hook:94.6,hold:9.9,note:''},
+ {n:'Advantage · PROMT INDIRECTO',f:'F1',ap:null,b:6400,s:54815,r:22967,cpa:2,base:2,u:'ThruPlays',fr:1.03,hook:98.5,hold:48.1,note:''}];
+const MARKS=[{k:'ajuste',label:'Ajuste de presupuesto',c:'#ff9f0a'},
+             {k:'lanzamiento',label:'Lanzamiento',c:'#bf5af2'},
+             {k:'nota',label:'Nota',c:'#30d158'}];
+const MAP={}; DAILY.forEach(d=>MAP[d[0]]=d);
+let range=30, off={F1:true,F2:true,F3:true};
+
+/* pestañas */
+document.querySelectorAll('.tabs button').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('.tabs button').forEach(o=>o.setAttribute('aria-selected',o===b));
+    document.querySelectorAll('section[role=tabpanel]').forEach(s=>s.classList.toggle('on',s.id==='tab-'+b.dataset.tab));
+    if(b.dataset.tab==='inv') draw();
+  };
+});
+
+/* almacenamiento tolerante */
+const store={
+  get(){ try{ return JSON.parse(localStorage.getItem('bk_meta_marcas')||'{}'); }catch(e){ return {}; } },
+  set(v){ try{ localStorage.setItem('bk_meta_marcas',JSON.stringify(v)); }catch(e){} }
+};
+let marcas=store.get();
+
+/* leyenda */
+const legend=document.getElementById('legend');
+SERIES.forEach(s=>{
+  const b=document.createElement('button');
+  b.className='lg'; b.setAttribute('aria-pressed','true');
+  b.innerHTML=`<i style="background:${s.hex}"></i>${s.label} <span class="pct" data-pct="${s.k}"></span>`;
+  b.onclick=()=>{ off[s.k]=!off[s.k]; b.setAttribute('aria-pressed',off[s.k]); draw(); };
+  legend.appendChild(b);
+});
+
+/* barras diarias */
+const svg=document.getElementById('chart'), tip=document.getElementById('tip');
+const W=900,H=320,PL=58,PR=12,PT=14,PB=34;
+function draw(){
+  const data=DAILY.slice(-range), n=data.length;
+  const act=SERIES.filter(s=>off[s.k]);
+  const max=Math.max(...data.map(d=>act.reduce((a,s)=>a+d[s.i],0)),1);
+  const top=Math.ceil(max/100000)*100000, iw=W-PL-PR, ih=H-PT-PB;
+  const step=iw/n, bw=Math.max(3,step-(n>20?3:6)), y=v=>PT+ih-(v/top)*ih;
+  let g='';
+  for(let i=0;i<=4;i++){ const v=top*i/4, yy=y(v);
+    g+=`<line x1="${PL}" x2="${W-PR}" y1="${yy}" y2="${yy}" stroke="var(--grid)" stroke-width="1"/>`;
+    g+=`<text x="${PL-10}" y="${yy+4}" text-anchor="end" fill="var(--dim)" font-size="10.5" font-family="Manrope">${FMTK(v)}</text>`; }
+  data.forEach((d,i)=>{
+    const x=PL+i*step+(step-bw)/2; let acc=0;
+    act.forEach(s=>{ const v=d[s.i]; if(v<=0)return;
+      const h=(v/top)*ih-2; if(h<=0)return;
+      g+=`<rect x="${x}" y="${y(acc+v)}" width="${bw}" height="${Math.max(h,1)}" fill="${s.hex}" rx="2"/>`; acc+=v; });
+    if(n<=14||i%Math.ceil(n/10)===0)
+      g+=`<text x="${x+bw/2}" y="${H-12}" text-anchor="middle" fill="var(--dim)" font-size="10" font-family="Manrope">${d[0].slice(8)}/${d[0].slice(5,7)}</text>`;
+    g+=`<rect class="hit" data-i="${i}" x="${PL+i*step}" y="${PT}" width="${step}" height="${ih}" fill="transparent"/>`;
+  });
+  svg.innerHTML=g;
+  svg.querySelectorAll('.hit').forEach(r=>{
+    r.onmouseenter=()=>show(+r.dataset.i,data);
+    r.onmousemove=e=>place(e);
+    r.onmouseleave=()=>tip.style.opacity=0;
+  });
+  const tot={F1:0,F2:0,F3:0}; data.forEach(d=>SERIES.forEach(s=>tot[s.k]+=d[s.i]));
+  const sum=tot.F1+tot.F2+tot.F3;
+  SERIES.forEach(s=>document.querySelector(`[data-pct="${s.k}"]`).textContent=(tot[s.k]/sum*100).toFixed(1)+'%');
+  drawFunnel(tot,sum,data.length);
+}
+function show(i,data){
+  const d=data[i]; let h=`<h4>${new Date(d[0]+'T12:00').toLocaleDateString('es-CO',{weekday:'short',day:'numeric',month:'short'})}</h4>`,t=0;
+  SERIES.forEach(s=>{ if(!off[s.k])return; t+=d[s.i];
+    h+=`<div class="r"><i style="background:${s.hex}"></i>${s.k}<b>${FMT(d[s.i])}</b></div>`; });
+  h+=`<div class="tot">Total<b>${FMT(t)}</b></div>`; tip.innerHTML=h; tip.style.opacity=1;
+}
+function place(e){
+  const box=svg.parentElement.getBoundingClientRect();
+  let x=e.clientX-box.left+14;
+  if(x+195>box.width) x=e.clientX-box.left-195;
+  tip.style.left=x+'px'; tip.style.top=Math.max(0,e.clientY-box.top-10)+'px';
+}
+document.querySelectorAll('.seg button').forEach(b=>{
+  b.onclick=()=>{ document.querySelectorAll('.seg button').forEach(o=>o.setAttribute('aria-pressed','false'));
+    b.setAttribute('aria-pressed','true'); range=+b.dataset.range; draw(); };
+});
+
+/* embudo */
+function drawFunnel(tot,sum,nd){
+  const BAND=88, GAP=8, X=560, MAXW=440, LEFT=300;
+  const max=Math.max(tot.F1,tot.F2,tot.F3), w=k=>Math.max((tot[k]/max)*MAXW,60);
+  let g='', y=18;
+  SERIES.forEach((s,idx)=>{
+    const wTop=w(s.k), wBot=idx<2?w(SERIES[idx+1].k):wTop*0.72, yb=y+BAND;
+    g+=`<path d="M ${X-wTop/2} ${y} L ${X+wTop/2} ${y} L ${X+wBot/2} ${yb} L ${X-wBot/2} ${yb} Z" fill="${s.hex}"/>`;
+    g+=`<text x="${LEFT-24}" y="${y+BAND/2-4}" text-anchor="end" fill="var(--txt)" font-size="14" font-weight="700" font-family="Manrope">${s.label}</text>`;
+    g+=`<text x="${LEFT-24}" y="${y+BAND/2+16}" text-anchor="end" fill="var(--mut)" font-size="12" font-family="Manrope">${FMT(tot[s.k]/nd)} / día</text>`;
+    g+=`<text x="${X}" y="${y+BAND/2+2}" text-anchor="middle" fill="#fff" font-size="17" font-weight="800" font-family="Manrope">${FMT(tot[s.k])}</text>`;
+    g+=`<text x="${X}" y="${y+BAND/2+21}" text-anchor="middle" fill="rgba(255,255,255,.75)" font-size="12" font-weight="600" font-family="Manrope">${(tot[s.k]/sum*100).toFixed(1)}%</text>`;
+    y=yb+GAP;
+  });
+  g+=`<text x="${X}" y="${y+22}" text-anchor="middle" fill="var(--mut)" font-size="12" font-family="Manrope">Total ${nd} días · ${FMT(sum)}</text>`;
+  document.getElementById('funnel').innerHTML=g;
+}
+
+/* calendario */
+const DOW=['L','M','X','J','V','S','D'];
+function buildCals(){
+  const meses={};
+  DAILY.forEach(d=>{ const m=d[0].slice(0,7); (meses[m]=meses[m]||[]).push(d[0]); });
+  const maxSpend=Math.max(...DAILY.map(d=>d[1]+d[2]+d[3]));
+  document.getElementById('cals').innerHTML=Object.keys(meses).sort().map(m=>{
+    const [Y,M]=m.split('-').map(Number);
+    const first=new Date(Y,M-1,1), dim=new Date(Y,M,0).getDate();
+    let lead=(first.getDay()+6)%7, cells='';
+    for(let i=0;i<lead;i++) cells+='<div class="day empty"></div>';
+    for(let d=1;d<=dim;d++){
+      const key=`${Y}-${String(M).padStart(2,'0')}-${String(d).padStart(2,'0')}`, row=MAP[key];
+      if(!row){ cells+=`<div class="day"><div class="n">${d}</div></div>`; continue; }
+      const t=row[1]+row[2]+row[3];
+      const bar=SERIES.map(s=>`<i style="width:${(row[s.i]/t*100).toFixed(1)}%;background:${s.hex}"></i>`).join('');
+      const mk=marcas[key];
+      const flag=mk?`<div class="flag" style="background:${(MARKS.find(x=>x.k===mk.tipo)||MARKS[2]).c}"></div>`:'';
+      const alpha=(0.10+0.28*(t/maxSpend)).toFixed(2);
+      cells+=`<div class="day has" data-k="${key}" style="background:rgba(57,135,229,${alpha})">
+        <div class="n">${d}</div>${flag}<div class="s">${FMTK(t)}</div><div class="bar">${bar}</div></div>`;
+    }
+    return `<div class="cal"><h3>${first.toLocaleDateString('es-CO',{month:'long',year:'numeric'})}</h3>
+      <div class="dow">${DOW.map(x=>`<span>${x}</span>`).join('')}</div><div class="days">${cells}</div></div>`;
+  }).join('');
+  document.querySelectorAll('.day.has').forEach(el=>el.onclick=()=>abrir(el.dataset.k));
+  renderNotas();
+}
+let sel=null, selTipo='nota';
+const ed=document.getElementById('editor');
+function abrir(k){
+  sel=k; const row=MAP[k], t=row[1]+row[2]+row[3], m=marcas[k];
+  selTipo=m?m.tipo:'nota';
+  document.getElementById('edTitle').textContent=
+    new Date(k+'T12:00').toLocaleDateString('es-CO',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('edMeta').innerHTML=
+    `Inversión <b style="color:var(--txt)">${FMT(t)}</b> · F1 ${FMT(row[1])} · F2 ${FMT(row[2])} · F3 ${FMT(row[3])}`;
+  document.getElementById('edMarks').innerHTML=MARKS.map(x=>
+    `<button class="mk" data-t="${x.k}" aria-pressed="${x.k===selTipo}"><i style="background:${x.c}"></i>${x.label}</button>`).join('');
+  document.querySelectorAll('.mk').forEach(b=>b.onclick=()=>{
+    selTipo=b.dataset.t;
+    document.querySelectorAll('.mk').forEach(o=>o.setAttribute('aria-pressed',o.dataset.t===selTipo));
+  });
+  document.getElementById('edNote').value=m?m.nota:'';
+  ed.classList.add('on');
+  document.querySelectorAll('.day').forEach(d=>d.classList.toggle('sel',d.dataset.k===k));
+  ed.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+document.getElementById('edSave').onclick=()=>{ if(!sel)return;
+  marcas[sel]={tipo:selTipo,nota:document.getElementById('edNote').value.trim()};
+  store.set(marcas); cerrar(); buildCals(); };
+document.getElementById('edDel').onclick=()=>{ if(!sel)return; delete marcas[sel]; store.set(marcas); cerrar(); buildCals(); };
+document.getElementById('edClose').onclick=cerrar;
+function cerrar(){ ed.classList.remove('on'); sel=null; document.querySelectorAll('.day').forEach(d=>d.classList.remove('sel')); }
+function renderNotas(){
+  const ks=Object.keys(marcas).sort().reverse();
+  document.getElementById('notelist').innerHTML=ks.map(k=>{
+    const m=marcas[k], c=(MARKS.find(x=>x.k===m.tipo)||MARKS[2]);
+    return `<div class="nt"><i style="background:${c.c}"></i><div class="d">${k.slice(8)}/${k.slice(5,7)}</div>
+      <div><b>${c.label}</b>${m.nota?' — '+m.nota.replace(/</g,'&lt;'):''}</div></div>`;
+  }).join('');
+}
+
+/* techo */
+const LIM=2400000, due=document.getElementById('due');
+const parseNum=s=>{ const d=String(s).replace(/[^0-9]/g,''); return d?+d:0; };
+function credito(){
+  const v=parseNum(due.value), pct=Math.min(v/LIM*100,100), rate=423066;
+  const falta=LIM-v, dias=falta>0?falta/rate:0;
+  const col=v===0?'var(--mut)':pct>=100?'var(--bad)':pct>=80?'var(--warn)':'var(--ok)';
+  const bar=document.getElementById('gbar'); bar.style.width=pct+'%'; bar.style.background=col;
+  document.getElementById('gtxt').innerHTML=v===0?'Sin dato — escribe el importe pendiente':
+    `<b style="color:${col}">${FMT(v)}</b> por pagar · ${pct.toFixed(0)}% del techo`;
+  let al;
+  if(v===0) al={c:'info',ic:'⚪',t:'Falta el dato de facturación',
+    m:'Abre <b>Administrador de Anuncios → Facturación</b>, copia el <b>importe pendiente</b> y escríbelo arriba. El medidor no inventa el saldo a partir del gasto diario porque ese número no coincide con lo que Meta cobra.'};
+  else if(pct>=100) al={c:'bad',ic:'🔴',t:'Techo superado',
+    m:`<b>${FMT(v)}</b> por pagar sobre un techo de ${FMT(LIM)}. Meta debió generar el cobro; si no entró, la cuenta puede quedar suspendida. Verifica el medio de pago hoy.`};
+  else if(pct>=80) al={c:'warn',ic:'🟡',t:'Techo por alcanzarse',
+    m:`<b>${FMT(v)}</b> por pagar (${pct.toFixed(0)}%). Al ritmo de $423.066/día quedan <b>${dias.toFixed(1)} días</b> antes del cobro. Asegura fondos en el medio de pago.`};
+  else al={c:'ok',ic:'🟢',t:'Techo con margen',
+    m:`<b>${FMT(v)}</b> por pagar (${pct.toFixed(0)}%). Al ritmo de $423.066/día quedan <b>${dias.toFixed(1)} días</b> antes de tocar el techo.`};
+  document.getElementById('galert').innerHTML=
+    `<div class="al ${al.c}"><div class="ic">${al.ic}</div><div class="bd"><div class="t">${al.t}</div><div class="m">${al.m}</div></div></div>`;
+}
+due.oninput=()=>{ const p=parseNum(due.value); due.value=p?p.toLocaleString('es-CO'):''; credito(); };
+
+/* alertas */
+function evaluar(a){
+  if(a.b===0||a.s===0) return {k:'revisar',w:'warn',ic:'⚪',t:'Sin entrega',
+    m:`Activo con presupuesto de <b>${FMT(a.b)}/día</b> pero 0 gasto en 7 días. Revisa entrega, superposición de audiencias o rechazo de anuncios.`};
+  if(a.cpa===null){
+    if(a.s>a.base*1.5) return {k:'pausar',w:'bad',ic:'🔴',t:'Gasto sin conversión',
+      m:`<b>${FMT(a.s)}</b> gastados sin una sola conversión. Ya superaste 1,5 veces el costo objetivo de la campaña (${FMT(a.base)}).`};
+    return {k:'revisar',w:'warn',ic:'⚪',t:'Aún sin conversión',
+      m:`<b>${FMT(a.s)}</b> gastados, todavía por debajo del umbral de decisión (${FMT(a.base*1.5)}). Dale margen.`};
+  }
+  const r=a.cpa/a.base;
+  if(r>1.2) return {k:'pausar',w:'bad',ic:'🔴',t:'Costo fuera de umbral',
+    m:`${FMT(a.cpa)} por resultado contra ${FMT(a.base)} de la campaña (<b>${(r*100).toFixed(0)}%</b>). Pausar o reconstruir con método relevo.`};
+  if(a.fr>=2.0) return {k:'bajar',w:'warn',ic:'🟡',t:'Frecuencia saturada',
+    m:`Frecuencia <b>${a.fr.toFixed(2)}</b>. El costo aún rinde (${(r*100).toFixed(0)}% del umbral) pero la audiencia se está quemando: renueva creativo antes de que suba.`};
+  if(r>1.0) return {k:'bajar',w:'warn',ic:'🟡',t:'Costo por encima del promedio',
+    m:`${(r*100).toFixed(0)}% del costo de su campaña. Bajar presupuesto ~20% (a ${FMT(a.b*0.8)}/día) y revisar en 3 días.`};
+  if(r<0.8&&a.fr<1.8) return {k:'escalar',w:'ok',ic:'🟢',t:'Espacio para escalar',
+    m:`${(r*100).toFixed(0)}% del costo de su campaña con frecuencia ${a.fr.toFixed(2)}. Subir presupuesto 20-30% (a ${FMT(a.b*1.25)}/día), un solo cambio por semana.`};
+  return {k:'ok',w:'ok',ic:'🟢',t:'En rango',m:`${(r*100).toFixed(0)}% del costo de su campaña. Sin acción.`};
+}
+const ORD={pausar:0,bajar:1,revisar:2,escalar:3,ok:4};
+const evals=ADSETS.map(a=>({a,e:evaluar(a)})).sort((x,y)=>ORD[x.e.k]-ORD[y.e.k]);
+const abiertas=evals.filter(v=>v.e.k!=='ok'&&v.e.k!=='escalar').length;
+document.getElementById('kAlert').textContent=abiertas;
+document.getElementById('cntRend').textContent=abiertas;
+document.getElementById('alerts').innerHTML=evals.filter(v=>v.e.k!=='ok').map(v=>
+  `<div class="al ${v.e.w}"><div class="ic">${v.e.ic}</div><div class="bd">
+    <div class="t">${v.a.n} — ${v.e.t}</div><div class="m">${v.e.m}</div></div>
+   <div class="act ${v.e.k}">${v.e.k}</div></div>`).join('')
+  ||'<div class="al ok"><div class="ic">🟢</div><div class="bd"><div class="t">Sin alertas</div><div class="m">Todos los conjuntos dentro de rango.</div></div></div>';
+const AP={FAIL:['p-bad','Limitado'],LEARNING:['p-warn','Aprendizaje'],SUCCESS:['p-ok','Completo']};
+document.getElementById('tbody').innerHTML=evals.map(({a,e})=>{
+  const r=a.cpa!==null?a.cpa/a.base:null;
+  const col=r===null?'var(--mut)':r>1.2?'var(--bad)':r>1?'var(--warn)':'var(--ok)';
+  const ap=AP[a.ap]||['p-dim','Sin dato'];
+  return `<tr><td class="nm">${a.n}${a.note?`<div style="color:var(--dim);font-weight:400;font-size:11px;margin-top:3px">${a.note}</div>`:''}</td>
+    <td><span class="tag" style="background:${HEX[a.f]}"></span>${a.f}</td>
+    <td><span class="pill ${ap[0]}">${ap[1]}</span></td>
+    <td class="num"${a.fr>=2?' style="color:var(--warn);font-weight:700"':''}>${a.fr?a.fr.toFixed(2):'—'}</td>
+    <td class="num">${a.b?FMT(a.b):'—'}</td><td class="num">${FMT(a.s)}</td>
+    <td class="num">${a.r.toLocaleString('es-CO')}</td>
+    <td class="num">${a.cpa!==null?FMT(a.cpa):'—'}</td>
+    <td class="num" style="color:${col};font-weight:700">${r!==null?(r*100).toFixed(0)+'%':'s/d'}</td>
+    <td class="num">${a.hook!==null?a.hook.toFixed(1)+'%':'—'}</td>
+    <td class="num">${a.hold!==null?a.hold.toFixed(1)+'%':'—'}</td>
+    <td><span class="act ${e.k}">${e.k}</span></td></tr>`;
+}).join('');
+
+draw(); buildCals(); credito();
+</script>
 </body>
 </html>
