@@ -7538,11 +7538,43 @@ function crearOpDesdeDiseno(id){
   }, 200);
 }
 
+function _opToggleVincDiseno(checked){
+  var wrap = document.getElementById('op-vinc-diseno-wrap');
+  if(wrap) wrap.style.display = checked ? 'block' : 'none';
+  if(!checked){
+    _opDesdeDisenoId = null;
+    var sel = document.getElementById('op-vinc-diseno-sel');
+    if(sel) sel.value = '';
+  }
+}
+function _opAplicarDisenoSeleccionado(disId){
+  if(!disId){ _opDesdeDisenoId = null; return; }
+  var d = (DB.disenos||[]).find(function(x){ return x.id===disId; });
+  if(!d) return;
+  _opDesdeDisenoId = disId;
+  if(!_opRefs.length) return;
+  var rid = _opRefs[0].rid;
+  var r = _opRefs[0];
+  var elNombre = document.getElementById('ref-nom-'+rid);
+  var elCat = document.getElementById('ref-cat-'+rid);
+  if(elNombre && d.nombre){ elNombre.value = (d.nombre||'').toUpperCase(); r.nombre = (d.nombre||'').toUpperCase(); }
+  if(elCat && d.categoria){
+    var opts = Array.from(elCat.options);
+    var match = opts.find(function(o){ return o.value.toUpperCase()===(d.categoria||'').toUpperCase(); });
+    if(match){ elCat.value = match.value; r.cat = match.value; }
+  }
+  if(d.colores_escogidos && d.colores_escogidos.length){
+    r.colores = d.colores_escogidos.map(function(c){ return (c.nombre||'').toUpperCase(); });
+    opRefRenderColorTags(rid); opRefGenTabla(rid);
+  }
+  opRefPreviewUpdate();
+  toast('Diseño vinculado — se prellenaron nombre y categoría', 'success');
+}
 function mostrarFormNuevaOP(){
   _opRefsInit();
   openModal('CREAR ORDEN DE PRODUCCIÓN', _buildFormNuevaOP(), '', {wide:true});
 }
-function cerrarFormNuevaOP(){ closeModal(); }
+function cerrarFormNuevaOP(){ _opDesdeDisenoId = null; closeModal(); }
 
 function verDetalleOP(opId){
   _opDetalleId = opId;
@@ -8858,6 +8890,24 @@ function _buildFormNuevaOP(){
   h += '<div class="form-group"><label class="form-label">Número OP</label><input class="form-control" type="number" id="op-num" value="'+nextOPNum()+'"></div>';
   h += '</div>';
   h += '<div class="form-group"><label class="form-label">Cortador *</label><select class="form-control" id="op-cortador"><option value="">Seleccionar...</option>'+CORTADORES.map(function(c){ return '<option'+(c==='Corte Carbajal'?' selected':'')+'>'+c+'</option>'; }).join('')+'</select></div>';
+  // Vincular a un diseño ya en "Lista para Producción" — para OPs que se crean desde acá
+  // (no desde el botón del diseño) y así no se queden huérfanas en Diseño esperando a que el
+  // nombre coincida exacto con lo que se escriba en "Referencia 1".
+  h += '<div class="form-group" style="background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.2);border-radius:8px;padding:10px 12px;">';
+  h += '<label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin:0;">';
+  h += '<input type="checkbox" id="op-vinc-diseno-chk" onchange="_opToggleVincDiseno(this.checked)">';
+  h += '<span style="font-size:12px;font-weight:600;color:#e2e8f0;">🎨 Vincular a un diseño que ya está en "Lista para Producción"</span>';
+  h += '</label>';
+  h += '<div id="op-vinc-diseno-wrap" style="display:none;margin-top:8px;">';
+  var _disenosListos = (DB.disenos||[]).filter(function(d){ return !d.eliminado && d.kanban_estado==='LISTA_PRODUCCION'; }).sort(function(a,b){ return (a.nombre||'').localeCompare(b.nombre||''); });
+  h += '<select class="form-control" id="op-vinc-diseno-sel" onchange="_opAplicarDisenoSeleccionado(this.value)"><option value="">Selecciona un diseño...</option>';
+  _disenosListos.forEach(function(d){ h += '<option value="'+d.id+'">'+esc(d.nombre)+' ('+esc(d.categoria||'')+')</option>'; });
+  h += '</select>';
+  h += _disenosListos.length
+    ? '<div style="font-size:10px;color:#64748b;margin-top:4px;">Al elegir un diseño se prellenan nombre y categoría, y esta OP queda enlazada automáticamente — así ya no aparece como pendiente en Diseño.</div>'
+    : '<div style="font-size:10px;color:#64748b;margin-top:4px;">No hay diseños en "Lista para Producción" en este momento.</div>';
+  h += '</div>';
+  h += '</div>';
   h += '<div class="sep"></div>';
   // Bloques de referencia
   h += '<div id="op-refs-container">';
@@ -9938,7 +9988,7 @@ function renderDiseno(){
         h += '</select>';
         var nCom2=(d.comentarios||[]).length;
         h += '<button data-id="'+d.id+'" onclick="event.stopPropagation();abrirComentariosDiseno(this.dataset.id)" style="position:relative;display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.3);border-radius:5px;cursor:pointer;color:#818cf8;font-size:12px;padding:0;line-height:1;flex-shrink:0;" title="Comentarios">💬'+(nCom2?'<span style="position:absolute;top:-4px;right:-4px;background:#6366f1;color:#fff;border-radius:8px;font-size:8px;font-weight:700;min-width:13px;height:13px;display:flex;align-items:center;justify-content:center;padding:0 2px;">'+nCom2+'</span>':'')+'</button>';
-        h += '<button data-id="'+d.id+'" onclick="event.stopPropagation();quitarDisenoListaProd(this.dataset.id)" title="Ya tiene OP — quitar de lista" style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);border-radius:5px;cursor:pointer;color:#f87171;font-size:12px;padding:0;line-height:1;flex-shrink:0;">✕</button>';
+        h += '<button data-id="'+d.id+'" onclick="event.stopPropagation();quitarDisenoListaProd(this.dataset.id)" title="Ya tiene OP — vincular" style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);border-radius:5px;cursor:pointer;color:#f87171;font-size:12px;padding:0;line-height:1;flex-shrink:0;">🔗</button>';
         h += '</div>';
         h += '</div></div>';
         return;
@@ -10395,13 +10445,71 @@ function moverDisenoAProduccion(id){
   d.kanban_estado = 'LISTA_PRODUCCION';
   guardarDisenos(); renderPage('diseno');
 }
+// Antes esto solo marcaba el diseño como eliminado sin enlazarlo a nada — si la OP se había
+// creado a mano (sin pasar por "Crear OP desde diseño"), el vínculo diseno_origen_id/_op_origen
+// nunca quedaba registrado. Ahora se elige explícitamente CUÁL OP es, para que ambos registros
+// queden enlazados de verdad (y no dependa de que el nombre haya quedado idéntico).
 function quitarDisenoListaProd(id){
   var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
   if(!d) return;
-  if(!confirm('"'+d.nombre+'" — ¿confirmas que ya tiene OP creada y quieres quitarla de esta lista?')) return;
+  var nombreUp = (d.nombre||'').trim().toUpperCase();
+  var ops = (DB.ops||[]).filter(function(o){ return o.estado_op!=='ARCHIVADO'; }).sort(function(a,b){
+    var am = (a.nombre_producto||'').trim().toUpperCase()===nombreUp ? 0 : 1;
+    var bm = (b.nombre_producto||'').trim().toUpperCase()===nombreUp ? 0 : 1;
+    if(am!==bm) return am-bm;
+    return (b.numero||0)-(a.numero||0);
+  });
+  var body = '<div style="font-size:12px;color:#94a3b8;margin-bottom:12px;">Selecciona la OP que ya se creó para "<b style="color:#e2e8f0;">'+esc(d.nombre)+'</b>" — al enlazarlas, el diseño sale de "Lista para Producción" y queda registrado como el origen de esa OP.</div>';
+  body += '<input type="text" id="quitardis-buscar" placeholder="🔍 Buscar OP o referencia..." oninput="_filtrarQuitarDisOps(this.value)" style="width:100%;box-sizing:border-box;background:#0d1117;border:1px solid #2c2c2e;border-radius:8px;color:#e2e8f0;padding:8px 12px;font-size:13px;margin-bottom:10px;">';
+  if(!ops.length){
+    body += '<div style="text-align:center;padding:20px;color:#475569;font-size:12px;">No hay OPs activas para vincular.</div>';
+  } else {
+    body += '<div id="quitardis-lista" style="max-height:320px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;">';
+    ops.forEach(function(op){
+      var match = (op.nombre_producto||'').trim().toUpperCase()===nombreUp;
+      body += '<div class="qd-item" data-search="'+esc((fmtOpId(op.id)+' '+(op.nombre_producto||'')).toUpperCase())+'" data-opid="'+op.id+'" data-disid="'+id+'" onclick="_confirmarVincularOP(this.dataset.opid,this.dataset.disid)" style="cursor:pointer;padding:8px 12px;background:'+(match?'rgba(52,211,153,.08)':'#0d1117')+';border:1px solid '+(match?'rgba(52,211,153,.35)':'#2c2c2e')+';border-radius:7px;display:flex;justify-content:space-between;align-items:center;">';
+      body += '<div><span style="font-weight:700;color:var(--accent);font-size:12px;">'+esc(fmtOpId(op.id))+'</span> <span style="color:#e2e8f0;font-size:12px;">'+esc(op.nombre_producto||'')+'</span> <span style="color:#64748b;font-size:10px;">'+esc(op.categoria||'')+'</span></div>';
+      if(match) body += '<span style="font-size:9px;color:#34d399;font-weight:700;">✓ MISMO NOMBRE</span>';
+      body += '</div>';
+    });
+    body += '</div>';
+  }
+  body += '<div style="margin-top:14px;padding-top:10px;border-top:1px solid #2c2c2e;text-align:center;">';
+  body += '<button data-id="'+id+'" onclick="_quitarDisenoSinVincular(this.dataset.id)" style="background:none;border:none;color:#64748b;font-size:11px;cursor:pointer;text-decoration:underline;">No tiene OP — solo quitar de la lista</button>';
+  body += '</div>';
+  var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>';
+  openModal('🔗 Vincular "'+esc(d.nombre)+'" a una OP', body, footer, {wide:true});
+  setTimeout(function(){ var el=document.getElementById('quitardis-buscar'); if(el) el.focus(); },100);
+}
+function _filtrarQuitarDisOps(q){
+  q=(q||'').trim().toUpperCase();
+  document.querySelectorAll('.qd-item').forEach(function(el){
+    el.style.display = (!q || (el.dataset.search||'').indexOf(q)>=0) ? '' : 'none';
+  });
+}
+async function _confirmarVincularOP(opId, disId){
+  var op = (DB.ops||[]).find(function(o){ return o.id===opId; });
+  var d = (DB.disenos||[]).find(function(x){ return x.id===disId; });
+  if(!op || !d) return;
+  d.eliminado = true;
+  d._op_origen = opId;
+  op.diseno_origen_id = d.id;
+  op.diseno_origen_nombre = d.nombre;
+  saveLocal();
+  var ok1 = await guardarArchivo('disenos', {disenos: DB.disenos, disenos_cfg: DB.disenos_cfg});
+  var ok2 = await guardarArchivo('ops', {ops: DB.ops});
+  closeModal();
+  if(ok1 && ok2) toast('"'+d.nombre+'" enlazado con '+fmtOpId(opId), 'success');
+  renderPage('diseno');
+}
+function _quitarDisenoSinVincular(id){
+  var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
+  if(!d) return;
+  if(!confirm('"'+d.nombre+'" — ¿confirmas quitarla de la lista sin enlazarla a ninguna OP?')) return;
   d.eliminado = true;
   d._quitado_manual = true;
   guardarArchivo('disenos', {disenos: DB.disenos, disenos_cfg: DB.disenos_cfg});
+  closeModal();
   toast('"'+d.nombre+'" quitado de Lista para Producción', 'success');
   renderPage('diseno');
 }
