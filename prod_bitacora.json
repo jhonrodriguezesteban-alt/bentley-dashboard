@@ -14990,16 +14990,27 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1788531017445_2move",
-      "ts": 1788531017445,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782165786544_6e86om29m",
-      "nombre": "PANTALON POLLY",
       "categoria": "Pantalones",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1782165786544_6e86om29m",
       "estado_anterior": "EN_REVISION_GERENCIA",
-      "estado_nuevo": "LISTA_PRODUCCION"
+      "estado_nuevo": "LISTA_PRODUCCION",
+      "id": "evt_1788531017445_2move",
+      "marca": "Bentley Kids",
+      "nombre": "PANTALON POLLY",
+      "tipo": "estado_diseno",
+      "ts": 1788531017445,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1788531028433_79trh",
+      "ts": 1788531028433,
+      "user": "Isabel",
+      "tipo": "diseno_responsable",
+      "diseno_id": "id_1782165545751_7o1s2haz5",
+      "nombre": "BLUSA POLLY",
+      "categoria": "Blusas",
+      "resp_anterior": "John",
+      "resp_nuevo": "Carolina"
     }
   ]
 }
