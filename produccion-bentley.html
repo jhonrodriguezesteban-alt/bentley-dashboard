@@ -7804,13 +7804,14 @@ function renderOPDetalle(opId){
   return h;
 }
 
-// Insumos "de rutina": empaque, marquillas y etiquetado siempre se piden junto con la OP
-// y el servicio de confección/maquila se rastrea aparte en Pagos (costos_mo) — así que estos
-// ítems arrancan marcados por defecto en el checklist para que Paola no tenga que tildarlos
-// a mano cada vez; igual se pueden desmarcar si en un caso puntual faltara alguno.
+// Insumos "de rutina": empaque, marquillas y etiquetado siempre se piden junto con la OP,
+// así que arrancan marcados por defecto en el checklist para que Paola no tenga que
+// tildarlos a mano cada vez (igual se pueden desmarcar si en un caso puntual falta alguno).
+// Los SERVICIO (confección, bordado, tejeduría, acolchado, etc.) NO van acá — son externos
+// y se pagan conforme avanza la prenda, así que se marcan solo cuando de verdad ya salió de
+// ese proceso, no de entrada.
 var _INV_FAMILIAS_SIEMPRE = ['Material de empaque','Marquilla','Rotulado/ Etiquetado'];
 function _invSiempreDisponible(tipo, familia){
-  if(tipo==='SERVICIO') return true;
   return _INV_FAMILIAS_SIEMPRE.indexOf(familia)>=0;
 }
 // Unidades totales por color programado en la OP (todas las OTs, sin importar estado —
