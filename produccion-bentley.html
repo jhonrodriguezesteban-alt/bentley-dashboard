@@ -14987,35 +14987,46 @@ function _monBuildRows(){
   Object.keys(mesesPlan).forEach(function(mk){ (mesesPlan[mk]||[]).forEach(function(key){ assignedSet[key]=mk; }); });
 
   var rows = [];
+  // Un color se muestra acá SOLO si su estado efectivo (el mismo cálculo que usa el tablero
+  // de Órdenes de Producción — respeta tanto las OTs reales como un avance manual del kanban)
+  // sigue en POR_REVISAR o PENDIENTE_CORTAR. Antes esto se decidía solo mirando si existían
+  // OTs, así que una OP avanzada a mano en el kanban (sin OTs creadas) seguía apareciendo acá
+  // como pendiente aunque en Órdenes de Producción ya figurara como cortada/más adelante.
   ops.forEach(function(op){
     var otsOp = otsXop[op.id] || [];
-    if(otsOp.length === 0){
-      var refs = op.referencias || [{nombre:op.nombre_producto||'—', cat:op.categoria||'—', colores:op.colores||[], tallas:op.tallas||[], cantidades:op.cantidades||{}}];
-      refs.forEach(function(ref){
-        (ref.colores||[]).forEach(function(color){
-          var tallasRow = {}, total = 0;
+    var refs = op.referencias || [{nombre:op.nombre_producto||'—', cat:op.categoria||'—', colores:op.colores||[], tallas:op.tallas||[], cantidades:op.cantidades||{}}];
+    var refPorColor = {};
+    refs.forEach(function(ref){
+      (ref.colores||[]).forEach(function(color){ if(!refPorColor[color]) refPorColor[color] = ref; });
+    });
+    var colores = (op.colores&&op.colores.length) ? op.colores : Object.keys(refPorColor);
+    colores.forEach(function(color){
+      var otsColor = otsOp.filter(function(o){ return (o.color||'').trim().toUpperCase()===(color||'').trim().toUpperCase(); });
+      var manual = _getSubgEstado(op.id, color);
+      var estado = _estadoEfectivo(manual, _subgEstadoDerivado(otsColor), otsColor);
+      if(estado!=='POR_REVISAR' && estado!=='PENDIENTE_CORTAR') return; // ya cortado o más adelante — no va acá
+
+      var tallasRow = {}, total = 0;
+      var otsPend = otsColor.filter(function(o){ return o.estado==='POR_REVISAR'||o.estado==='PENDIENTE_CORTAR'; });
+      if(otsPend.length){
+        otsPend.forEach(function(ot){
+          var t = ot.talla||'—';
+          tallasRow[t] = (tallasRow[t]||0) + (ot.cantidad||0);
+          total += ot.cantidad||0;
+        });
+      } else {
+        var ref = refPorColor[color];
+        if(ref){
           (ref.tallas||[]).forEach(function(talla){
             var qty = (ref.cantidades||{})[color+'_'+talla]||0;
             if(qty>0){ tallasRow[talla]=qty; total+=qty; }
           });
-          if(total>0) rows.push({cat:ref.cat||op.categoria||'—', nombre:ref.nombre||op.nombre_producto||'—', color:color, tallas:tallasRow, total:total, opId:op.id, opNum:fmtOpId(op.id), cortador:op.cortador||'—', isAnioAnt:isOpAnioAnterior(op), hasOTs:false, isDiseno:false, mes:assignedSet[_planKey(op.id,color)]||''});
-        });
-      });
-    } else {
-      var coloresVistos = {};
-      otsOp.forEach(function(ot){
-        if(ot.estado !== 'PENDIENTE_CORTAR') return;
-        var color = ot.color||'—';
-        var key = (ot.nombre||op.nombre_producto||'—')+'||'+color;
-        if(!coloresVistos[key]){
-          coloresVistos[key] = {cat:ot.categoria||op.categoria||'—', nombre:ot.nombre||op.nombre_producto||'—', color:color, tallas:{}, total:0, opId:op.id, opNum:fmtOpId(op.id), cortador:op.cortador||'—', isAnioAnt:isOpAnioAnterior(op), hasOTs:true, isDiseno:false, mes:assignedSet[_planKey(op.id,color)]||''};
-          rows.push(coloresVistos[key]);
         }
-        var r = coloresVistos[key];
-        r.tallas[ot.talla||'—'] = (r.tallas[ot.talla||'—']||0) + (ot.cantidad||0);
-        r.total += ot.cantidad||0;
-      });
-    }
+      }
+      if(total<=0) return;
+      var refN = refPorColor[color];
+      rows.push({cat:(refN&&refN.cat)||op.categoria||'—', nombre:(refN&&refN.nombre)||op.nombre_producto||'—', color:color, tallas:tallasRow, total:total, opId:op.id, opNum:fmtOpId(op.id), cortador:op.cortador||'—', isAnioAnt:isOpAnioAnterior(op), hasOTs:otsColor.length>0, isDiseno:false, mes:assignedSet[_planKey(op.id,color)]||''});
+    });
   });
 
   // Diseños programados en Planeación que aún no tienen OP creada — tallas por definir.
