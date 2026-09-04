@@ -5289,20 +5289,20 @@
     },
     {
       "cantidades": {
-        "CAFE_T10": 12,
-        "CAFE_T12": 12,
-        "CAFE_T14": 12,
-        "CAFE_T16": 12,
-        "CAFE_T4": 12,
-        "CAFE_T6": 12,
-        "CAFE_T8": 12,
+        "ROSA_T4": 11,
+        "ROSA_T6": 11,
+        "ROSA_T8": 11,
         "ROSA_T10": 11,
         "ROSA_T12": 11,
         "ROSA_T14": 11,
         "ROSA_T16": 11,
-        "ROSA_T4": 11,
-        "ROSA_T6": 11,
-        "ROSA_T8": 11
+        "CAFE_T4": 12,
+        "CAFE_T6": 12,
+        "CAFE_T8": 12,
+        "CAFE_T10": 12,
+        "CAFE_T12": 12,
+        "CAFE_T14": 12,
+        "CAFE_T16": 12
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -5319,29 +5319,14 @@
       "numero": 87,
       "referencias": [
         {
-          "cantidades": {
-            "CAFE_T10": 12,
-            "CAFE_T12": 12,
-            "CAFE_T14": 12,
-            "CAFE_T16": 12,
-            "CAFE_T4": 12,
-            "CAFE_T6": 12,
-            "CAFE_T8": 12,
-            "ROSA_T10": 11,
-            "ROSA_T12": 11,
-            "ROSA_T14": 11,
-            "ROSA_T16": 11,
-            "ROSA_T4": 11,
-            "ROSA_T6": 11,
-            "ROSA_T8": 11
-          },
+          "nombre": "CHAQUETA ROCKY",
+          "ref": "1170",
           "cat": "CHAQUETAS",
+          "vmo": 1151,
           "colores": [
             "ROSA",
             "CAFE"
           ],
-          "nombre": "CHAQUETA ROCKY",
-          "ref": "1170",
           "tallas": [
             "T4",
             "T6",
@@ -5351,8 +5336,23 @@
             "T14",
             "T16"
           ],
-          "totalUds": 161,
-          "vmo": 1151
+          "cantidades": {
+            "ROSA_T4": 11,
+            "ROSA_T6": 11,
+            "ROSA_T8": 11,
+            "ROSA_T10": 11,
+            "ROSA_T12": 11,
+            "ROSA_T14": 11,
+            "ROSA_T16": 11,
+            "CAFE_T4": 12,
+            "CAFE_T6": 12,
+            "CAFE_T8": 12,
+            "CAFE_T10": 12,
+            "CAFE_T12": 12,
+            "CAFE_T14": 12,
+            "CAFE_T16": 12
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -5376,7 +5376,8 @@
         "cid_1783374158054_3659__cid_1783376562367_7132": true,
         "cid_1783374158054_3659__cid_1783376749183_995": true,
         "cid_1783374158054_3659__cid_1783376448638_5939": false
-      }
+      },
+      "updated_at": "2026-09-04"
     },
     {
       "cantidades": {
