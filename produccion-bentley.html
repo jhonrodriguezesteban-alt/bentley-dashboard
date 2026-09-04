@@ -7351,16 +7351,22 @@ function abrirResumenColumna(colK){
     sg.forEach(function(s){
       var _CH={'NEGRO':'#1a1a1a','BLANCO':'#f8fafc','CAFE':'#92400e','CAMEL':'#b45309','BEIGE':'#d4b896','ROJO':'#dc2626','AZUL':'#2563eb','VERDE':'#16a34a','GRIS':'#6b7280','ROSA':'#ec4899','NARANJA':'#f97316','MORADO':'#7c3aed','MARFIL':'#fffbeb','MOSTAZA':'#ca8a04','TAUPE':'#78716c','CHOCOLATE':'#78350f','MILITAR':'#4d7c0f','CAMUFLADO':'#65a30d'};
       var dotColor = s.color ? (_CH[s.color.toUpperCase().split(' ')[0]]||meta.color) : meta.color;
+      // El taller real se asigna por OT (ot.satelite_id), no a nivel de OP — op.satelite_id
+      // casi nunca está poblado, así que había que sacarlo de las OTs de este color específico.
+      var satNames = [];
+      (s.otsColor||[]).forEach(function(ot){
+        if(ot.satelite_id){ var n = getSatNombre(ot.satelite_id); if(n && n!=='—' && satNames.indexOf(n)<0) satNames.push(n); }
+      });
+      var fechaColor = _pconfFechaEntrega(op.id, s.color);
       c += '<span style="display:inline-flex;align-items:center;gap:4px;background:#0d1117;border:1px solid #2c2c2e;border-radius:12px;padding:3px 9px;font-size:10px;color:#94a3b8;">';
       c += '<span style="width:6px;height:6px;border-radius:50%;background:'+dotColor+';flex-shrink:0;"></span>';
       c += esc(s.color||'—')+' · '+sUds(s)+' uds';
       if(op.cortador && colK==='PENDIENTE_CORTAR') c += ' · <span style="color:#60a5fa;">'+esc(op.cortador)+'</span>';
+      if(satNames.length) c += ' · <span style="color:#fbbf24;">🏭 '+esc(satNames.join(', '))+'</span>';
+      if(fechaColor) c += ' · <span style="color:#60a5fa;">🎯 '+esc(fmtDate(fechaColor))+'</span>';
       c += '</span>';
     });
     c += '</div>';
-    if(op.satelite_nombre){
-      c += '<div style="margin-top:6px;font-size:10px;color:#475569;">🏭 '+esc(op.satelite_nombre)+'</div>';
-    }
     c += '<div id="'+detId+'" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);"></div>';
     c += '</div>';
     return c;
