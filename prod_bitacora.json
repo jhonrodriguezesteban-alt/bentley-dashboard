@@ -15078,20 +15078,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "GRIS CLARO",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1788534482350_4fqgy",
-      "ts": 1788534482350,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-096",
       "op_nombre": "FALDA ESCOSES",
       "referencia": "FALDA ESCOSES",
-      "color": "GRIS CLARO",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1788534482350,
       "uds": 124,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788534718369_pbwsq",
+      "ts": 1788534718369,
+      "user": "Isabel",
+      "tipo": "diseno_responsable",
+      "diseno_id": "id_1782182087591_a8je2c72b",
+      "nombre": "conjunto dakota",
+      "categoria": "Conjuntos",
+      "resp_anterior": "Carolina",
+      "resp_nuevo": "John"
     }
   ]
 }
