@@ -6006,16 +6006,16 @@
     },
     {
       "cantidades": {
-        "BEIGE_T10": 16,
-        "BEIGE_T12": 20,
-        "BEIGE_T14": 20,
-        "BEIGE_T16": 20,
-        "BEIGE_T8": 16,
-        "GRIS CLARO_T10": 16,
-        "GRIS CLARO_T12": 20,
-        "GRIS CLARO_T14": 20,
-        "GRIS CLARO_T16": 20,
-        "GRIS CLARO_T8": 16
+        "BEIGE_T8": 17,
+        "BEIGE_T10": 17,
+        "BEIGE_T12": 24,
+        "BEIGE_T14": 24,
+        "BEIGE_T16": 24,
+        "GRIS CLARO_T8": 20,
+        "GRIS CLARO_T10": 20,
+        "GRIS CLARO_T12": 28,
+        "GRIS CLARO_T14": 28,
+        "GRIS CLARO_T16": 28
       },
       "categoria": "FALDA",
       "colores": [
@@ -6034,25 +6034,14 @@
       "receta_nombre": "FALDA ESCOSES - REF: 1130",
       "referencias": [
         {
-          "cantidades": {
-            "BEIGE_T10": 16,
-            "BEIGE_T12": 20,
-            "BEIGE_T14": 20,
-            "BEIGE_T16": 20,
-            "BEIGE_T8": 16,
-            "GRIS CLARO_T10": 16,
-            "GRIS CLARO_T12": 20,
-            "GRIS CLARO_T14": 20,
-            "GRIS CLARO_T16": 20,
-            "GRIS CLARO_T8": 16
-          },
+          "nombre": "FALDA ESCOSES",
+          "ref": "1130",
           "cat": "FALDA",
+          "vmo": 1151,
           "colores": [
             "BEIGE",
             "GRIS CLARO"
           ],
-          "nombre": "FALDA ESCOSES",
-          "ref": "1130",
           "tallas": [
             "T8",
             "T10",
@@ -6060,8 +6049,19 @@
             "T14",
             "T16"
           ],
-          "totalUds": 184,
-          "vmo": 1151
+          "cantidades": {
+            "BEIGE_T8": 17,
+            "BEIGE_T10": 17,
+            "BEIGE_T12": 24,
+            "BEIGE_T14": 24,
+            "BEIGE_T16": 24,
+            "GRIS CLARO_T8": 20,
+            "GRIS CLARO_T10": 20,
+            "GRIS CLARO_T12": 28,
+            "GRIS CLARO_T14": 28,
+            "GRIS CLARO_T16": 28
+          },
+          "maquilador_id": ""
         }
       ],
       "tallas": [
@@ -6071,7 +6071,8 @@
         "T14",
         "T16"
       ],
-      "subg_estados": {}
+      "subg_estados": {},
+      "updated_at": "2026-09-04"
     },
     {
       "cantidades": {
