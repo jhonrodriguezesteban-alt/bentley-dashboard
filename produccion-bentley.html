@@ -2857,6 +2857,13 @@ function _planToggleSoloConfirmados(){
   _planSoloConfirmados = !_planSoloConfirmados;
   renderPage('planeacion');
 }
+// Oculta las tarjetas de mes que ya no tienen nada pendiente (0 colores y 0 diseños) —
+// típicamente meses ya pasados que solo quedan como ruido en la grilla.
+var _planOcultarVacios = false;
+function _planToggleOcultarVacios(){
+  _planOcultarVacios = !_planOcultarVacios;
+  renderPage('planeacion');
+}
 // Cantidad "programada" REAL de una referencia ahora mismo (no la foto vieja que se
 // guardó al marcar el check) — se recalcula desde window._planCatMap, que ya trae
 // las últimas cantidades de OP/diseño en cada render de Planeación.
@@ -5209,6 +5216,7 @@ function renderPlaneacion(){
     h += '<button onclick="_planBusqRef=\'\';document.getElementById(\'plan-busq-ref\').value=\'\';_planFiltrarMeses()" style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);border-radius:7px;color:#f87171;font-size:11px;font-weight:700;padding:7px 12px;cursor:pointer;">✕ Limpiar</button>';
   }
   h += '<button onclick="_planToggleSoloConfirmados()" title="Filtra las tarjetas de mes para mostrar solo lo ya confirmado (☑), respetando el mes donde ya estaba puesto" style="background:'+(_planSoloConfirmados?'rgba(52,211,153,.18)':'rgba(255,255,255,.04)')+';border:1px solid '+(_planSoloConfirmados?'rgba(52,211,153,.5)':'#2c2c2e')+';border-radius:7px;color:'+(_planSoloConfirmados?'#34d399':'#94a3b8')+';font-size:11px;font-weight:700;padding:7px 12px;cursor:pointer;white-space:nowrap;">'+(_planSoloConfirmados?'✅ Solo confirmados: ON':'☐ Ver solo confirmados')+'</button>';
+  h += '<button onclick="_planToggleOcultarVacios()" title="Oculta las tarjetas de mes que ya no tienen nada pendiente (0 colores, 0 diseños)" style="background:'+(_planOcultarVacios?'rgba(251,191,36,.18)':'rgba(255,255,255,.04)')+';border:1px solid '+(_planOcultarVacios?'rgba(251,191,36,.5)':'#2c2c2e')+';border-radius:7px;color:'+(_planOcultarVacios?'#fbbf24':'#94a3b8')+';font-size:11px;font-weight:700;padding:7px 12px;cursor:pointer;white-space:nowrap;">'+(_planOcultarVacios?'✅ Ocultar vacíos: ON':'☐ Ocultar meses vacíos')+'</button>';
   h += '</div>';
 
   // ── Grid de meses ────────────────────────────────────────────────────────────
@@ -5272,8 +5280,11 @@ function renderPlaneacion(){
 
     var catEntries = Object.keys(catMap).sort(function(a,b){ return catMap[b]-catMap[a]; });
 
-    // Guardar todo lo necesario para el modal de resumen (planVerMes)
+    // Guardar todo lo necesario para el modal de resumen (planVerMes) — se guarda siempre,
+    // incluso si la tarjeta se termina ocultando, para que planVerMes(mes) siga funcionando.
     window._planMesMap[mes.k] = {mes:mes, mesUnits:mesUnits, mesDisenos:mesDisenos, disPlanAll:disPlanAll, costoMes:costoMes, totalUds:totalUds, disUds:disUds, disInv:disInv, disFenioInv:disFenioInv, totalUdsCombinado:totalUdsCombinado};
+
+    if(_planOcultarVacios && !mesUnits.length && !mesDisenos.length) return;
 
     var _mesRefs = mesOps.map(function(op){ return (op.nombre_producto||op.id); }).concat(mesDisenos.map(function(d){ return d.nombre||''; })).join('|').toUpperCase();
     h += '<div data-plan-mes="'+mes.k+'" data-refs="'+esc(_mesRefs)+'" style="background:#0a0d14;border:1px solid '+mes.color+'33;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;max-height:680px;">';
