@@ -15176,16 +15176,25 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1788540259263_ca6cs",
-      "ts": 1788540259263,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782400152280_85zhl3nb5",
-      "nombre": "CAMISA CLASICA BK",
       "categoria": "CAMISAS",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1782400152280_85zhl3nb5",
       "estado_anterior": "EN_ESCALADO",
-      "estado_nuevo": "LISTA_PRODUCCION"
+      "estado_nuevo": "LISTA_PRODUCCION",
+      "id": "evt_1788540259263_ca6cs",
+      "marca": "Bentley Kids",
+      "nombre": "CAMISA CLASICA BK",
+      "tipo": "estado_diseno",
+      "ts": 1788540259263,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1788540583996_r8s5k",
+      "ts": 1788540583996,
+      "user": "Jefa de Producción",
+      "tipo": "satelite_crear",
+      "nombre": "NOHELIA ESTHER CHARRIS",
+      "personas": 1,
+      "capacidad": 0
     }
   ]
 }
