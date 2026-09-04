@@ -38,12 +38,10 @@
       "OP-2026-098||SALMON",
       "OP-2026-098||FUCSIA",
       "OP-2026-102||GRIS OSCURO",
-      "OP-2026-096||BEIGE",
       "OP-2026-106||NEGRO",
       "OP-2026-106||BEIGE",
       "OP-2026-105||MARFIL",
       "OP-2026-105||NEGRO",
-      "OP-2026-096||GRIS CLARO",
       "OP-2026-101||MARFIL",
       "OP-2026-103||AVENA",
       "OP-2026-103||AZUL BEBE",
@@ -63,7 +61,6 @@
       "OP-2026-075||NEGRO",
       "OP-0059||VINOTINTO",
       "OP-0059||GRIS OSCURO",
-      "OP-2026-095||CAMEL",
       "OP-2026-073||CAMEL",
       "OP-2026-073||BLANCO NEGRO",
       "OP-2026-073||NEGRO",
@@ -940,48 +937,81 @@
       "uds": 16
     },
     {
-      "key": "OP-2026-111||VERDE MILITAR",
-      "op_id": "OP-2026-111",
-      "op_nombre": "OVERSIZED CAPOTA",
       "categoria": "CHAQUETAS",
       "color": "VERDE MILITAR",
-      "uds": 56,
-      "mes_planeado": "2026-08",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-09-03"
-    },
-    {
-      "key": "OP-2026-111||VINOTINTO",
+      "fecha_deteccion": "2026-09-03",
+      "key": "OP-2026-111||VERDE MILITAR",
+      "mes_planeado": "2026-08",
       "op_id": "OP-2026-111",
       "op_nombre": "OVERSIZED CAPOTA",
+      "uds": 56
+    },
+    {
       "categoria": "CHAQUETAS",
       "color": "VINOTINTO",
-      "uds": 116,
-      "mes_planeado": "2026-08",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-09-03"
+      "fecha_deteccion": "2026-09-03",
+      "key": "OP-2026-111||VINOTINTO",
+      "mes_planeado": "2026-08",
+      "op_id": "OP-2026-111",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "uds": 116
     },
     {
-      "key": "OP-2026-110||AZUL OSCURO",
-      "op_id": "OP-2026-110",
-      "op_nombre": "PANTALON RAVE",
       "categoria": "PANTALONES",
       "color": "AZUL OSCURO",
-      "uds": 139,
-      "mes_planeado": "2026-08",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-09-03"
-    },
-    {
-      "key": "OP-2026-110||ROJO",
+      "fecha_deteccion": "2026-09-03",
+      "key": "OP-2026-110||AZUL OSCURO",
+      "mes_planeado": "2026-08",
       "op_id": "OP-2026-110",
       "op_nombre": "PANTALON RAVE",
+      "uds": 139
+    },
+    {
       "categoria": "PANTALONES",
       "color": "ROJO",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-09-03",
+      "key": "OP-2026-110||ROJO",
+      "mes_planeado": "2026-08",
+      "op_id": "OP-2026-110",
+      "op_nombre": "PANTALON RAVE",
+      "uds": 124
+    },
+    {
+      "key": "OP-2026-096||BEIGE",
+      "op_id": "OP-2026-096",
+      "op_nombre": "FALDA ESCOSES",
+      "categoria": "FALDA",
+      "color": "BEIGE",
+      "uds": 106,
+      "mes_planeado": "2026-08",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-09-04"
+    },
+    {
+      "key": "OP-2026-096||GRIS CLARO",
+      "op_id": "OP-2026-096",
+      "op_nombre": "FALDA ESCOSES",
+      "categoria": "FALDA",
+      "color": "GRIS CLARO",
       "uds": 124,
       "mes_planeado": "2026-08",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-09-03"
+      "fecha_deteccion": "2026-09-04"
+    },
+    {
+      "key": "OP-2026-095||CAMEL",
+      "op_id": "OP-2026-095",
+      "op_nombre": "CHAQUETA SUEDE OLD MONEY",
+      "categoria": "CHAQUETAS",
+      "color": "CAMEL",
+      "uds": 96,
+      "mes_planeado": "2026-08",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-09-04"
     }
   ],
   "confirmadas": {
