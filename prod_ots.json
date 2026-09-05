@@ -76448,7 +76448,7 @@
       "color": "VERDE",
       "created_at": "2026-08-20",
       "created_by": "Jefa de Producción",
-      "estado": "EN_CONFECCION",
+      "estado": "ENTREGADO",
       "fecha_ot": "2026-08-20",
       "historial": [
         {
@@ -76459,6 +76459,11 @@
         {
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
           "fecha": "2026-08-20T21:35:59.498Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-09-05T16:54:09.536Z",
+          "accion": "Entrega completa: 12 uds → ENTREGADO",
           "user": "Jefa de Producción"
         }
       ],
@@ -76471,9 +76476,11 @@
       "referencia": "1062T8",
       "satelite_id": "id_1785519081675_amd8sy8h3",
       "talla": "T8",
-      "unidades_entregadas": 0,
+      "unidades_entregadas": 12,
       "unidades_novedad": 0,
-      "valor_mo": 9249
+      "valor_mo": 9249,
+      "fecha_entrega_real": "2026-09-05",
+      "total_costo_mo": 110988
     },
     {
       "cantidad": 12,
