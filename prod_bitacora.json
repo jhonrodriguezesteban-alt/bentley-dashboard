@@ -16196,20 +16196,34 @@
       "user": "John Rodriguez"
     },
     {
+      "bulk": false,
+      "color": "CAMEL",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1788626893778_ngfzm",
-      "ts": 1788626893778,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-118",
       "op_nombre": "BOMBON",
       "referencia": "BOMBON",
-      "color": "CAMEL",
       "talla": "T8",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": false,
+      "tipo": "estado_ot",
+      "ts": 1788626893778,
       "uds": 2,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788626917872_re6hd",
+      "ts": 1788626917872,
+      "user": "Jefa de Producción",
+      "tipo": "entrega_inline",
+      "ot_id": "id_1787262244474_325x7a6ib",
+      "numero_ot": 13208,
+      "op_id": "OP-2026-118",
+      "uds_entregadas": 5,
+      "pendientes": 0,
+      "estado": "ENTREGADO",
+      "talla": "T8",
+      "satelite": "CLAUDIA GARCIA SANTANA"
     }
   ]
 }
