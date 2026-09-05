@@ -77016,7 +77016,7 @@
       "color": "ROSA",
       "created_at": "2026-08-20",
       "created_by": "Jefa de Producción",
-      "estado": "EN_CONFECCION",
+      "estado": "ENTREGADO",
       "fecha_ot": "2026-08-20",
       "historial": [
         {
@@ -77033,6 +77033,11 @@
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
           "fecha": "2026-08-21T13:04:48.313Z",
           "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-09-05T16:51:25.909Z",
+          "accion": "Entrega completa: 3 uds → ENTREGADO",
+          "user": "Jefa de Producción"
         }
       ],
       "id": "id_1787262244474_tofune7vw",
@@ -77044,9 +77049,11 @@
       "referencia": "1062T10",
       "satelite_id": "id_1785519081675_amd8sy8h3",
       "talla": "T10",
-      "unidades_entregadas": 0,
+      "unidades_entregadas": 3,
       "unidades_novedad": 0,
-      "valor_mo": 9249
+      "valor_mo": 9249,
+      "fecha_entrega_real": "2026-09-05",
+      "total_costo_mo": 27747
     },
     {
       "cantidad": 3,
