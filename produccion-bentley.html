@@ -7297,6 +7297,14 @@ function _opToggleMatriz(detId, opId, colK){
       : (colK==='NOVEDAD' ? _opMatrizNovedadHTML(op) : _opMatrizDetalleHTML(op, colK));
   }
 }
+// Estados donde tiene sentido ver "por satélite" — son los únicos donde el trabajo ya
+// está físicamente en un taller (Corte/Nuevas/Pte. Cortar todavía no tienen taller asignado).
+var _RESCOL_TALLER_ELEGIBLE = {EN_CONFECCION:1, NOVEDAD:1, ALISTAMIENTO:1};
+var _resColVista = 'categoria'; // 'categoria' | 'satelite'
+function _resColSetVista(colK, v){
+  _resColVista = v;
+  abrirResumenColumna(colK);
+}
 function abrirResumenColumna(colK){
   var meta = OP_KANBAN.find(function(c){ return c.k===colK; });
   if(!meta) return;
@@ -7340,10 +7348,10 @@ function abrirResumenColumna(colK){
   body += '<div style="font-size:22px;font-weight:900;color:'+meta.color+';">'+totalUds.toLocaleString('es-CO')+'</div></div>';
   body += '</div>';
 
-  function opCardHTML(oid){
+  function opCardHTML(oid, subgsSubset){
     var item = byOp[oid];
     var op   = item.op;
-    var sg   = item.subgs;
+    var sg   = subgsSubset || item.subgs;
     var udsOp = sg.reduce(function(a,s){ return a+sUds(s); },0);
     var novedades = sg.filter(function(s){ return s.estado==='NOVEDAD'; }).length;
     var detId = 'op-col-det-'+colK+'-'+oid.replace(/[^A-Za-z0-9]/g,'');
@@ -7390,8 +7398,89 @@ function abrirResumenColumna(colK){
     return c;
   }
 
+  // Tabs "Por categoría" / "Por satélite" — solo tienen sentido en los 3 estados donde el
+  // trabajo ya está en un taller real. En los demás estados (nuevas/pte.cortar/corte por
+  // alistar) el color todavía no tiene satélite asignado, así que no aplica.
+  var vistaSatDisponible = !!_RESCOL_TALLER_ELEGIBLE[colK];
+  if(vistaSatDisponible && opOrder.length){
+    body += '<div style="display:flex;gap:6px;margin-bottom:14px;">';
+    var _tabOn='background:'+meta.bg+';border:1px solid '+meta.color+';color:'+meta.color+';';
+    var _tabOff='background:transparent;border:1px solid #2c2c2e;color:#64748b;';
+    body += '<button onclick="_resColSetVista(\''+colK+'\',\'categoria\')" style="'+(_resColVista==='categoria'?_tabOn:_tabOff)+'border-radius:8px;padding:7px 14px;font-size:11px;font-weight:700;cursor:pointer;">📂 Por categoría</button>';
+    body += '<button onclick="_resColSetVista(\''+colK+'\',\'satelite\')" style="'+(_resColVista==='satelite'?_tabOn:_tabOff)+'border-radius:8px;padding:7px 14px;font-size:11px;font-weight:700;cursor:pointer;">🏭 Por satélite</button>';
+    body += '</div>';
+  }
+  var vistaSat = vistaSatDisponible && _resColVista==='satelite';
+
   if(!opOrder.length){
     body += '<div style="text-align:center;padding:30px;color:#475569;">No hay OPs en este estado</div>';
+  } else if(vistaSat){
+    // Agrupar por satélite (taller real, sacado de ot.satelite_id) — una misma OP puede
+    // aparecer bajo varios talleres distintos si sus colores están repartidos entre
+    // satélites diferentes; cada tarjeta solo muestra los colores de ESE taller.
+    var bySat = {}; var satOrder = [];
+    colSubgs.forEach(function(s){
+      var satNames = [];
+      (s.otsColor||[]).forEach(function(ot){
+        if(ot.satelite_id){ var n=getSatNombre(ot.satelite_id); if(n && n!=='—' && satNames.indexOf(n)<0) satNames.push(n); }
+      });
+      var satKey = satNames.length ? satNames.join(', ') : 'Sin asignar';
+      if(!bySat[satKey]){ bySat[satKey] = {refs:{}, refOrder:[], opsSeen:{}, ops:0, uds:0}; satOrder.push(satKey); }
+      var sat = bySat[satKey];
+      var refN = (s.op.nombre_producto||'Sin referencia').trim();
+      if(!sat.refs[refN]){ sat.refs[refN] = {opsMap:{}, opOrder:[], uds:0}; sat.refOrder.push(refN); }
+      var rinfo = sat.refs[refN];
+      if(!rinfo.opsMap[s.op.id]){ rinfo.opsMap[s.op.id] = []; rinfo.opOrder.push(s.op.id); }
+      rinfo.opsMap[s.op.id].push(s);
+      rinfo.uds += sUds(s);
+      sat.uds += sUds(s);
+      if(!sat.opsSeen[s.op.id]){ sat.opsSeen[s.op.id]=1; sat.ops++; }
+    });
+    // "Sin asignar" al final — lo urgente para la jefa es ver primero los talleres reales.
+    satOrder.sort(function(a,b){
+      if(a==='Sin asignar') return 1;
+      if(b==='Sin asignar') return -1;
+      return bySat[b].uds - bySat[a].uds;
+    });
+
+    var modalUidS = 'ressat'+colK.replace(/[^A-Za-z0-9]/g,'');
+    body += '<div style="display:flex;flex-direction:column;gap:8px;">';
+    satOrder.forEach(function(satKey, si){
+      var satId = modalUidS+'s'+si;
+      var info = bySat[satKey];
+      var refOrder = info.refOrder.slice().sort(function(a,b){ return info.refs[b].uds - info.refs[a].uds; });
+      var sinAsig = satKey==='Sin asignar';
+      body += '<div>';
+      body += '<div data-tid="'+satId+'" onclick="_toggleResumenCat(this.dataset.tid)" style="display:flex;align-items:center;justify-content:space-between;background:'+(sinAsig?'rgba(148,163,184,.06)':meta.bg)+';border:1px solid '+(sinAsig?'#2c2c2e':meta.color+'33')+';border-radius:8px;padding:10px 14px;cursor:pointer;">';
+      body += '<div style="display:flex;align-items:center;gap:8px;">';
+      body += '<span id="'+satId+'-icon" style="font-size:9px;color:'+(sinAsig?'#64748b':meta.color)+';">▸</span>';
+      body += '<span style="font-size:12px;font-weight:800;color:'+(sinAsig?'#94a3b8':meta.color)+';text-transform:uppercase;letter-spacing:.4px;">'+(sinAsig?'⚠ ':'🏭 ')+esc(satKey)+'</span>';
+      body += '<span style="font-size:10px;color:#64748b;">'+info.ops+' OP'+(info.ops!==1?'s':'')+' · '+refOrder.length+' ref'+(refOrder.length!==1?'s':'')+'</span>';
+      body += '</div>';
+      body += '<span style="font-family:var(--bebas);font-size:18px;color:'+(sinAsig?'#94a3b8':meta.color)+';">'+info.uds.toLocaleString('es-CO')+' <span style="font-size:9px;color:#64748b;text-transform:uppercase;font-family:inherit;">uds</span></span>';
+      body += '</div>';
+      body += '<div id="'+satId+'" style="display:none;flex-direction:column;gap:6px;margin-top:8px;padding-left:14px;border-left:1px dashed '+(sinAsig?'#2c2c2e':meta.color+'33')+';">';
+      refOrder.forEach(function(refN, ri){
+        var refId = satId+'ref'+ri;
+        var rinfo = info.refs[refN];
+        body += '<div>';
+        body += '<div data-tid="'+refId+'" onclick="_toggleResumenCat(this.dataset.tid)" style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid #2c2c2e;border-radius:7px;padding:8px 12px;cursor:pointer;">';
+        body += '<div style="display:flex;align-items:center;gap:8px;">';
+        body += '<span id="'+refId+'-icon" style="font-size:9px;color:#94a3b8;">▸</span>';
+        body += '<span style="font-size:12px;font-weight:700;color:#e2e8f0;">'+esc(refN)+'</span>';
+        body += '<span style="font-size:10px;color:#64748b;">'+rinfo.opOrder.length+' OP'+(rinfo.opOrder.length!==1?'s':'')+'</span>';
+        body += '</div>';
+        body += '<span style="font-size:14px;font-weight:800;color:#94a3b8;">'+rinfo.uds.toLocaleString('es-CO')+' <span style="font-size:9px;text-transform:uppercase;">uds</span></span>';
+        body += '</div>';
+        body += '<div id="'+refId+'" style="display:none;flex-direction:column;gap:10px;margin-top:6px;">';
+        rinfo.opOrder.forEach(function(oid){ body += opCardConFechaHTML(oid, rinfo.opsMap[oid]); });
+        body += '</div>';
+        body += '</div>';
+      });
+      body += '</div>';
+      body += '</div>';
+    });
+    body += '</div>';
   } else {
     // Agrupar por categoría — clic en la categoría despliega sus OPs, con subtotal de
     // unidades arriba para poder revisar de un vistazo cuánto hay de cada familia.
@@ -7413,15 +7502,16 @@ function abrirResumenColumna(colK){
 
     // Tercer nivel: dentro de cada referencia, las OPs — si alguna de sus OTs ya tiene fecha
     // comprometida en Cronograma (_pconfFechaEntrega), se muestra como etiqueta en la tarjeta.
-    function opCardConFechaHTML(oid){
+    function opCardConFechaHTML(oid, subgsSubset){
       var item = byOp[oid];
       var op = item.op;
       var fechas = [];
-      (op.colores&&op.colores.length ? op.colores : ['—']).forEach(function(color){
+      var coloresRelevantes = subgsSubset ? subgsSubset.map(function(s){ return s.color; }) : (op.colores&&op.colores.length ? op.colores : ['—']);
+      coloresRelevantes.forEach(function(color){
         var f = _pconfFechaEntrega(op.id, color);
         if(f && fechas.indexOf(f)<0) fechas.push(f);
       });
-      var c = opCardHTML(oid);
+      var c = opCardHTML(oid, subgsSubset);
       if(fechas.length){
         fechas.sort();
         var tag = '<span style="display:inline-flex;align-items:center;gap:4px;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);border-radius:12px;padding:3px 9px;font-size:10px;color:#60a5fa;font-weight:700;margin-top:6px;">🎯 '+(fechas.length>1?'entregas desde ':'entrega comprometida ')+esc(fmtDate(fechas[0]))+(fechas.length>1?' hasta '+esc(fmtDate(fechas[fechas.length-1])):'')+'</span>';
