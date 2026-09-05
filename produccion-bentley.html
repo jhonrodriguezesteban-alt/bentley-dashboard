@@ -2859,9 +2859,10 @@ function _planToggleSoloConfirmados(){
 }
 // Oculta las tarjetas de mes que ya no tienen nada pendiente (0 colores y 0 diseños) —
 // típicamente meses ya pasados que solo quedan como ruido en la grilla.
-var _planOcultarVacios = false;
+var _planOcultarVacios = (function(){ try{ return localStorage.getItem('plan_ocultar_vacios') !== '0'; }catch(e){ return true; } })();
 function _planToggleOcultarVacios(){
   _planOcultarVacios = !_planOcultarVacios;
+  try{ localStorage.setItem('plan_ocultar_vacios', _planOcultarVacios ? '1' : '0'); }catch(e){}
   renderPage('planeacion');
 }
 // Cantidad "programada" REAL de una referencia ahora mismo (no la foto vieja que se
