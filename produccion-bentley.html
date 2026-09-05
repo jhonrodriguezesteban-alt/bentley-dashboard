@@ -8737,6 +8737,7 @@ async function guardarEdicionOP(){
     DB.ots.filter(function(o){ return o.op_id===_opDetalleId && o.color===color; }).forEach(function(ot){
       if(nv!==ot.satelite_id){ ot.satelite_id=nv; cambios++; }
     });
+    _cronSyncSatelite(_opDetalleId, color);
   });
   // Renombrar colores
   var op2 = DB.ops.find(function(o){ return o.id===_opDetalleId; });
@@ -9645,6 +9646,7 @@ async function confirmarAsignar(ids){
   var notas = document.getElementById('ma-notas').value;
   if(!satId || !fest){ toast('Selecciona satélite y fecha estimada', 'error'); return; }
   var now = new Date().toISOString();
+  var tocados = {};
   ids.forEach(function(id){
     var ot = DB.ots.find(function(o){ return o.id===id; });
     if(!ot) return;
@@ -9655,7 +9657,9 @@ async function confirmarAsignar(ids){
     ot.notas = notas;
     ot.estado = 'EN_CONFECCION';
     ot.historial.push({fecha: now, accion: 'Asignado a ' + getSatNombre(satId), user: getUser()});
+    tocados[ot.op_id+'||'+ot.color] = true;
   });
+  Object.keys(tocados).forEach(function(k){ var p=k.split('||'); _cronSyncSatelite(p[0], p[1]); });
   saveLocal(); selectedOTs.clear();
   var ok = await guardarArchivo('ots', {ots: DB.ots});
   if(ok){ _logEvt('asignar_masivo_ots', {satelite:getSatNombre(satId), cantidad_ots:ids.length, fecha_estimada:fest}); toast('OTs asignadas correctamente', 'success'); closeModal(); renderPage('activas'); }
@@ -12633,6 +12637,20 @@ function _cronAutoSync(ot){
   guardarCronograma();
 }
 
+// El satelite_id de una entrada de Cronograma se copia UNA VEZ al crearla (_cronAutoSync)
+// y de ahí en adelante vive suelto — si el taller de ese color se reasigna después desde
+// Órdenes de Producción, la entrada de Cronograma se queda con el taller viejo para siempre.
+// Llamar esto en cada punto donde se reasigna taller para que ambos módulos no se desincronicen.
+function _cronSyncSatelite(opId, color){
+  var entry = _cronGetEntry(opId, color);
+  if(!entry) return;
+  var otsColor = (DB.ots||[]).filter(function(o){ return o.op_id===opId && o.color===color; });
+  if(!otsColor.length) return;
+  var nuevoSatId = otsColor[0].satelite_id || null;
+  if(entry.satelite_id === nuevoSatId) return;
+  entry.satelite_id = nuevoSatId;
+  guardarCronograma();
+}
 // Cuando el color-grupo pasa a ENTREGADO/ALISTAMIENTO, marcar como entregado
 function _cronMarcarEntregado(opId, color){
   var entry = _cronGetEntry(opId, color);
@@ -14110,6 +14128,7 @@ async function cambiarSateliteColor(opId, color, nuevoSatId){
     ot.historial.push({fecha: new Date().toISOString(), accion: 'Taller asignado: '+satNombre, user: getUser()});
   });
   saveLocal();
+  _cronSyncSatelite(opId, color);
   var ok = await guardarArchivo('ots', {ots: DB.ots});
   if(ok){ toast('Taller asignado: '+satNombre+' ('+otsColor.length+' OTs)', 'success'); renderPage('ops'); }
 }
@@ -14125,6 +14144,7 @@ async function cambiarSateliteColorRef(opId, refNombre, color, nuevoSatId){
   });
   _logEvt('asignar_satelite', {op_id: opId, ref: refNombre, color: color, satelite: satNombre});
   saveLocal();
+  _cronSyncSatelite(opId, color);
   var ok = await guardarArchivo('ots', {ots: DB.ots});
   if(ok){ toast('Taller: '+satNombre+' → '+esc(refNombre)+' / '+esc(color)+' ('+otsColor.length+' OTs)', 'success'); renderPage('ops'); }
 }
@@ -14158,6 +14178,7 @@ async function cambiarSateliteOT(otId, nuevoSatId){
   if(!ot.historial) ot.historial = [];
   ot.historial.push({fecha: new Date().toISOString(), accion: 'Satélite cambiado: '+anterior+' → '+getSatNombre(nuevoSatId), user: getUser()});
   saveLocal();
+  _cronSyncSatelite(ot.op_id, ot.color);
   var ok = await guardarArchivo('ots', {ots: DB.ots});
   if(ok){ _logEvt('cambiar_satelite_ot', {ot_id:otId, numero_ot:ot.numero_ot, anterior:anterior, nuevo:getSatNombre(nuevoSatId)}); toast('Satélite actualizado · '+getSatNombre(nuevoSatId), 'success'); renderPage('ops'); }
 }
