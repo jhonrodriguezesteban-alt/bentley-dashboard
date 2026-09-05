@@ -16186,14 +16186,30 @@
       "user": "John Rodriguez"
     },
     {
+      "color": "NEGRO",
       "id": "evt_1788623935646_oo3q1",
-      "ts": 1788623935646,
-      "user": "John Rodriguez",
-      "tipo": "planeacion_asignar",
+      "mes": "2026-09",
       "op_id": "OP-2026-217",
       "op_nombre": "BODY BASICO",
-      "color": "NEGRO",
-      "mes": "2026-09"
+      "tipo": "planeacion_asignar",
+      "ts": 1788623935646,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1788626893778_ngfzm",
+      "ts": 1788626893778,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-118",
+      "op_nombre": "BOMBON",
+      "referencia": "BOMBON",
+      "color": "CAMEL",
+      "talla": "T8",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": false,
+      "uds": 2,
+      "motivo": "ENTREGADO"
     }
   ]
 }
