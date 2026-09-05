@@ -16688,18 +16688,28 @@
       "user": "Jefa de Producción"
     },
     {
+      "estado": "ENTREGADO",
       "id": "evt_1788628582561_ofy0i",
-      "ts": 1788628582561,
-      "user": "Jefa de Producción",
-      "tipo": "entrega_inline",
-      "ot_id": "id_1787260029511_8fm4a63mp",
       "numero_ot": 13174,
       "op_id": "OP-2026-114",
-      "uds_entregadas": 9,
+      "ot_id": "id_1787260029511_8fm4a63mp",
       "pendientes": 0,
-      "estado": "ENTREGADO",
+      "satelite": "CLAUDIA GARCIA SANTANA",
       "talla": "T10",
-      "satelite": "CLAUDIA GARCIA SANTANA"
+      "tipo": "entrega_inline",
+      "ts": 1788628582561,
+      "uds_entregadas": 9,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788629288031_7kxq9",
+      "ts": 1788629288031,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-082",
+      "op_nombre": "CONJUNTO OSLO",
+      "color": "TAUPE",
+      "mes": "2026-11"
     }
   ]
 }
