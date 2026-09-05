@@ -2430,9 +2430,29 @@ async function cargarDatos(){
     var planConfR = await fetch(BASE_URL + 'prod_planeacion_confeccion.json?t=' + t);
     if(planConfR.ok){ var d11b = await planConfR.json(); DB.planeacion_confeccion = {por_satelite: d11b.por_satelite||{}}; }
     else { DB.planeacion_confeccion = {por_satelite:{}}; }
-    var costeoR = await fetch(BASE_URL + 'prod_costeo.json?t=' + t);
-    if(costeoR.ok){ var d12 = await costeoR.json(); DB.costeo = {mp:d12.mp||[],servicios:d12.servicios||[],puestos:d12.puestos||[],tarifas_cif:d12.tarifas_cif||[],params:d12.params||{},recetas:d12.recetas||[],precios_pt:d12.precios_pt||[],receta_map:d12.receta_map||{}}; }
-    else { if(!DB.planeacion) DB.planeacion = {meses:{}}; }
+    // Costeo se edita seguido y necesita reflejarse al instante — igual que OPs/OTs/Diseños,
+    // se lee directo de la API de GitHub (Contents API) en vez de GitHub Pages, que tarda
+    // varios minutos en reconstruir el sitio tras cada commit y dejaba viendo datos viejos.
+    var costeoLoaded = false;
+    if(tk){
+      try {
+        var costeoApiR = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + FILES['costeo'], {
+          headers: {'Authorization': 'token ' + tk, 'Cache-Control': 'no-cache'}
+        });
+        if(costeoApiR.ok){
+          var costeoApiData = await costeoApiR.json();
+          _fileShas['costeo'] = costeoApiData.sha;
+          var d12 = JSON.parse(decodeURIComponent(escape(atob(costeoApiData.content.replace(/\n/g,'')))));
+          DB.costeo = {mp:d12.mp||[],servicios:d12.servicios||[],puestos:d12.puestos||[],tarifas_cif:d12.tarifas_cif||[],params:d12.params||{},recetas:d12.recetas||[],precios_pt:d12.precios_pt||[],receta_map:d12.receta_map||{}};
+          costeoLoaded = true;
+        }
+      } catch(e){}
+    }
+    if(!costeoLoaded){
+      var costeoR = await fetch(BASE_URL + 'prod_costeo.json?t=' + t);
+      if(costeoR.ok){ var d12b = await costeoR.json(); DB.costeo = {mp:d12b.mp||[],servicios:d12b.servicios||[],puestos:d12b.puestos||[],tarifas_cif:d12b.tarifas_cif||[],params:d12b.params||{},recetas:d12b.recetas||[],precios_pt:d12b.precios_pt||[],receta_map:d12b.receta_map||{}}; }
+    }
+    if(!DB.planeacion) DB.planeacion = {meses:{}};
     var cronR = await fetch(BASE_URL + 'prod_cronograma.json?t=' + t);
     if(cronR.ok){ var d13 = await cronR.json(); DB.cronograma = d13.cronograma||[]; }
     else { DB.cronograma = []; }
