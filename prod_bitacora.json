@@ -16520,17 +16520,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "estado": "ENTREGADO",
       "id": "evt_1788627299457_obrz2",
-      "ts": 1788627299457,
-      "user": "Jefa de Producción",
-      "tipo": "entrega_inline",
-      "ot_id": "id_1787261422690_hg01za2mq",
       "numero_ot": 13200,
       "op_id": "OP-2026-117",
+      "ot_id": "id_1787261422690_hg01za2mq",
+      "pendientes": 0,
+      "satelite": "CLAUDIA GARCIA SANTANA",
+      "talla": "T10",
+      "tipo": "entrega_inline",
+      "ts": 1788627299457,
       "uds_entregadas": 12,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788627310187_la11e",
+      "ts": 1788627310187,
+      "user": "Jefa de Producción",
+      "tipo": "entrega_inline",
+      "ot_id": "id_1787261422690_4eggv1s61",
+      "numero_ot": 13204,
+      "op_id": "OP-2026-117",
+      "uds_entregadas": 2,
       "pendientes": 0,
       "estado": "ENTREGADO",
-      "talla": "T10",
+      "talla": "T12",
       "satelite": "CLAUDIA GARCIA SANTANA"
     }
   ]
