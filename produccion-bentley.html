@@ -7398,6 +7398,28 @@ function abrirResumenColumna(colK){
     return c;
   }
 
+  // Si alguna OT de este color ya tiene fecha comprometida en Cronograma (_pconfFechaEntrega),
+  // se muestra como etiqueta en la tarjeta. Usada tanto por la vista "por categoría" como por
+  // "por satélite" — tiene que vivir a este nivel (no dentro de una sola rama del if/else) para
+  // que esté definida sin importar cuál de las dos ramas se ejecute.
+  function opCardConFechaHTML(oid, subgsSubset){
+    var item = byOp[oid];
+    var op = item.op;
+    var fechas = [];
+    var coloresRelevantes = subgsSubset ? subgsSubset.map(function(s){ return s.color; }) : (op.colores&&op.colores.length ? op.colores : ['—']);
+    coloresRelevantes.forEach(function(color){
+      var f = _pconfFechaEntrega(op.id, color);
+      if(f && fechas.indexOf(f)<0) fechas.push(f);
+    });
+    var c = opCardHTML(oid, subgsSubset);
+    if(fechas.length){
+      fechas.sort();
+      var tag = '<span style="display:inline-flex;align-items:center;gap:4px;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);border-radius:12px;padding:3px 9px;font-size:10px;color:#60a5fa;font-weight:700;margin-top:6px;">🎯 '+(fechas.length>1?'entregas desde ':'entrega comprometida ')+esc(fmtDate(fechas[0]))+(fechas.length>1?' hasta '+esc(fmtDate(fechas[fechas.length-1])):'')+'</span>';
+      c = c.replace(/<\/div>\s*$/, tag+'</div>');
+    }
+    return c;
+  }
+
   // Tabs "Por categoría" / "Por satélite" — solo tienen sentido en los 3 estados donde el
   // trabajo ya está en un taller real. En los demás estados (nuevas/pte.cortar/corte por
   // alistar) el color todavía no tiene satélite asignado, así que no aplica.
@@ -7499,26 +7521,6 @@ function abrirResumenColumna(colK){
       byCat[cat].uds += udsOp;
     });
     catOrder.sort(function(a,b){ return byCat[b].uds - byCat[a].uds; });
-
-    // Tercer nivel: dentro de cada referencia, las OPs — si alguna de sus OTs ya tiene fecha
-    // comprometida en Cronograma (_pconfFechaEntrega), se muestra como etiqueta en la tarjeta.
-    function opCardConFechaHTML(oid, subgsSubset){
-      var item = byOp[oid];
-      var op = item.op;
-      var fechas = [];
-      var coloresRelevantes = subgsSubset ? subgsSubset.map(function(s){ return s.color; }) : (op.colores&&op.colores.length ? op.colores : ['—']);
-      coloresRelevantes.forEach(function(color){
-        var f = _pconfFechaEntrega(op.id, color);
-        if(f && fechas.indexOf(f)<0) fechas.push(f);
-      });
-      var c = opCardHTML(oid, subgsSubset);
-      if(fechas.length){
-        fechas.sort();
-        var tag = '<span style="display:inline-flex;align-items:center;gap:4px;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);border-radius:12px;padding:3px 9px;font-size:10px;color:#60a5fa;font-weight:700;margin-top:6px;">🎯 '+(fechas.length>1?'entregas desde ':'entrega comprometida ')+esc(fmtDate(fechas[0]))+(fechas.length>1?' hasta '+esc(fmtDate(fechas[fechas.length-1])):'')+'</span>';
-        c = c.replace(/<\/div>\s*$/, tag+'</div>');
-      }
-      return c;
-    }
 
     var modalUid = 'rescol'+colK.replace(/[^A-Za-z0-9]/g,'');
     body += '<div style="display:flex;flex-direction:column;gap:8px;">';
