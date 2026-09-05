@@ -16762,14 +16762,30 @@
       "user": "John Rodriguez"
     },
     {
+      "color": "ROSA",
       "id": "evt_1788629400639_f567z",
-      "ts": 1788629400639,
-      "user": "John Rodriguez",
-      "tipo": "planeacion_asignar",
+      "mes": "2026-10",
       "op_id": "OP-2026-205",
       "op_nombre": "CAMIBUZO NEVADO",
-      "color": "ROSA",
-      "mes": "2026-10"
+      "tipo": "planeacion_asignar",
+      "ts": 1788629400639,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1788631209388_0pat3",
+      "ts": 1788631209388,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-085",
+      "op_nombre": "PANTALON RAVE",
+      "referencia": "PANTALON RAVE",
+      "color": "BEIGE",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 96,
+      "motivo": "EN TALLER"
     }
   ]
 }
