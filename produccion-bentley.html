@@ -16509,8 +16509,16 @@ function _renderModalReceta(rec){
         else if(comp.tipo==='CIF'){ nombreComp='CIF '+esc(comp.zona||''); }
         else if(comp.tipo==='MATERIAL'){ var mp=mps.find(function(x){return x.id===comp.mp_id;}); nombreComp=mp?mp.nombre:'?'; }
         else if(comp.tipo==='SERVICIO'){ var sv=svcs.find(function(x){return x.id===comp.servicio_id;}); nombreComp=sv?sv.nombre:'?'; }
+        // Actividad/operación (viene de la plantilla financiera original) — cuando el mismo
+        // puesto/zona se repite más de una vez en la receta (ej. "bodega" x3, "logística" x2),
+        // esto es lo único que distingue una fila de otra: cada una es un paso real distinto,
+        // no un duplicado. Se muestra como subtítulo debajo del nombre.
+        var actividadComp = (comp.tipo==='MOD'||comp.tipo==='CIF') ? (comp.actividad||'') : '';
         compListHtml += '<div id="mcrow-'+comp.id+'" style="display:flex;align-items:center;gap:6px;background:#0a0d14;border:1px solid #2c2c2e;border-left:3px solid '+g.color+';border-radius:6px;padding:6px 10px;margin-bottom:4px;">';
-        compListHtml += '<button id="mcname-'+comp.id+'" data-cid="'+comp.id+'" data-tipo="'+comp.tipo+'" onclick="_modalAbrirSwap(this.dataset.cid,this.dataset.tipo)" title="Click para cambiar por otro '+(comp.tipo==='MOD'?'puesto':comp.tipo==='CIF'?'zona':comp.tipo==='MATERIAL'?'insumo':'servicio')+' de la lista" style="background:none;border:none;padding:0;text-align:left;font-size:11px;color:#94a3b8;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px;">'+esc(nombreComp)+' <span style="font-size:9px;color:#334155;">▾</span></button>';
+        compListHtml += '<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;">';
+        compListHtml += '<button id="mcname-'+comp.id+'" data-cid="'+comp.id+'" data-tipo="'+comp.tipo+'" onclick="_modalAbrirSwap(this.dataset.cid,this.dataset.tipo)" title="Click para cambiar por otro '+(comp.tipo==='MOD'?'puesto':comp.tipo==='CIF'?'zona':comp.tipo==='MATERIAL'?'insumo':'servicio')+' de la lista" style="background:none;border:none;padding:0;text-align:left;font-size:11px;color:#94a3b8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px;width:fit-content;max-width:100%;">'+esc(nombreComp)+' <span style="font-size:9px;color:#334155;">▾</span></button>';
+        if(actividadComp) compListHtml += '<span style="font-size:9px;color:#475569;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+esc(actividadComp)+'">'+esc(actividadComp)+'</span>';
+        compListHtml += '</div>';
         // Editable fields
         if(comp.tipo==='MOD'||comp.tipo==='CIF'){
           var tarifaRef = comp.tipo==='MOD' ? calcTarifaMOD(comp.puesto_id) : calcTarifaCIF(comp.zona);
