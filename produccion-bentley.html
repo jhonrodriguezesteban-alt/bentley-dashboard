@@ -2734,16 +2734,86 @@ function _planObjetivoBadge(totalCat, objetivo){
 function _planRenderConfirmados(){
   var confirmadas = (DB.planeacion && DB.planeacion.confirmadas) || {};
   var entries = _planConLiveUds(Object.keys(confirmadas).map(function(k){ return Object.assign({refKey:k}, confirmadas[k]); }).filter(function(e){ return e.ok; }));
+  // Mapa nombre+categoría → diseño real, para saber si un confirmado tipo "diseño" es Fenio
+  // (crédito diferido a diciembre — no cuenta como inversión inmediata).
+  var disenosPorNombreCatConf = {};
+  (DB.disenos||[]).forEach(function(d){
+    if(d.eliminado) return;
+    disenosPorNombreCatConf[(d.categoria||'').trim().toUpperCase()+'||'+(d.nombre||'').trim().toUpperCase()] = d;
+  });
+  // Financiero global de lo confirmado — para OP usa el snapshot de costo tomado al marcar el
+  // check (mat/mod/cif/svc), escalado a la cantidad viva actual; para diseños (que no traen ese
+  // snapshot) usa el benchmark de costeo por categoría, igual que hacía el resumen de arriba.
+  var gMat=0, gMod=0, gCif=0, gSvc=0, gUdsTotal=0, gOpInv=0, gDisInv=0, gOpUds=0, gDisUds=0, gFenioInv=0;
+  entries.forEach(function(e){
+    var totalUdsRef = (e.uds||0)+(e.extra||0);
+    gUdsTotal += totalUdsRef;
+    if(e.tipo==='diseno'){
+      var dz = disenosPorNombreCatConf[(e.cat||'').trim().toUpperCase()+'||'+(e.nombre||'').trim().toUpperCase()];
+      var r = _getCosteoRef(e.cat);
+      if(r){
+        var esFenio = dz && (dz.proveedor||'').toUpperCase()==='FENIO';
+        gMat += r.mat*totalUdsRef; gMod += r.mod*totalUdsRef; gCif += r.cif*totalUdsRef; gSvc += r.svc*totalUdsRef;
+        if(esFenio) gFenioInv += r.total*totalUdsRef; else { gDisInv += r.total*totalUdsRef; }
+        gDisUds += totalUdsRef;
+      }
+    } else if(e.tieneReceta && e.uds>0){
+      var matU=(e.mat||0)/e.uds, modU=(e.mod||0)/e.uds, cifU=(e.cif||0)/e.uds, svcU=(e.svc||0)/e.uds;
+      gMat += matU*totalUdsRef; gMod += modU*totalUdsRef; gCif += cifU*totalUdsRef; gSvc += svcU*totalUdsRef;
+      gOpInv += (matU+svcU)*totalUdsRef; gOpUds += totalUdsRef;
+    }
+  });
+  var gMatSvc = gMat+gSvc;
+  var gInversionInmediata = gOpInv + gDisInv; // sin Fenio (diferido a diciembre)
+
   var h = '<div style="background:rgba(52,211,153,.04);border:1px solid rgba(52,211,153,.25);border-radius:14px;padding:16px 18px;margin-bottom:20px;">';
   h += '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">';
   h += '<div><div style="font-size:15px;font-weight:900;color:#e2e8f0;">✅ Productos confirmados</div>';
   h += '<div style="font-size:11px;color:#64748b;margin-top:2px;">'+entries.length+' referencia'+(entries.length!==1?'s':'')+' con check · se alimenta de lo que marques arriba</div></div>';
   if(entries.length){
-    var totUds = entries.reduce(function(a,e){ return a+(e.uds||0)+(e.extra||0); },0);
-    h += '<div style="text-align:right;"><div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;">Total confirmado</div>';
-    h += '<div style="font-size:26px;font-weight:900;color:#34d399;line-height:1;">'+totUds.toLocaleString('es-CO')+'<span style="font-size:11px;color:#64748b;margin-left:4px;">uds</span></div></div>';
+    h += '<div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">';
+    h += '<div style="text-align:center;">';
+    h += '<div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;">Unidades</div>';
+    h += '<div style="font-size:30px;font-weight:900;color:#f1f5f9;line-height:1;">'+gUdsTotal.toLocaleString('es-CO')+'</div>';
+    h += '</div>';
+    h += '<div style="width:1px;height:44px;background:rgba(255,255,255,.1);"></div>';
+    h += '<div style="text-align:right;">';
+    h += '<div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;">Inversión inmediata</div>';
+    h += '<div style="font-size:26px;font-weight:900;color:#34d399;line-height:1;">'+fmtCopFull(gInversionInmediata)+'</div>';
+    if(gFenioInv>0){
+      h += '<div style="margin-top:3px;display:inline-flex;align-items:center;gap:5px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:6px;padding:2px 8px;">';
+      h += '<span style="font-size:9px;color:#fbbf24;font-weight:700;">💳 FENIO dic.</span>';
+      h += '<span style="font-size:10px;font-weight:800;color:#fbbf24;">'+fmtCopFull(gFenioInv)+'</span>';
+      h += '</div>';
+    }
+    h += '</div>';
+    h += '</div>';
   }
   h += '</div>';
+  if(entries.length){
+    h += '<div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;">';
+    h += '<div style="background:rgba(14,165,233,.07);border:1px solid rgba(14,165,233,.25);border-radius:7px;padding:5px 11px;display:flex;align-items:center;gap:7px;">';
+    h += '<span style="font-size:9px;font-weight:700;color:#0ea5e9;text-transform:uppercase;letter-spacing:.3px;">Mat. Primas</span>';
+    h += '<span style="font-size:14px;font-weight:800;color:#0ea5e9;">'+fmtCopFull(gMat)+'</span>';
+    h += '</div>';
+    h += '<div style="background:rgba(168,85,247,.07);border:1px solid rgba(168,85,247,.25);border-radius:7px;padding:5px 11px;display:flex;align-items:center;gap:7px;">';
+    h += '<span style="font-size:9px;font-weight:700;color:#a855f7;text-transform:uppercase;letter-spacing:.3px;">Servicios</span>';
+    h += '<span style="font-size:14px;font-weight:800;color:#a855f7;">'+fmtCopFull(gSvc)+'</span>';
+    h += '</div>';
+    h += '<div style="background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.2);border-radius:7px;padding:5px 11px;display:flex;align-items:center;gap:7px;">';
+    h += '<span style="font-size:9px;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:.3px;">M.O.D.</span>';
+    h += '<span style="font-size:13px;font-weight:700;color:#34d399;">'+fmtCopFull(gMod)+'</span>';
+    h += '</div>';
+    h += '<div style="background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.2);border-radius:7px;padding:5px 11px;display:flex;align-items:center;gap:7px;">';
+    h += '<span style="font-size:9px;font-weight:700;color:#fbbf24;text-transform:uppercase;letter-spacing:.3px;">CIF</span>';
+    h += '<span style="font-size:13px;font-weight:700;color:#fbbf24;">'+fmtCopFull(gCif)+'</span>';
+    h += '</div>';
+    h += '<div style="background:rgba(148,163,184,.08);border:1px solid rgba(148,163,184,.3);border-radius:7px;padding:5px 11px;display:flex;align-items:center;gap:7px;" title="Materias Primas + Servicios de lo confirmado (sin M.O.D. ni CIF)">';
+    h += '<span style="font-size:9px;font-weight:800;color:#e2e8f0;text-transform:uppercase;letter-spacing:.3px;">Mat.+Svc. Total</span>';
+    h += '<span style="font-size:14px;font-weight:900;color:#f1f5f9;">'+fmtCopFull(gMatSvc)+'</span>';
+    h += '</div>';
+    h += '</div>';
+  }
   if(entries.length){
     var opEntries = entries.filter(function(e){ return e.tipo!=='diseno'; });
     var disEntries = entries.filter(function(e){ return e.tipo==='diseno'; });
@@ -5100,102 +5170,11 @@ function renderPlaneacion(){
   }
   h += '</div>';
 
-  // ── Tarjeta resumen global ───────────────────────────────────────────────────
-  var globalMat=0,globalMod=0,globalCif=0,globalSvc=0,globalTotal=0,globalUds=0,globalOps=0;
-  MESES.forEach(function(mes){
-    var keys2 = (DB.planeacion.meses||{})[mes.k]||[];
-    var mesUnits2 = keys2.map(function(key){ return planUnitsByKey[key]; }).filter(Boolean);
-    mesUnits2.forEach(function(u){
-      globalUds += _planColorUds(u.op, u.color);
-      globalOps++;
-      var c2 = _planCostoColor(u.op, u.color);
-      if(c2){ globalMat+=c2.mat; globalMod+=c2.mod; globalCif+=c2.cif; globalSvc+=c2.svc; globalTotal+=c2.total; }
-    });
-  });
-  // Sumar diseños planificados (los que tienen mes + uds asignados)
-  // Fenio: uds cuentan en mes asignado, inversión se difiere a Diciembre
-  var globalDisUds=0, globalDisInv=0, globalFenioInv=0, globalDisCount=0, globalDisMatSvc=0;
+  // ── window._planCatMap: mapa categoría → {op,color} y diseños planificados por mes.
+  // Ya no se pinta como tarjeta propia (se fusionó dentro de "Productos confirmados", más
+  // abajo) pero varias funciones (_planUdsLiveDeRef, los modales de categoría, etc.) siguen
+  // dependiendo de este mapa para recalcular unidades "en vivo".
   var disPlanGlobal = (DB.planeacion && DB.planeacion.disenos_plan) || {};
-  (DB.disenos||[]).filter(function(d){ return !d.eliminado; }).forEach(function(d){
-    var p = disPlanGlobal[d.id];
-    if(!p || !p.mes || !(p.uds>0)) return;
-    var r = _getCosteoRef(d.categoria);
-    globalDisUds += p.uds;
-    globalDisCount++;
-    if(r){
-      if((d.proveedor||'').toUpperCase()==='FENIO') globalFenioInv += p.uds * r.total;
-      else { globalDisInv += p.uds * r.total; globalDisMatSvc += p.uds * (r.mat+r.svc); }
-    }
-  });
-  var globalUdsCombinado = globalUds + globalDisUds;
-
-  h += '<div style="background:linear-gradient(135deg,rgba(10,132,255,.06),rgba(139,92,246,.06));border:1px solid rgba(10,132,255,.2);border-radius:14px;padding:18px 22px;margin-bottom:20px;">';
-  h += '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">';
-  h += '<div>';
-  h += '<div style="font-size:13px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.8px;">Resumen Total Planeado</div>';
-  h += '<div style="font-size:11px;color:#475569;margin-top:2px;">'+globalOps+' color'+(globalOps!==1?'es':'')+' programados';
-  if(globalDisCount>0) h += ' <span style="color:#34d399;">· '+globalDisCount+' diseños planificados</span>';
-  h += '</div>';
-  h += '</div>';
-  // Header derecho: Unidades grandes + inversión separando Fenio
-  var globalMatSvc = globalMat + globalSvc;
-  var grandTotal = globalMatSvc + globalDisInv; // SIN Fenio (diferido)
-  var grandTotalConFenio = grandTotal + globalFenioInv; // Total completo
-  h += '<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">';
-  // Unidades
-  h += '<div style="text-align:center;">';
-  h += '<div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;">Unidades</div>';
-  h += '<div style="font-size:36px;font-weight:900;color:#f1f5f9;line-height:1;">'+globalUdsCombinado.toLocaleString('es-CO')+'</div>';
-  if(globalDisUds>0){
-    h += '<div style="font-size:9px;color:#64748b;margin-top:3px;font-variant-numeric:tabular-nums;">';
-    h += globalUds.toLocaleString('es-CO')+' prod. + <span style="color:#34d399;">'+globalDisUds.toLocaleString('es-CO')+' diseños</span>';
-    h += '</div>';
-  }
-  h += '</div>';
-  h += '<div style="width:1px;height:70px;background:rgba(255,255,255,.1);"></div>';
-  // Inversión al contado (sin Fenio)
-  h += '<div style="text-align:right;">';
-  h += '<div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;">Inversión inmediata</div>';
-  h += '<div style="font-size:32px;font-weight:900;color:#f1f5f9;line-height:1;">'+fmtCopFull(grandTotal)+'</div>';
-  if(globalDisInv>0 || globalMatSvc>0){
-    h += '<div style="font-size:9px;color:#64748b;margin-top:2px;font-variant-numeric:tabular-nums;">';
-    h += fmtCopFull(globalMatSvc)+' prod.';
-    if(globalDisInv>0) h += ' + <span style="color:#34d399;">'+fmtCopFull(globalDisInv)+' diseños</span>';
-    h += '</div>';
-  }
-  if(globalFenioInv>0){
-    h += '<div style="margin-top:4px;display:inline-flex;align-items:center;gap:5px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:6px;padding:2px 8px;">';
-    h += '<span style="font-size:9px;color:#fbbf24;font-weight:700;">💳 FENIO dic.</span>';
-    h += '<span style="font-size:11px;font-weight:800;color:#fbbf24;font-variant-numeric:tabular-nums;">'+fmtCopFull(globalFenioInv)+'</span>';
-    h += '</div>';
-  }
-  h += '</div>';
-  h += '</div>';
-  h += '</div>';
-  // Mat + Servicios + MOD + CIF: chips en una línea compacta
-  h += '<div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;">';
-  h += '<div style="background:rgba(14,165,233,.07);border:1px solid rgba(14,165,233,.25);border-radius:7px;padding:5px 11px;display:flex;align-items:center;gap:7px;">';
-  h += '<span style="font-size:9px;font-weight:700;color:#0ea5e9;text-transform:uppercase;letter-spacing:.3px;">Mat. Primas</span>';
-  h += '<span style="font-size:14px;font-weight:800;color:#0ea5e9;">'+fmtCopFull(globalMat)+'</span>';
-  h += '</div>';
-  h += '<div style="background:rgba(168,85,247,.07);border:1px solid rgba(168,85,247,.25);border-radius:7px;padding:5px 11px;display:flex;align-items:center;gap:7px;">';
-  h += '<span style="font-size:9px;font-weight:700;color:#a855f7;text-transform:uppercase;letter-spacing:.3px;">Servicios</span>';
-  h += '<span style="font-size:14px;font-weight:800;color:#a855f7;">'+fmtCopFull(globalSvc)+'</span>';
-  h += '</div>';
-  h += '<div style="background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.2);border-radius:7px;padding:5px 11px;display:flex;align-items:center;gap:7px;">';
-  h += '<span style="font-size:9px;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:.3px;">M.O.D.</span>';
-  h += '<span style="font-size:13px;font-weight:700;color:#34d399;">'+fmtCopFull(globalMod)+'</span>';
-  h += '</div>';
-  h += '<div style="background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.2);border-radius:7px;padding:5px 11px;display:flex;align-items:center;gap:7px;">';
-  h += '<span style="font-size:9px;font-weight:700;color:#fbbf24;text-transform:uppercase;letter-spacing:.3px;">CIF</span>';
-  h += '<span style="font-size:13px;font-weight:700;color:#fbbf24;">'+fmtCopFull(globalCif)+'</span>';
-  h += '</div>';
-  h += '<div style="background:rgba(148,163,184,.08);border:1px solid rgba(148,163,184,.3);border-radius:7px;padding:5px 11px;display:flex;align-items:center;gap:7px;" title="Materias Primas + Servicios — producción real más el estimado de diseños planificados (sin M.O.D. ni CIF)">';
-  h += '<span style="font-size:9px;font-weight:800;color:#e2e8f0;text-transform:uppercase;letter-spacing:.3px;">Mat.+Svc. Total</span>';
-  h += '<span style="font-size:14px;font-weight:900;color:#f1f5f9;">'+fmtCopFull(globalMatSvc+globalDisMatSvc)+'</span>';
-  h += '</div>';
-  h += '</div>';
-  // Breakdown por categoría — ordenado de mayor a menor uds (OPs + diseños planificados)
   var catMap = {};
   MESES.forEach(function(mes){
     var keys3 = (DB.planeacion.meses||{})[mes.k]||[];
@@ -5208,7 +5187,6 @@ function renderPlaneacion(){
       catMap[cat].uds += _planColorUds(u.op, u.color);
     });
   });
-  // Sumar diseños planificados al catMap por categoría
   (DB.disenos||[]).filter(function(d){ return !d.eliminado; }).forEach(function(d){
     var p = disPlanGlobal[d.id];
     if(!p || !p.mes || !(p.uds>0)) return;
@@ -5219,31 +5197,9 @@ function renderPlaneacion(){
     catMap[cat].refs.push({diseno:d, mes:p.mes, uds:p.uds});
   });
   window._planCatMap = catMap;
-  var catKeys = Object.keys(catMap).sort(function(a,b){ return catMap[b].uds - catMap[a].uds; });
-  if(catKeys.length){
-    h += '<div style="border-top:1px solid rgba(255,255,255,.06);padding-top:14px;">';
-    h += '<div style="font-size:9px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">Unidades por categoría — click para ver referencias</div>';
-    h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;">';
-    catKeys.forEach(function(cat){
-      var info = catMap[cat];
-      var pct = globalUdsCombinado>0 ? (info.uds/globalUdsCombinado*100) : 0;
-      h += '<div onclick="planVerCategoria(\''+cat+'\')" style="background:rgba(255,255,255,.04);border:1px solid #2c2c2e;border-radius:10px;padding:12px 13px;cursor:pointer;transition:border-color .15s,background .15s;" onmouseover="this.style.borderColor=\'rgba(10,132,255,.4)\';this.style.background=\'rgba(10,132,255,.04)\'" onmouseout="this.style.borderColor=\'#2c2c2e\';this.style.background=\'rgba(255,255,255,.04)\'">';
-      h += '<div style="font-size:9px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;">'+cat+'</div>';
-      h += '<div style="font-size:28px;font-weight:900;color:#f1f5f9;line-height:1;margin-bottom:4px;">'+info.uds.toLocaleString('es-CO')+'</div>';
-      // Barra de participación
-      h += '<div style="height:3px;background:#2c2c2e;border-radius:2px;margin-bottom:6px;"><div style="height:100%;width:'+pct.toFixed(1)+'%;background:linear-gradient(90deg,#0a84ff,#a855f7);border-radius:2px;"></div></div>';
-      h += '<div style="display:flex;justify-content:space-between;align-items:center;">';
-      var refsLabel = info.refs.length ? info.refs.length+' '+(info.refs.length===1?'ref':'refs') : '';
-      var disLabel  = info.disUds ? '<span style="color:#34d399;">+'+info.disUds.toLocaleString('es-CO')+' dis.</span>' : '';
-      h += '<span style="font-size:10px;color:#475569;">'+refsLabel+(refsLabel&&disLabel?' ':'')+disLabel+'</span>';
-      h += '<span style="font-size:11px;font-weight:700;color:#0a84ff;">'+pct.toFixed(1)+'%</span>';
-      h += '</div></div>';
-    });
-    h += '</div></div>';
-  }
-  h += '</div>';
 
-  // ── Productos confirmados (chuleados) ───────────────────────────────────────
+  // ── Productos confirmados (chuleados) — incluye el resumen financiero (Mat/Svc/MOD/CIF,
+  // unidades e inversión inmediata) que antes vivía en la tarjeta "Resumen Total Planeado".
   h += _planRenderConfirmados();
 
   // ── Pool ─────────────────────────────────────────────────────────────────────
