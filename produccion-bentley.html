@@ -4612,6 +4612,11 @@ function _planDisMiniCard(d, planD){
   return h;
 }
 
+var _histCardOpen = {};
+function _planHistToggleCard(key){
+  _histCardOpen[key] = !_histCardOpen[key];
+  renderPage('planeacion');
+}
 function _renderPlanHistorialCorte(MESES){
   var hist = (DB.planeacion && DB.planeacion.historial_corte) || [];
   var h = '<div style="padding:16px 20px 40px;">';
@@ -4652,19 +4657,48 @@ function _renderPlanHistorialCorte(MESES){
         return (a.color||'').localeCompare(b.color||'');
       });
       h += '<div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.6px;margin:10px 0 6px;">'+esc(cat)+'</div>';
+      // Consolidar por OP: si una OP tiene varios colores cortados en este mes, se ve como
+      // una sola tarjeta con la cantidad global; al abrirla se desglosa por color.
+      var porOp = {};
+      catItems.forEach(function(e){ (porOp[e.op_id]=porOp[e.op_id]||[]).push(e); });
+      var opGroups = Object.keys(porOp).map(function(opId){
+        var colores = porOp[opId];
+        var udsTotal = colores.reduce(function(a,c){ return a+(c.uds||0); },0);
+        var fechaMax = colores.reduce(function(a,c){ return (c.fecha_deteccion||'') > a ? (c.fecha_deteccion||'') : a; },'');
+        return {opId:opId, colores:colores, udsTotal:udsTotal, fechaMax:fechaMax, op_nombre:colores[0].op_nombre, categoria:colores[0].categoria};
+      }).sort(function(a,b){ return (a.op_nombre||'').localeCompare(b.op_nombre||''); });
       h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;">';
-      catItems.forEach(function(e){
-        h += '<div data-opid="'+e.op_id+'" onclick="verDetalleOP(this.dataset.opid)" style="background:#0d1117;border:1px solid rgba(52,211,153,.2);border-radius:9px;padding:10px 12px;cursor:pointer;">';
+      opGroups.forEach(function(g){
+        var key = mes.k+'||'+g.opId;
+        var open = !!_histCardOpen[key];
+        var multi = g.colores.length > 1;
+        h += '<div style="background:#0d1117;border:1px solid rgba(52,211,153,.2);border-radius:9px;padding:10px 12px;">';
+        h += '<div data-key="'+esc(key)+'" onclick="'+(multi?'_planHistToggleCard(this.dataset.key)':'verDetalleOP(\''+esc(g.opId)+'\')')+'" style="cursor:pointer;">';
         h += '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">';
-        h += '<span style="font-size:11px;font-weight:800;color:#0a84ff;">'+esc(fmtOpId(e.op_id))+'</span>';
-        h += '<span style="font-size:8px;font-weight:700;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);color:#34d399;border-radius:4px;padding:1px 5px;text-transform:uppercase;">'+esc(e.categoria||'')+'</span>';
+        h += '<span style="font-size:11px;font-weight:800;color:#0a84ff;">'+esc(fmtOpId(g.opId))+'</span>';
+        h += '<span style="font-size:8px;font-weight:700;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);color:#34d399;border-radius:4px;padding:1px 5px;text-transform:uppercase;">'+esc(g.categoria||'')+'</span>';
+        if(multi) h += '<span style="margin-left:auto;font-size:10px;color:#475569;">'+(open?'▲':'▼')+'</span>';
         h += '</div>';
-        h += '<div style="font-size:12px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:4px;">'+esc(e.op_nombre||'')+'</div>';
-        if(e.color && e.color!=='—') h += '<span style="font-size:9px;font-weight:700;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);border-radius:3px;color:#0a84ff;padding:1px 5px;text-transform:uppercase;">'+esc(e.color)+'</span>';
+        h += '<div style="font-size:12px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:4px;">'+esc(g.op_nombre||'')+'</div>';
+        if(!multi && g.colores[0].color && g.colores[0].color!=='—') h += '<span style="font-size:9px;font-weight:700;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);border-radius:3px;color:#0a84ff;padding:1px 5px;text-transform:uppercase;">'+esc(g.colores[0].color)+'</span>';
+        if(multi) h += '<span style="font-size:9px;font-weight:700;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);border-radius:3px;color:#0a84ff;padding:1px 5px;">'+g.colores.length+' colores</span>';
         h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">';
-        h += '<span style="font-size:11px;color:#64748b;">'+(e.uds||0).toLocaleString('es-CO')+' uds</span>';
-        h += '<span style="font-size:9px;color:#475569;">✂ '+fmtDate(e.fecha_deteccion)+'</span>';
+        h += '<span style="font-size:11px;color:#64748b;">'+g.udsTotal.toLocaleString('es-CO')+' uds</span>';
+        h += '<span style="font-size:9px;color:#475569;">✂ '+fmtDate(g.fechaMax)+'</span>';
         h += '</div>';
+        h += '</div>';
+        if(multi && open){
+          h += '<div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;gap:5px;">';
+          g.colores.slice().sort(function(a,b){ return (a.color||'').localeCompare(b.color||''); }).forEach(function(c){
+            h += '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">';
+            h += '<span style="font-size:9px;font-weight:700;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);border-radius:3px;color:#0a84ff;padding:1px 5px;text-transform:uppercase;">'+esc(c.color||'—')+'</span>';
+            h += '<span style="font-size:10px;color:#94a3b8;">'+(c.uds||0).toLocaleString('es-CO')+' uds</span>';
+            h += '<span style="font-size:9px;color:#475569;">✂ '+fmtDate(c.fecha_deteccion)+'</span>';
+            h += '</div>';
+          });
+          h += '<button data-opid="'+esc(g.opId)+'" onclick="verDetalleOP(this.dataset.opid)" style="margin-top:4px;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);border-radius:6px;color:#0a84ff;font-size:10px;font-weight:700;padding:5px 8px;cursor:pointer;">Ver OP completa →</button>';
+          h += '</div>';
+        }
         h += '</div>';
       });
       h += '</div>';
