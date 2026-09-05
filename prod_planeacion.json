@@ -8,7 +8,6 @@
       "OP-0033",
       "OP-0038"
     ],
-    "2026-08": [],
     "2026-09": [
       "OP-2026-076||BEIGE",
       "OP-2026-100||NEGRO",
@@ -184,7 +183,6 @@
       "OP-2026-102||GRIS OSCURO"
     ],
     "2026-10": [
-      "OP-2026-200||NEGRO",
       "OP-2026-200||CHOCOLATE",
       "OP-2026-200||TAUPE",
       "OP-2026-200||MARFIL",
@@ -236,6 +234,9 @@
       "OP-2026-109||MARFIL",
       "OP-2026-109||NEGRO",
       "OP-2026-073||BEIGE"
+    ],
+    "2026-11": [
+      "OP-2026-200||NEGRO"
     ]
   },
   "disenos_plan": {
@@ -1336,19 +1337,19 @@
       "ts": 1787578717089
     },
     "REF||CHAQUETAS||CHAQUETA DISCOVERY": {
-      "ok": true,
-      "extra": 0,
-      "ts": 1788559523216,
       "cat": "CHAQUETAS",
-      "nombre": "CHAQUETA DISCOVERY",
-      "uds": 288,
-      "tipo": "op",
+      "cif": 0,
+      "costoTotal": 0,
+      "extra": 0,
       "mat": 0,
       "mod": 0,
-      "cif": 0,
+      "nombre": "CHAQUETA DISCOVERY",
+      "ok": true,
       "svc": 0,
-      "costoTotal": 0,
-      "tieneReceta": false
+      "tieneReceta": false,
+      "tipo": "op",
+      "ts": 1788559523216,
+      "uds": 288
     },
     "REF||CHAQUETAS||CHAQUETA FIRE": {
       "cat": "CHAQUETAS",
