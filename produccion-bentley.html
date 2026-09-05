@@ -718,6 +718,9 @@ textarea.form-control{resize:vertical;min-height:80px;}
     <div class="nav-item" onclick="navTo('planeacion')" data-page="planeacion">
       <span class="icon">📅</span><span class="nav-label"> Planeación</span>
     </div>
+    <div class="nav-item" onclick="navTo('inversion')" data-page="inversion">
+      <span class="icon">🧾</span><span class="nav-label"> Resumen de Inversión</span>
+    </div>
     <div class="nav-item" onclick="navTo('monitoreo')" data-page="monitoreo">
       <span class="icon">🔍</span><span class="nav-label"> Monitoreo Producción</span>
     </div>
@@ -741,9 +744,6 @@ textarea.form-control{resize:vertical;min-height:80px;}
     </div>
     <div class="nav-item" onclick="navTo('costeo')" data-page="costeo">
       <span class="icon">📊</span><span class="nav-label"> Costeo</span>
-    </div>
-    <div class="nav-item" onclick="navTo('inversion')" data-page="inversion">
-      <span class="icon">🧾</span><span class="nav-label"> Resumen de Inversión</span>
     </div>
     <div class="nav-item" onclick="navTo('bitacora')" data-page="bitacora">
       <span class="icon">📒</span><span class="nav-label"> Bitácora</span>
@@ -4630,7 +4630,7 @@ function _renderPlanHistorialCorte(MESES){
   h += '<div style="font-size:12px;color:#64748b;margin-bottom:16px;">'+hist.length+' colores cortados en total · '+totalUds.toLocaleString('es-CO')+' uds</div>';
 
   MESES.forEach(function(mes){
-    var items = (porMes[mes.k]||[]).slice().sort(function(a,b){ return (b.fecha_deteccion||'').localeCompare(a.fecha_deteccion||''); });
+    var items = (porMes[mes.k]||[]).slice();
     if(!items.length) return;
     var udsMes = items.reduce(function(a,e){ return a+(e.uds||0); },0);
     h += '<div style="margin-bottom:20px;">';
@@ -4638,22 +4638,38 @@ function _renderPlanHistorialCorte(MESES){
     h += '<span style="font-size:13px;font-weight:800;color:'+mes.color+';text-transform:uppercase;letter-spacing:.5px;">'+mes.label+'</span>';
     h += '<span style="font-size:11px;color:#475569;">'+items.length+' color'+(items.length!==1?'es':'')+' cortados · '+udsMes.toLocaleString('es-CO')+' uds</span>';
     h += '</div>';
-    h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;">';
+    // Orden de corte: por categoría y luego por referencia (nombre de producto), en vez de
+    // por fecha — así se ve de un vistazo qué se ha cortado de cada categoría/referencia.
+    var porCat = {};
     items.forEach(function(e){
-      h += '<div data-opid="'+e.op_id+'" onclick="verDetalleOP(this.dataset.opid)" style="background:#0d1117;border:1px solid rgba(52,211,153,.2);border-radius:9px;padding:10px 12px;cursor:pointer;">';
-      h += '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">';
-      h += '<span style="font-size:11px;font-weight:800;color:#0a84ff;">'+esc(fmtOpId(e.op_id))+'</span>';
-      h += '<span style="font-size:8px;font-weight:700;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);color:#34d399;border-radius:4px;padding:1px 5px;text-transform:uppercase;">'+esc(e.categoria||'')+'</span>';
-      h += '</div>';
-      h += '<div style="font-size:12px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:4px;">'+esc(e.op_nombre||'')+'</div>';
-      if(e.color && e.color!=='—') h += '<span style="font-size:9px;font-weight:700;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);border-radius:3px;color:#0a84ff;padding:1px 5px;text-transform:uppercase;">'+esc(e.color)+'</span>';
-      h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">';
-      h += '<span style="font-size:11px;color:#64748b;">'+(e.uds||0).toLocaleString('es-CO')+' uds</span>';
-      h += '<span style="font-size:9px;color:#475569;">✂ '+fmtDate(e.fecha_deteccion)+'</span>';
-      h += '</div>';
+      var cat = (e.categoria||'Sin categoría').trim().toUpperCase();
+      (porCat[cat]=porCat[cat]||[]).push(e);
+    });
+    Object.keys(porCat).sort().forEach(function(cat){
+      var catItems = porCat[cat].slice().sort(function(a,b){
+        var na=(a.op_nombre||'').localeCompare(b.op_nombre||'');
+        if(na) return na;
+        return (a.color||'').localeCompare(b.color||'');
+      });
+      h += '<div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.6px;margin:10px 0 6px;">'+esc(cat)+'</div>';
+      h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;">';
+      catItems.forEach(function(e){
+        h += '<div data-opid="'+e.op_id+'" onclick="verDetalleOP(this.dataset.opid)" style="background:#0d1117;border:1px solid rgba(52,211,153,.2);border-radius:9px;padding:10px 12px;cursor:pointer;">';
+        h += '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">';
+        h += '<span style="font-size:11px;font-weight:800;color:#0a84ff;">'+esc(fmtOpId(e.op_id))+'</span>';
+        h += '<span style="font-size:8px;font-weight:700;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);color:#34d399;border-radius:4px;padding:1px 5px;text-transform:uppercase;">'+esc(e.categoria||'')+'</span>';
+        h += '</div>';
+        h += '<div style="font-size:12px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:4px;">'+esc(e.op_nombre||'')+'</div>';
+        if(e.color && e.color!=='—') h += '<span style="font-size:9px;font-weight:700;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);border-radius:3px;color:#0a84ff;padding:1px 5px;text-transform:uppercase;">'+esc(e.color)+'</span>';
+        h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">';
+        h += '<span style="font-size:11px;color:#64748b;">'+(e.uds||0).toLocaleString('es-CO')+' uds</span>';
+        h += '<span style="font-size:9px;color:#475569;">✂ '+fmtDate(e.fecha_deteccion)+'</span>';
+        h += '</div>';
+        h += '</div>';
+      });
       h += '</div>';
     });
-    h += '</div></div>';
+    h += '</div>';
   });
   h += '</div>';
   return h;
