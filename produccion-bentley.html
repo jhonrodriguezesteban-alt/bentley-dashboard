@@ -16345,6 +16345,30 @@ function _renderModalReceta(rec){
     if(!gc.length){
       compListHtml += '<div style="font-size:11px;color:#2c2c2e;padding:6px 10px;border:1px dashed #2c2c2e;border-radius:6px;">Sin componentes de este tipo</div>';
     } else {
+      // Encabezado de columnas — para que quede claro qué es cada número (tiempo en MINUTOS,
+      // no horas) sin tener que adivinar por el contexto.
+      compListHtml += '<div style="display:flex;align-items:center;gap:6px;padding:0 10px 3px;">';
+      compListHtml += '<span style="font-size:9px;color:#334155;flex:1;min-width:0;">Puesto / zona</span>';
+      if(g.tipo==='MOD'||g.tipo==='CIF'){
+        compListHtml += '<span style="font-size:9px;color:#334155;white-space:nowrap;width:56px;">Tarifa/min</span>';
+        compListHtml += '<span style="font-size:9px;color:#334155;white-space:nowrap;width:52px;text-align:center;">Tiempo (min)</span>';
+        compListHtml += '<span style="font-size:9px;color:#334155;width:10px;"></span>';
+        compListHtml += '<span style="font-size:9px;color:#334155;white-space:nowrap;width:48px;text-align:center;">Uds</span>';
+        compListHtml += '<span style="font-size:9px;color:#334155;width:12px;"></span>';
+      } else if(g.tipo==='MATERIAL'){
+        compListHtml += '<span style="font-size:9px;color:#334155;white-space:nowrap;width:64px;text-align:center;">Consumo</span>';
+        compListHtml += '<span style="font-size:9px;color:#334155;width:24px;"></span>';
+        compListHtml += '<span style="font-size:9px;color:#334155;width:10px;"></span>';
+        compListHtml += '<span style="font-size:9px;color:#334155;white-space:nowrap;width:64px;text-align:center;">Precio unit.</span>';
+      } else if(g.tipo==='SERVICIO'){
+        compListHtml += '<span style="font-size:9px;color:#334155;white-space:nowrap;width:52px;text-align:center;">Cantidad</span>';
+        compListHtml += '<span style="font-size:9px;color:#334155;width:24px;"></span>';
+        compListHtml += '<span style="font-size:9px;color:#334155;width:10px;"></span>';
+        compListHtml += '<span style="font-size:9px;color:#334155;white-space:nowrap;width:64px;text-align:center;">Costo unit.</span>';
+      }
+      compListHtml += '<span style="font-size:9px;color:#334155;white-space:nowrap;min-width:58px;text-align:right;">Subtotal</span>';
+      compListHtml += '<span style="width:16px;"></span>';
+      compListHtml += '</div>';
       gc.forEach(function(comp){
         var costo = calcCostoComp(comp);
         var nombreComp='';
@@ -16359,6 +16383,7 @@ function _renderModalReceta(rec){
           var tarifaRef = comp.tipo==='MOD' ? calcTarifaMOD(comp.puesto_id) : calcTarifaCIF(comp.zona);
           compListHtml += '<span style="font-size:9px;color:#334155;white-space:nowrap;">'+fmtCopFull(tarifaRef)+'/min</span>';
           compListHtml += '<input type="number" min="0" step="0.01" value="'+(comp.tiempo_minutos||0)+'" data-cid="'+comp.id+'" data-campo="tiempo_minutos" oninput="_modalEditComp(this)" style="width:52px;background:#0d1117;border:1px solid #2c2c2e;border-radius:4px;color:#fbbf24;font-size:11px;padding:2px 4px;text-align:center;" placeholder="min">';
+          compListHtml += '<span style="font-size:9px;color:#475569;">min</span>';
           compListHtml += '<span style="font-size:10px;color:#475569;">÷</span>';
           compListHtml += '<input type="number" min="1" step="1" value="'+(comp.unidades||1)+'" data-cid="'+comp.id+'" data-campo="unidades" oninput="_modalEditComp(this)" style="width:48px;background:#0d1117;border:1px solid #2c2c2e;border-radius:4px;color:#34d399;font-size:11px;padding:2px 4px;text-align:center;" placeholder="uds">';
           compListHtml += '<span style="font-size:10px;color:#475569;">uds</span>';
