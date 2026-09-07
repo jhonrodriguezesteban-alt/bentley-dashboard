@@ -16896,16 +16896,27 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1788789921253_tnhrz",
-      "ts": 1788789921253,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782400432936_kd4g7xnnv",
-      "nombre": "CAMISETA GIRLI",
       "categoria": "Blusas",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1782400432936_kd4g7xnnv",
       "estado_anterior": "EN_ESCALADO",
-      "estado_nuevo": "LISTA_PRODUCCION"
+      "estado_nuevo": "LISTA_PRODUCCION",
+      "id": "evt_1788789921253_tnhrz",
+      "marca": "Bentley Kids",
+      "nombre": "CAMISETA GIRLI",
+      "tipo": "estado_diseno",
+      "ts": 1788789921253,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1788789961056_rm86a",
+      "ts": 1788789961056,
+      "user": "Isabel",
+      "tipo": "diseno_responsable",
+      "diseno_id": "id_1782162430849_8gi3mpnjv",
+      "nombre": "BODY BASICO",
+      "categoria": "BODYS",
+      "resp_anterior": "Carolina",
+      "resp_nuevo": "John"
     }
   ]
 }
