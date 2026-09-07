@@ -16788,20 +16788,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1788631235238_imizj",
-      "ts": 1788631235238,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-085",
       "op_nombre": "PANTALON RAVE",
       "referencia": "PANTALON RAVE",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1788631235238,
       "uds": 120,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1788782948540_678l1",
+      "ts": 1788782948540,
+      "user": "Isabel",
+      "tipo": "diseno_comentario",
+      "diseno_id": "id_1782402877635_t7jvdv957",
+      "nombre": "CAMISETA MISO",
+      "categoria": "Camisetas",
+      "tiene_imagen": false,
+      "extracto": "Modificaciones realizadas. Lista para producción."
     }
   ]
 }
