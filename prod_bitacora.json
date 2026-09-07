@@ -16838,16 +16838,39 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1788787876940_9o90k",
-      "ts": 1788787876940,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782165786544_6e86om29m",
-      "nombre": "PANTALON POLLY",
       "categoria": "Pantalones",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1782165786544_6e86om29m",
       "estado_anterior": "LISTA_PRODUCCION",
-      "estado_nuevo": "EN_CORTE_MUESTRA"
+      "estado_nuevo": "EN_CORTE_MUESTRA",
+      "id": "evt_1788787876940_9o90k",
+      "marca": "Bentley Kids",
+      "nombre": "PANTALON POLLY",
+      "tipo": "estado_diseno",
+      "ts": 1788787876940,
+      "user": "Isabel"
+    },
+    {
+      "categoria": "Pantalones",
+      "diseno_id": "id_1782165786544_6e86om29m",
+      "estado_anterior": "EN_CORTE_MUESTRA",
+      "estado_nuevo": "LISTA_PRODUCCION",
+      "id": "evt_1788787930356_1p27s",
+      "marca": "Bentley Kids",
+      "nombre": "PANTALON POLLY",
+      "tipo": "estado_diseno",
+      "ts": 1788787930356,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1788788385344_mit2s",
+      "ts": 1788788385344,
+      "user": "Isabel",
+      "tipo": "diseno_responsable",
+      "diseno_id": "id_1782401804563_fdxl77k8w",
+      "nombre": "CONJUNTO CHELSY",
+      "categoria": "Conjuntos",
+      "resp_anterior": "Carolina",
+      "resp_nuevo": "John"
     }
   ]
 }
