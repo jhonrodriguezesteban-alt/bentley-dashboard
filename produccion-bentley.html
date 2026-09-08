@@ -730,6 +730,9 @@ textarea.form-control{resize:vertical;min-height:80px;}
     <div class="nav-item" onclick="navTo('cronograma')" data-page="cronograma">
       <span class="icon">🎯</span><span class="nav-label"> Cronograma</span>
     </div>
+    <div class="nav-item" onclick="navTo('trazos')" data-page="trazos">
+      <span class="icon">📐</span><span class="nav-label"> Trazos</span>
+    </div>
     <div class="nav-item" onclick="navTo('diseno')" data-page="diseno">
       <span class="icon">🎨</span><span class="nav-label"> Diseño</span>
     </div>
@@ -1031,6 +1034,7 @@ function _fbApplyKey(key, d){
   else if(key==='sim')       { DB.sim={active:d.active||[],data:d.data||{}}; _simActive=DB.sim.active; _simData=DB.sim.data; }
   else if(key==='usuarios')  { DB.usuarios = d.usuarios||[]; }
   else if(key==='costeo')    { DB.costeo = d; }
+  else if(key==='trazos')    { DB.trazos = {solicitudes: d.solicitudes||[]}; }
 }
 
 async function _fbMigrarSiVacio(){
@@ -1065,7 +1069,7 @@ var _fbListenersActive = false;
 function _iniciarListenersFirebase(){
   if(!_fbDb || _fbListenersActive) return;
   _fbListenersActive = true;
-  var KEYS = ['ops','ots','disenos','logistica','satelites','costos_mo','bitacora','cronograma','prog_ops','planeacion','planeacion_confeccion','sim','usuarios','costeo'];
+  var KEYS = ['ops','ots','disenos','logistica','satelites','costos_mo','bitacora','cronograma','prog_ops','planeacion','planeacion_confeccion','sim','usuarios','costeo','trazos'];
   KEYS.forEach(function(key){
     _fbDb.ref(FB_ROOT+'/'+key).on('value', function(snap){
       // Para bitácora: NUNCA ignorar el echo propio — el merge por ID es idempotente
@@ -1091,7 +1095,7 @@ var GT = (function(){
 
 // ─── Constants ─────────────────────────────────────────────────────────────────
 var REPO = 'jhonrodriguezesteban-alt/bentley-dashboard';
-var FILES = { satelites: 'prod_satelites.json', ops: 'prod_ops.json', ots: 'prod_ots.json', disenos: 'prod_disenos.json', prog_ops: 'prod_prog_ops.json', costos_mo: 'prod_costos_mo.json', usuarios: 'prod_usuarios.json', sim: 'prod_simulador.json', logistica: 'prod_logistica.json', planeacion: 'prod_planeacion.json', planeacion_confeccion: 'prod_planeacion_confeccion.json', costeo: 'prod_costeo.json', cronograma: 'prod_cronograma.json', bitacora: 'prod_bitacora.json' };
+var FILES = { satelites: 'prod_satelites.json', ops: 'prod_ops.json', ots: 'prod_ots.json', disenos: 'prod_disenos.json', prog_ops: 'prod_prog_ops.json', costos_mo: 'prod_costos_mo.json', usuarios: 'prod_usuarios.json', sim: 'prod_simulador.json', logistica: 'prod_logistica.json', planeacion: 'prod_planeacion.json', planeacion_confeccion: 'prod_planeacion_confeccion.json', costeo: 'prod_costeo.json', cronograma: 'prod_cronograma.json', bitacora: 'prod_bitacora.json', trazos: 'prod_trazos.json' };
 var BASE_URL = 'https://jhonrodriguezesteban-alt.github.io/bentley-dashboard/';
 var RAW_URL = 'https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/';
 
@@ -1130,7 +1134,7 @@ var ESTADO_LABELS = {
 };
 
 // ─── State ─────────────────────────────────────────────────────────────────────
-var DB = { satelites: [], ops: [], ots: [], disenos: [], prog_ops: [], disenos_cfg: {}, costos_mo: {precios:[], pagos:[]}, sim: {active:[], data:{}}, logistica: {tareas:[]}, costeo: {mp:[],servicios:[],puestos:[],tarifas_cif:[],params:{},recetas:[],precios_pt:[]}, bitacora: {eventos:[]} };
+var DB = { satelites: [], ops: [], ots: [], disenos: [], prog_ops: [], disenos_cfg: {}, costos_mo: {precios:[], pagos:[]}, sim: {active:[], data:{}}, logistica: {tareas:[]}, costeo: {mp:[],servicios:[],puestos:[],tarifas_cif:[],params:{},recetas:[],precios_pt:[]}, bitacora: {eventos:[]}, trazos: {solicitudes:[]} };
 var currentPage = 'dashboard';
 var _opDetalleId = null;
 var _opEditMode = false;
@@ -1191,7 +1195,7 @@ function _getHash(u){ if(_U[u]) return _U[u]; var cfg=_getCfgUsers(); return (cf
 // Devuelve nombre display
 function _getName(u){ var cfg=_getCfgUsers(); return (cfg[u]&&cfg[u].name)||_NAMES[u]||u; }
 // Módulos permitidos para un usuario (jhon = todos)
-var ALL_MODULES = ['dashboard','satelites','ops','monitoreo','planconf','cronograma','diseno','planeacion','logistica','novedades','costos_mo','costeo','inversion','bitacora'];
+var ALL_MODULES = ['dashboard','satelites','ops','monitoreo','planconf','cronograma','trazos','diseno','planeacion','logistica','novedades','costos_mo','costeo','inversion','bitacora'];
 function _getModules(u){
   if(u==='jhon') return ALL_MODULES.slice();
   var cfg=_getCfgUsers();
@@ -1321,7 +1325,7 @@ function applyModuleAccess(uid){
 
 var ALL_MODULE_LABELS = {
   dashboard:'Dashboard', satelites:'Satélites', ops:'OTs', monitoreo:'Monitoreo Producción',
-  planconf:'Planeación Confección', cronograma:'Cronograma',
+  planconf:'Planeación Confección', cronograma:'Cronograma', trazos:'Trazos',
   diseno:'Diseño', planeacion:'Planeación', logistica:'Logística', novedades:'Novedades',
   costos_mo:'Pagos', costeo:'Costeo y Rentabilidad', inversion:'Resumen de Inversión', bitacora:'Bitácora'
 };
@@ -2453,6 +2457,28 @@ async function cargarDatos(){
       if(costeoR.ok){ var d12b = await costeoR.json(); DB.costeo = {mp:d12b.mp||[],servicios:d12b.servicios||[],puestos:d12b.puestos||[],tarifas_cif:d12b.tarifas_cif||[],params:d12b.params||{},recetas:d12b.recetas||[],precios_pt:d12b.precios_pt||[],receta_map:d12b.receta_map||{}}; }
     }
     if(!DB.planeacion) DB.planeacion = {meses:{}};
+    // Trazos: mismo motivo que Costeo — se edita seguido, va directo por API.
+    var trazosLoaded = false;
+    if(tk){
+      try {
+        var trazosApiR = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + FILES['trazos'], {
+          headers: {'Authorization': 'token ' + tk, 'Cache-Control': 'no-cache'}
+        });
+        if(trazosApiR.ok){
+          var trazosApiData = await trazosApiR.json();
+          _fileShas['trazos'] = trazosApiData.sha;
+          var d12t = JSON.parse(decodeURIComponent(escape(atob(trazosApiData.content.replace(/\n/g,'')))));
+          DB.trazos = {solicitudes: d12t.solicitudes||[]};
+          trazosLoaded = true;
+        }
+      } catch(e){}
+    }
+    if(!trazosLoaded){
+      try {
+        var trazosR = await fetch(BASE_URL + 'prod_trazos.json?t=' + t);
+        if(trazosR.ok){ var d12tb = await trazosR.json(); DB.trazos = {solicitudes: d12tb.solicitudes||[]}; }
+      } catch(e){}
+    }
     var cronR = await fetch(BASE_URL + 'prod_cronograma.json?t=' + t);
     if(cronR.ok){ var d13 = await cronR.json(); DB.cronograma = d13.cronograma||[]; }
     else { DB.cronograma = []; }
@@ -2494,6 +2520,8 @@ async function cargarDatos(){
           if(fbBit) DB.bitacora = {eventos: fbBit.eventos||[]};
           var fbCosteo = await _fbGet('costeo');
           if(fbCosteo) DB.costeo = fbCosteo;
+          var fbTrazos = await _fbGet('trazos');
+          if(fbTrazos) DB.trazos = {solicitudes: fbTrazos.solicitudes||[]};
           var fbCmo = await _fbGet('costos_mo');
           if(fbCmo) DB.costos_mo = {precios: fbCmo.precios||[], pagos: fbCmo.pagos||[]};
           var fbProg = await _fbGet('prog_ops');
@@ -2592,7 +2620,7 @@ function navTo(page){
   localStorage.setItem('bentley_last_page', page);
   if(page !== 'ops') _opDetalleId = null;
   document.querySelectorAll('.nav-item').forEach(function(el){ el.classList.toggle('active', el.dataset.page===page); });
-  var titles = {dashboard:'⬡ DASHBOARD',satelites:'🏭 SATÉLITES',ops:'📋 ÓRDENES DE PRODUCCIÓN',monitoreo:'🔍 MONITOREO DE PRODUCCIÓN',entregas:'📦 ENTREGAS',diseno:'🎨 DISEÑO',planeacion:'📅 PLANEACIÓN DE PRODUCCIÓN',planconf:'🧵 PLANEACIÓN DE CONFECCIÓN',logistica:'🚚 LOGÍSTICA',novedades:'⚠ NOVEDADES',simulador:'🧮 SIMULADOR DE PRODUCCIÓN',costos_mo:'💰 PAGOS',inversion:'🧾 RESUMEN DE INVERSIÓN'};
+  var titles = {dashboard:'⬡ DASHBOARD',satelites:'🏭 SATÉLITES',ops:'📋 ÓRDENES DE PRODUCCIÓN',monitoreo:'🔍 MONITOREO DE PRODUCCIÓN',entregas:'📦 ENTREGAS',diseno:'🎨 DISEÑO',planeacion:'📅 PLANEACIÓN DE PRODUCCIÓN',planconf:'🧵 PLANEACIÓN DE CONFECCIÓN',trazos:'📐 TRAZOS',logistica:'🚚 LOGÍSTICA',novedades:'⚠ NOVEDADES',simulador:'🧮 SIMULADOR DE PRODUCCIÓN',costos_mo:'💰 PAGOS',inversion:'🧾 RESUMEN DE INVERSIÓN'};
   document.getElementById('topbar-title').innerHTML = titles[page] || page.toUpperCase();
   closeDrawer(); closeModal(); selectedOTs.clear();
   renderPage(page);
@@ -2653,6 +2681,7 @@ function renderPage(page){
   else if(page==='costeo') el.innerHTML = renderCosteo();
   else if(page==='inversion') el.innerHTML = renderInversion();
   else if(page==='simulador'){ try{ el.innerHTML = renderSimulador(); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar el Simulador</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[Simulador]', e); } }
+  else if(page==='trazos'){ try{ el.innerHTML = renderTrazos(); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar Trazos</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[Trazos]', e); } }
   else if(page==='planconf'){ try{ el.innerHTML = renderPlaneacionConfeccion(); document.querySelectorAll('.pconf-scroll').forEach(function(sc){ sc.scrollTop=0; }); if(_pconfBusq) setTimeout(_pconfFiltrarBusq, 0); if(_pconfBusqSat) setTimeout(_pconfFiltrarSat, 0); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar Planeación de Confección</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[PlanConf]', e); } }
   else if(page==='monitoreo'){ try{ el.innerHTML = renderMonitoreo(); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar Monitoreo de Producción</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[Monitoreo]', e); } }
   else if(page==='cronograma') el.innerHTML = renderCronograma();
@@ -18043,6 +18072,294 @@ function renderBitacora(){
   h += '</div>'; // timeline card
   h += '</div>'; // max-width container
   return h;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// TRAZOS — solicitud de trazos a Tec Patrón (Carolina)
+// ═══════════════════════════════════════════════════════════════════════════════
+function guardarTrazos(){ return guardarArchivo('trazos', DB.trazos); }
+
+var TRAZO_TIPOS = [
+  {k:'TELA_PRINCIPAL', l:'Tela Principal', color:'#0a84ff'},
+  {k:'PIEZAS_LISAS',   l:'Piezas Lisas',   color:'#a855f7'},
+  {k:'FORRO',          l:'Forro',          color:'#34d399'}
+];
+function _trazoTipoInfo(k){ return TRAZO_TIPOS.find(function(t){ return t.k===k; }) || TRAZO_TIPOS[0]; }
+
+// El check "ya solicité trazos para este color" vive en la propia OP (no siempre se piden
+// todos los colores de una vez) — independiente de armar una solicitud formal con líneas.
+function _trazosColorSolicitado(op, color){ return !!((op.trazos_color_solicitado||{})[color]); }
+async function toggleTrazosColorSolicitado(opId, color){
+  var op = DB.ops.find(function(o){ return o.id===opId; });
+  if(!op) return;
+  if(!op.trazos_color_solicitado) op.trazos_color_solicitado = {};
+  op.trazos_color_solicitado[color] = !op.trazos_color_solicitado[color];
+  saveLocal();
+  await guardarArchivo('ops', {ops: DB.ops});
+  renderPage('trazos');
+}
+
+// OPs con colores todavía sin cortar (Nuevas programaciones + Pendiente Cortar) — universo
+// del que se puede pedir trazos. Una vez el color pasa a Corte por Alistar en adelante ya
+// no tiene sentido seguir pidiéndole trazo.
+function _trazosOpsPendientes(){
+  var subgs = _buildSubgs().filter(function(s){ return s.estado==='POR_REVISAR' || s.estado==='PENDIENTE_CORTAR'; });
+  var byOp = {}; var order = [];
+  subgs.forEach(function(s){
+    if(!byOp[s.op.id]){ byOp[s.op.id] = {op:s.op, colores:[]}; order.push(s.op.id); }
+    byOp[s.op.id].colores.push(s.color);
+  });
+  return order.map(function(oid){ return byOp[oid]; });
+}
+
+function _trazosTablaOP(op, coloresFiltro){
+  var colores = (coloresFiltro && coloresFiltro.length) ? coloresFiltro : (op.colores&&op.colores.length?op.colores:['—']);
+  var tallas = op.tallas||[];
+  var h = '<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:11px;">';
+  h += '<thead><tr><th style="text-align:left;padding:5px 8px;color:#64748b;">✓</th><th style="text-align:left;padding:5px 8px;color:#64748b;">COLOR</th>';
+  tallas.forEach(function(t){ h += '<th style="padding:5px 8px;color:#64748b;">'+t+'</th>'; });
+  h += '<th style="padding:5px 8px;color:#64748b;">TOTAL</th></tr></thead><tbody>';
+  colores.forEach(function(c){
+    var total = 0;
+    var checked = _trazosColorSolicitado(op, c);
+    h += '<tr style="'+(checked?'opacity:.5;':'')+'">';
+    h += '<td style="padding:5px 8px;"><input type="checkbox" '+(checked?'checked':'')+' data-opid="'+op.id+'" data-color="'+esc(c)+'" onchange="toggleTrazosColorSolicitado(this.dataset.opid,this.dataset.color)" title="Trazos ya solicitados para este color" style="width:15px;height:15px;accent-color:#34d399;cursor:pointer;"></td>';
+    h += '<td style="padding:5px 8px;font-weight:700;color:#e2e8f0;'+(checked?'text-decoration:line-through;':'')+'">'+esc(c)+'</td>';
+    tallas.forEach(function(t){
+      var q = (op.cantidades||{})[c+'_'+t] || 0;
+      total += q;
+      h += '<td style="padding:5px 8px;text-align:center;color:#94a3b8;">'+(q||'·')+'</td>';
+    });
+    h += '<td style="padding:5px 8px;text-align:center;font-weight:800;color:#f1f5f9;">'+total+'</td></tr>';
+  });
+  h += '</tbody></table></div>';
+  return h;
+}
+
+function _trazosToggleOp(id){
+  var el = document.getElementById(id); if(!el) return;
+  el.style.display = el.style.display==='none' ? 'block' : 'none';
+}
+
+var _trazosTab = 'pendientes'; // pendientes | historial | recoger
+function setTrazosTab(t){ _trazosTab = t; renderPage('trazos'); }
+
+function renderTrazos(){
+  if(!DB.trazos) DB.trazos = {solicitudes:[]};
+  var h = '<div style="padding:18px 16px 80px;">';
+  h += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;">';
+  h += '<div><div style="font-size:22px;font-weight:800;color:var(--accent);">📐 Trazos</div>';
+  h += '<div style="font-size:11px;color:#64748b;">Solicitudes de trazos a Tec Patrón</div></div>';
+  h += '</div>';
+
+  var tabs = [{k:'pendientes',l:'📦 Pendientes por cortar'},{k:'historial',l:'📋 Historial'},{k:'recoger',l:'🚚 Por recoger'}];
+  h += '<div style="display:flex;gap:6px;margin-bottom:16px;">';
+  tabs.forEach(function(t){
+    var a = _trazosTab===t.k;
+    h += '<button onclick="setTrazosTab(\''+t.k+'\')" style="padding:7px 14px;font-size:12px;font-weight:700;border-radius:8px;border:1px solid '+(a?'#0a84ff':'#2c2c2e')+';background:'+(a?'rgba(10,132,255,.1)':'transparent')+';color:'+(a?'#0a84ff':'#64748b')+';cursor:pointer;">'+t.l+'</button>';
+  });
+  h += '</div>';
+
+  if(_trazosTab==='pendientes') h += _renderTrazosPendientes();
+  else if(_trazosTab==='historial') h += _renderTrazosHistorial();
+  else h += _renderTrazosPorRecoger();
+
+  h += '</div>';
+  return h;
+}
+
+function _renderTrazosPendientes(){
+  var lista = _trazosOpsPendientes();
+  if(!lista.length) return '<div style="text-align:center;padding:40px;color:#374151;">No hay OPs pendientes por cortar.</div>';
+  var h = '';
+  lista.forEach(function(item){
+    var op = item.op;
+    var detId = 'traz-op-'+op.id.replace(/[^A-Za-z0-9]/g,'');
+    var coloresUnicos = item.colores.filter(function(c,i,arr){ return arr.indexOf(c)===i; });
+    var pendConfirm = coloresUnicos.filter(function(c){ return !_trazosColorSolicitado(op,c); }).length;
+    h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:10px;margin-bottom:8px;overflow:hidden;">';
+    h += '<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;gap:10px;">';
+    h += '<div data-detid="'+detId+'" onclick="_trazosToggleOp(this.dataset.detid)" style="flex:1;min-width:0;cursor:pointer;">';
+    h += '<span style="font-family:var(--bebas);font-size:15px;color:#0a84ff;">'+esc(fmtOpId(op.id))+'</span> <span style="font-size:13px;font-weight:700;color:#e2e8f0;margin-left:6px;">'+esc(op.nombre_producto||'')+'</span>';
+    h += '<div style="font-size:10px;color:#64748b;margin-top:2px;">'+esc(op.categoria||'')+' · '+coloresUnicos.length+' color'+(coloresUnicos.length!==1?'es':'')+(pendConfirm?' · <span style="color:#fbbf24;">'+pendConfirm+' sin marcar</span>':' · <span style="color:#34d399;">✓ todos marcados</span>')+'</div>';
+    h += '</div>';
+    h += '<button data-opid="'+op.id+'" onclick="abrirBuilderTrazos(this.dataset.opid)" style="background:rgba(10,132,255,.12);border:1px solid rgba(10,132,255,.35);color:#0a84ff;border-radius:7px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;flex-shrink:0;">+ Solicitar trazos</button>';
+    h += '</div>';
+    h += '<div id="'+detId+'" style="display:none;padding:0 14px 14px;">';
+    h += _trazosTablaOP(op, coloresUnicos);
+    h += '</div></div>';
+  });
+  return h;
+}
+
+function _renderTrazosHistorial(){
+  var sols = (DB.trazos.solicitudes||[]).slice().sort(function(a,b){ return (b.enviada_en||'').localeCompare(a.enviada_en||''); });
+  if(!sols.length) return '<div style="text-align:center;padding:40px;color:#374151;">Aún no has enviado ninguna solicitud.</div>';
+  var h = '';
+  sols.forEach(function(s){
+    var totalLineas = (s.lineas||[]).length;
+    var generadas = (s.lineas||[]).filter(function(l){ return l.generado; }).length;
+    var impresas = (s.lineas||[]).filter(function(l){ return l.impreso; }).length;
+    var estadoTxt = totalLineas && impresas===totalLineas ? 'IMPRESO COMPLETO' : totalLineas && generadas===totalLineas ? 'GENERADO, FALTA IMPRIMIR' : generadas>0 ? 'EN PROCESO' : 'ENVIADA';
+    var estadoColor = totalLineas && impresas===totalLineas ? '#34d399' : generadas>0 ? '#fbbf24' : '#64748b';
+    h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:10px;padding:12px 14px;margin-bottom:8px;">';
+    h += '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">';
+    h += '<div><span style="font-family:var(--bebas);font-size:14px;color:#0a84ff;">'+esc(fmtOpId(s.op_id))+'</span> <span style="font-size:13px;font-weight:700;color:#e2e8f0;">'+esc(s.op_nombre)+'</span>';
+    h += '<div style="font-size:10px;color:#64748b;margin-top:2px;">Enviada '+fmtDate(s.enviada_en)+' por '+esc(s.creado_por)+' · '+totalLineas+' línea'+(totalLineas!==1?'s':'')+'</div></div>';
+    h += '<div style="display:flex;align-items:center;gap:8px;">';
+    h += '<span style="font-size:9px;font-weight:800;background:'+estadoColor+'18;border:1px solid '+estadoColor+'40;color:'+estadoColor+';border-radius:5px;padding:3px 8px;white-space:nowrap;">'+estadoTxt+'</span>';
+    h += '<button data-sid="'+s.id+'" onclick="imprimirSolicitudTrazos(this.dataset.sid)" style="background:rgba(148,163,184,.1);border:1px solid #2c2c2e;color:#94a3b8;border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;">🖨 Imprimir</button>';
+    h += '</div></div>';
+    h += '</div>';
+  });
+  return h;
+}
+
+function _renderTrazosPorRecoger(){
+  var items = [];
+  (DB.trazos.solicitudes||[]).forEach(function(s){
+    (s.lineas||[]).forEach(function(l){
+      if(l.impreso && !l.recogido) items.push({sol:s, linea:l});
+    });
+  });
+  if(!items.length) return '<div style="text-align:center;padding:40px;color:#374151;">Nada pendiente por recoger.</div>';
+  var h = '';
+  items.forEach(function(it){
+    var tt = _trazoTipoInfo(it.linea.tipo);
+    h += '<div style="display:flex;align-items:center;gap:10px;background:#0a0d14;border:1px solid #2c2c2e;border-left:3px solid '+tt.color+';border-radius:9px;padding:10px 14px;margin-bottom:6px;">';
+    h += '<div style="flex:1;min-width:0;"><span style="font-family:var(--bebas);font-size:13px;color:#0a84ff;">'+esc(fmtOpId(it.sol.op_id))+'</span> <span style="font-size:12px;font-weight:700;color:#e2e8f0;">'+esc(it.sol.op_nombre)+'</span>';
+    h += '<div style="font-size:10px;color:#64748b;margin-top:2px;">'+tt.l+' · tallas '+(it.linea.tallas||[]).join(', ')+' · '+it.linea.cantidad_trazos+' trazo(s) · '+it.linea.ancho_util+'m · '+(it.linea.colores||[]).join(', ')+'</div></div>';
+    h += '<button data-sid="'+it.sol.id+'" data-lid="'+it.linea.id+'" onclick="marcarTrazoRecogido(this.dataset.sid,this.dataset.lid)" style="background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.35);color:#34d399;border-radius:7px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;flex-shrink:0;">✓ Ya lo recogí</button>';
+    h += '</div>';
+  });
+  return h;
+}
+
+async function marcarTrazoRecogido(sid, lid){
+  var sol = (DB.trazos.solicitudes||[]).find(function(s){ return s.id===sid; });
+  if(!sol) return;
+  var linea = (sol.lineas||[]).find(function(l){ return l.id===lid; });
+  if(!linea) return;
+  linea.recogido = true;
+  linea.recogido_en = hoy();
+  saveLocal();
+  var ok = await guardarTrazos();
+  if(ok){ toast('Marcado como recogido','success'); renderPage('trazos'); }
+}
+
+// ── Builder de solicitud (modal) ────────────────────────────────────────────────
+var _trazoBuilderOpId = null;
+var _trazoBuilderLineas = [];
+
+function abrirBuilderTrazos(opId){
+  _trazoBuilderOpId = opId;
+  _trazoBuilderLineas = [];
+  _renderBuilderTrazos();
+}
+
+function _renderLineasBuilderList(){
+  if(!_trazoBuilderLineas.length) return '<div style="text-align:center;color:#374151;font-size:12px;padding:14px 0;">Aún no has agregado líneas de trazo.</div>';
+  var h = '';
+  TRAZO_TIPOS.forEach(function(tt){
+    var lns = _trazoBuilderLineas.filter(function(l){ return l.tipo===tt.k; });
+    if(!lns.length) return;
+    h += '<div style="font-size:10px;font-weight:700;color:'+tt.color+';text-transform:uppercase;letter-spacing:.5px;margin:10px 0 6px;">'+tt.l+'</div>';
+    lns.forEach(function(l){
+      var idx = _trazoBuilderLineas.indexOf(l);
+      h += '<div style="display:flex;align-items:center;gap:8px;background:#0d1117;border:1px solid #2c2c2e;border-left:3px solid '+tt.color+';border-radius:7px;padding:8px 12px;margin-bottom:5px;">';
+      h += '<div style="flex:1;font-size:11px;color:#cbd5e1;">Tallas <b>'+l.tallas.join(', ')+'</b> · '+l.cantidad_trazos+' trazo(s) · ancho '+l.ancho_util+'m · colores: <span style="color:#fbbf24;">'+l.colores.join(', ')+'</span></div>';
+      h += '<button data-idx="'+idx+'" onclick="_trazoQuitarLinea(this.dataset.idx)" style="background:none;border:none;color:#334155;cursor:pointer;font-size:13px;">✕</button>';
+      h += '</div>';
+    });
+  });
+  return h;
+}
+
+function _renderBuilderTrazos(){
+  var op = DB.ops.find(function(o){ return o.id===_trazoBuilderOpId; });
+  if(!op) return;
+  var colores = op.colores&&op.colores.length ? op.colores : ['—'];
+  var tallas = op.tallas||[];
+  var h = '<div style="margin-bottom:14px;font-size:12px;color:#64748b;">'+esc(op.nombre_producto||'')+' · '+esc(fmtOpId(op.id))+'</div>';
+  h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:10px;padding:14px;margin-bottom:14px;">';
+  h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">';
+  h += '<div><label class="form-label">Tipo de trazo</label><select id="tb-tipo" class="form-control">';
+  TRAZO_TIPOS.forEach(function(t){ h += '<option value="'+t.k+'">'+t.l+'</option>'; });
+  h += '</select></div>';
+  h += '<div><label class="form-label">Cantidad de trazos</label><input id="tb-cant" type="number" min="1" value="1" class="form-control"></div>';
+  h += '</div>';
+  h += '<div style="margin-bottom:10px;"><label class="form-label">Ancho útil de tela (mts)</label><input id="tb-ancho" type="number" step="0.01" min="0" class="form-control" placeholder="Ej: 1.32"></div>';
+  h += '<div style="margin-bottom:10px;"><label class="form-label">Tallas</label><div style="display:flex;flex-wrap:wrap;gap:6px;">';
+  tallas.forEach(function(t){ h += '<label style="display:inline-flex;align-items:center;gap:4px;background:#0d1117;border:1px solid #2c2c2e;border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;"><input type="checkbox" class="tb-talla" value="'+esc(t)+'" style="accent-color:#0a84ff;"> '+esc(t)+'</label>'; });
+  h += '</div></div>';
+  h += '<div style="margin-bottom:10px;"><label class="form-label">Colores</label><div style="display:flex;flex-wrap:wrap;gap:6px;">';
+  colores.forEach(function(c){ h += '<label style="display:inline-flex;align-items:center;gap:4px;background:#0d1117;border:1px solid #2c2c2e;border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;"><input type="checkbox" class="tb-color" value="'+esc(c)+'" style="accent-color:#0a84ff;"> '+esc(c)+'</label>'; });
+  h += '</div></div>';
+  h += '<button onclick="_trazoAgregarLinea()" style="background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.4);color:#34d399;border-radius:7px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;">+ Agregar línea</button>';
+  h += '</div>';
+  h += '<div id="tb-lineas-list">' + _renderLineasBuilderList() + '</div>';
+  var footer = '<button onclick="_trazoEnviarSolicitud()" '+(_trazoBuilderLineas.length?'':'disabled')+' style="background:#0a84ff;border:none;border-radius:8px;color:#fff;padding:8px 18px;font-size:13px;font-weight:700;'+(_trazoBuilderLineas.length?'cursor:pointer;':'opacity:.4;cursor:not-allowed;')+'">📤 Enviar solicitud</button><button onclick="closeModal()" style="background:rgba(255,255,255,.06);border:1px solid var(--card-border);color:var(--dim);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px;margin-left:8px;">Cerrar</button>';
+  openModal('SOLICITUD DE TRAZOS', h, footer, {wide:true});
+}
+
+function _trazoAgregarLinea(){
+  var tipo = document.getElementById('tb-tipo').value;
+  var cant = parseInt(document.getElementById('tb-cant').value)||1;
+  var ancho = parseFloat(document.getElementById('tb-ancho').value)||0;
+  var tallas = Array.prototype.slice.call(document.querySelectorAll('.tb-talla:checked')).map(function(el){ return el.value; });
+  var colores = Array.prototype.slice.call(document.querySelectorAll('.tb-color:checked')).map(function(el){ return el.value; });
+  if(!tallas.length){ toast('Selecciona al menos una talla','error'); return; }
+  if(!colores.length){ toast('Selecciona al menos un color','error'); return; }
+  if(!ancho){ toast('Ingresa el ancho útil','error'); return; }
+  _trazoBuilderLineas.push({id:uid(), tipo:tipo, tallas:tallas, cantidad_trazos:cant, ancho_util:ancho, colores:colores, generado:false, impreso:false, recogido:false});
+  _renderBuilderTrazos();
+}
+function _trazoQuitarLinea(idx){
+  _trazoBuilderLineas.splice(parseInt(idx,10),1);
+  _renderBuilderTrazos();
+}
+async function _trazoEnviarSolicitud(){
+  if(!_trazoBuilderLineas.length) return;
+  var op = DB.ops.find(function(o){ return o.id===_trazoBuilderOpId; });
+  if(!op) return;
+  if(!DB.trazos) DB.trazos = {solicitudes:[]};
+  var sol = {
+    id: uid(), op_id: op.id, op_nombre: op.nombre_producto, categoria: op.categoria||'',
+    creado_por: getUser(), creado_en: hoy(), estado: 'ENVIADA', enviada_en: hoy(),
+    lineas: _trazoBuilderLineas
+  };
+  DB.trazos.solicitudes.push(sol);
+  saveLocal();
+  var ok = await guardarTrazos();
+  if(ok){ toast('Solicitud de trazos enviada','success'); closeModal(); _trazoBuilderLineas=[]; _trazoBuilderOpId=null; renderPage('trazos'); }
+  else toast('Error al guardar la solicitud','error');
+}
+
+function imprimirSolicitudTrazos(sid){
+  var s = (DB.trazos.solicitudes||[]).find(function(x){ return x.id===sid; });
+  if(!s) return;
+  var w = window.open('', '_blank');
+  if(!w) return;
+  var h = '<html><head><title>Solicitud de Trazos - '+esc(s.op_nombre)+'</title><style>';
+  h += 'body{font-family:Arial,sans-serif;padding:24px;color:#111;} h1{font-size:20px;margin-bottom:2px;} .sub{color:#666;font-size:12px;margin-bottom:18px;}';
+  h += '.tipo{font-size:13px;font-weight:800;text-transform:uppercase;margin:16px 0 6px;border-bottom:2px solid #333;padding-bottom:3px;}';
+  h += '.linea{border:1px solid #ccc;border-radius:6px;padding:8px 12px;margin-bottom:6px;font-size:13px;}';
+  h += '.linea b{display:inline-block;min-width:70px;}';
+  h += '</style></head><body>';
+  h += '<h1>'+esc(s.op_nombre)+' · '+esc(fmtOpId(s.op_id))+'</h1>';
+  h += '<div class="sub">Solicitud de trazos · enviada '+fmtDate(s.enviada_en)+' por '+esc(s.creado_por)+'</div>';
+  TRAZO_TIPOS.forEach(function(tt){
+    var lns = (s.lineas||[]).filter(function(l){ return l.tipo===tt.k; });
+    if(!lns.length) return;
+    h += '<div class="tipo">'+tt.l+'</div>';
+    lns.forEach(function(l,i){
+      h += '<div class="linea"><b>Trazo '+(i+1)+'</b> Tallas: '+(l.tallas||[]).join(', ')+' &nbsp;|&nbsp; Cantidad: '+l.cantidad_trazos+' &nbsp;|&nbsp; Ancho: '+l.ancho_util+'m &nbsp;|&nbsp; Color(es): <b>'+(l.colores||[]).join(', ')+'</b></div>';
+    });
+  });
+  h += '</body></html>';
+  w.document.write(h);
+  w.document.close();
+  setTimeout(function(){ w.print(); }, 300);
 }
 </script>
 </body>
