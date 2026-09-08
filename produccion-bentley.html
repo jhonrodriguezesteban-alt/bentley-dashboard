@@ -733,6 +733,9 @@ textarea.form-control{resize:vertical;min-height:80px;}
     <div class="nav-item" onclick="navTo('trazos')" data-page="trazos">
       <span class="icon">📐</span><span class="nav-label"> Trazos</span>
     </div>
+    <div class="nav-item" onclick="navTo('tecpatron')" data-page="tecpatron">
+      <span class="icon">🧵</span><span class="nav-label"> TecPatrón</span>
+    </div>
     <div class="nav-item" onclick="navTo('diseno')" data-page="diseno">
       <span class="icon">🎨</span><span class="nav-label"> Diseño</span>
     </div>
@@ -1195,7 +1198,7 @@ function _getHash(u){ if(_U[u]) return _U[u]; var cfg=_getCfgUsers(); return (cf
 // Devuelve nombre display
 function _getName(u){ var cfg=_getCfgUsers(); return (cfg[u]&&cfg[u].name)||_NAMES[u]||u; }
 // Módulos permitidos para un usuario (jhon = todos)
-var ALL_MODULES = ['dashboard','satelites','ops','monitoreo','planconf','cronograma','trazos','diseno','planeacion','logistica','novedades','costos_mo','costeo','inversion','bitacora'];
+var ALL_MODULES = ['dashboard','satelites','ops','monitoreo','planconf','cronograma','trazos','tecpatron','diseno','planeacion','logistica','novedades','costos_mo','costeo','inversion','bitacora'];
 function _getModules(u){
   if(u==='jhon') return ALL_MODULES.slice();
   var cfg=_getCfgUsers();
@@ -1325,7 +1328,7 @@ function applyModuleAccess(uid){
 
 var ALL_MODULE_LABELS = {
   dashboard:'Dashboard', satelites:'Satélites', ops:'OTs', monitoreo:'Monitoreo Producción',
-  planconf:'Planeación Confección', cronograma:'Cronograma', trazos:'Trazos',
+  planconf:'Planeación Confección', cronograma:'Cronograma', trazos:'Trazos', tecpatron:'TecPatrón',
   diseno:'Diseño', planeacion:'Planeación', logistica:'Logística', novedades:'Novedades',
   costos_mo:'Pagos', costeo:'Costeo y Rentabilidad', inversion:'Resumen de Inversión', bitacora:'Bitácora'
 };
@@ -2620,7 +2623,7 @@ function navTo(page){
   localStorage.setItem('bentley_last_page', page);
   if(page !== 'ops') _opDetalleId = null;
   document.querySelectorAll('.nav-item').forEach(function(el){ el.classList.toggle('active', el.dataset.page===page); });
-  var titles = {dashboard:'⬡ DASHBOARD',satelites:'🏭 SATÉLITES',ops:'📋 ÓRDENES DE PRODUCCIÓN',monitoreo:'🔍 MONITOREO DE PRODUCCIÓN',entregas:'📦 ENTREGAS',diseno:'🎨 DISEÑO',planeacion:'📅 PLANEACIÓN DE PRODUCCIÓN',planconf:'🧵 PLANEACIÓN DE CONFECCIÓN',trazos:'📐 TRAZOS',logistica:'🚚 LOGÍSTICA',novedades:'⚠ NOVEDADES',simulador:'🧮 SIMULADOR DE PRODUCCIÓN',costos_mo:'💰 PAGOS',inversion:'🧾 RESUMEN DE INVERSIÓN'};
+  var titles = {dashboard:'⬡ DASHBOARD',satelites:'🏭 SATÉLITES',ops:'📋 ÓRDENES DE PRODUCCIÓN',monitoreo:'🔍 MONITOREO DE PRODUCCIÓN',entregas:'📦 ENTREGAS',diseno:'🎨 DISEÑO',planeacion:'📅 PLANEACIÓN DE PRODUCCIÓN',planconf:'🧵 PLANEACIÓN DE CONFECCIÓN',trazos:'📐 TRAZOS',tecpatron:'🧵 TECPATRÓN',logistica:'🚚 LOGÍSTICA',novedades:'⚠ NOVEDADES',simulador:'🧮 SIMULADOR DE PRODUCCIÓN',costos_mo:'💰 PAGOS',inversion:'🧾 RESUMEN DE INVERSIÓN'};
   document.getElementById('topbar-title').innerHTML = titles[page] || page.toUpperCase();
   closeDrawer(); closeModal(); selectedOTs.clear();
   renderPage(page);
@@ -2682,6 +2685,7 @@ function renderPage(page){
   else if(page==='inversion') el.innerHTML = renderInversion();
   else if(page==='simulador'){ try{ el.innerHTML = renderSimulador(); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar el Simulador</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[Simulador]', e); } }
   else if(page==='trazos'){ try{ el.innerHTML = renderTrazos(); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar Trazos</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[Trazos]', e); } }
+  else if(page==='tecpatron'){ try{ el.innerHTML = renderTecPatron(); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar TecPatrón</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[TecPatron]', e); } }
   else if(page==='planconf'){ try{ el.innerHTML = renderPlaneacionConfeccion(); document.querySelectorAll('.pconf-scroll').forEach(function(sc){ sc.scrollTop=0; }); if(_pconfBusq) setTimeout(_pconfFiltrarBusq, 0); if(_pconfBusqSat) setTimeout(_pconfFiltrarSat, 0); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar Planeación de Confección</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[PlanConf]', e); } }
   else if(page==='monitoreo'){ try{ el.innerHTML = renderMonitoreo(); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar Monitoreo de Producción</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[Monitoreo]', e); } }
   else if(page==='cronograma') el.innerHTML = renderCronograma();
@@ -18360,6 +18364,179 @@ function imprimirSolicitudTrazos(sid){
   w.document.write(h);
   w.document.close();
   setTimeout(function(){ w.print(); }, 300);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// TECPATRÓN — módulo de Carolina: recibe solicitudes de Trazos y mantiene la
+// "hoja de vida" de cada producto (foto de trazo, promedios, ficha técnica).
+// No muestra costos ni materias primas aunque los datos convivan con Costeo.
+// ═══════════════════════════════════════════════════════════════════════════════
+var _tecpatronTab = 'trazos';
+var _tpBusq = '';
+function setTecpatronTab(t){ _tecpatronTab = t; renderPage('tecpatron'); }
+
+function renderTecPatron(){
+  if(!DB.trazos) DB.trazos = {solicitudes:[]};
+  if(!DB.costeo) DB.costeo = {recetas:[]};
+  var h = '<div style="padding:18px 16px 80px;">';
+  h += '<div style="margin-bottom:14px;"><div style="font-size:22px;font-weight:800;color:var(--accent);">🧵 TecPatrón</div>';
+  h += '<div style="font-size:11px;color:#64748b;">Trazos por hacer y ficha de vida de cada producto</div></div>';
+  var tabs = [{k:'trazos',l:'📐 Trazos'},{k:'productos',l:'🗂 Diseños / Productos'}];
+  h += '<div style="display:flex;gap:6px;margin-bottom:16px;">';
+  tabs.forEach(function(t){
+    var a = _tecpatronTab===t.k;
+    h += '<button onclick="setTecpatronTab(\''+t.k+'\')" style="padding:7px 14px;font-size:12px;font-weight:700;border-radius:8px;border:1px solid '+(a?'#0a84ff':'#2c2c2e')+';background:'+(a?'rgba(10,132,255,.1)':'transparent')+';color:'+(a?'#0a84ff':'#64748b')+';cursor:pointer;">'+t.l+'</button>';
+  });
+  h += '</div>';
+  if(_tecpatronTab==='trazos') h += _renderTecPatronTrazos();
+  else h += _renderTecPatronProductos();
+  h += '</div>';
+  return h;
+}
+
+// ── Tab Trazos ──────────────────────────────────────────────────────────────────
+function _renderTecPatronTrazos(){
+  var sols = (DB.trazos.solicitudes||[]).filter(function(s){
+    return (s.lineas||[]).some(function(l){ return !l.recogido; });
+  }).sort(function(a,b){ return (b.enviada_en||'').localeCompare(a.enviada_en||''); });
+  if(!sols.length) return '<div style="text-align:center;padding:40px;color:#374151;">No hay solicitudes de trazos pendientes.</div>';
+  var h = '';
+  sols.forEach(function(s){
+    h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:10px;padding:14px;margin-bottom:10px;">';
+    h += '<div style="margin-bottom:8px;"><span style="font-family:var(--bebas);font-size:14px;color:#0a84ff;">'+esc(fmtOpId(s.op_id))+'</span> <span style="font-size:13px;font-weight:700;color:#e2e8f0;">'+esc(s.op_nombre)+'</span>';
+    h += '<div style="font-size:10px;color:#64748b;">Enviada '+fmtDate(s.enviada_en)+' por '+esc(s.creado_por)+'</div></div>';
+    TRAZO_TIPOS.forEach(function(tt){
+      var lns = (s.lineas||[]).filter(function(l){ return l.tipo===tt.k && !l.recogido; });
+      if(!lns.length) return;
+      h += '<div style="font-size:10px;font-weight:700;color:'+tt.color+';text-transform:uppercase;letter-spacing:.5px;margin:8px 0 4px;">'+tt.l+'</div>';
+      lns.forEach(function(l){
+        h += '<div style="display:flex;align-items:center;gap:14px;background:#0d1117;border:1px solid #2c2c2e;border-left:3px solid '+tt.color+';border-radius:7px;padding:8px 12px;margin-bottom:5px;flex-wrap:wrap;">';
+        h += '<div style="flex:1;min-width:200px;font-size:11px;color:#cbd5e1;">Tallas <b>'+(l.tallas||[]).join(', ')+'</b> · '+l.cantidad_trazos+' trazo(s) · '+l.ancho_util+'m · <span style="color:#fbbf24;">'+(l.colores||[]).join(', ')+'</span></div>';
+        h += '<label style="display:flex;align-items:center;gap:5px;font-size:11px;color:#94a3b8;cursor:pointer;white-space:nowrap;"><input type="checkbox" '+(l.generado?'checked':'')+' data-sid="'+s.id+'" data-lid="'+l.id+'" onchange="tecpatronToggleGenerado(this.dataset.sid,this.dataset.lid,this.checked)" style="width:15px;height:15px;accent-color:#a855f7;cursor:pointer;"> Generado</label>';
+        h += '<label style="display:flex;align-items:center;gap:5px;font-size:11px;color:#94a3b8;cursor:pointer;white-space:nowrap;"><input type="checkbox" '+(l.impreso?'checked':'')+' data-sid="'+s.id+'" data-lid="'+l.id+'" onchange="tecpatronToggleImpreso(this.dataset.sid,this.dataset.lid,this.checked)" style="width:15px;height:15px;accent-color:#34d399;cursor:pointer;"> Impreso</label>';
+        h += '</div>';
+      });
+    });
+    h += '</div>';
+  });
+  return h;
+}
+async function tecpatronToggleGenerado(sid, lid, val){
+  var sol = (DB.trazos.solicitudes||[]).find(function(s){ return s.id===sid; });
+  if(!sol) return;
+  var l = (sol.lineas||[]).find(function(x){ return x.id===lid; });
+  if(!l) return;
+  l.generado = val; l.generado_en = val ? hoy() : null;
+  saveLocal();
+  var ok = await guardarTrazos();
+  if(ok) toast(val?'Marcado como generado (ploteado)':'Desmarcado','success');
+}
+async function tecpatronToggleImpreso(sid, lid, val){
+  var sol = (DB.trazos.solicitudes||[]).find(function(s){ return s.id===sid; });
+  if(!sol) return;
+  var l = (sol.lineas||[]).find(function(x){ return x.id===lid; });
+  if(!l) return;
+  l.impreso = val; l.impreso_en = val ? hoy() : null;
+  saveLocal();
+  var ok = await guardarTrazos();
+  if(ok) toast(val?'Marcado como impreso — ya le aparece a producción para recoger':'Desmarcado','success');
+}
+
+// ── Tab Diseños/Productos ────────────────────────────────────────────────────────
+function _renderTecPatronProductos(){
+  var recetas = (DB.costeo.recetas||[]).slice().sort(function(a,b){ return (a.producto||'').localeCompare(b.producto||''); });
+  var q = (_tpBusq||'').trim().toUpperCase();
+  if(q) recetas = recetas.filter(function(r){ return (r.producto||'').toUpperCase().indexOf(q)>=0; });
+  var h = '<div style="margin-bottom:14px;">';
+  h += '<input type="text" value="'+esc(_tpBusq||'')+'" oninput="_tpBusq=this.value;renderPage(\'tecpatron\')" placeholder="Buscar producto..." style="background:#0d1117;border:1px solid #2c2c2e;border-radius:7px;color:var(--text);padding:8px 12px;font-size:12px;width:280px;outline:none;">';
+  h += '</div>';
+  if(!recetas.length) return h + '<div style="text-align:center;padding:40px;color:#374151;">Sin productos.</div>';
+  h += '<div style="display:flex;flex-direction:column;gap:8px;">';
+  recetas.forEach(function(r){
+    var completos = [r.foto_trazo_url, (r.promedios_foto_url||r.promedios_texto), r.ficha_tecnica_url].filter(Boolean).length;
+    var cid = 'tp-prod-'+r.id;
+    h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:9px;padding:12px 14px;">';
+    h += '<div data-cid="'+cid+'" onclick="tecpatronToggleProducto(this.dataset.cid)" style="display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;">';
+    h += '<div><span style="font-size:13px;font-weight:700;color:#e2e8f0;">'+esc(r.producto||'')+'</span>'+(r.referencia?' <span style="font-size:10px;color:#64748b;">REF '+esc(r.referencia)+'</span>':'')+'</div>';
+    h += '<span style="font-size:9px;font-weight:800;color:'+(completos===3?'#34d399':completos>0?'#fbbf24':'#64748b')+';">'+completos+'/3</span>';
+    h += '</div>';
+    h += '<div id="'+cid+'" style="display:none;margin-top:10px;">'+_renderTecPatronProductoDetalle(r)+'</div>';
+    h += '</div>';
+  });
+  h += '</div>';
+  return h;
+}
+function tecpatronToggleProducto(cid){
+  var el = document.getElementById(cid); if(!el) return;
+  el.style.display = el.style.display==='none' ? 'block' : 'none';
+}
+function _renderTecPatronProductoDetalle(r){
+  var h = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;">';
+  h += _tpSlotHTML(r, 'foto_trazo_url', 'Foto del trazo', 'image');
+  h += _tpSlotHTML(r, 'promedios_foto_url', 'Foto de promedios', 'image');
+  h += _tpSlotHTML(r, 'ficha_tecnica_url', 'Ficha técnica', 'file');
+  h += '</div>';
+  h += '<div style="margin-top:10px;"><label class="form-label">Notas de promedios (opcional)</label>';
+  h += '<textarea data-rid="'+r.id+'" onchange="tpGuardarPromediosTexto(this.dataset.rid,this.value)" class="form-control" rows="2" placeholder="Ej: consumo promedio, notas para producción...">'+esc(r.promedios_texto||'')+'</textarea></div>';
+  return h;
+}
+function _tpSlotHTML(r, campo, label, kind){
+  var blobUrl = r[campo+'_blob'] && _fotosBlob[r[campo+'_blob']];
+  var showUrl = blobUrl || r[campo];
+  var h = '<div style="background:#0d1117;border:1px solid #2c2c2e;border-radius:8px;padding:10px;text-align:center;">';
+  h += '<div style="font-size:9px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:6px;">'+label+'</div>';
+  if(showUrl){
+    if(kind==='image') h += '<img src="'+showUrl+'" style="width:100%;height:90px;object-fit:cover;border-radius:6px;margin-bottom:6px;cursor:pointer;" onclick="window.open(\''+showUrl+'\',\'_blank\')">';
+    else h += '<a href="'+showUrl+'" target="_blank" style="display:block;height:90px;line-height:90px;font-size:24px;margin-bottom:6px;text-decoration:none;">📄</a>';
+  } else {
+    h += '<div style="height:90px;display:flex;align-items:center;justify-content:center;color:#334155;font-size:24px;">'+(kind==='image'?'🖼':'📄')+'</div>';
+  }
+  h += '<input type="file" accept="'+(kind==='image'?'image/*':'*')+'" data-rid="'+r.id+'" data-campo="'+campo+'" onchange="tpSubirArchivo(this)" style="display:none;" id="tp-inp-'+r.id+'-'+campo+'">';
+  h += '<label for="tp-inp-'+r.id+'-'+campo+'" style="display:inline-block;background:rgba(10,132,255,.12);border:1px solid rgba(10,132,255,.35);color:#0a84ff;border-radius:6px;padding:4px 10px;font-size:10px;font-weight:700;cursor:pointer;">'+(showUrl?'Cambiar':'Subir')+'</label>';
+  h += '</div>';
+  return h;
+}
+async function tpSubirArchivo(input){
+  var rid = input.dataset.rid, campo = input.dataset.campo;
+  var file = input.files[0];
+  if(!file) return;
+  var r = (DB.costeo.recetas||[]).find(function(x){ return x.id===rid; });
+  if(!r) return;
+  var tk = GT || localStorage.getItem('bentley_gh_token') || '';
+  if(!tk){ toast('Sin token GitHub','error'); return; }
+  try {
+    var dataUrl = await new Promise(function(res,rej){
+      var fr = new FileReader();
+      fr.onload = function(e){ res(e.target.result); };
+      fr.onerror = rej;
+      fr.readAsDataURL(file);
+    });
+    var b64 = dataUrl.split(',')[1];
+    var ext = (file.name.split('.').pop()||'jpg').toLowerCase();
+    var fname = 'tecpatron-imgs/'+rid+'_'+campo+'_'+Date.now()+'.'+ext;
+    toast('Subiendo...','info');
+    var putR = await fetch('https://api.github.com/repos/'+REPO+'/contents/'+fname,{
+      method:'PUT',
+      headers:{'Authorization':'token '+tk,'Content-Type':'application/json'},
+      body: JSON.stringify({message:'TecPatrón: '+campo+' de '+r.producto, content:b64})
+    });
+    if(putR.ok){
+      var blobId = 'tp_'+Date.now();
+      _fotosBlob[blobId] = dataUrl;
+      r[campo] = RAW_URL + fname;
+      r[campo+'_blob'] = blobId;
+      var ok = await guardarCosteo();
+      if(ok) toast('Archivo guardado','success');
+      renderPage('tecpatron');
+    } else { toast('Error al subir archivo','error'); }
+  } catch(e){ toast('Error al subir archivo','error'); }
+}
+async function tpGuardarPromediosTexto(rid, texto){
+  var r = (DB.costeo.recetas||[]).find(function(x){ return x.id===rid; });
+  if(!r) return;
+  r.promedios_texto = texto;
+  var ok = await guardarCosteo();
+  if(ok) toast('Guardado','success');
 }
 </script>
 </body>
