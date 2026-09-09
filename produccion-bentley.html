@@ -18310,6 +18310,7 @@ function _renderTrazosHistorial(){
     h += '<div style="display:flex;align-items:center;gap:8px;">';
     h += '<span style="font-size:9px;font-weight:800;background:'+estadoColor+'18;border:1px solid '+estadoColor+'40;color:'+estadoColor+';border-radius:5px;padding:3px 8px;white-space:nowrap;">'+estadoTxt+'</span>';
     if(!s.manual) h += '<button data-sid="'+s.id+'" onclick="imprimirSolicitudTrazos(this.dataset.sid)" style="background:rgba(148,163,184,.1);border:1px solid #2c2c2e;color:#94a3b8;border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;">🖨 Imprimir</button>';
+    h += '<button data-sid="'+s.id+'" onclick="event.stopPropagation();abrirRevertirSolicitudTrazos(this.dataset.sid)" title="Revertir esta solicitud (por error, duplicado, etc.)" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);color:#f87171;border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;">↩ Revertir</button>';
     h += '</div></div>';
     h += '<div id="'+detId+'" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);">'+_trazosRenderLineasSolicitud(s)+'</div>';
     h += '</div>';
@@ -18478,6 +18479,38 @@ function imprimirSolicitudTrazos(sid){
   w.document.write(h);
   w.document.close();
   setTimeout(function(){ w.print(); }, 300);
+}
+
+// ── Revertir solicitud (por error, duplicado, etc.) — doble confirmación: primero un
+// modal con el detalle de lo que se va a borrar, y al confirmar ahí, un segundo aviso
+// nativo del navegador. Solo entonces se elimina, sin posibilidad de deshacer.
+function abrirRevertirSolicitudTrazos(sid){
+  var s = (DB.trazos.solicitudes||[]).find(function(x){ return x.id===sid; });
+  if(!s) return;
+  var body = '<div style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:12px 14px;margin-bottom:14px;">';
+  body += '<div style="font-size:12px;font-weight:700;color:#f87171;margin-bottom:4px;">⚠️ Esta acción no se puede deshacer</div>';
+  body += '<div style="font-size:12px;color:#94a3b8;">Se va a eliminar por completo esta solicitud de trazos — si Carolina ya la vio, generó o imprimió, ella dejará de verla también.</div>';
+  body += '</div>';
+  body += '<div style="font-size:13px;color:#e2e8f0;margin-bottom:6px;"><b>'+esc(fmtOpId(s.op_id))+'</b> · '+esc(s.op_nombre)+'</div>';
+  body += '<div style="font-size:11px;color:#64748b;margin-bottom:12px;">'+(s.manual?'Marcada':'Enviada')+' '+fmtDate(s.enviada_en)+' por '+esc(s.creado_por)+'</div>';
+  body += _trazosRenderLineasSolicitud(s);
+  var footer = '<button data-sid="'+s.id+'" onclick="confirmarRevertirSolicitudTrazos(this.dataset.sid)" style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);color:#f87171;border-radius:8px;padding:8px 18px;cursor:pointer;font-size:13px;font-weight:700;">↩ Sí, revertir solicitud</button><button onclick="closeModal()" style="background:rgba(255,255,255,.06);border:1px solid var(--card-border);color:var(--dim);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px;margin-left:8px;">Cancelar</button>';
+  openModal('↩ REVERTIR SOLICITUD DE TRAZOS', body, footer, {wide:true});
+}
+async function confirmarRevertirSolicitudTrazos(sid){
+  var s = (DB.trazos.solicitudes||[]).find(function(x){ return x.id===sid; });
+  if(!s) return;
+  if(!confirm('Última confirmación: vas a eliminar para siempre la solicitud de trazos de '+fmtOpId(s.op_id)+' ('+s.op_nombre+'). ¿Continuar?')) return;
+  DB.trazos.solicitudes = (DB.trazos.solicitudes||[]).filter(function(x){ return x.id!==sid; });
+  // Limpiar también la etiqueta en la OP, si la tiene.
+  var op = DB.ops.find(function(o){ return o.id===s.op_id; });
+  if(op && op.trazos_solicitudes){ op.trazos_solicitudes = op.trazos_solicitudes.filter(function(x){ return x.solicitud_id!==sid; }); }
+  saveLocal();
+  var ok = await guardarTrazos();
+  if(op) await guardarArchivo('ops', {ops: DB.ops});
+  closeModal();
+  if(ok){ toast('Solicitud revertida','success'); renderPage('trazos'); }
+  else toast('Error al revertir','error');
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
