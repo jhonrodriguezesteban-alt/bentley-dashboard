@@ -1,1 +1,103 @@
-{"solicitudes": [{"id": "id_1788981254779_1rzdrc6ct", "op_id": "OP-0040", "op_nombre": "PANTALON DONATELLA", "categoria": "PANTALONES", "creado_por": "Isabel", "creado_en": "2026-09-09", "estado": "ENVIADA", "enviada_en": "2026-09-09", "lineas": [{"id": "id_1788981198258_cq5m6e8dp", "tipo": "TELA_PRINCIPAL", "tallas": ["T6", "T8", "T10"], "cantidad_trazos": 1, "ancho_util": 145, "colores": ["MARFIL", "CAMEL", "NEGRO"], "generado": false, "impreso": false, "recogido": false}, {"id": "id_1788981251404_rpd1x9oav", "tipo": "TELA_PRINCIPAL", "tallas": ["T12", "T14", "T16"], "cantidad_trazos": 1, "ancho_util": 145, "colores": ["MARFIL", "CAMEL", "NEGRO"], "generado": false, "impreso": false, "recogido": false}]}]}
+{
+  "solicitudes": [
+    {
+      "categoria": "PANTALONES",
+      "creado_en": "2026-09-09",
+      "creado_por": "Isabel",
+      "enviada_en": "2026-09-09",
+      "estado": "ENVIADA",
+      "id": "id_1788981254779_1rzdrc6ct",
+      "lineas": [
+        {
+          "ancho_util": 145,
+          "cantidad_trazos": 1,
+          "colores": [
+            "MARFIL",
+            "CAMEL",
+            "NEGRO"
+          ],
+          "generado": false,
+          "id": "id_1788981198258_cq5m6e8dp",
+          "impreso": false,
+          "recogido": false,
+          "tallas": [
+            "T6",
+            "T8",
+            "T10"
+          ],
+          "tipo": "TELA_PRINCIPAL"
+        },
+        {
+          "ancho_util": 145,
+          "cantidad_trazos": 1,
+          "colores": [
+            "MARFIL",
+            "CAMEL",
+            "NEGRO"
+          ],
+          "generado": false,
+          "id": "id_1788981251404_rpd1x9oav",
+          "impreso": false,
+          "recogido": false,
+          "tallas": [
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "tipo": "TELA_PRINCIPAL"
+        }
+      ],
+      "op_id": "OP-0040",
+      "op_nombre": "PANTALON DONATELLA"
+    },
+    {
+      "id": "id_1788983260763_py3v163mk",
+      "op_id": "OP-2026-216",
+      "op_nombre": "CAMISA CLASICA BK",
+      "categoria": "CAMISAS",
+      "creado_por": "Isabel",
+      "creado_en": "2026-09-09",
+      "estado": "ENVIADA",
+      "enviada_en": "2026-09-09",
+      "lineas": [
+        {
+          "id": "id_1788983199089_gxqash7b4",
+          "tipo": "TELA_PRINCIPAL",
+          "tallas": [
+            "T4",
+            "T6"
+          ],
+          "cantidad_trazos": 1,
+          "ancho_util": 144,
+          "colores": [
+            "NEGRO",
+            "AZUL"
+          ],
+          "generado": false,
+          "impreso": false,
+          "recogido": false
+        },
+        {
+          "id": "id_1788983236465_1dmeq4mp7",
+          "tipo": "TELA_PRINCIPAL",
+          "tallas": [
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "cantidad_trazos": 1,
+          "ancho_util": 144,
+          "colores": [
+            "NEGRO",
+            "AZUL"
+          ],
+          "generado": false,
+          "impreso": false,
+          "recogido": false
+        }
+      ]
+    }
+  ]
+}
