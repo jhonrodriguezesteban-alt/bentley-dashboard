@@ -18197,15 +18197,26 @@ function renderTrazos(){
 }
 
 var _trazosBusq = '';
-function setTrazosBusq(v){ _trazosBusq = v; renderPage('trazos'); }
+// Solo refiltra el contenedor de la lista, sin re-renderizar la página completa — si no,
+// el <input> se reemplaza en cada tecla y el usuario pierde el foco y tiene que volver
+// a hacer click para seguir escribiendo.
+function setTrazosBusq(v){
+  _trazosBusq = v;
+  var cont = document.getElementById('trazos-pend-list');
+  if(cont) cont.innerHTML = _trazosListaPendientesHTML();
+}
 
 function _renderTrazosPendientes(){
-  var lista = _trazosOpsPendientes();
   var h = '<div style="position:relative;max-width:340px;margin-bottom:14px;">';
   h += '<span style="position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:13px;pointer-events:none;">🔍</span>';
   h += '<input type="text" value="'+esc(_trazosBusq)+'" oninput="setTrazosBusq(this.value)" placeholder="Buscar OP o referencia..." style="width:100%;box-sizing:border-box;background:#0a0d14;border:1px solid #2c2c2e;border-radius:9px;color:#e2e8f0;font-size:12px;padding:8px 12px 8px 32px;outline:none;">';
   h += '</div>';
+  h += '<div id="trazos-pend-list">' + _trazosListaPendientesHTML() + '</div>';
+  return h;
+}
 
+function _trazosListaPendientesHTML(){
+  var lista = _trazosOpsPendientes();
   var q = _trazosBusq.trim().toUpperCase();
   if(q){
     lista = lista.filter(function(item){
@@ -18214,9 +18225,9 @@ function _renderTrazosPendientes(){
       return haystack.indexOf(q) >= 0;
     });
   }
+  if(!lista.length) return '<div style="text-align:center;padding:40px;color:#374151;">'+(q?'Nada coincide con "'+esc(_trazosBusq)+'".':'No hay OPs pendientes por cortar.')+'</div>';
 
-  if(!lista.length) return h + '<div style="text-align:center;padding:40px;color:#374151;">'+(q?'Nada coincide con "'+esc(_trazosBusq)+'".':'No hay OPs pendientes por cortar.')+'</div>';
-
+  var h = '';
   lista.forEach(function(item){
     var op = item.op;
     var detId = 'traz-op-'+op.id.replace(/[^A-Za-z0-9]/g,'');
