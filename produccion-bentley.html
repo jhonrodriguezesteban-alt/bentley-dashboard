@@ -18578,12 +18578,12 @@ function _renderTecPatronProductos(){
   if(!recetas.length) return h + '<div style="text-align:center;padding:40px;color:#374151;">Sin productos.</div>';
   h += '<div style="display:flex;flex-direction:column;gap:8px;">';
   recetas.forEach(function(r){
-    var completos = [r.foto_trazo_url, (r.promedios_foto_url||r.promedios_texto), r.ficha_tecnica_url].filter(Boolean).length;
+    var completos = [r.foto_trazo_url, (r.promedios_foto_url||r.promedios_texto), r.ficha_tecnica_url, r.ruta_operacional_url].filter(Boolean).length;
     var cid = 'tp-prod-'+r.id;
     h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:9px;padding:12px 14px;">';
     h += '<div data-cid="'+cid+'" onclick="tecpatronToggleProducto(this.dataset.cid)" style="display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;">';
     h += '<div><span style="font-size:13px;font-weight:700;color:#e2e8f0;">'+esc(r.producto||'')+'</span>'+(r.referencia?' <span style="font-size:10px;color:#64748b;">REF '+esc(r.referencia)+'</span>':'')+'</div>';
-    h += '<span style="font-size:9px;font-weight:800;color:'+(completos===3?'#34d399':completos>0?'#fbbf24':'#64748b')+';">'+completos+'/3</span>';
+    h += '<span style="font-size:9px;font-weight:800;color:'+(completos===4?'#34d399':completos>0?'#fbbf24':'#64748b')+';">'+completos+'/4</span>';
     h += '</div>';
     h += '<div id="'+cid+'" style="display:none;margin-top:10px;">'+_renderTecPatronProductoDetalle(r)+'</div>';
     h += '</div>';
@@ -18600,10 +18600,32 @@ function _renderTecPatronProductoDetalle(r){
   h += _tpSlotHTML(r, 'foto_trazo_url', 'Foto del trazo', 'image');
   h += _tpSlotHTML(r, 'promedios_foto_url', 'Foto de promedios', 'image');
   h += _tpSlotHTML(r, 'ficha_tecnica_url', 'Ficha técnica', 'file');
+  h += _tpSlotHTML(r, 'ruta_operacional_url', 'Ruta operacional', 'file');
   h += '</div>';
-  h += '<div style="margin-top:10px;"><label class="form-label">Notas de promedios (opcional)</label>';
-  h += '<textarea data-rid="'+r.id+'" onchange="tpGuardarPromediosTexto(this.dataset.rid,this.value)" class="form-control" rows="2" placeholder="Ej: consumo promedio, notas para producción...">'+esc(r.promedios_texto||'')+'</textarea></div>';
+  // Promedio por tipo de trazo — un campo por cada uno (Tela Principal / Piezas Lisas /
+  // Forro), independientes entre sí. Se anexan conforme la persona los vaya teniendo, no
+  // son obligatorios todos a la vez.
+  h += '<div style="margin-top:12px;">';
+  h += '<label class="form-label" style="margin-bottom:6px;display:block;">Promedio por tipo de trazo (opcional)</label>';
+  h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;">';
+  TRAZO_TIPOS.forEach(function(tt){
+    var campo = 'promedio_'+tt.k.toLowerCase();
+    h += '<div>';
+    h += '<div style="font-size:10px;font-weight:700;color:'+tt.color+';text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;">'+tt.l+'</div>';
+    h += '<input type="text" data-rid="'+r.id+'" data-campo="'+campo+'" onchange="tpGuardarPromedioTipo(this.dataset.rid,this.dataset.campo,this.value)" class="form-control" value="'+esc(r[campo]||'')+'" placeholder="Ej: 1.45 mts/prenda">';
+    h += '</div>';
+  });
+  h += '</div></div>';
+  h += '<div style="margin-top:12px;"><label class="form-label">Notas generales (opcional)</label>';
+  h += '<textarea data-rid="'+r.id+'" onchange="tpGuardarPromediosTexto(this.dataset.rid,this.value)" class="form-control" rows="2" placeholder="Ej: notas para producción...">'+esc(r.promedios_texto||'')+'</textarea></div>';
   return h;
+}
+async function tpGuardarPromedioTipo(rid, campo, valor){
+  var r = (DB.costeo.recetas||[]).find(function(x){ return x.id===rid; });
+  if(!r) return;
+  r[campo] = valor;
+  var ok = await guardarCosteo();
+  if(ok) toast('Guardado','success');
 }
 function _tpSlotHTML(r, campo, label, kind){
   var blobUrl = r[campo+'_blob'] && _fotosBlob[r[campo+'_blob']];
