@@ -18500,21 +18500,39 @@ function renderTecPatron(){
 }
 
 // ── Tab Trazos ──────────────────────────────────────────────────────────────────
+// Una sola tarjeta por OP — si hay varias solicitudes enviadas para la misma orden
+// (ej. un lote de colores primero y otro después), se juntan todas sus líneas ahí,
+// agrupadas por tipo de trazo, en vez de una tarjeta por cada envío.
 function _renderTecPatronTrazos(){
   var sols = (DB.trazos.solicitudes||[]).filter(function(s){
     return (s.lineas||[]).some(function(l){ return !l.recogido; });
-  }).sort(function(a,b){ return (b.enviada_en||'').localeCompare(a.enviada_en||''); });
+  });
   if(!sols.length) return '<div style="text-align:center;padding:40px;color:#374151;">No hay solicitudes de trazos pendientes.</div>';
-  var h = '';
+
+  var porOp = {}; var orden = [];
   sols.forEach(function(s){
+    if(!porOp[s.op_id]){ porOp[s.op_id] = {op_id:s.op_id, op_nombre:s.op_nombre, items:[], ultimaFecha:''}; orden.push(s.op_id); }
+    var g = porOp[s.op_id];
+    if(s.enviada_en > g.ultimaFecha) g.ultimaFecha = s.enviada_en;
+    (s.lineas||[]).forEach(function(l){
+      if(l.recogido) return;
+      g.items.push({sol:s, linea:l});
+    });
+  });
+  orden.sort(function(a,b){ return porOp[b].ultimaFecha.localeCompare(porOp[a].ultimaFecha); });
+
+  var h = '';
+  orden.forEach(function(opId){
+    var g = porOp[opId];
     h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:10px;padding:14px;margin-bottom:10px;">';
-    h += '<div style="margin-bottom:8px;"><span style="font-family:var(--bebas);font-size:14px;color:#0a84ff;">'+esc(fmtOpId(s.op_id))+'</span> <span style="font-size:13px;font-weight:700;color:#e2e8f0;">'+esc(s.op_nombre)+'</span>';
-    h += '<div style="font-size:10px;color:#64748b;">Enviada '+fmtDate(s.enviada_en)+' por '+esc(s.creado_por)+'</div></div>';
+    h += '<div style="margin-bottom:8px;"><span style="font-family:var(--bebas);font-size:14px;color:#0a84ff;">'+esc(fmtOpId(opId))+'</span> <span style="font-size:13px;font-weight:700;color:#e2e8f0;">'+esc(g.op_nombre)+'</span>';
+    h += '<div style="font-size:10px;color:#64748b;">Última solicitud '+fmtDate(g.ultimaFecha)+'</div></div>';
     TRAZO_TIPOS.forEach(function(tt){
-      var lns = (s.lineas||[]).filter(function(l){ return l.tipo===tt.k && !l.recogido; });
+      var lns = g.items.filter(function(it){ return it.linea.tipo===tt.k; });
       if(!lns.length) return;
       h += '<div style="font-size:10px;font-weight:700;color:'+tt.color+';text-transform:uppercase;letter-spacing:.5px;margin:8px 0 4px;">'+tt.l+'</div>';
-      lns.forEach(function(l){
+      lns.forEach(function(it){
+        var l = it.linea, s = it.sol;
         h += '<div style="display:flex;align-items:center;gap:14px;background:#0d1117;border:1px solid #2c2c2e;border-left:3px solid '+tt.color+';border-radius:7px;padding:8px 12px;margin-bottom:5px;flex-wrap:wrap;">';
         h += '<div style="flex:1;min-width:200px;font-size:11px;color:#cbd5e1;">Tallas <b>'+(l.tallas||[]).join(', ')+'</b> · '+l.cantidad_trazos+' trazo(s) · '+l.ancho_util+'m · <span style="color:#fbbf24;">'+(l.colores||[]).join(', ')+'</span></div>';
         h += '<label style="display:flex;align-items:center;gap:5px;font-size:11px;color:#94a3b8;cursor:pointer;white-space:nowrap;"><input type="checkbox" '+(l.generado?'checked':'')+' data-sid="'+s.id+'" data-lid="'+l.id+'" onchange="tecpatronToggleGenerado(this.dataset.sid,this.dataset.lid,this.checked)" style="width:15px;height:15px;accent-color:#a855f7;cursor:pointer;"> Generado</label>';
