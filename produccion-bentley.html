@@ -18106,6 +18106,9 @@ async function toggleTrazosColorSolicitado(opId, color){
 // Atajo para cuando el trazo ya se pidió por fuera de la app (ej. verbalmente) — marca
 // TODOS los colores todavía pendientes de esa OP como solicitados de una sola vez, sin
 // tener que desplegar la fila y chulear color por color.
+// Puro check masivo — el equivalente de marcar uno por uno el checkbox de cada color
+// pendiente de la OP. No toca DB.trazos ni el Historial ni TecPatrón: es un mecanismo
+// totalmente aparte del proceso real de solicitud (builder → Historial → TecPatrón).
 async function marcarOPTrazosListos(opId){
   var op = DB.ops.find(function(o){ return o.id===opId; });
   if(!op) return;
@@ -18113,21 +18116,9 @@ async function marcarOPTrazosListos(opId){
   if(!pendientes.length) return;
   if(!op.trazos_color_solicitado) op.trazos_color_solicitado = {};
   pendientes.forEach(function(c){ op.trazos_color_solicitado[c] = true; });
-  // Esto también debe quedar en el Historial — si no, se pierde el rastro de que esos
-  // trazos ya se pidieron (aunque haya sido por fuera de la app, ej. verbalmente).
-  if(!DB.trazos) DB.trazos = {solicitudes:[]};
-  var sol = {
-    id: uid(), op_id: op.id, op_nombre: op.nombre_producto, categoria: op.categoria||'',
-    creado_por: getUser(), creado_en: hoy(), estado: 'ENVIADA', enviada_en: hoy(),
-    manual: true, colores_manual: pendientes, lineas: []
-  };
-  DB.trazos.solicitudes.push(sol);
-  if(!op.trazos_solicitudes) op.trazos_solicitudes = [];
-  op.trazos_solicitudes.push({solicitud_id: sol.id, fecha: hoy(), lineas: 0, manual:true});
   saveLocal();
-  var okTrazos = await guardarTrazos();
-  await guardarArchivo('ops', {ops: DB.ops});
-  if(okTrazos){ toast('Marcada: ya se pidieron los trazos de '+esc(fmtOpId(op.id)),'success'); renderPage('trazos'); }
+  var ok = await guardarArchivo('ops', {ops: DB.ops});
+  if(ok){ toast('Marcados los colores de '+esc(fmtOpId(op.id))+' como ya solicitados','success'); renderPage('trazos'); }
   else toast('Error al guardar','error');
 }
 
