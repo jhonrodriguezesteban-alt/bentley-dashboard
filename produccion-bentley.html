@@ -18581,8 +18581,18 @@ function _renderTecPatronTrazos(){
   var sols = (DB.trazos.solicitudes||[]).filter(function(s){
     return (s.lineas||[]).some(function(l){ return !l.recogido; });
   });
-  if(!sols.length) return '<div style="text-align:center;padding:40px;color:#374151;">No hay solicitudes de trazos pendientes.</div>';
 
+  var h = '';
+  if(!sols.length){
+    h += '<div style="text-align:center;padding:30px;color:#374151;">No hay solicitudes de trazos pendientes.</div>';
+  } else {
+    h += _renderTecPatronTrazosPendientes(sols);
+  }
+  h += _renderTecPatronTrazosEnviados();
+  return h;
+}
+
+function _renderTecPatronTrazosPendientes(sols){
   var porOp = {}; var orden = [];
   sols.forEach(function(s){
     if(!porOp[s.op_id]){ porOp[s.op_id] = {op_id:s.op_id, op_nombre:s.op_nombre, items:[], ultimaFecha:''}; orden.push(s.op_id); }
@@ -18616,6 +18626,41 @@ function _renderTecPatronTrazos(){
     });
     h += '</div>';
   });
+  return h;
+}
+
+// "Trazos enviados" — historial de líneas ya recogidas por producción. Sin esto, en
+// cuanto Jhon marca "Ya lo recogí" la línea desaparece por completo del lado de
+// Carolina y ella pierde el rastro de lo que ya entregó.
+function _renderTecPatronTrazosEnviados(){
+  var items = [];
+  (DB.trazos.solicitudes||[]).forEach(function(s){
+    (s.lineas||[]).forEach(function(l){
+      if(l.recogido) items.push({sol:s, linea:l});
+    });
+  });
+  if(!items.length) return '';
+  items.sort(function(a,b){ return (b.linea.recogido_en||'').localeCompare(a.linea.recogido_en||''); });
+
+  var porOp = {}; var orden = [];
+  items.forEach(function(it){
+    if(!porOp[it.sol.op_id]){ porOp[it.sol.op_id] = {op_id:it.sol.op_id, op_nombre:it.sol.op_nombre, items:[]}; orden.push(it.sol.op_id); }
+    porOp[it.sol.op_id].items.push(it);
+  });
+
+  var h = '<div style="margin-top:18px;">';
+  h += '<div style="font-size:11px;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">📦 Trazos enviados (ya recogidos por producción)</div>';
+  orden.forEach(function(opId){
+    var g = porOp[opId];
+    h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:10px;padding:12px 14px;margin-bottom:6px;opacity:.75;">';
+    h += '<div style="margin-bottom:6px;"><span style="font-family:var(--bebas);font-size:13px;color:#0a84ff;">'+esc(fmtOpId(opId))+'</span> <span style="font-size:12px;font-weight:700;color:#e2e8f0;">'+esc(g.op_nombre)+'</span></div>';
+    g.items.forEach(function(it){
+      var tt = _trazoTipoInfo(it.linea.tipo);
+      h += '<div style="font-size:11px;color:#94a3b8;padding:4px 0;border-left:2px solid '+tt.color+';padding-left:8px;margin-bottom:3px;">'+tt.l+' · tallas '+(it.linea.tallas||[]).join(', ')+' · '+(it.linea.colores||[]).join(', ')+' <span style="color:#475569;">· recogido '+fmtDate(it.linea.recogido_en)+'</span></div>';
+    });
+    h += '</div>';
+  });
+  h += '</div>';
   return h;
 }
 async function tecpatronToggleGenerado(sid, lid, val){
