@@ -18318,23 +18318,55 @@ function _renderTrazosHistorial(){
   return h;
 }
 
+// Una sola tarjeta por OP (igual que en TecPatrón) — todas sus líneas impresas y
+// pendientes de recoger van juntas, cada una con su propio botón "Ya lo recogí".
 function _renderTrazosPorRecoger(){
-  var items = [];
+  var pendientes = [], recogidos = [];
   (DB.trazos.solicitudes||[]).forEach(function(s){
     (s.lineas||[]).forEach(function(l){
-      if(l.impreso && !l.recogido) items.push({sol:s, linea:l});
+      if(!l.impreso) return;
+      (l.recogido ? recogidos : pendientes).push({sol:s, linea:l});
     });
   });
-  if(!items.length) return '<div style="text-align:center;padding:40px;color:#374151;">Nada pendiente por recoger.</div>';
+
   var h = '';
-  items.forEach(function(it){
-    var tt = _trazoTipoInfo(it.linea.tipo);
-    h += '<div style="display:flex;align-items:center;gap:10px;background:#0a0d14;border:1px solid #2c2c2e;border-left:3px solid '+tt.color+';border-radius:9px;padding:10px 14px;margin-bottom:6px;">';
-    h += '<div style="flex:1;min-width:0;"><span style="font-family:var(--bebas);font-size:13px;color:#0a84ff;">'+esc(fmtOpId(it.sol.op_id))+'</span> <span style="font-size:12px;font-weight:700;color:#e2e8f0;">'+esc(it.sol.op_nombre)+'</span>';
-    h += '<div style="font-size:10px;color:#64748b;margin-top:2px;">'+tt.l+' · tallas '+(it.linea.tallas||[]).join(', ')+' · '+it.linea.cantidad_trazos+' trazo(s) · '+it.linea.ancho_util+'m · '+(it.linea.colores||[]).join(', ')+'</div></div>';
-    h += '<button data-sid="'+it.sol.id+'" data-lid="'+it.linea.id+'" onclick="marcarTrazoRecogido(this.dataset.sid,this.dataset.lid)" style="background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.35);color:#34d399;border-radius:7px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;flex-shrink:0;">✓ Ya lo recogí</button>';
+  if(!pendientes.length){
+    h += '<div style="text-align:center;padding:30px;color:#374151;">Nada pendiente por recoger.</div>';
+  } else {
+    var porOp = {}; var orden = [];
+    pendientes.forEach(function(it){
+      if(!porOp[it.sol.op_id]){ porOp[it.sol.op_id] = {op_id:it.sol.op_id, op_nombre:it.sol.op_nombre, items:[]}; orden.push(it.sol.op_id); }
+      porOp[it.sol.op_id].items.push(it);
+    });
+    orden.forEach(function(opId){
+      var g = porOp[opId];
+      h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:10px;padding:14px;margin-bottom:8px;">';
+      h += '<div style="margin-bottom:8px;"><span style="font-family:var(--bebas);font-size:14px;color:#0a84ff;">'+esc(fmtOpId(opId))+'</span> <span style="font-size:13px;font-weight:700;color:#e2e8f0;">'+esc(g.op_nombre)+'</span></div>';
+      g.items.forEach(function(it){
+        var tt = _trazoTipoInfo(it.linea.tipo);
+        h += '<div style="display:flex;align-items:center;gap:10px;background:#0d1117;border:1px solid #2c2c2e;border-left:3px solid '+tt.color+';border-radius:7px;padding:8px 12px;margin-bottom:5px;flex-wrap:wrap;">';
+        h += '<div style="flex:1;min-width:200px;font-size:11px;color:#cbd5e1;">'+tt.l+' · tallas <b>'+(it.linea.tallas||[]).join(', ')+'</b> · '+it.linea.cantidad_trazos+' trazo(s) · '+it.linea.ancho_util+'m · <span style="color:#fbbf24;">'+(it.linea.colores||[]).join(', ')+'</span></div>';
+        h += '<button data-sid="'+it.sol.id+'" data-lid="'+it.linea.id+'" onclick="marcarTrazoRecogido(this.dataset.sid,this.dataset.lid)" style="background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.35);color:#34d399;border-radius:7px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;flex-shrink:0;">✓ Ya lo recogí</button>';
+        h += '</div>';
+      });
+      h += '</div>';
+    });
+  }
+
+  // Historial de lo ya recogido — para que no desaparezca sin dejar rastro al marcarlo.
+  if(recogidos.length){
+    recogidos.sort(function(a,b){ return (b.linea.recogido_en||'').localeCompare(a.linea.recogido_en||''); });
+    h += '<div style="margin-top:18px;">';
+    h += '<div style="font-size:11px;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">✅ Ya recogidos</div>';
+    recogidos.forEach(function(it){
+      var tt = _trazoTipoInfo(it.linea.tipo);
+      h += '<div style="display:flex;align-items:center;gap:10px;background:#0a0d14;border:1px solid #2c2c2e;border-left:3px solid '+tt.color+';border-radius:9px;padding:8px 14px;margin-bottom:5px;opacity:.7;">';
+      h += '<div style="flex:1;min-width:0;font-size:11px;color:#94a3b8;"><span style="font-family:var(--bebas);font-size:12px;color:#0a84ff;">'+esc(fmtOpId(it.sol.op_id))+'</span> '+esc(it.sol.op_nombre)+' · '+tt.l+' · tallas '+(it.linea.tallas||[]).join(', ')+' · '+(it.linea.colores||[]).join(', ')+'</div>';
+      h += '<div style="font-size:10px;color:#475569;white-space:nowrap;">Recogido '+fmtDate(it.linea.recogido_en)+'</div>';
+      h += '</div>';
+    });
     h += '</div>';
-  });
+  }
   return h;
 }
 
