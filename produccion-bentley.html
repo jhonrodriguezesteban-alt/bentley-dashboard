@@ -18116,6 +18116,15 @@ function _trazosOpsPendientes(){
   return order.map(function(oid){ return byOp[oid]; });
 }
 
+// Colores pendientes por cortar de una OP puntual (mismo criterio que _trazosOpsPendientes,
+// pero para una sola OP) — usado en el builder para no ofrecer colores ya cortados.
+function _trazosColoresPendientesOP(opId){
+  return _buildSubgs()
+    .filter(function(s){ return s.op.id===opId && (s.estado==='POR_REVISAR' || s.estado==='PENDIENTE_CORTAR'); })
+    .map(function(s){ return s.color; })
+    .filter(function(c,i,arr){ return arr.indexOf(c)===i; });
+}
+
 function _trazosTablaOP(op, coloresFiltro){
   var colores = (coloresFiltro && coloresFiltro.length) ? coloresFiltro : (op.colores&&op.colores.length?op.colores:['—']);
   var tallas = op.tallas||[];
@@ -18282,9 +18291,13 @@ function _renderLineasBuilderList(){
 function _renderBuilderTrazos(){
   var op = DB.ops.find(function(o){ return o.id===_trazoBuilderOpId; });
   if(!op) return;
-  var colores = op.colores&&op.colores.length ? op.colores : ['—'];
+  var coloresPendientes = _trazosColoresPendientesOP(op.id);
+  var colores = coloresPendientes.length ? coloresPendientes : (op.colores&&op.colores.length ? op.colores : ['—']);
   var tallas = op.tallas||[];
   var h = '<div style="margin-bottom:14px;font-size:12px;color:#64748b;">'+esc(op.nombre_producto||'')+' · '+esc(fmtOpId(op.id))+'</div>';
+  // Tabla de referencia — colores × tallas × total pendiente, para revisar cantidades
+  // mientras se arma la solicitud, sin tener que cerrar el modal.
+  h += '<div style="margin-bottom:14px;">'+_trazosTablaOP(op, coloresPendientes)+'</div>';
   h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:10px;padding:14px;margin-bottom:14px;">';
   h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">';
   h += '<div><label class="form-label">Tipo de trazo</label><select id="tb-tipo" class="form-control">';
