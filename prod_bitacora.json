@@ -17054,16 +17054,27 @@
       "user": "Isabel"
     },
     {
+      "categoria": "Chalecos",
+      "diseno_id": "id_1782184291758_la9ni12ix",
+      "estado_anterior": "EN_CORTE_MUESTRA",
+      "estado_nuevo": "EN_REVISION_GERENCIA",
       "id": "evt_1788976311895_7ykut",
-      "ts": 1788976311895,
-      "user": "Isabel",
+      "marca": "Bentley Kids",
+      "nombre": "CHALECO KENWORT",
       "tipo": "estado_diseno",
+      "ts": 1788976311895,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1788976329315_h421i",
+      "ts": 1788976329315,
+      "user": "Isabel",
+      "tipo": "diseno_responsable",
       "diseno_id": "id_1782184291758_la9ni12ix",
       "nombre": "CHALECO KENWORT",
       "categoria": "Chalecos",
-      "marca": "Bentley Kids",
-      "estado_anterior": "EN_CORTE_MUESTRA",
-      "estado_nuevo": "EN_REVISION_GERENCIA"
+      "resp_anterior": "Isa",
+      "resp_nuevo": "John"
     }
   ]
 }
