@@ -51,35 +51,42 @@
       "op_nombre": "PANTALON DONATELLA"
     },
     {
-      "id": "id_1788983260763_py3v163mk",
-      "op_id": "OP-2026-216",
-      "op_nombre": "CAMISA CLASICA BK",
       "categoria": "CAMISAS",
-      "creado_por": "Isabel",
       "creado_en": "2026-09-09",
-      "estado": "ENVIADA",
+      "creado_por": "Isabel",
       "enviada_en": "2026-09-09",
+      "estado": "ENVIADA",
+      "id": "id_1788983260763_py3v163mk",
       "lineas": [
         {
+          "ancho_util": 144,
+          "cantidad_trazos": 1,
+          "colores": [
+            "NEGRO",
+            "AZUL"
+          ],
+          "generado": true,
           "id": "id_1788983199089_gxqash7b4",
-          "tipo": "TELA_PRINCIPAL",
+          "impreso": false,
+          "recogido": false,
           "tallas": [
             "T4",
             "T6"
           ],
-          "cantidad_trazos": 1,
+          "tipo": "TELA_PRINCIPAL",
+          "generado_en": "2026-09-09"
+        },
+        {
           "ancho_util": 144,
+          "cantidad_trazos": 1,
           "colores": [
             "NEGRO",
             "AZUL"
           ],
           "generado": false,
-          "impreso": false,
-          "recogido": false
-        },
-        {
           "id": "id_1788983236465_1dmeq4mp7",
-          "tipo": "TELA_PRINCIPAL",
+          "impreso": false,
+          "recogido": false,
           "tallas": [
             "T8",
             "T10",
@@ -87,17 +94,11 @@
             "T14",
             "T16"
           ],
-          "cantidad_trazos": 1,
-          "ancho_util": 144,
-          "colores": [
-            "NEGRO",
-            "AZUL"
-          ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
+          "tipo": "TELA_PRINCIPAL"
         }
-      ]
+      ],
+      "op_id": "OP-2026-216",
+      "op_nombre": "CAMISA CLASICA BK"
     }
   ]
 }
