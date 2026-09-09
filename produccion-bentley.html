@@ -18333,6 +18333,9 @@ function _renderTrazosPorRecoger(){
   if(!pendientes.length){
     h += '<div style="text-align:center;padding:30px;color:#374151;">Nada pendiente por recoger.</div>';
   } else {
+    h += '<div style="display:flex;justify-content:flex-end;margin-bottom:10px;">';
+    h += '<button onclick="imprimirPorRecoger()" title="Abre el diálogo de impresión — en el celular, ahí mismo puedes elegir Guardar como PDF para enviarlo por WhatsApp" style="background:rgba(148,163,184,.1);border:1px solid #2c2c2e;color:#94a3b8;border-radius:7px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;">🖨 Imprimir / Guardar como PDF</button>';
+    h += '</div>';
     var porOp = {}; var orden = [];
     pendientes.forEach(function(it){
       if(!porOp[it.sol.op_id]){ porOp[it.sol.op_id] = {op_id:it.sol.op_id, op_nombre:it.sol.op_nombre, items:[]}; orden.push(it.sol.op_id); }
@@ -18484,6 +18487,47 @@ async function _trazoEnviarSolicitud(){
   } finally {
     _enviandoSolicitudTrazos = false;
   }
+}
+
+// Imprime (o "Guardar como PDF" desde el diálogo del navegador, útil en celular para
+// mandarlo por WhatsApp) todo lo que está pendiente por recoger en este momento,
+// agrupado por OP — igual que se ve en pantalla.
+function imprimirPorRecoger(){
+  var pendientes = [];
+  (DB.trazos.solicitudes||[]).forEach(function(s){
+    (s.lineas||[]).forEach(function(l){
+      if(l.impreso && !l.recogido) pendientes.push({sol:s, linea:l});
+    });
+  });
+  if(!pendientes.length) return;
+  var porOp = {}; var orden = [];
+  pendientes.forEach(function(it){
+    if(!porOp[it.sol.op_id]){ porOp[it.sol.op_id] = {op_id:it.sol.op_id, op_nombre:it.sol.op_nombre, items:[]}; orden.push(it.sol.op_id); }
+    porOp[it.sol.op_id].items.push(it);
+  });
+
+  var w = window.open('', '_blank');
+  if(!w) return;
+  var h = '<html><head><title>Trazos por recoger</title><style>';
+  h += 'body{font-family:Arial,sans-serif;padding:24px;color:#111;} h1{font-size:20px;margin-bottom:2px;} .sub{color:#666;font-size:12px;margin-bottom:18px;}';
+  h += '.op{font-size:15px;font-weight:800;margin:18px 0 6px;border-bottom:2px solid #333;padding-bottom:3px;}';
+  h += '.linea{border:1px solid #ccc;border-radius:6px;padding:8px 12px;margin-bottom:6px;font-size:13px;}';
+  h += '.linea b{display:inline-block;min-width:70px;}';
+  h += '</style></head><body>';
+  h += '<h1>📐 Trazos por recoger</h1>';
+  h += '<div class="sub">'+pendientes.length+' línea'+(pendientes.length!==1?'s':'')+' pendiente'+(pendientes.length!==1?'s':'')+' · '+fmtDate(hoy())+'</div>';
+  orden.forEach(function(opId){
+    var g = porOp[opId];
+    h += '<div class="op">'+esc(fmtOpId(opId))+' · '+esc(g.op_nombre)+'</div>';
+    g.items.forEach(function(it){
+      var tt = _trazoTipoInfo(it.linea.tipo);
+      h += '<div class="linea"><b>'+esc(tt.l)+'</b> Tallas: '+(it.linea.tallas||[]).join(', ')+' &nbsp;|&nbsp; Cantidad: '+it.linea.cantidad_trazos+' &nbsp;|&nbsp; Ancho: '+it.linea.ancho_util+'m &nbsp;|&nbsp; Color(es): <b>'+(it.linea.colores||[]).join(', ')+'</b></div>';
+    });
+  });
+  h += '</body></html>';
+  w.document.write(h);
+  w.document.close();
+  setTimeout(function(){ w.print(); }, 300);
 }
 
 function imprimirSolicitudTrazos(sid){
