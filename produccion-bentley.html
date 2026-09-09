@@ -18103,6 +18103,21 @@ async function toggleTrazosColorSolicitado(opId, color){
   renderPage('trazos');
 }
 
+// Atajo para cuando el trazo ya se pidió por fuera de la app (ej. verbalmente) — marca
+// TODOS los colores todavía pendientes de esa OP como solicitados de una sola vez, sin
+// tener que desplegar la fila y chulear color por color.
+async function marcarOPTrazosListos(opId){
+  var op = DB.ops.find(function(o){ return o.id===opId; });
+  if(!op) return;
+  var pendientes = _trazosColoresPendientesOP(opId);
+  if(!pendientes.length) return;
+  if(!op.trazos_color_solicitado) op.trazos_color_solicitado = {};
+  pendientes.forEach(function(c){ op.trazos_color_solicitado[c] = true; });
+  saveLocal();
+  var ok = await guardarArchivo('ops', {ops: DB.ops});
+  if(ok){ toast('Marcada: ya se pidieron los trazos de '+esc(fmtOpId(op.id)),'success'); renderPage('trazos'); }
+}
+
 // OPs con colores todavía sin cortar (Nuevas programaciones + Pendiente Cortar) — universo
 // del que se puede pedir trazos. Una vez el color pasa a Corte por Alistar en adelante ya
 // no tiene sentido seguir pidiéndole trazo.
@@ -18181,22 +18196,44 @@ function renderTrazos(){
   return h;
 }
 
+var _trazosBusq = '';
+function setTrazosBusq(v){ _trazosBusq = v; renderPage('trazos'); }
+
 function _renderTrazosPendientes(){
   var lista = _trazosOpsPendientes();
-  if(!lista.length) return '<div style="text-align:center;padding:40px;color:#374151;">No hay OPs pendientes por cortar.</div>';
-  var h = '';
+  var h = '<div style="position:relative;max-width:340px;margin-bottom:14px;">';
+  h += '<span style="position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:13px;pointer-events:none;">🔍</span>';
+  h += '<input type="text" value="'+esc(_trazosBusq)+'" oninput="setTrazosBusq(this.value)" placeholder="Buscar OP o referencia..." style="width:100%;box-sizing:border-box;background:#0a0d14;border:1px solid #2c2c2e;border-radius:9px;color:#e2e8f0;font-size:12px;padding:8px 12px 8px 32px;outline:none;">';
+  h += '</div>';
+
+  var q = _trazosBusq.trim().toUpperCase();
+  if(q){
+    lista = lista.filter(function(item){
+      var op = item.op;
+      var haystack = (fmtOpId(op.id)+' '+op.id+' '+(op.nombre_producto||'')+' '+(op.categoria||'')).toUpperCase();
+      return haystack.indexOf(q) >= 0;
+    });
+  }
+
+  if(!lista.length) return h + '<div style="text-align:center;padding:40px;color:#374151;">'+(q?'Nada coincide con "'+esc(_trazosBusq)+'".':'No hay OPs pendientes por cortar.')+'</div>';
+
   lista.forEach(function(item){
     var op = item.op;
     var detId = 'traz-op-'+op.id.replace(/[^A-Za-z0-9]/g,'');
     var coloresUnicos = item.colores.filter(function(c,i,arr){ return arr.indexOf(c)===i; });
     var pendConfirm = coloresUnicos.filter(function(c){ return !_trazosColorSolicitado(op,c); }).length;
+    var nSol = (op.trazos_solicitudes||[]).length;
     h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:10px;margin-bottom:8px;overflow:hidden;">';
-    h += '<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;gap:10px;">';
+    h += '<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;gap:10px;flex-wrap:wrap;">';
     h += '<div data-detid="'+detId+'" onclick="_trazosToggleOp(this.dataset.detid)" style="flex:1;min-width:0;cursor:pointer;">';
     h += '<span style="font-family:var(--bebas);font-size:15px;color:#0a84ff;">'+esc(fmtOpId(op.id))+'</span> <span style="font-size:13px;font-weight:700;color:#e2e8f0;margin-left:6px;">'+esc(op.nombre_producto||'')+'</span>';
+    if(nSol) h += ' <span style="font-size:9px;font-weight:800;background:rgba(10,132,255,.12);border:1px solid rgba(10,132,255,.35);color:#0a84ff;border-radius:5px;padding:2px 6px;margin-left:4px;">📐 '+nSol+' solicitud'+(nSol!==1?'es':'')+' enviada'+(nSol!==1?'s':'')+'</span>';
     h += '<div style="font-size:10px;color:#64748b;margin-top:2px;">'+esc(op.categoria||'')+' · '+coloresUnicos.length+' color'+(coloresUnicos.length!==1?'es':'')+(pendConfirm?' · <span style="color:#fbbf24;">'+pendConfirm+' sin marcar</span>':' · <span style="color:#34d399;">✓ todos marcados</span>')+'</div>';
     h += '</div>';
-    h += '<button data-opid="'+op.id+'" onclick="abrirBuilderTrazos(this.dataset.opid)" style="background:rgba(10,132,255,.12);border:1px solid rgba(10,132,255,.35);color:#0a84ff;border-radius:7px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;flex-shrink:0;">+ Solicitar trazos</button>';
+    h += '<div style="display:flex;gap:6px;flex-shrink:0;">';
+    if(pendConfirm) h += '<button data-opid="'+op.id+'" onclick="event.stopPropagation();marcarOPTrazosListos(this.dataset.opid)" title="Marca todos los colores pendientes de esta OP como ya solicitados y la saca de esta lista" style="background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.35);color:#34d399;border-radius:7px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;">✓ Ya se pidieron</button>';
+    h += '<button data-opid="'+op.id+'" onclick="abrirBuilderTrazos(this.dataset.opid)" style="background:rgba(10,132,255,.12);border:1px solid rgba(10,132,255,.35);color:#0a84ff;border-radius:7px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;">+ Solicitar trazos</button>';
+    h += '</div>';
     h += '</div>';
     h += '<div id="'+detId+'" style="display:none;padding:0 14px 14px;">';
     h += _trazosTablaOP(op, coloresUnicos);
@@ -18346,9 +18383,14 @@ async function _trazoEnviarSolicitud(){
     lineas: _trazoBuilderLineas
   };
   DB.trazos.solicitudes.push(sol);
+  // Etiquetar la OP con qué solicitud(es) de trazos se le han hecho — control/trazabilidad
+  // desde el lado de la orden, sin tener que ir a buscarlo en el módulo de Trazos.
+  if(!op.trazos_solicitudes) op.trazos_solicitudes = [];
+  op.trazos_solicitudes.push({solicitud_id: sol.id, fecha: hoy(), lineas: _trazoBuilderLineas.length});
   saveLocal();
-  var ok = await guardarTrazos();
-  if(ok){ toast('Solicitud de trazos enviada','success'); closeModal(); _trazoBuilderLineas=[]; _trazoBuilderOpId=null; renderPage('trazos'); }
+  var okTrazos = await guardarTrazos();
+  var okOps = await guardarArchivo('ops', {ops: DB.ops});
+  if(okTrazos){ toast('Solicitud de trazos enviada','success'); closeModal(); _trazoBuilderLineas=[]; _trazoBuilderOpId=null; renderPage('trazos'); }
   else toast('Error al guardar la solicitud','error');
 }
 
