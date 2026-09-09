@@ -16931,16 +16931,27 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1788790591941_zf4j5",
-      "ts": 1788790591941,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782162430849_8gi3mpnjv",
-      "nombre": "BODY BASICO",
       "categoria": "BODYS",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1782162430849_8gi3mpnjv",
       "estado_anterior": "EN_REVISION_GERENCIA",
-      "estado_nuevo": "LISTA_PRODUCCION"
+      "estado_nuevo": "LISTA_PRODUCCION",
+      "id": "evt_1788790591941_zf4j5",
+      "marca": "Bentley Kids",
+      "nombre": "BODY BASICO",
+      "tipo": "estado_diseno",
+      "ts": 1788790591941,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1788956099121_l3w93",
+      "ts": 1788956099121,
+      "user": "Isabel",
+      "tipo": "diseno_responsable",
+      "diseno_id": "id_1782401927717_21tmv43pe",
+      "nombre": "CONJUNTO JACOBO",
+      "categoria": "Conjuntos",
+      "resp_anterior": "Carolina",
+      "resp_nuevo": "John"
     }
   ]
 }
