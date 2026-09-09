@@ -18113,9 +18113,22 @@ async function marcarOPTrazosListos(opId){
   if(!pendientes.length) return;
   if(!op.trazos_color_solicitado) op.trazos_color_solicitado = {};
   pendientes.forEach(function(c){ op.trazos_color_solicitado[c] = true; });
+  // Esto también debe quedar en el Historial — si no, se pierde el rastro de que esos
+  // trazos ya se pidieron (aunque haya sido por fuera de la app, ej. verbalmente).
+  if(!DB.trazos) DB.trazos = {solicitudes:[]};
+  var sol = {
+    id: uid(), op_id: op.id, op_nombre: op.nombre_producto, categoria: op.categoria||'',
+    creado_por: getUser(), creado_en: hoy(), estado: 'ENVIADA', enviada_en: hoy(),
+    manual: true, colores_manual: pendientes, lineas: []
+  };
+  DB.trazos.solicitudes.push(sol);
+  if(!op.trazos_solicitudes) op.trazos_solicitudes = [];
+  op.trazos_solicitudes.push({solicitud_id: sol.id, fecha: hoy(), lineas: 0, manual:true});
   saveLocal();
-  var ok = await guardarArchivo('ops', {ops: DB.ops});
-  if(ok){ toast('Marcada: ya se pidieron los trazos de '+esc(fmtOpId(op.id)),'success'); renderPage('trazos'); }
+  var okTrazos = await guardarTrazos();
+  await guardarArchivo('ops', {ops: DB.ops});
+  if(okTrazos){ toast('Marcada: ya se pidieron los trazos de '+esc(fmtOpId(op.id)),'success'); renderPage('trazos'); }
+  else toast('Error al guardar','error');
 }
 
 // OPs con colores todavía sin cortar (Nuevas programaciones + Pendiente Cortar) — universo
@@ -18269,6 +18282,9 @@ function _trazosListaPendientesHTML(){
 // Historial (al desplegar una solicitud) como en Pendientes (para ver qué ya se pidió
 // de esa OP sin salir de la tarjeta).
 function _trazosRenderLineasSolicitud(s){
+  if(s.manual){
+    return '<div style="background:#0d1117;border:1px solid #2c2c2e;border-left:3px solid #64748b;border-radius:7px;padding:8px 12px;font-size:11px;color:#cbd5e1;">✓ Marcado manualmente como "ya pedido" — sin detalle de tallas/ancho por línea. Colores: <span style="color:#fbbf24;">'+(s.colores_manual||[]).join(', ')+'</span></div>';
+  }
   var h = '';
   TRAZO_TIPOS.forEach(function(tt){
     var lns = (s.lineas||[]).filter(function(l){ return l.tipo===tt.k; });
@@ -18293,16 +18309,16 @@ function _renderTrazosHistorial(){
     var totalLineas = (s.lineas||[]).length;
     var generadas = (s.lineas||[]).filter(function(l){ return l.generado; }).length;
     var impresas = (s.lineas||[]).filter(function(l){ return l.impreso; }).length;
-    var estadoTxt = totalLineas && impresas===totalLineas ? 'IMPRESO COMPLETO' : totalLineas && generadas===totalLineas ? 'GENERADO, FALTA IMPRIMIR' : generadas>0 ? 'EN PROCESO' : 'ENVIADA';
-    var estadoColor = totalLineas && impresas===totalLineas ? '#34d399' : generadas>0 ? '#fbbf24' : '#64748b';
+    var estadoTxt = s.manual ? 'MARCADO MANUAL' : totalLineas && impresas===totalLineas ? 'IMPRESO COMPLETO' : totalLineas && generadas===totalLineas ? 'GENERADO, FALTA IMPRIMIR' : generadas>0 ? 'EN PROCESO' : 'ENVIADA';
+    var estadoColor = s.manual ? '#a855f7' : totalLineas && impresas===totalLineas ? '#34d399' : generadas>0 ? '#fbbf24' : '#64748b';
     var detId = 'hist-sol-'+s.id;
     h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:10px;padding:12px 14px;margin-bottom:8px;">';
     h += '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">';
     h += '<div data-detid="'+detId+'" onclick="_trazosToggleOp(this.dataset.detid)" style="cursor:pointer;flex:1;min-width:0;"><span style="font-family:var(--bebas);font-size:14px;color:#0a84ff;">'+esc(fmtOpId(s.op_id))+'</span> <span style="font-size:13px;font-weight:700;color:#e2e8f0;">'+esc(s.op_nombre)+'</span>';
-    h += '<div style="font-size:10px;color:#64748b;margin-top:2px;">Enviada '+fmtDate(s.enviada_en)+' por '+esc(s.creado_por)+' · '+totalLineas+' línea'+(totalLineas!==1?'s':'')+' · <span style="text-decoration:underline dotted;">ver detalle</span></div></div>';
+    h += '<div style="font-size:10px;color:#64748b;margin-top:2px;">'+(s.manual?'Marcada':'Enviada')+' '+fmtDate(s.enviada_en)+' por '+esc(s.creado_por)+(s.manual?'':(' · '+totalLineas+' línea'+(totalLineas!==1?'s':'')))+' · <span style="text-decoration:underline dotted;">ver detalle</span></div></div>';
     h += '<div style="display:flex;align-items:center;gap:8px;">';
     h += '<span style="font-size:9px;font-weight:800;background:'+estadoColor+'18;border:1px solid '+estadoColor+'40;color:'+estadoColor+';border-radius:5px;padding:3px 8px;white-space:nowrap;">'+estadoTxt+'</span>';
-    h += '<button data-sid="'+s.id+'" onclick="imprimirSolicitudTrazos(this.dataset.sid)" style="background:rgba(148,163,184,.1);border:1px solid #2c2c2e;color:#94a3b8;border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;">🖨 Imprimir</button>';
+    if(!s.manual) h += '<button data-sid="'+s.id+'" onclick="imprimirSolicitudTrazos(this.dataset.sid)" style="background:rgba(148,163,184,.1);border:1px solid #2c2c2e;color:#94a3b8;border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;">🖨 Imprimir</button>';
     h += '</div></div>';
     h += '<div id="'+detId+'" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);">'+_trazosRenderLineasSolicitud(s)+'</div>';
     h += '</div>';
