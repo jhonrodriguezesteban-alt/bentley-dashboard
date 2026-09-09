@@ -18233,7 +18233,10 @@ function _trazosListaPendientesHTML(){
     var detId = 'traz-op-'+op.id.replace(/[^A-Za-z0-9]/g,'');
     var coloresUnicos = item.colores.filter(function(c,i,arr){ return arr.indexOf(c)===i; });
     var pendConfirm = coloresUnicos.filter(function(c){ return !_trazosColorSolicitado(op,c); }).length;
-    var nSol = (op.trazos_solicitudes||[]).length;
+    // Se cuenta directo sobre DB.trazos (fuente real) en vez de op.trazos_solicitudes —
+    // esa etiqueta en la OP es solo un resumen y puede faltar en solicitudes viejas.
+    var solsDeEstaOp = (DB.trazos.solicitudes||[]).filter(function(s){ return s.op_id===op.id; }).sort(function(a,b){ return (b.enviada_en||'').localeCompare(a.enviada_en||''); });
+    var nSol = solsDeEstaOp.length;
     h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:10px;margin-bottom:8px;overflow:hidden;">';
     h += '<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;gap:10px;flex-wrap:wrap;">';
     h += '<div data-detid="'+detId+'" onclick="_trazosToggleOp(this.dataset.detid)" style="flex:1;min-width:0;cursor:pointer;">';
@@ -18249,7 +18252,6 @@ function _trazosListaPendientesHTML(){
     h += '<div id="'+detId+'" style="display:none;padding:0 14px 14px;">';
     h += _trazosTablaOP(op, coloresUnicos);
     if(nSol){
-      var solsDeEstaOp = (DB.trazos.solicitudes||[]).filter(function(s){ return s.op_id===op.id; }).sort(function(a,b){ return (b.enviada_en||'').localeCompare(a.enviada_en||''); });
       h += '<div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06);">';
       h += '<div style="font-size:10px;font-weight:700;color:#0a84ff;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">📐 Trazos ya solicitados de esta OP</div>';
       solsDeEstaOp.forEach(function(s){
