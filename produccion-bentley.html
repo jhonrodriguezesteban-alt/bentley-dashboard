@@ -6024,6 +6024,7 @@ function abrirSat(id){
   body += '<div id="sat-tab-ficha">';
   body += '<div class="form-group"><label class="form-label">Nombre</label><input class="form-control" id="se-nombre" value="' + esc(sat.nombre) + '"></div>';
   body += '<div class="form-group"><label class="form-label">Tipo</label><select class="form-control" id="se-tipo"><option value="interno"' + ((sat.tipo||'interno')==='interno'?' selected':'') + '>Interno (persona/taller propio)</option><option value="maquila"' + (sat.tipo==='maquila'?' selected':'') + '>Maquilador externo (Fenio, Mariluz, etc.)</option></select></div>';
+  body += '<div class="form-group"><label class="form-label" style="display:flex;align-items:center;gap:6px;"><input type="checkbox" id="se-prodterm" ' + (sat.producto_terminado?'checked':'') + '> 🏷️ Vende producto terminado (no confecciona — ya viene hecho, ej: buzo de moños)</label></div>';
   body += '<div class="form-group"><div style="display:flex;align-items:center;justify-content:space-between;"><label class="form-label">Activo</label><input type="checkbox" class="toggle" id="se-activo" ' + (sat.activo?'checked':'') + '></div></div>';
   body += '<div class="form-row"><div class="form-group"><label class="form-label">Personas</label><input class="form-control" type="number" id="se-personas" value="' + (sat.personas||0) + '"></div><div class="form-group"><label class="form-label">Cap. semanal (uds)</label><input class="form-control" type="number" id="se-cap" value="' + (sat.capacidad_semanal||0) + '"></div></div>';
   body += '<div class="form-group"><label class="form-label">Teléfono</label><input class="form-control" id="se-tel" value="' + esc(sat.telefono||'') + '"></div>';
@@ -6084,6 +6085,7 @@ async function guardarSat(id){
   if(!sat) return;
   sat.nombre = document.getElementById('se-nombre').value.trim() || sat.nombre;
   sat.tipo = (document.getElementById('se-tipo')||{}).value || 'interno';
+  sat.producto_terminado = document.getElementById('se-prodterm').checked;
   sat.activo = document.getElementById('se-activo').checked;
   sat.personas = parseInt(document.getElementById('se-personas').value)||0;
   sat.capacidad_semanal = parseInt(document.getElementById('se-cap').value)||0;
@@ -6107,6 +6109,7 @@ async function guardarSat(id){
 function nuevoSatelite(){
   var body = '<div class="form-group"><label class="form-label">Nombre del satélite *</label><input class="form-control" id="ns-nombre" autocomplete="off" placeholder="Ej: SOFIA SANCHEZ"></div>';
   body += '<div class="form-group"><label class="form-label">Tipo</label><select class="form-control" id="ns-tipo" autocomplete="off"><option value="interno">Interno (persona/taller propio)</option><option value="maquila">Maquilador externo (Fenio, Mariluz, etc.)</option></select></div>';
+  body += '<div class="form-group"><label class="form-label" style="display:flex;align-items:center;gap:6px;"><input type="checkbox" id="ns-prodterm"> 🏷️ Vende producto terminado (no confecciona — ya viene hecho, ej: buzo de moños)</label></div>';
   body += '<div class="form-row"><div class="form-group"><label class="form-label">Personas</label><input class="form-control" type="number" id="ns-personas" autocomplete="off" value="0"></div><div class="form-group"><label class="form-label">Cap. semanal</label><input class="form-control" type="number" id="ns-cap" autocomplete="off" value="0"></div></div>';
   body += '<div class="form-group"><label class="form-label">Teléfono</label><input class="form-control" id="ns-tel" autocomplete="off"></div>';
   body += '<div class="form-group"><label class="form-label">Especialidades</label><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">' + CATEGORIAS.map(function(c){ return '<label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer;"><input type="checkbox" class="ns-esp" value="' + c + '"> ' + c + '</label>'; }).join('') + '</div></div>';
@@ -6120,6 +6123,7 @@ function nuevoSatelite(){
     var p=document.getElementById('ns-personas'); if(p) p.value='0';
     var c=document.getElementById('ns-cap'); if(c) c.value='0';
     var tel=document.getElementById('ns-tel'); if(tel) tel.value='';
+    var pt=document.getElementById('ns-prodterm'); if(pt) pt.checked=false;
     document.querySelectorAll('.ns-esp').forEach(function(cb){ cb.checked=false; });
   }, 30);
 }
@@ -9407,7 +9411,7 @@ function _buildRefBlock(r, idx, total){
   h += '</div>';
   var _maquilaSatsForm = (DB.satelites||[]).filter(function(s){ return s.tipo==='maquila'; });
   h += '<div class="form-group"><label class="form-label" style="display:flex;align-items:center;gap:6px;"><input type="checkbox" id="ref-esmaquila-'+r.rid+'" '+(r.maquilador_id?'checked':'')+' onchange="opRefToggleMaquila(\''+r.rid+'\')"> 🏭 Es maquilador externo</label>';
-  h += '<select class="form-control" id="ref-maquila-'+r.rid+'" style="'+(r.maquilador_id?'':'display:none;')+'margin-top:6px;">';
+  h += '<select class="form-control" id="ref-maquila-'+r.rid+'" style="'+(r.maquilador_id?'':'display:none;')+'margin-top:6px;" onchange="_opRefPreviewCodigo(\''+r.rid+'\')">';
   h += '<option value="">Seleccionar maquilador...</option>';
   _maquilaSatsForm.forEach(function(s){ h += '<option value="'+s.id+'"'+(r.maquilador_id===s.id?' selected':'')+'>'+esc(s.nombre)+'</option>'; });
   h += '</select>';
@@ -9575,7 +9579,9 @@ function _opRefPreviewCodigo(rid){
   if(!r || !r.nombre || r.ref){ hint.textContent=''; return; } // ya tiene código (catálogo o calculado)
   var disSelId = (document.getElementById('op-vinc-diseno-sel')||{}).value;
   var disSel = disSelId ? (DB.disenos||[]).find(function(d){ return d.id===disSelId; }) : null;
-  var prev = _refPreview(r.nombre, !!(disSel && disSel.proveedor));
+  var maquilaId = ((document.getElementById('ref-esmaquila-'+rid)||{}).checked) ? ((document.getElementById('ref-maquila-'+rid)||{}).value||'') : '';
+  var esProveedor = !!(disSel && disSel.proveedor) || _satEsProveedorProductoTerminado(maquilaId);
+  var prev = _refPreview(r.nombre, esProveedor);
   if(!prev){ hint.textContent=''; return; }
   if(prev.definitiva){
     // Referencia real ya existente (asignada antes o de una receta) — sí es seguro
@@ -9596,6 +9602,7 @@ function opRefToggleMaquila(rid){
   if(!ck || !sel) return;
   sel.style.display = ck.checked ? '' : 'none';
   if(!ck.checked) sel.value = '';
+  _opRefPreviewCodigo(rid);
 }
 
 function opRefColorAdd(rid){
@@ -11095,7 +11102,11 @@ function abrirFormDiseno(id){
   body += '</select>';
   body += '<input type="text" id="dis-cat-otro" class="form-control" placeholder="Escribe el nombre de la nueva categoría" style="margin-top:8px;display:'+(catEsOtro?'block':'none')+';" value="'+esc(catEsOtro?d.categoria:'')+'">';
   body += '</div>';
-  body += '<div class="form-group"><label class="form-label">Referencia / Nombre</label><input id="dis-nombre" class="form-control" value="'+esc(d?d.nombre:'')+'" placeholder="Nombre del diseño"></div>';
+  body += '<div class="form-group"><label class="form-label">Referencia / Nombre</label><input id="dis-nombre" class="form-control" value="'+esc(d?d.nombre:'')+'" placeholder="Nombre del diseño" oninput="_disRefCodPreview()"></div>';
+  var _disRefAsignada = d ? (DB.costeo && DB.costeo.referencias_asignadas && DB.costeo.referencias_asignadas[_refNombreKey(d.nombre)]) || '' : '';
+  body += '<div class="form-group"><label class="form-label">Referencia (código) <span style="color:var(--dim);font-size:11px;">(opcional — déjalo vacío para asignación automática)</span></label>';
+  body += '<input id="dis-refcod" class="form-control" maxlength="4" value="'+esc(_disRefAsignada)+'" placeholder="Ej: 1181" oninput="this.value=this.value.replace(/[^0-9]/g,\'\')">';
+  body += '<div id="dis-refcod-hint" style="font-size:10px;color:#fbbf24;margin-top:3px;"></div></div>';
   body += '<div class="form-group"><label class="form-label">Etapa Kanban</label><select id="dis-kanban" class="form-control">';
   DIS_KANBAN.forEach(function(c){ body += '<option value="'+c.k+'"'+((d&&(d.kanban_estado||'EN_DISENO_DIGITAL')===c.k)||((!d)&&c.k==='EN_DISENO_DIGITAL')?' selected':'')+'>'+c.label.toUpperCase()+'</option>'; });
   body += '</select></div>';
@@ -11105,7 +11116,7 @@ function abrirFormDiseno(id){
   var provActual = d ? (d.proveedor||'') : '';
   body += '<div class="form-group"><label class="form-label">Proveedor <span style="color:var(--dim);font-size:11px;">(opcional)</span></label>';
   body += '<div style="display:flex;gap:8px;">';
-  body += '<select id="dis-proveedor" class="form-control" onchange="if(this.value===\'__nuevo__\'){this.value=\'\';abrirNuevoProveedorForm();}">';
+  body += '<select id="dis-proveedor" class="form-control" onchange="if(this.value===\'__nuevo__\'){this.value=\'\';abrirNuevoProveedorForm();}_disRefCodPreview();">';
   body += '<option value="">— Sin proveedor —</option>';
   proveedores.forEach(function(p){ body += '<option value="'+esc(p)+'"'+(provActual===p?' selected':'')+'>'+esc(p)+'</option>'; });
   body += '<option value="__nuevo__">+ Nuevo proveedor...</option>';
@@ -11151,6 +11162,26 @@ function abrirFormDiseno(id){
   openModal(d?'Editar Diseño':'Nuevo Diseño', body, footer);
   var mcBtn = document.getElementById('modal-close');
   if(mcBtn) mcBtn.onclick = function(){ cancelarFormDiseno(); };
+  setTimeout(_disRefCodPreview, 30);
+}
+
+// Vista previa del código que se le asignaría si se deja vacío — no consume el
+// consecutivo, solo lo "asoma" (misma lógica que en el formulario de Crear OP).
+function _disRefCodPreview(){
+  var nombreEl = document.getElementById('dis-nombre');
+  var codEl = document.getElementById('dis-refcod');
+  var hint = document.getElementById('dis-refcod-hint');
+  if(!nombreEl || !codEl || !hint) return;
+  if(codEl.value){ hint.textContent = ''; return; } // el usuario ya escribió un código manual
+  var nombre = nombreEl.value.trim();
+  if(!nombre){ hint.textContent = ''; return; }
+  var provEl = document.getElementById('dis-proveedor');
+  var esProveedor = !!(provEl && provEl.value);
+  var prev = _refPreview(nombre, esProveedor);
+  if(!prev){ hint.textContent = ''; return; }
+  hint.textContent = prev.definitiva
+    ? '✓ Ya tiene referencia asignada: '+prev.codigo
+    : '🆕 Se le asignará automáticamente la referencia '+prev.codigo+' cuando se use en una OP';
 }
 
 function selTelaForm(k){
@@ -11320,6 +11351,9 @@ async function guardarDisenoForm(){
 
   var btn = document.getElementById('btn-guardar-diseno');
   if(btn){ btn.disabled=true; btn.textContent='Guardando...'; }
+
+  var refCod = (document.getElementById('dis-refcod') ? document.getElementById('dis-refcod').value.trim() : '');
+  if(refCod) await _refAsignarManual(nombre, refCod);
 
   if(editId){
     var ex = DB.disenos.find(function(d){ return d.id===editId; });
@@ -16026,15 +16060,36 @@ async function _asignarReferenciaAutoPorNombre(nombre, esProveedor){
   await guardarCosteo();
   return String(numero);
 }
+// Asignación manual — el usuario escribe el código a mano (desde el formulario de
+// Diseño, o desde el editor de recetas de Costeo) en vez de dejar que se calcule solo.
+async function _refAsignarManual(nombre, codigo){
+  _refInicializarContadores();
+  var key = _refNombreKey(nombre);
+  codigo = (codigo||'').trim();
+  if(!key || !codigo) return;
+  if(DB.costeo.referencias_asignadas[key] === codigo) return;
+  DB.costeo.referencias_asignadas[key] = codigo;
+  saveLocal();
+  await guardarCosteo();
+}
+// Si un satélite tipo "maquila" en realidad solo vende producto ya terminado
+// (no confecciona, ej: buzo de moños comprado a un proveedor externo), sus OPs
+// deben ir a la secuencia de "proveedor" (2066+) aunque no haya diseño vinculado.
+function _satEsProveedorProductoTerminado(satId){
+  if(!satId) return false;
+  var s = (DB.satelites||[]).find(function(x){ return x.id===satId; });
+  return !!(s && s.producto_terminado);
+}
 // Recorre las referencias de una OP recién creada y le asigna código a las que no
 // hayan venido ya de un catálogo existente (ref.ref vacío).
 async function _asignarReferenciasOP(op, disVincular){
-  var esProveedor = !!(disVincular && disVincular.proveedor);
+  var disProveedor = !!(disVincular && disVincular.proveedor);
   var refs = (op.referencias && op.referencias.length) ? op.referencias : [{nombre:op.nombre_producto, ref:''}];
   var huboAsignacion = false;
   for(var i=0; i<refs.length; i++){
     var ref = refs[i];
     if(ref.ref) continue; // ya tiene código de catálogo, no tocar
+    var esProveedor = disProveedor || _satEsProveedorProductoTerminado(ref.maquilador_id);
     var codigo = await _asignarReferenciaAutoPorNombre(ref.nombre, esProveedor);
     if(codigo){ ref.ref = codigo; huboAsignacion = true; }
   }
