@@ -16885,6 +16885,21 @@ function _modalAbrirSwap(cid, tipo){
   body+='<div id="modal-swap-lista" style="max-height:260px;overflow-y:auto;border:1px solid #2c2c2e;border-radius:8px;background:#080a10;">';
   body+=items.map(function(it){ return '<div class="ms-item" data-val="'+esc(valFn(it))+'" onclick="_modalConfirmarSwap(this.dataset.val)" style="padding:8px 12px;cursor:pointer;font-size:12px;color:#cbd5e1;border-bottom:1px solid #0d1117;">'+esc(labelFn(it))+'</div>'; }).join('');
   body+='</div>';
+  if(tipo==='MATERIAL'){
+    body+='<button id="swap-nuevamp-toggle" onclick="_swapMostrarNuevaMP()" style="width:100%;margin-top:10px;padding:8px;border-radius:8px;background:rgba(14,165,233,.08);border:1px dashed rgba(14,165,233,.35);color:#38bdf8;font-size:11px;font-weight:700;cursor:pointer;">+ Nueva materia prima</button>';
+    body+='<div id="swap-nuevamp-form" style="display:none;margin-top:10px;padding:12px;border:1px solid #2c2c2e;border-radius:8px;background:#080a10;">';
+    body+='<input id="swap-mp-nombre" class="form-control" placeholder="Nombre — Ej: TELA ALGODÓN 12/1 NEGRO" style="margin-bottom:8px;">';
+    body+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">';
+    body+='<select id="swap-mp-familia" class="form-control"><option value="">Familia —</option>'+COSTEO_MP_FAMILIAS.map(function(f){ return '<option value="'+f+'">'+f+'</option>'; }).join('')+'</select>';
+    body+='<input id="swap-mp-unidad" class="form-control" placeholder="Unidad (und, mt, kg…)">';
+    body+='</div>';
+    body+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">';
+    body+='<input id="swap-mp-precio" class="form-control" type="number" min="0" placeholder="Precio unitario ($)">';
+    body+='<input id="swap-mp-proveedor" class="form-control" placeholder="Proveedor (opcional)">';
+    body+='</div>';
+    body+='<button onclick="_swapCrearYUsarMP()" style="width:100%;background:#0ea5e9;border:none;border-radius:8px;color:#000;font-size:12px;font-weight:700;padding:9px;cursor:pointer;">Crear y usar en esta fila</button>';
+    body+='</div>';
+  }
   body+='<div style="display:flex;justify-content:flex-end;margin-top:12px;">';
   body+='<button onclick="document.getElementById(&quot;modal-swap-overlay&quot;).remove()" style="background:rgba(148,163,184,.1);border:1px solid #2c2c2e;color:#94a3b8;border-radius:8px;padding:8px 16px;font-size:12px;cursor:pointer;">Cancelar</button>';
   body+='</div></div>';
@@ -16914,6 +16929,35 @@ function _modalConfirmarSwap(val){
   else if(tipo==='SERVICIO') comp.servicio_id = val;
   var rec = _modalRecetaId ? (DB.costeo.recetas||[]).find(function(x){ return x.id===_modalRecetaId; }) : null;
   _renderModalReceta(rec);
+}
+function _swapMostrarNuevaMP(){
+  var f = document.getElementById('swap-nuevamp-form');
+  var btn = document.getElementById('swap-nuevamp-toggle');
+  if(!f) return;
+  var showing = f.style.display!=='none';
+  f.style.display = showing ? 'none' : 'block';
+  if(btn) btn.textContent = showing ? '+ Nueva materia prima' : '← Volver a la lista';
+  if(!showing) setTimeout(function(){ var i=document.getElementById('swap-mp-nombre'); if(i) i.focus(); },30);
+}
+// Crea la materia prima en el catálogo y de una vez la deja seleccionada en esta fila —
+// para no tener que salir a Materias Primas, crearla ahí y volver a buscarla acá.
+async function _swapCrearYUsarMP(){
+  var nombre = (document.getElementById('swap-mp-nombre').value||'').trim();
+  if(!nombre){ toast('El nombre es requerido','error'); return; }
+  var mp = {
+    id: _costeoId(),
+    nombre: nombre,
+    familia: (document.getElementById('swap-mp-familia')||{}).value||'',
+    unidad: (document.getElementById('swap-mp-unidad').value||'').trim(),
+    precio_unitario: parseFloat(document.getElementById('swap-mp-precio').value)||0,
+    proveedor: (document.getElementById('swap-mp-proveedor').value||'').trim()
+  };
+  if(!DB.costeo.mp) DB.costeo.mp = [];
+  DB.costeo.mp.push(mp);
+  var ok = await guardarCosteo();
+  if(!ok){ toast('No se pudo guardar la materia prima','error'); return; }
+  toast('Materia prima creada: '+nombre,'success');
+  _modalConfirmarSwap(mp.id);
 }
 function _modalAgregarComp(tipo){
   var puestos=DB.costeo.puestos||[]; var cifs=DB.costeo.tarifas_cif||[]; var mps=DB.costeo.mp||[]; var svcs=DB.costeo.servicios||[];
