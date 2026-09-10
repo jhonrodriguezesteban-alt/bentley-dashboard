@@ -4354,12 +4354,12 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-07-30",
       "trazos_color_solicitado": {
-        "NEGRO": true,
         "CAFE": false,
-        "MARFIL": false
-      }
+        "MARFIL": false,
+        "NEGRO": true
+      },
+      "updated_at": "2026-07-30"
     },
     {
       "cantidades": {
@@ -5049,8 +5049,8 @@
         "T16"
       ],
       "trazos_color_solicitado": {
-        "GRIS MEDIO": true,
-        "AVENA": true
+        "AVENA": true,
+        "GRIS MEDIO": true
       }
     },
     {
@@ -7666,9 +7666,9 @@
         "T16"
       ],
       "trazos_color_solicitado": {
-        "NEGRO": true,
         "AZUL OSCURO": true,
-        "MORA LECHE": true
+        "MORA LECHE": true,
+        "NEGRO": true
       }
     },
     {
@@ -7760,9 +7760,9 @@
         "T16"
       ],
       "trazos_color_solicitado": {
-        "NEGRO": true,
+        "AZUL OSCURO": false,
         "CAMEL": true,
-        "AZUL OSCURO": false
+        "NEGRO": true
       }
     },
     {
@@ -8848,6 +8848,9 @@
           "vmo": 10510
         }
       ],
+      "subg_estados": {
+        "OP-2026-125||CAMEL": "PENDIENTE_CORTAR"
+      },
       "tallas": [
         "T6",
         "T8",
@@ -8855,10 +8858,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {
-        "OP-2026-125||CAMEL": "PENDIENTE_CORTAR"
-      }
+      ]
     },
     {
       "cantidades": {
@@ -9305,8 +9305,8 @@
         "T16"
       ],
       "trazos_color_solicitado": {
-        "MARFIL": true,
-        "AZUL BEBE": true
+        "AZUL BEBE": true,
+        "MARFIL": true
       }
     },
     {
@@ -10618,9 +10618,9 @@
         "T16"
       ],
       "trazos_color_solicitado": {
-        "NEGRO": true,
         "CAMEL": true,
-        "GRIS": true
+        "GRIS": true,
+        "NEGRO": true
       }
     },
     {
@@ -11407,8 +11407,8 @@
         "T16"
       ],
       "trazos_color_solicitado": {
-        "NEGRO": true,
-        "MARFIL": true
+        "MARFIL": true,
+        "NEGRO": true
       }
     },
     {
@@ -11520,7 +11520,10 @@
         "T12",
         "T14",
         "T16"
-      ]
+      ],
+      "trazos_color_solicitado": {
+        "VERDE": true
+      }
     },
     {
       "cantidades": {
