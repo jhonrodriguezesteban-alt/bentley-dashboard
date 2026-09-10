@@ -17227,15 +17227,7 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1789070307884_96f6u",
-      "ts": 1789070307884,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-125",
-      "op_nombre": "OVERSIZED CAPOTA",
       "categoria": "CHAQUETAS",
-      "total_ots": 30,
-      "total_uds": 400,
       "colores": [
         "NEGRO",
         "VERDE MILITAR",
@@ -17243,9 +17235,33 @@
         "GRIS OSCURO",
         "MORA LECHE"
       ],
+      "id": "evt_1789070307884_96f6u",
+      "op_id": "OP-2026-125",
+      "op_nombre": "OVERSIZED CAPOTA",
       "referencias": [
         "OVERSIZED CAPOTA"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 30,
+      "total_uds": 400,
+      "ts": 1789070307884,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789070402443_9qlyc",
+      "ts": 1789070402443,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-125",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "referencia": "OVERSIZED CAPOTA",
+      "color": "CAMEL",
+      "talla": "todas las tallas",
+      "estado_anterior": "PENDIENTE_CORTAR",
+      "estado_nuevo": "PENDIENTE_CORTAR",
+      "bulk": true,
+      "uds": 80,
+      "motivo": "por corte"
     }
   ]
 }
