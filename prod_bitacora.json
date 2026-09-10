@@ -17344,15 +17344,33 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1789070585130_wfxws",
-      "ts": 1789070585130,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-125",
-      "nombre": "OVERSIZED CAPOTA",
       "categoria": "CHAQUETAS",
       "colores": 5,
-      "refs": 1
+      "id": "evt_1789070585130_wfxws",
+      "nombre": "OVERSIZED CAPOTA",
+      "op_id": "OP-2026-125",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1789070585130,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789071457863_576pu",
+      "ts": 1789071457863,
+      "user": "Jefa de Producción",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-103",
+      "op_nombre": "CHAQUETA TORERO NIÑA",
+      "categoria": "CHAQUETAS",
+      "total_ots": 12,
+      "total_uds": 180,
+      "colores": [
+        "AVENA",
+        "AZUL BEBE"
+      ],
+      "referencias": [
+        "CHAQUETA TORERO NIÑA"
+      ]
     }
   ]
 }
