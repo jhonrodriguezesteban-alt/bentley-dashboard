@@ -17355,22 +17355,38 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1789071457863_576pu",
-      "ts": 1789071457863,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-103",
-      "op_nombre": "CHAQUETA TORERO NIÑA",
       "categoria": "CHAQUETAS",
-      "total_ots": 12,
-      "total_uds": 180,
       "colores": [
         "AVENA",
         "AZUL BEBE"
       ],
+      "id": "evt_1789071457863_576pu",
+      "op_id": "OP-2026-103",
+      "op_nombre": "CHAQUETA TORERO NIÑA",
       "referencias": [
         "CHAQUETA TORERO NIÑA"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 12,
+      "total_uds": 180,
+      "ts": 1789071457863,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789071496995_qj7pf",
+      "ts": 1789071496995,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-103",
+      "op_nombre": "CHAQUETA TORERO NIÑA",
+      "referencia": "CHAQUETA TORERO NIÑA",
+      "color": "AVENA",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 90,
+      "motivo": "EN TALLER"
     }
   ]
 }
