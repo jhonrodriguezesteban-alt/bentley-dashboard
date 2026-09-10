@@ -7781,6 +7781,9 @@ function _opAplicarDisenoSeleccionado(disId){
     opRefRenderColorTags(rid); opRefGenTabla(rid);
   }
   opRefPreviewUpdate();
+  // El diseño trae o no proveedor asignado, lo que decide qué consecutivo de referencia
+  // aplica (propio vs. comprado) — recalcular la vista previa de todas las referencias.
+  _opRefs.forEach(function(rr){ _opRefPreviewCodigo(rr.rid); });
   toast('Diseño vinculado — se prellenaron nombre y categoría', 'success');
 }
 function mostrarFormNuevaOP(){
@@ -9364,7 +9367,7 @@ async function crearOP(){
     }
     // Producto nuevo (primera OP que se le hace): asignar automáticamente el siguiente
     // número de referencia — propio o de proveedor según el diseño de origen.
-    await _asignarReferenciaAuto(op, disVincular);
+    await _asignarReferenciasOP(op, disVincular);
     // Vincular receta de costeo por nombre
     var recVinculo = _planRecetaDeOp(op);
     if(recVinculo){
@@ -9399,7 +9402,7 @@ function _buildRefBlock(r, idx, total){
   h += '<div id="ref-sug-'+r.rid+'" style="display:none;position:absolute;left:0;right:0;top:100%;z-index:200;background:#1c1c1e;border:1px solid #334155;border-radius:8px;max-height:220px;overflow-y:auto;box-shadow:0 12px 32px rgba(0,0,0,.7);margin-top:4px;"></div>';
   h += '</div></div>';
   h += '<div class="form-row op-form-row-mob">';
-  h += '<div class="form-group"><label class="form-label">Ref. base (código)</label><input class="form-control" id="ref-ref-'+r.rid+'" value="'+esc(r.ref||'')+'" readonly style="background:rgba(255,255,255,.04);color:var(--dim);"></div>';
+  h += '<div class="form-group"><label class="form-label">Ref. base (código)</label><input class="form-control" id="ref-ref-'+r.rid+'" value="'+esc(r.ref||'')+'" readonly style="background:rgba(255,255,255,.04);color:var(--dim);"><div id="ref-refprev-'+r.rid+'" style="font-size:10px;color:#fbbf24;margin-top:3px;"></div></div>';
   h += '<div class="form-group"><label class="form-label">Valor M.O./unidad (COP)</label><input class="form-control" type="number" id="ref-vmo-'+r.rid+'" value="'+(r.vmo||1151)+'" oninput="opRefPreviewUpdate()"></div>';
   h += '</div>';
   var _maquilaSatsForm = (DB.satelites||[]).filter(function(s){ return s.tipo==='maquila'; });
@@ -9549,7 +9552,36 @@ function opRefSelCatalogo(el){
   opRefPreviewUpdate();
 }
 
-function opRefOcultarSug(rid){ var b=document.getElementById('ref-sug-'+rid); if(b) b.style.display='none'; }
+function opRefOcultarSug(rid){
+  var b=document.getElementById('ref-sug-'+rid); if(b) b.style.display='none';
+  _opRefPreviewCodigo(rid);
+}
+// Si el nombre escrito no coincide con nada del catálogo (por eso "Ref. base" sigue
+// vacío), se muestra ahí mismo una vista previa del código que se le va a asignar al
+// guardar — mismo consecutivo que después prellena Costeo. No consume el número todavía,
+// solo lo "asoma"; el que se guarda de verdad se calcula al momento de crear la OP.
+function _opRefPreviewCodigo(rid){
+  var r = _opRefs.find(function(x){ return x.rid===rid; });
+  var hint = document.getElementById('ref-refprev-'+rid);
+  var el = document.getElementById('ref-ref-'+rid);
+  if(!hint) return;
+  if(!r || !r.nombre || r.ref){ hint.textContent=''; return; } // ya tiene código (catálogo o calculado)
+  var disSelId = (document.getElementById('op-vinc-diseno-sel')||{}).value;
+  var disSel = disSelId ? (DB.disenos||[]).find(function(d){ return d.id===disSelId; }) : null;
+  var prev = _refPreview(r.nombre, !!(disSel && disSel.proveedor));
+  if(!prev){ hint.textContent=''; return; }
+  if(prev.definitiva){
+    // Referencia real ya existente (asignada antes o de una receta) — sí es seguro
+    // escribirla directo en el campo, porque ya no hay nada más que "reservar" al guardar.
+    if(el) el.value = prev.codigo;
+    hint.textContent = '✓ Referencia ya existente para este producto';
+  } else {
+    // Todavía no está reservada — si se escribiera en el input, el guardado la leería
+    // como si viniera de un catálogo real y se saltaría la asignación definitiva.
+    // Se avisa aparte, sin tocar el campo.
+    hint.textContent = '🆕 Producto nuevo — se le asignará la referencia '+prev.codigo+' al guardar';
+  }
+}
 
 function opRefToggleMaquila(rid){
   var ck = document.getElementById('ref-esmaquila-'+rid);
@@ -15951,33 +15983,60 @@ function guardarCosteo(){ return guardarArchivo('costeo', DB.costeo); }
 // — así, cuando después le armen la receta de Costeo, ya viene prellenado el mismo
 // número y nunca queda un producto con dos referencias distintas.
 function _refNombreKey(nombre){ return (nombre||'').trim().toUpperCase(); }
-async function _asignarReferenciaAuto(op, disVincular){
+function _refInicializarContadores(){
   if(!DB.costeo) DB.costeo = {};
   if(!DB.costeo.referencias_asignadas) DB.costeo.referencias_asignadas = {};
   if(DB.costeo.referencia_siguiente_propio==null) DB.costeo.referencia_siguiente_propio = 1181;
   if(DB.costeo.referencia_siguiente_proveedor==null) DB.costeo.referencia_siguiente_proveedor = 2066;
-
-  var key = _refNombreKey(op.nombre_producto);
-  if(!key) return;
-  if(DB.costeo.referencias_asignadas[key]) return; // ya asignada por una OP anterior de este producto
-
-  // Si el producto ya tiene receta de costeo con su propia referencia, no inventar una
-  // nueva — solo sincronizar el mapa con lo que ya existe.
-  var recExistente = (DB.costeo.recetas||[]).find(function(r){ return _refNombreKey(r.producto)===key; });
-  if(recExistente && recExistente.referencia){
-    DB.costeo.referencias_asignadas[key] = recExistente.referencia;
-    await guardarCosteo();
-    return;
-  }
-
-  var esProveedor = !!(disVincular && disVincular.proveedor);
+}
+// Vista previa (NO consume el consecutivo) — para mostrarle al usuario en el formulario
+// qué número le va a tocar antes de guardar. Si ya existe asignada o receta con
+// referencia, devuelve esa (definitiva). Si no, "asoma" el próximo número disponible.
+function _refPreview(nombre, esProveedor){
+  _refInicializarContadores();
+  var key = _refNombreKey(nombre);
+  if(!key) return null;
+  if(DB.costeo.referencias_asignadas[key]) return {codigo:DB.costeo.referencias_asignadas[key], definitiva:true};
+  var rec = (DB.costeo.recetas||[]).find(function(r){ return _refNombreKey(r.producto)===key; });
+  if(rec && rec.referencia) return {codigo:rec.referencia, definitiva:true};
+  var prox = esProveedor ? DB.costeo.referencia_siguiente_proveedor : DB.costeo.referencia_siguiente_propio;
+  return {codigo:String(prox), definitiva:false};
+}
+// Asignación real — consume el consecutivo y lo persiste. Se llama una sola vez por
+// nombre de producto, al guardar la OP (no en cada tecla del formulario).
+async function _asignarReferenciaAutoPorNombre(nombre, esProveedor){
+  _refInicializarContadores();
+  var key = _refNombreKey(nombre);
+  if(!key) return null;
+  if(DB.costeo.referencias_asignadas[key]) return DB.costeo.referencias_asignadas[key];
+  var rec = (DB.costeo.recetas||[]).find(function(r){ return _refNombreKey(r.producto)===key; });
+  if(rec && rec.referencia){ DB.costeo.referencias_asignadas[key] = rec.referencia; await guardarCosteo(); return rec.referencia; }
   var numero;
   if(esProveedor){ numero = DB.costeo.referencia_siguiente_proveedor; DB.costeo.referencia_siguiente_proveedor++; }
   else { numero = DB.costeo.referencia_siguiente_propio; DB.costeo.referencia_siguiente_propio++; }
   DB.costeo.referencias_asignadas[key] = String(numero);
   saveLocal();
-  var ok = await guardarCosteo();
-  if(ok) toast('Referencia '+numero+' asignada a '+op.nombre_producto+(esProveedor?' (proveedor)':' (propio)'), 'info');
+  await guardarCosteo();
+  return String(numero);
+}
+// Recorre las referencias de una OP recién creada y le asigna código a las que no
+// hayan venido ya de un catálogo existente (ref.ref vacío).
+async function _asignarReferenciasOP(op, disVincular){
+  var esProveedor = !!(disVincular && disVincular.proveedor);
+  var refs = (op.referencias && op.referencias.length) ? op.referencias : [{nombre:op.nombre_producto, ref:''}];
+  var huboAsignacion = false;
+  for(var i=0; i<refs.length; i++){
+    var ref = refs[i];
+    if(ref.ref) continue; // ya tiene código de catálogo, no tocar
+    var codigo = await _asignarReferenciaAutoPorNombre(ref.nombre, esProveedor);
+    if(codigo){ ref.ref = codigo; huboAsignacion = true; }
+  }
+  if(huboAsignacion){
+    saveLocal();
+    await guardarArchivo('ops', {ops: DB.ops});
+    var nuevos = refs.filter(function(r){ return r.ref; }).map(function(r){ return r.nombre+' → '+r.ref; }).join(', ');
+    toast('Referencia asignada: '+nuevos, 'info');
+  }
 }
 function fmtPct(v){ return (v*100).toFixed(1)+'%'; }
 function semaforoMargen(margen, meta){
