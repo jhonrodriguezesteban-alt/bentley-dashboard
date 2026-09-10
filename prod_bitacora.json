@@ -17200,15 +17200,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1789059472776_ho6jh",
-      "ts": 1789059472776,
-      "user": "Jefa de Producción",
-      "tipo": "satelite_editar",
-      "satelite_id": "id_1786636151819_l1ebf9vx9",
-      "nombre": "yurfraidid del rio valencia",
       "activo": true,
+      "capacidad": 0,
+      "id": "evt_1789059472776_ho6jh",
+      "nombre": "yurfraidid del rio valencia",
       "personas": 2,
-      "capacidad": 0
+      "satelite_id": "id_1786636151819_l1ebf9vx9",
+      "tipo": "satelite_editar",
+      "ts": 1789059472776,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789068748504_mjhs4",
+      "ts": 1789068748504,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-111",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "referencia": "OVERSIZED CAPOTA",
+      "color": "NEGRO",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 72,
+      "motivo": "EN TALLER"
     }
   ]
 }
