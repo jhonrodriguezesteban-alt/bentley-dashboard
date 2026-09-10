@@ -17458,6 +17458,7 @@ function _costeoPendListaHTML(){
       h += '</div>';
       h += '<div style="display:flex;gap:6px;flex-shrink:0;">';
       h += '<button data-nombre="'+esc(item.nombre)+'" onclick="_vincularRecetaModal(this.dataset.nombre)" style="background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.35);border-radius:7px;color:#34d399;font-size:11px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">🔗 Vincular</button>';
+      h += '<button data-nombre="'+esc(item.nombre)+'" onclick="_duplicarRecetaModal(this.dataset.nombre)" style="background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.35);border-radius:7px;color:#c084fc;font-size:11px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">📑 Duplicar</button>';
       h += '<button data-nombre="'+esc(item.nombre)+'" onclick="_crearRecetaDesde(this.dataset.nombre)" style="background:#0a84ff;border:none;border-radius:7px;color:#000;font-size:11px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">+ Crear</button>';
       h += '</div>';
       h += '</div>';
@@ -17480,6 +17481,7 @@ function _costeoPendListaHTML(){
       h += '</div>';
       h += '<div style="display:flex;gap:6px;flex-shrink:0;">';
       h += '<button data-nombre="'+esc(d.nombre)+'" onclick="_vincularRecetaModal(this.dataset.nombre)" style="background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.35);border-radius:7px;color:#34d399;font-size:11px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">🔗 Vincular</button>';
+      h += '<button data-nombre="'+esc(d.nombre)+'" onclick="_duplicarRecetaModal(this.dataset.nombre)" style="background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.35);border-radius:7px;color:#c084fc;font-size:11px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">📑 Duplicar</button>';
       h += '<button data-nombre="'+esc(d.nombre)+'" onclick="_crearRecetaDesde(this.dataset.nombre)" style="background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.35);border-radius:7px;color:#fbbf24;font-size:11px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">+ Crear</button>';
       h += '</div>';
       h += '</div>';
@@ -17552,6 +17554,59 @@ function _crearRecetaDesde(nombre){
     var refInp = document.getElementById('modal-rec-ref');
     var asignada = (DB.costeo.referencias_asignadas||{})[_refNombreKey(nombre)];
     if(refInp && asignada && !refInp.value) refInp.value = asignada;
+  }, 150);
+}
+
+// Elegir una receta parecida existente y usarla como punto de partida — copia todos
+// sus componentes (MOD/CIF/materiales/servicios) para no armar desde cero algo casi igual.
+function _duplicarRecetaModal(nombre){
+  var recetas = (DB.costeo.recetas||[]).slice().sort(function(a,b){ return a.producto.localeCompare(b.producto); });
+  var html = '<div style="padding:0 20px 20px;">';
+  html += '<p style="font-size:12px;color:#94a3b8;margin-bottom:14px;">Elige la receta que quieres copiar como base para <strong style="color:#e2e8f0;">'+esc(nombre)+'</strong>. Se abrirá para que ajustes lo que cambie antes de guardar.</p>';
+  html += '<input id="dup-busq" type="text" placeholder="🔍 Filtrar recetas..." oninput="_dupFiltrar(this.value)" style="width:100%;box-sizing:border-box;background:#0d1117;border:1px solid #2c2c2e;border-radius:8px;color:#e2e8f0;padding:8px 12px;font-size:12px;outline:none;margin-bottom:10px;" autofocus>';
+  html += '<div id="dup-lista" style="display:flex;flex-direction:column;gap:5px;max-height:380px;overflow-y:auto;">';
+  recetas.forEach(function(rec){
+    var res = calcResumen(rec);
+    html += '<div data-dup-id="'+rec.id+'" data-dup-nombre="'+esc(nombre)+'" onclick="_guardarDuplicadoReceta(this.dataset.dupNombre,this.dataset.dupId)" style="display:flex;align-items:center;justify-content:space-between;background:#0d1117;border:1px solid #2c2c2e;border-radius:8px;padding:10px 14px;cursor:pointer;transition:border-color .12s,background .12s;" onmouseover="this.style.borderColor=\'#a855f7\';this.style.background=\'rgba(168,85,247,.06)\'" onmouseout="this.style.borderColor=\'#2c2c2e\';this.style.background=\'#0d1117\'">';
+    html += '<div style="flex:1;min-width:0;">';
+    html += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(rec.producto)+'</div>';
+    if(rec.referencia) html += '<div style="font-size:10px;color:#475569;">Ref: '+esc(rec.referencia)+'</div>';
+    html += '</div>';
+    html += '<div style="text-align:right;flex-shrink:0;margin-left:14px;">';
+    html += '<div style="font-size:14px;font-weight:800;color:#e2e8f0;">'+fmtCopFull(res.total)+'</div>';
+    html += '<div style="font-size:9px;color:#475569;">'+rec.componentes.length+' comp.</div>';
+    html += '</div>';
+    html += '</div>';
+  });
+  html += '</div></div>';
+  openModal('📑 Duplicar receta para · '+nombre, html);
+  setTimeout(function(){ var i=document.getElementById('dup-busq'); if(i) i.focus(); },100);
+}
+function _dupFiltrar(q){
+  var el = document.getElementById('dup-lista'); if(!el) return;
+  var Q = (q||'').trim().toUpperCase();
+  el.querySelectorAll('[data-dup-id]').forEach(function(row){
+    var txt = row.textContent.toUpperCase();
+    row.style.display = (!Q || txt.indexOf(Q)>=0) ? '' : 'none';
+  });
+}
+function _guardarDuplicadoReceta(nombre, recetaId){
+  var src = (DB.costeo.recetas||[]).find(function(r){ return r.id===recetaId; });
+  closeModal();
+  if(!src) return;
+  _costeoTab = 'recetas';
+  renderPage('costeo');
+  _modalRecetaId = null; // se guarda como receta NUEVA, nunca sobrescribe la original
+  _modalRecetaComps = JSON.parse(JSON.stringify(src.componentes||[]));
+  _modalRecetaComps.forEach(function(c){ c.id = _costeoId(); }); // IDs propios, no compartidos con la fuente
+  _renderModalReceta(null);
+  setTimeout(function(){
+    var inp = document.getElementById('modal-rec-producto');
+    if(inp){ inp.value = nombre; inp.focus(); }
+    var refInp = document.getElementById('modal-rec-ref');
+    var asignada = (DB.costeo.referencias_asignadas||{})[_refNombreKey(nombre)];
+    if(refInp && asignada && !refInp.value) refInp.value = asignada;
+    toast('Receta copiada de "'+src.producto+'" — revisa y ajusta antes de guardar','info');
   }, 150);
 }
 
