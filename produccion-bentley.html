@@ -16754,12 +16754,13 @@ function _renderModalReceta(rec){
   html += '<div style="padding:20px 22px;overflow-y:auto;flex:1;">';
   html += '<div class="form-group" style="margin-bottom:18px;">';
   html += '<label class="form-label" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#64748b;">Nombre del Producto <span style="color:#ef4444;">*</span></label>';
-  html += '<input id="modal-rec-producto" class="form-control" style="font-size:14px;font-weight:600;" value="'+esc(rec?rec.producto:'')+'" placeholder="Ej: CHAQUETA CAZADORA" autofocus>';
+  html += '<input id="modal-rec-producto" class="form-control" style="font-size:14px;font-weight:600;" value="'+esc(rec?rec.producto:'')+'" placeholder="Ej: CHAQUETA CAZADORA" autofocus oninput="_modalRecRefPreview()">';
   html += '<div style="font-size:10px;color:#334155;margin-top:4px;">Usa el mismo nombre del producto para que vincule con las Órdenes de Producción.</div>';
   html += '</div>';
   html += '<div class="form-group" style="margin-bottom:18px;">';
   html += '<label class="form-label" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#64748b;">Referencia <span style="font-size:10px;color:#475569;">(4 dígitos)</span></label>';
-  html += '<input id="modal-rec-ref" class="form-control" style="font-size:16px;font-weight:700;letter-spacing:3px;width:120px;" maxlength="4" value="'+esc(rec&&rec.referencia?rec.referencia:'')+'" placeholder="1002">';
+  html += '<input id="modal-rec-ref" class="form-control" style="font-size:16px;font-weight:700;letter-spacing:3px;width:120px;" maxlength="4" value="'+esc(rec&&rec.referencia?rec.referencia:'')+'" placeholder="1002" oninput="_modalRecRefPreview()">';
+  html += '<div id="modal-rec-ref-hint" style="font-size:10px;color:#fbbf24;margin-top:4px;"></div>';
   html += '</div>';
   html += compListHtml;
   html += '</div>';
@@ -16772,6 +16773,7 @@ function _renderModalReceta(rec){
   html += '</div>';
 
   overlay.innerHTML = html;
+  setTimeout(_modalRecRefPreview, 30);
 }
 
 function _cerrarModalReceta(){
@@ -16779,6 +16781,23 @@ function _cerrarModalReceta(){
   if(el) el.remove();
   _modalRecetaId = null;
   _modalRecetaComps = [];
+}
+
+// Si el campo de referencia sigue vacío, muestra en amarillo qué número le tocaría
+// al guardar (mismo consecutivo que usa Crear OP) — sin reservarlo todavía.
+function _modalRecRefPreview(){
+  var nombreEl = document.getElementById('modal-rec-producto');
+  var refEl = document.getElementById('modal-rec-ref');
+  var hint = document.getElementById('modal-rec-ref-hint');
+  if(!nombreEl || !refEl || !hint) return;
+  if(refEl.value){ hint.textContent = ''; return; }
+  var nombre = nombreEl.value.trim();
+  if(!nombre){ hint.textContent = ''; return; }
+  var prev = _refPreview(nombre, false);
+  if(!prev){ hint.textContent = ''; return; }
+  hint.textContent = prev.definitiva
+    ? '✓ Ya tiene referencia asignada: '+prev.codigo
+    : '🆕 Se le asignará automáticamente la referencia '+prev.codigo+' al guardar';
 }
 
 function _modalEditComp(input){
@@ -17554,6 +17573,7 @@ function _crearRecetaDesde(nombre){
     var refInp = document.getElementById('modal-rec-ref');
     var asignada = (DB.costeo.referencias_asignadas||{})[_refNombreKey(nombre)];
     if(refInp && asignada && !refInp.value) refInp.value = asignada;
+    _modalRecRefPreview();
   }, 150);
 }
 
@@ -17606,6 +17626,7 @@ function _guardarDuplicadoReceta(nombre, recetaId){
     var refInp = document.getElementById('modal-rec-ref');
     var asignada = (DB.costeo.referencias_asignadas||{})[_refNombreKey(nombre)];
     if(refInp && asignada && !refInp.value) refInp.value = asignada;
+    _modalRecRefPreview();
     toast('Receta copiada de "'+src.producto+'" — revisa y ajusta antes de guardar','info');
   }, 150);
 }
