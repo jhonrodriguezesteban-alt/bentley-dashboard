@@ -9362,6 +9362,9 @@ async function crearOP(){
       guardarArchivo('disenos', {disenos: DB.disenos, disenos_cfg: DB.disenos_cfg});
       saveLocal();
     }
+    // Producto nuevo (primera OP que se le hace): asignar automáticamente el siguiente
+    // número de referencia — propio o de proveedor según el diseño de origen.
+    await _asignarReferenciaAuto(op, disVincular);
     // Vincular receta de costeo por nombre
     var recVinculo = _planRecetaDeOp(op);
     if(recVinculo){
@@ -15940,6 +15943,42 @@ function matchRecetaOP(nombre){
          rs.find(function(r){ var rp=r.producto.toUpperCase().trim(); return q.indexOf(rp)>=0||rp.indexOf(q)>=0; }) || null;
 }
 function guardarCosteo(){ return guardarArchivo('costeo', DB.costeo); }
+
+// ── Numeración automática de referencia (4 dígitos) ─────────────────────────────
+// Dos consecutivos independientes: fabricación propia y producto terminado comprado
+// a proveedor (se detecta por el diseño de origen — si tiene d.proveedor asignado).
+// Se asigna UNA sola vez por nombre de producto, la primera vez que se le crea una OP
+// — así, cuando después le armen la receta de Costeo, ya viene prellenado el mismo
+// número y nunca queda un producto con dos referencias distintas.
+function _refNombreKey(nombre){ return (nombre||'').trim().toUpperCase(); }
+async function _asignarReferenciaAuto(op, disVincular){
+  if(!DB.costeo) DB.costeo = {};
+  if(!DB.costeo.referencias_asignadas) DB.costeo.referencias_asignadas = {};
+  if(DB.costeo.referencia_siguiente_propio==null) DB.costeo.referencia_siguiente_propio = 1181;
+  if(DB.costeo.referencia_siguiente_proveedor==null) DB.costeo.referencia_siguiente_proveedor = 2066;
+
+  var key = _refNombreKey(op.nombre_producto);
+  if(!key) return;
+  if(DB.costeo.referencias_asignadas[key]) return; // ya asignada por una OP anterior de este producto
+
+  // Si el producto ya tiene receta de costeo con su propia referencia, no inventar una
+  // nueva — solo sincronizar el mapa con lo que ya existe.
+  var recExistente = (DB.costeo.recetas||[]).find(function(r){ return _refNombreKey(r.producto)===key; });
+  if(recExistente && recExistente.referencia){
+    DB.costeo.referencias_asignadas[key] = recExistente.referencia;
+    await guardarCosteo();
+    return;
+  }
+
+  var esProveedor = !!(disVincular && disVincular.proveedor);
+  var numero;
+  if(esProveedor){ numero = DB.costeo.referencia_siguiente_proveedor; DB.costeo.referencia_siguiente_proveedor++; }
+  else { numero = DB.costeo.referencia_siguiente_propio; DB.costeo.referencia_siguiente_propio++; }
+  DB.costeo.referencias_asignadas[key] = String(numero);
+  saveLocal();
+  var ok = await guardarCosteo();
+  if(ok) toast('Referencia '+numero+' asignada a '+op.nombre_producto+(esProveedor?' (proveedor)':' (propio)'), 'info');
+}
 function fmtPct(v){ return (v*100).toFixed(1)+'%'; }
 function semaforoMargen(margen, meta){
   if(!meta) return '#64748b';
@@ -17385,6 +17424,13 @@ function _crearRecetaDesde(nombre){
   setTimeout(function(){
     var inp = document.getElementById('modal-rec-producto');
     if(inp){ inp.value = nombre; inp.focus(); }
+    // Si ya se le asignó automáticamente un número de referencia al crear la primera OP
+    // de este producto, precargarlo aquí — así nunca queda un producto con dos números
+    // de referencia distintos (uno "de facto" desde que se creó la OP, y otro inventado
+    // aparte al armar la receta).
+    var refInp = document.getElementById('modal-rec-ref');
+    var asignada = (DB.costeo.referencias_asignadas||{})[_refNombreKey(nombre)];
+    if(refInp && asignada && !refInp.value) refInp.value = asignada;
   }, 150);
 }
 
