@@ -17201,6 +17201,25 @@ function renderCosteoPendientes(){
   return h;
 }
 
+// Cuando un diseño pasa a Órdenes de Producción se marca eliminado=true dentro de
+// DB.disenos (sigue existiendo el registro, solo se oculta del kanban), así que sus
+// fotos siguen recuperables — primero por el vínculo explícito que quedó en la OP
+// (op.diseno_origen_id), y si no lo tiene, por coincidencia exacta de nombre.
+function _costeoPendImagenesDeOP(item){
+  var opId = item.ops[0];
+  var op = opId ? (DB.ops||[]).find(function(o){ return o.id===opId; }) : null;
+  var dis = null;
+  if(op && op.diseno_origen_id){
+    dis = (DB.disenos||[]).find(function(d){ return d.id===op.diseno_origen_id; });
+  }
+  if(!dis){
+    var nombreOP = (item.nombre||'').trim().toUpperCase();
+    dis = (DB.disenos||[]).find(function(d){ return (d.nombre||'').trim().toUpperCase()===nombreOP; });
+  }
+  if(!dis || !dis.imagenes || !dis.imagenes.length) return [];
+  return dis.imagenes.map(function(im){ return im.url; }).filter(Boolean);
+}
+
 function _costeoPendListaHTML(){
   var recetasNombres = (DB.costeo.recetas||[]).map(function(r){ return r.producto.toUpperCase(); });
   var recMapa = DB.costeo.receta_map||{};
@@ -17253,8 +17272,11 @@ function _costeoPendListaHTML(){
     h += '<div style="font-size:11px;font-weight:700;color:#f87171;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">📋 OPs activas sin receta</div>';
     h += '<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:20px;">';
     opItems.forEach(function(item){
+      var imgs = _costeoPendImagenesDeOP(item);
       var catColor = {CHAQUETAS:'#6366f1',ABRIGOS:'#8b5cf6',CONJUNTOS:'#3b82f6',PANTALONES:'#10b981',BUZOS:'#0ea5e9',BLUSAS:'#f59e0b',CAMISETAS:'#34d399',VESTIDOS:'#ec4899',CAMISONES:'#a855f7'}[(item.categoria||'').toUpperCase().replace(' PR','')] || '#475569';
       h += '<div style="display:flex;align-items:center;gap:12px;background:#0d1117;border:1px solid rgba(239,68,68,.2);border-radius:9px;padding:11px 14px;">';
+      if(imgs.length) h += '<img src="'+esc(imgs[0])+'" onclick="abrirLightbox(this.src,'+JSON.stringify(imgs).replace(/"/g,'&quot;')+')" title="Click para ver en grande'+(imgs.length>1?' ('+imgs.length+' fotos)':'')+'" style="width:44px;height:44px;object-fit:cover;border-radius:7px;flex-shrink:0;cursor:pointer;border:1px solid #2c2c2e;">';
+      else h += '<div style="width:44px;height:44px;border-radius:7px;background:#1c1c1e;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;color:#334155;" title="Sin fotos del diseño de origen">🎨</div>';
       h += '<div style="flex:1;min-width:0;">';
       h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+esc(item.nombre)+'</div>';
       h += '<div style="display:flex;align-items:center;gap:8px;margin-top:4px;">';
