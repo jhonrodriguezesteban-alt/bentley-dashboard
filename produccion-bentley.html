@@ -9475,9 +9475,16 @@ function opRefRemove(rid){
 
 function opRefNombreInput(rid, val){
   var r = _opRefs.find(function(x){ return x.rid===rid; });
-  if(r) r.nombre = (val||'').trim().toUpperCase();
+  if(r){
+    // Si venía de una selección de catálogo (ref.ref ya puesto) y el usuario sigue
+    // escribiendo/cambia el nombre a mano, ese código ya no aplica — se limpia para que
+    // la vista previa de referencia automática pueda recalcularse.
+    if(r.ref && r.nombre !== (val||'').trim().toUpperCase()) r.ref = '';
+    r.nombre = (val||'').trim().toUpperCase();
+  }
   var q = (val||'').trim().toUpperCase();
   var box = document.getElementById('ref-sug-'+rid);
+  _opRefPreviewCodigo(rid); // vista previa en vivo, no solo al salir del campo
   if(!box) return;
   var precios = (DB.costos_mo && DB.costos_mo.precios) || [];
 
