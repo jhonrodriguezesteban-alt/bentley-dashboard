@@ -17389,20 +17389,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "AZUL BEBE",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1789071524690_kfbsc",
-      "ts": 1789071524690,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-103",
       "op_nombre": "CHAQUETA TORERO NIÑA",
       "referencia": "CHAQUETA TORERO NIÑA",
-      "color": "AZUL BEBE",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1789071524690,
       "uds": 90,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789157509057_tn52w",
+      "ts": 1789157509057,
+      "user": "Isabel",
+      "tipo": "diseno_comentario",
+      "diseno_id": "id_1782240897563_3lix3vy1y",
+      "nombre": "CAMIBUSO HOUSER",
+      "categoria": "Buzos",
+      "tiene_imagen": false,
+      "extracto": "Muestra confeccionada en tela miso de vitral. El cuello no da la medida. Para la"
     }
   ]
 }
