@@ -17230,7 +17230,7 @@ function _modalConfirmarComp(tipo){
   _renderModalReceta(rec);
 }
 
-function _guardarModalReceta(){
+async function _guardarModalReceta(){
   var producto = ((document.getElementById('modal-rec-producto')||{}).value||'').trim().toUpperCase();
   if(!producto){ toast('Nombre requerido','error'); return; }
   var referencia = ((document.getElementById('modal-rec-ref')||{}).value||'').trim().toUpperCase();
@@ -17238,6 +17238,12 @@ function _guardarModalReceta(){
   // Deshabilitar botón visualmente para evitar doble clic
   var btn = document.querySelector('#modal-receta-overlay button[onclick="_guardarModalReceta()"]');
   if(btn){ btn.disabled = true; btn.textContent = 'Guardando…'; }
+
+  // Si se dejó vacío, el hint amarillo solo era una vista previa — acá se consume de
+  // verdad el consecutivo (mismo que usa Crear OP), no antes.
+  if(!referencia){
+    referencia = (await _asignarReferenciaAutoPorNombre(producto, false)) || '';
+  }
 
   if(!DB.costeo.recetas) DB.costeo.recetas=[];
   if(_modalRecetaId){
