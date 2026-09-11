@@ -3924,20 +3924,28 @@
       "unidad": "UND"
     },
     {
+      "familia": "Telas",
       "id": "cid_1789100758215_3606",
       "nombre": "TELA SIROPE",
-      "familia": "Telas",
-      "unidad": "UND",
       "precio_unitario": 18500,
-      "proveedor": "VITRAL"
+      "proveedor": "VITRAL",
+      "unidad": "UND"
     },
     {
+      "familia": "Telas",
       "id": "cid_1789101203613_1859",
       "nombre": "TELA SNOWY",
-      "familia": "Telas",
-      "unidad": "UND",
       "precio_unitario": 18500,
-      "proveedor": "VITRAL"
+      "proveedor": "VITRAL",
+      "unidad": "UND"
+    },
+    {
+      "id": "cid_1789160163263_73",
+      "nombre": "tela miso",
+      "familia": "Telas",
+      "unidad": "und",
+      "precio_unitario": 13100,
+      "proveedor": "vitral"
     }
   ],
   "params": {
@@ -4788,9 +4796,9 @@
     "BLUSA JEN + BLUSA RAYAS JEN": "rec_blusa_jen_1118",
     "CHAQUETA ROCKY": "cid_1783374158054_3659",
     "CONJUNTO MANCHESTER": "rec_conjunto_hoodie_capota_p_a_1178",
+    "COUNTRY 2_0": "cid_1783378762151_5821",
     "HOODIE RANGLAND PAÑO ALGODON ABIERTO": "rec_hoodie_pa_o_algodon_abierto_1177",
-    "HOODIE RANGLAND PAÑO ALGODON CERRADO": "rec_hoodie_pa_o_algodon_cerrado_1172",
-    "COUNTRY 2_0": "cid_1783378762151_5821"
+    "HOODIE RANGLAND PAÑO ALGODON CERRADO": "rec_hoodie_pa_o_algodon_cerrado_1172"
   },
   "recetas": [
     {
@@ -36947,9 +36955,6 @@
       "referencia": "1190"
     },
     {
-      "id": "cid_1789100339732_852",
-      "producto": "CAMIBUSO PAÑO ALGODON RANGLAND",
-      "referencia": "1191",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -37181,12 +37186,12 @@
           "mp_id": "mp_31515_1061020",
           "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789100339732_852",
+      "producto": "CAMIBUSO PAÑO ALGODON RANGLAND",
+      "referencia": "1191"
     },
     {
-      "id": "cid_1789100412921_4638",
-      "producto": "CAMIBUSO PAÑO ALGODON MANGA OVERSIZED",
-      "referencia": "1192",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -37418,12 +37423,12 @@
           "mp_id": "mp_31515_1061020",
           "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789100412921_4638",
+      "producto": "CAMIBUSO PAÑO ALGODON MANGA OVERSIZED",
+      "referencia": "1192"
     },
     {
-      "id": "cid_1789100940765_2191",
-      "producto": "CONJUNTO SOLOMUN",
-      "referencia": "1193",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -37701,12 +37706,12 @@
           "mp_id": "mp_31515_1061020",
           "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789100940765_2191",
+      "producto": "CONJUNTO SOLOMUN",
+      "referencia": "1193"
     },
     {
-      "id": "cid_1789101474537_6876",
-      "producto": "CAMIBUZO NEVADO",
-      "referencia": "1194",
       "componentes": [
         {
           "id": "cid_1789101149168_9218",
@@ -37878,17 +37883,17 @@
         },
         {
           "id": "cid_1789101427265_4262",
-          "tipo": "CIF",
-          "zona": "corte",
           "tiempo_minutos": 60,
-          "unidades": 1
+          "tipo": "CIF",
+          "unidades": 1,
+          "zona": "corte"
         }
-      ]
+      ],
+      "id": "cid_1789101474537_6876",
+      "producto": "CAMIBUZO NEVADO",
+      "referencia": "1194"
     },
     {
-      "id": "cid_1789101883542_6974",
-      "producto": "PANTALON TRENCH",
-      "referencia": "1195",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -38152,7 +38157,10 @@
           "mp_id": "mp_31515_1061020",
           "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789101883542_6974",
+      "producto": "PANTALON TRENCH",
+      "referencia": "1195"
     }
   ],
   "referencia_siguiente_propio": 1196,
@@ -38160,19 +38168,19 @@
   "referencias_asignadas": {
     "BLUSA COSMO": "1182",
     "BLUSA POLLY": "1184",
+    "CAMIBUSO PAÑO ALGODON MANGA OVERSIZED": "1192",
+    "CAMIBUSO PAÑO ALGODON RANGLAND": "1191",
+    "CAMIBUZO NEVADO": "1194",
     "CAMISETA COCOA": "1190",
+    "CONJUNTO SOLOMUN": "1193",
     "HOODIE CAROLINA": "1187",
     "PANTALON POLLY": "1181",
+    "PANTALON TRENCH": "1195",
     "PANTALON VENOM": "1188",
     "PANTALON ZAMBA": "1183",
     "VESTIDO KIKI": "1189",
     "VESTIDO MINI DRESS": "1185",
-    "VESTIDO SOUL - REF: 1104": "1186",
-    "CAMIBUSO PAÑO ALGODON RANGLAND": "1191",
-    "CAMIBUSO PAÑO ALGODON MANGA OVERSIZED": "1192",
-    "CONJUNTO SOLOMUN": "1193",
-    "CAMIBUZO NEVADO": "1194",
-    "PANTALON TRENCH": "1195"
+    "VESTIDO SOUL - REF: 1104": "1186"
   },
   "servicios": [
     {
@@ -38838,19 +38846,19 @@
       "nombre": "SERVICIO DE CONFECCION CAMISETA COCOA"
     },
     {
+      "costo_unitario": 11000,
       "id": "cid_1789100847121_7149",
-      "nombre": "SERVICIO DE CONFECCION CONJUNTO SOLOMUN",
-      "costo_unitario": 11000
+      "nombre": "SERVICIO DE CONFECCION CONJUNTO SOLOMUN"
     },
     {
+      "costo_unitario": 6200,
       "id": "cid_1789101275688_8078",
-      "nombre": "SERVICIO DE CONFECCION CAMIBUSO NEVADO",
-      "costo_unitario": 6200
+      "nombre": "SERVICIO DE CONFECCION CAMIBUSO NEVADO"
     },
     {
+      "costo_unitario": 6000,
       "id": "cid_1789101794819_6585",
-      "nombre": "SERVICIO DE CONFECCION PANTALON TRENCH",
-      "costo_unitario": 6000
+      "nombre": "SERVICIO DE CONFECCION PANTALON TRENCH"
     }
   ],
   "tarifas_cif": [
