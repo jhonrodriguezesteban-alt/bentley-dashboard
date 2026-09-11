@@ -3916,12 +3916,12 @@
       "unidad": "UND"
     },
     {
+      "familia": "Telas",
       "id": "cid_1789099297268_7672",
       "nombre": "TELA COCOA",
-      "familia": "Telas",
-      "unidad": "UND",
       "precio_unitario": 16000,
-      "proveedor": "VITRAL"
+      "proveedor": "VITRAL",
+      "unidad": "UND"
     }
   ],
   "params": {
@@ -35701,9 +35701,6 @@
       "referencia": "1183"
     },
     {
-      "id": "cid_1789097635561_8953",
-      "producto": "VESTIDO MINI DRESS",
-      "referencia": "1185",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -35924,17 +35921,17 @@
           "tipo": "MATERIAL"
         },
         {
+          "consumo": 1,
           "id": "cid_1789097461708_8771",
-          "tipo": "MATERIAL",
           "mp_id": "mp_31313_10411716",
-          "consumo": 1
+          "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789097635561_8953",
+      "producto": "VESTIDO MINI DRESS",
+      "referencia": "1185"
     },
     {
-      "id": "cid_1789097974344_840",
-      "producto": "HOODIE CAROLINA",
-      "referencia": "1187",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -36194,12 +36191,12 @@
           "mp_id": "mp_31515_1061020",
           "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789097974344_840",
+      "producto": "HOODIE CAROLINA",
+      "referencia": "1187"
     },
     {
-      "id": "cid_1789098310256_6823",
-      "producto": "PANTALON VENOM",
-      "referencia": "1188",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -36453,12 +36450,12 @@
           "mp_id": "mp_31515_1061020",
           "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789098310256_6823",
+      "producto": "PANTALON VENOM",
+      "referencia": "1188"
     },
     {
-      "id": "cid_1789098775195_6944",
-      "producto": "VESTIDO KIKI",
-      "referencia": "1189",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -36685,17 +36682,17 @@
           "tipo": "MATERIAL"
         },
         {
+          "consumo": 1.5,
           "id": "cid_1789098707303_4090",
-          "tipo": "MATERIAL",
           "mp_id": "mp_31414_10111116",
-          "consumo": 1.5
+          "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789098775195_6944",
+      "producto": "VESTIDO KIKI",
+      "referencia": "1189"
     },
     {
-      "id": "cid_1789099590026_4465",
-      "producto": "CAMISETA COCOA",
-      "referencia": "1190",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -36927,22 +36924,26 @@
           "mp_id": "mp_31515_1061020",
           "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789099590026_4465",
+      "producto": "CAMISETA COCOA",
+      "referencia": "1190"
     }
   ],
-  "referencia_siguiente_propio": 1191,
+  "referencia_siguiente_propio": 1192,
   "referencia_siguiente_proveedor": 2066,
   "referencias_asignadas": {
     "BLUSA COSMO": "1182",
     "BLUSA POLLY": "1184",
+    "CAMISETA COCOA": "1190",
+    "HOODIE CAROLINA": "1187",
     "PANTALON POLLY": "1181",
+    "PANTALON VENOM": "1188",
     "PANTALON ZAMBA": "1183",
+    "VESTIDO KIKI": "1189",
     "VESTIDO MINI DRESS": "1185",
     "VESTIDO SOUL - REF: 1104": "1186",
-    "HOODIE CAROLINA": "1187",
-    "PANTALON VENOM": "1188",
-    "VESTIDO KIKI": "1189",
-    "CAMISETA COCOA": "1190"
+    "CAMIBUSO PAÑO ALGODON RANGLAND": "1191"
   },
   "servicios": [
     {
@@ -37583,29 +37584,29 @@
       "nombre": "SERVICIO DE CONFECCION PANTALON ZAMBA"
     },
     {
+      "costo_unitario": 6500,
       "id": "cid_1789097500622_412",
-      "nombre": "SERVICIO DE CONFECCION VESTIDO MINI DRESS",
-      "costo_unitario": 6500
+      "nombre": "SERVICIO DE CONFECCION VESTIDO MINI DRESS"
     },
     {
+      "costo_unitario": 6800,
       "id": "cid_1789097898310_7491",
-      "nombre": "SERVICIO DE CONFECCION HOODIE CAROLINA",
-      "costo_unitario": 6800
+      "nombre": "SERVICIO DE CONFECCION HOODIE CAROLINA"
     },
     {
+      "costo_unitario": 5000,
       "id": "cid_1789098137459_714",
-      "nombre": "SERVICIO DE CONFECCION PANTALON VENOM",
-      "costo_unitario": 5000
+      "nombre": "SERVICIO DE CONFECCION PANTALON VENOM"
     },
     {
+      "costo_unitario": 3800,
       "id": "cid_1789098645300_1124",
-      "nombre": "SERVICIO DE CONFECCION VESTIKO KIKI",
-      "costo_unitario": 3800
+      "nombre": "SERVICIO DE CONFECCION VESTIKO KIKI"
     },
     {
+      "costo_unitario": 2400,
       "id": "cid_1789099473252_6379",
-      "nombre": "SERVICIO DE CONFECCION CAMISETA COCOA",
-      "costo_unitario": 2400
+      "nombre": "SERVICIO DE CONFECCION CAMISETA COCOA"
     }
   ],
   "tarifas_cif": [
