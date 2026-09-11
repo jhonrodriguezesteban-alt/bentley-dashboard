@@ -16356,7 +16356,7 @@ function _listaRecetas(recetas){
     var res=calcResumen(rec);
     var precios=calcPrecios(res.total,rec.producto);
     var nComp=(rec.componentes||[]).length;
-    h+='<div style="background:#1c1c1e;border:1px solid #2c2c2e;border-left:4px solid #0a84ff;border-radius:10px;padding:16px 20px;cursor:pointer;transition:background .12s;" onclick="verReceta(\''+rec.id+'\')" onmouseover="this.style.background=\'#181c28\'" onmouseout="this.style.background=\'\'">';
+    h+='<div style="background:#1c1c1e;border:1px solid #2c2c2e;border-left:4px solid #0a84ff;border-radius:10px;padding:16px 20px;cursor:pointer;transition:background .12s;" onclick="verReceta(\''+rec.id+'\')" onmouseenter="this.style.background=\'#181c28\'" onmouseleave="this.style.background=\'\'">';
     h+='<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">';
     h+='<div style="flex:1;min-width:0;">';
     if(rec.referencia) h+='<span style="font-size:14px;font-weight:700;color:#0a84ff;letter-spacing:2px;font-family:var(--bebas);margin-right:8px;">'+esc(rec.referencia)+'</span>';
