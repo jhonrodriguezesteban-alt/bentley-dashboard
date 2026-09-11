@@ -3912,8 +3912,8 @@
     {
       "id": "cid_1789096882240_2939",
       "nombre": "CREMALLERA PANTALON",
-      "unidad": "UND",
-      "precio_unitario": 1500
+      "precio_unitario": 1500,
+      "unidad": "UND"
     }
   ],
   "params": {
@@ -35202,9 +35202,6 @@
       "referencia": "1181"
     },
     {
-      "id": "cid_1789096543075_5117",
-      "producto": "BLUSA POLLY",
-      "referencia": "1184",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -35436,12 +35433,12 @@
           "mp_id": "mp_31010_11510116",
           "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789096543075_5117",
+      "producto": "BLUSA POLLY",
+      "referencia": "1184"
     },
     {
-      "id": "cid_1789097225630_5422",
-      "producto": "PANTALON ZAMBA",
-      "referencia": "1183",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -35684,27 +35681,30 @@
           "tipo": "MATERIAL"
         },
         {
+          "consumo": 1,
           "id": "cid_1789096921597_8601",
-          "tipo": "MATERIAL",
           "mp_id": "cid_1789096882240_2939",
-          "consumo": 1
+          "tipo": "MATERIAL"
         },
         {
+          "consumo": 1,
           "id": "cid_1789096940589_5457",
-          "tipo": "MATERIAL",
           "mp_id": "mp_32312_11110233",
-          "consumo": 1
+          "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789097225630_5422",
+      "producto": "PANTALON ZAMBA",
+      "referencia": "1183"
     }
   ],
   "referencia_siguiente_propio": 1185,
   "referencia_siguiente_proveedor": 2066,
   "referencias_asignadas": {
     "BLUSA COSMO": "1182",
+    "BLUSA POLLY": "1184",
     "PANTALON POLLY": "1181",
-    "PANTALON ZAMBA": "1183",
-    "BLUSA POLLY": "1184"
+    "PANTALON ZAMBA": "1183"
   },
   "servicios": [
     {
@@ -36335,13 +36335,18 @@
       "nombre": "SERVICIO DE CONFECCION PANTALON POLLY"
     },
     {
+      "costo_unitario": 2300,
       "id": "cid_1789096516663_5042",
-      "nombre": "SERVICIO DE CONFECCION BLUSA POLLY",
-      "costo_unitario": 2300
+      "nombre": "SERVICIO DE CONFECCION BLUSA POLLY"
     },
     {
+      "costo_unitario": 6500,
       "id": "cid_1789096990107_6372",
-      "nombre": "SERVICIO DE CONFECCION PANTALON ZAMBA",
+      "nombre": "SERVICIO DE CONFECCION PANTALON ZAMBA"
+    },
+    {
+      "id": "cid_1789097500622_412",
+      "nombre": "SERVICIO DE CONFECCION VESTIDO MINI DRESS",
       "costo_unitario": 6500
     }
   ],
