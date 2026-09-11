@@ -16955,7 +16955,13 @@ async function _swapCrearYUsarMP(){
   if(!DB.costeo.mp) DB.costeo.mp = [];
   DB.costeo.mp.push(mp);
   var ok = await guardarCosteo();
-  if(!ok){ toast('No se pudo guardar la materia prima','error'); return; }
+  if(!ok){
+    // Revertir el push local — si no, un reintento vuelve a agregar otra copia
+    // y al guardar de verdad quedan dos materias primas duplicadas.
+    DB.costeo.mp = DB.costeo.mp.filter(function(m){ return m.id!==mp.id; });
+    toast('No se pudo guardar — revisa tu conexión e intenta de nuevo','error');
+    return;
+  }
   toast('Materia prima creada: '+nombre,'success');
   _modalConfirmarSwap(mp.id);
 }
