@@ -37,7 +37,6 @@
       "OP-2026-126||ROSA",
       "OP-2026-126||VERDE MILITAR",
       "OP-2026-126||AZUL OSCURO",
-      "OP-2026-125||MORA LECHE",
       "OP-2026-125||GRIS OSCURO",
       "OP-2026-125||CAMEL",
       "OP-2026-130||MARFIL",
@@ -141,8 +140,6 @@
       "OP-2026-098||SALMON",
       "OP-2026-101||MARFIL",
       "OP-2026-079||MARFIL",
-      "OP-2026-103||AZUL BEBE",
-      "OP-2026-103||AVENA",
       "OP-0033||VINOTINTO",
       "OP-2026-075||MARFIL",
       "OP-2026-074||GRIS OSCURO",
@@ -158,7 +155,6 @@
       "OP-2026-111||MARFIL",
       "OP-2026-111||MORA LECHE",
       "OP-2026-111||CAMEL",
-      "OP-2026-111||NEGRO",
       "OP-2026-112||AZUL OSCURO",
       "OP-2026-112||CAMEL",
       "OP-2026-112||MARFIL",
@@ -1010,6 +1006,50 @@
       "op_id": "OP-2026-095",
       "op_nombre": "CHAQUETA SUEDE OLD MONEY",
       "uds": 96
+    },
+    {
+      "key": "OP-2026-125||MORA LECHE",
+      "op_id": "OP-2026-125",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "categoria": "CHAQUETAS",
+      "color": "MORA LECHE",
+      "uds": 60,
+      "mes_planeado": "2026-09",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-09-11"
+    },
+    {
+      "key": "OP-2026-103||AZUL BEBE",
+      "op_id": "OP-2026-103",
+      "op_nombre": "CHAQUETA TORERO NIÑA",
+      "categoria": "CHAQUETAS",
+      "color": "AZUL BEBE",
+      "uds": 90,
+      "mes_planeado": "2026-09",
+      "estado_al_salir": "EN_CONFECCION",
+      "fecha_deteccion": "2026-09-11"
+    },
+    {
+      "key": "OP-2026-103||AVENA",
+      "op_id": "OP-2026-103",
+      "op_nombre": "CHAQUETA TORERO NIÑA",
+      "categoria": "CHAQUETAS",
+      "color": "AVENA",
+      "uds": 90,
+      "mes_planeado": "2026-09",
+      "estado_al_salir": "EN_CONFECCION",
+      "fecha_deteccion": "2026-09-11"
+    },
+    {
+      "key": "OP-2026-111||NEGRO",
+      "op_id": "OP-2026-111",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "categoria": "CHAQUETAS",
+      "color": "NEGRO",
+      "uds": 72,
+      "mes_planeado": "2026-09",
+      "estado_al_salir": "EN_CONFECCION",
+      "fecha_deteccion": "2026-09-11"
     }
   ],
   "confirmadas": {
@@ -1951,13 +1991,13 @@
     "REF||CHAQUETAS||CHAQUETA DISCOVERY": true,
     "REF||CONJUNTOS||CONJUNTO CHELSY": true,
     "REF||CONJUNTOS||CONJUNTO DAKOTA": true,
+    "REF||CONJUNTOS||CONJUNTO JACOBO": true,
     "REF||CONJUNTOS||SUPERIOR CON CORTE RANGLAND": true,
     "REF||FALDA||FALDA ESCOSES": true,
     "REF||PANTALONES||PANTALON POLLY": true,
     "REF||PANTALONES||PANTALON RAVE": true,
     "REF||PANTALONES||PANTALON TRENCH": true,
     "REF||PANTALONES||PANTALON VENOM": true,
-    "REF||VESTIDOS||VESTIDO KIKI": true,
-    "REF||CONJUNTOS||CONJUNTO JACOBO": true
+    "REF||VESTIDOS||VESTIDO KIKI": true
   }
 }
