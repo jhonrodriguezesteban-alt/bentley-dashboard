@@ -16796,6 +16796,7 @@ function _cerrarModalReceta(){
   if(el) el.remove();
   _modalRecetaId = null;
   _modalRecetaComps = [];
+  _guardandoReceta = false;
 }
 
 // Si el campo de referencia sigue vacío, muestra en amarillo qué número le tocaría
@@ -17230,14 +17231,21 @@ function _modalConfirmarComp(tipo){
   _renderModalReceta(rec);
 }
 
+var _guardandoReceta = false;
 async function _guardarModalReceta(){
+  // Guardarropa: el guardado de Costeo puede tardar 20-30 s (archivo pesado), y si en ese
+  // tiempo el modal se vuelve a dibujar (cambiar insumo, etc.) el botón "Guardando..."
+  // se recrea habilitado — un segundo clic real duplicaba la receta completa. Esta bandera
+  // global no depende del DOM, así que bloquea el reintento pase lo que pase en pantalla.
+  if(_guardandoReceta){ toast('Ya se está guardando, espera…','info'); return; }
   var producto = ((document.getElementById('modal-rec-producto')||{}).value||'').trim().toUpperCase();
   if(!producto){ toast('Nombre requerido','error'); return; }
   var referencia = ((document.getElementById('modal-rec-ref')||{}).value||'').trim().toUpperCase();
+  _guardandoReceta = true;
 
   // Deshabilitar botón visualmente para evitar doble clic
   var btn = document.querySelector('#modal-receta-overlay button[onclick="_guardarModalReceta()"]');
-  if(btn){ btn.disabled = true; btn.textContent = 'Guardando…'; }
+  if(btn){ btn.disabled = true; btn.textContent = 'Guardando… puede tardar 20-30 s'; }
 
   // Si se dejó vacío, el hint amarillo solo era una vista previa — acá se consume de
   // verdad el consecutivo (mismo que usa Crear OP), no antes.
@@ -17253,7 +17261,7 @@ async function _guardarModalReceta(){
     DB.costeo.recetas.push({id:_costeoId(), producto:producto, referencia:referencia, componentes:JSON.parse(JSON.stringify(_modalRecetaComps))});
   }
 
-  function _reactivarBtn(){ if(btn){ btn.disabled=false; btn.textContent='Guardar Receta'; } }
+  function _reactivarBtn(){ _guardandoReceta = false; if(btn){ btn.disabled=false; btn.textContent='Guardar Receta'; } }
 
   // Si costeo está ocupado (otro guardado en curso), reintentar hasta 3 veces con pausa
   var intentos = 0;
@@ -17261,6 +17269,7 @@ async function _guardarModalReceta(){
     intentos++;
     guardarCosteo().then(function(ok){
       if(ok){
+        _guardandoReceta = false;
         _cerrarModalReceta();
         renderPage('costeo');
         toast('Receta guardada','success');
