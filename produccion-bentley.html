@@ -16902,7 +16902,8 @@ function _modalAbrirSwap(cid, tipo){
     body+='<input id="swap-mp-precio" class="form-control" type="number" min="0" placeholder="Precio unitario ($)">';
     body+='<input id="swap-mp-proveedor" class="form-control" placeholder="Proveedor (opcional)">';
     body+='</div>';
-    body+='<button onclick="_swapCrearYUsarMP()" style="width:100%;background:#0ea5e9;border:none;border-radius:8px;color:#000;font-size:12px;font-weight:700;padding:9px;cursor:pointer;">Crear y usar en esta fila</button>';
+    body+='<button id="swap-mp-crear-btn" onclick="_swapCrearYUsarMP()" style="width:100%;background:#0ea5e9;border:none;border-radius:8px;color:#000;font-size:12px;font-weight:700;padding:9px;cursor:pointer;">Crear y usar en esta fila</button>';
+    body+='<div style="font-size:10px;color:#334155;margin-top:6px;">El guardado sube todo el archivo de Costeo — puede tardar hasta 20-30 s en conexiones lentas. No cierres ni le des doble clic.</div>';
     body+='</div>';
   }
   body+='<div style="display:flex;justify-content:flex-end;margin-top:12px;">';
@@ -16959,11 +16960,16 @@ async function _swapCrearYUsarMP(){
   };
   if(!DB.costeo.mp) DB.costeo.mp = [];
   DB.costeo.mp.push(mp);
+  // El archivo de Costeo pesa ~1MB y se reenvía completo en cada guardado — puede tardar
+  // 20-30 s en conexiones lentas. Avisar en el botón para que no parezca que se congeló.
+  var btn = document.getElementById('swap-mp-crear-btn');
+  if(btn){ btn.disabled = true; btn.textContent = 'Guardando… puede tardar 20-30 s'; }
   var ok = await guardarCosteo();
   if(!ok){
     // Revertir el push local — si no, un reintento vuelve a agregar otra copia
     // y al guardar de verdad quedan dos materias primas duplicadas.
     DB.costeo.mp = DB.costeo.mp.filter(function(m){ return m.id!==mp.id; });
+    if(btn){ btn.disabled = false; btn.textContent = 'Crear y usar en esta fila'; }
     toast('No se pudo guardar — revisa tu conexión e intenta de nuevo','error');
     return;
   }
