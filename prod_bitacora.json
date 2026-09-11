@@ -17472,15 +17472,31 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1789158209056_z6i5u",
-      "ts": 1789158209056,
-      "user": "Isabel",
-      "tipo": "diseno_responsable",
-      "diseno_id": "id_1782182862281_fvrd1mdu6",
-      "nombre": "PANTALON HOUSER",
       "categoria": "Pantalones",
+      "diseno_id": "id_1782182862281_fvrd1mdu6",
+      "id": "evt_1789158209056_z6i5u",
+      "nombre": "PANTALON HOUSER",
       "resp_anterior": "Isa",
-      "resp_nuevo": "John"
+      "resp_nuevo": "John",
+      "tipo": "diseno_responsable",
+      "ts": 1789158209056,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1789164754020_ybb73",
+      "ts": 1789164754020,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0037",
+      "op_nombre": "CHALECO ACOLCHADO MANY",
+      "referencia": "CHALECO ACOLCHADO MANY",
+      "color": "MARFIL",
+      "talla": "todas las tallas",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": true,
+      "uds": 135,
+      "motivo": "ENTREGADO"
     }
   ]
 }
