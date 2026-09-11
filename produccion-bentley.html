@@ -1937,7 +1937,12 @@ async function _guardarArchivoCore(key, data){
         toast('Error GitHub ' + putR.status + ': ' + (err.message||''), 'error');
         _saving[key] = false; return false;
       }
-    } catch(e){ _saving[key]=false; toast('Error de red: ' + e.message, 'error'); return false; }
+    } catch(e){
+      // Fallo de red (ej. "Load failed" por wifi inestable) — antes se rendía al primer
+      // intento; ahora reintenta igual que el caso de conflicto 409, con pausa creciente.
+      if(attempt < 2){ await new Promise(function(r){ setTimeout(r, 800 + attempt*600); }); continue; }
+      _saving[key]=false; toast('Error de red tras 3 intentos: ' + e.message + ' — revisa tu conexión', 'error'); return false;
+    }
   }
   _saving[key] = false; return false;
 }
