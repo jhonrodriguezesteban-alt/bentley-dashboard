@@ -1645,7 +1645,7 @@
         }
       ],
       "subg_estados": {
-        "OP-0037||MARFIL": "EN_CONFECCION",
+        "OP-0037||MARFIL": "ALISTAMIENTO",
         "OP-0037||NEGRO": "EN_CONFECCION",
         "OP-0037||ROSA": "EN_CONFECCION"
       },
@@ -1659,10 +1659,10 @@
         "T16"
       ],
       "total_uds": 137,
-      "updated_at": "2026-08-27",
       "trazos_color_solicitado": {
         "BEIGE": true
-      }
+      },
+      "updated_at": "2026-08-27"
     },
     {
       "cantidades": {
@@ -3597,11 +3597,11 @@
         "T16"
       ],
       "total_uds": 434,
-      "updated_at": "2026-08-04",
       "trazos_color_solicitado": {
         "NEGRO": true,
         "ROSA": true
-      }
+      },
+      "updated_at": "2026-08-04"
     },
     {
       "cantidades": {
@@ -4267,8 +4267,7 @@
         "AVENA": false,
         "GRIS OSCURO": false
       },
-      "updated_at": "2026-07-30",
-      "subg_estados": {}
+      "updated_at": "2026-07-30"
     },
     {
       "cantidades": {
@@ -4367,8 +4366,7 @@
         "MARFIL": false,
         "NEGRO": true
       },
-      "updated_at": "2026-07-30",
-      "subg_estados": {}
+      "updated_at": "2026-07-30"
     },
     {
       "cantidades": {
@@ -4589,8 +4587,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -4685,8 +4682,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-08-25",
-      "subg_estados": {}
+      "updated_at": "2026-08-25"
     },
     {
       "cantidades": {
@@ -4980,8 +4976,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -5063,8 +5058,7 @@
       "trazos_color_solicitado": {
         "AVENA": true,
         "GRIS MEDIO": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -5705,8 +5699,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -6086,8 +6079,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -6459,8 +6451,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -6534,8 +6525,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -6741,6 +6731,10 @@
         "AVENA",
         "AZUL BEBE"
       ],
+      "consumibles_check": {
+        "rec_chaqueta_torero_ni_a_1101__c49_23": true,
+        "rec_chaqueta_torero_ni_a_1101__c49_24": true
+      },
       "cortador": "Corte Carbajal",
       "created_at": "2026-07-31",
       "created_by": "John Rodriguez",
@@ -6786,6 +6780,10 @@
           "vmo": 8408
         }
       ],
+      "subg_estados": {
+        "OP-2026-103||AVENA": "EN_CONFECCION",
+        "OP-2026-103||AZUL BEBE": "EN_CONFECCION"
+      },
       "tallas": [
         "T6",
         "T8",
@@ -6797,14 +6795,6 @@
       "trazos_color_solicitado": {
         "AVENA": true,
         "AZUL BEBE": true
-      },
-      "subg_estados": {
-        "OP-2026-103||AVENA": "EN_CONFECCION",
-        "OP-2026-103||AZUL BEBE": "EN_CONFECCION"
-      },
-      "consumibles_check": {
-        "rec_chaqueta_torero_ni_a_1101__c49_23": true,
-        "rec_chaqueta_torero_ni_a_1101__c49_24": true
       }
     },
     {
@@ -6997,8 +6987,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -7339,8 +7328,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-08-04",
-      "subg_estados": {}
+      "updated_at": "2026-08-04"
     },
     {
       "cantidades": {
@@ -7696,8 +7684,7 @@
         "AZUL OSCURO": true,
         "MORA LECHE": true,
         "NEGRO": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -7791,8 +7778,7 @@
         "AZUL OSCURO": false,
         "CAMEL": true,
         "NEGRO": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -8427,8 +8413,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -8517,8 +8502,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -8615,8 +8599,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -8695,8 +8678,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-08-24",
-      "subg_estados": {}
+      "updated_at": "2026-08-24"
     },
     {
       "cantidades": {
@@ -8771,41 +8753,40 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
-        "NEGRO_T6": 8,
-        "NEGRO_T8": 8,
-        "NEGRO_T10": 16,
-        "NEGRO_T12": 16,
-        "NEGRO_T14": 16,
-        "NEGRO_T16": 16,
-        "VERDE MILITAR_T6": 8,
-        "VERDE MILITAR_T8": 8,
-        "VERDE MILITAR_T10": 16,
-        "VERDE MILITAR_T12": 16,
-        "VERDE MILITAR_T14": 16,
-        "VERDE MILITAR_T16": 16,
-        "CAMEL_T6": 8,
-        "CAMEL_T8": 8,
         "CAMEL_T10": 16,
         "CAMEL_T12": 16,
         "CAMEL_T14": 16,
         "CAMEL_T16": 16,
-        "GRIS OSCURO_T6": 8,
-        "GRIS OSCURO_T8": 8,
+        "CAMEL_T6": 8,
+        "CAMEL_T8": 8,
         "GRIS OSCURO_T10": 16,
         "GRIS OSCURO_T12": 16,
         "GRIS OSCURO_T14": 16,
         "GRIS OSCURO_T16": 16,
-        "MORA LECHE_T6": 8,
-        "MORA LECHE_T8": 8,
+        "GRIS OSCURO_T6": 8,
+        "GRIS OSCURO_T8": 8,
         "MORA LECHE_T10": 11,
         "MORA LECHE_T12": 11,
         "MORA LECHE_T14": 11,
-        "MORA LECHE_T16": 11
+        "MORA LECHE_T16": 11,
+        "MORA LECHE_T6": 8,
+        "MORA LECHE_T8": 8,
+        "NEGRO_T10": 16,
+        "NEGRO_T12": 16,
+        "NEGRO_T14": 16,
+        "NEGRO_T16": 16,
+        "NEGRO_T6": 8,
+        "NEGRO_T8": 8,
+        "VERDE MILITAR_T10": 16,
+        "VERDE MILITAR_T12": 16,
+        "VERDE MILITAR_T14": 16,
+        "VERDE MILITAR_T16": 16,
+        "VERDE MILITAR_T6": 8,
+        "VERDE MILITAR_T8": 8
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -8827,10 +8808,39 @@
       "receta_nombre": "OVERSIZED CAPOTA - REF: 1058",
       "referencias": [
         {
-          "nombre": "OVERSIZED CAPOTA",
-          "ref": "1058",
+          "cantidades": {
+            "CAMEL_T10": 16,
+            "CAMEL_T12": 16,
+            "CAMEL_T14": 16,
+            "CAMEL_T16": 16,
+            "CAMEL_T6": 8,
+            "CAMEL_T8": 8,
+            "GRIS OSCURO_T10": 16,
+            "GRIS OSCURO_T12": 16,
+            "GRIS OSCURO_T14": 16,
+            "GRIS OSCURO_T16": 16,
+            "GRIS OSCURO_T6": 8,
+            "GRIS OSCURO_T8": 8,
+            "MORA LECHE_T10": 11,
+            "MORA LECHE_T12": 11,
+            "MORA LECHE_T14": 11,
+            "MORA LECHE_T16": 11,
+            "MORA LECHE_T6": 8,
+            "MORA LECHE_T8": 8,
+            "NEGRO_T10": 16,
+            "NEGRO_T12": 16,
+            "NEGRO_T14": 16,
+            "NEGRO_T16": 16,
+            "NEGRO_T6": 8,
+            "NEGRO_T8": 8,
+            "VERDE MILITAR_T10": 16,
+            "VERDE MILITAR_T12": 16,
+            "VERDE MILITAR_T14": 16,
+            "VERDE MILITAR_T16": 16,
+            "VERDE MILITAR_T6": 8,
+            "VERDE MILITAR_T8": 8
+          },
           "cat": "CHAQUETAS",
-          "vmo": 10510,
           "colores": [
             "NEGRO",
             "VERDE MILITAR",
@@ -8838,6 +8848,9 @@
             "GRIS OSCURO",
             "MORA LECHE"
           ],
+          "maquilador_id": "",
+          "nombre": "OVERSIZED CAPOTA",
+          "ref": "1058",
           "tallas": [
             "T6",
             "T8",
@@ -8846,39 +8859,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T6": 8,
-            "NEGRO_T8": 8,
-            "NEGRO_T10": 16,
-            "NEGRO_T12": 16,
-            "NEGRO_T14": 16,
-            "NEGRO_T16": 16,
-            "VERDE MILITAR_T6": 8,
-            "VERDE MILITAR_T8": 8,
-            "VERDE MILITAR_T10": 16,
-            "VERDE MILITAR_T12": 16,
-            "VERDE MILITAR_T14": 16,
-            "VERDE MILITAR_T16": 16,
-            "CAMEL_T6": 8,
-            "CAMEL_T8": 8,
-            "CAMEL_T10": 16,
-            "CAMEL_T12": 16,
-            "CAMEL_T14": 16,
-            "CAMEL_T16": 16,
-            "GRIS OSCURO_T6": 8,
-            "GRIS OSCURO_T8": 8,
-            "GRIS OSCURO_T10": 16,
-            "GRIS OSCURO_T12": 16,
-            "GRIS OSCURO_T14": 16,
-            "GRIS OSCURO_T16": 16,
-            "MORA LECHE_T6": 8,
-            "MORA LECHE_T8": 8,
-            "MORA LECHE_T10": 11,
-            "MORA LECHE_T12": 11,
-            "MORA LECHE_T14": 11,
-            "MORA LECHE_T16": 11
-          },
-          "maquilador_id": ""
+          "vmo": 10510
         }
       ],
       "subg_estados": {
@@ -8997,8 +8978,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -9101,8 +9081,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -9191,8 +9170,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -9267,8 +9245,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -9347,8 +9324,7 @@
       "trazos_color_solicitado": {
         "AZUL BEBE": true,
         "MARFIL": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -9538,8 +9514,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-08-25",
-      "subg_estados": {}
+      "updated_at": "2026-08-25"
     },
     {
       "cantidades": {
@@ -9648,8 +9623,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -9772,8 +9746,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -9843,7 +9816,6 @@
         "T14",
         "T16"
       ],
-      "subg_estados": {},
       "trazos_color_solicitado": {
         "AVENA": true,
         "GRIS OSCURO": true
@@ -9936,8 +9908,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10038,8 +10009,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10112,8 +10082,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10230,8 +10199,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10674,8 +10642,7 @@
         "CAMEL": true,
         "GRIS": true,
         "NEGRO": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -10754,8 +10721,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10842,8 +10808,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10938,8 +10903,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11040,8 +11004,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11122,8 +11085,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11252,8 +11214,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11354,8 +11315,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-09-02",
-      "subg_estados": {}
+      "updated_at": "2026-09-02"
     },
     {
       "cantidades": {
@@ -11470,8 +11430,7 @@
       "trazos_color_solicitado": {
         "MARFIL": true,
         "NEGRO": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -11584,11 +11543,10 @@
         "T16"
       ],
       "trazos_color_solicitado": {
-        "VERDE": true,
         "AZUL": true,
-        "MARFIL": true
-      },
-      "subg_estados": {}
+        "MARFIL": true,
+        "VERDE": true
+      }
     },
     {
       "cantidades": {
@@ -11731,8 +11689,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11833,8 +11790,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11930,7 +11886,6 @@
         "T14",
         "T16"
       ],
-      "subg_estados": {},
       "trazos_color_solicitado": {
         "NEGRO": true,
         "VERDE MILITAR": true
@@ -12056,8 +12011,7 @@
           "solicitud_id": "id_1788983260763_py3v163mk"
         }
       ],
-      "updated_at": "2026-09-02",
-      "subg_estados": {}
+      "updated_at": "2026-09-02"
     },
     {
       "cantidades": {
@@ -12172,8 +12126,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "_nota_separacion": "Separada de OP-0010 (CAMISA SYROS) el 2026-09-04: 24 OTs reales de la migracion original sin OP propia, mal colgadas de OP-0010 por error de la carga inicial. | Archivada el 2026-09-05: produccion ya entregada/pago pendiente en su totalidad, no requiere programacion activa.",
@@ -12276,8 +12229,7 @@
         "T8",
         "T10",
         "T12"
-      ],
-      "subg_estados": {}
+      ]
     }
   ]
 }
