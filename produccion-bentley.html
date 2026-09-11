@@ -16629,6 +16629,16 @@ function abrirModalReceta(id){
 
 function _renderModalReceta(rec){
   var overlay = document.getElementById('modal-receta-overlay');
+  // Antes de reconstruir el HTML, guardar lo que el usuario ya haya escrito en Nombre/
+  // Referencia — en una receta nueva o duplicada (rec=null) esos valores solo viven en el
+  // DOM, y cada re-render (al cambiar insumo, agregar/quitar componente) los borraba.
+  var _preservarProducto = null, _preservarRef = null;
+  if(overlay){
+    var _pInpPrev = document.getElementById('modal-rec-producto');
+    var _rInpPrev = document.getElementById('modal-rec-ref');
+    if(_pInpPrev) _preservarProducto = _pInpPrev.value;
+    if(_rInpPrev) _preservarRef = _rInpPrev.value;
+  }
   if(!overlay){
     overlay = document.createElement('div');
     overlay.id = 'modal-receta-overlay';
@@ -16759,12 +16769,12 @@ function _renderModalReceta(rec){
   html += '<div style="padding:20px 22px;overflow-y:auto;flex:1;">';
   html += '<div class="form-group" style="margin-bottom:18px;">';
   html += '<label class="form-label" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#64748b;">Nombre del Producto <span style="color:#ef4444;">*</span></label>';
-  html += '<input id="modal-rec-producto" class="form-control" style="font-size:14px;font-weight:600;" value="'+esc(rec?rec.producto:'')+'" placeholder="Ej: CHAQUETA CAZADORA" autofocus oninput="_modalRecRefPreview()">';
+  html += '<input id="modal-rec-producto" class="form-control" style="font-size:14px;font-weight:600;" value="'+esc(_preservarProducto!=null?_preservarProducto:(rec?rec.producto:''))+'" placeholder="Ej: CHAQUETA CAZADORA" autofocus oninput="_modalRecRefPreview()">';
   html += '<div style="font-size:10px;color:#334155;margin-top:4px;">Usa el mismo nombre del producto para que vincule con las Órdenes de Producción.</div>';
   html += '</div>';
   html += '<div class="form-group" style="margin-bottom:18px;">';
   html += '<label class="form-label" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#64748b;">Referencia <span style="font-size:10px;color:#475569;">(4 dígitos)</span></label>';
-  html += '<input id="modal-rec-ref" class="form-control" style="font-size:16px;font-weight:700;letter-spacing:3px;width:120px;" maxlength="4" value="'+esc(rec&&rec.referencia?rec.referencia:'')+'" placeholder="1002" oninput="_modalRecRefPreview()">';
+  html += '<input id="modal-rec-ref" class="form-control" style="font-size:16px;font-weight:700;letter-spacing:3px;width:120px;" maxlength="4" value="'+esc(_preservarRef!=null?_preservarRef:(rec&&rec.referencia?rec.referencia:''))+'" placeholder="1002" oninput="_modalRecRefPreview()">';
   html += '<div id="modal-rec-ref-hint" style="font-size:10px;color:#fbbf24;margin-top:4px;"></div>';
   html += '</div>';
   html += compListHtml;
