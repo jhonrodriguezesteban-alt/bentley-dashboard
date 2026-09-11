@@ -16905,6 +16905,14 @@ function _modalAbrirSwap(cid, tipo){
     body+='<button id="swap-mp-crear-btn" onclick="_swapCrearYUsarMP()" style="width:100%;background:#0ea5e9;border:none;border-radius:8px;color:#000;font-size:12px;font-weight:700;padding:9px;cursor:pointer;">Crear y usar en esta fila</button>';
     body+='<div style="font-size:10px;color:#334155;margin-top:6px;">El guardado sube todo el archivo de Costeo — puede tardar hasta 20-30 s en conexiones lentas. No cierres ni le des doble clic.</div>';
     body+='</div>';
+  } else if(tipo==='SERVICIO'){
+    body+='<button id="swap-nuevosvc-toggle" onclick="_swapMostrarNuevoSvc()" style="width:100%;margin-top:10px;padding:8px;border-radius:8px;background:rgba(168,85,247,.08);border:1px dashed rgba(168,85,247,.35);color:#c084fc;font-size:11px;font-weight:700;cursor:pointer;">+ Nuevo servicio</button>';
+    body+='<div id="swap-nuevosvc-form" style="display:none;margin-top:10px;padding:12px;border:1px solid #2c2c2e;border-radius:8px;background:#080a10;">';
+    body+='<input id="swap-svc-nombre" class="form-control" placeholder="Nombre — Ej: Servicio de bordado camiseta" style="margin-bottom:8px;">';
+    body+='<input id="swap-svc-costo" class="form-control" type="number" min="0" placeholder="Costo por unidad ($)" style="margin-bottom:10px;">';
+    body+='<button id="swap-svc-crear-btn" onclick="_swapCrearYUsarSvc()" style="width:100%;background:#a855f7;border:none;border-radius:8px;color:#000;font-size:12px;font-weight:700;padding:9px;cursor:pointer;">Crear y usar en esta fila</button>';
+    body+='<div style="font-size:10px;color:#334155;margin-top:6px;">El guardado sube todo el archivo de Costeo — puede tardar hasta 20-30 s en conexiones lentas. No cierres ni le des doble clic.</div>';
+    body+='</div>';
   }
   body+='<div style="display:flex;justify-content:flex-end;margin-top:12px;">';
   body+='<button onclick="document.getElementById(&quot;modal-swap-overlay&quot;).remove()" style="background:rgba(148,163,184,.1);border:1px solid #2c2c2e;color:#94a3b8;border-radius:8px;padding:8px 16px;font-size:12px;cursor:pointer;">Cancelar</button>';
@@ -16975,6 +16983,33 @@ async function _swapCrearYUsarMP(){
   }
   toast('Materia prima creada: '+nombre,'success');
   _modalConfirmarSwap(mp.id);
+}
+function _swapMostrarNuevoSvc(){
+  var f = document.getElementById('swap-nuevosvc-form');
+  var btn = document.getElementById('swap-nuevosvc-toggle');
+  if(!f) return;
+  var showing = f.style.display!=='none';
+  f.style.display = showing ? 'none' : 'block';
+  if(btn) btn.textContent = showing ? '+ Nuevo servicio' : '← Volver a la lista';
+  if(!showing) setTimeout(function(){ var i=document.getElementById('swap-svc-nombre'); if(i) i.focus(); },30);
+}
+async function _swapCrearYUsarSvc(){
+  var nombre = (document.getElementById('swap-svc-nombre').value||'').trim();
+  if(!nombre){ toast('El nombre es requerido','error'); return; }
+  var svc = { id: _costeoId(), nombre: nombre, costo_unitario: parseFloat(document.getElementById('swap-svc-costo').value)||0 };
+  if(!DB.costeo.servicios) DB.costeo.servicios = [];
+  DB.costeo.servicios.push(svc);
+  var btn = document.getElementById('swap-svc-crear-btn');
+  if(btn){ btn.disabled = true; btn.textContent = 'Guardando… puede tardar 20-30 s'; }
+  var ok = await guardarCosteo();
+  if(!ok){
+    DB.costeo.servicios = DB.costeo.servicios.filter(function(s){ return s.id!==svc.id; });
+    if(btn){ btn.disabled = false; btn.textContent = 'Crear y usar en esta fila'; }
+    toast('No se pudo guardar — revisa tu conexión e intenta de nuevo','error');
+    return;
+  }
+  toast('Servicio creado: '+nombre,'success');
+  _modalConfirmarSwap(svc.id);
 }
 function _modalAgregarComp(tipo){
   var puestos=DB.costeo.puestos||[]; var cifs=DB.costeo.tarifas_cif||[]; var mps=DB.costeo.mp||[]; var svcs=DB.costeo.servicios||[];
