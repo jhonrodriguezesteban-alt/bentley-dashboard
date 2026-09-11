@@ -35437,6 +35437,265 @@
           "tipo": "MATERIAL"
         }
       ]
+    },
+    {
+      "id": "cid_1789097225630_5422",
+      "producto": "PANTALON ZAMBA",
+      "referencia": "",
+      "componentes": [
+        {
+          "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
+          "id": "cid_1789096574047_7147",
+          "puesto_id": "puesto_3cort1",
+          "tiempo_minutos": 120,
+          "tipo": "MOD",
+          "unidades": 192
+        },
+        {
+          "actividad": "TENDER, CORTAR",
+          "id": "cid_1789096574047_4953",
+          "puesto_id": "puesto_3cort2",
+          "tiempo_minutos": 120,
+          "tipo": "MOD",
+          "unidades": 192
+        },
+        {
+          "actividad": "ALISTAR INSUMOS PARA PRODUCCION",
+          "id": "cid_1789096574047_1616",
+          "puesto_id": "puesto_4insu1",
+          "tiempo_minutos": 20,
+          "tipo": "MOD",
+          "unidades": 192
+        },
+        {
+          "actividad": "VAPORIZAR TELA DOS VECES",
+          "id": "cid_1789096574047_2096",
+          "puesto_id": "puesto_9vapo1",
+          "tiempo_minutos": 1,
+          "tipo": "MOD",
+          "unidades": 1
+        },
+        {
+          "actividad": "TRANSPORTAR CORTE A SATELITE Y PLANTA",
+          "id": "cid_1789096574047_8666",
+          "puesto_id": "puesto_5logi1",
+          "tiempo_minutos": 360,
+          "tipo": "MOD",
+          "unidades": 400
+        },
+        {
+          "actividad": "RECEPCION Y CONTROL DE CALIDAD",
+          "id": "cid_1789096574047_9797",
+          "puesto_id": "puesto_6cali1",
+          "tiempo_minutos": 480,
+          "tipo": "MOD",
+          "unidades": 300
+        },
+        {
+          "actividad": "DOBLA, ETIQUETA, CODIFICA, EMBOLSA, EMBALA PRODUCTO",
+          "id": "cid_1789096574047_8791",
+          "puesto_id": "puesto_7empa1",
+          "tiempo_minutos": 480,
+          "tipo": "MOD",
+          "unidades": 300
+        },
+        {
+          "actividad": "RECEPCION DE PRODUCTO EMPACADO, ALMACENAMIENTO DEL PRODUCTO",
+          "id": "cid_1789096574047_7266",
+          "puesto_id": "puesto_8bode1",
+          "tiempo_minutos": 60,
+          "tipo": "MOD",
+          "unidades": 208
+        },
+        {
+          "actividad": "ALISTAR PEDIDO PARA LOCAL O CLIENTE FINAL",
+          "id": "cid_1789096574047_7205",
+          "puesto_id": "puesto_8bode1",
+          "tiempo_minutos": 80,
+          "tipo": "MOD",
+          "unidades": 208
+        },
+        {
+          "actividad": "LLEVAR PRODUCTO A PUNTO DE VENTA",
+          "id": "cid_1789096574047_3812",
+          "puesto_id": "puesto_5logi1",
+          "tiempo_minutos": 100,
+          "tipo": "MOD",
+          "unidades": 208
+        },
+        {
+          "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
+          "id": "cid_1789096574047_237",
+          "tiempo_minutos": 120,
+          "tipo": "CIF",
+          "unidades": 192,
+          "zona": "corte"
+        },
+        {
+          "actividad": "TENDER, CORTAR",
+          "id": "cid_1789096574047_8373",
+          "tiempo_minutos": 120,
+          "tipo": "CIF",
+          "unidades": 192,
+          "zona": "corte"
+        },
+        {
+          "actividad": "ALISTAR INSUMOS PARA PRODUCCION",
+          "id": "cid_1789096574047_1028",
+          "tiempo_minutos": 20,
+          "tipo": "CIF",
+          "unidades": 192,
+          "zona": "insumos/alistamiento"
+        },
+        {
+          "actividad": "VAPORIZAR TELA DOS VECES",
+          "id": "cid_1789096574047_86",
+          "puesto_id": "puesto_9vapo1",
+          "tiempo_minutos": 1,
+          "tipo": "MOD",
+          "unidades": 1
+        },
+        {
+          "actividad": "TRANSPORTAR CORTE A SATELITE Y PLANTA",
+          "id": "cid_1789096574047_1836",
+          "tiempo_minutos": 360,
+          "tipo": "CIF",
+          "unidades": 400,
+          "zona": "logisitica"
+        },
+        {
+          "actividad": "RECEPCION Y CONTROL DE CALIDAD",
+          "id": "cid_1789096574047_5185",
+          "tiempo_minutos": 480,
+          "tipo": "CIF",
+          "unidades": 300,
+          "zona": "calidad"
+        },
+        {
+          "actividad": "DOBLA, ETIQUETA, CODIFICA, EMBOLSA, EMBALA PRODUCTO",
+          "id": "cid_1789096574047_7511",
+          "tiempo_minutos": 480,
+          "tipo": "CIF",
+          "unidades": 300,
+          "zona": "empaque"
+        },
+        {
+          "actividad": "RECEPCION DE PRODUCTO EMPACADO, ALMACENAMIENTO DEL PRODUCTO",
+          "id": "cid_1789096574047_1925",
+          "tiempo_minutos": 60,
+          "tipo": "CIF",
+          "unidades": 208,
+          "zona": "bodega almacenamiento"
+        },
+        {
+          "actividad": "ALISTAR PEDIDO PARA LOCAL O CLIENTE FINAL",
+          "id": "cid_1789096574047_7144",
+          "tiempo_minutos": 80,
+          "tipo": "CIF",
+          "unidades": 208,
+          "zona": "bodega almacenamiento"
+        },
+        {
+          "actividad": "LLEVAR PRODUCTO A PUNTO DE VENTA",
+          "id": "cid_1789096574047_3137",
+          "tiempo_minutos": 100,
+          "tipo": "CIF",
+          "unidades": 208,
+          "zona": "logisitica"
+        },
+        {
+          "actividad": "ALMACENAMIENTO Y USO DE BODEGA",
+          "id": "cid_1789096574047_9679",
+          "tiempo_minutos": 11040,
+          "tipo": "CIF",
+          "unidades": 15000,
+          "zona": "bodega almacenamiento"
+        },
+        {
+          "consumo": 0.9,
+          "id": "cid_1789096574047_7726",
+          "mp_id": "mp_31010_1511011",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 0.52,
+          "id": "cid_1789096574047_8548",
+          "mp_id": "mp_31414_00511429",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789096574047_7592",
+          "mp_id": "mp_32727_1031026",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789096574047_3990",
+          "mp_id": "mp_31616_1011020",
+          "tipo": "MATERIAL"
+        },
+        {
+          "cantidad": 1,
+          "id": "cid_1789096574048_6719",
+          "servicio_id": "cid_1789096990107_6372",
+          "tipo": "SERVICIO"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789096574048_279",
+          "mp_id": "mp_31515_1071020",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789096574048_7062",
+          "mp_id": "mp_31515_1011020",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789096574048_5098",
+          "mp_id": "mp_31515_1021020",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789096574048_5804",
+          "mp_id": "mp_31515_1031020",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789096574048_4321",
+          "mp_id": "mp_31515_1041020",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789096574048_9555",
+          "mp_id": "mp_31515_1051020",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789096574048_3913",
+          "mp_id": "mp_31515_1061020",
+          "tipo": "MATERIAL"
+        },
+        {
+          "id": "cid_1789096921597_8601",
+          "tipo": "MATERIAL",
+          "mp_id": "cid_1789096882240_2939",
+          "consumo": 1
+        },
+        {
+          "id": "cid_1789096940589_5457",
+          "tipo": "MATERIAL",
+          "mp_id": "mp_32312_11110233",
+          "consumo": 1
+        }
+      ]
     }
   ],
   "referencia_siguiente_propio": 1183,
