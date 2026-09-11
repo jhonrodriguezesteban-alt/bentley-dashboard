@@ -709,6 +709,9 @@ textarea.form-control{resize:vertical;min-height:80px;}
     <div class="nav-item active" onclick="navTo('dashboard')" data-page="dashboard">
       <span class="icon">⬡</span><span class="nav-label"> Dashboard</span>
     </div>
+    <div class="nav-item" onclick="navTo('dashboardpro')" data-page="dashboardpro">
+      <span class="icon">🏆</span><span class="nav-label"> Dashboard Pro</span>
+    </div>
     <div class="nav-item" onclick="navTo('satelites')" data-page="satelites">
       <span class="icon">🏭</span><span class="nav-label"> Satélites</span>
     </div>
@@ -1198,7 +1201,7 @@ function _getHash(u){ if(_U[u]) return _U[u]; var cfg=_getCfgUsers(); return (cf
 // Devuelve nombre display
 function _getName(u){ var cfg=_getCfgUsers(); return (cfg[u]&&cfg[u].name)||_NAMES[u]||u; }
 // Módulos permitidos para un usuario (jhon = todos)
-var ALL_MODULES = ['dashboard','satelites','ops','monitoreo','planconf','cronograma','trazos','tecpatron','diseno','planeacion','logistica','novedades','costos_mo','costeo','inversion','bitacora'];
+var ALL_MODULES = ['dashboard','dashboardpro','satelites','ops','monitoreo','planconf','cronograma','trazos','tecpatron','diseno','planeacion','logistica','novedades','costos_mo','costeo','inversion','bitacora'];
 function _getModules(u){
   if(u==='jhon') return ALL_MODULES.slice();
   var cfg=_getCfgUsers();
@@ -1327,7 +1330,7 @@ function applyModuleAccess(uid){
 }
 
 var ALL_MODULE_LABELS = {
-  dashboard:'Dashboard', satelites:'Satélites', ops:'OTs', monitoreo:'Monitoreo Producción',
+  dashboard:'Dashboard', dashboardpro:'Dashboard Pro', satelites:'Satélites', ops:'OTs', monitoreo:'Monitoreo Producción',
   planconf:'Planeación Confección', cronograma:'Cronograma', trazos:'Trazos', tecpatron:'TecPatrón',
   diseno:'Diseño', planeacion:'Planeación', logistica:'Logística', novedades:'Novedades',
   costos_mo:'Pagos', costeo:'Costeo y Rentabilidad', inversion:'Resumen de Inversión', bitacora:'Bitácora'
@@ -2628,7 +2631,7 @@ function navTo(page){
   localStorage.setItem('bentley_last_page', page);
   if(page !== 'ops') _opDetalleId = null;
   document.querySelectorAll('.nav-item').forEach(function(el){ el.classList.toggle('active', el.dataset.page===page); });
-  var titles = {dashboard:'⬡ DASHBOARD',satelites:'🏭 SATÉLITES',ops:'📋 ÓRDENES DE PRODUCCIÓN',monitoreo:'🔍 MONITOREO DE PRODUCCIÓN',entregas:'📦 ENTREGAS',diseno:'🎨 DISEÑO',planeacion:'📅 PLANEACIÓN DE PRODUCCIÓN',planconf:'🧵 PLANEACIÓN DE CONFECCIÓN',trazos:'📐 TRAZOS',tecpatron:'🧵 TECPATRÓN',logistica:'🚚 LOGÍSTICA',novedades:'⚠ NOVEDADES',simulador:'🧮 SIMULADOR DE PRODUCCIÓN',costos_mo:'💰 PAGOS',inversion:'🧾 RESUMEN DE INVERSIÓN'};
+  var titles = {dashboard:'⬡ DASHBOARD',dashboardpro:'🏆 DASHBOARD PRO',satelites:'🏭 SATÉLITES',ops:'📋 ÓRDENES DE PRODUCCIÓN',monitoreo:'🔍 MONITOREO DE PRODUCCIÓN',entregas:'📦 ENTREGAS',diseno:'🎨 DISEÑO',planeacion:'📅 PLANEACIÓN DE PRODUCCIÓN',planconf:'🧵 PLANEACIÓN DE CONFECCIÓN',trazos:'📐 TRAZOS',tecpatron:'🧵 TECPATRÓN',logistica:'🚚 LOGÍSTICA',novedades:'⚠ NOVEDADES',simulador:'🧮 SIMULADOR DE PRODUCCIÓN',costos_mo:'💰 PAGOS',inversion:'🧾 RESUMEN DE INVERSIÓN'};
   document.getElementById('topbar-title').innerHTML = titles[page] || page.toUpperCase();
   closeDrawer(); closeModal(); selectedOTs.clear();
   renderPage(page);
@@ -2678,6 +2681,7 @@ function renderPage(page){
   if(page !== 'diseno'){ var f=document.getElementById('fab-nuevo-diseno'); if(f) f.remove(); }
   if(page !== 'ops'){ var fop=document.getElementById('fab-nueva-op'); if(fop) fop.remove(); }
   if(page==='dashboard') el.innerHTML = renderDashboard();
+  else if(page==='dashboardpro') el.innerHTML = renderDashboardPro();
   else if(page==='satelites') el.innerHTML = renderSatelites();
   else if(page==='ops') el.innerHTML = _opDetalleId ? renderOPDetalle(_opDetalleId) : renderOPs();
   else if(page==='entregas') el.innerHTML = renderEntregas();
@@ -5971,6 +5975,182 @@ function renderDashboard(){
     h += '</div>';
   }
 
+  return h;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// DASHBOARD PRO — panel ejecutivo de producción: rankings de talleres, referencias
+// y categorías fabricadas. Vive aparte del Dashboard clásico hasta pulirlo.
+// ═══════════════════════════════════════════════════════════════════════════════
+var _dashProFiltroMes = '';
+function setDashProFiltro(mes){ _dashProFiltroMes = mes; renderPage('dashboardpro'); }
+
+// Tarjeta de ranking con podio (top 3 destacados) + lista compacta para el resto (4-10).
+function _dashProSeccionRanking(titulo, subtitulo, items, color){
+  var h = '<div class="card" style="padding:20px 18px;margin-bottom:16px;">';
+  h += '<div style="display:flex;align-items:baseline;gap:10px;margin-bottom:16px;flex-wrap:wrap;">';
+  h += '<span style="font-family:var(--bebas);font-size:22px;letter-spacing:1px;">'+titulo+'</span>';
+  h += '<span style="font-size:11px;color:#64748b;">'+subtitulo+'</span>';
+  h += '</div>';
+  if(!items.length){ h += '<div style="text-align:center;padding:30px;color:#334155;font-size:12px;">Sin datos fabricados en este período.</div></div>'; return h; }
+  var max = items[0].uds || 1;
+  var top3 = items.slice(0,3), resto = items.slice(3,10);
+  h += '<div style="display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:12px;align-items:end;margin-bottom:'+(resto.length?'18px':'0')+';">';
+  [1,0,2].forEach(function(idx){
+    var it = top3[idx];
+    if(!it){ h += '<div></div>'; return; }
+    var isFirst = idx===0;
+    var medal = ['🥇','🥈','🥉'][idx];
+    h += '<div onclick="'+(it.onclick||'')+'" style="'+(it.onclick?'cursor:pointer;':'')+'background:linear-gradient(180deg,'+color+'16,rgba(255,255,255,.01));border:1px solid '+color+'40;border-top:3px solid '+color+';border-radius:12px;padding:'+(isFirst?'22px 14px 18px':'16px 12px 14px')+';text-align:center;'+(isFirst?'transform:translateY(-10px);':'')+'">';
+    h += '<div style="font-size:'+(isFirst?'30px':'22px')+';line-height:1;margin-bottom:6px;">'+medal+'</div>';
+    h += '<div style="font-size:'+(isFirst?'14px':'12px')+';font-weight:700;color:#e2e8f0;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(it.nombre)+'</div>';
+    if(it.sub) h += '<div style="font-size:9px;color:#64748b;margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(it.sub)+'</div>';
+    h += '<div style="font-family:var(--bebas);font-size:'+(isFirst?'26px':'20px')+';color:'+color+';letter-spacing:1px;line-height:1;margin-top:2px;">'+fmtNum(it.uds)+'</div>';
+    h += '<div style="font-size:9px;color:#475569;">uds fabricadas</div>';
+    h += '</div>';
+  });
+  h += '</div>';
+  resto.forEach(function(it,i){
+    var pos = i+4, pct = Math.round(it.uds/max*100);
+    h += '<div onclick="'+(it.onclick||'')+'" style="'+(it.onclick?'cursor:pointer;':'')+'display:flex;align-items:center;gap:10px;padding:8px 10px;margin-bottom:5px;border-radius:8px;background:rgba(255,255,255,.02);">';
+    h += '<span style="font-size:12px;font-weight:700;color:#64748b;min-width:20px;text-align:right;flex-shrink:0;">'+pos+'</span>';
+    h += '<span style="flex:1;min-width:0;font-size:12px;color:#94a3b8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(it.nombre)+(it.sub?' <span style="color:#475569;">· '+esc(it.sub)+'</span>':'')+'</span>';
+    h += '<div style="width:90px;height:5px;border-radius:3px;background:#1a2032;overflow:hidden;flex-shrink:0;"><div style="height:100%;width:'+pct+'%;background:'+color+';border-radius:3px;"></div></div>';
+    h += '<span style="font-size:12px;font-weight:700;color:'+color+';min-width:52px;text-align:right;flex-shrink:0;">'+fmtNum(it.uds)+'</span>';
+    h += '</div>';
+  });
+  h += '</div>';
+  return h;
+}
+
+function renderDashboardPro(){
+  var filtro = _dashProFiltroMes;
+  var yearActual = hoy().substr(0,4);
+  var mesActual = hoy().substr(0,7);
+  var meses  = ['01','02','03','04','05','06','07','08','09','10','11','12'];
+  var nomMes = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  var C_CYAN='#0a84ff', C_PURPLE='#a855f7', C_GREEN='#34d399', C_ORANGE='#f97316', C_PINK='#ec4899', C_GOLD='#fbbf24';
+
+  // ── Alcance: OTs entregadas dentro del período elegido ──────────────────────
+  var entregadasScope = DB.ots.filter(function(o){
+    return o.estado==='ENTREGADO' && (!filtro || (o.fecha_entrega_real||'').startsWith(filtro));
+  });
+  var totalUdsPeriodo = entregadasScope.reduce(function(a,o){ return a+(o.unidades_entregadas||0); },0);
+
+  // ── KPIs ejecutivos ──────────────────────────────────────────────────────────
+  var opsActivas = DB.ops.filter(function(op){ return op.estado!=='COMPLETADO'&&op.estado!=='CERRADO'; }).length;
+  var udsConf = DB.ots.filter(function(o){ return o.estado==='EN_CONFECCION'; }).reduce(function(a,o){ return a+(o.cantidad||0); },0);
+  var udsPendientes = DB.ots.filter(function(o){ return o.estado!=='ENTREGADO'&&o.estado!=='ARCHIVADO'; }).reduce(function(a,o){ return a+(o.cantidad||0); },0);
+  var satActivos = DB.satelites.filter(function(s){ return s.activo; }).length;
+  var novCount = DB.ots.filter(function(o){ return o.estado==='NOVEDAD'; }).length;
+  var otsEntregadasTodas = DB.ots.filter(function(o){ return o.estado==='ENTREGADO'&&o.fecha_entrega_real&&o.fecha_estimada_entrega; });
+  var aTiempo = otsEntregadasTodas.filter(function(o){ return o.fecha_entrega_real<=o.fecha_estimada_entrega; }).length;
+  var pctCumpl = otsEntregadasTodas.length ? Math.round(aTiempo/otsEntregadasTodas.length*100) : null;
+  var cumplColor = pctCumpl===null ? '#475569' : pctCumpl>=85 ? C_GREEN : pctCumpl>=65 ? C_GOLD : C_PINK;
+
+  var h = '<div>';
+
+  // ── Selector de periodo ──────────────────────────────────────────────────────
+  h += '<div class="mes-pills">';
+  h += '<button onclick="setDashProFiltro(\'\')" class="mes-pill'+(!filtro?' active':'')+'">Todo el año</button>';
+  meses.forEach(function(m,i){
+    var key=yearActual+'-'+m;
+    h += '<button data-mes="'+key+'" onclick="setDashProFiltro(this.dataset.mes)" class="mes-pill'+(filtro===key?' active':'')+'">'+nomMes[i]+'</button>';
+  });
+  h += '</div>';
+
+  // ── KPI cards ────────────────────────────────────────────────────────────────
+  var kpiDefs = [
+    {label:'OPs en Proceso',     val:fmtNum(opsActivas),    color:C_CYAN,   sub:'Órdenes abiertas',        nav:'ops'},
+    {label:'Uds en Confección',  val:fmtNum(udsConf),       color:C_PURPLE, sub:'En talleres ahora',       nav:'programacion'},
+    {label:'Uds Fabricadas',     val:fmtNum(totalUdsPeriodo),color:C_GREEN, sub:filtro||yearActual,        nav:null},
+    {label:'Pendiente Entregar', val:fmtNum(udsPendientes), color:C_ORANGE, sub:'Backlog total en planta', nav:null},
+    {label:'Cumplimiento',       val:pctCumpl!==null?pctCumpl+'%':'—', color:cumplColor, sub:otsEntregadasTodas.length+' OTs evaluadas', nav:null},
+    {label:'Satélites Activos',  val:fmtNum(satActivos),    color:C_GOLD,   sub:'De '+DB.satelites.length+' total', nav:'satelites'},
+    {label:'Novedades',          val:fmtNum(novCount),      color:novCount>0?C_PINK:'#475569', sub:'OTs con pendiente', nav:'novedades'},
+  ];
+  h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:22px;">';
+  kpiDefs.forEach(function(k){
+    var click = k.nav ? 'onclick="navTo(\''+k.nav+'\')" style="cursor:pointer;' : 'style="';
+    h += '<div class="card" '+click+'padding:16px 18px;display:flex;flex-direction:column;gap:4px;border-top:3px solid '+k.color+'44;">';
+    h += '<div style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.7px;font-weight:600;">'+k.label+'</div>';
+    h += '<div style="font-size:30px;font-weight:800;color:'+k.color+';line-height:1;font-family:var(--bebas);letter-spacing:1px;margin-top:4px;">'+k.val+'</div>';
+    h += '<div style="font-size:11px;color:#475569;margin-top:2px;">'+k.sub+'</div>';
+    h += '</div>';
+  });
+  h += '</div>';
+
+  // ── Rankings: talleres / referencias / categorías (todos sobre lo ENTREGADO) ─
+  var mapaSat = {};
+  entregadasScope.forEach(function(o){ if(!o.satelite_id) return; mapaSat[o.satelite_id]=(mapaSat[o.satelite_id]||0)+(o.unidades_entregadas||0); });
+  var itemsSat = Object.keys(mapaSat).map(function(id){
+    var s = getSat(id);
+    return {nombre:getSatNombre(id), sub:(s&&s.tipo==='maquila')?'🏭 Maquila externa':'🧵 Taller interno', uds:mapaSat[id], onclick:"verSatEntregas('"+id+"')"};
+  }).sort(function(a,b){ return b.uds-a.uds; });
+
+  var mapaRef = {}, refCat = {};
+  entregadasScope.forEach(function(o){ var k=o.nombre||'—'; mapaRef[k]=(mapaRef[k]||0)+(o.unidades_entregadas||0); refCat[k]=o.categoria||''; });
+  var itemsRef = Object.keys(mapaRef).map(function(k){ return {nombre:k, sub:refCat[k], uds:mapaRef[k], onclick:''}; }).sort(function(a,b){ return b.uds-a.uds; });
+
+  var mapaCat = {};
+  entregadasScope.forEach(function(o){ var k=(o.categoria||'SIN CATEGORÍA').toUpperCase(); mapaCat[k]=(mapaCat[k]||0)+(o.unidades_entregadas||0); });
+  var itemsCat = Object.keys(mapaCat).map(function(k){ return {nombre:k, sub:'', uds:mapaCat[k], onclick:''}; }).sort(function(a,b){ return b.uds-a.uds; });
+
+  h += _dashProSeccionRanking('🏆 Top Talleres', (filtro||'año')+' · '+itemsSat.length+' talleres con entregas', itemsSat, C_CYAN);
+  h += _dashProSeccionRanking('🏆 Top Referencias Fabricadas', (filtro||'año')+' · '+itemsRef.length+' referencias distintas', itemsRef, C_PURPLE);
+  h += _dashProSeccionRanking('🏆 Top Categorías', (filtro||'año')+' · '+itemsCat.length+' categorías', itemsCat, C_GREEN);
+
+  // ── Evolución mensual (barras) ────────────────────────────────────────────────
+  var dataMes = meses.map(function(m){
+    var key = yearActual+'-'+m;
+    return DB.ots.filter(function(o){ return o.estado==='ENTREGADO'&&(o.fecha_entrega_real||'').startsWith(key); }).reduce(function(a,o){ return a+(o.unidades_entregadas||0); },0);
+  });
+  var maxMes = Math.max.apply(null, dataMes.concat([1]));
+  h += '<div class="card" style="padding:20px 18px;margin-bottom:16px;">';
+  h += '<div style="display:flex;align-items:baseline;gap:10px;margin-bottom:16px;">';
+  h += '<span style="font-family:var(--bebas);font-size:22px;letter-spacing:1px;">Evolución Mensual · Fabricado</span>';
+  h += '<span style="font-size:11px;color:#64748b;">'+yearActual+'</span>';
+  h += '</div>';
+  h += '<div style="display:flex;align-items:flex-end;gap:6px;height:150px;">';
+  dataMes.forEach(function(v,i){
+    var pctH = maxMes ? Math.round(v/maxMes*100) : 0;
+    var esActual = (yearActual+'-'+meses[i])===mesActual;
+    var mesKey = yearActual+'-'+meses[i];
+    h += '<div data-mes="'+mesKey+'" onclick="setDashProFiltro(this.dataset.mes)" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;cursor:pointer;">';
+    if(v>0) h += '<div style="font-size:10px;color:#94a3b8;margin-bottom:3px;">'+fmtNum(v)+'</div>';
+    h += '<div style="width:100%;max-width:34px;height:'+Math.max(pctH,2)+'%;background:'+(filtro===mesKey?C_CYAN:(esActual?C_CYAN+'cc':C_CYAN+'55'))+';border-radius:4px 4px 0 0;transition:background .15s;"></div>';
+    h += '<div style="font-size:10px;color:'+(filtro===mesKey?C_CYAN:'#475569')+';font-weight:'+(filtro===mesKey?'700':'400')+';margin-top:6px;">'+nomMes[i]+'</div>';
+    h += '</div>';
+  });
+  h += '</div></div>';
+
+  // ── Tabla detalle de satélites ────────────────────────────────────────────────
+  var satsOrdenados = (DB.satelites||[]).slice().map(function(s){ return {s:s, uds:mapaSat[s.id]||0}; }).sort(function(a,b){ return b.uds-a.uds; });
+  h += '<div class="card" style="padding:20px 18px;">';
+  h += '<div style="display:flex;align-items:baseline;gap:10px;margin-bottom:14px;flex-wrap:wrap;">';
+  h += '<span style="font-family:var(--bebas);font-size:22px;letter-spacing:1px;">Detalle de Satélites</span>';
+  h += '<span style="font-size:11px;color:#64748b;">capacidad declarada vs. fabricado en '+(filtro||'el año')+'</span>';
+  h += '</div>';
+  h += '<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:12px;">';
+  h += '<thead><tr style="border-bottom:1px solid #2c2c2e;color:#64748b;font-size:10px;text-transform:uppercase;">';
+  ['#','Taller','Tipo','Especialidades','Uds fabricadas','Cap. semanal',''].forEach(function(c){ h+='<th style="padding:8px 10px;text-align:left;white-space:nowrap;">'+c+'</th>'; });
+  h += '</tr></thead><tbody>';
+  satsOrdenados.forEach(function(row,i){
+    var s = row.s;
+    var medalColor = i<3 ? ['#fbbf24','#cbd5e1','#d97706'][i] : '#475569';
+    h += '<tr onclick="verSatEntregas(\''+s.id+'\')" style="border-bottom:1px solid #1a1f2e;cursor:pointer;" onmouseenter="this.style.background=\'rgba(255,255,255,.02)\'" onmouseleave="this.style.background=\'\'">';
+    h += '<td style="padding:9px 10px;color:'+medalColor+';font-weight:700;">'+(i+1)+'</td>';
+    h += '<td style="padding:9px 10px;color:#e2e8f0;font-weight:600;white-space:nowrap;">'+esc(s.nombre)+(s.activo?'':' <span style="color:#475569;font-weight:400;">(inactivo)</span>')+'</td>';
+    h += '<td style="padding:9px 10px;color:#94a3b8;white-space:nowrap;">'+(s.tipo==='maquila'?'🏭 Maquila':'🧵 Interno')+'</td>';
+    h += '<td style="padding:9px 10px;color:#64748b;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc((s.especialidades||[]).join(', ')||'—')+'</td>';
+    h += '<td style="padding:9px 10px;color:'+C_CYAN+';font-weight:700;">'+fmtNum(row.uds)+'</td>';
+    h += '<td style="padding:9px 10px;color:#94a3b8;white-space:nowrap;">'+fmtNum(s.capacidad_semanal||0)+' uds/sem</td>';
+    h += '<td style="padding:9px 10px;color:#334155;text-align:right;">›</td>';
+    h += '</tr>';
+  });
+  h += '</tbody></table></div></div>';
+
+  h += '</div>';
   return h;
 }
 
