@@ -34712,9 +34712,6 @@
       "referencia": "1088"
     },
     {
-      "id": "cid_1789095947053_7698",
-      "producto": "BLUSA COSMO",
-      "referencia": "1182",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -34946,12 +34943,12 @@
           "mp_id": "cid_1789093949710_8167",
           "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789095947053_7698",
+      "producto": "BLUSA COSMO",
+      "referencia": "1182"
     },
     {
-      "id": "cid_1789096212612_7197",
-      "producto": "PANTALON POLLY",
-      "referencia": "1181",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -35193,11 +35190,18 @@
           "mp_id": "mp_31515_1061020",
           "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789096212612_7197",
+      "producto": "PANTALON POLLY",
+      "referencia": "1181"
     }
   ],
   "referencia_siguiente_propio": 1183,
   "referencia_siguiente_proveedor": 2066,
+  "referencias_asignadas": {
+    "BLUSA COSMO": "1182",
+    "PANTALON POLLY": "1181"
+  },
   "servicios": [
     {
       "costo_unitario": 12000,
@@ -35817,14 +35821,19 @@
       "nombre": "CONFECCION PANTALON CALIFORNIA"
     },
     {
+      "costo_unitario": 2300,
       "id": "cid_1789095920713_2165",
-      "nombre": "SERVICIO DE CONFECCION BLUSA COSMO",
-      "costo_unitario": 2300
+      "nombre": "SERVICIO DE CONFECCION BLUSA COSMO"
     },
     {
+      "costo_unitario": 5500,
       "id": "cid_1789096130582_8499",
-      "nombre": "SERVICIO DE CONFECCION PANTALON POLLY",
-      "costo_unitario": 5500
+      "nombre": "SERVICIO DE CONFECCION PANTALON POLLY"
+    },
+    {
+      "id": "cid_1789096516663_5042",
+      "nombre": "SERVICIO DE CONFECCION BLUSA POLLY",
+      "costo_unitario": 2300
     }
   ],
   "tarifas_cif": [
@@ -35900,9 +35909,5 @@
       "tarifa_min": 470.800569,
       "zona": "area tejeduria"
     }
-  ],
-  "referencias_asignadas": {
-    "PANTALON POLLY": "1181",
-    "BLUSA COSMO": "1182"
-  }
+  ]
 }
