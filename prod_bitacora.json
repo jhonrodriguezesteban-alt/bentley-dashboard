@@ -17563,20 +17563,37 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "ROSA",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1789241317046_srxm3",
-      "ts": 1789241317046,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-087",
       "op_nombre": "CHAQUETA ROCKY",
       "referencia": "CHAQUETA ROCKY",
-      "color": "ROSA",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1789241317046,
       "uds": 77,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789242063737_q8r5i",
+      "ts": 1789242063737,
+      "user": "Jefa de Producción",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-113",
+      "op_nombre": "CHAQUETA RALPH",
+      "categoria": "CHAQUETAS",
+      "total_ots": 6,
+      "total_uds": 120,
+      "colores": [
+        "NEGRO"
+      ],
+      "referencias": [
+        "CHAQUETA RALPH"
+      ]
     }
   ]
 }
