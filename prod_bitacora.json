@@ -17655,15 +17655,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1789246758695_hgam7",
-      "ts": 1789246758695,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-125",
-      "nombre": "OVERSIZED CAPOTA",
       "categoria": "CHAQUETAS",
       "colores": 5,
-      "refs": 1
+      "id": "evt_1789246758695_hgam7",
+      "nombre": "OVERSIZED CAPOTA",
+      "op_id": "OP-2026-125",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1789246758695,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789246778206_lx5m4",
+      "ts": 1789246778206,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-125",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "referencia": "OVERSIZED CAPOTA",
+      "color": "VERDE MILITAR",
+      "talla": "todas las tallas",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
+      "bulk": true,
+      "uds": 80,
+      "motivo": "en insumos"
     }
   ]
 }
