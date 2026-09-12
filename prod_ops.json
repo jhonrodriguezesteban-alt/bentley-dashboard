@@ -7736,24 +7736,24 @@
     },
     {
       "cantidades": {
-        "AZUL OSCURO_T10": 14,
-        "AZUL OSCURO_T12": 14,
-        "AZUL OSCURO_T14": 14,
-        "AZUL OSCURO_T16": 14,
-        "AZUL OSCURO_T6": 14,
-        "AZUL OSCURO_T8": 14,
-        "CAMEL_T10": 20,
-        "CAMEL_T12": 20,
-        "CAMEL_T14": 20,
-        "CAMEL_T16": 20,
-        "CAMEL_T6": 20,
-        "CAMEL_T8": 20,
+        "NEGRO_T6": 20,
+        "NEGRO_T8": 20,
         "NEGRO_T10": 20,
         "NEGRO_T12": 20,
         "NEGRO_T14": 20,
         "NEGRO_T16": 20,
-        "NEGRO_T6": 20,
-        "NEGRO_T8": 20
+        "AZUL OSCURO_T6": 14,
+        "AZUL OSCURO_T8": 14,
+        "AZUL OSCURO_T10": 14,
+        "AZUL OSCURO_T12": 14,
+        "AZUL OSCURO_T14": 14,
+        "AZUL OSCURO_T16": 14,
+        "CAMEL_T6": 19,
+        "CAMEL_T8": 19,
+        "CAMEL_T10": 19,
+        "CAMEL_T12": 19,
+        "CAMEL_T14": 19,
+        "CAMEL_T16": 19
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -7773,35 +7773,15 @@
       "receta_nombre": "CHAQUETA RALPH - REF: 1155",
       "referencias": [
         {
-          "cantidades": {
-            "AZUL OSCURO_T10": 14,
-            "AZUL OSCURO_T12": 14,
-            "AZUL OSCURO_T14": 14,
-            "AZUL OSCURO_T16": 14,
-            "AZUL OSCURO_T6": 14,
-            "AZUL OSCURO_T8": 14,
-            "CAMEL_T10": 20,
-            "CAMEL_T12": 20,
-            "CAMEL_T14": 20,
-            "CAMEL_T16": 20,
-            "CAMEL_T6": 20,
-            "CAMEL_T8": 20,
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "NEGRO_T6": 20,
-            "NEGRO_T8": 20
-          },
+          "nombre": "CHAQUETA RALPH",
+          "ref": "1155",
           "cat": "CHAQUETAS",
+          "vmo": 9459,
           "colores": [
             "NEGRO",
             "AZUL OSCURO",
             "CAMEL"
           ],
-          "maquilador_id": "",
-          "nombre": "CHAQUETA RALPH",
-          "ref": "1155",
           "tallas": [
             "T6",
             "T8",
@@ -7810,8 +7790,27 @@
             "T14",
             "T16"
           ],
-          "totalUds": 324,
-          "vmo": 9459
+          "cantidades": {
+            "NEGRO_T6": 20,
+            "NEGRO_T8": 20,
+            "NEGRO_T10": 20,
+            "NEGRO_T12": 20,
+            "NEGRO_T14": 20,
+            "NEGRO_T16": 20,
+            "AZUL OSCURO_T6": 14,
+            "AZUL OSCURO_T8": 14,
+            "AZUL OSCURO_T10": 14,
+            "AZUL OSCURO_T12": 14,
+            "AZUL OSCURO_T14": 14,
+            "AZUL OSCURO_T16": 14,
+            "CAMEL_T6": 19,
+            "CAMEL_T8": 19,
+            "CAMEL_T10": 19,
+            "CAMEL_T12": 19,
+            "CAMEL_T14": 19,
+            "CAMEL_T16": 19
+          },
+          "maquilador_id": ""
         }
       ],
       "tallas": [
@@ -7842,7 +7841,8 @@
       },
       "consumibles_desagregado": {
         "rec_chaqueta_ralph_1155__c46_19": true
-      }
+      },
+      "updated_at": "2026-09-12"
     },
     {
       "cantidades": {
