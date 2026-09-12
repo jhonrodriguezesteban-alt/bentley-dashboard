@@ -16867,10 +16867,12 @@ function _renderModalReceta(rec){
   var compListHtml = '';
   grupos.forEach(function(g){
     var gc = _modalRecetaComps.filter(function(c){ return c.tipo===g.tipo; });
+    var gtotal = gc.reduce(function(a,c){ return a+calcCostoComp(c); },0);
     compListHtml += '<div style="margin-bottom:14px;">';
     compListHtml += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">';
     compListHtml += '<span style="font-size:10px;font-weight:700;color:'+g.color+';text-transform:uppercase;letter-spacing:.5px;">'+g.label+'</span>';
     compListHtml += '<span style="font-size:10px;color:#334155;">('+gc.length+')</span>';
+    compListHtml += '<span id="mc-grouptot-'+g.tipo+'" style="font-size:13px;font-weight:800;color:'+g.color+';margin-left:2px;">'+fmtCopFull(gtotal)+'</span>';
     compListHtml += '<button data-tipo="'+g.tipo+'" onclick="_modalAgregarComp(this.dataset.tipo)" style="margin-left:auto;font-size:10px;background:'+g.color+'15;border:1px solid '+g.color+'30;color:'+g.color+';border-radius:5px;padding:2px 8px;cursor:pointer;">+ Agregar</button>';
     compListHtml += '</div>';
     if(!gc.length){
@@ -17021,6 +17023,10 @@ function _modalEditComp(input){
   var total = _modalRecetaComps.reduce(function(a,c){ return a+calcCostoComp(c); },0);
   var hdrEl = document.querySelector('#modal-receta-overlay [data-total]');
   if(hdrEl) hdrEl.textContent = fmtCopFull(total);
+  // Actualizar subtotal del grupo (MOD/CIF/MATERIAL/SERVICIO) al que pertenece esta fila
+  var gtotal = _modalRecetaComps.filter(function(c){ return c.tipo===comp.tipo; }).reduce(function(a,c){ return a+calcCostoComp(c); },0);
+  var gEl = document.getElementById('mc-grouptot-'+comp.tipo);
+  if(gEl) gEl.textContent = fmtCopFull(gtotal);
 }
 // Editar el precio MAESTRO de la materia prima/insumo desde el modal de receta — a diferencia
 // de _modalEditComp (que solo ajusta el consumo dentro de ESTA receta), esto actualiza
