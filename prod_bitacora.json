@@ -17531,19 +17531,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "ROSA",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1789241242976_nxuri",
-      "ts": 1789241242976,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-101",
       "op_nombre": "CHAQUETA MARIPOSAS",
       "referencia": "CHAQUETA MARIPOSAS",
-      "color": "ROSA",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1789241242976,
+      "uds": 93,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789241298503_k62vw",
+      "ts": 1789241298503,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-087",
+      "op_nombre": "CHAQUETA ROCKY",
+      "referencia": "CHAQUETA ROCKY",
+      "color": "CAFE",
       "talla": "todas las tallas",
       "estado_anterior": "ENTREGADO",
       "estado_nuevo": "ENTREGADO",
       "bulk": true,
-      "uds": 93,
+      "uds": 84,
       "motivo": "ENTREGADO"
     }
   ]
