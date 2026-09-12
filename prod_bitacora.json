@@ -17639,20 +17639,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "CAMEL",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1789245845297_rste2",
-      "ts": 1789245845297,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-113",
       "op_nombre": "CHAQUETA RALPH",
       "referencia": "CHAQUETA RALPH",
-      "color": "CAMEL",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1789245845297,
       "uds": 114,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789246758695_hgam7",
+      "ts": 1789246758695,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-125",
+      "nombre": "OVERSIZED CAPOTA",
+      "categoria": "CHAQUETAS",
+      "colores": 5,
+      "refs": 1
     }
   ]
 }
