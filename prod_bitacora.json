@@ -17579,21 +17579,37 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1789242063737_q8r5i",
-      "ts": 1789242063737,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-113",
-      "op_nombre": "CHAQUETA RALPH",
       "categoria": "CHAQUETAS",
-      "total_ots": 6,
-      "total_uds": 120,
       "colores": [
         "NEGRO"
       ],
+      "id": "evt_1789242063737_q8r5i",
+      "op_id": "OP-2026-113",
+      "op_nombre": "CHAQUETA RALPH",
       "referencias": [
         "CHAQUETA RALPH"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 6,
+      "total_uds": 120,
+      "ts": 1789242063737,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789243042144_a6qvg",
+      "ts": 1789243042144,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-110",
+      "op_nombre": "PANTALON RAVE",
+      "referencia": "PANTALON RAVE",
+      "color": "ROJO",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 124,
+      "motivo": "EN TALLER"
     }
   ]
 }
