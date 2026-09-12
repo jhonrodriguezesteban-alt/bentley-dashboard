@@ -17562,14 +17562,18 @@ function _pvpCerrado(base, iva){
 }
 function _precioSugerido(costo, margen, iva){
   if(!costo) return 0;
-  var minBase = costo / (1 - margen);
+  // Debe llegar al mismo margen "neto" que calcPrecios() usa en el detalle de la receta,
+  // que le resta al costo una comisión del 4% sobre el precio base antes de calcular el
+  // margen — si no se incluye acá, el precio sugerido queda corto y nunca alcanza esa meta.
+  var minBase = costo / (1 - margen - 0.04);
   var pvpCerrado = _pvpCerrado(minBase, iva);
   return Math.round(pvpCerrado / (1 + iva));
 }
 function _calcMargenPvp(pvp, costo, iva){
   if(!pvp||!costo) return 0;
   var base = pvp / (1 + (iva||0));
-  return (base - costo) / base;
+  var comision = base * 0.04; // mismo descuento que aplica calcPrecios() al mostrar el margen guardado
+  return (base - costo - comision) / base;
 }
 function updatePrecioPreview(inp, canal){
   var pm = _costeoParams();
