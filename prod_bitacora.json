@@ -17612,20 +17612,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": false,
+      "color": "NEGRO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1789243487134_p1yu8",
-      "ts": 1789243487134,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-0014",
       "op_nombre": "LEGGIN CAMPANITA",
       "referencia": "LEGGIN CAMPANITA",
-      "color": "NEGRO",
       "talla": "T10",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": false,
+      "tipo": "estado_ot",
+      "ts": 1789243487134,
       "uds": 8,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789244011505_cp4vn",
+      "ts": 1789244011505,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-113",
+      "nombre": "CHAQUETA RALPH",
+      "categoria": "CHAQUETAS",
+      "colores": 3,
+      "refs": 1
     }
   ]
 }
