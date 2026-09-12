@@ -17596,19 +17596,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "ROJO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1789243042144_a6qvg",
-      "ts": 1789243042144,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-110",
       "op_nombre": "PANTALON RAVE",
       "referencia": "PANTALON RAVE",
-      "color": "ROJO",
       "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1789243042144,
+      "uds": 124,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789243487134_p1yu8",
+      "ts": 1789243487134,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0014",
+      "op_nombre": "LEGGIN CAMPANITA",
+      "referencia": "LEGGIN CAMPANITA",
+      "color": "NEGRO",
+      "talla": "T10",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
-      "uds": 124,
+      "bulk": false,
+      "uds": 8,
       "motivo": "EN TALLER"
     }
   ]
