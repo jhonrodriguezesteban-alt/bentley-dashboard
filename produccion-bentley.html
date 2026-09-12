@@ -674,6 +674,7 @@ textarea.form-control{resize:vertical;min-height:80px;}
 <!-- Firebase Realtime Database SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 </head>
 <body>
 
@@ -1000,19 +1001,26 @@ var _fbConfig = {
   messagingSenderId: "1013098760950",
   appId: "1:1013098760950:web:27c093d7e16a3c1085bad7"
 };
-var _fbApp, _fbDb;
-try { _fbApp = firebase.initializeApp(_fbConfig); _fbDb = firebase.database(); } catch(e){ console.warn('Firebase init:', e); }
+var _fbApp, _fbDb, _fbAuthReady;
+try {
+  _fbApp = firebase.initializeApp(_fbConfig);
+  _fbDb = firebase.database();
+  // Autenticación anónima — no cambia nada del login propio de la app (usuario/contraseña
+  // siguen igual), solo hace que el navegador quede "identificado" ante Firebase para poder
+  // pasar reglas de seguridad que exigen auth != null (antes la base quedaba abierta a cualquiera).
+  _fbAuthReady = firebase.auth().signInAnonymously().catch(function(e){ console.warn('Firebase auth anónima:', e); });
+} catch(e){ console.warn('Firebase init:', e); }
 var FB_ROOT = 'bentley-prod';
 var _fbOwnWrite = {}; // evita re-render cuando el propio usuario acaba de guardar
 
 async function _fbSet(key, data){
   if(!_fbDb) return;
-  try { await _fbDb.ref(FB_ROOT+'/'+key).set(data); } catch(e){ console.warn('FB write '+key, e); }
+  try { if(_fbAuthReady) await _fbAuthReady; await _fbDb.ref(FB_ROOT+'/'+key).set(data); } catch(e){ console.warn('FB write '+key, e); }
 }
 
 async function _fbGet(key){
   if(!_fbDb) return null;
-  try { var s = await _fbDb.ref(FB_ROOT+'/'+key).get(); return s.exists() ? s.val() : null; } catch(e){ return null; }
+  try { if(_fbAuthReady) await _fbAuthReady; var s = await _fbDb.ref(FB_ROOT+'/'+key).get(); return s.exists() ? s.val() : null; } catch(e){ return null; }
 }
 
 function _fbApplyKey(key, d){
@@ -1046,6 +1054,7 @@ function _fbApplyKey(key, d){
 async function _fbMigrarSiVacio(){
   if(!_fbDb) return;
   try {
+    if(_fbAuthReady) await _fbAuthReady;
     var snap = await _fbDb.ref(FB_ROOT+'/ops').get();
     if(snap.exists() && (snap.val().ops||[]).length > 0) return; // ya hay datos
     // Firebase vacío — migrar todo desde el DB en memoria (recién cargado de GitHub)
@@ -1072,9 +1081,10 @@ async function _fbMigrarSiVacio(){
 }
 
 var _fbListenersActive = false;
-function _iniciarListenersFirebase(){
+async function _iniciarListenersFirebase(){
   if(!_fbDb || _fbListenersActive) return;
   _fbListenersActive = true;
+  if(_fbAuthReady) await _fbAuthReady;
   var KEYS = ['ops','ots','disenos','logistica','satelites','costos_mo','bitacora','cronograma','prog_ops','planeacion','planeacion_confeccion','sim','usuarios','costeo','trazos'];
   KEYS.forEach(function(key){
     _fbDb.ref(FB_ROOT+'/'+key).on('value', function(snap){
