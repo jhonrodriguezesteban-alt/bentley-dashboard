@@ -3940,20 +3940,20 @@
       "unidad": "UND"
     },
     {
+      "familia": "Telas",
       "id": "cid_1789160163263_73",
       "nombre": "tela miso",
-      "familia": "Telas",
-      "unidad": "und",
       "precio_unitario": 13100,
-      "proveedor": "vitral"
+      "proveedor": "vitral",
+      "unidad": "und"
     },
     {
+      "familia": "Telas",
       "id": "cid_1789169457888_4529",
       "nombre": "tela scarlet",
-      "familia": "Telas",
-      "unidad": "und",
       "precio_unitario": 4500,
-      "proveedor": "vitral"
+      "proveedor": "vitral",
+      "unidad": "und"
     }
   ],
   "params": {
@@ -4693,18 +4693,18 @@
       "producto": "PANTALON CALIFORNIA"
     },
     {
-      "producto": "VESTIDO MINI DRESS",
-      "precio_mayorista": 42000,
       "precio_detal": 59900,
+      "precio_mayorista": 42000,
       "precio_web": 59900,
-      "precios_pvp": true
+      "precios_pvp": true,
+      "producto": "VESTIDO MINI DRESS"
     },
     {
-      "producto": "PANTALON ZAMBA",
-      "precio_mayorista": 54000,
-      "precio_detal": 75000,
-      "precio_web": 74900,
-      "precios_pvp": true
+      "precio_detal": 80000,
+      "precio_mayorista": 56000,
+      "precio_web": 79900,
+      "precios_pvp": true,
+      "producto": "PANTALON ZAMBA"
     }
   ],
   "puestos": [
@@ -37717,28 +37717,28 @@
           "tipo": "MATERIAL"
         },
         {
+          "consumo": 1,
           "id": "cid_1789177823186_2054",
-          "tipo": "MATERIAL",
           "mp_id": "mp_32424_10210116",
-          "consumo": 1
+          "tipo": "MATERIAL"
         },
         {
+          "consumo": 2,
           "id": "cid_1789177932244_6965",
-          "tipo": "MATERIAL",
           "mp_id": "mp_31212_10810233",
-          "consumo": 2
+          "tipo": "MATERIAL"
         },
         {
+          "consumo": 2,
           "id": "cid_1789177987932_7091",
-          "tipo": "MATERIAL",
           "mp_id": "mp_31212_10910233",
-          "consumo": 2
+          "tipo": "MATERIAL"
         },
         {
+          "consumo": 1,
           "id": "cid_1789178018911_8729",
-          "tipo": "MATERIAL",
           "mp_id": "mp_31414_0071020",
-          "consumo": 1
+          "tipo": "MATERIAL"
         }
       ],
       "id": "cid_1789100940765_2191",
@@ -38197,9 +38197,6 @@
       "referencia": "1195"
     },
     {
-      "id": "cid_1789160215883_5801",
-      "producto": "CAMISETA MISO",
-      "referencia": "1196",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -38431,12 +38428,12 @@
           "mp_id": "mp_31515_1061020",
           "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789160215883_5801",
+      "producto": "CAMISETA MISO",
+      "referencia": "1196"
     },
     {
-      "id": "cid_1789167556675_8814",
-      "producto": "CHAQUETA DISCOVERY",
-      "referencia": "1197",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -38669,23 +38666,23 @@
           "tipo": "MATERIAL"
         },
         {
+          "consumo": 0.35,
           "id": "cid_1789167394527_7070",
-          "tipo": "MATERIAL",
           "mp_id": "mp_31414_00511629",
-          "consumo": 0.35
+          "tipo": "MATERIAL"
         },
         {
+          "consumo": 0.18,
           "id": "cid_1789169021423_897",
-          "tipo": "MATERIAL",
           "mp_id": "mp_31010_1441020",
-          "consumo": 0.18
+          "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789167556675_8814",
+      "producto": "CHAQUETA DISCOVERY",
+      "referencia": "1197"
     },
     {
-      "id": "cid_1789168564507_3162",
-      "producto": "WASHMAN",
-      "referencia": "1198",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -38918,23 +38915,23 @@
           "tipo": "MATERIAL"
         },
         {
+          "consumo": 4,
           "id": "cid_1789168501009_9061",
-          "tipo": "MATERIAL",
           "mp_id": "mp_31212_10210233",
-          "consumo": 4
+          "tipo": "MATERIAL"
         },
         {
+          "consumo": 0.93,
           "id": "cid_1789168528657_3472",
-          "tipo": "MATERIAL",
           "mp_id": "mp_31414_00511629",
-          "consumo": 0.93
+          "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789168564507_3162",
+      "producto": "WASHMAN",
+      "referencia": "1198"
     },
     {
-      "id": "cid_1789177615299_8244",
-      "producto": "BLUSA MANGA BOLERO",
-      "referencia": "1199",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -39188,18 +39185,24 @@
           "mp_id": "cid_1789169457888_4529",
           "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789177615299_8244",
+      "producto": "BLUSA MANGA BOLERO",
+      "referencia": "1199"
     }
   ],
   "referencia_siguiente_propio": 1200,
   "referencia_siguiente_proveedor": 2066,
   "referencias_asignadas": {
     "BLUSA COSMO": "1182",
+    "BLUSA MANGA BOLERO": "1199",
     "BLUSA POLLY": "1184",
     "CAMIBUSO PAÑO ALGODON MANGA OVERSIZED": "1192",
     "CAMIBUSO PAÑO ALGODON RANGLAND": "1191",
     "CAMIBUZO NEVADO": "1194",
     "CAMISETA COCOA": "1190",
+    "CAMISETA MISO": "1196",
+    "CHAQUETA DISCOVERY": "1197",
     "CONJUNTO SOLOMUN": "1193",
     "HOODIE CAROLINA": "1187",
     "PANTALON POLLY": "1181",
@@ -39209,10 +39212,7 @@
     "VESTIDO KIKI": "1189",
     "VESTIDO MINI DRESS": "1185",
     "VESTIDO SOUL - REF: 1104": "1186",
-    "CAMISETA MISO": "1196",
-    "CHAQUETA DISCOVERY": "1197",
-    "WASHMAN": "1198",
-    "BLUSA MANGA BOLERO": "1199"
+    "WASHMAN": "1198"
   },
   "servicios": [
     {
@@ -39893,19 +39893,19 @@
       "nombre": "SERVICIO DE CONFECCION PANTALON TRENCH"
     },
     {
+      "costo_unitario": 8000,
       "id": "cid_1789167333976_3819",
-      "nombre": "SERVICIO DE CONFECCION CHAQUETA DISCOVERY",
-      "costo_unitario": 8000
+      "nombre": "SERVICIO DE CONFECCION CHAQUETA DISCOVERY"
     },
     {
+      "costo_unitario": 10500,
       "id": "cid_1789168389332_6118",
-      "nombre": "servicio de confeccion  washman",
-      "costo_unitario": 10500
+      "nombre": "servicio de confeccion  washman"
     },
     {
+      "costo_unitario": 2300,
       "id": "cid_1789177571022_182",
-      "nombre": "SERVICIO CONFECCION SCARLET",
-      "costo_unitario": 2300
+      "nombre": "SERVICIO CONFECCION SCARLET"
     }
   ],
   "tarifas_cif": [
