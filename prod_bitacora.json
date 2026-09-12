@@ -17666,20 +17666,29 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "VERDE MILITAR",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1789246778206_lx5m4",
-      "ts": 1789246778206,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-125",
       "op_nombre": "OVERSIZED CAPOTA",
       "referencia": "OVERSIZED CAPOTA",
-      "color": "VERDE MILITAR",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1789246778206,
       "uds": 80,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789247121946_pj7jm",
+      "ts": 1789247121946,
+      "user": "Jefa de Producción",
+      "tipo": "satelite_crear",
+      "nombre": "LUZ MIRIAM PULIDO",
+      "personas": 2,
+      "capacidad": 0
     }
   ]
 }
