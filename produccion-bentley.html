@@ -9247,6 +9247,23 @@ function _buildFormEditarOP(op){
   h += '</div>';
   var _defCort = op.cortador || 'Corte Carbajal';
   h += '<div class="form-group"><label class="form-label">Cortador *</label><select class="form-control" id="op-cortador"><option value="">Seleccionar...</option>'+CORTADORES.map(function(c){ return '<option'+(c===_defCort?' selected':'')+'>'+c+'</option>'; }).join('')+'</select></div>';
+  // Vincular/asociar a un diseño — igual que al crear la OP, pero también disponible al
+  // editar una ya existente (antes solo se podía asociar el origen al momento de crearla).
+  var _disOrigenActual = op.diseno_origen_id ? (DB.disenos||[]).find(function(d){ return d.id===op.diseno_origen_id; }) : null;
+  h += '<div class="form-group" style="background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.2);border-radius:8px;padding:10px 12px;">';
+  h += '<label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin:0;">';
+  h += '<input type="checkbox" id="op-vinc-diseno-chk" '+(_disOrigenActual?'checked':'')+' onchange="_opToggleVincDiseno(this.checked)">';
+  h += '<span style="font-size:12px;font-weight:600;color:#e2e8f0;">🎨 '+(_disOrigenActual?'Diseño asociado (click para cambiarlo)':'Asociar a un diseño ya creado (en cualquier etapa)')+'</span>';
+  h += '</label>';
+  h += '<div id="op-vinc-diseno-wrap" style="display:'+(_disOrigenActual?'block':'none')+';margin-top:8px;">';
+  h += '<div style="position:relative;">';
+  h += '<input type="text" class="form-control" id="op-vinc-diseno-buscar" placeholder="🔍 Buscar diseño..." autocomplete="off" value="'+(_disOrigenActual?esc(_disOrigenActual.nombre):'')+'" oninput="_opFiltrarDisenoLista(this.value)" onfocus="_opFiltrarDisenoLista(this.value)" onblur="setTimeout(function(){var b=document.getElementById(\'op-vinc-diseno-lista\');if(b)b.style.display=\'none\';},200);">';
+  h += '<input type="hidden" id="op-vinc-diseno-sel" value="'+(_disOrigenActual?_disOrigenActual.id:'')+'">';
+  h += '<div id="op-vinc-diseno-lista" style="display:none;position:absolute;left:0;right:0;top:100%;z-index:50;max-height:220px;overflow-y:auto;border:1px solid #2c2c2e;border-radius:8px;background:#0d1117;margin-top:4px;box-shadow:0 12px 32px rgba(0,0,0,.6);"></div>';
+  h += '</div>';
+  h += '<div style="font-size:10px;color:#64748b;margin-top:4px;">Al elegir un diseño se guarda como origen de esta OP; si aún no está en "Lista para Producción" su tarjeta sigue viéndose normal en el tablero de Diseño.</div>';
+  h += '</div>';
+  h += '</div>';
   h += '<div class="sep"></div>';
   h += '<div id="op-refs-container">';
   _opRefs.forEach(function(r,i){ h += _buildRefBlock(r,i,_opRefs.length); });
@@ -9293,6 +9310,25 @@ async function guardarEdicionOPRefs(opId){
   op.categoria=refs[0].cat;
   op.nombre_producto=refs.length>1 ? refs.map(function(r){ return r.nombre; }).join(' + ') : refs[0].nombre;
   op.updated_at=hoy();
+
+  // ── Asociar/actualizar diseño de origen (igual que al crear la OP) ────────
+  var disSelId = (document.getElementById('op-vinc-diseno-chk')||{}).checked ? (document.getElementById('op-vinc-diseno-sel')||{}).value : '';
+  if(disSelId){
+    var disAsociar = (DB.disenos||[]).find(function(x){ return x.id===disSelId; });
+    if(disAsociar){
+      op.diseno_origen_id = disAsociar.id;
+      op.diseno_origen_nombre = disAsociar.nombre;
+      // Solo se "cierra" del tablero de Diseño si de verdad ya estaba en Lista para
+      // Producción — igual criterio que al crear la OP.
+      if(disAsociar.kanban_estado==='LISTA_PRODUCCION'){ disAsociar.eliminado = true; disAsociar._op_origen = opId; }
+      else { disAsociar._op_planeacion = opId; }
+      guardarArchivo('disenos', {disenos: DB.disenos, disenos_cfg: DB.disenos_cfg});
+    }
+  } else if(!(document.getElementById('op-vinc-diseno-chk')||{}).checked){
+    op.diseno_origen_id = null;
+    op.diseno_origen_nombre = null;
+  }
+
   _logEvt('editar_op_refs', {op_id:opId, nombre:op.nombre_producto, categoria:op.categoria, colores:allColores.length, refs:refs.length});
 
   // ── Sincronizar OTs existentes y crear OTs para colores nuevos ───────────
