@@ -2844,10 +2844,46 @@ function _planMigrarConfirmacionesDisenoAOp(){
   if(cambiado){ saveLocal(); guardarPlaneacion(); }
   return cambiado;
 }
+// Toda referencia que ya tiene una OP real está, por definición, confirmada — ya no depende
+// de que alguien marque un check a mano. El check manual solo tiene sentido para lo que
+// TODAVÍA está en Diseño sin OP (ahí sí hace falta decidir si se va a producir o no).
+// Se calcula en vivo desde las OPs activas, agrupando por categoría+nombre de producto.
+function _planTodasLasRefsOP(){
+  var confirmadas = (DB.planeacion && DB.planeacion.confirmadas) || {};
+  var porRef = {};
+  (DB.ops||[]).forEach(function(op){
+    if(op.estado_op==='ARCHIVADO') return;
+    var cat = (op.categoria||'Sin categoría').trim().toUpperCase();
+    var nombreOriginal = op.nombre_producto||op.id;
+    var refKey = 'REF||'+cat+'||'+_recSanitizeKey(nombreOriginal.trim().toUpperCase());
+    if(!porRef[refKey]) porRef[refKey] = {refKey:refKey, cat:cat, nombre:nombreOriginal, tipo:'op', uds:0, mat:0, mod:0, cif:0, svc:0, costoTotal:0, tieneReceta:false};
+    var r = porRef[refKey];
+    var colores = (op.colores&&op.colores.length) ? op.colores : ['—'];
+    colores.forEach(function(color){
+      r.uds += _planColorUds(op, color);
+      var costo = _planCostoColor(op, color);
+      if(costo){ r.mat+=costo.mat; r.mod+=costo.mod; r.cif+=costo.cif; r.svc+=costo.svc; r.costoTotal+=costo.total; r.tieneReceta=true; }
+    });
+  });
+  // El "extra" manual (cantidad adicional que alguien haya querido sumarle a mano) se
+  // conserva si ya existía guardado para esa misma referencia.
+  return Object.keys(porRef).map(function(k){
+    var r = porRef[k];
+    r.extra = (confirmadas[k] && confirmadas[k].extra) || 0;
+    return r;
+  });
+}
 function _planRenderConfirmados(){
   _planMigrarConfirmacionesDisenoAOp();
   var confirmadas = (DB.planeacion && DB.planeacion.confirmadas) || {};
-  var entries = _planConLiveUds(Object.keys(confirmadas).map(function(k){ return Object.assign({refKey:k}, confirmadas[k]); }).filter(function(e){ return e.ok; }));
+  var opEntriesAuto = _planTodasLasRefsOP();
+  var opRefKeys = {}; opEntriesAuto.forEach(function(e){ opRefKeys[e.refKey] = true; });
+  // Diseño confirmado a mano — pero si esa misma referencia ya tiene OP real, la entrada
+  // automática de arriba manda y esta se descarta para no contar dos veces.
+  var disEntriesManual = Object.keys(confirmadas)
+    .map(function(k){ return Object.assign({refKey:k}, confirmadas[k]); })
+    .filter(function(e){ return e.ok && e.tipo==='diseno' && !opRefKeys[e.refKey]; });
+  var entries = _planConLiveUds(opEntriesAuto.concat(disEntriesManual));
   // Mapa nombre+categoría → diseño real, para saber si un confirmado tipo "diseño" es Fenio
   // (crédito diferido a diciembre — no cuenta como inversión inmediata).
   var disenosPorNombreCatConf = {};
@@ -3179,8 +3215,8 @@ function _planDescargarCSVListadoDisenos(){
 // listado de diseños confirmados, pero el "mes" y el "estado" salen de la OP real
 // (DB.ops + DB.planeacion.meses) en vez de disenos_plan/kanban_estado.
 function _planVerListadoReproConfirmados(){
-  var confirmadas = (DB.planeacion && DB.planeacion.confirmadas) || {};
-  var entries = _planConLiveUds(Object.keys(confirmadas).map(function(k){ return Object.assign({refKey:k}, confirmadas[k]); }).filter(function(e){ return e.ok && e.tipo!=='diseno'; }));
+  // Ya no depende del check manual — toda OP activa cuenta sola (ver _planTodasLasRefsOP).
+  var entries = _planConLiveUds(_planTodasLasRefsOP());
   var opsPorNombreCat = {};
   (DB.ops||[]).forEach(function(op){
     if(op.estado_op==='ARCHIVADO') return;
@@ -3245,16 +3281,14 @@ function _planVerListadoReproConfirmados(){
       refs.forEach(function(r, ri){
         var trazosOk = !!(((DB.planeacion&&DB.planeacion.trazos)||{})[r.refKey]);
         var detId = 'plan-lst-rep-det-'+ri+'-'+cat.replace(/[^A-Za-z0-9]/g,'');
-        var _tipoListado = 'repro';
         h += '<div data-trazos-row style="padding:7px 4px;'+(trazosOk?'opacity:.55;':'')+'">';
         h += '<div style="display:flex;align-items:center;gap:10px;">';
         h += '<input type="checkbox" title="Trazos montados" data-refkey="'+esc(r.refKey)+'" onchange="planToggleTrazos(this.dataset.refkey,this.checked,this)" '+(trazosOk?'checked':'')+' style="width:15px;height:15px;accent-color:#0a84ff;cursor:pointer;flex-shrink:0;">';
         h += '<div style="flex:1;min-width:0;">';
         h += '<div data-trazos-nombre style="font-size:12.5px;font-weight:700;color:#e2e8f0;'+(trazosOk?'text-decoration:line-through;':'')+'">'+esc(r.nombre)+'</div>';
-        h += '<div style="font-size:9.5px;color:#64748b;">'+(r.mes?('planificado: '+esc(r.mes)):'sin mes asignado')+(r.kanban?(' · '+esc(r.kanban)):'')+(!r.nOps?' · sin OP activa':'')+(r.extra?(' · +'+r.extra.toLocaleString('es-CO')+' extra'):'')+'</div>';
+        h += '<div style="font-size:9.5px;color:#64748b;">'+(r.mes?('planificado: '+esc(r.mes)):'sin mes asignado')+(r.kanban?(' · '+esc(r.kanban)):'')+(!r.nOps?' · sin OP activa':'')+(r.extra?(' · +'+r.extra.toLocaleString('es-CO')+' extra'):'')+' · <span style="color:#0a84ff;">confirmado (tiene OP)</span></div>';
         h += '</div>';
         h += '<div onclick="_planConfirmadoToggleDetalle(\''+detId+'\',\''+esc(r.nombre).replace(/\'/g,"\\'")+'\',\''+esc(cat)+'\')" title="Ver colores, tallas y cantidades" style="font-size:13px;font-weight:900;color:#f1f5f9;flex-shrink:0;cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px;">'+r.total.toLocaleString('es-CO')+'</div>';
-        h += '<button data-refkey="'+esc(r.refKey)+'" data-tipo="'+_tipoListado+'" onclick="_planQuitarConfirmadoDesdeListado(this.dataset.refkey,this.dataset.tipo)" title="Quitar confirmación (ya no cuenta en el total)" style="background:none;border:none;color:#334155;font-size:14px;cursor:pointer;flex-shrink:0;padding:0 2px;">✕</button>';
         h += '</div>';
         h += '<div id="'+detId+'" style="display:none;margin-top:8px;padding-top:8px;padding-left:25px;border-top:1px solid rgba(255,255,255,.06);"></div>';
         h += '</div>';
@@ -3422,7 +3456,9 @@ function planVerCategoria(cat){
   refs.forEach(function(ref, ri){
     var pct = totalUds>0 ? (ref.uds/totalUds*100) : 0;
     var refKey = 'REF||'+cat+'||'+_recSanitizeKey(ref.nombre.trim().toUpperCase());
-    var checked = !!(confirmadas[refKey] && confirmadas[refKey].ok);
+    // Una referencia con OP real está confirmada por definición — ya no depende del check
+    // manual, que solo sigue aplicando a lo que todavía es puro diseño sin OP.
+    var checked = ref.tipo==='op' ? true : !!(confirmadas[refKey] && confirmadas[refKey].ok);
     var rowId = 'plan-ref-expand-'+ri+'-'+cat.replace(/[^A-Za-z0-9]/g,'');
     // Valor MP + insumos: para OP con receta real via _planCostoColor (r.mat = todos los
     // componentes tipo MATERIAL: telas + insumos + apliques); para diseños sin OP, el precio
@@ -3447,7 +3483,11 @@ function planVerCategoria(cat){
     }
     h += '<div style="background:#1c1c1e;border-radius:9px;margin-bottom:6px;overflow:hidden;'+(checked?'box-shadow:inset 3px 0 0 var(--green);':'')+'">';
     h += '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;" onclick="planToggleExpandRef(\''+rowId+'\')">';
-    h += '<input type="checkbox" '+(checked?'checked':'')+' data-refkey="'+esc(refKey)+'" data-cat="'+esc(cat)+'" data-nombre="'+esc(ref.nombre)+'" data-uds="'+ref.uds+'" data-tipo="'+ref.tipo+'" data-mat="'+Math.round(costoTotales.mat)+'" data-mod="'+Math.round(costoTotales.mod)+'" data-cif="'+Math.round(costoTotales.cif)+'" data-svc="'+Math.round(costoTotales.svc)+'" data-total="'+Math.round(costoTotales.total)+'" data-tienereceta="'+(costoTotales.tieneReceta?'1':'0')+'" onclick="event.stopPropagation();_planConfirmarClick(this)" title="Confirmar que esta referencia sí va a producción" style="width:18px;height:18px;flex-shrink:0;accent-color:var(--green);cursor:pointer;">';
+    if(ref.tipo==='op'){
+      h += '<input type="checkbox" checked disabled title="Ya tiene OP — cuenta como confirmada automáticamente" style="width:18px;height:18px;flex-shrink:0;accent-color:var(--green);cursor:default;opacity:.85;">';
+    } else {
+      h += '<input type="checkbox" '+(checked?'checked':'')+' data-refkey="'+esc(refKey)+'" data-cat="'+esc(cat)+'" data-nombre="'+esc(ref.nombre)+'" data-uds="'+ref.uds+'" data-tipo="'+ref.tipo+'" data-mat="'+Math.round(costoTotales.mat)+'" data-mod="'+Math.round(costoTotales.mod)+'" data-cif="'+Math.round(costoTotales.cif)+'" data-svc="'+Math.round(costoTotales.svc)+'" data-total="'+Math.round(costoTotales.total)+'" data-tienereceta="'+(costoTotales.tieneReceta?'1':'0')+'" onclick="event.stopPropagation();_planConfirmarClick(this)" title="Confirmar que esta referencia sí va a producción" style="width:18px;height:18px;flex-shrink:0;accent-color:var(--green);cursor:pointer;">';
+    }
     h += '<div style="flex:1;min-width:0;">';
     var _DIS_ETAPA_LBL = {CON_PROVEEDOR:'Con Proveedor',EN_DISENO_DIGITAL:'Diseño Digital',EN_CORTE_MUESTRA:'Corte Muestra',EN_CONFECCION_MUESTRA:'Confección Muestra',EN_REVISION_GERENCIA:'Revisión Gerencia',EN_ESCALADO:'Escalado',LISTA_PRODUCCION:'Lista para Producción'};
     var _disEtapaTxt = ref.tipo==='diseno' ? (_DIS_ETAPA_LBL[ref.units[0].diseno.kanban_estado]||'En Diseño') : '';
@@ -3716,6 +3756,10 @@ function planVerMes(mesKey){
         var estLbl = DIS_KL_MES[estKey] || (estKey||'').replace(/_/g,' ') || 'Sin estado';
         var estColor = DIS_KL_COLOR[estKey] || '#64748b';
         var estBadge = '<span style="font-size:8px;font-weight:800;color:'+estColor+';background:'+estColor+'18;border:1px solid '+estColor+'44;border-radius:4px;padding:2px 6px;white-space:nowrap;text-transform:uppercase;letter-spacing:.3px;">'+esc(estLbl)+'</span>';
+        // Un diseño planificado en el mes que todavía no tiene el check de "va a producción"
+        // marcado — a diferencia de las OPs reales (que ya cuentan solas), esto sí necesita
+        // una decisión manual, así que se resalta para que no se quede sin confirmar por olvido.
+        if(!_planEsConfirmado(d.nombre, d.categoria)) estBadge += ' <span style="font-size:8px;font-weight:800;color:#f87171;background:rgba(248,113,113,.14);border:1px solid rgba(248,113,113,.45);border-radius:4px;padding:2px 6px;white-space:nowrap;text-transform:uppercase;letter-spacing:.3px;">⚠ No confirmado</span>';
         // Los que van a proveedor externo (Fenio) no se estiman — el proveedor se encarga
         // de su propia producción, no es tela que nosotros tengamos que programar.
         var esFenio = (d.proveedor||'').toUpperCase()==='FENIO';
