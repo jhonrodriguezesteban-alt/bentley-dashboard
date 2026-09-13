@@ -5500,10 +5500,10 @@
           "tipo": "MATERIAL"
         },
         {
+          "consumo": 6,
           "id": "cid_1789266227757_4258",
-          "tipo": "MATERIAL",
           "mp_id": "cid_1789264848822_1878",
-          "consumo": 6
+          "tipo": "MATERIAL"
         }
       ],
       "id": "rec_abrigo_luxor_1135",
@@ -42818,6 +42818,7 @@
   "referencia_siguiente_propio": 1215,
   "referencia_siguiente_proveedor": 2068,
   "referencias_asignadas": {
+    "ABRIGO LUXOR - REF: 1135": "1213",
     "BLAZER DONATELLA": "1212",
     "BLUSA COSMO": "1182",
     "BLUSA JEN - REF: 1118": "1200",
@@ -42841,6 +42842,7 @@
     "CHAQUETA DISCOVERY": "1197",
     "CHAQUETA LENTEJUELAS": "1209",
     "CONJUNTO CHELSY": "1207",
+    "CONJUNTO MANCHESTER": "1214",
     "CONJUNTO SOLOMUN": "1193",
     "HOODIE CAROLINA": "1187",
     "PANTALON POLLY": "1181",
@@ -42851,9 +42853,7 @@
     "VESTIDO KIKI": "1189",
     "VESTIDO MINI DRESS": "1185",
     "VESTIDO SOUL - REF: 1104": "1186",
-    "WASHMAN": "1198",
-    "ABRIGO LUXOR - REF: 1135": "1213",
-    "CONJUNTO MANCHESTER": "1214"
+    "WASHMAN": "1198"
   },
   "servicios": [
     {
@@ -43582,6 +43582,11 @@
       "costo_unitario": 10000,
       "id": "cid_1789265040378_2747",
       "nombre": "SERVICIO DE CONFECCION BLAZER DONATELLA"
+    },
+    {
+      "id": "cid_1789266578853_4494",
+      "nombre": "SERVICIO DE CONFECCION SET BOMBER CORTA",
+      "costo_unitario": 10500
     }
   ],
   "tarifas_cif": [
