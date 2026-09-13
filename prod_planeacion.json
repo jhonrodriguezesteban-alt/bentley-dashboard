@@ -32,7 +32,6 @@
       "OP-0040||NEGRO",
       "OP-0040||ROSA 613",
       "OP-2026-125||NEGRO",
-      "OP-2026-125||VERDE MILITAR",
       "OP-2026-126||LILA",
       "OP-2026-126||ROSA",
       "OP-2026-126||VERDE MILITAR",
@@ -161,8 +160,6 @@
       "OP-2026-112||NEGRO",
       "OP-2026-112||MORA LECHE",
       "OP-2026-113||AZUL OSCURO",
-      "OP-2026-113||NEGRO",
-      "OP-2026-113||CAMEL",
       "OP-0031||AZUL BEBE",
       "OP-2026-111||CAFE",
       "OP-0167||AVENA",
@@ -1008,48 +1005,81 @@
       "uds": 96
     },
     {
+      "categoria": "CHAQUETAS",
+      "color": "MORA LECHE",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-09-11",
       "key": "OP-2026-125||MORA LECHE",
+      "mes_planeado": "2026-09",
+      "op_id": "OP-2026-125",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "uds": 60
+    },
+    {
+      "categoria": "CHAQUETAS",
+      "color": "AZUL BEBE",
+      "estado_al_salir": "EN_CONFECCION",
+      "fecha_deteccion": "2026-09-11",
+      "key": "OP-2026-103||AZUL BEBE",
+      "mes_planeado": "2026-09",
+      "op_id": "OP-2026-103",
+      "op_nombre": "CHAQUETA TORERO NIÑA",
+      "uds": 90
+    },
+    {
+      "categoria": "CHAQUETAS",
+      "color": "AVENA",
+      "estado_al_salir": "EN_CONFECCION",
+      "fecha_deteccion": "2026-09-11",
+      "key": "OP-2026-103||AVENA",
+      "mes_planeado": "2026-09",
+      "op_id": "OP-2026-103",
+      "op_nombre": "CHAQUETA TORERO NIÑA",
+      "uds": 90
+    },
+    {
+      "categoria": "CHAQUETAS",
+      "color": "NEGRO",
+      "estado_al_salir": "EN_CONFECCION",
+      "fecha_deteccion": "2026-09-11",
+      "key": "OP-2026-111||NEGRO",
+      "mes_planeado": "2026-09",
+      "op_id": "OP-2026-111",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "uds": 72
+    },
+    {
+      "key": "OP-2026-125||VERDE MILITAR",
       "op_id": "OP-2026-125",
       "op_nombre": "OVERSIZED CAPOTA",
       "categoria": "CHAQUETAS",
-      "color": "MORA LECHE",
-      "uds": 60,
+      "color": "VERDE MILITAR",
+      "uds": 80,
       "mes_planeado": "2026-09",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-09-11"
+      "fecha_deteccion": "2026-09-12"
     },
     {
-      "key": "OP-2026-103||AZUL BEBE",
-      "op_id": "OP-2026-103",
-      "op_nombre": "CHAQUETA TORERO NIÑA",
-      "categoria": "CHAQUETAS",
-      "color": "AZUL BEBE",
-      "uds": 90,
-      "mes_planeado": "2026-09",
-      "estado_al_salir": "EN_CONFECCION",
-      "fecha_deteccion": "2026-09-11"
-    },
-    {
-      "key": "OP-2026-103||AVENA",
-      "op_id": "OP-2026-103",
-      "op_nombre": "CHAQUETA TORERO NIÑA",
-      "categoria": "CHAQUETAS",
-      "color": "AVENA",
-      "uds": 90,
-      "mes_planeado": "2026-09",
-      "estado_al_salir": "EN_CONFECCION",
-      "fecha_deteccion": "2026-09-11"
-    },
-    {
-      "key": "OP-2026-111||NEGRO",
-      "op_id": "OP-2026-111",
-      "op_nombre": "OVERSIZED CAPOTA",
+      "key": "OP-2026-113||NEGRO",
+      "op_id": "OP-2026-113",
+      "op_nombre": "CHAQUETA RALPH",
       "categoria": "CHAQUETAS",
       "color": "NEGRO",
-      "uds": 72,
+      "uds": 120,
       "mes_planeado": "2026-09",
-      "estado_al_salir": "EN_CONFECCION",
-      "fecha_deteccion": "2026-09-11"
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-09-12"
+    },
+    {
+      "key": "OP-2026-113||CAMEL",
+      "op_id": "OP-2026-113",
+      "op_nombre": "CHAQUETA RALPH",
+      "categoria": "CHAQUETAS",
+      "color": "CAMEL",
+      "uds": 114,
+      "mes_planeado": "2026-09",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-09-12"
     }
   ],
   "confirmadas": {
