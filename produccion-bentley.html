@@ -9721,7 +9721,7 @@ function _buildRefQtyTable(r){
     h += '<tr><td style="font-weight:600;white-space:nowrap;padding:4px 8px;">'+esc(col)+'</td>';
     r.tallas.forEach(function(t){
       var val = (r.cantidades||{})[col+'_'+t]||'';
-      h += '<td><input class="qty-input opref-qty-inp" type="number" min="0" data-rid="'+r.rid+'" data-color="'+esc(col)+'" data-talla="'+t+'" value="'+(val||'')+'" placeholder="0" oninput="opRefQtyInput(this)"></td>';
+      h += '<td><input class="qty-input opref-qty-inp" type="number" min="0" data-rid="'+r.rid+'" data-color="'+esc(col)+'" data-talla="'+t+'" value="'+(val||'')+'" placeholder="0" oninput="opRefQtyInput(this)" onfocus="this.select()" onmouseup="event.preventDefault()"></td>';
     });
     var rowTot = r.tallas.reduce(function(a,t){ return a+(parseInt((r.cantidades||{})[col+'_'+t]||0)); },0);
     h += '<td id="ref-rtot-'+r.rid+'-'+ci+'" style="font-weight:600;text-align:center;">'+rowTot+'</td></tr>';
