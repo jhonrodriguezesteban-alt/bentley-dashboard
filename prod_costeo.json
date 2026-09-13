@@ -4969,7 +4969,6 @@
     "CHAQUETA ROCKY": "cid_1783374158054_3659",
     "CHAQUETAS MIXTAS (MARIPOSAS _ ONION)": "rec_chaqueta_onion_1165",
     "CONJUNTO FRANKY PR": "rec_set_franky_pr_3012",
-    "CONJUNTO MANCHESTER": "rec_conjunto_hoodie_capota_p_a_1178",
     "COUNTRY 2_0": "cid_1783378762151_5821",
     "HOODIE RANGLAND PAÑO ALGODON ABIERTO": "rec_hoodie_pa_o_algodon_abierto_1177",
     "HOODIE RANGLAND PAÑO ALGODON CERRADO": "rec_hoodie_pa_o_algodon_cerrado_1172",
@@ -42559,9 +42558,264 @@
       "id": "cid_1789265184371_8805",
       "producto": "BLAZER DONATELLA",
       "referencia": "1212"
+    },
+    {
+      "componentes": [
+        {
+          "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
+          "id": "cid_1789266388454_601e65529",
+          "puesto_id": "puesto_3cort1",
+          "tiempo_minutos": 480,
+          "tipo": "MOD",
+          "unidades": 336
+        },
+        {
+          "actividad": "TENDER, CORTAR",
+          "id": "cid_1789266388454_6a05a2907",
+          "puesto_id": "puesto_3cort2",
+          "tiempo_minutos": 480,
+          "tipo": "MOD",
+          "unidades": 336
+        },
+        {
+          "actividad": "ALISTAR INSUMOS PARA PRODUCCION",
+          "id": "cid_1789266388454_57897d340",
+          "puesto_id": "puesto_4insu1",
+          "tiempo_minutos": 120,
+          "tipo": "MOD",
+          "unidades": 336
+        },
+        {
+          "actividad": "TRANSPORTAR CORTE A SATELITE Y PLANTA",
+          "id": "cid_1789266388454_98a2b0c34",
+          "puesto_id": "puesto_5logi1",
+          "tiempo_minutos": 360,
+          "tipo": "MOD",
+          "unidades": 400
+        },
+        {
+          "actividad": "RECEPCION Y CONTROL DE CALIDAD",
+          "id": "cid_1789266388454_5501f1506",
+          "puesto_id": "puesto_6cali1",
+          "tiempo_minutos": 480,
+          "tipo": "MOD",
+          "unidades": 300
+        },
+        {
+          "actividad": "DOBLA, ETIQUETA, CODIFICA, EMBOLSA, EMBALA PRODUCTO",
+          "id": "cid_1789266388454_d074623c2",
+          "puesto_id": "puesto_7empa1",
+          "tiempo_minutos": 480,
+          "tipo": "MOD",
+          "unidades": 300
+        },
+        {
+          "actividad": "RECEPCION DE PRODUCTO EMPACADO, ALMACENAMIENTO DEL PRODUCTO",
+          "id": "cid_1789266388454_738581c4e",
+          "puesto_id": "puesto_8bode1",
+          "tiempo_minutos": 60,
+          "tipo": "MOD",
+          "unidades": 208
+        },
+        {
+          "actividad": "ALISTAR PEDIDO PARA LOCAL O CLIENTE FINAL",
+          "id": "cid_1789266388454_68dcdfd5e",
+          "puesto_id": "puesto_8bode1",
+          "tiempo_minutos": 80,
+          "tipo": "MOD",
+          "unidades": 208
+        },
+        {
+          "actividad": "LLEVAR PRODUCTO A PUNTO DE VENTA",
+          "id": "cid_1789266388454_4a3571a7e",
+          "puesto_id": "puesto_5logi1",
+          "tiempo_minutos": 100,
+          "tipo": "MOD",
+          "unidades": 208
+        },
+        {
+          "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
+          "id": "cid_1789266388454_fe557fed0",
+          "tiempo_minutos": 480,
+          "tipo": "CIF",
+          "unidades": 336,
+          "zona": "corte"
+        },
+        {
+          "actividad": "TENDER, CORTAR",
+          "id": "cid_1789266388454_d0b1fdbde",
+          "tiempo_minutos": 480,
+          "tipo": "CIF",
+          "unidades": 336,
+          "zona": "corte"
+        },
+        {
+          "actividad": "ALISTAR INSUMOS PARA PRODUCCION",
+          "id": "cid_1789266388454_2c92911f1",
+          "tiempo_minutos": 120,
+          "tipo": "CIF",
+          "unidades": 336,
+          "zona": "insumos/alistamiento"
+        },
+        {
+          "actividad": "TRANSPORTAR CORTE A SATELITE Y PLANTA",
+          "id": "cid_1789266388454_8366edaf6",
+          "tiempo_minutos": 360,
+          "tipo": "CIF",
+          "unidades": 400,
+          "zona": "logisitica"
+        },
+        {
+          "actividad": "RECEPCION Y CONTROL DE CALIDAD",
+          "id": "cid_1789266388454_4f0e46f7d",
+          "tiempo_minutos": 480,
+          "tipo": "CIF",
+          "unidades": 300,
+          "zona": "calidad"
+        },
+        {
+          "actividad": "DOBLA, ETIQUETA, CODIFICA, EMBOLSA, EMBALA PRODUCTO",
+          "id": "cid_1789266388454_d42f38a4e",
+          "tiempo_minutos": 480,
+          "tipo": "CIF",
+          "unidades": 300,
+          "zona": "empaque"
+        },
+        {
+          "actividad": "RECEPCION DE PRODUCTO EMPACADO, ALMACENAMIENTO DEL PRODUCTO",
+          "id": "cid_1789266388454_699f51d10",
+          "tiempo_minutos": 60,
+          "tipo": "CIF",
+          "unidades": 208,
+          "zona": "bodega almacenamiento"
+        },
+        {
+          "actividad": "ALISTAR PEDIDO PARA LOCAL O CLIENTE FINAL",
+          "id": "cid_1789266388454_1c447df3d",
+          "tiempo_minutos": 80,
+          "tipo": "CIF",
+          "unidades": 208,
+          "zona": "bodega almacenamiento"
+        },
+        {
+          "actividad": "LLEVAR PRODUCTO A PUNTO DE VENTA",
+          "id": "cid_1789266388454_7518f33c8",
+          "tiempo_minutos": 100,
+          "tipo": "CIF",
+          "unidades": 208,
+          "zona": "logisitica"
+        },
+        {
+          "actividad": "ALMACENAMIENTO Y USO DE BODEGA",
+          "id": "cid_1789266388454_1096d86a6",
+          "tiempo_minutos": 11040,
+          "tipo": "CIF",
+          "unidades": 15000,
+          "zona": "bodega almacenamiento"
+        },
+        {
+          "consumo": 1.5,
+          "id": "cid_1789266388454_e016333a9",
+          "mp_id": "mp_31010_1051014",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789266388454_a8f99ad85",
+          "mp_id": "mp_31010_11310116",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 0.5,
+          "id": "cid_1789266388454_d1332ffda",
+          "mp_id": "mp_31414_00511429",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 2,
+          "id": "cid_1789266388454_8a0cb763f",
+          "mp_id": "mp_31313_10411716",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789266388454_3e5befaf6",
+          "mp_id": "mp_32727_1031026",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789266388454_6b74b395f",
+          "mp_id": "mp_31616_1011020",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 0.3,
+          "id": "cid_1789266388454_3920436b4",
+          "mp_id": "mp_32424_10110116",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789266388454_56f9b2c2f",
+          "mp_id": "mp_51922_1061020",
+          "tipo": "MATERIAL"
+        },
+        {
+          "cantidad": 1,
+          "id": "cid_1789266388454_3b522acbb",
+          "servicio_id": "svc_41919_1881020",
+          "tipo": "SERVICIO"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789266388454_c3a306185",
+          "mp_id": "mp_31515_1071020",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789266388454_1b3516b88",
+          "mp_id": "mp_31515_1011020",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789266388454_6bdb5a8b8",
+          "mp_id": "mp_31515_1021020",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789266388454_043908653",
+          "mp_id": "mp_31515_1031020",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789266388454_a3cb0af84",
+          "mp_id": "mp_31515_1041020",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789266388454_01a238b42",
+          "mp_id": "mp_31515_1051020",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789266388454_abb1a4fc2",
+          "mp_id": "mp_31515_1061020",
+          "tipo": "MATERIAL"
+        }
+      ],
+      "id": "cid_1789266388454_1834b2ad2",
+      "producto": "CONJUNTO MANCHESTER",
+      "referencia": "1214"
     }
   ],
-  "referencia_siguiente_propio": 1214,
+  "referencia_siguiente_propio": 1215,
   "referencia_siguiente_proveedor": 2068,
   "referencias_asignadas": {
     "BLAZER DONATELLA": "1212",
@@ -42598,7 +42852,8 @@
     "VESTIDO MINI DRESS": "1185",
     "VESTIDO SOUL - REF: 1104": "1186",
     "WASHMAN": "1198",
-    "ABRIGO LUXOR - REF: 1135": "1213"
+    "ABRIGO LUXOR - REF: 1135": "1213",
+    "CONJUNTO MANCHESTER": "1214"
   },
   "servicios": [
     {
