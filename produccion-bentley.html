@@ -6174,7 +6174,12 @@ function renderDashboardPro(){
   var entregadasScope = DB.ots.filter(function(o){
     return o.estado==='ENTREGADO' && (!filtro || (o.fecha_entrega_real||'').startsWith(filtro));
   });
-  var totalUdsPeriodo = entregadasScope.reduce(function(a,o){ return a+(o.unidades_entregadas||0); },0);
+  // Algunas OTs quedaron marcadas ENTREGADO sin que se haya guardado unidades_entregadas
+  // (ej. marcadas directamente sin pasar por confirmarEntrega) — para esas, la cantidad
+  // pedida es la mejor cifra real de lo fabricado, en vez de contar 0 y desaparecer del
+  // ranking aunque sí se haya producido.
+  function _udsEnt(o){ return (o.unidades_entregadas||0)>0 ? o.unidades_entregadas : (o.cantidad||0); }
+  var totalUdsPeriodo = entregadasScope.reduce(function(a,o){ return a+_udsEnt(o); },0);
 
   // ── KPIs ejecutivos ──────────────────────────────────────────────────────────
   var opsActivas = DB.ops.filter(function(op){ return op.estado!=='COMPLETADO'&&op.estado!=='CERRADO'; }).length;
@@ -6221,18 +6226,18 @@ function renderDashboardPro(){
 
   // ── Rankings: talleres / referencias / categorías (todos sobre lo ENTREGADO) ─
   var mapaSat = {};
-  entregadasScope.forEach(function(o){ if(!o.satelite_id) return; mapaSat[o.satelite_id]=(mapaSat[o.satelite_id]||0)+(o.unidades_entregadas||0); });
+  entregadasScope.forEach(function(o){ if(!o.satelite_id) return; mapaSat[o.satelite_id]=(mapaSat[o.satelite_id]||0)+_udsEnt(o); });
   var itemsSat = Object.keys(mapaSat).map(function(id){
     var s = getSat(id);
     return {nombre:getSatNombre(id), sub:(s&&s.tipo==='maquila')?'🏭 Maquila externa':'🧵 Taller interno', uds:mapaSat[id], onclick:"verSatEntregas('"+id+"')"};
   }).sort(function(a,b){ return b.uds-a.uds; });
 
   var mapaRef = {}, refCat = {};
-  entregadasScope.forEach(function(o){ var k=o.nombre||'—'; mapaRef[k]=(mapaRef[k]||0)+(o.unidades_entregadas||0); refCat[k]=o.categoria||''; });
+  entregadasScope.forEach(function(o){ var k=o.nombre||'—'; mapaRef[k]=(mapaRef[k]||0)+_udsEnt(o); refCat[k]=o.categoria||''; });
   var itemsRef = Object.keys(mapaRef).map(function(k){ return {nombre:k, sub:refCat[k], uds:mapaRef[k], onclick:''}; }).sort(function(a,b){ return b.uds-a.uds; });
 
   var mapaCat = {};
-  entregadasScope.forEach(function(o){ var k=(o.categoria||'SIN CATEGORÍA').toUpperCase(); mapaCat[k]=(mapaCat[k]||0)+(o.unidades_entregadas||0); });
+  entregadasScope.forEach(function(o){ var k=(o.categoria||'SIN CATEGORÍA').toUpperCase(); mapaCat[k]=(mapaCat[k]||0)+_udsEnt(o); });
   var itemsCat = Object.keys(mapaCat).map(function(k){ return {nombre:k, sub:'', uds:mapaCat[k], onclick:''}; }).sort(function(a,b){ return b.uds-a.uds; });
 
   h += _dashProSeccionRanking('🏆 Top Talleres', (filtro||'año')+' · '+itemsSat.length+' talleres con entregas', itemsSat, C_CYAN);
@@ -6242,7 +6247,7 @@ function renderDashboardPro(){
   // ── Evolución mensual (barras) ────────────────────────────────────────────────
   var dataMes = meses.map(function(m){
     var key = yearActual+'-'+m;
-    return DB.ots.filter(function(o){ return o.estado==='ENTREGADO'&&(o.fecha_entrega_real||'').startsWith(key); }).reduce(function(a,o){ return a+(o.unidades_entregadas||0); },0);
+    return DB.ots.filter(function(o){ return o.estado==='ENTREGADO'&&(o.fecha_entrega_real||'').startsWith(key); }).reduce(function(a,o){ return a+_udsEnt(o); },0);
   });
   var maxMes = Math.max.apply(null, dataMes.concat([1]));
   h += '<div class="card" style="padding:20px 18px;margin-bottom:16px;">';
