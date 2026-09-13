@@ -758,6 +758,9 @@ textarea.form-control{resize:vertical;min-height:80px;}
     <div class="nav-item" onclick="navTo('bitacora')" data-page="bitacora">
       <span class="icon">📒</span><span class="nav-label"> Bitácora</span>
     </div>
+    <div class="nav-item" onclick="navTo('catalogo')" data-page="catalogo">
+      <span class="icon">📚</span><span class="nav-label"> Catálogo</span>
+    </div>
   </nav>
   <div id="sidebar-footer">
     <button class="btn-settings" onclick="openSettings()">⚙️ <span>Configuración</span></button>
@@ -1211,7 +1214,7 @@ function _getHash(u){ if(_U[u]) return _U[u]; var cfg=_getCfgUsers(); return (cf
 // Devuelve nombre display
 function _getName(u){ var cfg=_getCfgUsers(); return (cfg[u]&&cfg[u].name)||_NAMES[u]||u; }
 // Módulos permitidos para un usuario (jhon = todos)
-var ALL_MODULES = ['dashboard','dashboardpro','satelites','ops','monitoreo','planconf','cronograma','trazos','tecpatron','diseno','planeacion','logistica','novedades','costos_mo','costeo','inversion','bitacora'];
+var ALL_MODULES = ['dashboard','dashboardpro','catalogo','satelites','ops','monitoreo','planconf','cronograma','trazos','tecpatron','diseno','planeacion','logistica','novedades','costos_mo','costeo','inversion','bitacora'];
 function _getModules(u){
   if(u==='jhon') return ALL_MODULES.slice();
   var cfg=_getCfgUsers();
@@ -1340,7 +1343,7 @@ function applyModuleAccess(uid){
 }
 
 var ALL_MODULE_LABELS = {
-  dashboard:'Dashboard', dashboardpro:'Dashboard Pro', satelites:'Satélites', ops:'OTs', monitoreo:'Monitoreo Producción',
+  dashboard:'Dashboard', dashboardpro:'Dashboard Pro', catalogo:'Catálogo', satelites:'Satélites', ops:'OTs', monitoreo:'Monitoreo Producción',
   planconf:'Planeación Confección', cronograma:'Cronograma', trazos:'Trazos', tecpatron:'TecPatrón',
   diseno:'Diseño', planeacion:'Planeación', logistica:'Logística', novedades:'Novedades',
   costos_mo:'Pagos', costeo:'Costeo y Rentabilidad', inversion:'Resumen de Inversión', bitacora:'Bitácora'
@@ -2641,7 +2644,7 @@ function navTo(page){
   localStorage.setItem('bentley_last_page', page);
   if(page !== 'ops') _opDetalleId = null;
   document.querySelectorAll('.nav-item').forEach(function(el){ el.classList.toggle('active', el.dataset.page===page); });
-  var titles = {dashboard:'⬡ DASHBOARD',dashboardpro:'🏆 DASHBOARD PRO',satelites:'🏭 SATÉLITES',ops:'📋 ÓRDENES DE PRODUCCIÓN',monitoreo:'🔍 MONITOREO DE PRODUCCIÓN',entregas:'📦 ENTREGAS',diseno:'🎨 DISEÑO',planeacion:'📅 PLANEACIÓN DE PRODUCCIÓN',planconf:'🧵 PLANEACIÓN DE CONFECCIÓN',trazos:'📐 TRAZOS',tecpatron:'🧵 TECPATRÓN',logistica:'🚚 LOGÍSTICA',novedades:'⚠ NOVEDADES',simulador:'🧮 SIMULADOR DE PRODUCCIÓN',costos_mo:'💰 PAGOS',inversion:'🧾 RESUMEN DE INVERSIÓN'};
+  var titles = {dashboard:'⬡ DASHBOARD',dashboardpro:'🏆 DASHBOARD PRO',catalogo:'📚 CATÁLOGO',satelites:'🏭 SATÉLITES',ops:'📋 ÓRDENES DE PRODUCCIÓN',monitoreo:'🔍 MONITOREO DE PRODUCCIÓN',entregas:'📦 ENTREGAS',diseno:'🎨 DISEÑO',planeacion:'📅 PLANEACIÓN DE PRODUCCIÓN',planconf:'🧵 PLANEACIÓN DE CONFECCIÓN',trazos:'📐 TRAZOS',tecpatron:'🧵 TECPATRÓN',logistica:'🚚 LOGÍSTICA',novedades:'⚠ NOVEDADES',simulador:'🧮 SIMULADOR DE PRODUCCIÓN',costos_mo:'💰 PAGOS',inversion:'🧾 RESUMEN DE INVERSIÓN'};
   document.getElementById('topbar-title').innerHTML = titles[page] || page.toUpperCase();
   closeDrawer(); closeModal(); selectedOTs.clear();
   renderPage(page);
@@ -2709,6 +2712,7 @@ function renderPage(page){
   else if(page==='monitoreo'){ try{ el.innerHTML = renderMonitoreo(); }catch(e){ el.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#ef4444;"><div style="font-size:32px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">Error al cargar Monitoreo de Producción</div><div style="font-size:11px;color:#64748b;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:8px;padding:12px;text-align:left;max-width:600px;margin:0 auto;font-family:monospace;word-break:break-all;">'+esc(e.message||String(e))+'</div></div>'; console.error('[Monitoreo]', e); } }
   else if(page==='cronograma') el.innerHTML = renderCronograma();
   else if(page==='bitacora') el.innerHTML = renderBitacora();
+  else if(page==='catalogo') el.innerHTML = renderCatalogo();
   else if(page==='planeacion'){
     el.innerHTML = renderPlaneacion();
     if(_planBusqRef) setTimeout(_planFiltrarMeses, 0);
@@ -19577,6 +19581,154 @@ async function tpGuardarPromediosTexto(rid, texto){
   r.promedios_texto = texto;
   var ok = await guardarCosteo();
   if(ok) toast('Guardado','success');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// CATÁLOGO — listado maestro de referencias: imagen, colores de fabricación,
+// ficha técnica, ruta operacional y checklist por producto. Reutiliza los mismos
+// campos y funciones de subida que TecPatrón (foto_trazo_url, ficha_tecnica_url,
+// ruta_operacional_url, etc. viven directamente en DB.costeo.recetas).
+// ═══════════════════════════════════════════════════════════════════════════════
+var _catalogoBusq = '';
+function filtrarCatalogo(v){
+  _catalogoBusq = v;
+  var el = document.getElementById('catalogo-lista');
+  if(el) el.innerHTML = _catalogoListaHTML();
+}
+function renderCatalogo(){
+  var h = '<div>';
+  h += '<div style="position:relative;max-width:400px;margin-bottom:18px;">';
+  h += '<span style="position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:13px;pointer-events:none;">🔍</span>';
+  h += '<input type="text" value="'+esc(_catalogoBusq)+'" oninput="filtrarCatalogo(this.value)" placeholder="Buscar referencia o producto..." style="width:100%;box-sizing:border-box;background:#0d1117;border:1px solid #2c2c2e;border-radius:9px;color:#e2e8f0;font-size:12px;padding:9px 12px 9px 32px;outline:none;">';
+  h += '</div>';
+  h += '<div id="catalogo-lista">'+_catalogoListaHTML()+'</div>';
+  h += '</div>';
+  return h;
+}
+function _catalogoImagen(producto){
+  var key = (producto||'').trim().toUpperCase();
+  if(!key) return null;
+  var d = (DB.disenos||[]).find(function(x){ return !x.eliminado && x.imagenes && x.imagenes.length && (x.nombre||'').trim().toUpperCase()===key; });
+  if(!d) d = (DB.disenos||[]).find(function(x){ return !x.eliminado && x.imagenes && x.imagenes.length && (x.nombre||'').toUpperCase().indexOf(key)>=0; });
+  return d ? d.imagenes[0].url : null;
+}
+function _catalogoColores(producto){
+  var key = (producto||'').trim().toUpperCase();
+  var set = {};
+  (DB.ots||[]).forEach(function(o){ if((o.nombre||'').toUpperCase()===key && o.color) set[o.color.toUpperCase()]=1; });
+  return Object.keys(set).sort();
+}
+function _catalogoListaHTML(){
+  var recetas = (DB.costeo.recetas||[]).slice().sort(function(a,b){ return (a.producto||'').localeCompare(b.producto||''); });
+  var q = (_catalogoBusq||'').trim().toUpperCase();
+  if(q) recetas = recetas.filter(function(r){ return (r.producto||'').toUpperCase().indexOf(q)>=0 || (r.referencia||'').indexOf(q)>=0; });
+  if(!recetas.length) return '<div style="text-align:center;padding:50px;color:#475569;font-size:13px;">Sin referencias que coincidan.</div>';
+  var h = '<div style="display:flex;flex-direction:column;gap:8px;">';
+  recetas.forEach(function(r){ h += _catalogoCardHTML(r); });
+  h += '</div>';
+  return h;
+}
+function _catalogoCardHTML(r){
+  var img = _catalogoImagen(r.producto);
+  var colores = _catalogoColores(r.producto);
+  var checklist = r.checklist||[];
+  var checklistHechos = checklist.filter(function(x){ return x.hecho; }).length;
+  var docsOk = [r.ficha_tecnica_url, r.ruta_operacional_url].filter(Boolean).length;
+  var cid = 'cat-card-'+r.id;
+  var h = '<div style="background:#1c1c1e;border:1px solid #2c2c2e;border-radius:10px;padding:12px 14px;">';
+  h += '<div data-cid="'+cid+'" onclick="_catalogoToggleCard(this.dataset.cid)" style="display:flex;align-items:center;gap:12px;cursor:pointer;">';
+  if(img) h += '<img src="'+esc(img)+'" loading="lazy" decoding="async" style="width:48px;height:48px;object-fit:cover;border-radius:8px;flex-shrink:0;background:#0d1117;">';
+  else h += '<div style="width:48px;height:48px;border-radius:8px;background:#0d1117;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;color:#334155;">🎨</div>';
+  h += '<div style="flex:1;min-width:0;">';
+  h += '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">';
+  if(r.referencia) h += '<span style="font-family:var(--bebas);font-size:14px;color:#0a84ff;letter-spacing:1px;">'+esc(r.referencia)+'</span>';
+  h += '<span style="font-size:14px;font-weight:700;color:#e2e8f0;">'+esc(r.producto)+'</span>';
+  h += '</div>';
+  if(colores.length){
+    h += '<div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:5px;">'+colores.slice(0,8).map(function(c){ return '<span style="font-size:9px;background:rgba(255,255,255,.06);border:1px solid #2c2c2e;border-radius:4px;color:#94a3b8;padding:1px 6px;">'+esc(c)+'</span>'; }).join('')+(colores.length>8?'<span style="font-size:9px;color:#475569;">+'+(colores.length-8)+'</span>':'')+'</div>';
+  } else {
+    h += '<div style="font-size:10px;color:#334155;margin-top:4px;">Sin colores registrados en producción</div>';
+  }
+  h += '</div>';
+  h += '<div style="display:flex;gap:6px;flex-shrink:0;">';
+  h += '<span style="background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);color:#0a84ff;border-radius:5px;padding:3px 8px;font-size:10px;font-weight:700;white-space:nowrap;">📄 '+docsOk+'/2</span>';
+  h += '<span style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);color:#34d399;border-radius:5px;padding:3px 8px;font-size:10px;font-weight:700;white-space:nowrap;">✅ '+checklistHechos+'/'+checklist.length+'</span>';
+  h += '</div>';
+  h += '</div>';
+  h += '<div id="'+cid+'" style="display:none;margin-top:12px;padding-top:12px;border-top:1px solid #2c2c2e;">'+_catalogoDetalleHTML(r)+'</div>';
+  h += '</div>';
+  return h;
+}
+function _catalogoToggleCard(cid){
+  var el = document.getElementById(cid);
+  if(el) el.style.display = el.style.display==='none' ? 'block' : 'none';
+}
+function _catalogoDetalleHTML(r){
+  var h = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:14px;">';
+  h += _tpSlotHTML(r, 'foto_trazo_url', 'Foto del trazo', 'image');
+  h += _tpSlotHTML(r, 'promedios_foto_url', 'Foto de promedios', 'image');
+  h += _tpSlotHTML(r, 'ficha_tecnica_url', 'Ficha técnica', 'file');
+  h += _tpSlotHTML(r, 'ruta_operacional_url', 'Ruta operacional', 'file');
+  h += '</div>';
+  h += '<div style="display:flex;gap:8px;flex-wrap:wrap;">';
+  h += '<button data-rid="'+r.id+'" onclick="_catalogoAbrirChecklist(this.dataset.rid)" style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);color:#34d399;border-radius:7px;padding:7px 14px;font-size:11px;font-weight:700;cursor:pointer;">✅ Checklist</button>';
+  h += '<button data-rid="'+r.id+'" onclick="verReceta(this.dataset.rid)" style="background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.3);color:#c084fc;border-radius:7px;padding:7px 14px;font-size:11px;font-weight:700;cursor:pointer;">💲 Ver costeo</button>';
+  h += '</div>';
+  return h;
+}
+function _catalogoAbrirChecklist(rid){
+  var r = (DB.costeo.recetas||[]).find(function(x){ return x.id===rid; });
+  if(!r) return;
+  if(!r.checklist) r.checklist = [];
+  var html = '<div style="padding:0 20px 20px;">';
+  html += '<div id="catalogo-checklist-items" style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">'+_catalogoChecklistItemsHTML(r)+'</div>';
+  html += '<div style="display:flex;gap:8px;">';
+  html += '<input id="catalogo-checklist-nuevo" class="form-control" placeholder="Nuevo ítem del checklist..." onkeydown="if(event.key===\'Enter\'){event.preventDefault();_catalogoAgregarChecklistItem(\''+rid+'\');}">';
+  html += '<button data-rid="'+rid+'" onclick="_catalogoAgregarChecklistItem(this.dataset.rid)" class="btn btn-primary" style="flex-shrink:0;">+ Agregar</button>';
+  html += '</div></div>';
+  openModal('✅ Checklist — '+esc(r.producto), html);
+  setTimeout(function(){ var i=document.getElementById('catalogo-checklist-nuevo'); if(i) i.focus(); },100);
+}
+function _catalogoChecklistItemsHTML(r){
+  if(!r.checklist || !r.checklist.length) return '<div style="text-align:center;padding:16px;color:#334155;font-size:12px;">Sin ítems todavía.</div>';
+  return r.checklist.map(function(it){
+    return '<div style="display:flex;align-items:center;gap:8px;background:#0d1117;border:1px solid #2c2c2e;border-radius:7px;padding:8px 10px;">'
+      +'<input type="checkbox" data-rid="'+r.id+'" data-iid="'+it.id+'" '+(it.hecho?'checked':'')+' onchange="_catalogoToggleChecklistItem(this.dataset.rid,this.dataset.iid,this.checked)">'
+      +'<span style="flex:1;font-size:12px;color:'+(it.hecho?'#475569;text-decoration:line-through;':'#e2e8f0;')+'">'+esc(it.texto)+'</span>'
+      +'<button data-rid="'+r.id+'" data-iid="'+it.id+'" onclick="_catalogoQuitarChecklistItem(this.dataset.rid,this.dataset.iid)" style="background:none;border:none;color:#334155;font-size:12px;cursor:pointer;">✕</button>'
+      +'</div>';
+  }).join('');
+}
+async function _catalogoAgregarChecklistItem(rid){
+  var inp = document.getElementById('catalogo-checklist-nuevo');
+  var texto = (inp.value||'').trim();
+  if(!texto) return;
+  var r = (DB.costeo.recetas||[]).find(function(x){ return x.id===rid; });
+  if(!r) return;
+  if(!r.checklist) r.checklist = [];
+  r.checklist.push({id:_costeoId(), texto:texto, hecho:false});
+  inp.value = '';
+  var cont = document.getElementById('catalogo-checklist-items');
+  if(cont) cont.innerHTML = _catalogoChecklistItemsHTML(r);
+  await guardarCosteo();
+}
+async function _catalogoToggleChecklistItem(rid, itemId, checked){
+  var r = (DB.costeo.recetas||[]).find(function(x){ return x.id===rid; });
+  if(!r) return;
+  var it = (r.checklist||[]).find(function(x){ return x.id===itemId; });
+  if(!it) return;
+  it.hecho = checked;
+  var cont = document.getElementById('catalogo-checklist-items');
+  if(cont) cont.innerHTML = _catalogoChecklistItemsHTML(r);
+  await guardarCosteo();
+}
+async function _catalogoQuitarChecklistItem(rid, itemId){
+  var r = (DB.costeo.recetas||[]).find(function(x){ return x.id===rid; });
+  if(!r) return;
+  r.checklist = (r.checklist||[]).filter(function(x){ return x.id!==itemId; });
+  var cont = document.getElementById('catalogo-checklist-items');
+  if(cont) cont.innerHTML = _catalogoChecklistItemsHTML(r);
+  await guardarCosteo();
 }
 </script>
 </body>
