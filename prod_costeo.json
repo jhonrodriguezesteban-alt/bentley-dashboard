@@ -3964,44 +3964,44 @@
       "unidad": "UND"
     },
     {
+      "familia": "Telas",
       "id": "cid_1789263482477_700",
       "nombre": "TELA CHELSY",
-      "familia": "Telas",
-      "unidad": "UND",
       "precio_unitario": 12800,
-      "proveedor": "VITRAL"
+      "proveedor": "VITRAL",
+      "unidad": "UND"
     },
     {
+      "familia": "Telas",
       "id": "cid_1789263692241_2244",
       "nombre": "TELA MADRID",
-      "familia": "Telas",
-      "unidad": "UND",
       "precio_unitario": 12200,
-      "proveedor": "VITRAL"
+      "proveedor": "VITRAL",
+      "unidad": "UND"
     },
     {
+      "familia": "Telas",
       "id": "cid_1789263790186_695",
       "nombre": "TELA MALALA",
-      "familia": "Telas",
-      "unidad": "UND",
       "precio_unitario": 8000,
-      "proveedor": "VITRAL"
+      "proveedor": "VITRAL",
+      "unidad": "UND"
     },
     {
+      "familia": "Telas",
       "id": "cid_1789264344872_2619",
       "nombre": "TELA MANDALA",
-      "familia": "Telas",
-      "unidad": "UND",
       "precio_unitario": 19500,
-      "proveedor": "VITRAL"
+      "proveedor": "VITRAL",
+      "unidad": "UND"
     },
     {
+      "familia": "Botones",
       "id": "cid_1789264848822_1878",
       "nombre": "BOTON GABAN LUXOR",
-      "familia": "Botones",
-      "unidad": "UND",
       "precio_unitario": 400,
-      "proveedor": "UND"
+      "proveedor": "UND",
+      "unidad": "UND"
     }
   ],
   "params": {
@@ -4967,13 +4967,13 @@
     "CALIFORNIA": "cid_1788290303656_5753",
     "CHAQUETA DELCO LISO DAMA": "rec_dotacion_hombre_liso_delco_3011",
     "CHAQUETA ROCKY": "cid_1783374158054_3659",
+    "CHAQUETAS MIXTAS (MARIPOSAS _ ONION)": "rec_chaqueta_onion_1165",
+    "CONJUNTO FRANKY PR": "rec_set_franky_pr_3012",
     "CONJUNTO MANCHESTER": "rec_conjunto_hoodie_capota_p_a_1178",
     "COUNTRY 2_0": "cid_1783378762151_5821",
     "HOODIE RANGLAND PAÑO ALGODON ABIERTO": "rec_hoodie_pa_o_algodon_abierto_1177",
     "HOODIE RANGLAND PAÑO ALGODON CERRADO": "rec_hoodie_pa_o_algodon_cerrado_1172",
-    "ROMPEVIENTOS": "rec_chaqueta_rompevientos_bk_1180",
-    "CHAQUETAS MIXTAS (MARIPOSAS _ ONION)": "rec_chaqueta_onion_1165",
-    "CONJUNTO FRANKY PR": "rec_set_franky_pr_3012"
+    "ROMPEVIENTOS": "rec_chaqueta_rompevientos_bk_1180"
   },
   "recetas": [
     {
@@ -40980,9 +40980,6 @@
       "referencia": "2067"
     },
     {
-      "id": "cid_1789263585688_5543",
-      "producto": "CONJUNTO CHELSY",
-      "referencia": "1207",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -41259,17 +41256,17 @@
           "tipo": "MATERIAL"
         },
         {
+          "consumo": 4,
           "id": "cid_1789263517487_6401",
-          "tipo": "MATERIAL",
           "mp_id": "mp_31212_10410233",
-          "consumo": 4
+          "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789263585688_5543",
+      "producto": "CONJUNTO CHELSY",
+      "referencia": "1207"
     },
     {
-      "id": "cid_1789263732934_7815",
-      "producto": "CAMISA CLASICA BK",
-      "referencia": "1208",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -41517,12 +41514,12 @@
           "mp_id": "mp_31515_1061020",
           "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789263732934_7815",
+      "producto": "CAMISA CLASICA BK",
+      "referencia": "1208"
     },
     {
-      "id": "cid_1789263865664_5823",
-      "producto": "CHAQUETA LENTEJUELAS",
-      "referencia": "1209",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -41784,12 +41781,12 @@
           "mp_id": "mp_31515_1061020",
           "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789263865664_5823",
+      "producto": "CHAQUETA LENTEJUELAS",
+      "referencia": "1209"
     },
     {
-      "id": "cid_1789264125616_3759",
-      "producto": "CHAQUETA BAGGY PINZAS",
-      "referencia": "1210",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -42034,17 +42031,17 @@
           "tipo": "MATERIAL"
         },
         {
+          "consumo": 1.5,
           "id": "cid_1789264104215_7428",
-          "tipo": "MATERIAL",
           "mp_id": "mp_51929_1031010",
-          "consumo": 1.5
+          "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789264125616_3759",
+      "producto": "CHAQUETA BAGGY PINZAS",
+      "referencia": "1210"
     },
     {
-      "id": "cid_1789264664815_73",
-      "producto": "BODY BASICO",
-      "referencia": "1211",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -42265,23 +42262,23 @@
           "tipo": "MATERIAL"
         },
         {
+          "consumo": 2,
           "id": "cid_1789264437316_7314",
-          "tipo": "MATERIAL",
           "mp_id": "mp_31212_10310229",
-          "consumo": 2
+          "tipo": "MATERIAL"
         },
         {
+          "cantidad": 1,
           "id": "cid_1789264504175_2930",
-          "tipo": "SERVICIO",
           "servicio_id": "cid_1789264499236_5285",
-          "cantidad": 1
+          "tipo": "SERVICIO"
         }
-      ]
+      ],
+      "id": "cid_1789264664815_73",
+      "producto": "BODY BASICO",
+      "referencia": "1211"
     },
     {
-      "id": "cid_1789265184371_8805",
-      "producto": "BLAZER DONATELLA",
-      "referencia": "1212",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -42540,27 +42537,32 @@
           "tipo": "MATERIAL"
         },
         {
+          "consumo": 0.3,
           "id": "cid_1789264889217_1174",
-          "tipo": "MATERIAL",
           "mp_id": "mp_31010_10210116",
-          "consumo": 0.3
+          "tipo": "MATERIAL"
         },
         {
+          "consumo": 0.15,
           "id": "cid_1789264988481_9936",
-          "tipo": "MATERIAL",
           "mp_id": "mp_31010_1441020",
-          "consumo": 0.15
+          "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789265184371_8805",
+      "producto": "BLAZER DONATELLA",
+      "referencia": "1212"
     }
   ],
-  "referencia_siguiente_propio": 1213,
+  "referencia_siguiente_propio": 1214,
   "referencia_siguiente_proveedor": 2068,
   "referencias_asignadas": {
+    "BLAZER DONATELLA": "1212",
     "BLUSA COSMO": "1182",
     "BLUSA JEN - REF: 1118": "1200",
     "BLUSA MANGA BOLERO": "1199",
     "BLUSA POLLY": "1184",
+    "BODY BASICO": "1211",
     "BONNIE": "1201",
     "BUZO CEREZAS": "2067",
     "BUZO TEJIDO MOÑOS": "2066",
@@ -42568,12 +42570,16 @@
     "CAMIBUSO PAÑO ALGODON RANGLAND": "1191",
     "CAMIBUSO STRAWBERRIES": "1203",
     "CAMIBUZO NEVADO": "1194",
+    "CAMISA CLASICA BK": "1208",
     "CAMISETA COCOA": "1190",
     "CAMISETA MISO": "1196",
     "CAZADORA ANIMALITOS": "1202",
     "CAZADORA RAYAS": "1204",
+    "CHAQUETA BAGGY PINZAS": "1210",
     "CHAQUETA CAZADORA HOJAS": "1206",
     "CHAQUETA DISCOVERY": "1197",
+    "CHAQUETA LENTEJUELAS": "1209",
+    "CONJUNTO CHELSY": "1207",
     "CONJUNTO SOLOMUN": "1193",
     "HOODIE CAROLINA": "1187",
     "PANTALON POLLY": "1181",
@@ -42585,12 +42591,7 @@
     "VESTIDO MINI DRESS": "1185",
     "VESTIDO SOUL - REF: 1104": "1186",
     "WASHMAN": "1198",
-    "CONJUNTO CHELSY": "1207",
-    "CAMISA CLASICA BK": "1208",
-    "CHAQUETA LENTEJUELAS": "1209",
-    "CHAQUETA BAGGY PINZAS": "1210",
-    "BODY BASICO": "1211",
-    "BLAZER DONATELLA": "1212"
+    "ABRIGO LUXOR - REF: 1135": "1213"
   },
   "servicios": [
     {
@@ -43291,34 +43292,34 @@
       "nombre": "SERVICIO BORDADO FUTURE"
     },
     {
+      "costo_unitario": 10000,
       "id": "cid_1789263560548_9826",
-      "nombre": "SERVICIO DE CONFECCION CONJUNTO CHELSY",
-      "costo_unitario": 10000
+      "nombre": "SERVICIO DE CONFECCION CONJUNTO CHELSY"
     },
     {
+      "costo_unitario": 9000,
       "id": "cid_1789263844716_6782",
-      "nombre": "SERVICIO DE CONFECCION CHAQUETA LENTEJUELAS B",
-      "costo_unitario": 9000
+      "nombre": "SERVICIO DE CONFECCION CHAQUETA LENTEJUELAS B"
     },
     {
+      "costo_unitario": 9000,
       "id": "cid_1789264053994_9307",
-      "nombre": "SERVICIO DE CONFECCION CHAQUETA PINZAS",
-      "costo_unitario": 9000
+      "nombre": "SERVICIO DE CONFECCION CHAQUETA PINZAS"
     },
     {
+      "costo_unitario": 500,
       "id": "cid_1789264499236_5285",
-      "nombre": "SERVICIO DE CORTE SESGO BODY",
-      "costo_unitario": 500
+      "nombre": "SERVICIO DE CORTE SESGO BODY"
     },
     {
+      "costo_unitario": 2200,
       "id": "cid_1789264529173_6592",
-      "nombre": "SERVICIO DE CONFECCION BODY BASICO",
-      "costo_unitario": 2200
+      "nombre": "SERVICIO DE CONFECCION BODY BASICO"
     },
     {
+      "costo_unitario": 10000,
       "id": "cid_1789265040378_2747",
-      "nombre": "SERVICIO DE CONFECCION BLAZER DONATELLA",
-      "costo_unitario": 10000
+      "nombre": "SERVICIO DE CONFECCION BLAZER DONATELLA"
     }
   ],
   "tarifas_cif": [
