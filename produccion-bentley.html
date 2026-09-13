@@ -16150,6 +16150,9 @@ function calcTarifaCIF(zona){
 function calcCostoComp(comp){
   if(!comp) return 0;
   if(comp.tipo==='MATERIAL'){
+    // Producto terminado comprado ya hecho a un proveedor externo — el costo es el precio
+    // de compra directo, no consumo × precio de un insumo del catálogo.
+    if(comp.costo_directo!=null) return parseFloat(comp.costo_directo)||0;
     var mp = (DB.costeo.mp||[]).find(function(x){ return x.id===comp.mp_id; });
     return (parseFloat(comp.consumo)||0) * (mp ? parseFloat(mp.precio_unitario)||0 : 0);
   }
@@ -16646,7 +16649,12 @@ function verReceta(id){
       gc.forEach(function(comp){
         var costo=calcCostoComp(comp); var nombre=''; var editBtn=''; var inlineInput='';
         var inpStyle='background:#0a0d14;border:1px solid #2c2c2e;border-radius:4px;color:#e2e8f0;font-size:11px;padding:2px 5px;text-align:center;';
-        if(comp.tipo==='MATERIAL'){
+        if(comp.tipo==='MATERIAL' && comp.costo_directo!=null){
+          nombre='📦 '+esc('Producto terminado (compra a proveedor)');
+          inlineInput='<span style="font-size:10px;color:#475569;margin-left:4px;">$</span>'
+            +'<input type="number" min="0" step="100" value="'+(comp.costo_directo||0)+'" data-rid="'+id+'" data-cid="'+comp.id+'" data-campo="costo_directo" onchange="event.stopPropagation();_editarCompReceta(this.dataset.rid,this.dataset.cid,this.dataset.campo,parseFloat(this.value)||0)" onclick="event.stopPropagation()" style="width:90px;'+inpStyle+'color:#fb923c;">';
+        }
+        else if(comp.tipo==='MATERIAL'){
           var mp=(DB.costeo.mp||[]).find(function(x){return x.id===comp.mp_id;});
           nombre=esc(mp?mp.nombre:'?');
           inlineInput='<span style="font-size:10px;color:#475569;margin-left:4px;">×</span>'
@@ -16907,7 +16915,7 @@ function _renderModalReceta(rec){
         var nombreComp='';
         if(comp.tipo==='MOD'){ var pu=puestos.find(function(x){return x.id===comp.puesto_id;}); nombreComp=pu?pu.zona+' – '+pu.cargo:'?'; }
         else if(comp.tipo==='CIF'){ nombreComp='CIF '+esc(comp.zona||''); }
-        else if(comp.tipo==='MATERIAL'){ var mp=mps.find(function(x){return x.id===comp.mp_id;}); nombreComp=mp?mp.nombre:'?'; }
+        else if(comp.tipo==='MATERIAL'){ if(comp.costo_directo!=null){ nombreComp='📦 Producto terminado (compra a proveedor)'; } else { var mp=mps.find(function(x){return x.id===comp.mp_id;}); nombreComp=mp?mp.nombre:'?'; } }
         else if(comp.tipo==='SERVICIO'){ var sv=svcs.find(function(x){return x.id===comp.servicio_id;}); nombreComp=sv?sv.nombre:'?'; }
         // Actividad/operación (viene de la plantilla financiera original) — cuando el mismo
         // puesto/zona se repite más de una vez en la receta (ej. "bodega" x3, "logística" x2),
@@ -16916,7 +16924,11 @@ function _renderModalReceta(rec){
         var actividadComp = (comp.tipo==='MOD'||comp.tipo==='CIF') ? (comp.actividad||'') : '';
         compListHtml += '<div id="mcrow-'+comp.id+'" style="display:flex;align-items:center;gap:6px;background:#0a0d14;border:1px solid #2c2c2e;border-left:3px solid '+g.color+';border-radius:6px;padding:6px 10px;margin-bottom:4px;">';
         compListHtml += '<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;">';
-        compListHtml += '<button id="mcname-'+comp.id+'" data-cid="'+comp.id+'" data-tipo="'+comp.tipo+'" onclick="_modalAbrirSwap(this.dataset.cid,this.dataset.tipo)" title="Click para cambiar por otro '+(comp.tipo==='MOD'?'puesto':comp.tipo==='CIF'?'zona':comp.tipo==='MATERIAL'?'insumo':'servicio')+' de la lista" style="background:none;border:none;padding:0;text-align:left;font-size:11px;color:#94a3b8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px;width:fit-content;max-width:100%;">'+esc(nombreComp)+' <span style="font-size:9px;color:#334155;">▾</span></button>';
+        if(comp.tipo==='MATERIAL' && comp.costo_directo!=null){
+          compListHtml += '<span style="font-size:11px;color:#fb923c;font-weight:600;">'+esc(nombreComp)+'</span>';
+        } else {
+          compListHtml += '<button id="mcname-'+comp.id+'" data-cid="'+comp.id+'" data-tipo="'+comp.tipo+'" onclick="_modalAbrirSwap(this.dataset.cid,this.dataset.tipo)" title="Click para cambiar por otro '+(comp.tipo==='MOD'?'puesto':comp.tipo==='CIF'?'zona':comp.tipo==='MATERIAL'?'insumo':'servicio')+' de la lista" style="background:none;border:none;padding:0;text-align:left;font-size:11px;color:#94a3b8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px;width:fit-content;max-width:100%;">'+esc(nombreComp)+' <span style="font-size:9px;color:#334155;">▾</span></button>';
+        }
         if(actividadComp) compListHtml += '<span style="font-size:9px;color:#475569;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+esc(actividadComp)+'">'+esc(actividadComp)+'</span>';
         compListHtml += '</div>';
         // Editable fields
@@ -16928,6 +16940,9 @@ function _renderModalReceta(rec){
           compListHtml += '<span style="font-size:10px;color:#475569;">÷</span>';
           compListHtml += '<input type="number" min="1" step="1" value="'+(comp.unidades||1)+'" data-cid="'+comp.id+'" data-campo="unidades" oninput="_modalEditComp(this)" style="width:48px;background:#0d1117;border:1px solid #2c2c2e;border-radius:4px;color:#34d399;font-size:11px;padding:2px 4px;text-align:center;" placeholder="uds">';
           compListHtml += '<span style="font-size:10px;color:#475569;">uds</span>';
+        } else if(comp.tipo==='MATERIAL' && comp.costo_directo!=null){
+          compListHtml += '<span style="font-size:9px;color:#475569;">Costo compra</span>';
+          compListHtml += '<input type="number" min="0" step="100" value="'+(comp.costo_directo||0)+'" data-cid="'+comp.id+'" data-campo="costo_directo" oninput="_modalEditComp(this)" style="width:90px;background:#0d1117;border:1px solid rgba(251,146,60,.4);border-radius:4px;color:#fb923c;font-size:11px;padding:2px 4px;text-align:center;">';
         } else if(comp.tipo==='MATERIAL'){
           compListHtml += '<input type="number" min="0" step="0.001" value="'+(comp.consumo||0)+'" data-cid="'+comp.id+'" data-campo="consumo" oninput="_modalEditComp(this)" style="width:64px;background:#0d1117;border:1px solid #2c2c2e;border-radius:4px;color:#0ea5e9;font-size:11px;padding:2px 4px;text-align:center;">';
           var mpU=mps.find(function(x){return x.id===comp.mp_id;}); compListHtml += '<span style="font-size:10px;color:#475569;">'+(mpU?esc(mpU.unidad):'')+'</span>';
@@ -17807,6 +17822,7 @@ function _costeoPendListaHTML(){
       h += '<div style="display:flex;gap:6px;flex-shrink:0;">';
       h += '<button data-nombre="'+esc(item.nombre)+'" onclick="_vincularRecetaModal(this.dataset.nombre)" style="background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.35);border-radius:7px;color:#34d399;font-size:11px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">🔗 Vincular</button>';
       h += '<button data-nombre="'+esc(item.nombre)+'" onclick="_duplicarRecetaModal(this.dataset.nombre)" style="background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.35);border-radius:7px;color:#c084fc;font-size:11px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">📑 Duplicar</button>';
+      h += '<button data-nombre="'+esc(item.nombre)+'" onclick="_abrirCostearProveedor(this.dataset.nombre)" style="background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.35);border-radius:7px;color:#fb923c;font-size:11px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">📦 Proveedor</button>';
       h += '<button data-nombre="'+esc(item.nombre)+'" onclick="_crearRecetaDesde(this.dataset.nombre)" style="background:#0a84ff;border:none;border-radius:7px;color:#000;font-size:11px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">+ Crear</button>';
       h += '</div>';
       h += '</div>';
@@ -17830,6 +17846,7 @@ function _costeoPendListaHTML(){
       h += '<div style="display:flex;gap:6px;flex-shrink:0;">';
       h += '<button data-nombre="'+esc(d.nombre)+'" onclick="_vincularRecetaModal(this.dataset.nombre)" style="background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.35);border-radius:7px;color:#34d399;font-size:11px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">🔗 Vincular</button>';
       h += '<button data-nombre="'+esc(d.nombre)+'" onclick="_duplicarRecetaModal(this.dataset.nombre)" style="background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.35);border-radius:7px;color:#c084fc;font-size:11px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">📑 Duplicar</button>';
+      h += '<button data-nombre="'+esc(d.nombre)+'" onclick="_abrirCostearProveedor(this.dataset.nombre)" style="background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.35);border-radius:7px;color:#fb923c;font-size:11px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">📦 Proveedor</button>';
       h += '<button data-nombre="'+esc(d.nombre)+'" onclick="_crearRecetaDesde(this.dataset.nombre)" style="background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.35);border-radius:7px;color:#fbbf24;font-size:11px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">+ Crear</button>';
       h += '</div>';
       h += '</div>';
@@ -17958,6 +17975,54 @@ function _guardarDuplicadoReceta(nombre, recetaId){
     _modalRecRefPreview();
     toast('Receta copiada de "'+src.producto+'" — revisa y ajusta antes de guardar','info');
   }, 150);
+}
+
+// Costeo simplificado para productos que se COMPRAN YA TERMINADOS a un proveedor externo
+// (ej. buzo de moños, buzo cerezas) — no llevan M.O.D./C.I.F./materiales/servicios propios,
+// solo lo que se le paga al proveedor por unidad. Aun así necesitan quedar "costeados" para
+// que cuenten en Programación de Producción como la inversión real que representan.
+function _abrirCostearProveedor(nombre){
+  var html = '<div style="padding:0 20px 20px;">';
+  html += '<p style="font-size:12px;color:#94a3b8;margin-bottom:14px;">Para productos que llegan YA TERMINADOS de un proveedor externo — no se fabrican acá, no llevan M.O.D., C.I.F., materiales ni servicios. Solo el precio que se le paga al proveedor por unidad.</p>';
+  html += '<div class="form-group" style="margin-bottom:14px;"><label class="form-label">Nombre del producto</label><input id="prov-nombre" class="form-control" value="'+esc(nombre)+'" oninput="_provRefPreview()"></div>';
+  html += '<div class="form-group" style="margin-bottom:14px;"><label class="form-label">Referencia (4 dígitos) <span style="font-size:10px;color:#475569;">opcional — se asigna sola en la serie de proveedor si la dejas vacía</span></label><input id="prov-ref" class="form-control" maxlength="4" style="width:120px;letter-spacing:2px;font-weight:700;" placeholder="2066" oninput="_provRefPreview()"><div id="prov-ref-hint" style="font-size:10px;color:#fbbf24;margin-top:4px;"></div></div>';
+  html += '<div class="form-group"><label class="form-label">Costo de compra al proveedor <span style="font-size:10px;color:#475569;">(unitario, $)</span></label><input id="prov-costo" class="form-control" type="number" min="0" step="100" placeholder="Ej: 35000"></div>';
+  html += '</div>';
+  var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" onclick="_guardarCostearProveedor()">💾 Guardar</button>';
+  openModal('📦 Costear producto de proveedor', html, footer);
+  setTimeout(function(){ _provRefPreview(); var i=document.getElementById('prov-costo'); if(i) i.focus(); },100);
+}
+function _provRefPreview(){
+  var nombreEl = document.getElementById('prov-nombre');
+  var refEl = document.getElementById('prov-ref');
+  var hint = document.getElementById('prov-ref-hint');
+  if(!nombreEl || !refEl || !hint) return;
+  if(refEl.value){ hint.textContent = ''; return; }
+  var nombre = nombreEl.value.trim();
+  if(!nombre){ hint.textContent = ''; return; }
+  var prev = _refPreview(nombre, true); // siempre serie de proveedor (2066+)
+  if(!prev){ hint.textContent = ''; return; }
+  hint.textContent = prev.definitiva
+    ? '✓ Ya tiene referencia asignada: '+prev.codigo
+    : '🆕 Se le asignará automáticamente la referencia '+prev.codigo+' al guardar';
+}
+async function _guardarCostearProveedor(){
+  var nombre = (document.getElementById('prov-nombre').value||'').trim().toUpperCase();
+  if(!nombre){ toast('El nombre es requerido','error'); return; }
+  var costo = parseFloat(document.getElementById('prov-costo').value)||0;
+  if(!costo){ toast('El costo de compra es requerido','error'); return; }
+  var referencia = (document.getElementById('prov-ref').value||'').trim().toUpperCase();
+  if(!referencia){
+    referencia = (await _asignarReferenciaAutoPorNombre(nombre, true)) || ''; // esProveedor=true → siempre serie 2066+
+  }
+  if(!DB.costeo.recetas) DB.costeo.recetas=[];
+  var comp = {id:_costeoId(), tipo:'MATERIAL', mp_id:null, consumo:1, costo_directo:costo};
+  DB.costeo.recetas.push({id:_costeoId(), producto:nombre, referencia:referencia, es_producto_terminado:true, componentes:[comp]});
+  var ok = await guardarCosteo();
+  if(!ok){ toast('No se pudo guardar — revisa tu conexión e intenta de nuevo','error'); return; }
+  closeModal();
+  renderPage('costeo');
+  toast('Producto de proveedor costeado: '+nombre,'success');
 }
 
 function renderCosteoTarifas(){
