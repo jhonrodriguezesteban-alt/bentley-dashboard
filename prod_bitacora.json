@@ -17783,16 +17783,26 @@
       "user": "John Rodriguez"
     },
     {
+      "categoria": "Conjuntos",
+      "diseno_id": "id_1782182087591_a8je2c72b",
+      "estado_anterior": "LISTA_PRODUCCION",
+      "estado_nuevo": "EN_ESCALADO",
       "id": "evt_1789274704071_hmsfo",
-      "ts": 1789274704071,
-      "user": "John Rodriguez",
+      "marca": "Bentley Kids",
+      "nombre": "conjunto dakota",
       "tipo": "estado_diseno",
+      "ts": 1789274704071,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1789274740577_tzghk",
+      "ts": 1789274740577,
+      "user": "John Rodriguez",
+      "tipo": "tela_nota",
       "diseno_id": "id_1782182087591_a8je2c72b",
       "nombre": "conjunto dakota",
-      "categoria": "Conjuntos",
-      "marca": "Bentley Kids",
-      "estado_anterior": "LISTA_PRODUCCION",
-      "estado_nuevo": "EN_ESCALADO"
+      "tiene_nota": true,
+      "precio": 7800
     }
   ]
 }
