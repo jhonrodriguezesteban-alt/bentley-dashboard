@@ -4924,14 +4924,15 @@
   "receta_map": {
     "BEISBOLERA 2_0": "cid_1783368475768_2164",
     "BLUSA JEN + BLUSA RAYAS JEN": "rec_blusa_jen_1118",
+    "CALIFORNIA": "cid_1788290303656_5753",
+    "CHAQUETA DELCO LISO DAMA": "rec_dotacion_hombre_liso_delco_3011",
     "CHAQUETA ROCKY": "cid_1783374158054_3659",
     "CONJUNTO MANCHESTER": "rec_conjunto_hoodie_capota_p_a_1178",
     "COUNTRY 2_0": "cid_1783378762151_5821",
     "HOODIE RANGLAND PAÑO ALGODON ABIERTO": "rec_hoodie_pa_o_algodon_abierto_1177",
     "HOODIE RANGLAND PAÑO ALGODON CERRADO": "rec_hoodie_pa_o_algodon_cerrado_1172",
     "ROMPEVIENTOS": "rec_chaqueta_rompevientos_bk_1180",
-    "CALIFORNIA": "cid_1788290303656_5753",
-    "CHAQUETA DELCO LISO DAMA": "rec_dotacion_hombre_liso_delco_3011"
+    "CHAQUETAS MIXTAS (MARIPOSAS _ ONION)": "rec_chaqueta_onion_1165"
   },
   "recetas": [
     {
@@ -39842,24 +39843,20 @@
       "referencia": "1202"
     },
     {
-      "id": "cid_1789262136705_964",
-      "producto": "BUZO TEJIDO MOÑOS",
-      "referencia": "2066",
-      "es_producto_terminado": true,
       "componentes": [
         {
-          "id": "cid_1789262136705_8930",
-          "tipo": "MATERIAL",
-          "mp_id": null,
           "consumo": 1,
-          "costo_directo": 38000
+          "costo_directo": 38000,
+          "id": "cid_1789262136705_8930",
+          "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "es_producto_terminado": true,
+      "id": "cid_1789262136705_964",
+      "producto": "BUZO TEJIDO MOÑOS",
+      "referencia": "2066"
     },
     {
-      "id": "cid_1789262176718_6527",
-      "producto": "CAMIBUSO STRAWBERRIES",
-      "referencia": "1203",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -40103,12 +40100,12 @@
           "mp_id": "mp_31515_1061020",
           "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789262176718_6527",
+      "producto": "CAMIBUSO STRAWBERRIES",
+      "referencia": "1203"
     },
     {
-      "id": "cid_1789262220220_6955",
-      "producto": "CAZADORA RAYAS",
-      "referencia": "1204",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -40376,12 +40373,12 @@
           "mp_id": "mp_31515_1061020",
           "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789262220220_6955",
+      "producto": "CAZADORA RAYAS",
+      "referencia": "1204"
     },
     {
-      "id": "cid_1789262438895_9952",
-      "producto": "RANGLAND FUTURE",
-      "referencia": "1205",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -40635,12 +40632,12 @@
           "mp_id": "mp_31515_1061020",
           "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789262438895_9952",
+      "producto": "RANGLAND FUTURE",
+      "referencia": "1205"
     },
     {
-      "id": "cid_1789262496562_203",
-      "producto": "CHAQUETA CAZADORA HOJAS",
-      "referencia": "1206",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -40908,37 +40905,38 @@
           "mp_id": "mp_31515_1061020",
           "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789262496562_203",
+      "producto": "CHAQUETA CAZADORA HOJAS",
+      "referencia": "1206"
     },
     {
+      "componentes": [
+        {
+          "consumo": 1,
+          "costo_directo": 42000,
+          "id": "cid_1789262630703_9079",
+          "tipo": "MATERIAL"
+        }
+      ],
+      "es_producto_terminado": true,
       "id": "cid_1789262630703_9020",
       "producto": "BUZO CEREZAS",
-      "referencia": "2067",
-      "es_producto_terminado": true,
-      "componentes": [
-        {
-          "id": "cid_1789262630703_9079",
-          "tipo": "MATERIAL",
-          "mp_id": null,
-          "consumo": 1,
-          "costo_directo": 42000
-        }
-      ]
+      "referencia": "2067"
     },
     {
-      "id": "cid_1789262631234_9462",
-      "producto": "BUZO CEREZAS",
-      "referencia": "2067",
-      "es_producto_terminado": true,
       "componentes": [
         {
-          "id": "cid_1789262631234_5542",
-          "tipo": "MATERIAL",
-          "mp_id": null,
           "consumo": 1,
-          "costo_directo": 42000
+          "costo_directo": 42000,
+          "id": "cid_1789262631234_5542",
+          "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "es_producto_terminado": true,
+      "id": "cid_1789262631234_9462",
+      "producto": "BUZO CEREZAS",
+      "referencia": "2067"
     }
   ],
   "referencia_siguiente_propio": 1207,
@@ -40949,12 +40947,17 @@
     "BLUSA MANGA BOLERO": "1199",
     "BLUSA POLLY": "1184",
     "BONNIE": "1201",
+    "BUZO CEREZAS": "2067",
+    "BUZO TEJIDO MOÑOS": "2066",
     "CAMIBUSO PAÑO ALGODON MANGA OVERSIZED": "1192",
     "CAMIBUSO PAÑO ALGODON RANGLAND": "1191",
+    "CAMIBUSO STRAWBERRIES": "1203",
     "CAMIBUZO NEVADO": "1194",
     "CAMISETA COCOA": "1190",
     "CAMISETA MISO": "1196",
     "CAZADORA ANIMALITOS": "1202",
+    "CAZADORA RAYAS": "1204",
+    "CHAQUETA CAZADORA HOJAS": "1206",
     "CHAQUETA DISCOVERY": "1197",
     "CONJUNTO SOLOMUN": "1193",
     "HOODIE CAROLINA": "1187",
@@ -40962,16 +40965,11 @@
     "PANTALON TRENCH": "1195",
     "PANTALON VENOM": "1188",
     "PANTALON ZAMBA": "1183",
+    "RANGLAND FUTURE": "1205",
     "VESTIDO KIKI": "1189",
     "VESTIDO MINI DRESS": "1185",
     "VESTIDO SOUL - REF: 1104": "1186",
-    "WASHMAN": "1198",
-    "BUZO TEJIDO MOÑOS": "2066",
-    "CAMIBUSO STRAWBERRIES": "1203",
-    "CAZADORA RAYAS": "1204",
-    "RANGLAND FUTURE": "1205",
-    "CHAQUETA CAZADORA HOJAS": "1206",
-    "BUZO CEREZAS": "2067"
+    "WASHMAN": "1198"
   },
   "servicios": [
     {
@@ -41667,9 +41665,9 @@
       "nombre": "SERVICIO CONFECCION SCARLET"
     },
     {
+      "costo_unitario": 5500,
       "id": "cid_1789262416633_6084",
-      "nombre": "SERVICIO BORDADO FUTURE",
-      "costo_unitario": 5500
+      "nombre": "SERVICIO BORDADO FUTURE"
     }
   ],
   "tarifas_cif": [
