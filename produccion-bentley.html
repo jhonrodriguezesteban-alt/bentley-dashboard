@@ -8637,9 +8637,10 @@ function _invResumenOP(op){
   var udsPorColor = _invUdsPorColorOp(op);
   var colores = Object.keys(udsPorColor);
   var insumoTotal=0, insumoPagado=0, insumoPendiente=0, insumoItems=[];
+  var confeccionTotal=0, confeccionPagado=0, confeccionPendiente=0, confeccionItems=[];
   if(receta){
     (receta.componentes||[]).forEach(function(c){
-      var costo=0, familia='', consumoUnit=0, precioUnit=0, nombreItem='';
+      var costo=0, familia='', consumoUnit=0, precioUnit=0, nombreItem='', esConfeccion=false;
       if(c.tipo==='MATERIAL'){
         var mp=(DB.costeo.mp||[]).find(function(x){ return x.id===c.mp_id; });
         if(!mp) return;
@@ -8650,26 +8651,35 @@ function _invResumenOP(op){
       } else if(c.tipo==='SERVICIO'){
         var sv=(DB.costeo.servicios||[]).find(function(x){ return x.id===c.servicio_id; });
         if(!sv) return;
-        familia = 'Servicio / Insumo'; nombreItem = sv.nombre||'';
+        // "SERVICIO DE CONFECCION ..." es el rubro real de mano de obra de esta receta — se
+        // cuenta aparte como Confección, no como Insumo. El resto de servicios (bordado,
+        // tejeduría, acolchado, corte láser, etc.) sí son insumos externos normales.
+        esConfeccion = /CONFECC/i.test(sv.nombre||'');
+        familia = esConfeccion ? 'Confección' : 'Servicio / Insumo'; nombreItem = sv.nombre||'';
         consumoUnit = parseFloat(c.cantidad)||0;
         precioUnit = parseFloat(sv.costo_unitario)||0;
         costo = consumoUnit*udsTotal*precioUnit;
       } else return;
       var key = receta.id+'__'+c.id;
-      insumoTotal += costo;
+      if(esConfeccion) confeccionTotal += costo; else insumoTotal += costo;
       var itemPendiente = 0;
       if(desagregados[key] && colores.length>1){
         colores.forEach(function(color){
           var costoColor = consumoUnit*(udsPorColor[color]||0)*precioUnit;
           var subKey = key+'||'+color;
           var checkedColor = checks.hasOwnProperty(subKey) ? !!checks[subKey] : _invSiempreDisponible(c.tipo, familia);
-          if(checkedColor) insumoPagado += costoColor; else { insumoPendiente += costoColor; itemPendiente += costoColor; }
+          if(checkedColor){ if(esConfeccion) confeccionPagado += costoColor; else insumoPagado += costoColor; }
+          else { if(esConfeccion) confeccionPendiente += costoColor; else insumoPendiente += costoColor; itemPendiente += costoColor; }
         });
       } else {
         var checked = checks.hasOwnProperty(key) ? !!checks[key] : _invSiempreDisponible(c.tipo, familia);
-        if(checked) insumoPagado += costo; else { insumoPendiente += costo; itemPendiente += costo; }
+        if(checked){ if(esConfeccion) confeccionPagado += costo; else insumoPagado += costo; }
+        else { if(esConfeccion) confeccionPendiente += costo; else insumoPendiente += costo; itemPendiente += costo; }
       }
-      if(itemPendiente>0) insumoItems.push({familia:familia, nombre:nombreItem, pendiente:itemPendiente});
+      if(itemPendiente>0){
+        if(esConfeccion) confeccionItems.push({familia:op.categoria||'Sin categoría', nombre:nombreItem, pendiente:itemPendiente});
+        else insumoItems.push({familia:familia, nombre:nombreItem, pendiente:itemPendiente});
+      }
     });
   }
   // Si la OP ya entregó (casi) el 100% de las unidades, es imposible que le falten insumos
@@ -8684,56 +8694,18 @@ function _invResumenOP(op){
   var otsEnt = otsOp.filter(function(o){ return o.estado==='ENTREGADO'||o.estado==='PAGO_PENDIENTE'; });
   var udsEnt = otsEnt.reduce(function(a,o){ return a+((o.unidades_entregadas||0)>0?o.unidades_entregadas:(o.cantidad||0)); },0);
   var entregadaCompleta = udsTotal>0 && udsEnt >= udsTotal*0.98;
-  if(entregadaCompleta){ insumoPagado += insumoPendiente; insumoPendiente = 0; insumoItems = []; }
-  // Confeccion = la mano de obra real de esta OP (lo que se le debe al satelite por coserla),
-  // NO el registro de pagos ya hechos. El total sale de valor_mo x cantidad de cada OT (costo
-  // pactado al crear la OP) -- asi una OP a la que todavia no se le ha pagado nada igual
-  // muestra cuanto se le debera pagar, en vez de casi $0 solo porque el pago recien se crea
-  // cuando el satelite entrega (ver confirmarEntrega()).
-  var confeccionOTs = _invConfeccionPorOT(op, otsOp);
-  var confeccionTotal=0, confeccionPagado=0, confeccionPendiente=0;
-  confeccionOTs.forEach(function(x){
-    confeccionTotal += x.total; confeccionPagado += x.pagado; confeccionPendiente += x.pendiente;
-  });
+  if(entregadaCompleta){
+    insumoPagado += insumoPendiente; insumoPendiente = 0; insumoItems = [];
+    confeccionPagado += confeccionPendiente; confeccionPendiente = 0; confeccionItems = [];
+  }
   return {
     op:op, receta:receta, udsTotal:udsTotal, tieneReceta:!!receta, entregadaCompleta:entregadaCompleta,
     insumoTotal:insumoTotal, insumoPagado:insumoPagado, insumoPendiente:insumoPendiente, insumoItems:insumoItems,
-    confeccionTotal:confeccionTotal, confeccionPagado:confeccionPagado, confeccionPendiente:confeccionPendiente, confeccionOTs:confeccionOTs,
+    confeccionTotal:confeccionTotal, confeccionPagado:confeccionPagado, confeccionPendiente:confeccionPendiente, confeccionItems:confeccionItems,
     total: insumoTotal+confeccionTotal,
     pagado: insumoPagado+confeccionPagado,
     pendiente: insumoPendiente+confeccionPendiente
   };
-}
-// Costo real de confeccion por OT: valor_mo (pactado al crear la OP) x cantidad, sin importar
-// si ya se entrego o no -- es lo que se le debe pagar al satelite por esa OT, no lo que ya se
-// le ha pagado. Lo "pagado" sale de DB.costos_mo.pagos (que solo se crea al confirmar entrega),
-// cruzado por ot_id. Si la OP todavia no tiene OTs generadas, se estima desde las referencias
-// (vmo x cantidades), bajo el satelite/maquilador asignado en la referencia.
-function _invConfeccionPorOT(op, otsOp){
-  var pagos = (DB.costos_mo && DB.costos_mo.pagos) || [];
-  var pagosPorOt = {};
-  pagos.forEach(function(p){ (pagosPorOt[p.ot_id] = pagosPorOt[p.ot_id]||[]).push(p); });
-  function pagadoDe(otId){
-    return (pagosPorOt[otId]||[]).reduce(function(a,p){
-      var tot=p.total||0; return a+(p.estado==='PAGADO'?tot:(p.total_abonado||0));
-    },0);
-  }
-  if(otsOp && otsOp.length){
-    return otsOp.map(function(ot){
-      var total = (ot.cantidad||0)*(ot.valor_mo||0);
-      var pagado = Math.min(total, pagadoDe(ot.id));
-      return {satelite_id:ot.satelite_id||null, color:ot.color, talla:ot.talla, uds:ot.cantidad||0, total:total, pagado:pagado, pendiente:Math.max(0,total-pagado)};
-    });
-  }
-  if(op.referencias){
-    var out=[];
-    op.referencias.forEach(function(r){
-      var total = Object.values(r.cantidades||{}).reduce(function(a,v){ return a+(parseInt(v)||0); },0) * (r.vmo||0);
-      out.push({satelite_id:r.maquilador_id||null, color:null, talla:null, uds:0, total:total, pagado:0, pendiente:total});
-    });
-    return out;
-  }
-  return [];
 }
 // Insumos pendientes de todas las OPs del listado, agrupados por familia (Telas, Botones,
 // Servicio/Insumo, etc.) y desglosados por insumo puntual al expandir.
@@ -8773,57 +8745,48 @@ function _invAbrirInsumosGrupos(){
 // debe pagar), con el desglose por OP al expandir.
 function _invAbrirConfeccionGrupos(){
   var filas = window._invFilasCache||[];
-  var porSat = {};
+  var porCat = {};
   filas.forEach(function(r){
-    (r.confeccionOTs||[]).forEach(function(x){
-      if(x.pendiente<=0) return;
-      var nombre = x.satelite_id ? getSatNombre(x.satelite_id) : 'Sin satélite asignado';
-      if(!porSat[nombre]) porSat[nombre] = {total:0, ops:{}};
-      porSat[nombre].total += x.pendiente;
-      var opLbl = fmtOpId(r.op.id)+' — '+(r.op.nombre_producto||'');
-      porSat[nombre].ops[opLbl] = (porSat[nombre].ops[opLbl]||0) + x.pendiente;
+    (r.confeccionItems||[]).forEach(function(it){
+      if(!porCat[it.familia]) porCat[it.familia] = {total:0, items:{}};
+      porCat[it.familia].total += it.pendiente;
+      var k = it.nombre||'(sin nombre)';
+      porCat[it.familia].items[k] = (porCat[it.familia].items[k]||0) + it.pendiente;
     });
   });
-  var sats = Object.keys(porSat).sort(function(a,b){ return porSat[b].total-porSat[a].total; });
+  var cats = Object.keys(porCat).sort(function(a,b){ return porCat[b].total-porCat[a].total; });
   var body = '<div style="display:flex;flex-direction:column;gap:8px;">';
-  if(!sats.length) body += '<div class="empty-state">No hay confección pendiente por pagar.</div>';
-  sats.forEach(function(sat, si){
-    var info = porSat[sat];
-    var sid = 'invsat'+si;
+  if(!cats.length) body += '<div class="empty-state">No hay confección pendiente por pagar.</div>';
+  cats.forEach(function(cat, ci){
+    var info = porCat[cat];
+    var cid = 'invconf'+ci;
     body += '<div>';
-    body += '<div data-tid="'+sid+'" onclick="_toggleResumenCat(this.dataset.tid)" style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid var(--card-border);border-radius:8px;padding:10px 14px;cursor:pointer;">';
-    body += '<div style="display:flex;align-items:center;gap:8px;"><span id="'+sid+'-icon" style="font-size:9px;color:#94a3b8;">▸</span><span style="font-size:12px;font-weight:800;color:#e2e8f0;text-transform:uppercase;letter-spacing:.4px;">🏭 '+esc(sat)+'</span></div>';
+    body += '<div data-tid="'+cid+'" onclick="_toggleResumenCat(this.dataset.tid)" style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid var(--card-border);border-radius:8px;padding:10px 14px;cursor:pointer;">';
+    body += '<div style="display:flex;align-items:center;gap:8px;"><span id="'+cid+'-icon" style="font-size:9px;color:#94a3b8;">▸</span><span style="font-size:12px;font-weight:800;color:#e2e8f0;text-transform:uppercase;letter-spacing:.4px;">🧵 '+esc(cat)+'</span></div>';
     body += '<span style="font-size:14px;font-weight:800;color:#f87171;">'+fmtCopFull(info.total)+'</span>';
     body += '</div>';
-    body += '<div id="'+sid+'" style="display:none;flex-direction:column;gap:4px;margin-top:6px;padding-left:14px;border-left:1px dashed var(--card-border);">';
-    Object.keys(info.ops).sort(function(a,b){ return info.ops[b]-info.ops[a]; }).forEach(function(opLbl){
-      body += '<div style="display:flex;justify-content:space-between;padding:5px 8px;font-size:11.5px;color:#94a3b8;"><span>'+esc(opLbl)+'</span><span style="color:#e2e8f0;font-weight:600;">'+fmtCopFull(info.ops[opLbl])+'</span></div>';
+    body += '<div id="'+cid+'" style="display:none;flex-direction:column;gap:4px;margin-top:6px;padding-left:14px;border-left:1px dashed var(--card-border);">';
+    Object.keys(info.items).sort(function(a,b){ return info.items[b]-info.items[a]; }).forEach(function(nom){
+      body += '<div style="display:flex;justify-content:space-between;padding:5px 8px;font-size:11.5px;color:#94a3b8;"><span>'+esc(nom)+'</span><span style="color:#e2e8f0;font-weight:600;">'+fmtCopFull(info.items[nom])+'</span></div>';
     });
     body += '</div></div>';
   });
   body += '</div>';
   var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cerrar</button>';
-  openModal('🧵 CONFECCIÓN PENDIENTE POR PAGAR — POR SATÉLITE', body, footer, {wide:true});
+  openModal('🧵 CONFECCIÓN PENDIENTE POR PAGAR — POR CATEGORÍA', body, footer, {wide:true});
 }
-// Confección pendiente de una sola OP, agrupada por satélite — usada desde el detalle
-// expandido de cada fila en Resumen de Inversión.
+// Confección pendiente de una sola OP — usada desde el detalle expandido de cada fila.
 function _invAbrirConfeccionOP(opId){
   var r = (window._invFilasCache||[]).find(function(x){ return x.op.id===opId; });
   if(!r){ var op=(DB.ops||[]).find(function(o){ return o.id===opId; }); if(op) r=_invResumenOP(op); }
   if(!r) return;
-  var porSat = {};
-  (r.confeccionOTs||[]).forEach(function(x){
-    if(x.pendiente<=0) return;
-    var nombre = x.satelite_id ? getSatNombre(x.satelite_id) : 'Sin satélite asignado';
-    porSat[nombre] = (porSat[nombre]||0) + x.pendiente;
-  });
-  var sats = Object.keys(porSat).sort(function(a,b){ return porSat[b]-porSat[a]; });
+  var items = r.confeccionItems||[];
   var body = '<div style="display:flex;flex-direction:column;gap:6px;">';
-  if(!sats.length) body += '<div class="empty-state">No hay confección pendiente para esta OP.</div>';
-  sats.forEach(function(sat){
+  if(!items.length) body += '<div class="empty-state">No hay confección pendiente para esta OP.</div>';
+  items.forEach(function(it){
     body += '<div style="display:flex;justify-content:space-between;padding:8px 12px;background:rgba(255,255,255,.03);border:1px solid var(--card-border);border-radius:7px;">';
-    body += '<span style="font-size:12px;color:#e2e8f0;">🏭 '+esc(sat)+'</span>';
-    body += '<span style="font-size:13px;font-weight:800;color:#f87171;">'+fmtCopFull(porSat[sat])+'</span>';
+    body += '<span style="font-size:12px;color:#e2e8f0;">🧵 '+esc(it.nombre)+'</span>';
+    body += '<span style="font-size:13px;font-weight:800;color:#f87171;">'+fmtCopFull(it.pendiente)+'</span>';
     body += '</div>';
   });
   body += '</div>';
