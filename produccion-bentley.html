@@ -2830,7 +2830,10 @@ function _planRenderConfirmados(){
       if(r){
         var esFenio = dz && (dz.proveedor||'').toUpperCase()==='FENIO';
         gMat += r.mat*totalUdsRef; gMod += r.mod*totalUdsRef; gCif += r.cif*totalUdsRef; gSvc += r.svc*totalUdsRef;
-        if(esFenio) gFenioInv += r.total*totalUdsRef; else { gDisInv += r.total*totalUdsRef; }
+        // Inversión inmediata = solo Mat.Primas + Servicios (MOD y CIF no son desembolso
+        // inmediato de compra, son costo de producción propio) — mismo criterio que ya
+        // aplicaba el bloque "Repro" un poco más abajo (matU+svcU).
+        if(esFenio) gFenioInv += (r.mat+r.svc)*totalUdsRef; else { gDisInv += (r.mat+r.svc)*totalUdsRef; }
         gDisUds += totalUdsRef;
       }
     } else if(e.tieneReceta && e.uds>0){
@@ -3248,12 +3251,36 @@ function _planConfirmadoToggleDetalle(detId, nombre, cat){
     el.innerHTML = _planConfirmadoDetalleHTML(nombre, cat);
   }
 }
+// Diseños confirmados aún no tienen OP (por eso están en la lista "Diseño (nuevas)", no
+// "Repro") — así que nunca hay cantidades por color/talla que sacar de una OT. Lo único que
+// existe en este punto son los colores que ya se le asignaron al diseño en el kanban.
+function _planColoresDiseno(nombre, cat){
+  var key = (cat||'').trim().toUpperCase()+'||'+(nombre||'').trim().toUpperCase();
+  var d = (DB.disenos||[]).find(function(x){ return !x.eliminado && (x.categoria||'').trim().toUpperCase()+'||'+(x.nombre||'').trim().toUpperCase()===key; });
+  if(!d || !(d.colores_escogidos||[]).length) return null;
+  var h = '<div style="display:flex;flex-wrap:wrap;gap:5px;">';
+  d.colores_escogidos.forEach(function(col){
+    var dotHex = col.hex || _disDetectHex(col.nombre||'') || '#6b7280';
+    h += '<div style="display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:3px 9px 3px 5px;">';
+    h += '<span style="width:11px;height:11px;border-radius:50%;background:'+dotHex+';flex-shrink:0;display:inline-block;box-shadow:0 0 0 1.5px rgba(255,255,255,.25),inset 0 0 0 1px rgba(0,0,0,.2);"></span>';
+    h += '<span style="font-size:10.5px;color:#cbd5e1;font-weight:600;">'+esc(col.nombre||'Color')+'</span>';
+    h += '</div>';
+  });
+  h += '</div>';
+  return h;
+}
 function _planConfirmadoDetalleHTML(nombre, cat){
   var catMap = window._planCatMap || {};
   var info = catMap[cat];
   if(!info) return '<div style="font-size:10px;color:#64748b;">Abre primero "'+esc(cat)+'" en la sección de arriba (Unidades por categoría) para cargar el detalle.</div>';
   var units = (info.refs||[]).filter(function(u){ return !u.diseno && (u.op.nombre_producto||u.op.id)===nombre; });
-  if(!units.length) return '<div style="font-size:10px;color:#64748b;">Sin colores/tallas asignados aún — es un diseño que todavía no tiene OP.</div>';
+  if(!units.length){
+    var coloresHtml = _planColoresDiseno(nombre, cat);
+    if(coloresHtml){
+      return '<div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;">Colores asignados al diseño (aún sin OP ni tallas)</div>'+coloresHtml;
+    }
+    return '<div style="font-size:10px;color:#64748b;">Sin colores asignados todavía — es un diseño que todavía no tiene OP.</div>';
+  }
   var porColor = {};
   units.forEach(function(u){
     var op = u.op, color = u.color;
