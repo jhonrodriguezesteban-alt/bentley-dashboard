@@ -2807,7 +2807,45 @@ function _planObjetivoBadge(totalCat, objetivo){
     + '<div style="font-size:9px;color:#475569;">Objetivo: '+objetivo.toLocaleString('es-CO')+' uds</div>'
     + '<div style="font-size:10px;font-weight:700;color:'+color+';">'+texto+'</div></div>';
 }
+// Una confirmación tipo "diseño" guarda su costo (mat/mod/cif/svc) congelado al momento de
+// marcar el check — y en ese momento, sin OP todavía, ese costo siempre queda en $0 salvo el
+// benchmark de categoría. Si después ese diseño se convierte en una OP real, la confirmación
+// vieja NUNCA se entera sola: sigue con tipo "diseno" y costo en $0, así que no encaja ni en
+// "Repro" ni sigue sumando bien en "Diseño". Esta migración la detecta y la pasa a tipo "op"
+// con el costo real de la receta, recalculado desde las OTs/colores vivos.
+function _planMigrarConfirmacionesDisenoAOp(){
+  var confirmadas = (DB.planeacion && DB.planeacion.confirmadas) || {};
+  var cambiado = false;
+  Object.keys(confirmadas).forEach(function(k){
+    var c = confirmadas[k];
+    if(!c || !c.ok || c.tipo!=='diseno') return;
+    var nombreU = (c.nombre||'').trim().toUpperCase();
+    var dis = (DB.disenos||[]).find(function(d){ return (d.nombre||'').trim().toUpperCase()===nombreU; });
+    if(!dis || !dis.eliminado) return; // sigue siendo un diseño puro, sin OP — no tocar
+    var opsMatch = (DB.ops||[]).filter(function(o){
+      return (o.nombre_producto||'').toUpperCase().split(' + ').map(function(s){ return s.trim(); }).indexOf(nombreU)>=0;
+    });
+    if(!opsMatch.length) return; // ya está "eliminado" pero aún no hay OP viva — no tocar
+    var mat=0, mod=0, cif=0, svc=0, total=0, udsTot=0, tieneReceta=false;
+    opsMatch.forEach(function(op){
+      (op.colores||[]).forEach(function(color){
+        var costo = _planCostoColor(op, color);
+        udsTot += _planColorUds(op, color);
+        if(costo){ mat+=costo.mat; mod+=costo.mod; cif+=costo.cif; svc+=costo.svc; total+=costo.total; tieneReceta=true; }
+      });
+    });
+    c.tipo = 'op';
+    c.mat = Math.round(mat); c.mod = Math.round(mod); c.cif = Math.round(cif); c.svc = Math.round(svc); c.total = Math.round(total);
+    c.tieneReceta = tieneReceta;
+    if(udsTot>0) c.uds = udsTot;
+    c.ts = Date.now();
+    cambiado = true;
+  });
+  if(cambiado){ saveLocal(); guardarPlaneacion(); }
+  return cambiado;
+}
 function _planRenderConfirmados(){
+  _planMigrarConfirmacionesDisenoAOp();
   var confirmadas = (DB.planeacion && DB.planeacion.confirmadas) || {};
   var entries = _planConLiveUds(Object.keys(confirmadas).map(function(k){ return Object.assign({refKey:k}, confirmadas[k]); }).filter(function(e){ return e.ok; }));
   // Mapa nombre+categoría → diseño real, para saber si un confirmado tipo "diseño" es Fenio
