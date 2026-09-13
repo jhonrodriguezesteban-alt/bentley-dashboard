@@ -222,14 +222,14 @@
       "OP-2026-198||BEIGE",
       "OP-2026-082||TAUPE",
       "OP-2026-082||NEGRO",
-      "OP-2026-082||CHOCOLATE",
       "OP-2026-205||ROSA"
     ],
     "2026-11": [
       "OP-2026-200||NEGRO",
       "OP-2026-200||TAUPE",
       "OP-2026-200||CHOCOLATE",
-      "OP-2026-200||MARFIL"
+      "OP-2026-200||MARFIL",
+      "OP-2026-082||CHOCOLATE"
     ]
   },
   "disenos_plan": {
@@ -1049,37 +1049,37 @@
       "uds": 72
     },
     {
-      "key": "OP-2026-125||VERDE MILITAR",
-      "op_id": "OP-2026-125",
-      "op_nombre": "OVERSIZED CAPOTA",
       "categoria": "CHAQUETAS",
       "color": "VERDE MILITAR",
-      "uds": 80,
-      "mes_planeado": "2026-09",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-09-12"
+      "fecha_deteccion": "2026-09-12",
+      "key": "OP-2026-125||VERDE MILITAR",
+      "mes_planeado": "2026-09",
+      "op_id": "OP-2026-125",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "uds": 80
     },
     {
-      "key": "OP-2026-113||NEGRO",
-      "op_id": "OP-2026-113",
-      "op_nombre": "CHAQUETA RALPH",
       "categoria": "CHAQUETAS",
       "color": "NEGRO",
-      "uds": 120,
-      "mes_planeado": "2026-09",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-09-12"
-    },
-    {
-      "key": "OP-2026-113||CAMEL",
+      "fecha_deteccion": "2026-09-12",
+      "key": "OP-2026-113||NEGRO",
+      "mes_planeado": "2026-09",
       "op_id": "OP-2026-113",
       "op_nombre": "CHAQUETA RALPH",
+      "uds": 120
+    },
+    {
       "categoria": "CHAQUETAS",
       "color": "CAMEL",
-      "uds": 114,
-      "mes_planeado": "2026-09",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-09-12"
+      "fecha_deteccion": "2026-09-12",
+      "key": "OP-2026-113||CAMEL",
+      "mes_planeado": "2026-09",
+      "op_id": "OP-2026-113",
+      "op_nombre": "CHAQUETA RALPH",
+      "uds": 114
     }
   ],
   "confirmadas": {
