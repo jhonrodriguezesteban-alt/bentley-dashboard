@@ -2867,11 +2867,14 @@ function _planTodasLasRefsOP(){
   });
   // El "extra" manual (cantidad adicional que alguien haya querido sumarle a mano) se
   // conserva si ya existía guardado para esa misma referencia.
+  // Solo interesa lo que sigue pendiente por cortar o es programación nueva (sin OTs
+  // todavía) — una referencia cuyas OTs ya pasaron todas por corte no debe seguir
+  // apareciendo aquí ni "resucitar" tarjetas de meses ya trabajados.
   return Object.keys(porRef).map(function(k){
     var r = porRef[k];
     r.extra = (confirmadas[k] && confirmadas[k].extra) || 0;
     return r;
-  });
+  }).filter(function(r){ return (r.uds + r.extra) > 0; });
 }
 function _planRenderConfirmados(){
   _planMigrarConfirmacionesDisenoAOp();
@@ -4627,16 +4630,21 @@ function planDrop(e, mesKey){
 
 var _PLAN_NO_CORTADO = {'POR_REVISAR':1,'PENDIENTE_CORTAR':1};
 function _planOpUds(op){
-  // Solo unidades que aún NO han pasado por corte
-  var ots = (DB.ots||[]).filter(function(o){ return o.op_id===op.id && _PLAN_NO_CORTADO[o.estado]; });
-  var uds = ots.reduce(function(a,o){ return a+(parseInt(o.cantidad)||0); },0);
-  if(!uds && op.referencias){
-    // OP sin OTs creadas aún: sumar desde referencias (cantidad total pendiente)
-    uds = op.referencias.reduce(function(a,r){
+  // Solo unidades que aún NO han pasado por corte. Si la OP ya tiene OTs creadas,
+  // esas OTs son la fuente de verdad (una vez cortadas, ya no cuentan aquí aunque
+  // la OP entera siga "viva"). El fallback a referencias es SOLO para OPs que
+  // todavía no tienen ninguna OT generada (nueva programación).
+  var ots = (DB.ots||[]).filter(function(o){ return o.op_id===op.id; });
+  if(ots.length){
+    return ots.filter(function(o){ return _PLAN_NO_CORTADO[o.estado]; })
+              .reduce(function(a,o){ return a+(parseInt(o.cantidad)||0); },0);
+  }
+  if(op.referencias){
+    return op.referencias.reduce(function(a,r){
       return a + Object.values(r.cantidades||{}).reduce(function(b,v){ return b+(parseInt(v)||0); },0);
     },0);
   }
-  return uds;
+  return 0;
 }
 
 // ── Unidad de planeación = (OP, color) ──────────────────────────────────────
@@ -4647,21 +4655,26 @@ function _planParseKey(key){
   return i<0 ? {opId:key, color:'—'} : {opId:key.substring(0,i), color:key.substring(i+2)};
 }
 function _planColorUds(op, color){
-  // Solo unidades del color indicado que aún NO han pasado por corte
-  var ots = (DB.ots||[]).filter(function(o){
-    return o.op_id===op.id && _PLAN_NO_CORTADO[o.estado] && (color==='—' || (o.color||'').trim().toUpperCase()===color.toUpperCase());
+  // Solo unidades del color indicado que aún NO han pasado por corte. Igual que
+  // _planOpUds: si ya existen OTs para ese color, ellas mandan (aunque estén todas
+  // ya cortadas, en cuyo caso el pendiente es legítimamente 0). El fallback a
+  // referencias es solo para cuando ese color todavía no tiene ninguna OT creada.
+  var otsDelColor = (DB.ots||[]).filter(function(o){
+    return o.op_id===op.id && (color==='—' || (o.color||'').trim().toUpperCase()===color.toUpperCase());
   });
-  var uds = ots.reduce(function(a,o){ return a+(parseInt(o.cantidad)||0); },0);
-  if(!uds && op.referencias){
-    // OP sin OTs creadas aún: sumar desde referencias (cantidad total pendiente) del color
-    uds = op.referencias.reduce(function(a,r){
+  if(otsDelColor.length){
+    return otsDelColor.filter(function(o){ return _PLAN_NO_CORTADO[o.estado]; })
+                       .reduce(function(a,o){ return a+(parseInt(o.cantidad)||0); },0);
+  }
+  if(op.referencias){
+    return op.referencias.reduce(function(a,r){
       return a + Object.keys(r.cantidades||{}).reduce(function(b,k){
         if(color!=='—' && k.indexOf(color+'_')!==0) return b;
         return b + (parseInt(r.cantidades[k])||0);
       },0);
     },0);
   }
-  return uds;
+  return 0;
 }
 // Unidades totales de un color, sin importar su estado (para el historial de corte —
 // a diferencia de _planColorUds, aquí SÍ cuentan las OTs ya cortadas/en confección/entregadas).
@@ -5429,9 +5442,12 @@ function renderPlaneacion(){
       return p && p.mes === mes.k && (p.uds||0) > 0;
     });
 
-    // Filtro "Ver solo confirmados": respeta el mes ya asignado, solo oculta lo que no está marcado ☑
+    // Filtro "Ver solo confirmados": el check manual de confirmación SOLO aplica a
+    // diseños (lo único que todavía requiere decidir si se produce o no). Las
+    // tarjetas de OP nunca se filtran por esto — una OP real ya está confirmada
+    // por definición, así que este filtro no debe ocultarlas ni "recordarlas" en
+    // función de un check que nunca les aplicó.
     if(_planSoloConfirmados){
-      mesUnits = mesUnits.filter(function(u){ return _planEsConfirmado(u.op.nombre_producto||u.op.id, u.op.categoria); });
       mesDisenos = mesDisenos.filter(function(d){ return _planEsConfirmado(d.nombre, d.categoria); });
     }
     var mesOps = mesUnits.map(function(u){ return u.op; }); // compat: OPs (con repetición si varios colores del mismo mes)
