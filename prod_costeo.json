@@ -45942,6 +45942,283 @@
           "tipo": "MATERIAL"
         }
       ]
+    },
+    {
+      "id": "cid_1789271682314_4427",
+      "producto": "CHALECO KENWORT",
+      "referencia": "1227",
+      "componentes": [
+        {
+          "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
+          "id": "cid_1789271491244_1402",
+          "puesto_id": "puesto_3cort1",
+          "tiempo_minutos": 480,
+          "tipo": "MOD",
+          "unidades": 128
+        },
+        {
+          "actividad": "TENDER, CORTAR",
+          "id": "cid_1789271491244_578",
+          "puesto_id": "puesto_3cort2",
+          "tiempo_minutos": 480,
+          "tipo": "MOD",
+          "unidades": 128
+        },
+        {
+          "actividad": "ALISTAR INSUMOS PARA PRODUCCION",
+          "id": "cid_1789271491244_8236",
+          "puesto_id": "puesto_4insu1",
+          "tiempo_minutos": 60,
+          "tipo": "MOD",
+          "unidades": 128
+        },
+        {
+          "actividad": "TRANSPORTAR CORTE A SATELITE Y PLANTA",
+          "id": "cid_1789271491244_7155",
+          "puesto_id": "puesto_5logi1",
+          "tiempo_minutos": 360,
+          "tipo": "MOD",
+          "unidades": 400
+        },
+        {
+          "actividad": "RECEPCION Y CONTROL DE CALIDAD",
+          "id": "cid_1789271491244_3535",
+          "puesto_id": "puesto_6cali1",
+          "tiempo_minutos": 480,
+          "tipo": "MOD",
+          "unidades": 300
+        },
+        {
+          "actividad": "PERFORAR HUECO, PONER TAPA MACHO",
+          "id": "cid_1789271491244_4209",
+          "puesto_id": "puesto_11broc1",
+          "tiempo_minutos": 3,
+          "tipo": "MOD",
+          "unidades": 1
+        },
+        {
+          "actividad": "DOBLA, ETIQUETA, CODIFICA, EMBOLSA, EMBALA PRODUCTO",
+          "id": "cid_1789271491244_6610",
+          "puesto_id": "puesto_7empa1",
+          "tiempo_minutos": 240,
+          "tipo": "MOD",
+          "unidades": 128
+        },
+        {
+          "actividad": "RECEPCION DE PRODUCTO EMPACADO, ALMACENAMIENTO DEL PRODUCTO",
+          "id": "cid_1789271491244_7383",
+          "puesto_id": "puesto_8bode1",
+          "tiempo_minutos": 60,
+          "tipo": "MOD",
+          "unidades": 208
+        },
+        {
+          "actividad": "ALISTAR PEDIDO PARA LOCAL O CLIENTE FINAL",
+          "id": "cid_1789271491244_3317",
+          "puesto_id": "puesto_8bode1",
+          "tiempo_minutos": 80,
+          "tipo": "MOD",
+          "unidades": 208
+        },
+        {
+          "actividad": "LLEVAR PRODUCTO A PUNTO DE VENTA",
+          "id": "cid_1789271491244_2473",
+          "puesto_id": "puesto_5logi1",
+          "tiempo_minutos": 100,
+          "tipo": "MOD",
+          "unidades": 208
+        },
+        {
+          "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
+          "id": "cid_1789271491244_684",
+          "tiempo_minutos": 480,
+          "tipo": "CIF",
+          "unidades": 128,
+          "zona": "corte"
+        },
+        {
+          "actividad": "TENDER, CORTAR",
+          "id": "cid_1789271491244_2056",
+          "tiempo_minutos": 480,
+          "tipo": "CIF",
+          "unidades": 128,
+          "zona": "corte"
+        },
+        {
+          "actividad": "ALISTAR INSUMOS PARA PRODUCCION",
+          "id": "cid_1789271491244_7695",
+          "tiempo_minutos": 60,
+          "tipo": "CIF",
+          "unidades": 128,
+          "zona": "insumos/alistamiento"
+        },
+        {
+          "actividad": "TRANSPORTAR CORTE A SATELITE Y PLANTA",
+          "id": "cid_1789271491244_4562",
+          "tiempo_minutos": 360,
+          "tipo": "CIF",
+          "unidades": 400,
+          "zona": "logisitica"
+        },
+        {
+          "actividad": "RECEPCION Y CONTROL DE CALIDAD",
+          "id": "cid_1789271491244_7368",
+          "tiempo_minutos": 480,
+          "tipo": "CIF",
+          "unidades": 300,
+          "zona": "calidad"
+        },
+        {
+          "actividad": "PERFORAR HUECO, PONER TAPA MACHO",
+          "id": "cid_1789271491244_9940",
+          "tiempo_minutos": 3,
+          "tipo": "CIF",
+          "unidades": 1,
+          "zona": "broches/ ojales"
+        },
+        {
+          "actividad": "DOBLA, ETIQUETA, CODIFICA, EMBOLSA, EMBALA PRODUCTO",
+          "id": "cid_1789271491244_970",
+          "tiempo_minutos": 240,
+          "tipo": "CIF",
+          "unidades": 128,
+          "zona": "empaque"
+        },
+        {
+          "actividad": "RECEPCION DE PRODUCTO EMPACADO, ALMACENAMIENTO DEL PRODUCTO",
+          "id": "cid_1789271491244_2116",
+          "tiempo_minutos": 60,
+          "tipo": "CIF",
+          "unidades": 208,
+          "zona": "bodega almacenamiento"
+        },
+        {
+          "actividad": "ALISTAR PEDIDO PARA LOCAL O CLIENTE FINAL",
+          "id": "cid_1789271491244_1292",
+          "tiempo_minutos": 80,
+          "tipo": "CIF",
+          "unidades": 208,
+          "zona": "bodega almacenamiento"
+        },
+        {
+          "actividad": "LLEVAR PRODUCTO A PUNTO DE VENTA",
+          "id": "cid_1789271491244_5311",
+          "tiempo_minutos": 100,
+          "tipo": "CIF",
+          "unidades": 208,
+          "zona": "logisitica"
+        },
+        {
+          "actividad": "ALMACENAMIENTO Y USO DE BODEGA",
+          "id": "cid_1789271491244_9374",
+          "tiempo_minutos": 11040,
+          "tipo": "CIF",
+          "unidades": 15000,
+          "zona": "bodega almacenamiento"
+        },
+        {
+          "consumo": 0.84,
+          "id": "cid_1789271491244_2054",
+          "mp_id": "mp_31010_1501010",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 0.56,
+          "id": "cid_1789271491244_1442",
+          "mp_id": "mp_31818_1031020",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 0.4,
+          "id": "cid_1789271491244_1444",
+          "mp_id": "mp_31010_1501010",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789271491244_1252",
+          "mp_id": "mp_32727_1021024",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789271491244_1680",
+          "mp_id": "mp_31616_1011020",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789271491244_5933",
+          "mp_id": "mp_31212_10710233",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 0.55,
+          "id": "cid_1789271491244_6088",
+          "mp_id": "mp_31313_10711010",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789271491244_9532",
+          "mp_id": "mp_31212_10111333",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 0.6,
+          "id": "cid_1789271491244_8676",
+          "mp_id": "mp_31414_0081020",
+          "tipo": "MATERIAL"
+        },
+        {
+          "cantidad": 1,
+          "id": "cid_1789271491244_1376",
+          "servicio_id": "cid_1789271669964_4342",
+          "tipo": "SERVICIO"
+        },
+        {
+          "cantidad": 0.56,
+          "id": "cid_1789271491244_226",
+          "servicio_id": "svc_52121_1011010",
+          "tipo": "SERVICIO"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789271491244_5247",
+          "mp_id": "mp_31515_1071020",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789271491244_7178",
+          "mp_id": "mp_31515_1021020",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789271491244_6694",
+          "mp_id": "mp_31515_1031020",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789271491244_6949",
+          "mp_id": "mp_31515_1041020",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789271491244_982",
+          "mp_id": "mp_31515_1051020",
+          "tipo": "MATERIAL"
+        },
+        {
+          "consumo": 1,
+          "id": "cid_1789271491244_1064",
+          "mp_id": "mp_31515_1061020",
+          "tipo": "MATERIAL"
+        }
+      ]
     }
   ],
   "referencia_siguiente_propio": 1228,
