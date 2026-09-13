@@ -5635,7 +5635,7 @@ function _getDashMetricData(mk){
   if(mk==='cortes') return ms.map(function(m){
     return DB.ots.filter(function(o){
       if(o.estado==='PENDIENTE_CORTAR'||o.estado==='POR_REVISAR') return false;
-      return (o.fecha_corte||o.fecha_ot||'').startsWith(m);
+      return (o.fecha_corte||o.fecha_entrega_corte_satelite||o.fecha_ot||'').startsWith(m);
     }).reduce(function(a,o){return a+(o.cantidad||0);},0);
   });
   if(mk==='sats') return ms.map(function(m){
@@ -5806,11 +5806,15 @@ function renderDashboard(){
   var novCount = DB.ots.filter(function(o){ return o.estado==='NOVEDAD'; }).length;
   // Uds pendientes de entregar (backlog total en planta)
   var udsPendientes = DB.ots.filter(function(o){ return o.estado!=='ENTREGADO'&&o.estado!=='ARCHIVADO'; }).reduce(function(a,o){ return a+(o.cantidad||0); },0);
-  // Cortes del mes actual: OTs que avanzaron más allá de PENDIENTE_CORTAR con fecha_ot en mes actual
+  // Cortes del mes actual: OTs que YA se cortaron (avanzaron más allá de PENDIENTE_CORTAR),
+  // agrupadas por la fecha REAL de corte (fecha_corte, la que queda al confirmar el corte en
+  // Monitoreo Producción) — no por fecha_ot, que es cuando se creó/programó la OT y puede ser
+  // muy anterior al corte real (ej. una OT migrada o programada hace meses que recién se corta
+  // hoy). Solo se usa fecha_ot como respaldo para OTs viejas que nunca guardaron fecha_corte.
   var cortesDelMes = DB.ots.filter(function(o){
     var est = o.estado;
     if(est==='POR_REVISAR'||est==='PENDIENTE_CORTAR') return false;
-    return (o.fecha_ot||'').startsWith(mesActual);
+    return (o.fecha_corte||o.fecha_entrega_corte_satelite||o.fecha_ot||'').startsWith(mesActual);
   }).reduce(function(a,o){ return a+(o.cantidad||0); },0);
   // Cumplimiento: OTs entregadas a tiempo vs vencidas
   var otsEntregadas = DB.ots.filter(function(o){ return o.estado==='ENTREGADO'&&o.fecha_entrega_real&&o.fecha_estimada_entrega; });
@@ -5822,7 +5826,7 @@ function renderDashboard(){
     {label:'Uds en Confección', val:fmtNum(udsConf),           color:C_PURPLE, sub:'En talleres ahora',   nav:'programacion',spark:mesesAll.map(function(m){ return DB.ots.filter(function(o){ return o.estado==='EN_CONFECCION'&&(o.fecha_ot||'').startsWith(m); }).reduce(function(a,o){ return a+(o.cantidad||0); },0); })},
     {label:'Uds Entregadas',    val:fmtNum(udsEntregadas),     color:C_GREEN,  sub:(filtro||yearActual),  nav:null,          spark:dataByMes},
     {label:'Pendiente Entregar',val:fmtNum(udsPendientes),     color:'#f97316',sub:'Backlog total en planta',nav:null,       spark:[]},
-    {label:'Cortes del Mes',    val:fmtNum(cortesDelMes),      color:C_GOLD,   sub:mesActual,             nav:null,          spark:mesesAll.map(function(m){ return DB.ots.filter(function(o){ var e=o.estado; return e!=='POR_REVISAR'&&e!=='PENDIENTE_CORTAR'&&(o.fecha_ot||'').startsWith(m); }).reduce(function(a,o){ return a+(o.cantidad||0); },0); })},
+    {label:'Cortes del Mes',    val:fmtNum(cortesDelMes),      color:C_GOLD,   sub:mesActual,             nav:null,          spark:mesesAll.map(function(m){ return DB.ots.filter(function(o){ var e=o.estado; return e!=='POR_REVISAR'&&e!=='PENDIENTE_CORTAR'&&(o.fecha_corte||o.fecha_entrega_corte_satelite||o.fecha_ot||'').startsWith(m); }).reduce(function(a,o){ return a+(o.cantidad||0); },0); })},
     {label:'Cumplimiento',      val:pctCumplimiento!==null?pctCumplimiento+'%':'—', color:cumplColor, sub:otsEntregadas.length+' OTs evaluadas', nav:null, spark:[]},
     {label:'Satélites Activos', val:fmtNum(satActivos),        color:'#fbbf24',sub:'De '+DB.satelites.length+' total', nav:'satelites', spark:[]},
     {label:'Novedades',         val:fmtNum(novCount),          color:novCount>0?C_PINK:'#475569', sub:'OTs con pendiente', nav:'novedades', spark:[]},
@@ -6552,10 +6556,15 @@ function _setSubgEstado(opId, color, estado){
   // _estadoEfectivo) termina pisando este override y la tarjeta "se devuelve sola" al
   // estado anterior en el siguiente render — no toca OTs ya ENTREGADO ni en NOVEDAD.
   var ESTADOS_SINCRONIZABLES = {PENDIENTE_CORTAR:1, CORTE_POR_ALISTAR:1, EN_CONFECCION:1, ALISTAMIENTO:1};
+  // Este es el mecanismo real por el que se marca un color como "ya cortado" en el día a día
+  // (arrastrar la tarjeta en el kanban) — así que es aquí donde hay que dejar fecha_corte
+  // (la fecha REAL de corte), no solo en el flujo de Monitoreo Producción que casi no se usa.
+  var yaCorto = estado!=='PENDIENTE_CORTAR';
   if(ESTADOS_SINCRONIZABLES[estado]){
     DB.ots.forEach(function(ot){
       if(ot.op_id===opId && (ot.color||'').toUpperCase()===(color||'').toUpperCase() && ot.estado!=='ENTREGADO' && ot.estado!=='NOVEDAD'){
         ot.estado = estado;
+        if(yaCorto && !ot.fecha_corte) ot.fecha_corte = hoy();
       }
     });
   }
@@ -7401,7 +7410,7 @@ async function _avanzarColoresSel(opId){
     (DB.ots||[]).filter(function(o){
       return o.op_id===opId && o.color===color &&
              (o.estado==='PENDIENTE_CORTAR'||o.estado==='POR_REVISAR');
-    }).forEach(function(o){ o.estado='CORTE_POR_ALISTAR'; });
+    }).forEach(function(o){ o.estado='CORTE_POR_ALISTAR'; if(!o.fecha_corte) o.fecha_corte = hoy(); });
     _setSubgEstado(opId, color, 'CORTE_POR_ALISTAR');
     delete _kanColorSel[opId+'||'+color];
   });
