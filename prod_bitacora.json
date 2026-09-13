@@ -17920,15 +17920,30 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1789276044436_lw3pr",
-      "ts": 1789276044436,
-      "user": "John Rodriguez",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-227",
-      "nombre": "CAMIBUSO OVERSIZED",
       "categoria": "CAMIBUSOS",
       "colores": 1,
-      "refs": 1
+      "id": "evt_1789276044436_lw3pr",
+      "nombre": "CAMIBUSO OVERSIZED",
+      "op_id": "OP-2026-227",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1789276044436,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1789277135068_2cpeb",
+      "ts": 1789277135068,
+      "user": "John Rodriguez",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-228",
+      "op_nombre": "CAMIBUSO HOUSER",
+      "categoria": "BUZOS",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-09-13",
+      "total_uds": 440,
+      "referencias": [
+        "CAMIBUSO HOUSER"
+      ]
     }
   ]
 }
