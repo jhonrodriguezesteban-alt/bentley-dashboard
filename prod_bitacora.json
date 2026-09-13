@@ -17795,14 +17795,29 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1789274740577_tzghk",
-      "ts": 1789274740577,
-      "user": "John Rodriguez",
-      "tipo": "tela_nota",
       "diseno_id": "id_1782182087591_a8je2c72b",
+      "id": "evt_1789274740577_tzghk",
       "nombre": "conjunto dakota",
+      "precio": 7800,
       "tiene_nota": true,
-      "precio": 7800
+      "tipo": "tela_nota",
+      "ts": 1789274740577,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1789274971328_xn1xw",
+      "ts": 1789274971328,
+      "user": "John Rodriguez",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-220",
+      "op_nombre": "CONJUNTO DAKOTA",
+      "categoria": "CONJUNTOS",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-09-12",
+      "total_uds": 300,
+      "referencias": [
+        "CONJUNTO DAKOTA"
+      ]
     }
   ]
 }
