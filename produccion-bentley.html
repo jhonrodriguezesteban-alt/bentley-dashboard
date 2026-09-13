@@ -17813,7 +17813,7 @@ function _costeoPendListaHTML(){
         h += '<div style="width:44px;height:44px;border-radius:7px;background:#1c1c1e;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;color:#334155;" title="Sin fotos del diseño de origen">🎨</div>';
       }
       h += '<div style="flex:1;min-width:0;">';
-      h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;">'+esc(item.nombre)+'</div>';
+      h += '<div style="font-size:13px;font-weight:700;color:#e2e8f0;display:flex;align-items:center;gap:6px;">'+esc(item.nombre)+'<button data-ops="'+item.ops.join(',')+'" data-nombre="'+esc(item.nombre)+'" onclick="_abrirEditarNombreOPPendiente(this.dataset.ops,this.dataset.nombre)" title="Editar nombre del producto — útil cuando quedaron dos productos pegados en una sola OP y necesitas dejarlo en uno solo para vincular el costeo correcto" style="background:none;border:none;color:#475569;font-size:11px;cursor:pointer;padding:0;flex-shrink:0;">✏️</button></div>';
       h += '<div style="display:flex;align-items:center;gap:8px;margin-top:4px;">';
       h += '<span style="font-size:10px;font-weight:700;background:'+catColor+'18;border:1px solid '+catColor+'40;color:'+catColor+';border-radius:5px;padding:1px 7px;">'+esc(item.categoria||'Sin cat.')+'</span>';
       h += '<span style="font-size:10px;color:#475569;">'+item.ops.length+' OP'+(item.ops.length!==1?'s':'')+': '+item.ops.slice(0,4).map(function(id){ return '<span style="color:#0a84ff;font-weight:700;">'+fmtOpId(id)+'</span>'; }).join(' · ')+(item.ops.length>4?' <span style="color:#475569;">+' +(item.ops.length-4)+'</span>':'')+'</span>';
@@ -17981,6 +17981,35 @@ function _guardarDuplicadoReceta(nombre, recetaId){
 // (ej. buzo de moños, buzo cerezas) — no llevan M.O.D./C.I.F./materiales/servicios propios,
 // solo lo que se le paga al proveedor por unidad. Aun así necesitan quedar "costeados" para
 // que cuenten en Programación de Producción como la inversión real que representan.
+// Corrige el nombre de producto de una OP directamente desde Costeo Pendientes — útil
+// cuando una OP quedó con dos productos pegados (ej. "BUZO CEREZAS + BUZO TEJIDO MOÑOS")
+// y hay que dejarla en uno solo para poder vincular el costeo correcto. No toca referencias,
+// colores, tallas ni nada más de la OP — solo el nombre de producto.
+function _abrirEditarNombreOPPendiente(opIdsCsv, nombreActual){
+  var html = '<div style="padding:0 20px 20px;">';
+  html += '<p style="font-size:12px;color:#94a3b8;margin-bottom:14px;">Corrige el nombre del producto de esta orden — útil cuando quedó con dos productos juntos y necesitas dejarlo en uno solo para vincular el costeo correcto. Esto NO borra ni cambia referencias, colores o tallas de la OP, solo el nombre.</p>';
+  html += '<input id="editnom-op-input" class="form-control" value="'+esc(nombreActual)+'" style="font-size:14px;font-weight:600;">';
+  html += '</div>';
+  var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cancelar</button><button data-ops="'+opIdsCsv+'" onclick="_guardarNombreOPPendiente(this.dataset.ops)" class="btn btn-primary">💾 Guardar</button>';
+  openModal('✏️ Editar nombre del producto', html, footer);
+  setTimeout(function(){ var i=document.getElementById('editnom-op-input'); if(i){ i.focus(); i.select(); } },100);
+}
+async function _guardarNombreOPPendiente(opIdsCsv){
+  var nuevo = (document.getElementById('editnom-op-input').value||'').trim().toUpperCase();
+  if(!nuevo){ toast('El nombre no puede quedar vacío','error'); return; }
+  var ids = opIdsCsv.split(',');
+  ids.forEach(function(id){
+    var op = DB.ops.find(function(o){ return o.id===id; });
+    if(op) op.nombre_producto = nuevo;
+  });
+  saveLocal();
+  var ok = await guardarArchivo('ops', {ops: DB.ops});
+  if(!ok){ toast('No se pudo guardar — revisa tu conexión e intenta de nuevo','error'); return; }
+  closeModal();
+  renderPage('costeo');
+  toast('Nombre actualizado','success');
+}
+
 function _abrirCostearProveedor(nombre){
   var html = '<div style="padding:0 20px 20px;">';
   html += '<p style="font-size:12px;color:#94a3b8;margin-bottom:14px;">Para productos que llegan YA TERMINADOS de un proveedor externo — no se fabrican acá, no llevan M.O.D., C.I.F., materiales ni servicios. Solo el precio que se le paga al proveedor por unidad.</p>';
