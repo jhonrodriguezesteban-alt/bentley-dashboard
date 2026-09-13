@@ -18355,15 +18355,27 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1789305675203_acr0q",
-      "ts": 1789305675203,
-      "user": "John Rodriguez",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-222",
-      "nombre": "SET SOLOMUN",
       "categoria": "CONJUNTOS",
       "colores": 4,
-      "refs": 1
+      "id": "evt_1789305675203_acr0q",
+      "nombre": "SET SOLOMUN",
+      "op_id": "OP-2026-222",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1789305675203,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1789319269801_kc81t",
+      "ts": 1789319269801,
+      "user": "John Rodriguez",
+      "tipo": "kanban_color",
+      "op_id": "OP-0038",
+      "op_nombre": "CHAQUETA CAZADORA",
+      "color": "AZUL OSCURO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "uds": 76
     }
   ]
 }
