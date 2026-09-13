@@ -9625,8 +9625,14 @@ async function crearOP(){
       });
     }
     if(disVincular){
-      disVincular.eliminado = true;
-      disVincular._op_origen = opId;
+      // Solo se "cierra" (sale del tablero de Diseño) si de verdad ya estaba en Lista para
+      // Producción. Si se vinculó desde una etapa anterior (uso de Planeación para reservar
+      // cantidad/colores con datos que ya se conocen, aunque el diseño físico siga en curso),
+      // la tarjeta se queda visible en su etapa real — solo queda anotado el origen para
+      // referencia, sin desaparecer del trabajo pendiente de Carolina/Isa.
+      var yaEstabaListo = disVincular.kanban_estado === 'LISTA_PRODUCCION';
+      if(yaEstabaListo){ disVincular.eliminado = true; disVincular._op_origen = opId; }
+      else { disVincular._op_planeacion = opId; }
       op.diseno_origen_id = disVincular.id;
       op.diseno_origen_nombre = disVincular.nombre;
       guardarArchivo('disenos', {disenos: DB.disenos, disenos_cfg: DB.disenos_cfg});
