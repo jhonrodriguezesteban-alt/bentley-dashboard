@@ -8716,6 +8716,7 @@ function _invBarraResumen(r, opId){
   h += box('Pagado', r.pagado, '#34d399', true);
   h += box('Pendiente por pagar', r.pendiente, '#ef4444', true);
   h += '</div>';
+  if(r.pendiente>0) h += '<div style="padding:8px 16px;font-size:11px;color:var(--dim);border-top:1px solid var(--card-border);">👷 Mano de obra pendiente: <b style="color:#f87171;">'+fmtCopFull(r.modPendiente)+'</b> &nbsp;·&nbsp; 📦 Insumos pendientes: <b style="color:#f87171;">'+fmtCopFull(r.insumoPendiente)+'</b></div>';
   if(!r.tieneReceta && !r.modTotal) h += '<div style="padding:10px 16px;font-size:11px;color:#64748b;border-top:1px solid var(--card-border);">Sin receta de costeo vinculada todavía — este total solo reflejará mano de obra hasta que se vincule.</div>';
   if(r.entregadaCompleta) h += '<div style="padding:10px 16px;font-size:11px;color:#34d399;border-top:1px solid var(--card-border);">✓ Esta OP ya entregó el 100% de las unidades — se dan por comprados los insumos aunque el checklist de arriba no esté marcado.</div>';
   h += '</div>';
@@ -8739,9 +8740,10 @@ function renderInversion(){
   var filas = ops.map(function(op){ return _invResumenOP(op); }).filter(function(r){ return !r.entregadaCompleta && r.pendiente>0; });
   filas.sort(function(a,b){ return (a.op.numero||0) - (b.op.numero||0); });
 
-  var granTotal=0, granPagado=0, granPendiente=0, sinReceta=0;
+  var granTotal=0, granPagado=0, granPendiente=0, sinReceta=0, granPendMod=0, granPendInsumo=0;
   filas.forEach(function(r){
     granTotal+=r.total; granPagado+=r.pagado; granPendiente+=r.pendiente;
+    granPendMod += r.modPendiente; granPendInsumo += r.insumoPendiente;
     if(!r.tieneReceta) sinReceta++;
   });
 
@@ -8750,14 +8752,16 @@ function renderInversion(){
 
   h += '<div class="card" style="padding:0;overflow:hidden;margin-bottom:18px;">';
   h += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0;">';
-  function granBox(label, val, color, borderLeft){
+  function granBox(label, val, color, borderLeft, sub){
     return '<div style="padding:16px 18px;'+(borderLeft?'border-left:1px solid var(--card-border);':'')+'">'
       +'<div style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;">'+label+'</div>'
-      +'<div style="font-size:20px;font-weight:800;color:'+color+';">'+fmtCopFull(val)+'</div></div>';
+      +'<div style="font-size:20px;font-weight:800;color:'+color+';">'+fmtCopFull(val)+'</div>'
+      +(sub?'<div style="font-size:10px;color:var(--dim);margin-top:4px;">'+sub+'</div>':'')+'</div>';
   }
   h += granBox('Inversión total', granTotal, '#e2e8f0', false);
   h += granBox('Pagado', granPagado, '#34d399', true);
-  h += granBox('Pendiente por pagar', granPendiente, '#ef4444', true);
+  h += granBox('Pendiente por pagar', granPendiente, '#ef4444', true,
+    '👷 M.O.D. <b style="color:#f87171;">'+fmtCopFull(granPendMod)+'</b> · 📦 Insumos <b style="color:#f87171;">'+fmtCopFull(granPendInsumo)+'</b>');
   h += '</div></div>';
 
   if(sinReceta) h += '<div style="background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.3);border-radius:9px;padding:10px 14px;font-size:12px;color:#fbbf24;margin-bottom:14px;">⚠ '+sinReceta+' OP(s) sin receta de costeo vinculada todavía — su checklist de insumos aparecerá automáticamente en cuanto se cree/vincule la receta en Costeo.</div>';
@@ -8783,7 +8787,10 @@ function renderInversion(){
     h += '<td style="padding:7px 10px;text-align:center;">'+(r.tieneReceta?'<span style="color:#34d399;">✓</span>':'<span style="color:#64748b;">—</span>')+'</td>';
     h += '<td style="padding:7px 10px;text-align:right;font-weight:700;color:#e2e8f0;white-space:nowrap;">'+fmtCopFull(r.total)+'</td>';
     h += '<td style="padding:7px 10px;text-align:right;color:#34d399;white-space:nowrap;">'+fmtCopFull(r.pagado)+'</td>';
-    h += '<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;white-space:nowrap;">'+fmtCopFull(r.pendiente)+'</td>';
+    h += '<td style="padding:7px 10px;text-align:right;white-space:nowrap;">';
+    h += '<div style="font-weight:700;color:#ef4444;">'+fmtCopFull(r.pendiente)+'</div>';
+    if(r.pendiente>0) h += '<div style="font-size:9.5px;color:#64748b;margin-top:1px;">👷 MOD '+fmtCopFull(r.modPendiente)+' · 📦 Insumos '+fmtCopFull(r.insumoPendiente)+'</div>';
+    h += '</td>';
     h += '</tr>';
     if(expandido){
       h += '<tr style="background:rgba(255,255,255,.015);">';
