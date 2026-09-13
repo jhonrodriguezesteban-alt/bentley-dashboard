@@ -3956,12 +3956,12 @@
       "unidad": "und"
     },
     {
+      "familia": "Telas",
       "id": "cid_1789261693988_3709",
       "nombre": "ANTIFLUIDO ESTAMPADO",
-      "familia": "Telas",
-      "unidad": "UND",
       "precio_unitario": 5500,
-      "proveedor": "CRISTIAN PARADA"
+      "proveedor": "CRISTIAN PARADA",
+      "unidad": "UND"
     }
   ],
   "params": {
@@ -39299,9 +39299,6 @@
       "referencia": "1199"
     },
     {
-      "id": "cid_1789261599653_7825",
-      "producto": "BONNIE",
-      "referencia": "1201",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -39563,12 +39560,12 @@
           "mp_id": "mp_31515_1061020",
           "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789261599653_7825",
+      "producto": "BONNIE",
+      "referencia": "1201"
     },
     {
-      "id": "cid_1789261721095_2239",
-      "producto": "CAZADORA ANIMALITOS",
-      "referencia": "1202",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -39836,21 +39833,26 @@
           "mp_id": "mp_31515_1061020",
           "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789261721095_2239",
+      "producto": "CAZADORA ANIMALITOS",
+      "referencia": "1202"
     }
   ],
   "referencia_siguiente_propio": 1203,
-  "referencia_siguiente_proveedor": 2066,
+  "referencia_siguiente_proveedor": 2067,
   "referencias_asignadas": {
     "BLUSA COSMO": "1182",
     "BLUSA JEN - REF: 1118": "1200",
     "BLUSA MANGA BOLERO": "1199",
     "BLUSA POLLY": "1184",
+    "BONNIE": "1201",
     "CAMIBUSO PAÑO ALGODON MANGA OVERSIZED": "1192",
     "CAMIBUSO PAÑO ALGODON RANGLAND": "1191",
     "CAMIBUZO NEVADO": "1194",
     "CAMISETA COCOA": "1190",
     "CAMISETA MISO": "1196",
+    "CAZADORA ANIMALITOS": "1202",
     "CHAQUETA DISCOVERY": "1197",
     "CONJUNTO SOLOMUN": "1193",
     "HOODIE CAROLINA": "1187",
@@ -39862,8 +39864,7 @@
     "VESTIDO MINI DRESS": "1185",
     "VESTIDO SOUL - REF: 1104": "1186",
     "WASHMAN": "1198",
-    "BONNIE": "1201",
-    "CAZADORA ANIMALITOS": "1202"
+    "BUZO TEJIDO MOÑOS": "2066"
   },
   "servicios": [
     {
