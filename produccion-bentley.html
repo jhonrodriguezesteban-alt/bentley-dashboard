@@ -8041,7 +8041,10 @@ function _opAplicarDisenoSeleccionado(disId){
     var match = opts.find(function(o){ return o.value.toUpperCase()===(d.categoria||'').toUpperCase(); });
     if(match){ elCat.value = match.value; r.cat = match.value; }
   }
-  if(d.colores_escogidos && d.colores_escogidos.length){
+  // Solo rellenar colores si la referencia todavía no tiene ninguno — al editar una OP que
+  // ya tiene colores y cantidades organizadas, vincular/cambiar el diseño de origen NO debe
+  // borrar ese trabajo. Esto solo aplica de verdad en una OP nueva recién empezada.
+  if((!r.colores || !r.colores.length) && d.colores_escogidos && d.colores_escogidos.length){
     r.colores = d.colores_escogidos.map(function(c){ return (c.nombre||'').toUpperCase(); });
     opRefRenderColorTags(rid); opRefGenTabla(rid);
   }
