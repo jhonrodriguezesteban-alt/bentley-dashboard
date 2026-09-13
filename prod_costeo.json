@@ -42815,9 +42815,6 @@
       "referencia": "1214"
     },
     {
-      "id": "cid_1789266683478_7780",
-      "producto": "SET BOMBER CORTA",
-      "referencia": "1215",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -43061,7 +43058,10 @@
           "mp_id": "mp_31515_1061020",
           "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1789266683478_7780",
+      "producto": "SET BOMBER CORTA",
+      "referencia": "1215"
     }
   ],
   "referencia_siguiente_propio": 1216,
@@ -43099,11 +43099,11 @@
     "PANTALON VENOM": "1188",
     "PANTALON ZAMBA": "1183",
     "RANGLAND FUTURE": "1205",
+    "SET BOMBER CORTA": "1215",
     "VESTIDO KIKI": "1189",
     "VESTIDO MINI DRESS": "1185",
     "VESTIDO SOUL - REF: 1104": "1186",
-    "WASHMAN": "1198",
-    "SET BOMBER CORTA": "1215"
+    "WASHMAN": "1198"
   },
   "servicios": [
     {
@@ -43834,9 +43834,14 @@
       "nombre": "SERVICIO DE CONFECCION BLAZER DONATELLA"
     },
     {
+      "costo_unitario": 10500,
       "id": "cid_1789266578853_4494",
-      "nombre": "SERVICIO DE CONFECCION SET BOMBER CORTA",
-      "costo_unitario": 10500
+      "nombre": "SERVICIO DE CONFECCION SET BOMBER CORTA"
+    },
+    {
+      "id": "cid_1789267338383_1586",
+      "nombre": "servicio de confeccion chaqueta fire",
+      "costo_unitario": 10000
     }
   ],
   "tarifas_cif": [
