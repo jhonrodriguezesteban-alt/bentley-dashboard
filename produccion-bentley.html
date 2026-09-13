@@ -5625,12 +5625,19 @@ function _smoothPath(points){
   return d;
 }
 
+// Una OT cuenta como "ya fabricada/entregada" en ENTREGADO, PAGO_PENDIENTE (la prenda ya salió
+// del taller, solo falta pagarle — ver _subgEstadoDerivado, que la trata igual que entregado)
+// y ENTREGADO_PARCIAL. Los dashboards de producción venían contando SOLO 'ENTREGADO', lo que
+// dejaba por fuera cientos de OTs realmente producidas (413 en PAGO_PENDIENTE) — mismo criterio
+// que ya usaban Resumen de Inversión y el kanban de OPs, solo que nunca se aplicó aquí.
+function _esOtFabricada(o){ return o.estado==='ENTREGADO'||o.estado==='PAGO_PENDIENTE'||o.estado==='ENTREGADO_PARCIAL'; }
+function _udsFabricadasOT(o){ return (o.unidades_entregadas||0)>0 ? o.unidades_entregadas : (o.cantidad||0); }
 function _getDashMetricData(mk){
   var yr=hoy().substr(0,4);
   var ms=['01','02','03','04','05','06','07','08','09','10','11','12'].map(function(m){return yr+'-'+m;});
   if(mk==='entregas') return ms.map(function(m){
-    return DB.ots.filter(function(o){return o.estado==='ENTREGADO'&&(o.fecha_entrega_real||'').startsWith(m);})
-                 .reduce(function(a,o){return a+(o.unidades_entregadas||0);},0);
+    return DB.ots.filter(function(o){return _esOtFabricada(o)&&(o.fecha_entrega_real||o.fecha_corte||o.fecha_ot||'').startsWith(m);})
+                 .reduce(function(a,o){return a+_udsFabricadasOT(o);},0);
   });
   if(mk==='cortes') return ms.map(function(m){
     return DB.ots.filter(function(o){
@@ -5776,10 +5783,10 @@ function renderDashboard(){
   var novedades = otsDelMes.filter(function(o){ return o.estado==='NOVEDAD'||(o.unidades_novedad||0)>0; }).length;
 
   var entregadasFiltro = DB.ots.filter(function(o){
-    if(o.estado!=='ENTREGADO') return false;
-    return !filtro || (o.fecha_entrega_real||'').startsWith(filtro);
+    if(!_esOtFabricada(o)) return false;
+    return !filtro || (o.fecha_entrega_real||o.fecha_corte||o.fecha_ot||'').startsWith(filtro);
   });
-  var udsEntregadas = entregadasFiltro.reduce(function(a,o){ return a+(o.unidades_entregadas||0); },0);
+  var udsEntregadas = entregadasFiltro.reduce(function(a,o){ return a+_udsFabricadasOT(o); },0);
 
   var C_CYAN='#0a84ff', C_PURPLE='#a855f7', C_GREEN='#34d399', C_ORANGE='#f97316', C_PINK='#ec4899', C_GOLD='#fbbf24';
   var meses  = ['01','02','03','04','05','06','07','08','09','10','11','12'];
@@ -5788,8 +5795,8 @@ function renderDashboard(){
   // ── Datos por mes para sparklines KPI ──────────────────────────────────────
   var mesesAll = meses.map(function(m){ return yearActual+'-'+m; });
   var dataByMes = mesesAll.map(function(m){
-    return DB.ots.filter(function(o){ return o.estado==='ENTREGADO'&&(o.fecha_entrega_real||'').startsWith(m); })
-                 .reduce(function(a,o){ return a+(o.unidades_entregadas||0); },0);
+    return DB.ots.filter(function(o){ return _esOtFabricada(o)&&(o.fecha_entrega_real||o.fecha_corte||o.fecha_ot||'').startsWith(m); })
+                 .reduce(function(a,o){ return a+_udsFabricadasOT(o); },0);
   });
 
   // ── Pills de mes ────────────────────────────────────────────────────────────
@@ -5817,7 +5824,7 @@ function renderDashboard(){
     return (o.fecha_corte||o.fecha_entrega_corte_satelite||o.fecha_ot||'').startsWith(mesActual);
   }).reduce(function(a,o){ return a+(o.cantidad||0); },0);
   // Cumplimiento: OTs entregadas a tiempo vs vencidas
-  var otsEntregadas = DB.ots.filter(function(o){ return o.estado==='ENTREGADO'&&o.fecha_entrega_real&&o.fecha_estimada_entrega; });
+  var otsEntregadas = DB.ots.filter(function(o){ return _esOtFabricada(o)&&o.fecha_entrega_real&&o.fecha_estimada_entrega; });
   var aTiempo = otsEntregadas.filter(function(o){ return o.fecha_entrega_real<=o.fecha_estimada_entrega; }).length;
   var pctCumplimiento = otsEntregadas.length ? Math.round(aTiempo/otsEntregadas.length*100) : null;
   var cumplColor = pctCumplimiento===null ? '#475569' : pctCumplimiento>=85 ? C_GREEN : pctCumplimiento>=65 ? C_GOLD : C_PINK;
@@ -6176,7 +6183,7 @@ function renderDashboardPro(){
 
   // ── Alcance: OTs entregadas dentro del período elegido ──────────────────────
   var entregadasScope = DB.ots.filter(function(o){
-    return o.estado==='ENTREGADO' && (!filtro || (o.fecha_entrega_real||'').startsWith(filtro));
+    return _esOtFabricada(o) && (!filtro || (o.fecha_entrega_real||o.fecha_corte||o.fecha_ot||'').startsWith(filtro));
   });
   // Algunas OTs quedaron marcadas ENTREGADO sin que se haya guardado unidades_entregadas
   // (ej. marcadas directamente sin pasar por confirmarEntrega) — para esas, la cantidad
@@ -6191,7 +6198,7 @@ function renderDashboardPro(){
   var udsPendientes = DB.ots.filter(function(o){ return o.estado!=='ENTREGADO'&&o.estado!=='ARCHIVADO'; }).reduce(function(a,o){ return a+(o.cantidad||0); },0);
   var satActivos = DB.satelites.filter(function(s){ return s.activo; }).length;
   var novCount = DB.ots.filter(function(o){ return o.estado==='NOVEDAD'; }).length;
-  var otsEntregadasTodas = DB.ots.filter(function(o){ return o.estado==='ENTREGADO'&&o.fecha_entrega_real&&o.fecha_estimada_entrega; });
+  var otsEntregadasTodas = DB.ots.filter(function(o){ return _esOtFabricada(o)&&o.fecha_entrega_real&&o.fecha_estimada_entrega; });
   var aTiempo = otsEntregadasTodas.filter(function(o){ return o.fecha_entrega_real<=o.fecha_estimada_entrega; }).length;
   var pctCumpl = otsEntregadasTodas.length ? Math.round(aTiempo/otsEntregadasTodas.length*100) : null;
   var cumplColor = pctCumpl===null ? '#475569' : pctCumpl>=85 ? C_GREEN : pctCumpl>=65 ? C_GOLD : C_PINK;
@@ -6251,7 +6258,7 @@ function renderDashboardPro(){
   // ── Evolución mensual (barras) ────────────────────────────────────────────────
   var dataMes = meses.map(function(m){
     var key = yearActual+'-'+m;
-    return DB.ots.filter(function(o){ return o.estado==='ENTREGADO'&&(o.fecha_entrega_real||'').startsWith(key); }).reduce(function(a,o){ return a+_udsEnt(o); },0);
+    return DB.ots.filter(function(o){ return _esOtFabricada(o)&&(o.fecha_entrega_real||o.fecha_corte||o.fecha_ot||'').startsWith(key); }).reduce(function(a,o){ return a+_udsFabricadasOT(o); },0);
   });
   var maxMes = Math.max.apply(null, dataMes.concat([1]));
   h += '<div class="card" style="padding:20px 18px;margin-bottom:16px;">';
