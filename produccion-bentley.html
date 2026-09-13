@@ -7994,18 +7994,24 @@ function _opToggleVincDiseno(checked){
 }
 // Buscador con lista desplegable (con scroll) para elegir el diseño a vincular — antes era
 // un <select> nativo sin buscador y sin scroll cómodo cuando había muchos diseños listos.
+var _OP_ETAPA_LBL = {CON_PROVEEDOR:'Con Proveedor',EN_DISENO_DIGITAL:'Diseño Digital',EN_CORTE_MUESTRA:'Corte Muestra',EN_CONFECCION_MUESTRA:'Confección Muestra',EN_REVISION_GERENCIA:'Revisión Gerencia',EN_ESCALADO:'Escalado',LISTA_PRODUCCION:'Lista Producción'};
 function _opFiltrarDisenoLista(q){
   var box = document.getElementById('op-vinc-diseno-lista');
   if(!box) return;
   var nq = _normTxt(q);
-  var disenos = (DB.disenos||[]).filter(function(d){ return !d.eliminado && d.kanban_estado==='LISTA_PRODUCCION'; });
+  // Se incluyen TODOS los diseños activos, no solo "Lista para Producción" — Planeación
+  // necesita poder reservar cantidad/colores desde que ya se sabe qué se va a producir,
+  // aunque el diseño todavía esté en una etapa anterior del pipeline.
+  var disenos = (DB.disenos||[]).filter(function(d){ return !d.eliminado; });
   var filtrados = nq ? disenos.filter(function(d){ return _normTxt((d.nombre||'')+' '+(d.categoria||'')).indexOf(nq)>=0; }) : disenos;
   filtrados.sort(function(a,b){ return (a.nombre||'').localeCompare(b.nombre||''); });
   if(!filtrados.length){
     box.innerHTML = '<div style="padding:10px 12px;color:#475569;font-size:12px;">Sin resultados</div>';
   } else {
     box.innerHTML = filtrados.map(function(d){
-      return '<div data-id="'+d.id+'" data-nombre="'+esc(d.nombre)+'" onmousedown="_opSeleccionarDisenoLista(this.dataset.id,this.dataset.nombre)" style="padding:8px 12px;cursor:pointer;font-size:12px;color:#cbd5e1;border-bottom:1px solid #0d1117;">'+esc(d.nombre)+' <span style="color:#475569;">('+esc(d.categoria||'')+')</span></div>';
+      var etapa = _OP_ETAPA_LBL[d.kanban_estado]||'';
+      var etapaColor = d.kanban_estado==='LISTA_PRODUCCION' ? '#22c55e' : '#a855f7';
+      return '<div data-id="'+d.id+'" data-nombre="'+esc(d.nombre)+'" onmousedown="_opSeleccionarDisenoLista(this.dataset.id,this.dataset.nombre)" style="padding:8px 12px;cursor:pointer;font-size:12px;color:#cbd5e1;border-bottom:1px solid #0d1117;">'+esc(d.nombre)+' <span style="color:#475569;">('+esc(d.categoria||'')+')</span>'+(etapa?' <span style="font-size:9px;font-weight:700;color:'+etapaColor+';">· '+esc(etapa.toUpperCase())+'</span>':'')+'</div>';
     }).join('');
   }
   box.style.display = 'block';
@@ -9372,18 +9378,18 @@ function _buildFormNuevaOP(){
   h += '<div class="form-group" style="background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.2);border-radius:8px;padding:10px 12px;">';
   h += '<label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin:0;">';
   h += '<input type="checkbox" id="op-vinc-diseno-chk" onchange="_opToggleVincDiseno(this.checked)">';
-  h += '<span style="font-size:12px;font-weight:600;color:#e2e8f0;">🎨 Vincular a un diseño que ya está en "Lista para Producción"</span>';
+  h += '<span style="font-size:12px;font-weight:600;color:#e2e8f0;">🎨 Vincular a un diseño ya creado (en cualquier etapa)</span>';
   h += '</label>';
   h += '<div id="op-vinc-diseno-wrap" style="display:none;margin-top:8px;">';
-  var _disenosListos = (DB.disenos||[]).filter(function(d){ return !d.eliminado && d.kanban_estado==='LISTA_PRODUCCION'; }).sort(function(a,b){ return (a.nombre||'').localeCompare(b.nombre||''); });
+  var _disenosListos = (DB.disenos||[]).filter(function(d){ return !d.eliminado; });
   h += '<div style="position:relative;">';
   h += '<input type="text" class="form-control" id="op-vinc-diseno-buscar" placeholder="🔍 Buscar diseño..." autocomplete="off" oninput="_opFiltrarDisenoLista(this.value)" onfocus="_opFiltrarDisenoLista(this.value)" onblur="setTimeout(function(){var b=document.getElementById(\'op-vinc-diseno-lista\');if(b)b.style.display=\'none\';},200);">';
   h += '<input type="hidden" id="op-vinc-diseno-sel" value="">';
   h += '<div id="op-vinc-diseno-lista" style="display:none;position:absolute;left:0;right:0;top:100%;z-index:50;max-height:220px;overflow-y:auto;border:1px solid #2c2c2e;border-radius:8px;background:#0d1117;margin-top:4px;box-shadow:0 12px 32px rgba(0,0,0,.6);"></div>';
   h += '</div>';
   h += _disenosListos.length
-    ? '<div style="font-size:10px;color:#64748b;margin-top:4px;">Al elegir un diseño se prellenan nombre y categoría, y esta OP queda enlazada automáticamente — así ya no aparece como pendiente en Diseño.</div>'
-    : '<div style="font-size:10px;color:#64748b;margin-top:4px;">No hay diseños en "Lista para Producción" en este momento.</div>';
+    ? '<div style="font-size:10px;color:#64748b;margin-top:4px;">Al elegir un diseño se prellenan nombre y categoría, y esta OP queda enlazada automáticamente — así ya no aparece como pendiente en Diseño (sin importar en qué etapa del pipeline esté).</div>'
+    : '<div style="font-size:10px;color:#64748b;margin-top:4px;">No hay diseños activos en este momento.</div>';
   h += '</div>';
   h += '</div>';
   h += '<div class="sep"></div>';
