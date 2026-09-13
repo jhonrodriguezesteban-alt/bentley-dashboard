@@ -15584,6 +15584,9 @@ function eliminarPrecio(id){
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+// Normaliza texto para comparar búsquedas ignorando tildes/acentos y mayúsculas —
+// así "MANCHESTER" y "MÁNCHESTER" (o buscar "café" sin tilde) encuentran lo mismo.
+function _normTxt(s){ return (s||'').toString().normalize('NFD').replace(/[̀-ͯ]/g,'').toUpperCase(); }
 
 function setBtnLoading(id, on){
   var btn = document.getElementById(id);
@@ -16354,10 +16357,10 @@ function _buscarIrMP(){
 }
 function buscarCosteoGlobal(q){
   if(!q||q.length<2){ return; }
-  var qu=q.toUpperCase();
-  var mps=(DB.costeo.mp||[]).filter(function(m){ return (m.nombre+' '+(m.familia||'')).toUpperCase().indexOf(qu)>=0; });
-  var recs=(DB.costeo.recetas||[]).filter(function(r){ return r.producto.toUpperCase().indexOf(qu)>=0; });
-  var svcs=(DB.costeo.servicios||[]).filter(function(s){ return s.nombre.toUpperCase().indexOf(qu)>=0; });
+  var qu=_normTxt(q);
+  var mps=(DB.costeo.mp||[]).filter(function(m){ return _normTxt(m.nombre+' '+(m.familia||'')).indexOf(qu)>=0; });
+  var recs=(DB.costeo.recetas||[]).filter(function(r){ return _normTxt(r.producto).indexOf(qu)>=0 || _recetaAliases(r.id).some(function(a){ return _normTxt(a).indexOf(qu)>=0; }); });
+  var svcs=(DB.costeo.servicios||[]).filter(function(s){ return _normTxt(s.nombre).indexOf(qu)>=0; });
   // Build results overlay
   var el=document.getElementById('costeo-search-results');
   if(!el){ el=document.createElement('div'); el.id='costeo-search-results'; el.style.cssText='position:absolute;z-index:800;background:#0d1117;border:1px solid #2c2c2e;border-radius:10px;padding:10px;max-height:320px;overflow-y:auto;width:calc(100% - 40px);box-shadow:0 8px 32px rgba(0,0,0,.6);'; document.getElementById('costeo-global-search').parentNode.style.position='relative'; document.getElementById('costeo-global-search').parentNode.appendChild(el); }
@@ -16496,7 +16499,8 @@ function _tablaMPs(mps){
   return h;
 }
 function filtrarCosteoMP(q){
-  var mps = (DB.costeo.mp||[]).filter(function(m){ return !q || (m.nombre+m.familia+(m.proveedor||'')).toUpperCase().indexOf(q.toUpperCase())>=0; });
+  var nq = _normTxt(q);
+  var mps = (DB.costeo.mp||[]).filter(function(m){ return !nq || _normTxt(m.nombre+m.familia+(m.proveedor||'')).indexOf(nq)>=0; });
   var el = document.getElementById('mp-tabla'); if(el) el.innerHTML=_tablaMPs(mps);
 }
 function abrirFormMP(id){
@@ -16542,8 +16546,20 @@ function renderCosteoRecetas(){
   h+='<div id="rec-lista">'+_listaRecetas(recetas)+'</div></div>';
   return h;
 }
+// Nombres alternativos vinculados por 🔗 Vincular (Costeo Pendientes) — viven aparte en
+// receta_map y antes eran invisibles: la búsqueda y la tarjeta solo veían rec.producto.
+function _recetaAliases(recId){
+  var mapa = DB.costeo.receta_map||{};
+  return Object.keys(mapa).filter(function(k){ return mapa[k]===recId; });
+}
 function filtrarCosteoRecetas(q){
-  var recetas=(DB.costeo.recetas||[]).slice().reverse().filter(function(r){ return !q||r.producto.toUpperCase().indexOf(q.toUpperCase())>=0||(r.referencia||'').toUpperCase().indexOf(q.toUpperCase())>=0; });
+  var nq = _normTxt(q);
+  var recetas=(DB.costeo.recetas||[]).slice().reverse().filter(function(r){
+    if(!nq) return true;
+    if(_normTxt(r.producto).indexOf(nq)>=0) return true;
+    if(_normTxt(r.referencia).indexOf(nq)>=0) return true;
+    return _recetaAliases(r.id).some(function(a){ return _normTxt(a).indexOf(nq)>=0; });
+  });
   var el=document.getElementById('rec-lista'); if(el) el.innerHTML=_listaRecetas(recetas);
 }
 function _listaRecetas(recetas){
@@ -16558,6 +16574,8 @@ function _listaRecetas(recetas){
     h+='<div style="flex:1;min-width:0;">';
     if(rec.referencia) h+='<span style="font-size:14px;font-weight:700;color:#0a84ff;letter-spacing:2px;font-family:var(--bebas);margin-right:8px;">'+esc(rec.referencia)+'</span>';
     h+='<span style="font-size:17px;font-weight:700;color:#e2e8f0;">'+esc(rec.producto)+'</span>';
+    var aliases = _recetaAliases(rec.id);
+    if(aliases.length) h+='<div style="font-size:10px;color:#34d399;margin-top:2px;">🔗 vinculado también como: '+aliases.map(esc).join(', ')+'</div>';
     h+='</div>';
     h+='<span style="font-size:12px;color:#64748b;">'+nComp+' comp.</span>';
     h+='<span style="font-family:var(--bebas);font-size:26px;color:#0a84ff;letter-spacing:1px;">'+fmtCopFull(res.total)+'</span>';
@@ -17767,10 +17785,10 @@ function _costeoPendListaHTML(){
   var disPendTotal = disPend.length;
   var opItems = Object.values(opMap).sort(function(a,b){ return a.nombre.localeCompare(b.nombre); });
 
-  var q = _costeoPendBusq.trim().toUpperCase();
+  var q = _normTxt(_costeoPendBusq);
   if(q){
-    opItems = opItems.filter(function(item){ return item.nombre.toUpperCase().indexOf(q)>=0; });
-    disPend = disPend.filter(function(d){ return (d.nombre||'').toUpperCase().indexOf(q)>=0; });
+    opItems = opItems.filter(function(item){ return _normTxt(item.nombre).indexOf(q)>=0; });
+    disPend = disPend.filter(function(d){ return _normTxt(d.nombre).indexOf(q)>=0; });
   }
 
   var h = '';
@@ -18222,9 +18240,9 @@ function renderServicios(){
   return h;
 }
 function _filtrarServicios(){
-  var q=((document.getElementById('svc-buscar')||{}).value||'').trim().toUpperCase();
+  var q=_normTxt((document.getElementById('svc-buscar')||{}).value||'');
   document.querySelectorAll('#svc-tabla .svc-row').forEach(function(tr){
-    tr.style.display=(!q||tr.textContent.toUpperCase().indexOf(q)>=0)?'':'none';
+    tr.style.display=(!q||_normTxt(tr.textContent).indexOf(q)>=0)?'':'none';
   });
 }
 function abrirFormSvc(id){
@@ -19639,8 +19657,8 @@ function _catalogoTodosProductos(){
 }
 function _catalogoListaHTML(){
   var items = _catalogoTodosProductos();
-  var q = (_catalogoBusq||'').trim().toUpperCase();
-  if(q) items = items.filter(function(it){ return it.nombre.toUpperCase().indexOf(q)>=0 || (it.receta&&it.receta.referencia&&it.receta.referencia.indexOf(q)>=0); });
+  var q = _normTxt(_catalogoBusq);
+  if(q) items = items.filter(function(it){ return _normTxt(it.nombre).indexOf(q)>=0 || (it.receta&&it.receta.referencia&&it.receta.referencia.indexOf(q)>=0); });
   if(!items.length) return '<div style="text-align:center;padding:50px;color:#475569;font-size:13px;">Sin productos que coincidan.</div>';
   var h = '<div style="font-size:11px;color:#475569;margin-bottom:10px;">'+items.length+' productos en total</div>';
   h += '<div style="display:flex;flex-direction:column;gap:8px;">';
