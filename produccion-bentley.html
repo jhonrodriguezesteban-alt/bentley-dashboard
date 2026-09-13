@@ -6596,17 +6596,25 @@ function renderOPs(){
     otsConSat.forEach(function(o){ satUnicos[o.satelite_id]=1; });
     var unSoloSat = otsOp.length > 0 && otsConSat.length === otsOp.length && Object.keys(satUnicos).length === 1;
 
-    if(unSoloSat && colores.length > 1){
-      // Consolidar todos los colores en un único subgrupo
-      var manual = _getSubgEstado(op.id, '—');
-      // Estado: el más avanzado entre todos los colores
-      var estadoConsolidado = null;
+    // Estado real de cada color (se calcula siempre, se use o no para consolidar) — necesario
+    // para decidir si de verdad se puede consolidar sin ocultar un color que va atrasado.
+    var estadosPorColor = {};
+    if(colores.length > 1){
       colores.forEach(function(color){
         var otsC = otsOp.filter(function(o){ return (o.color||'').trim().toUpperCase()===(color||'').trim().toUpperCase(); });
         var manC = _getSubgEstado(op.id, color);
-        var estC = _estadoEfectivo(manC, _subgEstadoDerivado(otsC), otsC);
-        if(!estadoConsolidado || (_ESTADO_PROGRESO[estC]||0) > (_ESTADO_PROGRESO[estadoConsolidado]||0)) estadoConsolidado = estC;
+        estadosPorColor[color] = _estadoEfectivo(manC, _subgEstadoDerivado(otsC), otsC);
       });
+    }
+    // Solo consolidar si, además de compartir satélite, TODOS los colores están realmente en
+    // el mismo estado — si no, consolidar tapa colores atrasados detrás del color más
+    // avanzado (ej. un color ya pagado escondiendo otro que sigue pendiente de cortar/alistar).
+    var todosMismoEstado = colores.length > 1 && colores.every(function(c){ return estadosPorColor[c]===estadosPorColor[colores[0]]; });
+
+    if(unSoloSat && colores.length > 1 && todosMismoEstado){
+      // Consolidar todos los colores en un único subgrupo
+      var manual = _getSubgEstado(op.id, '—');
+      var estadoConsolidado = estadosPorColor[colores[0]];
       var uds = otsOp.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
       var udsEnt = otsOp.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+((o.unidades_entregadas||0)>0?o.unidades_entregadas:(o.cantidad||0)); }, 0);
       var pct = uds ? Math.round(udsEnt/uds*100) : 0;
@@ -7532,13 +7540,18 @@ function _buildSubgs(){
     otsConSat.forEach(function(o){ satUnicos[o.satelite_id]=1; });
     var unSoloSat = otsOp.length > 0 && otsConSat.length === otsOp.length && Object.keys(satUnicos).length === 1;
     var sat = DB.satelites.find(function(s){ return s.id===op.satelite_id; });
-    if(unSoloSat && colores.length > 1){
-      var estadoConsolidado = null;
+    var estadosPorColorBS = {};
+    if(colores.length > 1){
       colores.forEach(function(color){
         var otsC = otsOp.filter(function(o){ return (o.color||'').trim().toUpperCase()===(color||'').trim().toUpperCase(); });
-        var estC = _estadoEfectivo(_getSubgEstado(op.id, color), _subgEstadoDerivado(otsC), otsC);
-        if(!estadoConsolidado || (_ESTADO_PROGRESO[estC]||0) > (_ESTADO_PROGRESO[estadoConsolidado]||0)) estadoConsolidado = estC;
+        estadosPorColorBS[color] = _estadoEfectivo(_getSubgEstado(op.id, color), _subgEstadoDerivado(otsC), otsC);
       });
+    }
+    // Solo consolidar si TODOS los colores están realmente en el mismo estado — si no,
+    // consolidar tapa un color atrasado detrás del más avanzado (ver mismo fix en renderOPs).
+    var todosMismoEstadoBS = colores.length > 1 && colores.every(function(c){ return estadosPorColorBS[c]===estadosPorColorBS[colores[0]]; });
+    if(unSoloSat && colores.length > 1 && todosMismoEstadoBS){
+      var estadoConsolidado = estadosPorColorBS[colores[0]];
       var uds = otsOp.reduce(function(a,o){ return a+(o.cantidad||0); },0);
       var udsEnt = otsOp.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+(o.unidades_entregadas||0); },0);
       var pct = uds ? Math.round(udsEnt/uds*100) : 0;
