@@ -17910,14 +17910,25 @@
       "user": "John Rodriguez"
     },
     {
+      "categoria": "CAMIBUSOS",
       "id": "evt_1789276023927_xh519",
-      "ts": 1789276023927,
-      "user": "John Rodriguez",
-      "tipo": "duplicar_op",
       "op_id": "OP-2026-227",
-      "op_origen": "OP-2026-226",
       "op_nombre": "CAMIBUSO RANGLAND",
-      "categoria": "CAMIBUSOS"
+      "op_origen": "OP-2026-226",
+      "tipo": "duplicar_op",
+      "ts": 1789276023927,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1789276044436_lw3pr",
+      "ts": 1789276044436,
+      "user": "John Rodriguez",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-227",
+      "nombre": "CAMIBUSO OVERSIZED",
+      "categoria": "CAMIBUSOS",
+      "colores": 1,
+      "refs": 1
     }
   ]
 }
