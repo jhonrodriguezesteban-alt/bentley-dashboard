@@ -7549,6 +7549,16 @@ function _buildSubgs(){
         var manual = _getSubgEstado(op.id, color);
         var estado = _estadoEfectivo(manual, _subgEstadoDerivado(otsColor), otsColor);
         var uds = otsColor.reduce(function(a,o){ return a+(o.cantidad||0); },0);
+        // OP sin OTs creadas todavía para este color (ej. "Nuevas programaciones"): el pedido
+        // real sale de las cantidades ya cargadas en las referencias, no de 0.
+        if(!otsColor.length && op.referencias){
+          uds = op.referencias.reduce(function(a,r){
+            return a + Object.keys(r.cantidades||{}).reduce(function(b,k){
+              if(color!=='—' && k.indexOf(color+'_')!==0) return b;
+              return b + (parseInt(r.cantidades[k])||0);
+            },0);
+          },0);
+        }
         var udsEnt = otsColor.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+(o.unidades_entregadas||0); },0);
         var pct = uds ? Math.round(udsEnt/uds*100) : 0;
         var satIds = {};
