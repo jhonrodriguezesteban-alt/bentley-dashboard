@@ -12555,17 +12555,33 @@
     },
     {
       "cantidades": {
-        "PENDIENTE_T10": 42,
-        "PENDIENTE_T12": 44,
-        "PENDIENTE_T14": 44,
-        "PENDIENTE_T16": 44,
-        "PENDIENTE_T4": 42,
-        "PENDIENTE_T6": 42,
-        "PENDIENTE_T8": 42
+        "BEIGE_T4": 8,
+        "BEIGE_T6": 8,
+        "BEIGE_T8": 18,
+        "BEIGE_T10": 18,
+        "BEIGE_T12": 18,
+        "BEIGE_T14": 18,
+        "BEIGE_T16": 18,
+        "VERDE MILITAR_T4": 8,
+        "VERDE MILITAR_T6": 8,
+        "VERDE MILITAR_T8": 18,
+        "VERDE MILITAR_T10": 18,
+        "VERDE MILITAR_T12": 18,
+        "VERDE MILITAR_T14": 18,
+        "VERDE MILITAR_T16": 18,
+        "NEGRO_T4": 8,
+        "NEGRO_T6": 8,
+        "NEGRO_T8": 18,
+        "NEGRO_T10": 18,
+        "NEGRO_T12": 18,
+        "NEGRO_T14": 18,
+        "NEGRO_T16": 18
       },
       "categoria": "CONJUNTOS",
       "colores": [
-        "PENDIENTE"
+        "BEIGE",
+        "VERDE MILITAR",
+        "NEGRO"
       ],
       "cortador": "Corte Carbajal",
       "created_at": "2026-09-12",
@@ -12581,22 +12597,15 @@
       "receta_nombre": "CONJUNTO DAKOTA",
       "referencias": [
         {
-          "cantidades": {
-            "PENDIENTE_T10": 42,
-            "PENDIENTE_T12": 44,
-            "PENDIENTE_T14": 44,
-            "PENDIENTE_T16": 44,
-            "PENDIENTE_T4": 42,
-            "PENDIENTE_T6": 42,
-            "PENDIENTE_T8": 42
-          },
-          "cat": "CONJUNTOS",
-          "colores": [
-            "PENDIENTE"
-          ],
-          "maquilador_id": "",
           "nombre": "CONJUNTO DAKOTA",
           "ref": "1217",
+          "cat": "CONJUNTOS",
+          "vmo": 1151,
+          "colores": [
+            "BEIGE",
+            "VERDE MILITAR",
+            "NEGRO"
+          ],
           "tallas": [
             "T4",
             "T6",
@@ -12606,8 +12615,30 @@
             "T14",
             "T16"
           ],
-          "totalUds": 300,
-          "vmo": 1151
+          "cantidades": {
+            "BEIGE_T4": 8,
+            "BEIGE_T6": 8,
+            "BEIGE_T8": 18,
+            "BEIGE_T10": 18,
+            "BEIGE_T12": 18,
+            "BEIGE_T14": 18,
+            "BEIGE_T16": 18,
+            "VERDE MILITAR_T4": 8,
+            "VERDE MILITAR_T6": 8,
+            "VERDE MILITAR_T8": 18,
+            "VERDE MILITAR_T10": 18,
+            "VERDE MILITAR_T12": 18,
+            "VERDE MILITAR_T14": 18,
+            "VERDE MILITAR_T16": 18,
+            "NEGRO_T4": 8,
+            "NEGRO_T6": 8,
+            "NEGRO_T8": 18,
+            "NEGRO_T10": 18,
+            "NEGRO_T12": 18,
+            "NEGRO_T14": 18,
+            "NEGRO_T16": 18
+          },
+          "maquilador_id": ""
         }
       ],
       "tallas": [
@@ -12618,7 +12649,8 @@
         "T12",
         "T14",
         "T16"
-      ]
+      ],
+      "updated_at": "2026-09-14"
     },
     {
       "cantidades": {
