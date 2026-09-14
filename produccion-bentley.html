@@ -6134,6 +6134,46 @@ function renderDashboard(){
 // ═══════════════════════════════════════════════════════════════════════════════
 var _dashProFiltroMes = '';
 function setDashProFiltro(mes){ _dashProFiltroMes = mes; renderPage('dashboardpro'); }
+// Detalle de un mes de la gráfica "Evolución Mensual · Fabricado": qué referencias y qué
+// satélites componen ese total — mismo criterio que la gráfica (fecha_entrega_real real).
+function _dashProAbrirMesDetalle(mesKey){
+  var ots = DB.ots.filter(function(o){ return _esOtFabricada(o)&&(o.fecha_entrega_real||'').startsWith(mesKey); });
+  var mesLbl = (_PLAN_MES_LABELS && _PLAN_MES_LABELS[mesKey]) || mesKey;
+  var totalUds = ots.reduce(function(a,o){ return a+_udsFabricadasOT(o); },0);
+  var porSat = {};
+  ots.forEach(function(o){
+    var satNombre = o.satelite_id ? getSatNombre(o.satelite_id) : 'Sin satélite asignado';
+    if(!porSat[satNombre]) porSat[satNombre] = {total:0, refs:{}};
+    var uds = _udsFabricadasOT(o);
+    porSat[satNombre].total += uds;
+    var refN = o.nombre || o.referencia || 'Sin referencia';
+    porSat[satNombre].refs[refN] = (porSat[satNombre].refs[refN]||0) + uds;
+  });
+  var sats = Object.keys(porSat).sort(function(a,b){ return porSat[b].total-porSat[a].total; });
+  var body = '<div style="display:flex;flex-direction:column;gap:8px;">';
+  if(!sats.length){
+    body += '<div class="empty-state">No hay entregas con fecha registrada en '+esc(mesKey)+'.</div>';
+  } else {
+    body += '<div style="font-size:11px;color:#64748b;margin-bottom:4px;">'+ots.length+' OTs · '+totalUds.toLocaleString('es-CO')+' uds entregadas</div>';
+    sats.forEach(function(sat, si){
+      var info = porSat[sat];
+      var sid = 'dpm'+si;
+      body += '<div>';
+      body += '<div data-tid="'+sid+'" onclick="_toggleResumenCat(this.dataset.tid)" style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid var(--card-border);border-radius:8px;padding:10px 14px;cursor:pointer;">';
+      body += '<div style="display:flex;align-items:center;gap:8px;"><span id="'+sid+'-icon" style="font-size:9px;color:#94a3b8;">▸</span><span style="font-size:12px;font-weight:800;color:#e2e8f0;text-transform:uppercase;letter-spacing:.4px;">🏭 '+esc(sat)+'</span></div>';
+      body += '<span style="font-size:14px;font-weight:800;color:#0a84ff;">'+info.total.toLocaleString('es-CO')+' uds</span>';
+      body += '</div>';
+      body += '<div id="'+sid+'" style="display:none;flex-direction:column;gap:4px;margin-top:6px;padding-left:14px;border-left:1px dashed var(--card-border);">';
+      Object.keys(info.refs).sort(function(a,b){ return info.refs[b]-info.refs[a]; }).forEach(function(refN){
+        body += '<div style="display:flex;justify-content:space-between;padding:5px 8px;font-size:11.5px;color:#94a3b8;"><span>'+esc(refN)+'</span><span style="color:#e2e8f0;font-weight:600;">'+info.refs[refN].toLocaleString('es-CO')+' uds</span></div>';
+      });
+      body += '</div></div>';
+    });
+  }
+  body += '</div>';
+  var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cerrar</button>';
+  openModal('📅 FABRICADO EN '+esc(mesLbl).toUpperCase(), body, footer, {wide:true});
+}
 
 // Tarjeta de ranking con podio (top 3 destacados) + lista compacta para el resto (4-10).
 function _dashProSeccionRanking(titulo, subtitulo, items, color){
@@ -6256,22 +6296,31 @@ function renderDashboardPro(){
   h += _dashProSeccionRanking('🏆 Top Categorías', (filtro||'año')+' · '+itemsCat.length+' categorías', itemsCat, C_GREEN);
 
   // ── Evolución mensual (barras) ────────────────────────────────────────────────
+  // A diferencia del resto del módulo (que ya cuenta PAGO_PENDIENTE como fabricado, con
+  // fecha_corte/fecha_ot de respaldo para no perder unidades del total), esta gráfica es
+  // por MES — así que aquí solo cuenta fecha_entrega_real, la fecha real de entrega. Usar
+  // fecha_corte o fecha_ot como respaldo aquí mezclaba "cuándo se cortó" o "cuándo se creó
+  // la OT" con "cuándo se entregó", inflando meses que no correspondían a la entrega real.
   var dataMes = meses.map(function(m){
     var key = yearActual+'-'+m;
-    return DB.ots.filter(function(o){ return _esOtFabricada(o)&&(o.fecha_entrega_real||o.fecha_corte||o.fecha_ot||'').startsWith(key); }).reduce(function(a,o){ return a+_udsFabricadasOT(o); },0);
+    return DB.ots.filter(function(o){ return _esOtFabricada(o)&&(o.fecha_entrega_real||'').startsWith(key); }).reduce(function(a,o){ return a+_udsFabricadasOT(o); },0);
   });
   var maxMes = Math.max.apply(null, dataMes.concat([1]));
+  var sinFechaEnt = DB.ots.filter(function(o){ return _esOtFabricada(o) && !o.fecha_entrega_real; });
+  var sinFechaUds = sinFechaEnt.reduce(function(a,o){ return a+_udsFabricadasOT(o); },0);
   h += '<div class="card" style="padding:20px 18px;margin-bottom:16px;">';
-  h += '<div style="display:flex;align-items:baseline;gap:10px;margin-bottom:16px;">';
+  h += '<div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px;">';
   h += '<span style="font-family:var(--bebas);font-size:22px;letter-spacing:1px;">Evolución Mensual · Fabricado</span>';
-  h += '<span style="font-size:11px;color:#64748b;">'+yearActual+'</span>';
+  h += '<span style="font-size:11px;color:#64748b;">'+yearActual+' · por fecha real de entrega</span>';
   h += '</div>';
+  if(sinFechaUds>0) h += '<div style="font-size:11px;color:#64748b;margin-bottom:12px;">⚠ '+fmtNum(sinFechaUds)+' uds ya fabricadas ('+sinFechaEnt.length+' OTs) no tienen fecha de entrega registrada, así que no aparecen en ningún mes de esta gráfica — pero sí están incluidas en "Uds Fabricadas" y en el ranking de "Todo el año".</div>';
+  else h += '<div style="margin-bottom:12px;"></div>';
   h += '<div style="display:flex;align-items:flex-end;gap:6px;height:150px;">';
   dataMes.forEach(function(v,i){
     var pctH = maxMes ? Math.round(v/maxMes*100) : 0;
     var esActual = (yearActual+'-'+meses[i])===mesActual;
     var mesKey = yearActual+'-'+meses[i];
-    h += '<div data-mes="'+mesKey+'" onclick="setDashProFiltro(this.dataset.mes)" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;cursor:pointer;">';
+    h += '<div data-mes="'+mesKey+'" onclick="_dashProAbrirMesDetalle(this.dataset.mes)" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;cursor:pointer;">';
     if(v>0) h += '<div style="font-size:10px;color:#94a3b8;margin-bottom:3px;">'+fmtNum(v)+'</div>';
     h += '<div style="width:100%;max-width:34px;height:'+Math.max(pctH,2)+'%;background:'+(filtro===mesKey?C_CYAN:(esActual?C_CYAN+'cc':C_CYAN+'55'))+';border-radius:4px 4px 0 0;transition:background .15s;"></div>';
     h += '<div style="font-size:10px;color:'+(filtro===mesKey?C_CYAN:'#475569')+';font-weight:'+(filtro===mesKey?'700':'400')+';margin-top:6px;">'+nomMes[i]+'</div>';
