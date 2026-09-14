@@ -7675,13 +7675,35 @@ function _opMatrizDetalleHTML(op, colK){
   var sg = _buildSubgs().filter(function(s){ return s.op.id===op.id && s.estado===colK; });
   var porColor = {};
   sg.forEach(function(s){
-    (s.otsColor||[]).forEach(function(ot){
-      var pend = _otPendienteUds(ot);
-      if(pend<=0) return;
-      var color = ot.color||'—', talla = ot.talla||'—';
-      if(!porColor[color]) porColor[color] = {};
-      porColor[color][talla] = (porColor[color][talla]||0) + pend;
-    });
+    if(s.otsColor && s.otsColor.length){
+      s.otsColor.forEach(function(ot){
+        var pend = _otPendienteUds(ot);
+        if(pend<=0) return;
+        var color = ot.color||'—', talla = ot.talla||'—';
+        if(!porColor[color]) porColor[color] = {};
+        porColor[color][talla] = (porColor[color][talla]||0) + pend;
+      });
+    } else if(op.referencias){
+      // Color sin ninguna OT generada todavía (ej. Nuevas Programaciones) — la matriz sale
+      // de las cantidades reales cargadas en las referencias, igual que el total de la
+      // tarjeta (si no, la tarjeta muestra un total pero el detalle sale vacío). Las claves
+      // son "COLOR_TALLA" (ej. "GRIS OSCURO_T4") — se separa por el último "_" porque el
+      // color puede traer espacios pero la talla nunca lleva "_".
+      var color = s.color;
+      op.referencias.forEach(function(r){
+        Object.keys(r.cantidades||{}).forEach(function(k){
+          var idx = k.lastIndexOf('_');
+          if(idx<0) return;
+          var kColor = k.substring(0,idx), talla = k.substring(idx+1);
+          if(color!=='—' && kColor!==color) return;
+          var v = parseInt(r.cantidades[k])||0;
+          if(v<=0) return;
+          var rowColor = color==='—' ? kColor : color;
+          if(!porColor[rowColor]) porColor[rowColor] = {};
+          porColor[rowColor][talla] = (porColor[rowColor][talla]||0) + v;
+        });
+      });
+    }
   });
   return _matrizTablaHTML(porColor, 'No hay unidades pendientes en este estado para esta OP.');
 }
