@@ -6686,6 +6686,11 @@ function renderOPs(){
       var manual = _getSubgEstado(op.id, '—');
       var estadoConsolidado = estadosPorColor[colores[0]];
       var uds = otsOp.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
+      // OP sin OTs creadas todavía (ej. Nuevas programaciones): el pedido real sale de las
+      // referencias, no de 0 — mismo criterio que _buildSubgs()/_planColorUds.
+      if(!otsOp.length && op.referencias){
+        uds = op.referencias.reduce(function(a,r){ return a+Object.values(r.cantidades||{}).reduce(function(b,v){ return b+(parseInt(v)||0); },0); },0);
+      }
       var udsEnt = otsOp.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+((o.unidades_entregadas||0)>0?o.unidades_entregadas:(o.cantidad||0)); }, 0);
       var pct = uds ? Math.round(udsEnt/uds*100) : 0;
       subgs.push({op:op, color:'—', colorIdx:0, totalColores:1, otsColor:otsOp, estado:estadoConsolidado, uds:uds, udsEnt:udsEnt, pct:pct, sats:1, consolidado:true, coloresReales:colores});
@@ -6696,6 +6701,15 @@ function renderOPs(){
         var manual = _getSubgEstado(op.id, color);
         var estado = _estadoEfectivo(manual, _subgEstadoDerivado(otsColor), otsColor);
         var uds = otsColor.reduce(function(a,o){ return a+(o.cantidad||0); }, 0);
+        // Mismo caso: color todavía sin OTs generadas — usar la cantidad real de la referencia.
+        if(!otsColor.length && op.referencias){
+          uds = op.referencias.reduce(function(a,r){
+            return a + Object.keys(r.cantidades||{}).reduce(function(b,k){
+              if(color!=='—' && k.indexOf(color+'_')!==0) return b;
+              return b + (parseInt(r.cantidades[k])||0);
+            },0);
+          },0);
+        }
         var udsEnt = otsColor.filter(function(o){ return o.estado==='ENTREGADO'; }).reduce(function(a,o){ return a+((o.unidades_entregadas||0)>0?o.unidades_entregadas:(o.cantidad||0)); }, 0);
         var pct = uds ? Math.round(udsEnt/uds*100) : 0;
         var satIds = {};
