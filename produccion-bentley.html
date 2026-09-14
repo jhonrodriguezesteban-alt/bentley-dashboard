@@ -8964,8 +8964,20 @@ function renderInversion(){
   });
   window._invFilasCache = filas;
 
+  var q = _normTxt(_invBusqueda);
+  var filasVista = !q ? filas : filas.filter(function(r){
+    return _normTxt(fmtOpId(r.op.id)).indexOf(q)>=0
+        || _normTxt(r.op.id).indexOf(q)>=0
+        || _normTxt(r.op.nombre_producto||'').indexOf(q)>=0;
+  });
+
   var h = '<div style="padding:16px 20px;height:100%;overflow-y:auto;box-sizing:border-box;">';
-  h += '<div style="font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px;">Producción en proceso ('+filas.length+' OPs) · qué falta invertir por referencia</div>';
+  h += '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;">';
+  h += '<span style="font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;">Producción en proceso ('+filas.length+' OPs) · qué falta invertir por referencia</span>';
+  h += '<div style="position:relative;flex:1;min-width:200px;max-width:320px;">';
+  h += '<input id="inv-search-input" type="text" value="'+esc(_invBusqueda)+'" oninput="var _q=this.value,_p=this.selectionStart;_invSetBusqueda(_q);var _el=document.getElementById(\'inv-search-input\');if(_el){_el.focus();try{_el.setSelectionRange(_p,_p);}catch(e){}}" placeholder="🔍 Buscar OP o nombre..." style="width:100%;background:#0d1117;border:1px solid #2c2c2e;border-radius:20px;color:#e2e8f0;font-size:12px;padding:5px 32px 5px 14px;outline:none;box-sizing:border-box;">';
+  if(_invBusqueda) h += '<button onclick="_invSetBusqueda(\'\')" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:#475569;cursor:pointer;font-size:14px;padding:0;line-height:1;">×</button>';
+  h += '</div></div>';
 
   h += '<div class="card" style="padding:0;overflow:hidden;margin-bottom:18px;">';
   h += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0;">';
@@ -8987,6 +8999,7 @@ function renderInversion(){
   if(sinReceta) h += '<div style="background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.3);border-radius:9px;padding:10px 14px;font-size:12px;color:#fbbf24;margin-bottom:14px;">⚠ '+sinReceta+' OP(s) sin receta de costeo vinculada todavía — su checklist de insumos aparecerá automáticamente en cuanto se cree/vincule la receta en Costeo.</div>';
 
   if(!filas.length){ h += '<div class="empty-state">No hay OPs en proceso.</div></div>'; return h; }
+  if(!filasVista.length){ h += '<div class="empty-state">🔍 Sin resultados para "'+esc(_invBusqueda)+'".</div></div>'; return h; }
 
   h += '<div class="card" style="padding:0;overflow:hidden;">';
   h += '<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:12px;">';
@@ -8995,7 +9008,7 @@ function renderInversion(){
     h += '<th style="padding:8px 10px;text-align:'+(col===''?'center':(col==='OP'||col==='Referencia'?'left':(col==='Receta'?'center':'right')))+';color:var(--dim);font-size:10px;font-weight:700;white-space:nowrap;border-bottom:1px solid var(--card-border);">'+col+'</th>';
   });
   h += '</tr></thead><tbody>';
-  filas.forEach(function(r, i){
+  filasVista.forEach(function(r, i){
     var op = r.op;
     var expandido = !!_invExpandido[op.id];
     var rowBg = i%2===0 ? '' : 'background:rgba(255,255,255,.012);';
@@ -9033,6 +9046,8 @@ function renderInversion(){
   return h;
 }
 var _invExpandido = {};
+var _invBusqueda = '';
+function _invSetBusqueda(v){ _invBusqueda = v; renderPage('inversion'); }
 function _invToggleExpand(opId){
   _invExpandido[opId] = !_invExpandido[opId];
   renderPage(currentPage);
