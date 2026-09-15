@@ -18763,20 +18763,37 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "VERDE MILITAR",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1789499834476_wfspd",
-      "ts": 1789499834476,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-111",
       "op_nombre": "OVERSIZED CAPOTA",
       "referencia": "OVERSIZED CAPOTA",
-      "color": "VERDE MILITAR",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1789499834476,
       "uds": 56,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789500033758_qvl77",
+      "ts": 1789500033758,
+      "user": "Jefa de Producción",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-131",
+      "op_nombre": "PANTALON RAVE",
+      "categoria": "PANTALONES",
+      "total_ots": 6,
+      "total_uds": 102,
+      "colores": [
+        "CAMEL"
+      ],
+      "referencias": [
+        "PANTALON RAVE"
+      ]
     }
   ]
 }
