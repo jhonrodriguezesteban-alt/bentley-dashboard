@@ -18587,15 +18587,32 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1789482029484_wm2ec",
-      "ts": 1789482029484,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-113",
-      "nombre": "CHAQUETA RALPH",
       "categoria": "CHAQUETAS",
       "colores": 3,
-      "refs": 1
+      "id": "evt_1789482029484_wm2ec",
+      "nombre": "CHAQUETA RALPH",
+      "op_id": "OP-2026-113",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1789482029484,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789488003714_par33",
+      "ts": 1789488003714,
+      "user": "Jefa de Producción",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-099",
+      "op_nombre": "BEISBOLERA 2.0",
+      "categoria": "CHAQUETAS",
+      "total_ots": 6,
+      "total_uds": 80,
+      "colores": [
+        "CAFE"
+      ],
+      "referencias": [
+        "BEISBOLERA 2.0"
+      ]
     }
   ]
 }
