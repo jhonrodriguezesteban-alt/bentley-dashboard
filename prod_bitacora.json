@@ -18779,21 +18779,37 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1789500033758_qvl77",
-      "ts": 1789500033758,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-131",
-      "op_nombre": "PANTALON RAVE",
       "categoria": "PANTALONES",
-      "total_ots": 6,
-      "total_uds": 102,
       "colores": [
         "CAMEL"
       ],
+      "id": "evt_1789500033758_qvl77",
+      "op_id": "OP-2026-131",
+      "op_nombre": "PANTALON RAVE",
       "referencias": [
         "PANTALON RAVE"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 6,
+      "total_uds": 102,
+      "ts": 1789500033758,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789500051531_c0b37",
+      "ts": 1789500051531,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-131",
+      "op_nombre": "PANTALON RAVE",
+      "referencia": "PANTALON RAVE",
+      "color": "CAMEL",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 102,
+      "motivo": "EN TALLER"
     }
   ]
 }
