@@ -3898,7 +3898,7 @@
       "numero": 169,
       "subg_estados": {
         "OP-0169||VERDE MENTA": "CORTE_POR_ALISTAR",
-        "OP-0169||VERDE PINO": "ALISTAMIENTO"
+        "OP-0169||VERDE PINO": "PAGO_PENDIENTE"
       },
       "tallas": [
         "T4",
@@ -3928,7 +3928,7 @@
       "numero": 174,
       "op_effi": 5167,
       "subg_estados": {
-        "OP-0174||AVENA": "ALISTAMIENTO",
+        "OP-0174||AVENA": "PAGO_PENDIENTE",
         "OP-0174||MARFIL": "PAGO_PENDIENTE"
       },
       "tallas": [
@@ -3940,7 +3940,13 @@
         "T14",
         "T16"
       ],
-      "total_uds": 252
+      "total_uds": 252,
+      "consumibles_check": {
+        "rec_set_franky_pr_3012__c101_23": true,
+        "rec_set_franky_pr_3012__c101_24": true,
+        "rec_set_franky_pr_3012__c101_25": true,
+        "rec_set_franky_pr_3012__c101_26": true
+      }
     },
     {
       "categoria": "CHAQUETAS",
