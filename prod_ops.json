@@ -47,7 +47,7 @@
         "OP-0001||LILA": "PAGO_PENDIENTE",
         "OP-0001||NEGRO": "ALISTAMIENTO",
         "OP-0001||ROSA": "PAGO_PENDIENTE",
-        "OP-0001||VERDE MILITAR": "EN_CONFECCION"
+        "OP-0001||VERDE MILITAR": "PAGO_PENDIENTE"
       },
       "tallas": [
         "T4",
@@ -127,7 +127,7 @@
       "cortador": "CARVAJAL",
       "created_at": "2026-01-21",
       "created_by": "migrado_matriz",
-      "estado_op": "CON_NOVEDAD",
+      "estado_op": "PAGO_PENDIENTE",
       "fecha_op": "2026-01-21",
       "id": "OP-0004",
       "migrado": true,
@@ -136,7 +136,7 @@
       "op_effi": 5210,
       "subg_estados": {
         "OP-0004||CAMUFLADO AZUL": "PAGO_PENDIENTE",
-        "OP-0004||CAMUFLADO VERDE": "ALISTAMIENTO"
+        "OP-0004||CAMUFLADO VERDE": "PAGO_PENDIENTE"
       },
       "tallas": [
         "T2/4",
@@ -144,7 +144,11 @@
         "T10/12",
         "T14/16"
       ],
-      "total_uds": 196
+      "total_uds": 196,
+      "consumibles_check": {
+        "rec_buzo_yinky_1046__c19_18": true,
+        "rec_buzo_yinky_1046__c19_19": true
+      }
     },
     {
       "categoria": "CHAQUETAS",
