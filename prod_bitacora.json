@@ -18647,15 +18647,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1789489025464_xskt2",
-      "ts": 1789489025464,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-079",
-      "nombre": "BEISBOLERA ARMIN",
       "categoria": "CHAQUETAS",
       "colores": 3,
-      "refs": 1
+      "id": "evt_1789489025464_xskt2",
+      "nombre": "BEISBOLERA ARMIN",
+      "op_id": "OP-2026-079",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1789489025464,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789489053817_13svl",
+      "ts": 1789489053817,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-079",
+      "op_nombre": "BEISBOLERA ARMIN",
+      "referencia": "BEISBOLERA ARMIN",
+      "color": "AVENA",
+      "talla": "todas las tallas",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
+      "bulk": true,
+      "uds": 100,
+      "motivo": "en insumos"
     }
   ]
 }
