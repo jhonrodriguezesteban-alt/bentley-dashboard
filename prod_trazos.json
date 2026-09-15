@@ -333,36 +333,87 @@
       "op_nombre": "CHAQUETA HARLEY"
     },
     {
-      "id": "id_1789491800922_g75o1ktrt",
-      "op_id": "OP-2026-119",
-      "op_nombre": "WASHMAN",
       "categoria": "CHAQUETAS",
+      "creado_en": "2026-09-15",
+      "creado_por": "Isabel",
+      "enviada_en": "2026-09-15",
+      "estado": "ENVIADA",
+      "id": "id_1789491800922_g75o1ktrt",
+      "lineas": [
+        {
+          "ancho_util": 145,
+          "cantidad_trazos": 1,
+          "colores": [
+            "AZUL OSCURO",
+            "VINOTINTO"
+          ],
+          "generado": false,
+          "id": "id_1789491580203_mok47h466",
+          "impreso": false,
+          "recogido": false,
+          "tallas": [
+            "T6",
+            "T8"
+          ],
+          "tipo": "TELA_PRINCIPAL"
+        },
+        {
+          "ancho_util": 145,
+          "cantidad_trazos": 1,
+          "colores": [
+            "AZUL OSCURO",
+            "VINOTINTO"
+          ],
+          "generado": false,
+          "id": "id_1789491752207_hvzfhqldl",
+          "impreso": false,
+          "recogido": false,
+          "tallas": [
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "tipo": "TELA_PRINCIPAL"
+        }
+      ],
+      "op_id": "OP-2026-119",
+      "op_nombre": "WASHMAN"
+    },
+    {
+      "id": "id_1789510472124_sfkvca2oy",
+      "op_id": "OP-2026-220",
+      "op_nombre": "CONJUNTO DAKOTA",
+      "categoria": "CONJUNTOS",
       "creado_por": "Isabel",
       "creado_en": "2026-09-15",
       "estado": "ENVIADA",
       "enviada_en": "2026-09-15",
       "lineas": [
         {
-          "id": "id_1789491580203_mok47h466",
+          "id": "id_1789510442812_3kfifhp28",
           "tipo": "TELA_PRINCIPAL",
           "tallas": [
-            "T6",
-            "T8"
+            "T4",
+            "T6"
           ],
           "cantidad_trazos": 1,
           "ancho_util": 145,
+          "sentido": "AMBOS",
+          "notas": "",
           "colores": [
-            "AZUL OSCURO",
-            "VINOTINTO"
+            "VERDE MILITAR",
+            "NEGRO"
           ],
           "generado": false,
           "impreso": false,
           "recogido": false
         },
         {
-          "id": "id_1789491752207_hvzfhqldl",
+          "id": "id_1789510465281_du4hn6shk",
           "tipo": "TELA_PRINCIPAL",
           "tallas": [
+            "T8",
             "T10",
             "T12",
             "T14",
@@ -370,9 +421,11 @@
           ],
           "cantidad_trazos": 1,
           "ancho_util": 145,
+          "sentido": "AMBOS",
+          "notas": "",
           "colores": [
-            "AZUL OSCURO",
-            "VINOTINTO"
+            "VERDE MILITAR",
+            "NEGRO"
           ],
           "generado": false,
           "impreso": false,
