@@ -942,7 +942,7 @@
       "subg_estados": {
         "OP-0022||BLANCO": "ALISTAMIENTO",
         "OP-0022||NEGRO": "PAGO_PENDIENTE",
-        "OP-0022||VERDE MILITAR": "NOVEDAD"
+        "OP-0022||VERDE MILITAR": "PAGO_PENDIENTE"
       },
       "tallas": [
         "T4",
@@ -953,7 +953,12 @@
         "T14",
         "T16"
       ],
-      "total_uds": 170
+      "total_uds": 170,
+      "consumibles_check": {
+        "rec_chaleco_puffy_1150__c35_21": true,
+        "rec_chaleco_puffy_1150__c35_22": true,
+        "rec_chaleco_puffy_1150__c35_24": false
+      }
     },
     {
       "categoria": "CHAQUETAS",
