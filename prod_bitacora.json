@@ -18571,20 +18571,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1789481986621_lim8g",
-      "ts": 1789481986621,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-113",
       "op_nombre": "CHAQUETA RALPH",
       "referencia": "CHAQUETA RALPH",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1789481986621,
       "uds": 120,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789482029484_wm2ec",
+      "ts": 1789482029484,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-113",
+      "nombre": "CHAQUETA RALPH",
+      "categoria": "CHAQUETAS",
+      "colores": 3,
+      "refs": 1
     }
   ]
 }
