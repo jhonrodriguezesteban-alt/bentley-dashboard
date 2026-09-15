@@ -18892,19 +18892,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "BLANCO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1789507447796_xdts1",
-      "ts": 1789507447796,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-0022",
       "op_nombre": "CHALECO PUFFY",
       "referencia": "CHALECO PUFFY",
-      "color": "BLANCO",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1789507447796,
+      "uds": 70,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789507574529_vpu09",
+      "ts": 1789507574529,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0149",
+      "op_nombre": "CONJUNTO TRENZAS",
+      "referencia": "CONJUNTO TRENZAS",
+      "color": "AVENA",
       "talla": "todas las tallas",
       "estado_anterior": "ENTREGADO",
       "estado_nuevo": "ENTREGADO",
       "bulk": true,
-      "uds": 70,
+      "uds": 210,
       "motivo": "ENTREGADO"
     }
   ]
