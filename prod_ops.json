@@ -4763,27 +4763,27 @@
     },
     {
       "cantidades": {
-        "AVENA_T4": 10,
-        "AVENA_T6": 10,
-        "AVENA_T8": 16,
         "AVENA_T10": 16,
         "AVENA_T12": 16,
         "AVENA_T14": 16,
         "AVENA_T16": 16,
-        "MARFIL_T4": 10,
-        "MARFIL_T6": 10,
-        "MARFIL_T8": 16,
+        "AVENA_T4": 10,
+        "AVENA_T6": 10,
+        "AVENA_T8": 16,
         "MARFIL_T10": 16,
         "MARFIL_T12": 16,
         "MARFIL_T14": 16,
         "MARFIL_T16": 16,
-        "NEGRO_T4": 12,
-        "NEGRO_T6": 12,
-        "NEGRO_T8": 24,
+        "MARFIL_T4": 10,
+        "MARFIL_T6": 10,
+        "MARFIL_T8": 16,
         "NEGRO_T10": 24,
         "NEGRO_T12": 24,
         "NEGRO_T14": 24,
-        "NEGRO_T16": 24
+        "NEGRO_T16": 24,
+        "NEGRO_T4": 12,
+        "NEGRO_T6": 12,
+        "NEGRO_T8": 24
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -4811,15 +4811,38 @@
       "numero": 79,
       "referencias": [
         {
-          "nombre": "BEISBOLERA ARMIN",
-          "ref": "1132",
+          "cantidades": {
+            "AVENA_T10": 16,
+            "AVENA_T12": 16,
+            "AVENA_T14": 16,
+            "AVENA_T16": 16,
+            "AVENA_T4": 10,
+            "AVENA_T6": 10,
+            "AVENA_T8": 16,
+            "MARFIL_T10": 16,
+            "MARFIL_T12": 16,
+            "MARFIL_T14": 16,
+            "MARFIL_T16": 16,
+            "MARFIL_T4": 10,
+            "MARFIL_T6": 10,
+            "MARFIL_T8": 16,
+            "NEGRO_T10": 24,
+            "NEGRO_T12": 24,
+            "NEGRO_T14": 24,
+            "NEGRO_T16": 24,
+            "NEGRO_T4": 12,
+            "NEGRO_T6": 12,
+            "NEGRO_T8": 24
+          },
           "cat": "CHAQUETAS",
-          "vmo": 9144,
           "colores": [
             "AVENA",
             "MARFIL",
             "NEGRO"
           ],
+          "maquilador_id": "",
+          "nombre": "BEISBOLERA ARMIN",
+          "ref": "1132",
           "tallas": [
             "T4",
             "T6",
@@ -4829,32 +4852,13 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "AVENA_T4": 10,
-            "AVENA_T6": 10,
-            "AVENA_T8": 16,
-            "AVENA_T10": 16,
-            "AVENA_T12": 16,
-            "AVENA_T14": 16,
-            "AVENA_T16": 16,
-            "MARFIL_T4": 10,
-            "MARFIL_T6": 10,
-            "MARFIL_T8": 16,
-            "MARFIL_T10": 16,
-            "MARFIL_T12": 16,
-            "MARFIL_T14": 16,
-            "MARFIL_T16": 16,
-            "NEGRO_T4": 12,
-            "NEGRO_T6": 12,
-            "NEGRO_T8": 24,
-            "NEGRO_T10": 24,
-            "NEGRO_T12": 24,
-            "NEGRO_T14": 24,
-            "NEGRO_T16": 24
-          },
-          "maquilador_id": ""
+          "vmo": 9144
         }
       ],
+      "subg_estados": {
+        "OP-2026-079||AVENA": "CORTE_POR_ALISTAR",
+        "OP-2026-079||MARFIL": "CORTE_POR_ALISTAR"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -4864,11 +4868,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-09-15",
-      "subg_estados": {
-        "OP-2026-079||AVENA": "CORTE_POR_ALISTAR",
-        "OP-2026-079||MARFIL": "CORTE_POR_ALISTAR"
-      }
+      "updated_at": "2026-09-15"
     },
     {
       "cantidades": {
@@ -6753,7 +6753,14 @@
       "trazos_color_solicitado": {
         "BEIGE": true,
         "NEGRO": true
-      }
+      },
+      "trazos_solicitudes": [
+        {
+          "solicitud_id": "id_1789489631878_p4wwqdwyf",
+          "fecha": "2026-09-15",
+          "lineas": 9
+        }
+      ]
     },
     {
       "cantidades": {
@@ -13717,51 +13724,63 @@
       ]
     },
     {
-      "id": "OP-2026-232",
-      "numero": 232,
-      "fecha_op": "2026-09-15",
-      "cortador": "Corte Carbajal",
-      "categoria": "CHAQUETAS",
-      "nombre_producto": "BEISBOLERA ARMIN",
-      "colores": [
-        "AVENA",
-        "MARFIL"
-      ],
-      "tallas": [
-        "T4",
-        "T6",
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
       "cantidades": {
-        "AVENA_T4": 2,
-        "AVENA_T6": 2,
-        "AVENA_T8": 8,
         "AVENA_T10": 8,
         "AVENA_T12": 8,
         "AVENA_T14": 8,
         "AVENA_T16": 8,
-        "MARFIL_T4": 2,
-        "MARFIL_T6": 2,
-        "MARFIL_T8": 8,
+        "AVENA_T4": 2,
+        "AVENA_T6": 2,
+        "AVENA_T8": 8,
         "MARFIL_T10": 8,
         "MARFIL_T12": 8,
         "MARFIL_T14": 8,
-        "MARFIL_T16": 8
+        "MARFIL_T16": 8,
+        "MARFIL_T4": 2,
+        "MARFIL_T6": 2,
+        "MARFIL_T8": 8
       },
+      "categoria": "CHAQUETAS",
+      "colores": [
+        "AVENA",
+        "MARFIL"
+      ],
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-09-15",
+      "created_by": "Jefa de Producción",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-09-15",
+      "id": "OP-2026-232",
+      "nombre_producto": "BEISBOLERA ARMIN",
+      "numero": 232,
+      "receta_id": "rec_beisbolera_armin_1132",
+      "receta_nombre": "BEISBOLERA ARMIN - REF: 1132",
       "referencias": [
         {
-          "nombre": "BEISBOLERA ARMIN",
-          "ref": "1132",
+          "cantidades": {
+            "AVENA_T10": 8,
+            "AVENA_T12": 8,
+            "AVENA_T14": 8,
+            "AVENA_T16": 8,
+            "AVENA_T4": 2,
+            "AVENA_T6": 2,
+            "AVENA_T8": 8,
+            "MARFIL_T10": 8,
+            "MARFIL_T12": 8,
+            "MARFIL_T14": 8,
+            "MARFIL_T16": 8,
+            "MARFIL_T4": 2,
+            "MARFIL_T6": 2,
+            "MARFIL_T8": 8
+          },
           "cat": "CHAQUETAS",
-          "vmo": 9144,
           "colores": [
             "AVENA",
             "MARFIL"
           ],
+          "maquilador_id": "",
+          "nombre": "BEISBOLERA ARMIN",
+          "ref": "1132",
           "tallas": [
             "T4",
             "T6",
@@ -13771,32 +13790,19 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "AVENA_T4": 2,
-            "AVENA_T6": 2,
-            "AVENA_T8": 8,
-            "AVENA_T10": 8,
-            "AVENA_T12": 8,
-            "AVENA_T14": 8,
-            "AVENA_T16": 8,
-            "MARFIL_T4": 2,
-            "MARFIL_T6": 2,
-            "MARFIL_T8": 8,
-            "MARFIL_T10": 8,
-            "MARFIL_T12": 8,
-            "MARFIL_T14": 8,
-            "MARFIL_T16": 8
-          },
           "totalUds": 88,
-          "maquilador_id": ""
+          "vmo": 9144
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-09-15",
-      "created_by": "Jefa de Producción",
-      "receta_id": "rec_beisbolera_armin_1132",
-      "receta_nombre": "BEISBOLERA ARMIN - REF: 1132"
+      "tallas": [
+        "T4",
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ]
     }
   ]
 }
