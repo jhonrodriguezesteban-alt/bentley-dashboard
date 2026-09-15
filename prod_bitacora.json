@@ -18632,19 +18632,30 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1789488982367_wjxis",
-      "ts": 1789488982367,
-      "user": "Jefa de Producción",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-232",
-      "op_nombre": "BEISBOLERA ARMIN",
       "categoria": "CHAQUETAS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-09-15",
-      "total_uds": 88,
+      "id": "evt_1789488982367_wjxis",
+      "op_id": "OP-2026-232",
+      "op_nombre": "BEISBOLERA ARMIN",
       "referencias": [
         "BEISBOLERA ARMIN"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 88,
+      "ts": 1789488982367,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789489025464_xskt2",
+      "ts": 1789489025464,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-079",
+      "nombre": "BEISBOLERA ARMIN",
+      "categoria": "CHAQUETAS",
+      "colores": 3,
+      "refs": 1
     }
   ]
 }
