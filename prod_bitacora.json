@@ -18812,19 +18812,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "AZUL OSCURO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1789500089384_fxa7q",
-      "ts": 1789500089384,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-110",
       "op_nombre": "PANTALON RAVE",
       "referencia": "PANTALON RAVE",
-      "color": "AZUL OSCURO",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1789500089384,
+      "uds": 139,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789500136886_xw3md",
+      "ts": 1789500136886,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-085",
+      "op_nombre": "PANTALON RAVE",
+      "referencia": "PANTALON RAVE",
+      "color": "VERDE MILITAR",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 139,
+      "uds": 78,
       "motivo": "EN TALLER"
     }
   ]
