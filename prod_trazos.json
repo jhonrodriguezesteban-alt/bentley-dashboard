@@ -105,72 +105,237 @@
       "op_nombre": "CAMISA CLASICA BK"
     },
     {
-      "id": "id_1789487705983_39gh4fypo",
-      "op_id": "OP-0037",
-      "op_nombre": "CHALECO ACOLCHADO MANY",
       "categoria": "CHALECOS",
-      "creado_por": "Isabel",
       "creado_en": "2026-09-15",
-      "estado": "ENVIADA",
+      "creado_por": "Isabel",
       "enviada_en": "2026-09-15",
+      "estado": "ENVIADA",
+      "id": "id_1789487705983_39gh4fypo",
       "lineas": [
         {
-          "id": "id_1789487566312_i0vh5hza4",
-          "tipo": "TELA_PRINCIPAL",
-          "tallas": [
-            "T12",
-            "T14",
-            "T16"
-          ],
-          "cantidad_trazos": 3,
           "ancho_util": 128,
+          "cantidad_trazos": 3,
           "colores": [
             "BEIGE"
           ],
           "generado": false,
+          "id": "id_1789487566312_i0vh5hza4",
           "impreso": false,
-          "recogido": false
-        },
-        {
-          "id": "id_1789487643683_ddlgxig2m",
-          "tipo": "PIEZAS_LISAS",
+          "recogido": false,
           "tallas": [
             "T12",
             "T14",
             "T16"
           ],
-          "cantidad_trazos": 1,
+          "tipo": "TELA_PRINCIPAL"
+        },
+        {
           "ancho_util": 136,
+          "cantidad_trazos": 1,
           "colores": [
             "BEIGE"
           ],
           "generado": false,
+          "id": "id_1789487643683_ddlgxig2m",
           "impreso": false,
-          "recogido": false
-        },
-        {
-          "id": "id_1789487684132_8vbok1hnu",
-          "tipo": "FORRO",
+          "recogido": false,
           "tallas": [
             "T12",
             "T14",
             "T16"
           ],
-          "cantidad_trazos": 1,
+          "tipo": "PIEZAS_LISAS"
+        },
+        {
           "ancho_util": 146,
+          "cantidad_trazos": 1,
           "colores": [
             "BEIGE"
           ],
           "generado": false,
+          "id": "id_1789487684132_8vbok1hnu",
           "impreso": false,
-          "recogido": false
+          "recogido": false,
+          "tallas": [
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "tipo": "FORRO"
         }
-      ]
+      ],
+      "op_id": "OP-0037",
+      "op_nombre": "CHALECO ACOLCHADO MANY"
     },
     {
+      "categoria": "CHAQUETAS",
+      "creado_en": "2026-09-15",
+      "creado_por": "Isabel",
+      "enviada_en": "2026-09-15",
+      "estado": "ENVIADA",
       "id": "id_1789489631878_p4wwqdwyf",
+      "lineas": [
+        {
+          "ancho_util": 128,
+          "cantidad_trazos": 3,
+          "colores": [
+            "NEGRO",
+            "BEIGE"
+          ],
+          "generado": false,
+          "id": "id_1789488144279_5l82usum1",
+          "impreso": false,
+          "recogido": false,
+          "tallas": [
+            "T6"
+          ],
+          "tipo": "TELA_PRINCIPAL"
+        },
+        {
+          "ancho_util": 128,
+          "cantidad_trazos": 6,
+          "colores": [
+            "NEGRO",
+            "BEIGE"
+          ],
+          "generado": false,
+          "id": "id_1789488186805_bb90hypv0",
+          "impreso": false,
+          "recogido": false,
+          "tallas": [
+            "T8",
+            "T10",
+            "T12",
+            "T14"
+          ],
+          "tipo": "TELA_PRINCIPAL"
+        },
+        {
+          "ancho_util": 128,
+          "cantidad_trazos": 4,
+          "colores": [
+            "NEGRO",
+            "BEIGE"
+          ],
+          "generado": false,
+          "id": "id_1789489329996_n00rn49wz",
+          "impreso": false,
+          "recogido": false,
+          "tallas": [
+            "T16"
+          ],
+          "tipo": "TELA_PRINCIPAL"
+        },
+        {
+          "ancho_util": 136,
+          "cantidad_trazos": 1,
+          "colores": [
+            "NEGRO",
+            "BEIGE"
+          ],
+          "generado": false,
+          "id": "id_1789489394937_u0r459x4n",
+          "impreso": false,
+          "recogido": false,
+          "tallas": [
+            "T6"
+          ],
+          "tipo": "PIEZAS_LISAS"
+        },
+        {
+          "ancho_util": 136,
+          "cantidad_trazos": 1,
+          "colores": [
+            "NEGRO",
+            "BEIGE"
+          ],
+          "generado": false,
+          "id": "id_1789489479898_e00y2uim3",
+          "impreso": false,
+          "recogido": false,
+          "tallas": [
+            "T8",
+            "T10",
+            "T12",
+            "T14"
+          ],
+          "tipo": "PIEZAS_LISAS"
+        },
+        {
+          "ancho_util": 136,
+          "cantidad_trazos": 1,
+          "colores": [
+            "NEGRO",
+            "BEIGE"
+          ],
+          "generado": false,
+          "id": "id_1789489530029_zk3ya9qi9",
+          "impreso": false,
+          "recogido": false,
+          "tallas": [
+            "T16"
+          ],
+          "tipo": "PIEZAS_LISAS"
+        },
+        {
+          "ancho_util": 146,
+          "cantidad_trazos": 1,
+          "colores": [
+            "NEGRO",
+            "BEIGE"
+          ],
+          "generado": false,
+          "id": "id_1789489563077_xz71ttqea",
+          "impreso": false,
+          "recogido": false,
+          "tallas": [
+            "T6"
+          ],
+          "tipo": "FORRO"
+        },
+        {
+          "ancho_util": 146,
+          "cantidad_trazos": 1,
+          "colores": [
+            "NEGRO",
+            "BEIGE"
+          ],
+          "generado": false,
+          "id": "id_1789489585063_ipl681c6n",
+          "impreso": false,
+          "recogido": false,
+          "tallas": [
+            "T8",
+            "T10",
+            "T12",
+            "T14"
+          ],
+          "tipo": "FORRO"
+        },
+        {
+          "ancho_util": 136,
+          "cantidad_trazos": 1,
+          "colores": [
+            "NEGRO",
+            "BEIGE"
+          ],
+          "generado": false,
+          "id": "id_1789489606353_ay6opzqv6",
+          "impreso": false,
+          "recogido": false,
+          "tallas": [
+            "T16"
+          ],
+          "tipo": "FORRO"
+        }
+      ],
       "op_id": "OP-2026-100",
-      "op_nombre": "CHAQUETA HARLEY",
+      "op_nombre": "CHAQUETA HARLEY"
+    },
+    {
+      "id": "id_1789491800922_g75o1ktrt",
+      "op_id": "OP-2026-119",
+      "op_nombre": "WASHMAN",
       "categoria": "CHAQUETAS",
       "creado_por": "Isabel",
       "creado_en": "2026-09-15",
@@ -178,153 +343,36 @@
       "enviada_en": "2026-09-15",
       "lineas": [
         {
-          "id": "id_1789488144279_5l82usum1",
+          "id": "id_1789491580203_mok47h466",
           "tipo": "TELA_PRINCIPAL",
           "tallas": [
-            "T6"
-          ],
-          "cantidad_trazos": 3,
-          "ancho_util": 128,
-          "colores": [
-            "NEGRO",
-            "BEIGE"
-          ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
-        },
-        {
-          "id": "id_1789488186805_bb90hypv0",
-          "tipo": "TELA_PRINCIPAL",
-          "tallas": [
-            "T8",
-            "T10",
-            "T12",
-            "T14"
-          ],
-          "cantidad_trazos": 6,
-          "ancho_util": 128,
-          "colores": [
-            "NEGRO",
-            "BEIGE"
-          ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
-        },
-        {
-          "id": "id_1789489329996_n00rn49wz",
-          "tipo": "TELA_PRINCIPAL",
-          "tallas": [
-            "T16"
-          ],
-          "cantidad_trazos": 4,
-          "ancho_util": 128,
-          "colores": [
-            "NEGRO",
-            "BEIGE"
-          ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
-        },
-        {
-          "id": "id_1789489394937_u0r459x4n",
-          "tipo": "PIEZAS_LISAS",
-          "tallas": [
-            "T6"
+            "T6",
+            "T8"
           ],
           "cantidad_trazos": 1,
-          "ancho_util": 136,
+          "ancho_util": 145,
           "colores": [
-            "NEGRO",
-            "BEIGE"
+            "AZUL OSCURO",
+            "VINOTINTO"
           ],
           "generado": false,
           "impreso": false,
           "recogido": false
         },
         {
-          "id": "id_1789489479898_e00y2uim3",
-          "tipo": "PIEZAS_LISAS",
+          "id": "id_1789491752207_hvzfhqldl",
+          "tipo": "TELA_PRINCIPAL",
           "tallas": [
-            "T8",
             "T10",
             "T12",
-            "T14"
-          ],
-          "cantidad_trazos": 1,
-          "ancho_util": 136,
-          "colores": [
-            "NEGRO",
-            "BEIGE"
-          ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
-        },
-        {
-          "id": "id_1789489530029_zk3ya9qi9",
-          "tipo": "PIEZAS_LISAS",
-          "tallas": [
+            "T14",
             "T16"
           ],
           "cantidad_trazos": 1,
-          "ancho_util": 136,
+          "ancho_util": 145,
           "colores": [
-            "NEGRO",
-            "BEIGE"
-          ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
-        },
-        {
-          "id": "id_1789489563077_xz71ttqea",
-          "tipo": "FORRO",
-          "tallas": [
-            "T6"
-          ],
-          "cantidad_trazos": 1,
-          "ancho_util": 146,
-          "colores": [
-            "NEGRO",
-            "BEIGE"
-          ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
-        },
-        {
-          "id": "id_1789489585063_ipl681c6n",
-          "tipo": "FORRO",
-          "tallas": [
-            "T8",
-            "T10",
-            "T12",
-            "T14"
-          ],
-          "cantidad_trazos": 1,
-          "ancho_util": 146,
-          "colores": [
-            "NEGRO",
-            "BEIGE"
-          ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
-        },
-        {
-          "id": "id_1789489606353_ay6opzqv6",
-          "tipo": "FORRO",
-          "tallas": [
-            "T16"
-          ],
-          "cantidad_trazos": 1,
-          "ancho_util": 136,
-          "colores": [
-            "NEGRO",
-            "BEIGE"
+            "AZUL OSCURO",
+            "VINOTINTO"
           ],
           "generado": false,
           "impreso": false,
