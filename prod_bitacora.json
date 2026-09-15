@@ -18674,20 +18674,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MARFIL",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1789489067047_gkrw6",
-      "ts": 1789489067047,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-079",
       "op_nombre": "BEISBOLERA ARMIN",
       "referencia": "BEISBOLERA ARMIN",
-      "color": "MARFIL",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1789489067047,
       "uds": 100,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789494480520_zis53",
+      "ts": 1789494480520,
+      "user": "Jefa de Producción",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-233",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "categoria": "CHAQUETAS",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-09-15",
+      "total_uds": 46,
+      "referencias": [
+        "OVERSIZED CAPOTA"
+      ]
     }
   ]
 }
