@@ -18908,20 +18908,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "AVENA",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1789507574529_vpu09",
-      "ts": 1789507574529,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-0149",
       "op_nombre": "CONJUNTO TRENZAS",
       "referencia": "CONJUNTO TRENZAS",
-      "color": "AVENA",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1789507574529,
       "uds": 210,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789508761258_brq0z",
+      "ts": 1789508761258,
+      "user": "Isabel",
+      "tipo": "diseno_comentario",
+      "diseno_id": "id_6e172690a79b4df7",
+      "nombre": "CONJUNTO BOMBER CORTA",
+      "categoria": "Conjuntos",
+      "tiene_imagen": false,
+      "extracto": "Muestras realizadas. Listas para medir talla 8 y16.\n \nEn cuanto al trazo rectifi"
     }
   ]
 }
