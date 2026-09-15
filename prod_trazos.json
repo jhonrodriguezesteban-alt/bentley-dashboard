@@ -66,17 +66,17 @@
             "AZUL"
           ],
           "generado": true,
+          "generado_en": "2026-09-09",
           "id": "id_1788983199089_gxqash7b4",
           "impreso": true,
+          "impreso_en": "2026-09-09",
           "recogido": true,
+          "recogido_en": "2026-09-09",
           "tallas": [
             "T4",
             "T6"
           ],
-          "tipo": "TELA_PRINCIPAL",
-          "generado_en": "2026-09-09",
-          "impreso_en": "2026-09-09",
-          "recogido_en": "2026-09-09"
+          "tipo": "TELA_PRINCIPAL"
         },
         {
           "ancho_util": 144,
@@ -86,8 +86,10 @@
             "AZUL"
           ],
           "generado": true,
+          "generado_en": "2026-09-09",
           "id": "id_1788983236465_1dmeq4mp7",
           "impreso": true,
+          "impreso_en": "2026-09-09",
           "recogido": false,
           "tallas": [
             "T8",
@@ -96,13 +98,74 @@
             "T14",
             "T16"
           ],
-          "tipo": "TELA_PRINCIPAL",
-          "generado_en": "2026-09-09",
-          "impreso_en": "2026-09-09"
+          "tipo": "TELA_PRINCIPAL"
         }
       ],
       "op_id": "OP-2026-216",
       "op_nombre": "CAMISA CLASICA BK"
+    },
+    {
+      "id": "id_1789487705983_39gh4fypo",
+      "op_id": "OP-0037",
+      "op_nombre": "CHALECO ACOLCHADO MANY",
+      "categoria": "CHALECOS",
+      "creado_por": "Isabel",
+      "creado_en": "2026-09-15",
+      "estado": "ENVIADA",
+      "enviada_en": "2026-09-15",
+      "lineas": [
+        {
+          "id": "id_1789487566312_i0vh5hza4",
+          "tipo": "TELA_PRINCIPAL",
+          "tallas": [
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "cantidad_trazos": 3,
+          "ancho_util": 128,
+          "colores": [
+            "BEIGE"
+          ],
+          "generado": false,
+          "impreso": false,
+          "recogido": false
+        },
+        {
+          "id": "id_1789487643683_ddlgxig2m",
+          "tipo": "PIEZAS_LISAS",
+          "tallas": [
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "cantidad_trazos": 1,
+          "ancho_util": 136,
+          "colores": [
+            "BEIGE"
+          ],
+          "generado": false,
+          "impreso": false,
+          "recogido": false
+        },
+        {
+          "id": "id_1789487684132_8vbok1hnu",
+          "tipo": "FORRO",
+          "tallas": [
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "cantidad_trazos": 1,
+          "ancho_util": 146,
+          "colores": [
+            "BEIGE"
+          ],
+          "generado": false,
+          "impreso": false,
+          "recogido": false
+        }
+      ]
     }
   ]
 }
