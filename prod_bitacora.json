@@ -18859,21 +18859,37 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1789503243013_z2oh3",
-      "ts": 1789503243013,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-234",
-      "op_nombre": "CHAQUETA HARLEY",
       "categoria": "CHAQUETAS",
-      "total_ots": 6,
-      "total_uds": 102,
       "colores": [
         "NEGRO"
       ],
+      "id": "evt_1789503243013_z2oh3",
+      "op_id": "OP-2026-234",
+      "op_nombre": "CHAQUETA HARLEY",
       "referencias": [
         "CHAQUETA HARLEY"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 6,
+      "total_uds": 102,
+      "ts": 1789503243013,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789503270811_hd7n4",
+      "ts": 1789503270811,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-234",
+      "op_nombre": "CHAQUETA HARLEY",
+      "referencia": "CHAQUETA HARLEY",
+      "color": "NEGRO",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 102,
+      "motivo": "EN TALLER"
     }
   ]
 }
