@@ -1763,14 +1763,14 @@
       "trazos_color_solicitado": {
         "BEIGE": true
       },
-      "updated_at": "2026-08-27",
       "trazos_solicitudes": [
         {
-          "solicitud_id": "id_1789487705983_39gh4fypo",
           "fecha": "2026-09-15",
-          "lineas": 3
+          "lineas": 3,
+          "solicitud_id": "id_1789487705983_39gh4fypo"
         }
-      ]
+      ],
+      "updated_at": "2026-08-27"
     },
     {
       "cantidades": {
@@ -4439,8 +4439,7 @@
         "AVENA": false,
         "GRIS OSCURO": false
       },
-      "updated_at": "2026-07-30",
-      "subg_estados": {}
+      "updated_at": "2026-07-30"
     },
     {
       "cantidades": {
@@ -4539,8 +4538,7 @@
         "MARFIL": false,
         "NEGRO": true
       },
-      "updated_at": "2026-07-30",
-      "subg_estados": {}
+      "updated_at": "2026-07-30"
     },
     {
       "cantidades": {
@@ -4761,8 +4759,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -4867,8 +4864,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-08-25",
-      "subg_estados": {}
+      "updated_at": "2026-08-25"
     },
     {
       "cantidades": {
@@ -5173,8 +5169,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -5256,8 +5251,7 @@
       "trazos_color_solicitado": {
         "AVENA": true,
         "GRIS MEDIO": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -5906,8 +5900,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -6287,8 +6280,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -6601,6 +6593,22 @@
         "VINOTINTO",
         "CAFE"
       ],
+      "consumibles_check": {
+        "cid_1783368475768_2164__cid_1783368475768_3498": true,
+        "cid_1783368475768_2164__cid_1783368475768_4295": true,
+        "cid_1783368475768_2164__cid_1783368475768_4295||CAFE": true,
+        "cid_1783368475768_2164__cid_1783368475768_4295||GRIS OSCURO": true,
+        "cid_1783368475768_2164__cid_1783368475768_4295||VINOTINTO": false,
+        "cid_1783368475768_2164__cid_1783368475768_4637": true,
+        "cid_1783368475768_2164__cid_1783368475768_5574": true,
+        "cid_1783368475768_2164__cid_1783368475768_5609": true,
+        "cid_1783368475768_2164__cid_1783368475768_6797": true,
+        "cid_1783368475768_2164__cid_1783368475768_9305": true,
+        "cid_1783368475768_2164__cid_1783368684304_3011": true
+      },
+      "consumibles_desagregado": {
+        "cid_1783368475768_2164__cid_1783368475768_4295": true
+      },
       "cortador": "Corte Carbajal",
       "created_at": "2026-07-31",
       "created_by": "John Rodriguez",
@@ -6660,24 +6668,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {},
-      "consumibles_check": {
-        "cid_1783368475768_2164__cid_1783368475768_4295": true,
-        "cid_1783368475768_2164__cid_1783368475768_4295||GRIS OSCURO": true,
-        "cid_1783368475768_2164__cid_1783368475768_4295||VINOTINTO": false,
-        "cid_1783368475768_2164__cid_1783368475768_3498": true,
-        "cid_1783368475768_2164__cid_1783368475768_6797": true,
-        "cid_1783368475768_2164__cid_1783368475768_9305": true,
-        "cid_1783368475768_2164__cid_1783368475768_5574": true,
-        "cid_1783368475768_2164__cid_1783368475768_4637": true,
-        "cid_1783368475768_2164__cid_1783368475768_5609": true,
-        "cid_1783368475768_2164__cid_1783368684304_3011": true,
-        "cid_1783368475768_2164__cid_1783368475768_4295||CAFE": true
-      },
-      "consumibles_desagregado": {
-        "cid_1783368475768_2164__cid_1783368475768_4295": true
-      }
+      ]
     },
     {
       "cantidades": {
@@ -6755,10 +6746,9 @@
         "T14",
         "T16"
       ],
-      "subg_estados": {},
       "trazos_color_solicitado": {
-        "NEGRO": true,
-        "BEIGE": true
+        "BEIGE": true,
+        "NEGRO": true
       }
     },
     {
@@ -7221,8 +7211,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -7570,8 +7559,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-08-04",
-      "subg_estados": {}
+      "updated_at": "2026-08-04"
     },
     {
       "cantidades": {
@@ -7721,6 +7709,7 @@
       ],
       "consumibles_check": {
         "rec_oversized_capota_1058__c82_20": false,
+        "rec_oversized_capota_1058__c82_20||CAFE": true,
         "rec_oversized_capota_1058__c82_20||CAMEL": true,
         "rec_oversized_capota_1058__c82_20||MARFIL": true,
         "rec_oversized_capota_1058__c82_20||MORA LECHE": true,
@@ -7730,12 +7719,11 @@
         "rec_oversized_capota_1058__c82_21": true,
         "rec_oversized_capota_1058__c82_22": true,
         "rec_oversized_capota_1058__c82_23": true,
+        "rec_oversized_capota_1058__c82_24": true,
         "rec_oversized_capota_1058__c82_25": true,
         "rec_oversized_capota_1058__c82_28": true,
         "rec_oversized_capota_1058__c82_30": true,
-        "rec_oversized_capota_1058__c82_31": true,
-        "rec_oversized_capota_1058__c82_20||CAFE": true,
-        "rec_oversized_capota_1058__c82_24": true
+        "rec_oversized_capota_1058__c82_31": true
       },
       "consumibles_desagregado": {
         "rec_oversized_capota_1058__c82_20": true
@@ -7953,29 +7941,28 @@
         "AZUL OSCURO": true,
         "MORA LECHE": true,
         "NEGRO": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
-        "NEGRO_T6": 19,
-        "NEGRO_T8": 19,
-        "NEGRO_T10": 19,
-        "NEGRO_T12": 19,
-        "NEGRO_T14": 19,
-        "NEGRO_T16": 19,
-        "AZUL OSCURO_T6": 14,
-        "AZUL OSCURO_T8": 14,
         "AZUL OSCURO_T10": 14,
         "AZUL OSCURO_T12": 14,
         "AZUL OSCURO_T14": 14,
         "AZUL OSCURO_T16": 14,
-        "CAMEL_T6": 19,
-        "CAMEL_T8": 19,
+        "AZUL OSCURO_T6": 14,
+        "AZUL OSCURO_T8": 14,
         "CAMEL_T10": 19,
         "CAMEL_T12": 19,
         "CAMEL_T14": 19,
-        "CAMEL_T16": 19
+        "CAMEL_T16": 19,
+        "CAMEL_T6": 19,
+        "CAMEL_T8": 19,
+        "NEGRO_T10": 19,
+        "NEGRO_T12": 19,
+        "NEGRO_T14": 19,
+        "NEGRO_T16": 19,
+        "NEGRO_T6": 19,
+        "NEGRO_T8": 19
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -8010,15 +7997,35 @@
       "receta_nombre": "CHAQUETA RALPH - REF: 1155",
       "referencias": [
         {
-          "nombre": "CHAQUETA RALPH",
-          "ref": "1155",
+          "cantidades": {
+            "AZUL OSCURO_T10": 14,
+            "AZUL OSCURO_T12": 14,
+            "AZUL OSCURO_T14": 14,
+            "AZUL OSCURO_T16": 14,
+            "AZUL OSCURO_T6": 14,
+            "AZUL OSCURO_T8": 14,
+            "CAMEL_T10": 19,
+            "CAMEL_T12": 19,
+            "CAMEL_T14": 19,
+            "CAMEL_T16": 19,
+            "CAMEL_T6": 19,
+            "CAMEL_T8": 19,
+            "NEGRO_T10": 19,
+            "NEGRO_T12": 19,
+            "NEGRO_T14": 19,
+            "NEGRO_T16": 19,
+            "NEGRO_T6": 19,
+            "NEGRO_T8": 19
+          },
           "cat": "CHAQUETAS",
-          "vmo": 9459,
           "colores": [
             "NEGRO",
             "AZUL OSCURO",
             "CAMEL"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA RALPH",
+          "ref": "1155",
           "tallas": [
             "T6",
             "T8",
@@ -8027,27 +8034,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T6": 19,
-            "NEGRO_T8": 19,
-            "NEGRO_T10": 19,
-            "NEGRO_T12": 19,
-            "NEGRO_T14": 19,
-            "NEGRO_T16": 19,
-            "AZUL OSCURO_T6": 14,
-            "AZUL OSCURO_T8": 14,
-            "AZUL OSCURO_T10": 14,
-            "AZUL OSCURO_T12": 14,
-            "AZUL OSCURO_T14": 14,
-            "AZUL OSCURO_T16": 14,
-            "CAMEL_T6": 19,
-            "CAMEL_T8": 19,
-            "CAMEL_T10": 19,
-            "CAMEL_T12": 19,
-            "CAMEL_T14": 19,
-            "CAMEL_T16": 19
-          },
-          "maquilador_id": ""
+          "vmo": 9459
         }
       ],
       "subg_estados": {
@@ -8713,8 +8700,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -8806,8 +8792,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -8904,8 +8889,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -8984,8 +8968,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-08-24",
-      "subg_estados": {}
+      "updated_at": "2026-08-24"
     },
     {
       "cantidades": {
@@ -9064,8 +9047,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -9307,8 +9289,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -9411,8 +9392,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -9501,8 +9481,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -9577,8 +9556,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -9657,8 +9635,7 @@
       "trazos_color_solicitado": {
         "AZUL BEBE": true,
         "MARFIL": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -9851,8 +9828,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-08-25",
-      "subg_estados": {}
+      "updated_at": "2026-08-25"
     },
     {
       "cantidades": {
@@ -9961,8 +9937,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10085,8 +10060,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10159,8 +10133,7 @@
       "trazos_color_solicitado": {
         "AVENA": true,
         "GRIS OSCURO": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -10249,8 +10222,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10351,8 +10323,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10425,8 +10396,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10469,6 +10439,9 @@
         "NEGRO",
         "VINOTINTO"
       ],
+      "consumibles_desagregado": {
+        "rec_conjunto_hoodie_capota_p_a_1178__c58_19": true
+      },
       "cortador": "Corte Carbajal",
       "created_at": "2026-08-25",
       "created_by": "John Rodriguez",
@@ -10543,11 +10516,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "consumibles_desagregado": {
-        "rec_conjunto_hoodie_capota_p_a_1178__c58_19": true
-      },
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10993,8 +10962,7 @@
         "CAMEL": true,
         "GRIS": true,
         "NEGRO": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -11073,8 +11041,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11161,8 +11128,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11260,8 +11226,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11362,8 +11327,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11444,8 +11408,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11577,8 +11540,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11679,8 +11641,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-09-02",
-      "subg_estados": {}
+      "updated_at": "2026-09-02"
     },
     {
       "cantidades": {
@@ -11798,8 +11759,7 @@
       "trazos_color_solicitado": {
         "MARFIL": true,
         "NEGRO": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -11919,8 +11879,7 @@
         "AZUL": true,
         "MARFIL": true,
         "VERDE": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -12063,8 +12022,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -12174,8 +12132,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -12277,8 +12234,7 @@
       "trazos_color_solicitado": {
         "NEGRO": true,
         "VERDE MILITAR": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -12407,8 +12363,7 @@
           "solicitud_id": "id_1788983260763_py3v163mk"
         }
       ],
-      "updated_at": "2026-09-02",
-      "subg_estados": {}
+      "updated_at": "2026-09-02"
     },
     {
       "cantidades": {
@@ -12526,8 +12481,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "_nota_separacion": "Separada de OP-0010 (CAMISA SYROS) el 2026-09-04: 24 OTs reales de la migracion original sin OP propia, mal colgadas de OP-0010 por error de la carga inicial. | Archivada el 2026-09-05: produccion ya entregada/pago pendiente en su totalidad, no requiere programacion activa.",
@@ -12630,8 +12584,7 @@
         "T8",
         "T10",
         "T12"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -12733,8 +12686,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-09-14",
-      "subg_estados": {}
+      "updated_at": "2026-09-14"
     },
     {
       "cantidades": {
@@ -12815,8 +12767,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -12922,8 +12873,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-09-13",
-      "subg_estados": {}
+      "updated_at": "2026-09-13"
     },
     {
       "cantidades": {
@@ -13007,8 +12957,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -13074,8 +13023,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -13167,8 +13115,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-09-13",
-      "subg_estados": {}
+      "updated_at": "2026-09-13"
     },
     {
       "cantidades": {
@@ -13233,8 +13180,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-09-13",
-      "subg_estados": {}
+      "updated_at": "2026-09-13"
     },
     {
       "cantidades": {
@@ -13297,8 +13243,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-09-13",
-      "subg_estados": {}
+      "updated_at": "2026-09-13"
     },
     {
       "cantidades": {
@@ -13432,8 +13377,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -13567,8 +13511,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -13662,8 +13605,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -13768,8 +13710,87 @@
         "T12",
         "T14",
         "T16"
+      ]
+    },
+    {
+      "id": "OP-2026-232",
+      "numero": 232,
+      "fecha_op": "2026-09-15",
+      "cortador": "Corte Carbajal",
+      "categoria": "CHAQUETAS",
+      "nombre_producto": "BEISBOLERA ARMIN",
+      "colores": [
+        "AVENA",
+        "MARFIL"
       ],
-      "subg_estados": {}
+      "tallas": [
+        "T4",
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ],
+      "cantidades": {
+        "AVENA_T4": 2,
+        "AVENA_T6": 2,
+        "AVENA_T8": 8,
+        "AVENA_T10": 8,
+        "AVENA_T12": 8,
+        "AVENA_T14": 8,
+        "AVENA_T16": 8,
+        "MARFIL_T4": 2,
+        "MARFIL_T6": 2,
+        "MARFIL_T8": 8,
+        "MARFIL_T10": 8,
+        "MARFIL_T12": 8,
+        "MARFIL_T14": 8,
+        "MARFIL_T16": 8
+      },
+      "referencias": [
+        {
+          "nombre": "BEISBOLERA ARMIN",
+          "ref": "1132",
+          "cat": "CHAQUETAS",
+          "vmo": 9144,
+          "colores": [
+            "AVENA",
+            "MARFIL"
+          ],
+          "tallas": [
+            "T4",
+            "T6",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "cantidades": {
+            "AVENA_T4": 2,
+            "AVENA_T6": 2,
+            "AVENA_T8": 8,
+            "AVENA_T10": 8,
+            "AVENA_T12": 8,
+            "AVENA_T14": 8,
+            "AVENA_T16": 8,
+            "MARFIL_T4": 2,
+            "MARFIL_T6": 2,
+            "MARFIL_T8": 8,
+            "MARFIL_T10": 8,
+            "MARFIL_T12": 8,
+            "MARFIL_T14": 8,
+            "MARFIL_T16": 8
+          },
+          "totalUds": 88,
+          "maquilador_id": ""
+        }
+      ],
+      "op_effi": null,
+      "estado_op": "EN_PROCESO",
+      "created_at": "2026-09-15",
+      "created_by": "Jefa de Producción"
     }
   ]
 }
