@@ -91,6 +91,7 @@
           "impreso": true,
           "impreso_en": "2026-09-09",
           "recogido": true,
+          "recogido_en": "2026-09-16",
           "tallas": [
             "T8",
             "T10",
@@ -98,8 +99,7 @@
             "T14",
             "T16"
           ],
-          "tipo": "TELA_PRINCIPAL",
-          "recogido_en": "2026-09-16"
+          "tipo": "TELA_PRINCIPAL"
         }
       ],
       "op_id": "OP-2026-216",
@@ -125,13 +125,13 @@
           "impreso": true,
           "impreso_en": "2026-09-16",
           "recogido": true,
+          "recogido_en": "2026-09-16",
           "tallas": [
             "T12",
             "T14",
             "T16"
           ],
-          "tipo": "TELA_PRINCIPAL",
-          "recogido_en": "2026-09-16"
+          "tipo": "TELA_PRINCIPAL"
         },
         {
           "ancho_util": 136,
@@ -458,6 +458,68 @@
       ],
       "op_id": "OP-2026-220",
       "op_nombre": "CONJUNTO DAKOTA"
+    },
+    {
+      "id": "id_1789587664861_rcstc8182",
+      "op_id": "OP-0033",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "categoria": "CHAQUETAS",
+      "creado_por": "Isabel",
+      "creado_en": "2026-09-16",
+      "estado": "ENVIADA",
+      "enviada_en": "2026-09-16",
+      "lineas": [
+        {
+          "id": "id_1789587632667_4gc304vim",
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": "",
+          "tallas": [
+            "T4",
+            "T6",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "cantidad_trazos": 1,
+          "ancho_util": 135,
+          "sentido": "DOS_DIRECCIONES",
+          "orientacion": "AL_TRAVES",
+          "notas": "",
+          "colores": [
+            "VINOTINTO"
+          ],
+          "generado": false,
+          "impreso": false,
+          "recogido": false
+        },
+        {
+          "id": "id_1789587660394_76fqw2de5",
+          "tipo": "PIEZAS_LISAS",
+          "tipo_custom": "",
+          "tallas": [
+            "T4",
+            "T6",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "cantidad_trazos": 2,
+          "ancho_util": 140,
+          "sentido": "DOS_DIRECCIONES",
+          "orientacion": "AL_HILO",
+          "notas": "",
+          "colores": [
+            "VINOTINTO"
+          ],
+          "generado": false,
+          "impreso": false,
+          "recogido": false
+        }
+      ]
     }
   ]
 }
