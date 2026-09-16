@@ -19329,6 +19329,15 @@ function _trazoTipoInfo(k){ return TRAZO_TIPOS.find(function(t){ return t.k===k;
 // Etiqueta a mostrar para una línea: si es tipo "Adicional" con texto propio escrito por la
 // diseñadora, se usa ese texto en vez del genérico "Adicional".
 function _trazoTipoLabel(l){ return (l.tipo==='ADICIONAL' && l.tipo_custom) ? l.tipo_custom : _trazoTipoInfo(l.tipo).l; }
+// Texto de tallas con su número de marcadas (ej. "T4 x2, T6 x1") — solo se anota "xN" cuando
+// hay más de 1 marcada, para no ensuciar el caso normal de 1 marcada por talla.
+function _trazoTallasConMarcadas(l){
+  var mpt = l.marcadas_por_talla || {};
+  return (l.tallas||[]).map(function(t){
+    var n = mpt[t]||1;
+    return n>1 ? (t+' x'+n) : t;
+  }).join(', ');
+}
 var TRAZO_SENTIDOS = [
   {k:'UNA_DIRECCION',    l:'Una dirección'},
   {k:'DOS_DIRECCIONES',  l:'Dos direcciones'},
@@ -19535,7 +19544,7 @@ function _trazosRenderLineasSolicitud(s){
     lns.forEach(function(l){
       var estTxt = l.recogido ? '✅ Recogido' : l.impreso ? '🚚 Impreso, por recoger' : l.generado ? '🖨 Generado, falta imprimir' : '⏳ Enviado';
       h += '<div style="background:#0d1117;border:1px solid #2c2c2e;border-left:3px solid '+tt.color+';border-radius:7px;padding:8px 12px;margin-bottom:5px;">';
-      h += '<div style="font-size:11px;color:#cbd5e1;">'+(l.tipo==='ADICIONAL'&&l.tipo_custom?'<b>'+esc(l.tipo_custom)+'</b> · ':'')+'Tallas <b>'+(l.tallas||[]).join(', ')+'</b> · '+l.cantidad_trazos+' trazo(s) · '+l.ancho_util+'m · '+esc(_trazoSentidoInfo(l.sentido).l)+' · '+esc(_trazoOrientacionInfo(l.orientacion).l)+' · colores: <span style="color:#fbbf24;">'+(l.colores||[]).join(', ')+'</span></div>';
+      h += '<div style="font-size:11px;color:#cbd5e1;">'+(l.tipo==='ADICIONAL'&&l.tipo_custom?'<b>'+esc(l.tipo_custom)+'</b> · ':'')+'Tallas <b>'+esc(_trazoTallasConMarcadas(l))+'</b> · '+l.cantidad_trazos+' trazo(s) · '+l.ancho_util+'m · '+esc(_trazoSentidoInfo(l.sentido).l)+' · '+esc(_trazoOrientacionInfo(l.orientacion).l)+' · colores: <span style="color:#fbbf24;">'+(l.colores||[]).join(', ')+'</span></div>';
       if(l.notas) h += '<div style="font-size:10px;color:#94a3b8;margin-top:2px;">📝 '+esc(l.notas)+'</div>';
       h += '<div style="font-size:10px;color:#64748b;margin-top:2px;">'+estTxt+'</div>';
       h += '</div>';
@@ -19657,7 +19666,7 @@ function _renderLineasBuilderList(){
     lns.forEach(function(l){
       var idx = _trazoBuilderLineas.indexOf(l);
       h += '<div style="display:flex;align-items:center;gap:8px;background:#0d1117;border:1px solid #2c2c2e;border-left:3px solid '+tt.color+';border-radius:7px;padding:8px 12px;margin-bottom:5px;">';
-      h += '<div style="flex:1;font-size:11px;color:#cbd5e1;">'+(l.tipo==='ADICIONAL'&&l.tipo_custom?'<b>'+esc(l.tipo_custom)+'</b> · ':'')+'Tallas <b>'+l.tallas.join(', ')+'</b> · '+l.cantidad_trazos+' trazo(s) · ancho '+l.ancho_util+'m · '+esc(_trazoSentidoInfo(l.sentido).l)+' · '+esc(_trazoOrientacionInfo(l.orientacion).l)+' · colores: <span style="color:#fbbf24;">'+l.colores.join(', ')+'</span>'+(l.notas?'<div style="color:#64748b;margin-top:2px;">📝 '+esc(l.notas)+'</div>':'')+'</div>';
+      h += '<div style="flex:1;font-size:11px;color:#cbd5e1;">'+(l.tipo==='ADICIONAL'&&l.tipo_custom?'<b>'+esc(l.tipo_custom)+'</b> · ':'')+'Tallas <b>'+esc(_trazoTallasConMarcadas(l))+'</b> · '+l.cantidad_trazos+' trazo(s) · ancho '+l.ancho_util+'m · '+esc(_trazoSentidoInfo(l.sentido).l)+' · '+esc(_trazoOrientacionInfo(l.orientacion).l)+' · colores: <span style="color:#fbbf24;">'+l.colores.join(', ')+'</span>'+(l.notas?'<div style="color:#64748b;margin-top:2px;">📝 '+esc(l.notas)+'</div>':'')+'</div>';
       h += '<button data-idx="'+idx+'" onclick="_trazoQuitarLinea(this.dataset.idx)" style="background:none;border:none;color:#334155;cursor:pointer;font-size:13px;">✕</button>';
       h += '</div>';
     });
@@ -19694,7 +19703,14 @@ function _renderBuilderTrazos(){
   h += '</div>';
   h += '<div style="margin-bottom:10px;"><label class="form-label">Nota adicional de este trazo (opcional)</label><textarea id="tb-notas" class="form-control" rows="2" placeholder="Ej: cuidado con el estampado, centrar motivo..."></textarea></div>';
   h += '<div style="margin-bottom:10px;"><label class="form-label">Tallas</label><div style="display:flex;flex-wrap:wrap;gap:6px;">';
-  tallas.forEach(function(t){ h += '<label style="display:inline-flex;align-items:center;gap:4px;background:#0d1117;border:1px solid #2c2c2e;border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;"><input type="checkbox" class="tb-talla" value="'+esc(t)+'" style="accent-color:#0a84ff;"> '+esc(t)+'</label>'; });
+  // Cada talla trae su propio número de "marcadas" (veces que se repite esa talla dentro del
+  // trazo) — el campo solo se habilita cuando la talla está seleccionada, y trae 1 por defecto.
+  tallas.forEach(function(t){
+    h += '<div class="tb-talla-chip" style="display:flex;flex-direction:column;align-items:center;gap:4px;background:#0d1117;border:1px solid #2c2c2e;border-radius:6px;padding:5px 8px;">';
+    h += '<label style="display:inline-flex;align-items:center;gap:4px;font-size:11px;cursor:pointer;white-space:nowrap;"><input type="checkbox" class="tb-talla" value="'+esc(t)+'" onchange="_tbTallaToggle(this)" style="accent-color:#0a84ff;"> '+esc(t)+'</label>';
+    h += '<input type="number" class="tb-talla-marc" data-talla="'+esc(t)+'" min="1" value="1" disabled style="display:none;width:52px;background:#0a0d14;border:1px solid #2c2c2e;border-radius:4px;color:#e2e8f0;font-size:10px;text-align:center;padding:3px 2px;" title="Número de marcadas">';
+    h += '</div>';
+  });
   h += '</div></div>';
   h += '<div style="margin-bottom:10px;"><label class="form-label">Colores</label><div style="display:flex;flex-wrap:wrap;gap:6px;">';
   colores.forEach(function(c){ h += '<label style="display:inline-flex;align-items:center;gap:4px;background:#0d1117;border:1px solid #2c2c2e;border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;"><input type="checkbox" class="tb-color" value="'+esc(c)+'" style="accent-color:#0a84ff;"> '+esc(c)+'</label>'; });
@@ -19712,6 +19728,16 @@ function _tbTipoChange(){
   var wrap = document.getElementById('tb-tipo-custom-wrap');
   if(wrap) wrap.style.display = tipo==='ADICIONAL' ? 'block' : 'none';
 }
+// Al marcar/desmarcar una talla, se habilita/deshabilita su input de "número de marcadas"
+// (cuántas veces se repite esa talla dentro del trazo) — vive junto al checkbox, en el mismo chip.
+function _tbTallaToggle(chk){
+  var chip = chk.closest('.tb-talla-chip');
+  var inp = chip ? chip.querySelector('.tb-talla-marc') : null;
+  if(!inp) return;
+  inp.disabled = !chk.checked;
+  inp.style.display = chk.checked ? 'block' : 'none';
+  if(chk.checked && !inp.value) inp.value = 1;
+}
 function _trazoAgregarLinea(){
   var tipo = document.getElementById('tb-tipo').value;
   var tipoCustom = (document.getElementById('tb-tipo-custom').value||'').trim();
@@ -19726,7 +19752,12 @@ function _trazoAgregarLinea(){
   if(!colores.length){ toast('Selecciona al menos un color','error'); return; }
   if(!ancho){ toast('Ingresa el ancho útil','error'); return; }
   if(tipo==='ADICIONAL' && !tipoCustom){ toast('Especifica el tipo de trazo adicional','error'); return; }
-  _trazoBuilderLineas.push({id:uid(), tipo:tipo, tipo_custom:tipo==='ADICIONAL'?tipoCustom:'', tallas:tallas, cantidad_trazos:cant, ancho_util:ancho, sentido:sentido, orientacion:orientacion, notas:notas, colores:colores, generado:false, impreso:false, recogido:false});
+  var marcadasPorTalla = {};
+  tallas.forEach(function(t){
+    var inp = document.querySelector('.tb-talla-marc[data-talla="'+t+'"]');
+    marcadasPorTalla[t] = inp ? (parseInt(inp.value)||1) : 1;
+  });
+  _trazoBuilderLineas.push({id:uid(), tipo:tipo, tipo_custom:tipo==='ADICIONAL'?tipoCustom:'', tallas:tallas, marcadas_por_talla:marcadasPorTalla, cantidad_trazos:cant, ancho_util:ancho, sentido:sentido, orientacion:orientacion, notas:notas, colores:colores, generado:false, impreso:false, recogido:false});
   _renderBuilderTrazos();
 }
 function _trazoQuitarLinea(idx){
@@ -19821,7 +19852,7 @@ function imprimirSolicitudTrazos(sid){
     if(!lns.length) return;
     h += '<div class="tipo">'+tt.l+'</div>';
     lns.forEach(function(l,i){
-      h += '<div class="linea"><b>Trazo '+(i+1)+(l.tipo==='ADICIONAL'&&l.tipo_custom?' — '+esc(l.tipo_custom):'')+'</b> Tallas: '+(l.tallas||[]).join(', ')+' &nbsp;|&nbsp; Cantidad: '+l.cantidad_trazos+' &nbsp;|&nbsp; Ancho: '+l.ancho_util+'m &nbsp;|&nbsp; Rotación: <b>'+esc(_trazoSentidoInfo(l.sentido).l)+'</b> &nbsp;|&nbsp; Orientación: <b>'+esc(_trazoOrientacionInfo(l.orientacion).l)+'</b> &nbsp;|&nbsp; Color(es): <b>'+(l.colores||[]).join(', ')+'</b>'+(l.notas?'<br><span style="color:#555;">📝 '+esc(l.notas)+'</span>':'')+'</div>';
+      h += '<div class="linea"><b>Trazo '+(i+1)+(l.tipo==='ADICIONAL'&&l.tipo_custom?' — '+esc(l.tipo_custom):'')+'</b> Tallas: '+esc(_trazoTallasConMarcadas(l))+' &nbsp;|&nbsp; Cantidad: '+l.cantidad_trazos+' &nbsp;|&nbsp; Ancho: '+l.ancho_util+'m &nbsp;|&nbsp; Rotación: <b>'+esc(_trazoSentidoInfo(l.sentido).l)+'</b> &nbsp;|&nbsp; Orientación: <b>'+esc(_trazoOrientacionInfo(l.orientacion).l)+'</b> &nbsp;|&nbsp; Color(es): <b>'+(l.colores||[]).join(', ')+'</b>'+(l.notas?'<br><span style="color:#555;">📝 '+esc(l.notas)+'</span>':'')+'</div>';
     });
   });
   h += '</body></html>';
@@ -19935,7 +19966,7 @@ function _renderTecPatronTrazosPendientes(sols){
       lns.forEach(function(it){
         var l = it.linea, s = it.sol;
         h += '<div style="display:flex;align-items:center;gap:14px;background:#0d1117;border:1px solid #2c2c2e;border-left:3px solid '+tt.color+';border-radius:7px;padding:8px 12px;margin-bottom:5px;flex-wrap:wrap;">';
-        h += '<div style="flex:1;min-width:200px;font-size:11px;color:#cbd5e1;">Tallas <b>'+(l.tallas||[]).join(', ')+'</b> · '+l.cantidad_trazos+' trazo(s) · '+l.ancho_util+'m · <span style="color:#fbbf24;">'+(l.colores||[]).join(', ')+'</span></div>';
+        h += '<div style="flex:1;min-width:200px;font-size:11px;color:#cbd5e1;">Tallas <b>'+esc(_trazoTallasConMarcadas(l))+'</b> · '+l.cantidad_trazos+' trazo(s) · '+l.ancho_util+'m · <span style="color:#fbbf24;">'+(l.colores||[]).join(', ')+'</span></div>';
         h += '<label style="display:flex;align-items:center;gap:5px;font-size:11px;color:#94a3b8;cursor:pointer;white-space:nowrap;"><input type="checkbox" '+(l.generado?'checked':'')+' data-sid="'+s.id+'" data-lid="'+l.id+'" onchange="tecpatronToggleGenerado(this.dataset.sid,this.dataset.lid,this.checked)" style="width:15px;height:15px;accent-color:#a855f7;cursor:pointer;"> Generado</label>';
         h += '<label style="display:flex;align-items:center;gap:5px;font-size:11px;color:#94a3b8;cursor:pointer;white-space:nowrap;"><input type="checkbox" '+(l.impreso?'checked':'')+' data-sid="'+s.id+'" data-lid="'+l.id+'" onchange="tecpatronToggleImpreso(this.dataset.sid,this.dataset.lid,this.checked)" style="width:15px;height:15px;accent-color:#34d399;cursor:pointer;"> Impreso</label>';
         h += '</div>';
