@@ -19108,15 +19108,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1789587773256_om4bj",
-      "ts": 1789587773256,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-098",
-      "nombre": "CHAQUETA CAZADORA",
       "categoria": "CHAQUETAS",
       "colores": 8,
-      "refs": 1
+      "id": "evt_1789587773256_om4bj",
+      "nombre": "CHAQUETA CAZADORA",
+      "op_id": "OP-2026-098",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1789587773256,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789587796844_8ablh",
+      "ts": 1789587796844,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-098",
+      "op_nombre": "CHAQUETA CAZADORA",
+      "referencia": "CHAQUETA CAZADORA",
+      "color": "FUCSIA",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 36,
+      "motivo": "EN TALLER"
     }
   ]
 }
