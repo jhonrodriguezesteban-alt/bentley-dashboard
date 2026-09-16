@@ -19135,20 +19135,29 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "LILA",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1789587821417_ccyml",
-      "ts": 1789587821417,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-098",
       "op_nombre": "CHAQUETA CAZADORA",
       "referencia": "CHAQUETA CAZADORA",
-      "color": "LILA",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1789587821417,
       "uds": 49,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789587911712_twhx0",
+      "ts": 1789587911712,
+      "user": "Jefa de Producción",
+      "tipo": "satelite_crear",
+      "nombre": "LETICIA VILLAMIZAR",
+      "personas": 3,
+      "capacidad": 0
     }
   ]
 }
