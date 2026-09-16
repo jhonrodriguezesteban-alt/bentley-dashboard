@@ -19885,25 +19885,73 @@ function imprimirPorRecoger(){
   setTimeout(function(){ w.print(); }, 300);
 }
 
+// Tabla color×talla de la OP, en blanco/negro para impresión — mismo dato fuente que
+// _trazosTablaOP (op.cantidades) pero sin el checkbox de "ya solicitado" y con fila/columna
+// de TOTAL, para que el satélite/cortador vea de un vistazo el pedido completo de la orden.
+function _trazosPrintTablaOP(op){
+  var colores = op.colores && op.colores.length ? op.colores : ['—'];
+  var tallas = op.tallas||[];
+  var h = '<table class="optab"><thead><tr><th>Color</th>';
+  tallas.forEach(function(t){ h += '<th>'+esc(t)+'</th>'; });
+  h += '<th>Total</th></tr></thead><tbody>';
+  var totalesPorTalla = {}; tallas.forEach(function(t){ totalesPorTalla[t]=0; });
+  var granTotal = 0;
+  colores.forEach(function(c){
+    var rowTot = 0;
+    h += '<tr><td class="colname">'+esc(c)+'</td>';
+    tallas.forEach(function(t){
+      var q = (op.cantidades||{})[c+'_'+t] || 0;
+      rowTot += q; totalesPorTalla[t] += q;
+      h += '<td>'+(q||'·')+'</td>';
+    });
+    granTotal += rowTot;
+    h += '<td class="tot">'+rowTot+'</td></tr>';
+  });
+  h += '<tr class="totrow"><td>TOTAL</td>';
+  tallas.forEach(function(t){ h += '<td>'+totalesPorTalla[t]+'</td>'; });
+  h += '<td class="tot">'+granTotal+'</td></tr>';
+  h += '</tbody></table>';
+  return h;
+}
 function imprimirSolicitudTrazos(sid){
   var s = (DB.trazos.solicitudes||[]).find(function(x){ return x.id===sid; });
   if(!s) return;
+  var op = (DB.ops||[]).find(function(x){ return x.id===s.op_id; });
   var w = window.open('', '_blank');
   if(!w) return;
   var h = '<html><head><title>Solicitud de Trazos - '+esc(s.op_nombre)+'</title><style>';
   h += 'body{font-family:Arial,sans-serif;padding:24px;color:#111;} h1{font-size:20px;margin-bottom:2px;} .sub{color:#666;font-size:12px;margin-bottom:18px;}';
+  h += '.section{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;margin:20px 0 8px;color:#333;}';
   h += '.tipo{font-size:13px;font-weight:800;text-transform:uppercase;margin:16px 0 6px;border-bottom:2px solid #333;padding-bottom:3px;}';
-  h += '.linea{border:1px solid #ccc;border-radius:6px;padding:8px 12px;margin-bottom:6px;font-size:13px;}';
-  h += '.linea b{display:inline-block;min-width:70px;}';
+  h += 'table{border-collapse:collapse;width:100%;font-size:12px;margin-bottom:6px;}';
+  h += 'table th,table td{border:1px solid #999;padding:5px 8px;text-align:center;}';
+  h += '.optab th{background:#eee;} .optab td.colname{text-align:left;font-weight:700;} .optab td.tot{font-weight:800;background:#f5f5f5;} .optab tr.totrow td{font-weight:800;background:#eee;}';
+  h += '.lntab th{background:#f0f0f0;font-size:10px;text-transform:uppercase;} .lntab td{text-align:left;} .lntab td.num,.lntab td.mid{text-align:center;}';
+  h += '.notas{font-size:11px;color:#555;margin-top:-4px;margin-bottom:10px;}';
   h += '</style></head><body>';
   h += '<h1>'+esc(s.op_nombre)+' · '+esc(fmtOpId(s.op_id))+'</h1>';
   h += '<div class="sub">Solicitud de trazos · enviada '+fmtDate(s.enviada_en)+' por '+esc(s.creado_por)+'</div>';
+  if(op){
+    h += '<div class="section">Resumen de la orden de producción</div>';
+    h += _trazosPrintTablaOP(op);
+  }
   TRAZO_TIPOS.forEach(function(tt){
     var lns = (s.lineas||[]).filter(function(l){ return l.tipo===tt.k; });
     if(!lns.length) return;
     h += '<div class="tipo">'+tt.l+'</div>';
+    h += '<table class="lntab"><thead><tr><th>#</th><th>Tallas</th><th>Cant.</th><th>Ancho</th><th>Rotación</th><th>Orientación</th><th>Color(es)</th></tr></thead><tbody>';
     lns.forEach(function(l,i){
-      h += '<div class="linea"><b>Trazo '+(i+1)+(l.tipo==='ADICIONAL'&&l.tipo_custom?' — '+esc(l.tipo_custom):'')+'</b> Tallas: '+esc(_trazoTallasConMarcadas(l))+' &nbsp;|&nbsp; Cantidad: '+l.cantidad_trazos+' &nbsp;|&nbsp; Ancho: '+l.ancho_util+'m &nbsp;|&nbsp; Rotación: <b>'+esc(_trazoSentidoInfo(l.sentido).l)+'</b> &nbsp;|&nbsp; Orientación: <b>'+esc(_trazoOrientacionInfo(l.orientacion).l)+'</b> &nbsp;|&nbsp; Color(es): <b>'+(l.colores||[]).join(', ')+'</b>'+(l.notas?'<br><span style="color:#555;">📝 '+esc(l.notas)+'</span>':'')+'</div>';
+      h += '<tr><td class="num">'+(i+1)+(l.tipo==='ADICIONAL'&&l.tipo_custom?'<br><b>'+esc(l.tipo_custom)+'</b>':'')+'</td>';
+      h += '<td>'+esc(_trazoTallasConMarcadas(l))+'</td>';
+      h += '<td class="mid">'+l.cantidad_trazos+'</td>';
+      h += '<td class="mid">'+l.ancho_util+'m</td>';
+      h += '<td class="mid">'+esc(_trazoSentidoInfo(l.sentido).l)+'</td>';
+      h += '<td class="mid">'+esc(_trazoOrientacionInfo(l.orientacion).l)+'</td>';
+      h += '<td><b>'+esc((l.colores||[]).join(', '))+'</b></td></tr>';
+    });
+    h += '</tbody></table>';
+    lns.forEach(function(l,i){
+      if(l.notas) h += '<div class="notas">📝 Trazo '+(i+1)+': '+esc(l.notas)+'</div>';
     });
   });
   h += '</body></html>';
