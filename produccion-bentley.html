@@ -19392,6 +19392,13 @@ function _trazosOpsPendientes(){
     if(!byOp[s.op.id]){ byOp[s.op.id] = {op:s.op, colores:[]}; order.push(s.op.id); }
     byOp[s.op.id].colores.push(s.color);
   });
+  // Más reciente primero — la OP generada más nueva (mayor número/fecha) arriba de la lista.
+  order.sort(function(a,b){
+    var opA = byOp[a].op, opB = byOp[b].op;
+    var fa = opA.created_at||opA.fecha_op||'', fb = opB.created_at||opB.fecha_op||'';
+    if(fa!==fb) return fb.localeCompare(fa);
+    return (opB.numero||0)-(opA.numero||0);
+  });
   return order.map(function(oid){ return byOp[oid]; });
 }
 
