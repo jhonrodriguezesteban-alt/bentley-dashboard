@@ -118,7 +118,7 @@
           "colores": [
             "BEIGE"
           ],
-          "generado": false,
+          "generado": true,
           "id": "id_1789487566312_i0vh5hza4",
           "impreso": false,
           "recogido": false,
@@ -127,7 +127,8 @@
             "T14",
             "T16"
           ],
-          "tipo": "TELA_PRINCIPAL"
+          "tipo": "TELA_PRINCIPAL",
+          "generado_en": "2026-09-16"
         },
         {
           "ancho_util": 136,
@@ -381,37 +382,45 @@
       "op_nombre": "WASHMAN"
     },
     {
-      "id": "id_1789510472124_sfkvca2oy",
-      "op_id": "OP-2026-220",
-      "op_nombre": "CONJUNTO DAKOTA",
       "categoria": "CONJUNTOS",
-      "creado_por": "Isabel",
       "creado_en": "2026-09-15",
-      "estado": "ENVIADA",
+      "creado_por": "Isabel",
       "enviada_en": "2026-09-15",
+      "estado": "ENVIADA",
+      "id": "id_1789510472124_sfkvca2oy",
       "lineas": [
         {
-          "id": "id_1789510442812_3kfifhp28",
-          "tipo": "TELA_PRINCIPAL",
-          "tallas": [
-            "T4",
-            "T6"
-          ],
-          "cantidad_trazos": 1,
           "ancho_util": 145,
-          "sentido": "AMBOS",
-          "notas": "",
+          "cantidad_trazos": 1,
           "colores": [
             "VERDE MILITAR",
             "NEGRO"
           ],
           "generado": false,
+          "id": "id_1789510442812_3kfifhp28",
           "impreso": false,
-          "recogido": false
+          "notas": "",
+          "recogido": false,
+          "sentido": "AMBOS",
+          "tallas": [
+            "T4",
+            "T6"
+          ],
+          "tipo": "TELA_PRINCIPAL"
         },
         {
+          "ancho_util": 145,
+          "cantidad_trazos": 1,
+          "colores": [
+            "VERDE MILITAR",
+            "NEGRO"
+          ],
+          "generado": false,
           "id": "id_1789510465281_du4hn6shk",
-          "tipo": "TELA_PRINCIPAL",
+          "impreso": false,
+          "notas": "",
+          "recogido": false,
+          "sentido": "AMBOS",
           "tallas": [
             "T8",
             "T10",
@@ -419,19 +428,11 @@
             "T14",
             "T16"
           ],
-          "cantidad_trazos": 1,
-          "ancho_util": 145,
-          "sentido": "AMBOS",
-          "notas": "",
-          "colores": [
-            "VERDE MILITAR",
-            "NEGRO"
-          ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
+          "tipo": "TELA_PRINCIPAL"
         }
-      ]
+      ],
+      "op_id": "OP-2026-220",
+      "op_nombre": "CONJUNTO DAKOTA"
     }
   ]
 }
