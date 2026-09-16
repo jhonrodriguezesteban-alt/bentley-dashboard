@@ -19322,6 +19322,7 @@ var TRAZO_TIPOS = [
   {k:'FORRO',          l:'Forro',          color:'#34d399'},
   {k:'GUATA',          l:'Guata',          color:'#f97316'},
   {k:'ENTRETELA',      l:'Entretela',      color:'#ec4899'},
+  {k:'RIB',            l:'Rib',            color:'#14b8a6'},
   {k:'ADICIONAL',      l:'Adicional',      color:'#fbbf24'}
 ];
 function _trazoTipoInfo(k){ return TRAZO_TIPOS.find(function(t){ return t.k===k; }) || TRAZO_TIPOS[0]; }
@@ -19329,8 +19330,9 @@ function _trazoTipoInfo(k){ return TRAZO_TIPOS.find(function(t){ return t.k===k;
 // diseñadora, se usa ese texto en vez del genérico "Adicional".
 function _trazoTipoLabel(l){ return (l.tipo==='ADICIONAL' && l.tipo_custom) ? l.tipo_custom : _trazoTipoInfo(l.tipo).l; }
 var TRAZO_SENTIDOS = [
-  {k:'UNA_DIRECCION',   l:'Una dirección'},
-  {k:'DOS_DIRECCIONES', l:'Dos direcciones'}
+  {k:'UNA_DIRECCION',    l:'Una dirección'},
+  {k:'DOS_DIRECCIONES',  l:'Dos direcciones'},
+  {k:'CUATRO_DIRECCIONES', l:'4 direcciones'}
 ];
 function _trazoSentidoInfo(k){ return TRAZO_SENTIDOS.find(function(s){ return s.k===k; }) || TRAZO_SENTIDOS[0]; }
 var TRAZO_ORIENTACIONES = [
@@ -19675,7 +19677,7 @@ function _renderBuilderTrazos(){
   h += '<div style="margin-bottom:14px;">'+_trazosTablaOP(op, coloresPendientes)+'</div>';
   h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:10px;padding:14px;margin-bottom:14px;">';
   h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">';
-  h += '<div><label class="form-label">Tipo de trazo</label><select id="tb-tipo" class="form-control" onchange="_tbTipoChange()">';
+  h += '<div><label class="form-label">Material</label><select id="tb-tipo" class="form-control" onchange="_tbTipoChange()">';
   TRAZO_TIPOS.forEach(function(t){ h += '<option value="'+t.k+'">'+t.l+'</option>'; });
   h += '</select></div>';
   h += '<div><label class="form-label">Cantidad de trazos</label><input id="tb-cant" type="number" min="1" value="1" class="form-control"></div>';
@@ -19683,7 +19685,7 @@ function _renderBuilderTrazos(){
   h += '<div id="tb-tipo-custom-wrap" style="display:none;margin-bottom:10px;"><label class="form-label">Especificar tipo "Adicional"</label><input id="tb-tipo-custom" type="text" class="form-control" placeholder="Ej: Vivo, cinta ribete..."></div>';
   h += '<div style="margin-bottom:10px;"><label class="form-label">Ancho útil de tela (mts)</label><input id="tb-ancho" type="number" step="0.01" min="0" class="form-control" placeholder="Ej: 1.32"></div>';
   h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">';
-  h += '<div><label class="form-label">Sentido del trazo</label><select id="tb-sentido" class="form-control">';
+  h += '<div><label class="form-label">Rotación del trazo</label><select id="tb-sentido" class="form-control">';
   TRAZO_SENTIDOS.forEach(function(s){ h += '<option value="'+s.k+'">'+s.l+'</option>'; });
   h += '</select></div>';
   h += '<div><label class="form-label">Al hilo / Al través</label><select id="tb-orientacion" class="form-control">';
@@ -19819,7 +19821,7 @@ function imprimirSolicitudTrazos(sid){
     if(!lns.length) return;
     h += '<div class="tipo">'+tt.l+'</div>';
     lns.forEach(function(l,i){
-      h += '<div class="linea"><b>Trazo '+(i+1)+(l.tipo==='ADICIONAL'&&l.tipo_custom?' — '+esc(l.tipo_custom):'')+'</b> Tallas: '+(l.tallas||[]).join(', ')+' &nbsp;|&nbsp; Cantidad: '+l.cantidad_trazos+' &nbsp;|&nbsp; Ancho: '+l.ancho_util+'m &nbsp;|&nbsp; Sentido: <b>'+esc(_trazoSentidoInfo(l.sentido).l)+'</b> &nbsp;|&nbsp; Orientación: <b>'+esc(_trazoOrientacionInfo(l.orientacion).l)+'</b> &nbsp;|&nbsp; Color(es): <b>'+(l.colores||[]).join(', ')+'</b>'+(l.notas?'<br><span style="color:#555;">📝 '+esc(l.notas)+'</span>':'')+'</div>';
+      h += '<div class="linea"><b>Trazo '+(i+1)+(l.tipo==='ADICIONAL'&&l.tipo_custom?' — '+esc(l.tipo_custom):'')+'</b> Tallas: '+(l.tallas||[]).join(', ')+' &nbsp;|&nbsp; Cantidad: '+l.cantidad_trazos+' &nbsp;|&nbsp; Ancho: '+l.ancho_util+'m &nbsp;|&nbsp; Rotación: <b>'+esc(_trazoSentidoInfo(l.sentido).l)+'</b> &nbsp;|&nbsp; Orientación: <b>'+esc(_trazoOrientacionInfo(l.orientacion).l)+'</b> &nbsp;|&nbsp; Color(es): <b>'+(l.colores||[]).join(', ')+'</b>'+(l.notas?'<br><span style="color:#555;">📝 '+esc(l.notas)+'</span>':'')+'</div>';
     });
   });
   h += '</body></html>';
