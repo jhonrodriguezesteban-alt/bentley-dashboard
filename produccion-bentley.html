@@ -20128,31 +20128,104 @@ async function tecpatronToggleImpreso(sid, lid, val){
 }
 
 // ── Tab Diseños/Productos ────────────────────────────────────────────────────────
+// Categoría real de un producto de costeo: la receta en sí no guarda categoría, así que se
+// cruza por nombre contra las OPs reales (mismo criterio que _tpTallasDelProducto).
+function _tpCategoriaDeProducto(r){
+  var nombreU = (r.producto||'').replace(/\s*-\s*REF:\s*\d+\s*$/i,'').trim().toUpperCase();
+  var op = (DB.ops||[]).find(function(o){ return (o.nombre_producto||'').trim().toUpperCase()===nombreU; });
+  return (op && op.categoria) ? op.categoria.trim().toUpperCase() : 'SIN CATEGORÍA';
+}
+// Número de referencia para ordenar dentro de cada categoría — usa el campo real r.referencia
+// si existe, si no lo saca del "- REF: NNNN" que quedó pegado al nombre en varias recetas viejas.
+function _tpReferenciaNum(r){
+  if(r.referencia) return parseInt(r.referencia)||999999;
+  var m = (r.producto||'').match(/REF:\s*(\d+)/i);
+  return m ? parseInt(m[1]) : 999999;
+}
+function _tpImagenProducto(r){
+  return (r.imagen_principal_url_blob && _fotosBlob[r.imagen_principal_url_blob]) || r.imagen_principal_url || _catalogoImagen(r.producto);
+}
+async function tpSubirImagenPrincipal(input){
+  var rid = input.dataset.rid;
+  var file = input.files[0];
+  if(!file) return;
+  var r = (DB.costeo.recetas||[]).find(function(x){ return x.id===rid; });
+  if(!r) return;
+  var tk = GT || localStorage.getItem('bentley_gh_token') || '';
+  if(!tk){ toast('Sin token GitHub','error'); return; }
+  try {
+    var dataUrl = await new Promise(function(res,rej){
+      var fr = new FileReader();
+      fr.onload = function(e){ res(e.target.result); };
+      fr.onerror = rej;
+      fr.readAsDataURL(file);
+    });
+    var b64 = dataUrl.split(',')[1];
+    var ext = (file.name.split('.').pop()||'jpg').toLowerCase();
+    var fname = 'tecpatron-imgs/'+rid+'_principal_'+Date.now()+'.'+ext;
+    toast('Subiendo imagen...','info');
+    var putR = await fetch('https://api.github.com/repos/'+REPO+'/contents/'+fname,{
+      method:'PUT',
+      headers:{'Authorization':'token '+tk,'Content-Type':'application/json'},
+      body: JSON.stringify({message:'Techpatron: imagen principal de '+r.producto, content:b64})
+    });
+    if(putR.ok){
+      var blobId = 'tp_'+Date.now();
+      _fotosBlob[blobId] = dataUrl;
+      r.imagen_principal_url = RAW_URL + fname;
+      r.imagen_principal_url_blob = blobId;
+      var ok = await guardarCosteo();
+      if(ok) toast('Imagen guardada','success');
+      renderPage('tecpatron');
+    } else { toast('Error al subir la imagen','error'); }
+  } catch(e){ toast('Error al subir la imagen','error'); }
+}
+function _tpProductoRowHTML(r){
+  var completos = [r.molde_url, (r.promedios&&r.promedios.length)||(r.promedios_fotos&&r.promedios_fotos.length), r.ficha_tecnica_url, r.ruta_operacional_url].filter(Boolean).length;
+  var cid = 'tp-prod-'+r.id;
+  var imgProd = _tpImagenProducto(r);
+  var h = '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:9px;padding:12px 14px;">';
+  h += '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">';
+  h += '<div data-cid="'+cid+'" onclick="tecpatronToggleProducto(this.dataset.cid)" style="display:flex;align-items:center;gap:10px;min-width:0;flex:1;cursor:pointer;">';
+  if(imgProd){
+    h += '<img src="'+esc(imgProd)+'" style="width:36px;height:36px;object-fit:cover;border-radius:7px;border:1px solid #2c2c2e;flex-shrink:0;">';
+  } else {
+    h += '<input type="file" accept="image/*" data-rid="'+r.id+'" onchange="event.stopPropagation();tpSubirImagenPrincipal(this)" onclick="event.stopPropagation()" style="display:none;" id="tp-imgprin-'+r.id+'">';
+    h += '<label for="tp-imgprin-'+r.id+'" onclick="event.stopPropagation()" title="Subir imagen del producto" style="width:36px;height:36px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#0d1117;border:1px dashed #2c2c2e;border-radius:7px;color:#475569;font-size:15px;cursor:pointer;">🖼</label>';
+  }
+  h += '<div><span style="font-size:13px;font-weight:700;color:#e2e8f0;">'+esc(r.producto||'')+'</span>'+(r.referencia?' <span style="font-size:10px;color:#64748b;">REF '+esc(r.referencia)+'</span>':'')+'</div>';
+  h += '</div>';
+  h += '<span data-cid="'+cid+'" onclick="tecpatronToggleProducto(this.dataset.cid)" style="cursor:pointer;font-size:9px;font-weight:800;color:'+(completos===4?'#34d399':completos>0?'#fbbf24':'#64748b')+';">'+completos+'/4</span>';
+  h += '</div>';
+  h += '<div id="'+cid+'" style="display:none;margin-top:10px;">'+_renderTecPatronProductoDetalle(r)+'</div>';
+  h += '</div>';
+  return h;
+}
 function _renderTecPatronProductos(){
-  var recetas = (DB.costeo.recetas||[]).slice().sort(function(a,b){ return (a.producto||'').localeCompare(b.producto||''); });
+  var recetas = (DB.costeo.recetas||[]).slice();
   var q = (_tpBusq||'').trim().toUpperCase();
   if(q) recetas = recetas.filter(function(r){ return (r.producto||'').toUpperCase().indexOf(q)>=0; });
   var h = '<div style="margin-bottom:14px;">';
   h += '<input type="text" value="'+esc(_tpBusq||'')+'" oninput="_tpBusq=this.value;renderPage(\'tecpatron\')" placeholder="Buscar producto..." style="background:#0d1117;border:1px solid #2c2c2e;border-radius:7px;color:var(--text);padding:8px 12px;font-size:12px;width:280px;outline:none;">';
   h += '</div>';
   if(!recetas.length) return h + '<div style="text-align:center;padding:40px;color:#374151;">Sin productos.</div>';
-  h += '<div style="display:flex;flex-direction:column;gap:8px;">';
+  // Familia de categorías → dentro, ordenado por número de referencia.
+  var porCat = {}; var catOrder = [];
   recetas.forEach(function(r){
-    var completos = [r.molde_url, (r.promedios&&r.promedios.length)||(r.promedios_fotos&&r.promedios_fotos.length), r.ficha_tecnica_url, r.ruta_operacional_url].filter(Boolean).length;
-    var cid = 'tp-prod-'+r.id;
-    var imgProd = _catalogoImagen(r.producto);
-    h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:9px;padding:12px 14px;">';
-    h += '<div data-cid="'+cid+'" onclick="tecpatronToggleProducto(this.dataset.cid)" style="display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;">';
-    h += '<div style="display:flex;align-items:center;gap:10px;min-width:0;">';
-    if(imgProd) h += '<img src="'+esc(imgProd)+'" style="width:36px;height:36px;object-fit:cover;border-radius:7px;border:1px solid #2c2c2e;flex-shrink:0;">';
-    h += '<div><span style="font-size:13px;font-weight:700;color:#e2e8f0;">'+esc(r.producto||'')+'</span>'+(r.referencia?' <span style="font-size:10px;color:#64748b;">REF '+esc(r.referencia)+'</span>':'')+'</div>';
-    h += '</div>';
-    h += '<span style="font-size:9px;font-weight:800;color:'+(completos===4?'#34d399':completos>0?'#fbbf24':'#64748b')+';">'+completos+'/4</span>';
-    h += '</div>';
-    h += '<div id="'+cid+'" style="display:none;margin-top:10px;">'+_renderTecPatronProductoDetalle(r)+'</div>';
+    var cat = _tpCategoriaDeProducto(r);
+    if(!porCat[cat]){ porCat[cat] = []; catOrder.push(cat); }
+    porCat[cat].push(r);
+  });
+  catOrder.sort(function(a,b){ return a.localeCompare(b); });
+  catOrder.forEach(function(cat){
+    porCat[cat].sort(function(a,b){ return _tpReferenciaNum(a)-_tpReferenciaNum(b); });
+  });
+  catOrder.forEach(function(cat){
+    h += '<div style="font-size:11px;font-weight:800;color:#0a84ff;text-transform:uppercase;letter-spacing:.5px;margin:16px 0 8px;">'+esc(cat)+' <span style="color:#475569;font-weight:400;">· '+porCat[cat].length+'</span></div>';
+    h += '<div style="display:flex;flex-direction:column;gap:8px;">';
+    porCat[cat].forEach(function(r){ h += _tpProductoRowHTML(r); });
     h += '</div>';
   });
-  h += '</div>';
   return h;
 }
 function tecpatronToggleProducto(cid){
