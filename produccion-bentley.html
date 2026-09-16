@@ -19958,20 +19958,20 @@ function _renderTecPatronTrazosPendientes(sols){
   orden.forEach(function(opId){
     var g = porOp[opId];
     h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:10px;padding:16px;margin-bottom:12px;">';
-    h += '<div style="margin-bottom:10px;"><span style="font-family:var(--bebas);font-size:17px;color:#0a84ff;">'+esc(fmtOpId(opId))+'</span> <span style="font-size:15px;font-weight:700;color:#e2e8f0;">'+esc(g.op_nombre)+'</span>';
-    h += '<div style="font-size:11px;color:#64748b;margin-top:2px;">Última solicitud '+fmtDate(g.ultimaFecha)+'</div></div>';
+    h += '<div style="margin-bottom:12px;"><span style="font-family:var(--bebas);font-size:22px;color:#0a84ff;">'+esc(fmtOpId(opId))+'</span> <span style="font-size:19px;font-weight:700;color:#e2e8f0;">'+esc(g.op_nombre)+'</span>';
+    h += '<div style="font-size:13px;color:#64748b;margin-top:2px;">Última solicitud '+fmtDate(g.ultimaFecha)+'</div></div>';
     TRAZO_TIPOS.forEach(function(tt){
       var lns = g.items.filter(function(it){ return it.linea.tipo===tt.k; });
       if(!lns.length) return;
-      h += '<div style="font-size:12px;font-weight:800;color:'+tt.color+';text-transform:uppercase;letter-spacing:.5px;margin:12px 0 6px;">'+tt.l+'</div>';
+      h += '<div style="font-size:15px;font-weight:800;color:'+tt.color+';text-transform:uppercase;letter-spacing:.5px;margin:14px 0 8px;">'+tt.l+'</div>';
       lns.forEach(function(it){
         var l = it.linea, s = it.sol;
         function campo(label, valor){
-          return '<div><div style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.3px;">'+label+'</div><div style="font-size:14px;color:#e2e8f0;font-weight:600;">'+valor+'</div></div>';
+          return '<div><div style="font-size:12px;color:#94a3b8;text-transform:uppercase;letter-spacing:.3px;">'+label+'</div><div style="font-size:18px;color:#f1f5f9;font-weight:600;">'+valor+'</div></div>';
         }
-        h += '<div style="background:#0d1117;border:1px solid #2c2c2e;border-left:4px solid '+tt.color+';border-radius:8px;padding:12px 14px;margin-bottom:8px;">';
-        if(l.tipo==='ADICIONAL'&&l.tipo_custom) h += '<div style="font-size:14px;font-weight:800;color:'+tt.color+';margin-bottom:8px;">'+esc(l.tipo_custom)+'</div>';
-        h += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px 16px;margin-bottom:10px;">';
+        h += '<div style="background:#0d1117;border:1px solid #2c2c2e;border-left:4px solid '+tt.color+';border-radius:8px;padding:14px 16px;margin-bottom:10px;">';
+        if(l.tipo==='ADICIONAL'&&l.tipo_custom) h += '<div style="font-size:18px;font-weight:800;color:'+tt.color+';margin-bottom:10px;">'+esc(l.tipo_custom)+'</div>';
+        h += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px 18px;margin-bottom:12px;">';
         h += campo('Tallas', '<b>'+esc(_trazoTallasConMarcadas(l))+'</b>');
         h += campo('Cantidad', l.cantidad_trazos+' trazo(s)');
         h += campo('Ancho útil', l.ancho_util+'m');
@@ -19979,12 +19979,12 @@ function _renderTecPatronTrazosPendientes(sols){
         h += campo('Orientación', esc(_trazoOrientacionInfo(l.orientacion).l));
         h += campo('Colores', '<span style="color:#fbbf24;">'+esc((l.colores||[]).join(', '))+'</span>');
         h += '</div>';
-        if(l.notas) h += '<div style="font-size:12px;color:#94a3b8;background:rgba(255,255,255,.03);border-radius:6px;padding:6px 10px;margin-bottom:10px;">📝 '+esc(l.notas)+'</div>';
-        h += '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06);">';
+        if(l.notas) h += '<div style="font-size:15px;color:#cbd5e1;background:rgba(255,255,255,.03);border-radius:6px;padding:8px 12px;margin-bottom:12px;">📝 '+esc(l.notas)+'</div>';
+        h += '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);">';
         h += _tecpatronImagenLineaHTML(l, s.id);
-        h += '<div style="display:flex;align-items:center;gap:16px;">';
-        h += '<label style="display:flex;align-items:center;gap:6px;font-size:13px;color:#cbd5e1;cursor:pointer;white-space:nowrap;"><input type="checkbox" '+(l.generado?'checked':'')+' data-sid="'+s.id+'" data-lid="'+l.id+'" onchange="tecpatronToggleGenerado(this.dataset.sid,this.dataset.lid,this.checked)" style="width:18px;height:18px;accent-color:#a855f7;cursor:pointer;"> Generado</label>';
-        h += '<label style="display:flex;align-items:center;gap:6px;font-size:13px;color:#cbd5e1;cursor:pointer;white-space:nowrap;"><input type="checkbox" '+(l.impreso?'checked':'')+' data-sid="'+s.id+'" data-lid="'+l.id+'" onchange="tecpatronToggleImpreso(this.dataset.sid,this.dataset.lid,this.checked)" style="width:18px;height:18px;accent-color:#34d399;cursor:pointer;"> Impreso</label>';
+        h += '<div style="display:flex;align-items:center;gap:20px;">';
+        h += '<label style="display:flex;align-items:center;gap:7px;font-size:16px;color:#e2e8f0;cursor:pointer;white-space:nowrap;"><input type="checkbox" '+(l.generado?'checked':'')+' data-sid="'+s.id+'" data-lid="'+l.id+'" onchange="tecpatronToggleGenerado(this.dataset.sid,this.dataset.lid,this.checked)" style="width:22px;height:22px;accent-color:#a855f7;cursor:pointer;"> Generado</label>';
+        h += '<label style="display:flex;align-items:center;gap:7px;font-size:16px;color:#e2e8f0;cursor:pointer;white-space:nowrap;"><input type="checkbox" '+(l.impreso?'checked':'')+' data-sid="'+s.id+'" data-lid="'+l.id+'" onchange="tecpatronToggleImpreso(this.dataset.sid,this.dataset.lid,this.checked)" style="width:22px;height:22px;accent-color:#34d399;cursor:pointer;"> Impreso</label>';
         h += '</div></div>';
         h += '</div>';
       });
