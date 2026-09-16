@@ -20168,17 +20168,35 @@ function _tpPromediosHTML(r){
     });
     h += '</div>';
   }
-  h += '<div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;align-items:end;background:#0a0d14;border:1px solid #2c2c2e;border-radius:8px;padding:10px;">';
+  h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:8px;padding:10px;">';
+  h += '<div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:end;margin-bottom:10px;">';
   h += '<div><label class="form-label" style="font-size:10px;">Material</label><select id="tpp-tipo-'+r.id+'" class="form-control" onchange="_tppTipoChange(\''+r.id+'\')">';
   TRAZO_TIPOS.forEach(function(t){ h += '<option value="'+t.k+'">'+t.l+'</option>'; });
   h += '</select></div>';
-  h += '<div><label class="form-label" style="font-size:10px;">Tallas</label><input type="text" id="tpp-tallas-'+r.id+'" class="form-control" placeholder="Ej: T4 a T16"></div>';
   h += '<div><label class="form-label" style="font-size:10px;">Promedio</label><input type="text" id="tpp-valor-'+r.id+'" class="form-control" placeholder="Ej: 1.45 mts/prenda"></div>';
   h += '<button onclick="tpAgregarPromedio(\''+r.id+'\')" style="background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.4);color:#34d399;border-radius:7px;padding:9px 14px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;">+ Agregar</button>';
   h += '</div>';
-  h += '<div id="tpp-tipo-custom-wrap-'+r.id+'" style="display:none;margin-top:8px;"><input type="text" id="tpp-tipo-custom-'+r.id+'" class="form-control" placeholder="Especificar tipo adicional..."></div>';
+  h += '<div id="tpp-tipo-custom-wrap-'+r.id+'" style="display:none;margin-bottom:10px;"><input type="text" id="tpp-tipo-custom-'+r.id+'" class="form-control" placeholder="Especificar tipo adicional..."></div>';
+  h += '<label class="form-label" style="font-size:10px;">Tallas</label>';
+  h += '<div id="tpp-tallas-wrap-'+r.id+'" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">';
+  _tpTallasDelProducto(r).forEach(function(t){
+    h += '<label style="display:inline-flex;align-items:center;gap:4px;background:#0d1117;border:1px solid #2c2c2e;border-radius:6px;padding:5px 9px;font-size:12px;cursor:pointer;"><input type="checkbox" class="tpp-talla" value="'+esc(t)+'" style="accent-color:#0a84ff;cursor:pointer;"> '+esc(t)+'</label>';
+  });
+  h += '</div>';
   h += '</div>';
   return h;
+}
+// Universo de tallas a ofrecer como checkboxes: las que ya se usan en las OPs reales de este
+// producto (union de op.tallas de todas sus OPs) — si el producto aún no tiene ninguna OP,
+// cae al set de tallas infantiles por defecto.
+function _tpTallasDelProducto(r){
+  var nombreU = (r.producto||'').trim().toUpperCase();
+  var set = {};
+  (DB.ops||[]).forEach(function(op){
+    if((op.nombre_producto||'').trim().toUpperCase()===nombreU) (op.tallas||[]).forEach(function(t){ set[t]=1; });
+  });
+  var tallas = Object.keys(set);
+  return tallas.length ? tallas : ['T4','T6','T8','T10','T12','T14','T16'];
 }
 function _tppTipoChange(rid){
   var tipo = document.getElementById('tpp-tipo-'+rid).value;
@@ -20190,10 +20208,11 @@ async function tpAgregarPromedio(rid){
   if(!r) return;
   var tipo = document.getElementById('tpp-tipo-'+rid).value;
   var tipoCustom = (document.getElementById('tpp-tipo-custom-'+rid).value||'').trim();
-  var tallas = (document.getElementById('tpp-tallas-'+rid).value||'').trim();
+  var tallasWrap = document.getElementById('tpp-tallas-wrap-'+rid);
+  var tallas = tallasWrap ? Array.prototype.slice.call(tallasWrap.querySelectorAll('.tpp-talla:checked')).map(function(el){ return el.value; }).join(', ') : '';
   var valor = (document.getElementById('tpp-valor-'+rid).value||'').trim();
   if(tipo==='ADICIONAL' && !tipoCustom){ toast('Especifica el tipo de trazo adicional','error'); return; }
-  if(!tallas){ toast('Indica el grupo de tallas de este promedio','error'); return; }
+  if(!tallas){ toast('Selecciona al menos una talla','error'); return; }
   if(!valor){ toast('Ingresa el valor del promedio','error'); return; }
   if(!r.promedios) r.promedios = [];
   r.promedios.push({id:uid(), tipo:tipo, tipo_custom:tipo==='ADICIONAL'?tipoCustom:'', tallas:tallas, valor:valor, creado_en:hoy()});
