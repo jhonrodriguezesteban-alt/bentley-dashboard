@@ -19611,6 +19611,7 @@ function _renderTrazosHistorial(){
     h += '<div style="display:flex;align-items:center;gap:8px;">';
     h += '<span style="font-size:9px;font-weight:800;background:'+estadoColor+'18;border:1px solid '+estadoColor+'40;color:'+estadoColor+';border-radius:5px;padding:3px 8px;white-space:nowrap;">'+estadoTxt+'</span>';
     if(!s.manual) h += '<button data-sid="'+s.id+'" onclick="imprimirSolicitudTrazos(this.dataset.sid)" style="background:rgba(148,163,184,.1);border:1px solid #2c2c2e;color:#94a3b8;border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;">🖨 Imprimir</button>';
+    if(!s.manual) h += '<button data-sid="'+s.id+'" onclick="event.stopPropagation();abrirEditarSolicitudTrazos(this.dataset.sid)" style="background:rgba(10,132,255,.08);border:1px solid rgba(10,132,255,.3);color:#0a84ff;border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;">✏️ Editar</button>';
     h += '<button data-sid="'+s.id+'" onclick="event.stopPropagation();abrirRevertirSolicitudTrazos(this.dataset.sid)" title="Revertir esta solicitud (por error, duplicado, etc.)" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);color:#f87171;border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;">↩ Revertir</button>';
     h += '</div></div>';
     h += '<div id="'+detId+'" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);">'+_trazosRenderLineasSolicitud(s)+'</div>';
@@ -19667,6 +19668,7 @@ function _renderTrazosPorRecoger(){
       h += '<div style="display:flex;align-items:center;gap:10px;background:#0a0d14;border:1px solid #2c2c2e;border-left:3px solid '+tt.color+';border-radius:9px;padding:8px 14px;margin-bottom:5px;opacity:.7;">';
       h += '<div style="flex:1;min-width:0;font-size:11px;color:#94a3b8;"><span style="font-family:var(--bebas);font-size:12px;color:#0a84ff;">'+esc(fmtOpId(it.sol.op_id))+'</span> '+esc(it.sol.op_nombre)+' · '+tt.l+' · tallas '+(it.linea.tallas||[]).join(', ')+' · '+(it.linea.colores||[]).join(', ')+'</div>';
       h += '<div style="font-size:10px;color:#475569;white-space:nowrap;">Recogido '+fmtDate(it.linea.recogido_en)+'</div>';
+      h += '<button data-sid="'+it.sol.id+'" data-lid="'+it.linea.id+'" onclick="revertirTrazoRecogido(this.dataset.sid,this.dataset.lid)" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);color:#f87171;border-radius:6px;padding:4px 9px;font-size:10px;cursor:pointer;white-space:nowrap;">↩ Revertir</button>';
       h += '</div>';
     });
     h += '</div>';
@@ -19685,14 +19687,49 @@ async function marcarTrazoRecogido(sid, lid){
   var ok = await guardarTrazos();
   if(ok){ toast('Marcado como recogido','success'); renderPage('trazos'); }
 }
+// Deshace un "Ya lo recogí" marcado por error — el color vuelve a la lista de pendientes
+// por recoger de arriba.
+async function revertirTrazoRecogido(sid, lid){
+  var sol = (DB.trazos.solicitudes||[]).find(function(s){ return s.id===sid; });
+  if(!sol) return;
+  var linea = (sol.lineas||[]).find(function(l){ return l.id===lid; });
+  if(!linea) return;
+  linea.recogido = false;
+  linea.recogido_en = null;
+  saveLocal();
+  var ok = await guardarTrazos();
+  if(ok){ toast('Revertido — vuelve a pendiente por recoger','success'); renderPage('trazos'); }
+}
 
 // ── Builder de solicitud (modal) ────────────────────────────────────────────────
 var _trazoBuilderOpId = null;
 var _trazoBuilderLineas = [];
+var _trazoEditandoSolicitudId = null; // si tiene valor, el builder está en modo "editar" en vez de "nueva solicitud"
 
 function abrirBuilderTrazos(opId){
   _trazoBuilderOpId = opId;
   _trazoBuilderLineas = [];
+  _trazoEditandoSolicitudId = null;
+  _renderBuilderTrazos();
+}
+// Botón "Editar Solicitud de trazos" del historial: si Techpatron ya generó o imprimió algo
+// de esta solicitud, ya no tiene sentido editarla (el satélite puede tener ese trazo en mano)
+// — en ese caso se avisa y se ofrece de una vez crear una solicitud nueva. Si nadie la ha
+// tocado todavía (sigue "ENVIADA"), se abre el mismo builder pero precargado, para editar la
+// solicitud original en el sitio.
+function abrirEditarSolicitudTrazos(sid){
+  var s = (DB.trazos.solicitudes||[]).find(function(x){ return x.id===sid; });
+  if(!s) return;
+  var yaProcesada = (s.lineas||[]).some(function(l){ return l.generado || l.impreso; });
+  if(yaProcesada){
+    var body = '<div style="background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.3);border-radius:9px;padding:14px 16px;font-size:13px;color:#fbbf24;">⚠ Este trazo ya fue generado/impreso, genera una nueva orden en su lugar — editar la solicitud original ya no serviría porque Techpatron puede tener ese trazo listo o en manos del satélite.</div>';
+    var footer = '<button data-opid="'+s.op_id+'" onclick="closeModal();abrirBuilderTrazos(this.dataset.opid)" style="background:#0a84ff;border:none;border-radius:8px;color:#fff;padding:8px 18px;font-size:13px;font-weight:700;cursor:pointer;">+ Generar nueva solicitud</button><button onclick="closeModal()" style="background:rgba(255,255,255,.06);border:1px solid var(--card-border);color:var(--dim);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px;margin-left:8px;">Cerrar</button>';
+    openModal('SOLICITUD YA PROCESADA', body, footer, {});
+    return;
+  }
+  _trazoBuilderOpId = s.op_id;
+  _trazoBuilderLineas = JSON.parse(JSON.stringify(s.lineas||[]));
+  _trazoEditandoSolicitudId = sid;
   _renderBuilderTrazos();
 }
 
@@ -19762,8 +19799,11 @@ function _renderBuilderTrazos(){
   h += '<button onclick="_trazoAgregarLinea()" style="background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.4);color:#34d399;border-radius:7px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;">+ Agregar línea</button>';
   h += '</div>';
   h += '<div id="tb-lineas-list">' + _renderLineasBuilderList() + '</div>';
-  var footer = '<button onclick="_trazoEnviarSolicitud()" '+(_trazoBuilderLineas.length?'':'disabled')+' style="background:#0a84ff;border:none;border-radius:8px;color:#fff;padding:8px 18px;font-size:13px;font-weight:700;'+(_trazoBuilderLineas.length?'cursor:pointer;':'opacity:.4;cursor:not-allowed;')+'">📤 Enviar solicitud</button><button onclick="closeModal()" style="background:rgba(255,255,255,.06);border:1px solid var(--card-border);color:var(--dim);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px;margin-left:8px;">Cerrar</button>';
-  openModal('SOLICITUD DE TRAZOS', h, footer, {wide:true});
+  var editando = !!_trazoEditandoSolicitudId;
+  var footer = editando
+    ? '<button onclick="_trazoGuardarEdicionSolicitud()" '+(_trazoBuilderLineas.length?'':'disabled')+' style="background:#0a84ff;border:none;border-radius:8px;color:#fff;padding:8px 18px;font-size:13px;font-weight:700;'+(_trazoBuilderLineas.length?'cursor:pointer;':'opacity:.4;cursor:not-allowed;')+'">💾 Guardar cambios</button><button onclick="_trazoEditandoSolicitudId=null;closeModal()" style="background:rgba(255,255,255,.06);border:1px solid var(--card-border);color:var(--dim);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px;margin-left:8px;">Cancelar</button>'
+    : '<button onclick="_trazoEnviarSolicitud()" '+(_trazoBuilderLineas.length?'':'disabled')+' style="background:#0a84ff;border:none;border-radius:8px;color:#fff;padding:8px 18px;font-size:13px;font-weight:700;'+(_trazoBuilderLineas.length?'cursor:pointer;':'opacity:.4;cursor:not-allowed;')+'">📤 Enviar solicitud</button><button onclick="closeModal()" style="background:rgba(255,255,255,.06);border:1px solid var(--card-border);color:var(--dim);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px;margin-left:8px;">Cerrar</button>';
+  openModal(editando?'EDITAR SOLICITUD DE TRAZOS':'SOLICITUD DE TRAZOS', h, footer, {wide:true});
 }
 
 // Muestra/oculta el campo de texto libre cuando el tipo de trazo elegido es "Adicional".
@@ -19842,6 +19882,46 @@ async function _trazoEnviarSolicitud(){
   } finally {
     _enviandoSolicitudTrazos = false;
   }
+}
+// Guarda los cambios de una solicitud ya existente (solo posible si todavía está "ENVIADA",
+// sin nada generado/impreso — ver abrirEditarSolicitudTrazos). Deja rastro en
+// s.historial_ediciones para que Techpatron sepa que esa solicitud cambió después de enviada.
+async function _trazoGuardarEdicionSolicitud(){
+  if(_enviandoSolicitudTrazos) return;
+  if(!_trazoEditandoSolicitudId || !_trazoBuilderLineas.length) return;
+  var sol = (DB.trazos.solicitudes||[]).find(function(s){ return s.id===_trazoEditandoSolicitudId; });
+  if(!sol) return;
+  _enviandoSolicitudTrazos = true;
+  try {
+    sol.lineas = _trazoBuilderLineas;
+    if(!sol.historial_ediciones) sol.historial_ediciones = [];
+    var ahora = new Date();
+    sol.historial_ediciones.push({fecha:hoy(), hora:ahora.getHours().toString().padStart(2,'0')+':'+ahora.getMinutes().toString().padStart(2,'0'), usuario:getUser()});
+    saveLocal();
+    var ok = await guardarTrazos();
+    if(ok){ toast('Solicitud actualizada','success'); closeModal(); _trazoBuilderLineas=[]; _trazoBuilderOpId=null; _trazoEditandoSolicitudId=null; renderPage('trazos'); }
+    else toast('Error al guardar los cambios','error');
+  } finally {
+    _enviandoSolicitudTrazos = false;
+  }
+}
+// Historial de ediciones de una solicitud — a quién le avisa Techpatron que algo cambió
+// después de haberla enviado.
+function _tpVerHistorialEdicion(sid){
+  var s = (DB.trazos.solicitudes||[]).find(function(x){ return x.id===sid; });
+  if(!s) return;
+  var eds = (s.historial_ediciones||[]).slice().reverse();
+  var body = '<div style="display:flex;flex-direction:column;gap:8px;">';
+  if(!eds.length){
+    body += '<div class="empty-state">Sin ediciones registradas.</div>';
+  } else {
+    eds.forEach(function(e){
+      body += '<div style="background:#0d1117;border:1px solid #2c2c2e;border-radius:8px;padding:10px 12px;font-size:12px;color:#cbd5e1;">'+fmtDate(e.fecha)+(e.hora?' · '+esc(e.hora):'')+' · editado por <b style="color:#e2e8f0;">'+esc(e.usuario||'')+'</b></div>';
+    });
+  }
+  body += '</div>';
+  var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cerrar</button>';
+  openModal('✏️ HISTORIAL DE EDICIONES', body, footer, {});
 }
 
 // Imprime (o "Guardar como PDF" desde el diálogo del navegador, útil en celular para
@@ -20072,6 +20152,7 @@ function _renderTecPatronTrazosPendientes(sols){
           return '<div><div style="font-size:12px;color:#94a3b8;text-transform:uppercase;letter-spacing:.3px;">'+label+'</div><div style="font-size:18px;color:#f1f5f9;font-weight:600;">'+valor+'</div></div>';
         }
         h += '<div style="background:#0d1117;border:1px solid #2c2c2e;border-left:4px solid '+tt.color+';border-radius:8px;padding:14px 16px;margin-bottom:10px;">';
+        if(s.historial_ediciones && s.historial_ediciones.length) h += '<div data-sid="'+s.id+'" onclick="_tpVerHistorialEdicion(this.dataset.sid)" style="display:inline-block;font-size:11px;font-weight:700;color:#fbbf24;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.35);border-radius:5px;padding:2px 8px;margin-bottom:10px;cursor:pointer;">✏️ Solicitud editada · ver historial</div>';
         if(l.tipo==='ADICIONAL'&&l.tipo_custom) h += '<div style="font-size:18px;font-weight:800;color:'+tt.color+';margin-bottom:10px;">'+esc(l.tipo_custom)+'</div>';
         h += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px 18px;margin-bottom:12px;">';
         h += campo('Tallas', '<b>'+esc(_trazoTallasConMarcadas(l))+'</b>');
@@ -20360,6 +20441,7 @@ function _tpPromediosHTML(r){
   _tpTallasDelProducto(r).forEach(function(t){
     h += '<label style="display:inline-flex;align-items:center;gap:4px;background:#0d1117;border:1px solid #2c2c2e;border-radius:6px;padding:5px 9px;font-size:12px;cursor:pointer;"><input type="checkbox" class="tpp-talla" value="'+esc(t)+'" style="accent-color:#0a84ff;cursor:pointer;"> '+esc(t)+'</label>';
   });
+  h += '</div>';
   h += '</div>';
   h += '</div>';
   return h;
