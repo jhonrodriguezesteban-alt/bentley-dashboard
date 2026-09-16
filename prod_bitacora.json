@@ -19006,19 +19006,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "ROSA",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1789570122088_ocm4c",
-      "ts": 1789570122088,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-098",
       "op_nombre": "CHAQUETA CAZADORA",
       "referencia": "CHAQUETA CAZADORA",
-      "color": "ROSA",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1789570122088,
+      "uds": 74,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789571327042_yr452",
+      "ts": 1789571327042,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-125",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "referencia": "OVERSIZED CAPOTA",
+      "color": "NEGRO",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 74,
+      "uds": 92,
       "motivo": "EN TALLER"
     }
   ]
