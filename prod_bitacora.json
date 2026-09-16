@@ -19049,19 +19049,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "AZUL BEBE",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1789573590714_65fuc",
+      "motivo": "EN TALLER",
+      "op_id": "OP-2026-081",
+      "op_nombre": "CONJUNTO MANCHESTER",
+      "referencia": "CONJUNTO MANCHESTER",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1789573590714,
+      "uds": 104,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789573615681_vi1kb",
+      "ts": 1789573615681,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-081",
       "op_nombre": "CONJUNTO MANCHESTER",
       "referencia": "CONJUNTO MANCHESTER",
-      "color": "AZUL BEBE",
+      "color": "CAFE",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 104,
+      "uds": 64,
       "motivo": "EN TALLER"
     }
   ]
