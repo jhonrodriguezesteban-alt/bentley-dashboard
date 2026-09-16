@@ -19022,20 +19022,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1789571327042_yr452",
-      "ts": 1789571327042,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-125",
       "op_nombre": "OVERSIZED CAPOTA",
       "referencia": "OVERSIZED CAPOTA",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1789571327042,
       "uds": 92,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789573567002_0huor",
+      "ts": 1789573567002,
+      "user": "Jefa de Producción",
+      "tipo": "satelite_editar",
+      "satelite_id": "sat_07",
+      "nombre": "MARCELA PEÑA",
+      "activo": true,
+      "personas": 0,
+      "capacidad": 0
     }
   ]
 }
