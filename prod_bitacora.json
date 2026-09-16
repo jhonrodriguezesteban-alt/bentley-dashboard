@@ -19251,20 +19251,39 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MARFIL",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1789595564095_ovota",
-      "ts": 1789595564095,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-211",
       "op_nombre": "CAMISETA MISO",
       "referencia": "CAMISETA MISO",
-      "color": "MARFIL",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1789595564095,
       "uds": 106,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789595610108_bh5hw",
+      "ts": 1789595610108,
+      "user": "Jefa de Producción",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-215",
+      "op_nombre": "CHAQUETA DISCOVERY",
+      "categoria": "CHAQUETAS",
+      "total_ots": 21,
+      "total_uds": 288,
+      "colores": [
+        "NEGRO",
+        "VERDE MILITAR",
+        "CAMEL"
+      ],
+      "referencias": [
+        "CHAQUETA DISCOVERY"
+      ]
     }
   ]
 }
