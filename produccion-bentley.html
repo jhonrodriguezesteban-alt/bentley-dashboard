@@ -12227,10 +12227,38 @@ function abrirComentariosDiseno(id){
 
 var AVATAR_COLORS_C = {Carolina:'#f472b6',Isa:'#a78bfa',John:'#38bdf8',Juan:'#34d399'};
 
+// Confirmación de lectura estilo WhatsApp: al abrir el panel de comentarios de un diseño, el
+// usuario actual queda marcado como que "vio" cada comentario ajeno — automático, sin que
+// nadie tenga que hacer nada. No se marca a sí mismo como lector de sus propios comentarios.
+async function _marcarComentariosVistos(d){
+  var myId = getCurrentUserId();
+  if(!myId) return;
+  var changed = false;
+  (d.comentarios||[]).forEach(function(c){
+    if(c.autor_id && c.autor_id===myId) return;
+    if(!c.leido_por) c.leido_por = [];
+    if(c.leido_por.indexOf(myId)<0){ c.leido_por.push(myId); changed = true; }
+  });
+  if(changed){ saveLocal(); await guardarDisenos(); }
+}
+// Checkbox de "resuelto" en cada comentario — al marcarlo, el comentario queda tachado
+// visualmente (mismo criterio que un checklist normal), sin borrarlo ni ocultarlo.
+async function toggleComentarioResuelto(cid, checked){
+  var d = (DB.disenos||[]).find(function(x){ return x.id===_comentCtx; });
+  if(!d) return;
+  var c = (d.comentarios||[]).find(function(x){ return x.id===cid; });
+  if(!c) return;
+  c.resuelto = checked;
+  saveLocal();
+  var ok = await guardarDisenos();
+  if(ok) _renderDrawerComentarios();
+}
+
 function _renderDrawerComentarios(){
   var id = _comentCtx;
   var d = (DB.disenos||[]).find(function(x){ return x.id===id; });
   if(!d) return;
+  _marcarComentariosVistos(d);
   var comentarios = (d.comentarios||[]).slice().reverse();
 
   var h = '';
@@ -12246,19 +12274,24 @@ function _renderDrawerComentarios(){
       var ac = AVATAR_COLORS_C[c.autor] || '#64748b';
       var inicial = (c.autor||'?')[0].toUpperCase();
       var preview = (c.texto||'').replace(/\n/g,' ').substring(0,80) + ((c.texto||'').length>80?'…':'');
-      h += '<div data-cid="'+c.id+'" onclick="abrirDetalleComentario(this.dataset.cid)" style="display:flex;gap:12px;align-items:flex-start;background:#0d1117;border:1px solid #2c2c2e;border-radius:12px;padding:12px 14px;margin-bottom:10px;cursor:pointer;transition:border-color .15s;" onmouseenter="this.style.borderColor=\''+ac+'44\'" onmouseleave="this.style.borderColor=\'#2c2c2e\'">';
+      var resuelto = !!c.resuelto;
+      var tachado = resuelto ? 'text-decoration:line-through;' : '';
+      h += '<div data-cid="'+c.id+'" onclick="abrirDetalleComentario(this.dataset.cid)" style="display:flex;gap:10px;align-items:flex-start;background:#0d1117;border:1px solid #2c2c2e;border-radius:12px;padding:12px 14px;margin-bottom:10px;cursor:pointer;transition:border-color .15s;'+(resuelto?'opacity:.55;':'')+'" onmouseenter="this.style.borderColor=\''+ac+'44\'" onmouseleave="this.style.borderColor=\'#2c2c2e\'">';
+      h += '<input type="checkbox" '+(resuelto?'checked':'')+' data-cid="'+c.id+'" onclick="event.stopPropagation()" onchange="toggleComentarioResuelto(this.dataset.cid,this.checked)" title="Marcar como resuelto" style="margin-top:10px;width:16px;height:16px;accent-color:#34d399;cursor:pointer;flex-shrink:0;">';
       h += '<div style="flex-shrink:0;width:34px;height:34px;border-radius:50%;background:'+ac+'22;border:2px solid '+ac+'55;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:'+ac+';">'+inicial+'</div>';
       h += '<div style="flex:1;min-width:0;">';
       h += '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">';
-      h += '<span style="font-size:12px;font-weight:700;color:'+ac+';">'+esc(c.autor||'')+'</span>';
+      h += '<span style="font-size:12px;font-weight:700;color:'+ac+';'+tachado+'">'+esc(c.autor||'')+'</span>';
       h += '<span style="font-size:10px;color:#334155;">'+esc(c.fecha||'')+(c.hora?' · '+esc(c.hora):'')+'</span>';
       h += '</div>';
-      h += '<div style="font-size:12px;color:#94a3b8;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(preview)+'</div>';
+      h += '<div style="font-size:12px;color:#94a3b8;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'+tachado+'">'+esc(preview)+'</div>';
       var nLikes = (c.likes||[]).length, nReplies = (c.replies||[]).length;
-      if(nLikes||nReplies){
-        h += '<div style="display:flex;gap:8px;margin-top:5px;">';
+      var vistoPorOtros = (c.leido_por||[]).length>0;
+      if(nLikes||nReplies||true){
+        h += '<div style="display:flex;align-items:center;gap:8px;margin-top:5px;">';
         if(nLikes) h += '<span style="font-size:10px;color:#f87171;">❤️ '+nLikes+'</span>';
         if(nReplies) h += '<span style="font-size:10px;color:#818cf8;">💬 '+nReplies+'</span>';
+        h += '<span style="font-size:11px;color:'+(vistoPorOtros?'#38bdf8':'#475569')+';margin-left:auto;" title="'+(vistoPorOtros?'Visto por otros':'Aún no lo han visto')+'">'+(vistoPorOtros?'✓✓ Visto':'✓ Enviado')+'</span>';
         h += '</div>';
       }
       h += '</div>';
@@ -12518,7 +12551,7 @@ async function agregarComentarioDiseno(){
   var ahora = new Date();
   var hora = ahora.getHours().toString().padStart(2,'0')+':'+ahora.getMinutes().toString().padStart(2,'0');
   var cid = 'c_'+Date.now();
-  var nuevoC = { id:cid, texto:texto, autor:getUser()||'Desconocido', fecha:hoy(), hora:hora, imagenes:[] };
+  var nuevoC = { id:cid, texto:texto, autor:getUser()||'Desconocido', autor_id:getCurrentUserId(), fecha:hoy(), hora:hora, imagenes:[], leido_por:[] };
 
   // Subir imágenes adjuntas
   if(_comentImgsPendientes.length){
