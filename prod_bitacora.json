@@ -19151,13 +19151,29 @@
       "user": "Jefa de Producción"
     },
     {
+      "capacidad": 0,
       "id": "evt_1789587911712_twhx0",
-      "ts": 1789587911712,
-      "user": "Jefa de Producción",
-      "tipo": "satelite_crear",
       "nombre": "LETICIA VILLAMIZAR",
       "personas": 3,
-      "capacidad": 0
+      "tipo": "satelite_crear",
+      "ts": 1789587911712,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789587947664_trbk3",
+      "ts": 1789587947664,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-098",
+      "op_nombre": "CHAQUETA CAZADORA",
+      "referencia": "CHAQUETA CAZADORA",
+      "color": "AZUL OSCURO",
+      "talla": "todas las tallas",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": true,
+      "uds": 80,
+      "motivo": "EN TALLER"
     }
   ]
 }
