@@ -19908,7 +19908,7 @@ function renderTecPatron(){
   var h = '<div style="padding:18px 16px 80px;">';
   h += '<div style="margin-bottom:14px;"><div style="font-size:22px;font-weight:800;color:var(--accent);">🧵 Techpatron</div>';
   h += '<div style="font-size:11px;color:#64748b;">Trazos por hacer y ficha de vida de cada producto</div></div>';
-  var tabs = [{k:'trazos',l:'📐 Trazos'},{k:'productos',l:'🗂 Diseños / Productos'}];
+  var tabs = [{k:'trazos',l:'📐 Trazos pendientes'},{k:'enviados',l:'📦 Trazos enviados'},{k:'productos',l:'🗂 Diseños / Productos'}];
   h += '<div style="display:flex;gap:6px;margin-bottom:16px;">';
   tabs.forEach(function(t){
     var a = _tecpatronTab===t.k;
@@ -19916,6 +19916,7 @@ function renderTecPatron(){
   });
   h += '</div>';
   if(_tecpatronTab==='trazos') h += _renderTecPatronTrazos();
+  else if(_tecpatronTab==='enviados') h += _renderTecPatronTrazosEnviados();
   else h += _renderTecPatronProductos();
   h += '</div>';
   return h;
@@ -19931,13 +19932,11 @@ function _renderTecPatronTrazos(){
   });
 
   var h = '';
-  h += '<div style="font-size:11px;font-weight:700;color:#fbbf24;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">📐 Trazos pendientes</div>';
   if(!sols.length){
     h += '<div style="text-align:center;padding:30px;color:#374151;">No hay solicitudes de trazos pendientes.</div>';
   } else {
     h += _renderTecPatronTrazosPendientes(sols);
   }
-  h += _renderTecPatronTrazosEnviados();
   return h;
 }
 
@@ -20004,7 +20003,7 @@ function _renderTecPatronTrazosEnviados(){
       if(l.recogido) items.push({sol:s, linea:l});
     });
   });
-  if(!items.length) return '';
+  if(!items.length) return '<div style="text-align:center;padding:30px;color:#374151;">Todavía no hay trazos enviados (recogidos por producción).</div>';
   items.sort(function(a,b){ return (b.linea.recogido_en||'').localeCompare(a.linea.recogido_en||''); });
 
   var porOp = {}; var orden = [];
@@ -20013,8 +20012,7 @@ function _renderTecPatronTrazosEnviados(){
     porOp[it.sol.op_id].items.push(it);
   });
 
-  var h = '<div style="margin-top:18px;">';
-  h += '<div style="font-size:11px;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">📦 Trazos enviados (ya recogidos por producción)</div>';
+  var h = '<div>';
   orden.forEach(function(opId){
     var g = porOp[opId];
     h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:10px;padding:12px 14px;margin-bottom:6px;opacity:.75;">';
