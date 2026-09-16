@@ -19235,19 +19235,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1789595499844_ql1iz",
+      "motivo": "en insumos",
+      "op_id": "OP-2026-211",
+      "op_nombre": "CAMISETA MISO",
+      "referencia": "CAMISETA MISO",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1789595499844,
+      "uds": 100,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789595564095_ovota",
+      "ts": 1789595564095,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-211",
       "op_nombre": "CAMISETA MISO",
       "referencia": "CAMISETA MISO",
-      "color": "NEGRO",
+      "color": "MARFIL",
       "talla": "todas las tallas",
       "estado_anterior": "CORTE_POR_ALISTAR",
       "estado_nuevo": "CORTE_POR_ALISTAR",
       "bulk": true,
-      "uds": 100,
+      "uds": 106,
       "motivo": "en insumos"
     }
   ]
