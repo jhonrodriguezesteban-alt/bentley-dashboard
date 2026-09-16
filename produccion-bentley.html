@@ -19319,15 +19319,25 @@ function guardarTrazos(){ return guardarArchivo('trazos', DB.trazos); }
 var TRAZO_TIPOS = [
   {k:'TELA_PRINCIPAL', l:'Tela Principal', color:'#0a84ff'},
   {k:'PIEZAS_LISAS',   l:'Piezas Lisas',   color:'#a855f7'},
-  {k:'FORRO',          l:'Forro',          color:'#34d399'}
+  {k:'FORRO',          l:'Forro',          color:'#34d399'},
+  {k:'GUATA',          l:'Guata',          color:'#f97316'},
+  {k:'ENTRETELA',      l:'Entretela',      color:'#ec4899'},
+  {k:'ADICIONAL',      l:'Adicional',      color:'#fbbf24'}
 ];
 function _trazoTipoInfo(k){ return TRAZO_TIPOS.find(function(t){ return t.k===k; }) || TRAZO_TIPOS[0]; }
+// Etiqueta a mostrar para una línea: si es tipo "Adicional" con texto propio escrito por la
+// diseñadora, se usa ese texto en vez del genérico "Adicional".
+function _trazoTipoLabel(l){ return (l.tipo==='ADICIONAL' && l.tipo_custom) ? l.tipo_custom : _trazoTipoInfo(l.tipo).l; }
 var TRAZO_SENTIDOS = [
-  {k:'UN_SENTIDO',  l:'Un sentido'},
-  {k:'AL_TRAVES',   l:'Al través'},
-  {k:'AMBOS',       l:'Ambos sentidos'}
+  {k:'UNA_DIRECCION',   l:'Una dirección'},
+  {k:'DOS_DIRECCIONES', l:'Dos direcciones'}
 ];
 function _trazoSentidoInfo(k){ return TRAZO_SENTIDOS.find(function(s){ return s.k===k; }) || TRAZO_SENTIDOS[0]; }
+var TRAZO_ORIENTACIONES = [
+  {k:'AL_HILO',   l:'Al hilo'},
+  {k:'AL_TRAVES', l:'Al través'}
+];
+function _trazoOrientacionInfo(k){ return TRAZO_ORIENTACIONES.find(function(o){ return o.k===k; }) || TRAZO_ORIENTACIONES[0]; }
 
 // El check "ya solicité trazos para este color" vive en la propia OP (no siempre se piden
 // todos los colores de una vez) — independiente de armar una solicitud formal con líneas.
@@ -19523,7 +19533,7 @@ function _trazosRenderLineasSolicitud(s){
     lns.forEach(function(l){
       var estTxt = l.recogido ? '✅ Recogido' : l.impreso ? '🚚 Impreso, por recoger' : l.generado ? '🖨 Generado, falta imprimir' : '⏳ Enviado';
       h += '<div style="background:#0d1117;border:1px solid #2c2c2e;border-left:3px solid '+tt.color+';border-radius:7px;padding:8px 12px;margin-bottom:5px;">';
-      h += '<div style="font-size:11px;color:#cbd5e1;">Tallas <b>'+(l.tallas||[]).join(', ')+'</b> · '+l.cantidad_trazos+' trazo(s) · '+l.ancho_util+'m · '+esc(_trazoSentidoInfo(l.sentido).l)+' · colores: <span style="color:#fbbf24;">'+(l.colores||[]).join(', ')+'</span></div>';
+      h += '<div style="font-size:11px;color:#cbd5e1;">'+(l.tipo==='ADICIONAL'&&l.tipo_custom?'<b>'+esc(l.tipo_custom)+'</b> · ':'')+'Tallas <b>'+(l.tallas||[]).join(', ')+'</b> · '+l.cantidad_trazos+' trazo(s) · '+l.ancho_util+'m · '+esc(_trazoSentidoInfo(l.sentido).l)+' · '+esc(_trazoOrientacionInfo(l.orientacion).l)+' · colores: <span style="color:#fbbf24;">'+(l.colores||[]).join(', ')+'</span></div>';
       if(l.notas) h += '<div style="font-size:10px;color:#94a3b8;margin-top:2px;">📝 '+esc(l.notas)+'</div>';
       h += '<div style="font-size:10px;color:#64748b;margin-top:2px;">'+estTxt+'</div>';
       h += '</div>';
@@ -19645,7 +19655,7 @@ function _renderLineasBuilderList(){
     lns.forEach(function(l){
       var idx = _trazoBuilderLineas.indexOf(l);
       h += '<div style="display:flex;align-items:center;gap:8px;background:#0d1117;border:1px solid #2c2c2e;border-left:3px solid '+tt.color+';border-radius:7px;padding:8px 12px;margin-bottom:5px;">';
-      h += '<div style="flex:1;font-size:11px;color:#cbd5e1;">Tallas <b>'+l.tallas.join(', ')+'</b> · '+l.cantidad_trazos+' trazo(s) · ancho '+l.ancho_util+'m · '+esc(_trazoSentidoInfo(l.sentido).l)+' · colores: <span style="color:#fbbf24;">'+l.colores.join(', ')+'</span>'+(l.notas?'<div style="color:#64748b;margin-top:2px;">📝 '+esc(l.notas)+'</div>':'')+'</div>';
+      h += '<div style="flex:1;font-size:11px;color:#cbd5e1;">'+(l.tipo==='ADICIONAL'&&l.tipo_custom?'<b>'+esc(l.tipo_custom)+'</b> · ':'')+'Tallas <b>'+l.tallas.join(', ')+'</b> · '+l.cantidad_trazos+' trazo(s) · ancho '+l.ancho_util+'m · '+esc(_trazoSentidoInfo(l.sentido).l)+' · '+esc(_trazoOrientacionInfo(l.orientacion).l)+' · colores: <span style="color:#fbbf24;">'+l.colores.join(', ')+'</span>'+(l.notas?'<div style="color:#64748b;margin-top:2px;">📝 '+esc(l.notas)+'</div>':'')+'</div>';
       h += '<button data-idx="'+idx+'" onclick="_trazoQuitarLinea(this.dataset.idx)" style="background:none;border:none;color:#334155;cursor:pointer;font-size:13px;">✕</button>';
       h += '</div>';
     });
@@ -19665,15 +19675,21 @@ function _renderBuilderTrazos(){
   h += '<div style="margin-bottom:14px;">'+_trazosTablaOP(op, coloresPendientes)+'</div>';
   h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:10px;padding:14px;margin-bottom:14px;">';
   h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">';
-  h += '<div><label class="form-label">Tipo de trazo</label><select id="tb-tipo" class="form-control">';
+  h += '<div><label class="form-label">Tipo de trazo</label><select id="tb-tipo" class="form-control" onchange="_tbTipoChange()">';
   TRAZO_TIPOS.forEach(function(t){ h += '<option value="'+t.k+'">'+t.l+'</option>'; });
   h += '</select></div>';
   h += '<div><label class="form-label">Cantidad de trazos</label><input id="tb-cant" type="number" min="1" value="1" class="form-control"></div>';
   h += '</div>';
+  h += '<div id="tb-tipo-custom-wrap" style="display:none;margin-bottom:10px;"><label class="form-label">Especificar tipo "Adicional"</label><input id="tb-tipo-custom" type="text" class="form-control" placeholder="Ej: Vivo, cinta ribete..."></div>';
   h += '<div style="margin-bottom:10px;"><label class="form-label">Ancho útil de tela (mts)</label><input id="tb-ancho" type="number" step="0.01" min="0" class="form-control" placeholder="Ej: 1.32"></div>';
-  h += '<div style="margin-bottom:10px;"><label class="form-label">Sentido del trazo</label><select id="tb-sentido" class="form-control">';
+  h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">';
+  h += '<div><label class="form-label">Sentido del trazo</label><select id="tb-sentido" class="form-control">';
   TRAZO_SENTIDOS.forEach(function(s){ h += '<option value="'+s.k+'">'+s.l+'</option>'; });
   h += '</select></div>';
+  h += '<div><label class="form-label">Al hilo / Al través</label><select id="tb-orientacion" class="form-control">';
+  TRAZO_ORIENTACIONES.forEach(function(o){ h += '<option value="'+o.k+'">'+o.l+'</option>'; });
+  h += '</select></div>';
+  h += '</div>';
   h += '<div style="margin-bottom:10px;"><label class="form-label">Nota adicional de este trazo (opcional)</label><textarea id="tb-notas" class="form-control" rows="2" placeholder="Ej: cuidado con el estampado, centrar motivo..."></textarea></div>';
   h += '<div style="margin-bottom:10px;"><label class="form-label">Tallas</label><div style="display:flex;flex-wrap:wrap;gap:6px;">';
   tallas.forEach(function(t){ h += '<label style="display:inline-flex;align-items:center;gap:4px;background:#0d1117;border:1px solid #2c2c2e;border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;"><input type="checkbox" class="tb-talla" value="'+esc(t)+'" style="accent-color:#0a84ff;"> '+esc(t)+'</label>'; });
@@ -19688,18 +19704,27 @@ function _renderBuilderTrazos(){
   openModal('SOLICITUD DE TRAZOS', h, footer, {wide:true});
 }
 
+// Muestra/oculta el campo de texto libre cuando el tipo de trazo elegido es "Adicional".
+function _tbTipoChange(){
+  var tipo = document.getElementById('tb-tipo').value;
+  var wrap = document.getElementById('tb-tipo-custom-wrap');
+  if(wrap) wrap.style.display = tipo==='ADICIONAL' ? 'block' : 'none';
+}
 function _trazoAgregarLinea(){
   var tipo = document.getElementById('tb-tipo').value;
+  var tipoCustom = (document.getElementById('tb-tipo-custom').value||'').trim();
   var cant = parseInt(document.getElementById('tb-cant').value)||1;
   var ancho = parseFloat(document.getElementById('tb-ancho').value)||0;
   var sentido = document.getElementById('tb-sentido').value;
+  var orientacion = document.getElementById('tb-orientacion').value;
   var notas = (document.getElementById('tb-notas').value||'').trim();
   var tallas = Array.prototype.slice.call(document.querySelectorAll('.tb-talla:checked')).map(function(el){ return el.value; });
   var colores = Array.prototype.slice.call(document.querySelectorAll('.tb-color:checked')).map(function(el){ return el.value; });
   if(!tallas.length){ toast('Selecciona al menos una talla','error'); return; }
   if(!colores.length){ toast('Selecciona al menos un color','error'); return; }
   if(!ancho){ toast('Ingresa el ancho útil','error'); return; }
-  _trazoBuilderLineas.push({id:uid(), tipo:tipo, tallas:tallas, cantidad_trazos:cant, ancho_util:ancho, sentido:sentido, notas:notas, colores:colores, generado:false, impreso:false, recogido:false});
+  if(tipo==='ADICIONAL' && !tipoCustom){ toast('Especifica el tipo de trazo adicional','error'); return; }
+  _trazoBuilderLineas.push({id:uid(), tipo:tipo, tipo_custom:tipo==='ADICIONAL'?tipoCustom:'', tallas:tallas, cantidad_trazos:cant, ancho_util:ancho, sentido:sentido, orientacion:orientacion, notas:notas, colores:colores, generado:false, impreso:false, recogido:false});
   _renderBuilderTrazos();
 }
 function _trazoQuitarLinea(idx){
@@ -19794,7 +19819,7 @@ function imprimirSolicitudTrazos(sid){
     if(!lns.length) return;
     h += '<div class="tipo">'+tt.l+'</div>';
     lns.forEach(function(l,i){
-      h += '<div class="linea"><b>Trazo '+(i+1)+'</b> Tallas: '+(l.tallas||[]).join(', ')+' &nbsp;|&nbsp; Cantidad: '+l.cantidad_trazos+' &nbsp;|&nbsp; Ancho: '+l.ancho_util+'m &nbsp;|&nbsp; Sentido: <b>'+esc(_trazoSentidoInfo(l.sentido).l)+'</b> &nbsp;|&nbsp; Color(es): <b>'+(l.colores||[]).join(', ')+'</b>'+(l.notas?'<br><span style="color:#555;">📝 '+esc(l.notas)+'</span>':'')+'</div>';
+      h += '<div class="linea"><b>Trazo '+(i+1)+(l.tipo==='ADICIONAL'&&l.tipo_custom?' — '+esc(l.tipo_custom):'')+'</b> Tallas: '+(l.tallas||[]).join(', ')+' &nbsp;|&nbsp; Cantidad: '+l.cantidad_trazos+' &nbsp;|&nbsp; Ancho: '+l.ancho_util+'m &nbsp;|&nbsp; Sentido: <b>'+esc(_trazoSentidoInfo(l.sentido).l)+'</b> &nbsp;|&nbsp; Orientación: <b>'+esc(_trazoOrientacionInfo(l.orientacion).l)+'</b> &nbsp;|&nbsp; Color(es): <b>'+(l.colores||[]).join(', ')+'</b>'+(l.notas?'<br><span style="color:#555;">📝 '+esc(l.notas)+'</span>':'')+'</div>';
     });
   });
   h += '</body></html>';
