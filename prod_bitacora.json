@@ -19038,15 +19038,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1789573567002_0huor",
-      "ts": 1789573567002,
-      "user": "Jefa de Producción",
-      "tipo": "satelite_editar",
-      "satelite_id": "sat_07",
-      "nombre": "MARCELA PEÑA",
       "activo": true,
+      "capacidad": 0,
+      "id": "evt_1789573567002_0huor",
+      "nombre": "MARCELA PEÑA",
       "personas": 0,
-      "capacidad": 0
+      "satelite_id": "sat_07",
+      "tipo": "satelite_editar",
+      "ts": 1789573567002,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789573590714_65fuc",
+      "ts": 1789573590714,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-081",
+      "op_nombre": "CONJUNTO MANCHESTER",
+      "referencia": "CONJUNTO MANCHESTER",
+      "color": "AZUL BEBE",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 104,
+      "motivo": "EN TALLER"
     }
   ]
 }
