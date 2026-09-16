@@ -19687,13 +19687,17 @@ function _renderBuilderTrazos(){
   var coloresPendientes = _trazosColoresPendientesOP(op.id);
   var colores = coloresPendientes.length ? coloresPendientes : (op.colores&&op.colores.length ? op.colores : ['—']);
   var tallas = op.tallas||[];
-  var h = '<div style="margin-bottom:14px;font-size:12px;color:#64748b;">'+esc(op.nombre_producto||'')+' · '+esc(fmtOpId(op.id))+'</div>';
+  var imgOp = _catalogoImagen(op.nombre_producto);
+  var h = '<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">';
+  if(imgOp) h += '<img src="'+esc(imgOp)+'" style="width:48px;height:48px;object-fit:cover;border-radius:8px;border:1px solid #2c2c2e;flex-shrink:0;">';
+  h += '<div style="font-size:12px;color:#64748b;">'+esc(op.nombre_producto||'')+' · '+esc(fmtOpId(op.id))+'</div>';
+  h += '</div>';
   // Tabla de referencia — colores × tallas × total pendiente, para revisar cantidades
   // mientras se arma la solicitud, sin tener que cerrar el modal.
   h += '<div style="margin-bottom:14px;">'+_trazosTablaOP(op, coloresPendientes)+'</div>';
   h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:10px;padding:14px;margin-bottom:14px;">';
   h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">';
-  h += '<div><label class="form-label">Material</label><select id="tb-tipo" class="form-control" onchange="_tbTipoChange()">';
+  h += '<div><label class="form-label">Material</label><select id="tb-tipo" class="form-control" onchange="_tbTipoChange()"><option value="">-- Selecciona --</option>';
   TRAZO_TIPOS.forEach(function(t){ h += '<option value="'+t.k+'">'+t.l+'</option>'; });
   h += '</select></div>';
   h += '<div><label class="form-label">Cantidad de trazos</label><input id="tb-cant" type="number" min="1" value="1" class="form-control"></div>';
@@ -19701,10 +19705,10 @@ function _renderBuilderTrazos(){
   h += '<div id="tb-tipo-custom-wrap" style="display:none;margin-bottom:10px;"><label class="form-label">Especificar tipo "Adicional"</label><input id="tb-tipo-custom" type="text" class="form-control" placeholder="Ej: Vivo, cinta ribete..."></div>';
   h += '<div style="margin-bottom:10px;"><label class="form-label">Ancho útil de tela (mts)</label><input id="tb-ancho" type="number" step="0.01" min="0" class="form-control" placeholder="Ej: 1.32"></div>';
   h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">';
-  h += '<div><label class="form-label">Rotación del trazo</label><select id="tb-sentido" class="form-control">';
+  h += '<div><label class="form-label">Rotación del trazo</label><select id="tb-sentido" class="form-control"><option value="">-- Selecciona --</option>';
   TRAZO_SENTIDOS.forEach(function(s){ h += '<option value="'+s.k+'">'+s.l+'</option>'; });
   h += '</select></div>';
-  h += '<div><label class="form-label">Al hilo / Al través</label><select id="tb-orientacion" class="form-control">';
+  h += '<div><label class="form-label">Al hilo / Al través</label><select id="tb-orientacion" class="form-control"><option value="">-- Selecciona --</option>';
   TRAZO_ORIENTACIONES.forEach(function(o){ h += '<option value="'+o.k+'">'+o.l+'</option>'; });
   h += '</select></div>';
   h += '</div>';
@@ -19748,17 +19752,24 @@ function _tbTallaToggle(chk){
 function _trazoAgregarLinea(){
   var tipo = document.getElementById('tb-tipo').value;
   var tipoCustom = (document.getElementById('tb-tipo-custom').value||'').trim();
-  var cant = parseInt(document.getElementById('tb-cant').value)||1;
+  var cantRaw = document.getElementById('tb-cant').value;
+  var cant = parseInt(cantRaw)||0;
   var ancho = parseFloat(document.getElementById('tb-ancho').value)||0;
   var sentido = document.getElementById('tb-sentido').value;
   var orientacion = document.getElementById('tb-orientacion').value;
   var notas = (document.getElementById('tb-notas').value||'').trim();
   var tallas = Array.prototype.slice.call(document.querySelectorAll('.tb-talla:checked')).map(function(el){ return el.value; });
   var colores = Array.prototype.slice.call(document.querySelectorAll('.tb-color:checked')).map(function(el){ return el.value; });
+  // Ningún campo queda por defecto — hay que llenarlos/marcarlos todos antes de poder
+  // agregar la línea, con un aviso puntual de cuál falta.
+  if(!tipo){ toast('Selecciona el Material','error'); return; }
+  if(tipo==='ADICIONAL' && !tipoCustom){ toast('Especifica el tipo de trazo adicional','error'); return; }
+  if(!cantRaw || cant<1){ toast('Ingresa la cantidad de trazos','error'); return; }
+  if(!ancho){ toast('Ingresa el ancho útil de la tela','error'); return; }
+  if(!sentido){ toast('Selecciona la Rotación del trazo','error'); return; }
+  if(!orientacion){ toast('Selecciona Al hilo / Al través','error'); return; }
   if(!tallas.length){ toast('Selecciona al menos una talla','error'); return; }
   if(!colores.length){ toast('Selecciona al menos un color','error'); return; }
-  if(!ancho){ toast('Ingresa el ancho útil','error'); return; }
-  if(tipo==='ADICIONAL' && !tipoCustom){ toast('Especifica el tipo de trazo adicional','error'); return; }
   var marcadasPorTalla = {};
   tallas.forEach(function(t){
     var inp = document.querySelector('.tb-talla-marc[data-talla="'+t+'"]');
@@ -19963,9 +19974,13 @@ function _renderTecPatronTrazosPendientes(sols){
   var h = '';
   orden.forEach(function(opId){
     var g = porOp[opId];
+    var imgProd = _catalogoImagen(g.op_nombre);
     h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:10px;padding:16px;margin-bottom:12px;">';
-    h += '<div style="margin-bottom:12px;"><span style="font-family:var(--bebas);font-size:22px;color:#0a84ff;">'+esc(fmtOpId(opId))+'</span> <span style="font-size:19px;font-weight:700;color:#e2e8f0;">'+esc(g.op_nombre)+'</span>';
+    h += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">';
+    if(imgProd) h += '<img src="'+esc(imgProd)+'" onclick="_tpAmpliarImagen(this.src)" style="width:56px;height:56px;object-fit:cover;border-radius:9px;border:1px solid #2c2c2e;flex-shrink:0;cursor:pointer;">';
+    h += '<div><span style="font-family:var(--bebas);font-size:22px;color:#0a84ff;">'+esc(fmtOpId(opId))+'</span> <span style="font-size:19px;font-weight:700;color:#e2e8f0;">'+esc(g.op_nombre)+'</span>';
     h += '<div style="font-size:13px;color:#64748b;margin-top:2px;">Última solicitud '+fmtDate(g.ultimaFecha)+'</div></div>';
+    h += '</div>';
     TRAZO_TIPOS.forEach(function(tt){
       var lns = g.items.filter(function(it){ return it.linea.tipo===tt.k; });
       if(!lns.length) return;
@@ -20125,9 +20140,13 @@ function _renderTecPatronProductos(){
   recetas.forEach(function(r){
     var completos = [r.molde_url, (r.promedios&&r.promedios.length)||(r.promedios_fotos&&r.promedios_fotos.length), r.ficha_tecnica_url, r.ruta_operacional_url].filter(Boolean).length;
     var cid = 'tp-prod-'+r.id;
+    var imgProd = _catalogoImagen(r.producto);
     h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:9px;padding:12px 14px;">';
     h += '<div data-cid="'+cid+'" onclick="tecpatronToggleProducto(this.dataset.cid)" style="display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;">';
+    h += '<div style="display:flex;align-items:center;gap:10px;min-width:0;">';
+    if(imgProd) h += '<img src="'+esc(imgProd)+'" style="width:36px;height:36px;object-fit:cover;border-radius:7px;border:1px solid #2c2c2e;flex-shrink:0;">';
     h += '<div><span style="font-size:13px;font-weight:700;color:#e2e8f0;">'+esc(r.producto||'')+'</span>'+(r.referencia?' <span style="font-size:10px;color:#64748b;">REF '+esc(r.referencia)+'</span>':'')+'</div>';
+    h += '</div>';
     h += '<span style="font-size:9px;font-weight:800;color:'+(completos===4?'#34d399':completos>0?'#fbbf24':'#64748b')+';">'+completos+'/4</span>';
     h += '</div>';
     h += '<div id="'+cid+'" style="display:none;margin-top:10px;">'+_renderTecPatronProductoDetalle(r)+'</div>';
