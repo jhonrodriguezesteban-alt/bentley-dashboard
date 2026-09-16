@@ -19931,6 +19931,7 @@ function _renderTecPatronTrazos(){
   });
 
   var h = '';
+  h += '<div style="font-size:11px;font-weight:700;color:#fbbf24;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">📐 Trazos pendientes</div>';
   if(!sols.length){
     h += '<div style="text-align:center;padding:30px;color:#374151;">No hay solicitudes de trazos pendientes.</div>';
   } else {
@@ -19966,7 +19967,8 @@ function _renderTecPatronTrazosPendientes(sols){
       lns.forEach(function(it){
         var l = it.linea, s = it.sol;
         h += '<div style="display:flex;align-items:center;gap:14px;background:#0d1117;border:1px solid #2c2c2e;border-left:3px solid '+tt.color+';border-radius:7px;padding:8px 12px;margin-bottom:5px;flex-wrap:wrap;">';
-        h += '<div style="flex:1;min-width:200px;font-size:11px;color:#cbd5e1;">Tallas <b>'+esc(_trazoTallasConMarcadas(l))+'</b> · '+l.cantidad_trazos+' trazo(s) · '+l.ancho_util+'m · <span style="color:#fbbf24;">'+(l.colores||[]).join(', ')+'</span></div>';
+        h += '<div style="flex:1;min-width:200px;font-size:11px;color:#cbd5e1;">'+(l.tipo==='ADICIONAL'&&l.tipo_custom?'<b>'+esc(l.tipo_custom)+'</b> · ':'')+'Tallas <b>'+esc(_trazoTallasConMarcadas(l))+'</b> · '+l.cantidad_trazos+' trazo(s) · '+l.ancho_util+'m · <span style="color:#fbbf24;">'+(l.colores||[]).join(', ')+'</span></div>';
+        h += _tecpatronImagenLineaHTML(l, s.id);
         h += '<label style="display:flex;align-items:center;gap:5px;font-size:11px;color:#94a3b8;cursor:pointer;white-space:nowrap;"><input type="checkbox" '+(l.generado?'checked':'')+' data-sid="'+s.id+'" data-lid="'+l.id+'" onchange="tecpatronToggleGenerado(this.dataset.sid,this.dataset.lid,this.checked)" style="width:15px;height:15px;accent-color:#a855f7;cursor:pointer;"> Generado</label>';
         h += '<label style="display:flex;align-items:center;gap:5px;font-size:11px;color:#94a3b8;cursor:pointer;white-space:nowrap;"><input type="checkbox" '+(l.impreso?'checked':'')+' data-sid="'+s.id+'" data-lid="'+l.id+'" onchange="tecpatronToggleImpreso(this.dataset.sid,this.dataset.lid,this.checked)" style="width:15px;height:15px;accent-color:#34d399;cursor:pointer;"> Impreso</label>';
         h += '</div>';
@@ -20011,15 +20013,72 @@ function _renderTecPatronTrazosEnviados(){
   h += '</div>';
   return h;
 }
+// Imagen de referencia adjunta a una línea de trazo (opcional) — sigue el mismo patrón de
+// subida que tpSubirArchivo (FileReader → base64 → GitHub Contents API), pero guardada sobre
+// la línea misma (l.imagen_url) en vez de sobre una receta de costeo.
+function _tecpatronImagenLineaHTML(l, sid){
+  var inpId = 'tecp-img-'+sid+'-'+l.id;
+  var preview = l.imagen_url_blob && _fotosBlob[l.imagen_url_blob] ? _fotosBlob[l.imagen_url_blob] : l.imagen_url;
+  var h = '<div style="display:flex;align-items:center;gap:6px;">';
+  if(preview) h += '<img src="'+esc(preview)+'" onclick="window.open(\''+esc(preview)+'\',\'_blank\')" style="width:26px;height:26px;object-fit:cover;border-radius:5px;border:1px solid #2c2c2e;cursor:pointer;" title="Ver imagen adjunta">';
+  h += '<input type="file" accept="image/*" data-sid="'+sid+'" data-lid="'+l.id+'" onchange="tecpatronSubirImagenLinea(this)" style="display:none;" id="'+inpId+'">';
+  h += '<label for="'+inpId+'" style="font-size:10px;color:#64748b;border:1px solid #2c2c2e;border-radius:5px;padding:4px 8px;cursor:pointer;white-space:nowrap;">'+(preview?'📎 Cambiar':'📎 Adjuntar imagen')+'</label>';
+  h += '</div>';
+  return h;
+}
+async function tecpatronSubirImagenLinea(input){
+  var sid = input.dataset.sid, lid = input.dataset.lid;
+  var file = input.files[0];
+  if(!file) return;
+  var sol = (DB.trazos.solicitudes||[]).find(function(s){ return s.id===sid; });
+  var l = sol && (sol.lineas||[]).find(function(x){ return x.id===lid; });
+  if(!l) return;
+  var tk = GT || localStorage.getItem('bentley_gh_token') || '';
+  if(!tk){ toast('Sin token GitHub','error'); return; }
+  try {
+    var dataUrl = await new Promise(function(res,rej){
+      var fr = new FileReader();
+      fr.onload = function(e){ res(e.target.result); };
+      fr.onerror = rej;
+      fr.readAsDataURL(file);
+    });
+    var b64 = dataUrl.split(',')[1];
+    var ext = (file.name.split('.').pop()||'jpg').toLowerCase();
+    var fname = 'tecpatron-imgs/trazo_'+lid+'_'+Date.now()+'.'+ext;
+    toast('Subiendo imagen...','info');
+    var putR = await fetch('https://api.github.com/repos/'+REPO+'/contents/'+fname,{
+      method:'PUT',
+      headers:{'Authorization':'token '+tk,'Content-Type':'application/json'},
+      body: JSON.stringify({message:'Trazos: imagen de referencia de línea '+lid, content:b64})
+    });
+    if(putR.ok){
+      var blobId = 'tp_'+Date.now();
+      _fotosBlob[blobId] = dataUrl;
+      l.imagen_url = RAW_URL + fname;
+      l.imagen_url_blob = blobId;
+      var ok = await guardarTrazos();
+      if(ok) toast('Imagen adjuntada','success');
+      renderPage('tecpatron');
+    } else { toast('Error al subir la imagen','error'); }
+  } catch(e){ toast('Error al subir la imagen','error'); }
+}
+// Si ambos checks quedan marcados, se da por hecho que el trazo ya cumplió su ciclo completo
+// en TecPatrón (generado + impreso) y se auto-archiva a "enviados" (recogido=true) para que
+// deje de aparecer en Trazos pendientes — sin depender de que alguien lo marque a mano desde
+// el otro módulo de Trazos.
+function _tecpatronAutoArchivar(l){
+  if(l.generado && l.impreso && !l.recogido){ l.recogido = true; l.recogido_en = hoy(); }
+}
 async function tecpatronToggleGenerado(sid, lid, val){
   var sol = (DB.trazos.solicitudes||[]).find(function(s){ return s.id===sid; });
   if(!sol) return;
   var l = (sol.lineas||[]).find(function(x){ return x.id===lid; });
   if(!l) return;
   l.generado = val; l.generado_en = val ? hoy() : null;
+  _tecpatronAutoArchivar(l);
   saveLocal();
   var ok = await guardarTrazos();
-  if(ok) toast(val?'Marcado como generado (ploteado)':'Desmarcado','success');
+  if(ok){ toast(val?'Marcado como generado (ploteado)':'Desmarcado','success'); renderPage('tecpatron'); }
 }
 async function tecpatronToggleImpreso(sid, lid, val){
   var sol = (DB.trazos.solicitudes||[]).find(function(s){ return s.id===sid; });
@@ -20027,9 +20086,10 @@ async function tecpatronToggleImpreso(sid, lid, val){
   var l = (sol.lineas||[]).find(function(x){ return x.id===lid; });
   if(!l) return;
   l.impreso = val; l.impreso_en = val ? hoy() : null;
+  _tecpatronAutoArchivar(l);
   saveLocal();
   var ok = await guardarTrazos();
-  if(ok) toast(val?'Marcado como impreso — ya le aparece a producción para recoger':'Desmarcado','success');
+  if(ok){ toast(val?'Marcado como impreso — ya le aparece a producción para recoger':'Desmarcado','success'); renderPage('tecpatron'); }
 }
 
 // ── Tab Diseños/Productos ────────────────────────────────────────────────────────
