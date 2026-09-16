@@ -18935,20 +18935,37 @@
       "user": "Isabel"
     },
     {
+      "bulk": true,
+      "color": "BEIGE",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1789509392143_ce98f",
-      "ts": 1789509392143,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-0033",
       "op_nombre": "OVERSIZED CAPOTA",
       "referencia": "OVERSIZED CAPOTA",
-      "color": "BEIGE",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1789509392143,
       "uds": 68,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789569317588_ovirq",
+      "ts": 1789569317588,
+      "user": "Jefa de Producción",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-126",
+      "op_nombre": "CHAQUETA CAZADORA",
+      "categoria": "CHAQUETAS",
+      "total_ots": 6,
+      "total_uds": 88,
+      "colores": [
+        "ROSA"
+      ],
+      "referencias": [
+        "CHAQUETA CAZADORA"
+      ]
     }
   ]
 }
