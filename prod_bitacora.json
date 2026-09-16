@@ -19092,20 +19092,31 @@
       "user": "Isabel"
     },
     {
+      "bulk": true,
+      "color": "AZUL OSCURO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1789587434483_yv3wk",
-      "ts": 1789587434483,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-126",
       "op_nombre": "CHAQUETA CAZADORA",
       "referencia": "CHAQUETA CAZADORA",
-      "color": "AZUL OSCURO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1789587434483,
       "uds": 88,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789587773256_om4bj",
+      "ts": 1789587773256,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-098",
+      "nombre": "CHAQUETA CAZADORA",
+      "categoria": "CHAQUETAS",
+      "colores": 8,
+      "refs": 1
     }
   ]
 }
