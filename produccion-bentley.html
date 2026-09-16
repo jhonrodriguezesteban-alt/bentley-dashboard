@@ -19957,20 +19957,35 @@ function _renderTecPatronTrazosPendientes(sols){
   var h = '';
   orden.forEach(function(opId){
     var g = porOp[opId];
-    h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:10px;padding:14px;margin-bottom:10px;">';
-    h += '<div style="margin-bottom:8px;"><span style="font-family:var(--bebas);font-size:14px;color:#0a84ff;">'+esc(fmtOpId(opId))+'</span> <span style="font-size:13px;font-weight:700;color:#e2e8f0;">'+esc(g.op_nombre)+'</span>';
-    h += '<div style="font-size:10px;color:#64748b;">Última solicitud '+fmtDate(g.ultimaFecha)+'</div></div>';
+    h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:10px;padding:16px;margin-bottom:12px;">';
+    h += '<div style="margin-bottom:10px;"><span style="font-family:var(--bebas);font-size:17px;color:#0a84ff;">'+esc(fmtOpId(opId))+'</span> <span style="font-size:15px;font-weight:700;color:#e2e8f0;">'+esc(g.op_nombre)+'</span>';
+    h += '<div style="font-size:11px;color:#64748b;margin-top:2px;">Última solicitud '+fmtDate(g.ultimaFecha)+'</div></div>';
     TRAZO_TIPOS.forEach(function(tt){
       var lns = g.items.filter(function(it){ return it.linea.tipo===tt.k; });
       if(!lns.length) return;
-      h += '<div style="font-size:10px;font-weight:700;color:'+tt.color+';text-transform:uppercase;letter-spacing:.5px;margin:8px 0 4px;">'+tt.l+'</div>';
+      h += '<div style="font-size:12px;font-weight:800;color:'+tt.color+';text-transform:uppercase;letter-spacing:.5px;margin:12px 0 6px;">'+tt.l+'</div>';
       lns.forEach(function(it){
         var l = it.linea, s = it.sol;
-        h += '<div style="display:flex;align-items:center;gap:14px;background:#0d1117;border:1px solid #2c2c2e;border-left:3px solid '+tt.color+';border-radius:7px;padding:8px 12px;margin-bottom:5px;flex-wrap:wrap;">';
-        h += '<div style="flex:1;min-width:200px;font-size:11px;color:#cbd5e1;">'+(l.tipo==='ADICIONAL'&&l.tipo_custom?'<b>'+esc(l.tipo_custom)+'</b> · ':'')+'Tallas <b>'+esc(_trazoTallasConMarcadas(l))+'</b> · '+l.cantidad_trazos+' trazo(s) · '+l.ancho_util+'m · <span style="color:#fbbf24;">'+(l.colores||[]).join(', ')+'</span></div>';
+        function campo(label, valor){
+          return '<div><div style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.3px;">'+label+'</div><div style="font-size:14px;color:#e2e8f0;font-weight:600;">'+valor+'</div></div>';
+        }
+        h += '<div style="background:#0d1117;border:1px solid #2c2c2e;border-left:4px solid '+tt.color+';border-radius:8px;padding:12px 14px;margin-bottom:8px;">';
+        if(l.tipo==='ADICIONAL'&&l.tipo_custom) h += '<div style="font-size:14px;font-weight:800;color:'+tt.color+';margin-bottom:8px;">'+esc(l.tipo_custom)+'</div>';
+        h += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px 16px;margin-bottom:10px;">';
+        h += campo('Tallas', '<b>'+esc(_trazoTallasConMarcadas(l))+'</b>');
+        h += campo('Cantidad', l.cantidad_trazos+' trazo(s)');
+        h += campo('Ancho útil', l.ancho_util+'m');
+        h += campo('Rotación', esc(_trazoSentidoInfo(l.sentido).l));
+        h += campo('Orientación', esc(_trazoOrientacionInfo(l.orientacion).l));
+        h += campo('Colores', '<span style="color:#fbbf24;">'+esc((l.colores||[]).join(', '))+'</span>');
+        h += '</div>';
+        if(l.notas) h += '<div style="font-size:12px;color:#94a3b8;background:rgba(255,255,255,.03);border-radius:6px;padding:6px 10px;margin-bottom:10px;">📝 '+esc(l.notas)+'</div>';
+        h += '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06);">';
         h += _tecpatronImagenLineaHTML(l, s.id);
-        h += '<label style="display:flex;align-items:center;gap:5px;font-size:11px;color:#94a3b8;cursor:pointer;white-space:nowrap;"><input type="checkbox" '+(l.generado?'checked':'')+' data-sid="'+s.id+'" data-lid="'+l.id+'" onchange="tecpatronToggleGenerado(this.dataset.sid,this.dataset.lid,this.checked)" style="width:15px;height:15px;accent-color:#a855f7;cursor:pointer;"> Generado</label>';
-        h += '<label style="display:flex;align-items:center;gap:5px;font-size:11px;color:#94a3b8;cursor:pointer;white-space:nowrap;"><input type="checkbox" '+(l.impreso?'checked':'')+' data-sid="'+s.id+'" data-lid="'+l.id+'" onchange="tecpatronToggleImpreso(this.dataset.sid,this.dataset.lid,this.checked)" style="width:15px;height:15px;accent-color:#34d399;cursor:pointer;"> Impreso</label>';
+        h += '<div style="display:flex;align-items:center;gap:16px;">';
+        h += '<label style="display:flex;align-items:center;gap:6px;font-size:13px;color:#cbd5e1;cursor:pointer;white-space:nowrap;"><input type="checkbox" '+(l.generado?'checked':'')+' data-sid="'+s.id+'" data-lid="'+l.id+'" onchange="tecpatronToggleGenerado(this.dataset.sid,this.dataset.lid,this.checked)" style="width:18px;height:18px;accent-color:#a855f7;cursor:pointer;"> Generado</label>';
+        h += '<label style="display:flex;align-items:center;gap:6px;font-size:13px;color:#cbd5e1;cursor:pointer;white-space:nowrap;"><input type="checkbox" '+(l.impreso?'checked':'')+' data-sid="'+s.id+'" data-lid="'+l.id+'" onchange="tecpatronToggleImpreso(this.dataset.sid,this.dataset.lid,this.checked)" style="width:18px;height:18px;accent-color:#34d399;cursor:pointer;"> Impreso</label>';
+        h += '</div></div>';
         h += '</div>';
       });
     });
@@ -20103,7 +20118,7 @@ function _renderTecPatronProductos(){
   if(!recetas.length) return h + '<div style="text-align:center;padding:40px;color:#374151;">Sin productos.</div>';
   h += '<div style="display:flex;flex-direction:column;gap:8px;">';
   recetas.forEach(function(r){
-    var completos = [r.foto_trazo_url, (r.promedios_foto_url||r.promedios_texto), r.ficha_tecnica_url, r.ruta_operacional_url].filter(Boolean).length;
+    var completos = [r.molde_url, (r.promedios&&r.promedios.length)||(r.promedios_fotos&&r.promedios_fotos.length), r.ficha_tecnica_url, r.ruta_operacional_url].filter(Boolean).length;
     var cid = 'tp-prod-'+r.id;
     h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:9px;padding:12px 14px;">';
     h += '<div data-cid="'+cid+'" onclick="tecpatronToggleProducto(this.dataset.cid)" style="display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;">';
@@ -20122,35 +20137,183 @@ function tecpatronToggleProducto(cid){
 }
 function _renderTecPatronProductoDetalle(r){
   var h = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;">';
-  h += _tpSlotHTML(r, 'foto_trazo_url', 'Foto del trazo', 'image');
-  h += _tpSlotHTML(r, 'promedios_foto_url', 'Foto de promedios', 'image');
+  h += _tpSlotHTML(r, 'molde_url', 'Molde', 'file');
   h += _tpSlotHTML(r, 'ficha_tecnica_url', 'Ficha técnica', 'file');
   h += _tpSlotHTML(r, 'ruta_operacional_url', 'Ruta operacional', 'file');
   h += '</div>';
-  // Promedio por tipo de trazo — un campo por cada uno (Tela Principal / Piezas Lisas /
-  // Forro), independientes entre sí. Se anexan conforme la persona los vaya teniendo, no
-  // son obligatorios todos a la vez.
-  h += '<div style="margin-top:12px;">';
-  h += '<label class="form-label" style="margin-bottom:6px;display:block;">Promedio por tipo de trazo (opcional)</label>';
-  h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;">';
-  TRAZO_TIPOS.forEach(function(tt){
-    var campo = 'promedio_'+tt.k.toLowerCase();
-    h += '<div>';
-    h += '<div style="font-size:10px;font-weight:700;color:'+tt.color+';text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;">'+tt.l+'</div>';
-    h += '<input type="text" data-rid="'+r.id+'" data-campo="'+campo+'" onchange="tpGuardarPromedioTipo(this.dataset.rid,this.dataset.campo,this.value)" class="form-control" value="'+esc(r[campo]||'')+'" placeholder="Ej: 1.45 mts/prenda">';
+  h += _tpPromediosHTML(r);
+  h += _tpPromediosFotosHTML(r);
+  h += '<div style="margin-top:16px;"><label class="form-label">Notas generales (opcional)</label>';
+  h += '<textarea data-rid="'+r.id+'" onchange="tpGuardarPromediosTexto(this.dataset.rid,this.value)" class="form-control" rows="2" placeholder="Ej: notas para producción...">'+esc(r.promedios_texto||'')+'</textarea></div>';
+  h += _tpHistorialTrazosHTML(r);
+  return h;
+}
+// ── Promedio por tipo de trazo: en vez de un campo fijo para cada Material (mostrando
+// siempre los 7, aunque esa prenda no lleve todos), se van agregando uno a uno — cada
+// promedio queda ligado al Material Y al grupo de tallas al que corresponde, porque una
+// misma prenda puede tener promedios distintos para distintos rangos de tallas.
+function _tpPromediosHTML(r){
+  var proms = r.promedios || [];
+  var h = '<div style="margin-top:16px;">';
+  h += '<label class="form-label" style="margin-bottom:8px;display:block;">Promedio por tipo de trazo (opcional)</label>';
+  if(proms.length){
+    h += '<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px;">';
+    proms.forEach(function(p){
+      var tt = _trazoTipoInfo(p.tipo);
+      var nombre = (p.tipo==='ADICIONAL'&&p.tipo_custom) ? p.tipo_custom : tt.l;
+      h += '<div style="display:flex;align-items:center;gap:10px;background:#0d1117;border:1px solid #2c2c2e;border-left:3px solid '+tt.color+';border-radius:7px;padding:8px 12px;">';
+      h += '<div style="flex:1;font-size:13px;color:#e2e8f0;"><b style="color:'+tt.color+';">'+esc(nombre)+'</b> · tallas <b>'+esc(p.tallas||'—')+'</b> · <span style="color:#fbbf24;">'+esc(p.valor||'')+'</span></div>';
+      h += '<button data-rid="'+r.id+'" data-pid="'+p.id+'" onclick="tpQuitarPromedio(this.dataset.rid,this.dataset.pid)" style="background:none;border:none;color:#475569;cursor:pointer;font-size:14px;">✕</button>';
+      h += '</div>';
+    });
+    h += '</div>';
+  }
+  h += '<div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;align-items:end;background:#0a0d14;border:1px solid #2c2c2e;border-radius:8px;padding:10px;">';
+  h += '<div><label class="form-label" style="font-size:10px;">Material</label><select id="tpp-tipo-'+r.id+'" class="form-control" onchange="_tppTipoChange(\''+r.id+'\')">';
+  TRAZO_TIPOS.forEach(function(t){ h += '<option value="'+t.k+'">'+t.l+'</option>'; });
+  h += '</select></div>';
+  h += '<div><label class="form-label" style="font-size:10px;">Tallas</label><input type="text" id="tpp-tallas-'+r.id+'" class="form-control" placeholder="Ej: T4 a T16"></div>';
+  h += '<div><label class="form-label" style="font-size:10px;">Promedio</label><input type="text" id="tpp-valor-'+r.id+'" class="form-control" placeholder="Ej: 1.45 mts/prenda"></div>';
+  h += '<button onclick="tpAgregarPromedio(\''+r.id+'\')" style="background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.4);color:#34d399;border-radius:7px;padding:9px 14px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;">+ Agregar</button>';
+  h += '</div>';
+  h += '<div id="tpp-tipo-custom-wrap-'+r.id+'" style="display:none;margin-top:8px;"><input type="text" id="tpp-tipo-custom-'+r.id+'" class="form-control" placeholder="Especificar tipo adicional..."></div>';
+  h += '</div>';
+  return h;
+}
+function _tppTipoChange(rid){
+  var tipo = document.getElementById('tpp-tipo-'+rid).value;
+  var wrap = document.getElementById('tpp-tipo-custom-wrap-'+rid);
+  if(wrap) wrap.style.display = tipo==='ADICIONAL' ? 'block' : 'none';
+}
+async function tpAgregarPromedio(rid){
+  var r = (DB.costeo.recetas||[]).find(function(x){ return x.id===rid; });
+  if(!r) return;
+  var tipo = document.getElementById('tpp-tipo-'+rid).value;
+  var tipoCustom = (document.getElementById('tpp-tipo-custom-'+rid).value||'').trim();
+  var tallas = (document.getElementById('tpp-tallas-'+rid).value||'').trim();
+  var valor = (document.getElementById('tpp-valor-'+rid).value||'').trim();
+  if(tipo==='ADICIONAL' && !tipoCustom){ toast('Especifica el tipo de trazo adicional','error'); return; }
+  if(!tallas){ toast('Indica el grupo de tallas de este promedio','error'); return; }
+  if(!valor){ toast('Ingresa el valor del promedio','error'); return; }
+  if(!r.promedios) r.promedios = [];
+  r.promedios.push({id:uid(), tipo:tipo, tipo_custom:tipo==='ADICIONAL'?tipoCustom:'', tallas:tallas, valor:valor, creado_en:hoy()});
+  var ok = await guardarCosteo();
+  if(ok){ toast('Promedio agregado','success'); renderPage('tecpatron'); }
+}
+async function tpQuitarPromedio(rid, pid){
+  var r = (DB.costeo.recetas||[]).find(function(x){ return x.id===rid; });
+  if(!r || !r.promedios) return;
+  r.promedios = r.promedios.filter(function(p){ return p.id!==pid; });
+  var ok = await guardarCosteo();
+  if(ok){ toast('Promedio eliminado','success'); renderPage('tecpatron'); }
+}
+// ── Fotos de promedios: varias imágenes por producto, cada una con su propio nombre (ej.
+// "Tela principal T4-T16") — a diferencia del resto de casillas (molde, ficha técnica...)
+// que son un solo archivo, acá se pueden ir agregando y quitando una por una.
+function _tpPromediosFotosHTML(r){
+  var fotos = r.promedios_fotos || [];
+  var h = '<div style="margin-top:16px;">';
+  h += '<label class="form-label" style="margin-bottom:8px;display:block;">Fotos de promedios (opcional)</label>';
+  if(fotos.length){
+    h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-bottom:10px;">';
+    fotos.forEach(function(f){
+      var showUrl = (f.url_blob && _fotosBlob[f.url_blob]) || f.url;
+      h += '<div style="background:#0d1117;border:1px solid #2c2c2e;border-radius:8px;padding:8px;text-align:center;">';
+      h += '<img src="'+esc(showUrl)+'" onclick="_tpAmpliarImagen(this.src)" style="width:100%;height:80px;object-fit:cover;border-radius:6px;margin-bottom:6px;cursor:pointer;">';
+      h += '<div style="font-size:10px;color:#cbd5e1;margin-bottom:6px;word-break:break-word;">'+esc(f.nombre||'—')+'</div>';
+      h += '<button data-rid="'+r.id+'" data-fid="'+f.id+'" onclick="tpQuitarFotoPromedio(this.dataset.rid,this.dataset.fid)" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#f87171;border-radius:5px;padding:3px 8px;font-size:10px;cursor:pointer;">✕ Quitar</button>';
+      h += '</div>';
+    });
+    h += '</div>';
+  }
+  h += '<div style="display:flex;gap:8px;align-items:center;background:#0a0d14;border:1px solid #2c2c2e;border-radius:8px;padding:10px;flex-wrap:wrap;">';
+  h += '<input type="text" id="tpf-nombre-'+r.id+'" class="form-control" placeholder="Nombre (ej: Tela principal T4-T16)" style="flex:1;min-width:180px;">';
+  h += '<input type="file" accept="image/*" data-rid="'+r.id+'" onchange="tpSubirFotoPromedio(this)" style="display:none;" id="tpf-inp-'+r.id+'">';
+  h += '<label for="tpf-inp-'+r.id+'" style="background:rgba(10,132,255,.12);border:1px solid rgba(10,132,255,.35);color:#0a84ff;border-radius:6px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;">+ Agregar imagen</label>';
+  h += '</div>';
+  h += '</div>';
+  return h;
+}
+async function tpSubirFotoPromedio(input){
+  var rid = input.dataset.rid;
+  var file = input.files[0];
+  if(!file) return;
+  var r = (DB.costeo.recetas||[]).find(function(x){ return x.id===rid; });
+  if(!r) return;
+  var nombreInp = document.getElementById('tpf-nombre-'+rid);
+  var nombre = (nombreInp&&nombreInp.value||'').trim();
+  var tk = GT || localStorage.getItem('bentley_gh_token') || '';
+  if(!tk){ toast('Sin token GitHub','error'); return; }
+  try {
+    var dataUrl = await new Promise(function(res,rej){
+      var fr = new FileReader();
+      fr.onload = function(e){ res(e.target.result); };
+      fr.onerror = rej;
+      fr.readAsDataURL(file);
+    });
+    var b64 = dataUrl.split(',')[1];
+    var ext = (file.name.split('.').pop()||'jpg').toLowerCase();
+    var fid = uid();
+    var fname = 'tecpatron-imgs/'+rid+'_promedio_'+fid+'.'+ext;
+    toast('Subiendo imagen...','info');
+    var putR = await fetch('https://api.github.com/repos/'+REPO+'/contents/'+fname,{
+      method:'PUT',
+      headers:{'Authorization':'token '+tk,'Content-Type':'application/json'},
+      body: JSON.stringify({message:'Techpatron: foto de promedio de '+r.producto, content:b64})
+    });
+    if(putR.ok){
+      var blobId = 'tp_'+Date.now();
+      _fotosBlob[blobId] = dataUrl;
+      if(!r.promedios_fotos) r.promedios_fotos = [];
+      r.promedios_fotos.push({id:fid, nombre:nombre, url:RAW_URL+fname, url_blob:blobId});
+      var ok = await guardarCosteo();
+      if(ok) toast('Imagen agregada','success');
+      renderPage('tecpatron');
+    } else { toast('Error al subir la imagen','error'); }
+  } catch(e){ toast('Error al subir la imagen','error'); }
+}
+async function tpQuitarFotoPromedio(rid, fid){
+  var r = (DB.costeo.recetas||[]).find(function(x){ return x.id===rid; });
+  if(!r || !r.promedios_fotos) return;
+  r.promedios_fotos = r.promedios_fotos.filter(function(f){ return f.id!==fid; });
+  var ok = await guardarCosteo();
+  if(ok){ toast('Imagen eliminada','success'); renderPage('tecpatron'); }
+}
+// ── Historial de trazos solicitados para este producto — se arma cruzando el nombre del
+// producto (r.producto) con las solicitudes reales (DB.trazos.solicitudes usa op_nombre),
+// para tener a mano fecha, tipo, tallas y las imágenes que Carolina haya adjuntado desde
+// Trazos pendientes, sin tener que ir a buscarlas al otro módulo.
+function _tpHistorialTrazosHTML(r){
+  var nombreU = (r.producto||'').trim().toUpperCase();
+  if(!nombreU) return '';
+  var sols = (DB.trazos.solicitudes||[]).filter(function(s){ return (s.op_nombre||'').trim().toUpperCase()===nombreU; });
+  if(!sols.length) return '';
+  sols = sols.slice().sort(function(a,b){ return (b.enviada_en||'').localeCompare(a.enviada_en||''); });
+  var h = '<div style="margin-top:18px;">';
+  h += '<label class="form-label" style="margin-bottom:8px;display:block;">📜 Histórico de trazos solicitados</label>';
+  h += '<div style="display:flex;flex-direction:column;gap:8px;">';
+  sols.forEach(function(s){
+    h += '<div style="background:#0d1117;border:1px solid #2c2c2e;border-radius:8px;padding:10px 12px;">';
+    h += '<div style="font-size:11px;color:#64748b;margin-bottom:6px;">'+fmtDate(s.enviada_en)+' · '+esc(s.creado_por||'')+' · '+esc(fmtOpId(s.op_id))+'</div>';
+    (s.lineas||[]).forEach(function(l){
+      var tt = _trazoTipoInfo(l.tipo);
+      var nombreLinea = (l.tipo==='ADICIONAL'&&l.tipo_custom) ? l.tipo_custom : tt.l;
+      var img = (l.imagen_url_blob && _fotosBlob[l.imagen_url_blob]) || l.imagen_url;
+      h += '<div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-left:2px solid '+tt.color+';padding-left:8px;margin-bottom:3px;">';
+      if(img) h += '<img src="'+esc(img)+'" onclick="_tpAmpliarImagen(this.src)" style="width:26px;height:26px;object-fit:cover;border-radius:5px;cursor:pointer;flex-shrink:0;">';
+      h += '<div style="font-size:11px;color:#94a3b8;"><b style="color:'+tt.color+';">'+esc(nombreLinea)+'</b> · tallas '+esc(_trazoTallasConMarcadas(l))+' · '+esc((l.colores||[]).join(', '))+'</div>';
+      h += '</div>';
+    });
     h += '</div>';
   });
   h += '</div></div>';
-  h += '<div style="margin-top:12px;"><label class="form-label">Notas generales (opcional)</label>';
-  h += '<textarea data-rid="'+r.id+'" onchange="tpGuardarPromediosTexto(this.dataset.rid,this.value)" class="form-control" rows="2" placeholder="Ej: notas para producción...">'+esc(r.promedios_texto||'')+'</textarea></div>';
   return h;
 }
-async function tpGuardarPromedioTipo(rid, campo, valor){
-  var r = (DB.costeo.recetas||[]).find(function(x){ return x.id===rid; });
-  if(!r) return;
-  r[campo] = valor;
-  var ok = await guardarCosteo();
-  if(ok) toast('Guardado','success');
+// Vista ampliada de una imagen en un modal propio de la app, en vez de window.open() —
+// con imágenes base64 (recién subidas, antes de que GitHub las sirva) window.open() a veces
+// abría y cerraba la pestaña de golpe por el tamaño del data URI. Un modal interno no tiene ese problema.
+function _tpAmpliarImagen(url){
+  openModal('', '<div style="text-align:center;"><img src="'+esc(url)+'" style="max-width:100%;max-height:75vh;border-radius:8px;"></div>', '<button class="btn btn-ghost" onclick="closeModal()">Cerrar</button>', {wide:true});
 }
 function _tpSlotHTML(r, campo, label, kind){
   var blobUrl = r[campo+'_blob'] && _fotosBlob[r[campo+'_blob']];
@@ -20158,7 +20321,7 @@ function _tpSlotHTML(r, campo, label, kind){
   var h = '<div style="background:#0d1117;border:1px solid #2c2c2e;border-radius:8px;padding:10px;text-align:center;">';
   h += '<div style="font-size:9px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:6px;">'+label+'</div>';
   if(showUrl){
-    if(kind==='image') h += '<img src="'+showUrl+'" style="width:100%;height:90px;object-fit:cover;border-radius:6px;margin-bottom:6px;cursor:pointer;" onclick="window.open(\''+showUrl+'\',\'_blank\')">';
+    if(kind==='image') h += '<img src="'+showUrl+'" style="width:100%;height:90px;object-fit:cover;border-radius:6px;margin-bottom:6px;cursor:pointer;" onclick="_tpAmpliarImagen(this.src)">';
     else h += '<a href="'+showUrl+'" target="_blank" style="display:block;height:90px;line-height:90px;font-size:24px;margin-bottom:6px;text-decoration:none;">📄</a>';
   } else {
     h += '<div style="height:90px;display:flex;align-items:center;justify-content:center;color:#334155;font-size:24px;">'+(kind==='image'?'🖼':'📄')+'</div>';
