@@ -18995,15 +18995,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1789570084398_77rxg",
-      "ts": 1789570084398,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-098",
-      "nombre": "CHAQUETA CAZADORA",
       "categoria": "CHAQUETAS",
       "colores": 8,
-      "refs": 1
+      "id": "evt_1789570084398_77rxg",
+      "nombre": "CHAQUETA CAZADORA",
+      "op_id": "OP-2026-098",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1789570084398,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789570122088_ocm4c",
+      "ts": 1789570122088,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-098",
+      "op_nombre": "CHAQUETA CAZADORA",
+      "referencia": "CHAQUETA CAZADORA",
+      "color": "ROSA",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 74,
+      "motivo": "EN TALLER"
     }
   ]
 }
