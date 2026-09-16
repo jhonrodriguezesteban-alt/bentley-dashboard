@@ -18951,21 +18951,37 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1789569317588_ovirq",
-      "ts": 1789569317588,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-126",
-      "op_nombre": "CHAQUETA CAZADORA",
       "categoria": "CHAQUETAS",
-      "total_ots": 6,
-      "total_uds": 88,
       "colores": [
         "ROSA"
       ],
+      "id": "evt_1789569317588_ovirq",
+      "op_id": "OP-2026-126",
+      "op_nombre": "CHAQUETA CAZADORA",
       "referencias": [
         "CHAQUETA CAZADORA"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 6,
+      "total_uds": 88,
+      "ts": 1789569317588,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789569351651_ist9t",
+      "ts": 1789569351651,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-126",
+      "op_nombre": "CHAQUETA CAZADORA",
+      "referencia": "CHAQUETA CAZADORA",
+      "color": "ROSA",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 88,
+      "motivo": "EN TALLER"
     }
   ]
 }
