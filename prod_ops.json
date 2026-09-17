@@ -271,6 +271,9 @@
         "rec_buzo_yinky_1046__c19_25": true,
         "rec_buzo_yinky_1046__c19_26": false
       },
+      "consumibles_desagregado": {
+        "rec_buzo_yinky_1046__c19_26": true
+      },
       "cortador": "CARVAJAL",
       "created_at": "2026-01-21",
       "created_by": "migrado_matriz",
@@ -305,10 +308,7 @@
         "T6/8",
         "T10/12"
       ],
-      "total_uds": 224,
-      "consumibles_desagregado": {
-        "rec_buzo_yinky_1046__c19_26": true
-      }
+      "total_uds": 224
     },
     {
       "categoria": "ABRIGOS",
@@ -556,10 +556,10 @@
       "consumibles_check": {
         "cid_1789262438895_9952__cid_1789262321478_2944": true,
         "cid_1789262438895_9952__cid_1789262321478_2994": true,
-        "cid_1789262438895_9952__cid_1789262321478_6160": true,
-        "cid_1789262438895_9952__cid_1789262321478_756": true,
         "cid_1789262438895_9952__cid_1789262321478_380": true,
-        "cid_1789262438895_9952__cid_1789262321478_51": true
+        "cid_1789262438895_9952__cid_1789262321478_51": true,
+        "cid_1789262438895_9952__cid_1789262321478_6160": true,
+        "cid_1789262438895_9952__cid_1789262321478_756": true
       },
       "cortador": "CARVAJAL",
       "created_at": "2026-01-21",
@@ -1216,6 +1216,17 @@
       "colores": [
         "AZUL BEBE"
       ],
+      "consumibles_check": {
+        "rec_conjunto_trenzas_1128__c68_19": true,
+        "rec_conjunto_trenzas_1128__c68_20": true,
+        "rec_conjunto_trenzas_1128__c68_21": true,
+        "rec_conjunto_trenzas_1128__c68_25": true,
+        "rec_conjunto_trenzas_1128__c68_26": true,
+        "rec_conjunto_trenzas_1128__c68_27": true,
+        "rec_conjunto_trenzas_1128__c68_28": true,
+        "rec_conjunto_trenzas_1128__c68_29": true,
+        "rec_conjunto_trenzas_1128__c68_30": true
+      },
       "cortador": "Corte Carbajal",
       "created_at": "2026-03-24",
       "created_by": "migrado_matriz",
@@ -1270,18 +1281,7 @@
       "trazos_color_solicitado": {
         "AZUL BEBE": true
       },
-      "updated_at": "2026-07-31",
-      "consumibles_check": {
-        "rec_conjunto_trenzas_1128__c68_19": true,
-        "rec_conjunto_trenzas_1128__c68_20": true,
-        "rec_conjunto_trenzas_1128__c68_21": true,
-        "rec_conjunto_trenzas_1128__c68_25": true,
-        "rec_conjunto_trenzas_1128__c68_26": true,
-        "rec_conjunto_trenzas_1128__c68_27": true,
-        "rec_conjunto_trenzas_1128__c68_28": true,
-        "rec_conjunto_trenzas_1128__c68_29": true,
-        "rec_conjunto_trenzas_1128__c68_30": true
-      }
+      "updated_at": "2026-07-31"
     },
     {
       "cantidades": {
@@ -1534,14 +1534,14 @@
       "trazos_color_solicitado": {
         "VINOTINTO": true
       },
-      "updated_at": "2026-07-28",
       "trazos_solicitudes": [
         {
-          "solicitud_id": "id_1789587664861_rcstc8182",
           "fecha": "2026-09-16",
-          "lineas": 2
+          "lineas": 2,
+          "solicitud_id": "id_1789587664861_rcstc8182"
         }
-      ]
+      ],
+      "updated_at": "2026-07-28"
     },
     {
       "cantidades": {
@@ -1930,6 +1930,9 @@
         "rec_chaqueta_cazadora_1002__c38_29": true,
         "rec_chaqueta_cazadora_1002__c38_31": true
       },
+      "consumibles_desagregado": {
+        "rec_chaqueta_cazadora_1002__c38_19": true
+      },
       "cortador": "Corte Carbajal",
       "created_at": "2026-03-24",
       "created_by": "migrado_matriz",
@@ -2041,10 +2044,7 @@
         "T16"
       ],
       "total_uds": 620,
-      "updated_at": "2026-07-17",
-      "consumibles_desagregado": {
-        "rec_chaqueta_cazadora_1002__c38_19": true
-      }
+      "updated_at": "2026-07-17"
     },
     {
       "cantidades": {
@@ -2069,8 +2069,8 @@
       "consumibles_check": {
         "rec_bota_ancha_kenia_1128__c14_19||BEIGE": true,
         "rec_bota_ancha_kenia_1128__c14_20": true,
-        "rec_bota_ancha_kenia_1128__c14_24": true,
-        "rec_bota_ancha_kenia_1128__c14_21": true
+        "rec_bota_ancha_kenia_1128__c14_21": true,
+        "rec_bota_ancha_kenia_1128__c14_24": true
       },
       "consumibles_desagregado": {
         "rec_bota_ancha_kenia_1128__c14_19": true
@@ -3888,14 +3888,14 @@
       ],
       "consumibles_check": {
         "rec_conjunto_trenzas_1128__c68_19": true,
-        "rec_conjunto_trenzas_1128__c68_27": true,
-        "rec_conjunto_trenzas_1128__c68_28": true,
-        "rec_conjunto_trenzas_1128__c68_29": true,
-        "rec_conjunto_trenzas_1128__c68_30": true,
         "rec_conjunto_trenzas_1128__c68_20": true,
         "rec_conjunto_trenzas_1128__c68_21": true,
         "rec_conjunto_trenzas_1128__c68_25": true,
-        "rec_conjunto_trenzas_1128__c68_26": true
+        "rec_conjunto_trenzas_1128__c68_26": true,
+        "rec_conjunto_trenzas_1128__c68_27": true,
+        "rec_conjunto_trenzas_1128__c68_28": true,
+        "rec_conjunto_trenzas_1128__c68_29": true,
+        "rec_conjunto_trenzas_1128__c68_30": true
       },
       "cortador": "Corte Carbajal",
       "created_at": "2025-09-19",
@@ -4569,8 +4569,7 @@
         "AVENA": false,
         "GRIS OSCURO": false
       },
-      "updated_at": "2026-07-30",
-      "subg_estados": {}
+      "updated_at": "2026-07-30"
     },
     {
       "cantidades": {
@@ -4669,8 +4668,7 @@
         "MARFIL": false,
         "NEGRO": true
       },
-      "updated_at": "2026-07-30",
-      "subg_estados": {}
+      "updated_at": "2026-07-30"
     },
     {
       "cantidades": {
@@ -4901,8 +4899,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -5034,6 +5031,28 @@
         "CAMEL",
         "BEIGE"
       ],
+      "consumibles_check": {
+        "rec_conjunto_isabella_1097__c59_19||CAMEL": true,
+        "rec_conjunto_isabella_1097__c59_19||NEGRO": true,
+        "rec_conjunto_isabella_1097__c59_20||CAMEL": true,
+        "rec_conjunto_isabella_1097__c59_20||NEGRO": true,
+        "rec_conjunto_isabella_1097__c59_21||CAMEL": true,
+        "rec_conjunto_isabella_1097__c59_21||NEGRO": true,
+        "rec_conjunto_isabella_1097__c59_25||CAMEL": true,
+        "rec_conjunto_isabella_1097__c59_25||NEGRO": true,
+        "rec_conjunto_isabella_1097__c59_26||CAMEL": true,
+        "rec_conjunto_isabella_1097__c59_26||NEGRO": true,
+        "rec_conjunto_isabella_1097__c59_28||CAMEL": true,
+        "rec_conjunto_isabella_1097__c59_28||NEGRO": true
+      },
+      "consumibles_desagregado": {
+        "rec_conjunto_isabella_1097__c59_19": true,
+        "rec_conjunto_isabella_1097__c59_20": true,
+        "rec_conjunto_isabella_1097__c59_21": true,
+        "rec_conjunto_isabella_1097__c59_25": true,
+        "rec_conjunto_isabella_1097__c59_26": true,
+        "rec_conjunto_isabella_1097__c59_28": true
+      },
       "cortador": "Corte Carbajal",
       "created_at": "2026-06-25",
       "created_by": "John Rodriguez",
@@ -5085,29 +5104,7 @@
         "T12",
         "T14"
       ],
-      "updated_at": "2026-07-31",
-      "consumibles_desagregado": {
-        "rec_conjunto_isabella_1097__c59_19": true,
-        "rec_conjunto_isabella_1097__c59_20": true,
-        "rec_conjunto_isabella_1097__c59_21": true,
-        "rec_conjunto_isabella_1097__c59_25": true,
-        "rec_conjunto_isabella_1097__c59_26": true,
-        "rec_conjunto_isabella_1097__c59_28": true
-      },
-      "consumibles_check": {
-        "rec_conjunto_isabella_1097__c59_19||NEGRO": true,
-        "rec_conjunto_isabella_1097__c59_19||CAMEL": true,
-        "rec_conjunto_isabella_1097__c59_20||NEGRO": true,
-        "rec_conjunto_isabella_1097__c59_20||CAMEL": true,
-        "rec_conjunto_isabella_1097__c59_21||NEGRO": true,
-        "rec_conjunto_isabella_1097__c59_21||CAMEL": true,
-        "rec_conjunto_isabella_1097__c59_25||CAMEL": true,
-        "rec_conjunto_isabella_1097__c59_25||NEGRO": true,
-        "rec_conjunto_isabella_1097__c59_28||NEGRO": true,
-        "rec_conjunto_isabella_1097__c59_28||CAMEL": true,
-        "rec_conjunto_isabella_1097__c59_26||NEGRO": true,
-        "rec_conjunto_isabella_1097__c59_26||CAMEL": true
-      }
+      "updated_at": "2026-07-31"
     },
     {
       "cantidades": {
@@ -5156,16 +5153,16 @@
         "GRIS CLARO"
       ],
       "consumibles_check": {
+        "cid_1789266459798_1f0eb8970__cid_1789266459798_4fdde1e38": true,
+        "cid_1789266459798_1f0eb8970__cid_1789266459798_97b2cd3b5": true,
         "cid_1789266459798_1f0eb8970__cid_1789266459798_a2712fda9||AZUL BEBE": true,
         "cid_1789266459798_1f0eb8970__cid_1789266459798_a2712fda9||CAFE": true,
         "cid_1789266459798_1f0eb8970__cid_1789266459798_a2712fda9||GRIS CLARO": true,
         "cid_1789266459798_1f0eb8970__cid_1789266459798_a2712fda9||NEGRO": true,
         "cid_1789266459798_1f0eb8970__cid_1789266459798_a2712fda9||VINOTINTO": true,
-        "cid_1789266459798_1f0eb8970__cid_1789266459798_eaeddea39": true,
-        "cid_1789266459798_1f0eb8970__cid_1789266459798_97b2cd3b5": true,
-        "cid_1789266459798_1f0eb8970__cid_1789266459798_4fdde1e38": true,
+        "cid_1789266459798_1f0eb8970__cid_1789266459798_ae1d22ba9": true,
         "cid_1789266459798_1f0eb8970__cid_1789266459798_c06789977": true,
-        "cid_1789266459798_1f0eb8970__cid_1789266459798_ae1d22ba9": true
+        "cid_1789266459798_1f0eb8970__cid_1789266459798_eaeddea39": true
       },
       "consumibles_desagregado": {
         "cid_1789266459798_1f0eb8970__cid_1789266459798_a2712fda9": true
@@ -5342,8 +5339,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -5367,6 +5363,12 @@
         "GRIS MEDIO",
         "AVENA"
       ],
+      "consumibles_check": {
+        "rec_conjunto_chicago_1143__c50_21||AVENA": true
+      },
+      "consumibles_desagregado": {
+        "rec_conjunto_chicago_1143__c50_21": true
+      },
       "cortador": "Corte Carbajal",
       "created_at": "2026-06-25",
       "created_by": "John Rodriguez",
@@ -5425,13 +5427,6 @@
       "trazos_color_solicitado": {
         "AVENA": true,
         "GRIS MEDIO": true
-      },
-      "subg_estados": {},
-      "consumibles_desagregado": {
-        "rec_conjunto_chicago_1143__c50_21": true
-      },
-      "consumibles_check": {
-        "rec_conjunto_chicago_1143__c50_21||AVENA": true
       }
     },
     {
@@ -5452,6 +5447,11 @@
         "NEGRO",
         "BEIGE"
       ],
+      "consumibles_check": {
+        "rec_falda_gaby_bk_1079__c73_20": true,
+        "rec_falda_gaby_bk_1079__c73_21": true,
+        "rec_falda_gaby_bk_1079__c73_25": true
+      },
       "cortador": "Corte Carbajal",
       "created_at": "2026-06-28",
       "created_by": "John Rodriguez",
@@ -5502,12 +5502,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-07-31",
-      "consumibles_check": {
-        "rec_falda_gaby_bk_1079__c73_20": true,
-        "rec_falda_gaby_bk_1079__c73_21": true,
-        "rec_falda_gaby_bk_1079__c73_25": true
-      }
+      "updated_at": "2026-07-31"
     },
     {
       "cantidades": {
@@ -6013,11 +6008,11 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-07-06",
       "trazos_color_solicitado": {
-        "ROSA": true,
-        "MARFIL": true
-      }
+        "MARFIL": true,
+        "ROSA": true
+      },
+      "updated_at": "2026-07-06"
     },
     {
       "cantidades": {
@@ -6091,8 +6086,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -6424,6 +6418,13 @@
       "colores": [
         "CAMEL"
       ],
+      "consumibles_check": {
+        "rec_chaqueta_suede_old_money_1119__c48_19": true,
+        "rec_chaqueta_suede_old_money_1119__c48_20": true,
+        "rec_chaqueta_suede_old_money_1119__c48_23": true,
+        "rec_chaqueta_suede_old_money_1119__c48_24": true,
+        "rec_chaqueta_suede_old_money_1119__c48_25": true
+      },
       "cortador": "Corte Carbajal",
       "created_at": "2026-07-28",
       "created_by": "John Rodriguez",
@@ -6472,15 +6473,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {},
-      "consumibles_check": {
-        "rec_chaqueta_suede_old_money_1119__c48_19": true,
-        "rec_chaqueta_suede_old_money_1119__c48_20": true,
-        "rec_chaqueta_suede_old_money_1119__c48_25": true,
-        "rec_chaqueta_suede_old_money_1119__c48_24": true,
-        "rec_chaqueta_suede_old_money_1119__c48_23": true
-      }
+      ]
     },
     {
       "cantidades": {
@@ -6614,43 +6607,43 @@
     },
     {
       "cantidades": {
-        "NEGRO_T10": 8,
-        "NEGRO_T14": 8,
-        "FUCSIA_T10": 12,
-        "FUCSIA_T12": 12,
-        "FUCSIA_T14": 12,
-        "SALMON_T10": 12,
-        "SALMON_T12": 12,
-        "SALMON_T14": 12,
-        "SALMON_T16": 12,
-        "LILA_T8": 10,
-        "LILA_T10": 13,
-        "LILA_T12": 13,
-        "LILA_T14": 13,
-        "AZUL OSCURO_T6": 8,
-        "AZUL OSCURO_T8": 12,
         "AZUL OSCURO_T10": 12,
         "AZUL OSCURO_T12": 16,
         "AZUL OSCURO_T14": 16,
         "AZUL OSCURO_T16": 16,
-        "VERDE MILITAR_T6": 8,
-        "VERDE MILITAR_T8": 12,
-        "VERDE MILITAR_T10": 12,
-        "VERDE MILITAR_T12": 16,
-        "VERDE MILITAR_T14": 16,
-        "VERDE MILITAR_T16": 16,
-        "ROSA_T6": 8,
-        "ROSA_T8": 12,
+        "AZUL OSCURO_T6": 8,
+        "AZUL OSCURO_T8": 12,
+        "FUCSIA_T10": 12,
+        "FUCSIA_T12": 12,
+        "FUCSIA_T14": 12,
+        "LILA_T10": 13,
+        "LILA_T12": 13,
+        "LILA_T14": 13,
+        "LILA_T8": 10,
+        "NEGRO_T10": 8,
+        "NEGRO_T14": 8,
+        "ROJO_T10": 12,
+        "ROJO_T12": 16,
+        "ROJO_T14": 16,
+        "ROJO_T16": 16,
+        "ROJO_T6": 8,
+        "ROJO_T8": 12,
         "ROSA_T10": 12,
         "ROSA_T12": 14,
         "ROSA_T14": 14,
         "ROSA_T16": 14,
-        "ROJO_T6": 8,
-        "ROJO_T8": 12,
-        "ROJO_T10": 12,
-        "ROJO_T12": 16,
-        "ROJO_T14": 16,
-        "ROJO_T16": 16
+        "ROSA_T6": 8,
+        "ROSA_T8": 12,
+        "SALMON_T10": 12,
+        "SALMON_T12": 12,
+        "SALMON_T14": 12,
+        "SALMON_T16": 12,
+        "VERDE MILITAR_T10": 12,
+        "VERDE MILITAR_T12": 16,
+        "VERDE MILITAR_T14": 16,
+        "VERDE MILITAR_T16": 16,
+        "VERDE MILITAR_T6": 8,
+        "VERDE MILITAR_T8": 12
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -6674,8 +6667,11 @@
         "rec_chaqueta_cazadora_1002__c38_28": true,
         "rec_chaqueta_cazadora_1002__c38_29": true,
         "rec_chaqueta_cazadora_1002__c38_30": false,
-        "rec_chaqueta_cazadora_1002__c38_31": true,
-        "rec_chaqueta_cazadora_1002__c38_30||AZUL OSCURO": false
+        "rec_chaqueta_cazadora_1002__c38_30||AZUL OSCURO": false,
+        "rec_chaqueta_cazadora_1002__c38_31": true
+      },
+      "consumibles_desagregado": {
+        "rec_chaqueta_cazadora_1002__c38_30": true
       },
       "cortador": "Corte Carbajal",
       "created_at": "2026-07-30",
@@ -6689,10 +6685,46 @@
       "receta_nombre": "CHAQUETA CAZADORA - REF: 1002",
       "referencias": [
         {
-          "nombre": "CHAQUETA CAZADORA",
-          "ref": "1002",
+          "cantidades": {
+            "AZUL OSCURO_T10": 12,
+            "AZUL OSCURO_T12": 16,
+            "AZUL OSCURO_T14": 16,
+            "AZUL OSCURO_T16": 16,
+            "AZUL OSCURO_T6": 8,
+            "AZUL OSCURO_T8": 12,
+            "FUCSIA_T10": 12,
+            "FUCSIA_T12": 12,
+            "FUCSIA_T14": 12,
+            "LILA_T10": 13,
+            "LILA_T12": 13,
+            "LILA_T14": 13,
+            "LILA_T8": 10,
+            "NEGRO_T10": 8,
+            "NEGRO_T14": 8,
+            "ROJO_T10": 12,
+            "ROJO_T12": 16,
+            "ROJO_T14": 16,
+            "ROJO_T16": 16,
+            "ROJO_T6": 8,
+            "ROJO_T8": 12,
+            "ROSA_T10": 12,
+            "ROSA_T12": 14,
+            "ROSA_T14": 14,
+            "ROSA_T16": 14,
+            "ROSA_T6": 8,
+            "ROSA_T8": 12,
+            "SALMON_T10": 12,
+            "SALMON_T12": 12,
+            "SALMON_T14": 12,
+            "SALMON_T16": 12,
+            "VERDE MILITAR_T10": 12,
+            "VERDE MILITAR_T12": 16,
+            "VERDE MILITAR_T14": 16,
+            "VERDE MILITAR_T16": 16,
+            "VERDE MILITAR_T6": 8,
+            "VERDE MILITAR_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 11561,
           "colores": [
             "NEGRO",
             "FUCSIA",
@@ -6703,6 +6735,9 @@
             "ROSA",
             "ROJO"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA CAZADORA",
+          "ref": "1002",
           "tallas": [
             "T4",
             "T6",
@@ -6712,55 +6747,16 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T10": 8,
-            "NEGRO_T14": 8,
-            "FUCSIA_T10": 12,
-            "FUCSIA_T12": 12,
-            "FUCSIA_T14": 12,
-            "SALMON_T10": 12,
-            "SALMON_T12": 12,
-            "SALMON_T14": 12,
-            "SALMON_T16": 12,
-            "LILA_T8": 10,
-            "LILA_T10": 13,
-            "LILA_T12": 13,
-            "LILA_T14": 13,
-            "AZUL OSCURO_T6": 8,
-            "AZUL OSCURO_T8": 12,
-            "AZUL OSCURO_T10": 12,
-            "AZUL OSCURO_T12": 16,
-            "AZUL OSCURO_T14": 16,
-            "AZUL OSCURO_T16": 16,
-            "VERDE MILITAR_T6": 8,
-            "VERDE MILITAR_T8": 12,
-            "VERDE MILITAR_T10": 12,
-            "VERDE MILITAR_T12": 16,
-            "VERDE MILITAR_T14": 16,
-            "VERDE MILITAR_T16": 16,
-            "ROSA_T6": 8,
-            "ROSA_T8": 12,
-            "ROSA_T10": 12,
-            "ROSA_T12": 14,
-            "ROSA_T14": 14,
-            "ROSA_T16": 14,
-            "ROJO_T6": 8,
-            "ROJO_T8": 12,
-            "ROJO_T10": 12,
-            "ROJO_T12": 16,
-            "ROJO_T14": 16,
-            "ROJO_T16": 16
-          },
-          "maquilador_id": ""
+          "vmo": 11561
         }
       ],
       "subg_estados": {
+        "OP-2026-098||AZUL OSCURO": "ALISTAMIENTO",
+        "OP-2026-098||FUCSIA": "EN_CONFECCION",
+        "OP-2026-098||LILA": "EN_CONFECCION",
         "OP-2026-098||NEGRO": "EN_CONFECCION",
         "OP-2026-098||ROJO": "EN_CONFECCION",
         "OP-2026-098||ROSA": "EN_CONFECCION",
-        "OP-2026-098||FUCSIA": "EN_CONFECCION",
-        "OP-2026-098||LILA": "EN_CONFECCION",
-        "OP-2026-098||AZUL OSCURO": "ALISTAMIENTO",
         "OP-2026-098||VERDE MILITAR": "EN_CONFECCION"
       },
       "tallas": [
@@ -6772,12 +6768,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-09-16",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null,
-      "consumibles_desagregado": {
-        "rec_chaqueta_cazadora_1002__c38_30": true
-      }
+      "updated_at": "2026-09-16"
     },
     {
       "cantidades": {
@@ -6882,8 +6873,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -6905,6 +6895,9 @@
         "NEGRO",
         "BEIGE"
       ],
+      "consumibles_check": {
+        "rec_chaqueta_harley_1107__c41_24": true
+      },
       "consumibles_desagregado": {
         "rec_chaqueta_harley_1107__c41_21": true,
         "rec_chaqueta_harley_1107__c41_22": true
@@ -6972,11 +6965,7 @@
           "lineas": 9,
           "solicitud_id": "id_1789489631878_p4wwqdwyf"
         }
-      ],
-      "subg_estados": {},
-      "consumibles_check": {
-        "rec_chaqueta_harley_1107__c41_24": true
-      }
+      ]
     },
     {
       "cantidades": {
@@ -7438,8 +7427,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -7788,8 +7776,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-08-04",
-      "subg_estados": {}
+      "updated_at": "2026-08-04"
     },
     {
       "cantidades": {
@@ -7820,6 +7807,9 @@
         "rec_pantalon_rave_1063__c96_28": true,
         "rec_pantalon_rave_1063__c96_29": true,
         "rec_pantalon_rave_1063__c96_30": true
+      },
+      "consumibles_desagregado": {
+        "rec_pantalon_rave_1063__c96_31": true
       },
       "cortador": "Corte Carbajal",
       "created_at": "2026-08-04",
@@ -7882,10 +7872,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-09-03",
-      "consumibles_desagregado": {
-        "rec_pantalon_rave_1063__c96_31": true
-      }
+      "updated_at": "2026-09-03"
     },
     {
       "cantidades": {
@@ -8181,8 +8168,7 @@
         "AZUL OSCURO": true,
         "MORA LECHE": true,
         "NEGRO": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -8952,8 +8938,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -8982,6 +8967,11 @@
         "BEIGE",
         "ROSA"
       ],
+      "consumibles_check": {
+        "rec_abrigo_frozen_1136__c0_21||BEIGE": true,
+        "rec_abrigo_frozen_1136__c0_21||NEGRO": true,
+        "rec_abrigo_frozen_1136__c0_21||ROSA": true
+      },
       "consumibles_desagregado": {
         "rec_abrigo_frozen_1136__c0_21": true
       },
@@ -9045,13 +9035,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {},
-      "consumibles_check": {
-        "rec_abrigo_frozen_1136__c0_21||NEGRO": true,
-        "rec_abrigo_frozen_1136__c0_21||BEIGE": true,
-        "rec_abrigo_frozen_1136__c0_21||ROSA": true
-      }
+      ]
     },
     {
       "cantidades": {
@@ -9148,8 +9132,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -9228,8 +9211,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-08-24",
-      "subg_estados": {}
+      "updated_at": "2026-08-24"
     },
     {
       "cantidades": {
@@ -9308,8 +9290,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -9459,30 +9440,30 @@
     },
     {
       "cantidades": {
-        "AZUL OSCURO_T6": 12,
-        "AZUL OSCURO_T8": 12,
         "AZUL OSCURO_T10": 16,
         "AZUL OSCURO_T12": 16,
         "AZUL OSCURO_T14": 16,
         "AZUL OSCURO_T16": 16,
-        "VERDE MILITAR_T6": 12,
-        "VERDE MILITAR_T8": 12,
-        "VERDE MILITAR_T10": 16,
-        "VERDE MILITAR_T12": 16,
-        "VERDE MILITAR_T14": 16,
-        "VERDE MILITAR_T16": 16,
-        "ROSA_T6": 15,
-        "ROSA_T8": 15,
+        "AZUL OSCURO_T6": 12,
+        "AZUL OSCURO_T8": 12,
+        "LILA_T10": 16,
+        "LILA_T12": 16,
+        "LILA_T14": 16,
+        "LILA_T16": 16,
+        "LILA_T6": 12,
+        "LILA_T8": 12,
         "ROSA_T10": 15,
         "ROSA_T12": 15,
         "ROSA_T14": 15,
         "ROSA_T16": 15,
-        "LILA_T6": 12,
-        "LILA_T8": 12,
-        "LILA_T10": 16,
-        "LILA_T12": 16,
-        "LILA_T14": 16,
-        "LILA_T16": 16
+        "ROSA_T6": 15,
+        "ROSA_T8": 15,
+        "VERDE MILITAR_T10": 16,
+        "VERDE MILITAR_T12": 16,
+        "VERDE MILITAR_T14": 16,
+        "VERDE MILITAR_T16": 16,
+        "VERDE MILITAR_T6": 12,
+        "VERDE MILITAR_T8": 12
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -9491,6 +9472,18 @@
         "ROSA",
         "LILA"
       ],
+      "consumibles_check": {
+        "rec_chaqueta_cazadora_1002__c38_19": true,
+        "rec_chaqueta_cazadora_1002__c38_20": true,
+        "rec_chaqueta_cazadora_1002__c38_21": true,
+        "rec_chaqueta_cazadora_1002__c38_22": true,
+        "rec_chaqueta_cazadora_1002__c38_25": true,
+        "rec_chaqueta_cazadora_1002__c38_26": true,
+        "rec_chaqueta_cazadora_1002__c38_27": true,
+        "rec_chaqueta_cazadora_1002__c38_28": true,
+        "rec_chaqueta_cazadora_1002__c38_29": true,
+        "rec_chaqueta_cazadora_1002__c38_31": true
+      },
       "cortador": "Corte Carbajal",
       "created_at": "2026-08-25",
       "created_by": "John Rodriguez",
@@ -9503,16 +9496,42 @@
       "receta_nombre": "CHAQUETA CAZADORA - REF: 1002",
       "referencias": [
         {
-          "nombre": "CHAQUETA CAZADORA",
-          "ref": "1002",
+          "cantidades": {
+            "AZUL OSCURO_T10": 16,
+            "AZUL OSCURO_T12": 16,
+            "AZUL OSCURO_T14": 16,
+            "AZUL OSCURO_T16": 16,
+            "AZUL OSCURO_T6": 12,
+            "AZUL OSCURO_T8": 12,
+            "LILA_T10": 16,
+            "LILA_T12": 16,
+            "LILA_T14": 16,
+            "LILA_T16": 16,
+            "LILA_T6": 12,
+            "LILA_T8": 12,
+            "ROSA_T10": 15,
+            "ROSA_T12": 15,
+            "ROSA_T14": 15,
+            "ROSA_T16": 15,
+            "ROSA_T6": 15,
+            "ROSA_T8": 15,
+            "VERDE MILITAR_T10": 16,
+            "VERDE MILITAR_T12": 16,
+            "VERDE MILITAR_T14": 16,
+            "VERDE MILITAR_T16": 16,
+            "VERDE MILITAR_T6": 12,
+            "VERDE MILITAR_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 11561,
           "colores": [
             "AZUL OSCURO",
             "VERDE MILITAR",
             "ROSA",
             "LILA"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA CAZADORA",
+          "ref": "1002",
           "tallas": [
             "T6",
             "T8",
@@ -9521,35 +9540,14 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "AZUL OSCURO_T6": 12,
-            "AZUL OSCURO_T8": 12,
-            "AZUL OSCURO_T10": 16,
-            "AZUL OSCURO_T12": 16,
-            "AZUL OSCURO_T14": 16,
-            "AZUL OSCURO_T16": 16,
-            "VERDE MILITAR_T6": 12,
-            "VERDE MILITAR_T8": 12,
-            "VERDE MILITAR_T10": 16,
-            "VERDE MILITAR_T12": 16,
-            "VERDE MILITAR_T14": 16,
-            "VERDE MILITAR_T16": 16,
-            "ROSA_T6": 15,
-            "ROSA_T8": 15,
-            "ROSA_T10": 15,
-            "ROSA_T12": 15,
-            "ROSA_T14": 15,
-            "ROSA_T16": 15,
-            "LILA_T6": 12,
-            "LILA_T8": 12,
-            "LILA_T10": 16,
-            "LILA_T12": 16,
-            "LILA_T14": 16,
-            "LILA_T16": 16
-          },
-          "maquilador_id": ""
+          "vmo": 11561
         }
       ],
+      "subg_estados": {
+        "OP-2026-126||AZUL OSCURO": "EN_CONFECCION",
+        "OP-2026-126||ROSA": "EN_CONFECCION",
+        "OP-2026-126||VERDE MILITAR": "EN_CONFECCION"
+      },
       "tallas": [
         "T6",
         "T8",
@@ -9558,25 +9556,7 @@
         "T14",
         "T16"
       ],
-      "subg_estados": {
-        "OP-2026-126||ROSA": "EN_CONFECCION",
-        "OP-2026-126||AZUL OSCURO": "EN_CONFECCION"
-      },
-      "consumibles_check": {
-        "rec_chaqueta_cazadora_1002__c38_19": true,
-        "rec_chaqueta_cazadora_1002__c38_21": true,
-        "rec_chaqueta_cazadora_1002__c38_22": true,
-        "rec_chaqueta_cazadora_1002__c38_20": true,
-        "rec_chaqueta_cazadora_1002__c38_25": true,
-        "rec_chaqueta_cazadora_1002__c38_27": true,
-        "rec_chaqueta_cazadora_1002__c38_26": true,
-        "rec_chaqueta_cazadora_1002__c38_29": true,
-        "rec_chaqueta_cazadora_1002__c38_28": true,
-        "rec_chaqueta_cazadora_1002__c38_31": true
-      },
-      "updated_at": "2026-09-16",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-09-16"
     },
     {
       "cantidades": {
@@ -9679,8 +9659,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -9769,8 +9748,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -9845,8 +9823,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -9925,8 +9902,7 @@
       "trazos_color_solicitado": {
         "AZUL BEBE": true,
         "MARFIL": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -10119,8 +10095,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-08-25",
-      "subg_estados": {}
+      "updated_at": "2026-08-25"
     },
     {
       "cantidades": {
@@ -10229,8 +10204,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10353,8 +10327,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10427,8 +10400,7 @@
       "trazos_color_solicitado": {
         "AVENA": true,
         "GRIS OSCURO": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -10517,8 +10489,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10619,8 +10590,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10693,8 +10663,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10814,8 +10783,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11191,10 +11159,10 @@
         "GRIS"
       ],
       "consumibles_check": {
-        "cid_1789263585688_5543__cid_1789263410162_7598": true,
         "cid_1789263585688_5543__cid_1789263410162_4351": true,
         "cid_1789263585688_5543__cid_1789263410162_510": true,
         "cid_1789263585688_5543__cid_1789263410162_6574": true,
+        "cid_1789263585688_5543__cid_1789263410162_7598": true,
         "cid_1789263585688_5543__cid_1789263517487_6401": true
       },
       "cortador": "Corte Carbajal",
@@ -11265,8 +11233,7 @@
         "CAMEL": true,
         "GRIS": true,
         "NEGRO": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -11345,8 +11312,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11433,8 +11399,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11532,8 +11497,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11634,8 +11598,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11716,8 +11679,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11849,8 +11811,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11951,39 +11912,38 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-09-02",
-      "subg_estados": {}
+      "updated_at": "2026-09-02"
     },
     {
       "cantidades": {
-        "CAFE_T4": 10,
-        "CAFE_T6": 10,
-        "CAFE_T8": 16,
         "CAFE_T10": 16,
         "CAFE_T12": 16,
         "CAFE_T14": 16,
         "CAFE_T16": 16,
-        "NEGRO_T4": 10,
-        "NEGRO_T6": 10,
-        "NEGRO_T8": 16,
+        "CAFE_T4": 10,
+        "CAFE_T6": 10,
+        "CAFE_T8": 16,
+        "MARFIL_T10": 16,
+        "MARFIL_T12": 16,
+        "MARFIL_T14": 16,
+        "MARFIL_T16": 16,
+        "MARFIL_T4": 16,
+        "MARFIL_T6": 10,
+        "MARFIL_T8": 16,
         "NEGRO_T10": 16,
         "NEGRO_T12": 16,
         "NEGRO_T14": 16,
         "NEGRO_T16": 16,
-        "VERDE_T4": 10,
-        "VERDE_T6": 10,
-        "VERDE_T8": 16,
+        "NEGRO_T4": 10,
+        "NEGRO_T6": 10,
+        "NEGRO_T8": 16,
         "VERDE_T10": 16,
         "VERDE_T12": 16,
         "VERDE_T14": 16,
         "VERDE_T16": 16,
-        "MARFIL_T4": 16,
-        "MARFIL_T6": 10,
-        "MARFIL_T8": 16,
-        "MARFIL_T10": 16,
-        "MARFIL_T12": 16,
-        "MARFIL_T14": 16,
-        "MARFIL_T16": 16
+        "VERDE_T4": 10,
+        "VERDE_T6": 10,
+        "VERDE_T8": 16
       },
       "categoria": "CAMISETAS",
       "colores": [
@@ -12007,16 +11967,46 @@
       "numero": 211,
       "referencias": [
         {
-          "nombre": "CAMISETA MISO",
-          "ref": "",
+          "cantidades": {
+            "CAFE_T10": 16,
+            "CAFE_T12": 16,
+            "CAFE_T14": 16,
+            "CAFE_T16": 16,
+            "CAFE_T4": 10,
+            "CAFE_T6": 10,
+            "CAFE_T8": 16,
+            "MARFIL_T10": 16,
+            "MARFIL_T12": 16,
+            "MARFIL_T14": 16,
+            "MARFIL_T16": 16,
+            "MARFIL_T4": 16,
+            "MARFIL_T6": 10,
+            "MARFIL_T8": 16,
+            "NEGRO_T10": 16,
+            "NEGRO_T12": 16,
+            "NEGRO_T14": 16,
+            "NEGRO_T16": 16,
+            "NEGRO_T4": 10,
+            "NEGRO_T6": 10,
+            "NEGRO_T8": 16,
+            "VERDE_T10": 16,
+            "VERDE_T12": 16,
+            "VERDE_T14": 16,
+            "VERDE_T16": 16,
+            "VERDE_T4": 10,
+            "VERDE_T6": 10,
+            "VERDE_T8": 16
+          },
           "cat": "CAMISETAS",
-          "vmo": 1151,
           "colores": [
             "CAFE",
             "NEGRO",
             "VERDE",
             "MARFIL"
           ],
+          "maquilador_id": "",
+          "nombre": "CAMISETA MISO",
+          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -12026,39 +12016,13 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "CAFE_T4": 10,
-            "CAFE_T6": 10,
-            "CAFE_T8": 16,
-            "CAFE_T10": 16,
-            "CAFE_T12": 16,
-            "CAFE_T14": 16,
-            "CAFE_T16": 16,
-            "NEGRO_T4": 10,
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 16,
-            "NEGRO_T10": 16,
-            "NEGRO_T12": 16,
-            "NEGRO_T14": 16,
-            "NEGRO_T16": 16,
-            "VERDE_T4": 10,
-            "VERDE_T6": 10,
-            "VERDE_T8": 16,
-            "VERDE_T10": 16,
-            "VERDE_T12": 16,
-            "VERDE_T14": 16,
-            "VERDE_T16": 16,
-            "MARFIL_T4": 16,
-            "MARFIL_T6": 10,
-            "MARFIL_T8": 16,
-            "MARFIL_T10": 16,
-            "MARFIL_T12": 16,
-            "MARFIL_T14": 16,
-            "MARFIL_T16": 16
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
+      "subg_estados": {
+        "OP-2026-211||MARFIL": "CORTE_POR_ALISTAR",
+        "OP-2026-211||NEGRO": "CORTE_POR_ALISTAR"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -12072,13 +12036,7 @@
         "MARFIL": true,
         "NEGRO": true
       },
-      "subg_estados": {
-        "OP-2026-211||NEGRO": "CORTE_POR_ALISTAR",
-        "OP-2026-211||MARFIL": "CORTE_POR_ALISTAR"
-      },
-      "updated_at": "2026-09-16",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-09-16"
     },
     {
       "cantidades": {
@@ -12198,8 +12156,7 @@
         "AZUL": true,
         "MARFIL": true,
         "VERDE": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -12342,8 +12299,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -12453,8 +12409,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -12487,10 +12442,10 @@
         "CAMEL"
       ],
       "consumibles_check": {
-        "cid_1789167556675_8814__cid_1789166879416_911": true,
-        "cid_1789167556675_8814__cid_1789166879416_5197": true,
-        "cid_1789167556675_8814__cid_1789166879416_4609": true,
         "cid_1789167556675_8814__cid_1789166879416_2564": true,
+        "cid_1789167556675_8814__cid_1789166879416_4609": true,
+        "cid_1789167556675_8814__cid_1789166879416_5197": true,
+        "cid_1789167556675_8814__cid_1789166879416_911": true,
         "cid_1789167556675_8814__cid_1789167394527_7070": true,
         "cid_1789167556675_8814__cid_1789169021423_897": true
       },
@@ -12562,8 +12517,7 @@
         "CAMEL": true,
         "NEGRO": true,
         "VERDE MILITAR": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -12692,8 +12646,7 @@
           "solicitud_id": "id_1788983260763_py3v163mk"
         }
       ],
-      "updated_at": "2026-09-02",
-      "subg_estados": {}
+      "updated_at": "2026-09-02"
     },
     {
       "cantidades": {
@@ -12811,8 +12764,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "_nota_separacion": "Separada de OP-0010 (CAMISA SYROS) el 2026-09-04: 24 OTs reales de la migracion original sin OP propia, mal colgadas de OP-0010 por error de la carga inicial. | Archivada el 2026-09-05: produccion ya entregada/pago pendiente en su totalidad, no requiere programacion activa.",
@@ -12921,8 +12873,7 @@
         "T8",
         "T10",
         "T12"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -12954,6 +12905,11 @@
         "VERDE MILITAR",
         "NEGRO"
       ],
+      "consumibles_check": {
+        "cid_1789269430435_6299__cid_1789268387931_7184||BEIGE": true,
+        "cid_1789269430435_6299__cid_1789268387931_7184||NEGRO": true,
+        "cid_1789269430435_6299__cid_1789268387931_7184||VERDE MILITAR": true
+      },
       "consumibles_desagregado": {
         "cid_1789269430435_6299__cid_1789268387931_7184": true
       },
@@ -13035,13 +12991,7 @@
           "solicitud_id": "id_1789510472124_sfkvca2oy"
         }
       ],
-      "updated_at": "2026-09-14",
-      "subg_estados": {},
-      "consumibles_check": {
-        "cid_1789269430435_6299__cid_1789268387931_7184||BEIGE": true,
-        "cid_1789269430435_6299__cid_1789268387931_7184||VERDE MILITAR": true,
-        "cid_1789269430435_6299__cid_1789268387931_7184||NEGRO": true
-      }
+      "updated_at": "2026-09-14"
     },
     {
       "cantidades": {
@@ -13122,8 +13072,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -13229,8 +13178,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-09-13",
-      "subg_estados": {}
+      "updated_at": "2026-09-13"
     },
     {
       "cantidades": {
@@ -13314,8 +13262,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -13381,8 +13328,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -13474,8 +13420,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-09-13",
-      "subg_estados": {}
+      "updated_at": "2026-09-13"
     },
     {
       "cantidades": {
@@ -13540,8 +13485,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-09-13",
-      "subg_estados": {}
+      "updated_at": "2026-09-13"
     },
     {
       "cantidades": {
@@ -13604,8 +13548,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-09-13",
-      "subg_estados": {}
+      "updated_at": "2026-09-13"
     },
     {
       "cantidades": {
@@ -13739,8 +13682,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -13874,8 +13816,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -13969,8 +13910,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -14075,8 +14015,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -14157,8 +14096,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
