@@ -675,6 +675,9 @@ textarea.form-control{resize:vertical;min-height:80px;}
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<!-- Generación de PDF en el navegador (compartir solicitudes de trazos por WhatsApp) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 
@@ -19672,6 +19675,7 @@ function _renderTrazosHistorial(){
     h += '<div style="display:flex;align-items:center;gap:8px;">';
     h += '<span style="font-size:9px;font-weight:800;background:'+estadoColor+'18;border:1px solid '+estadoColor+'40;color:'+estadoColor+';border-radius:5px;padding:3px 8px;white-space:nowrap;">'+estadoTxt+'</span>';
     if(!s.manual) h += '<button data-sid="'+s.id+'" onclick="imprimirSolicitudTrazos(this.dataset.sid)" style="background:rgba(148,163,184,.1);border:1px solid #2c2c2e;color:#94a3b8;border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;">🖨 Imprimir</button>';
+    if(!s.manual) h += '<button data-sid="'+s.id+'" onclick="event.stopPropagation();compartirSolicitudTrazos(this.dataset.sid)" title="Compartir como PDF por WhatsApp u otra app (en celular)" style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);color:#34d399;border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;">📤 Compartir</button>';
     if(!s.manual) h += '<button data-sid="'+s.id+'" onclick="event.stopPropagation();abrirEditarSolicitudTrazos(this.dataset.sid)" style="background:rgba(10,132,255,.08);border:1px solid rgba(10,132,255,.3);color:#0a84ff;border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;">✏️ Editar</button>';
     h += '<button data-sid="'+s.id+'" onclick="event.stopPropagation();abrirRevertirSolicitudTrazos(this.dataset.sid)" title="Revertir esta solicitud (por error, duplicado, etc.)" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);color:#f87171;border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;">↩ Revertir</button>';
     h += '</div></div>';
@@ -20054,23 +20058,22 @@ function _trazosPrintTablaOP(op){
   h += '</tbody></table>';
   return h;
 }
-function imprimirSolicitudTrazos(sid){
-  var s = (DB.trazos.solicitudes||[]).find(function(x){ return x.id===sid; });
-  if(!s) return;
-  var op = (DB.ops||[]).find(function(x){ return x.id===s.op_id; });
-  var w = window.open('', '_blank');
-  if(!w) return;
-  var h = '<html><head><title>Solicitud de Trazos - '+esc(s.op_nombre)+'</title><style>';
-  h += 'body{font-family:Arial,sans-serif;padding:24px;color:#111;} h1{font-size:20px;margin-bottom:2px;} .sub{color:#666;font-size:12px;margin-bottom:18px;}';
-  h += '.section{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;margin:20px 0 8px;color:#333;}';
-  h += '.tipo{font-size:13px;font-weight:800;text-transform:uppercase;margin:16px 0 6px;border-bottom:2px solid #333;padding-bottom:3px;}';
-  h += 'table{border-collapse:collapse;width:100%;font-size:12px;margin-bottom:6px;}';
-  h += 'table th,table td{border:1px solid #999;padding:5px 8px;text-align:center;}';
-  h += '.optab th{background:#eee;} .optab td.colname{text-align:left;font-weight:700;} .optab td.tot{font-weight:800;background:#f5f5f5;} .optab tr.totrow td{font-weight:800;background:#eee;}';
-  h += '.lntab th{background:#f0f0f0;font-size:10px;text-transform:uppercase;} .lntab td{text-align:left;} .lntab td.num,.lntab td.mid{text-align:center;}';
-  h += '.notas{font-size:11px;color:#555;margin-top:-4px;margin-bottom:10px;}';
-  h += '</style></head><body>';
-  h += '<h1>'+esc(s.op_nombre)+' · '+esc(fmtOpId(s.op_id))+'</h1>';
+// Estilos + contenido de la hoja de la solicitud — separados del documento que los envuelve
+// para poder reusarlos tanto en la ventana de impresión (imprimirSolicitudTrazos) como en el
+// PDF generado para compartir por WhatsApp (compartirSolicitudTrazos), sin duplicar el HTML.
+function _trazosPrintStyles(){
+  var css = 'body{font-family:Arial,sans-serif;padding:24px;color:#111;background:#fff;} h1{font-size:20px;margin-bottom:2px;} .sub{color:#666;font-size:12px;margin-bottom:18px;}';
+  css += '.section{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;margin:20px 0 8px;color:#333;}';
+  css += '.tipo{font-size:13px;font-weight:800;text-transform:uppercase;margin:16px 0 6px;border-bottom:2px solid #333;padding-bottom:3px;}';
+  css += 'table{border-collapse:collapse;width:100%;font-size:12px;margin-bottom:6px;}';
+  css += 'table th,table td{border:1px solid #999;padding:5px 8px;text-align:center;}';
+  css += '.optab th{background:#eee;} .optab td.colname{text-align:left;font-weight:700;} .optab td.tot{font-weight:800;background:#f5f5f5;} .optab tr.totrow td{font-weight:800;background:#eee;}';
+  css += '.lntab th{background:#f0f0f0;font-size:10px;text-transform:uppercase;} .lntab td{text-align:left;} .lntab td.num,.lntab td.mid{text-align:center;}';
+  css += '.notas{font-size:11px;color:#555;margin-top:-4px;margin-bottom:10px;}';
+  return css;
+}
+function _trazosPrintContentHTML(s, op){
+  var h = '<h1>'+esc(s.op_nombre)+' · '+esc(fmtOpId(s.op_id))+'</h1>';
   h += '<div class="sub">Solicitud de trazos · enviada '+fmtDate(s.enviada_en)+' por '+esc(s.creado_por)+'</div>';
   if(op){
     h += '<div class="section">Resumen de la orden de producción</div>';
@@ -20095,10 +20098,69 @@ function imprimirSolicitudTrazos(sid){
       if(l.notas) h += '<div class="notas">📝 Trazo '+(i+1)+': '+esc(l.notas)+'</div>';
     });
   });
+  return h;
+}
+function imprimirSolicitudTrazos(sid){
+  var s = (DB.trazos.solicitudes||[]).find(function(x){ return x.id===sid; });
+  if(!s) return;
+  var op = (DB.ops||[]).find(function(x){ return x.id===s.op_id; });
+  var w = window.open('', '_blank');
+  if(!w) return;
+  var h = '<html><head><title>Solicitud de Trazos - '+esc(s.op_nombre)+'</title><style>'+_trazosPrintStyles()+'</style></head><body>';
+  h += _trazosPrintContentHTML(s, op);
   h += '</body></html>';
   w.document.write(h);
   w.document.close();
   setTimeout(function(){ w.print(); }, 300);
+}
+// Comparte la misma hoja como PDF real a través del selector nativo de "Compartir" del
+// celular — ahí WhatsApp aparece como una opción más, tal como cuando se comparte una foto.
+// En computador (donde no hay ese selector con archivos) cae al mismo diálogo de impresión,
+// desde el cual también se puede "Guardar como PDF" y adjuntarlo a mano.
+async function compartirSolicitudTrazos(sid){
+  var s = (DB.trazos.solicitudes||[]).find(function(x){ return x.id===sid; });
+  if(!s) return;
+  var op = (DB.ops||[]).find(function(x){ return x.id===s.op_id; });
+  var puedeCompartirArchivo = navigator.canShare && window.jspdf && window.html2canvas;
+  if(!puedeCompartirArchivo){ imprimirSolicitudTrazos(sid); return; }
+  var host = document.createElement('div');
+  host.style.cssText = 'position:fixed;left:-9999px;top:0;width:760px;background:#fff;';
+  host.innerHTML = '<style>'+_trazosPrintStyles()+'</style>'+_trazosPrintContentHTML(s, op);
+  document.body.appendChild(host);
+  try {
+    toast('Generando PDF...', 'info');
+    var canvas = await html2canvas(host, {scale:2, backgroundColor:'#ffffff', useCORS:true});
+    var imgData = canvas.toDataURL('image/jpeg', 0.92);
+    var jsPDF = window.jspdf.jsPDF;
+    var pdf = new jsPDF({unit:'pt', format:'a4'});
+    var pageW = pdf.internal.pageSize.getWidth();
+    var pageH = pdf.internal.pageSize.getHeight();
+    var imgW = pageW;
+    var imgH = canvas.height * (imgW/canvas.width);
+    var yLeft = imgH, y = 0;
+    pdf.addImage(imgData, 'JPEG', 0, 0, imgW, imgH);
+    yLeft -= pageH;
+    while(yLeft > 0){
+      y -= pageH;
+      pdf.addPage();
+      pdf.addImage(imgData, 'JPEG', 0, y, imgW, imgH);
+      yLeft -= pageH;
+    }
+    var fname = 'Trazos_'+String(fmtOpId(s.op_id)).replace(/[^A-Za-z0-9]+/g,'_')+'.pdf';
+    var blob = pdf.output('blob');
+    var file = new File([blob], fname, {type:'application/pdf'});
+    if(navigator.canShare({files:[file]})){
+      await navigator.share({files:[file], title:'Solicitud de trazos', text:s.op_nombre+' · '+fmtOpId(s.op_id)});
+    } else {
+      pdf.save(fname);
+      toast('PDF descargado — adjúntalo manualmente en WhatsApp', 'success');
+    }
+  } catch(e){
+    if(e && e.name==='AbortError') return; // el usuario cerró el selector de compartir, no es un error
+    toast('No se pudo generar el PDF para compartir', 'error');
+  } finally {
+    document.body.removeChild(host);
+  }
 }
 
 // ── Revertir solicitud (por error, duplicado, etc.) — doble confirmación: primero un
