@@ -5265,10 +5265,10 @@
           "tipo": "MATERIAL"
         },
         {
+          "consumo": 1,
           "id": "cid_1789588955187_9432",
-          "tipo": "MATERIAL",
           "mp_id": "mp_31515_1071020",
-          "consumo": 1
+          "tipo": "MATERIAL"
         }
       ],
       "id": "rec_abrigo_frozen_1136",
@@ -5520,16 +5520,16 @@
           "tipo": "MATERIAL"
         },
         {
+          "consumo": 1,
           "id": "cid_1789590576240_5927",
-          "tipo": "MATERIAL",
           "mp_id": "mp_31515_1071020",
-          "consumo": 1
+          "tipo": "MATERIAL"
         },
         {
+          "consumo": 1,
           "id": "cid_1789590590760_2982",
-          "tipo": "MATERIAL",
           "mp_id": "mp_32727_1021024",
-          "consumo": 1
+          "tipo": "MATERIAL"
         }
       ],
       "id": "rec_abrigo_luxor_1135",
@@ -46205,6 +46205,7 @@
   "referencia_siguiente_propio": 1234,
   "referencia_siguiente_proveedor": 2068,
   "referencias_asignadas": {
+    "ABRIGO FROZEN - REF: 1136": "1233",
     "ABRIGO LUXOR - REF: 1135": "1213",
     "BLAZER DONATELLA": "1212",
     "BLUSA BOLERO": "1226",
@@ -46258,8 +46259,7 @@
     "VESTIDO KIKI": "1189",
     "VESTIDO MINI DRESS": "1185",
     "VESTIDO SOUL - REF: 1104": "1186",
-    "WASHMAN": "1198",
-    "ABRIGO FROZEN - REF: 1136": "1233"
+    "WASHMAN": "1198"
   },
   "servicios": [
     {
@@ -47038,6 +47038,11 @@
       "costo_unitario": 8000,
       "id": "cid_1789271669964_4342",
       "nombre": "servicio de confeccion chaleco kenwort"
+    },
+    {
+      "id": "cid_1789620888476_4095",
+      "nombre": "BORDADO ARMIN",
+      "costo_unitario": 5000
     }
   ],
   "tarifas_cif": [
