@@ -20509,16 +20509,27 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1789662660850_clv8l",
-      "ts": 1789662660850,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782240897563_3lix3vy1y",
-      "nombre": "CAMIBUSO HOUSER",
       "categoria": "Buzos",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1782240897563_3lix3vy1y",
       "estado_anterior": "EN_REVISION_GERENCIA",
-      "estado_nuevo": "EN_CORTE_MUESTRA"
+      "estado_nuevo": "EN_CORTE_MUESTRA",
+      "id": "evt_1789662660850_clv8l",
+      "marca": "Bentley Kids",
+      "nombre": "CAMIBUSO HOUSER",
+      "tipo": "estado_diseno",
+      "ts": 1789662660850,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1789662750470_edyfu",
+      "ts": 1789662750470,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-0034",
+      "nombre": "PILOTO PANCAKE",
+      "categoria": "CHAQUETAS",
+      "colores": 2,
+      "refs": 1
     }
   ]
 }
