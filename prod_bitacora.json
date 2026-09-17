@@ -20567,15 +20567,27 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1789663574078_5ht63",
-      "ts": 1789663574078,
-      "user": "Isabel",
-      "tipo": "diseno_tela",
-      "diseno_id": "id_1787602844206_a4wg3bqtn",
-      "nombre": "PANTALON NEVADO",
       "categoria": "Pantalones",
+      "diseno_id": "id_1787602844206_a4wg3bqtn",
+      "id": "evt_1789663574078_5ht63",
+      "nombre": "PANTALON NEVADO",
       "tela_anterior": "asignada",
-      "tela_nueva": "sin_tela"
+      "tela_nueva": "sin_tela",
+      "tipo": "diseno_tela",
+      "ts": 1789663574078,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1789663632645_enp1c",
+      "ts": 1789663632645,
+      "user": "Isabel",
+      "tipo": "estado_diseno",
+      "diseno_id": "id_1782174578406_eoos12irc",
+      "nombre": "CAMISETA COCOA",
+      "categoria": "Camisetas",
+      "marca": "Bentley Kids",
+      "estado_anterior": "EN_REVISION_GERENCIA",
+      "estado_nuevo": "LISTA_PRODUCCION"
     }
   ]
 }
