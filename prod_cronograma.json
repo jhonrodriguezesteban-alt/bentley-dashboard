@@ -1880,23 +1880,22 @@
     {
       "color": "BEIGE",
       "entregado": false,
+      "fecha_compromiso": "2026-09-17",
       "fecha_entrada": "2026-08-21",
+      "fecha_inicial": "2026-09-17",
+      "historial": [
+        {
+          "at": "2026-09-17",
+          "by": "Jefa de Producción",
+          "fecha_nueva": "2026-09-17",
+          "motivo": "Asignación inicial"
+        }
+      ],
       "id": "id_1787344759343_6ne7bb7f9",
       "op_id": "OP-2026-078",
       "op_nombre": "CHAQUETA HARLEY",
       "satelite_id": "id_1786649501329_3ghknzahs",
-      "uds": 102,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-09-17",
-          "motivo": "Asignación inicial",
-          "by": "Jefa de Producción",
-          "at": "2026-09-17"
-        }
-      ],
-      "fecha_inicial": "2026-09-17",
-      "fecha_compromiso": "2026-09-17"
+      "uds": 102
     },
     {
       "color": "NEGRO",
@@ -1921,13 +1920,14 @@
     },
     {
       "color": "CAFE",
-      "entregado": false,
+      "entregado": true,
       "fecha_entrada": "2026-08-22",
       "id": "id_1787413203827_8qbekluji",
       "op_id": "OP-2026-086",
       "op_nombre": "PANTALON CHICAGO",
       "satelite_id": "sat_00",
-      "uds": 68
+      "uds": 68,
+      "fecha_entrega_real": "2026-09-17"
     },
     {
       "color": "GRIS OSCURO",
@@ -2074,22 +2074,21 @@
     {
       "color": "NEGRO",
       "entregado": false,
+      "fecha_compromiso": "2026-09-22",
       "fecha_entrada": "2026-09-03",
+      "fecha_inicial": "2026-09-22",
+      "historial": [
+        {
+          "at": "2026-09-17",
+          "by": "Jefa de Producción",
+          "fecha_nueva": "2026-09-22",
+          "motivo": "Fecha inicial asignada"
+        }
+      ],
       "id": "id_1788448915547_0op1rluxw",
       "op_id": "OP-0036",
       "op_nombre": "PANTALON DRILL ANCHO",
-      "uds": 70,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-09-22",
-          "motivo": "Fecha inicial asignada",
-          "by": "Jefa de Producción",
-          "at": "2026-09-17"
-        }
-      ],
-      "fecha_compromiso": "2026-09-22",
-      "fecha_inicial": "2026-09-22"
+      "uds": 70
     },
     {
       "color": "ROSA",
@@ -2363,18 +2362,14 @@
       "uds": 8
     },
     {
+      "color": "VERDE MILITAR",
+      "entregado": false,
+      "fecha_entrada": "2026-09-17",
       "id": "id_1789652888835_xdj1ii04k",
       "op_id": "OP-2026-098",
       "op_nombre": "CHAQUETA CAZADORA",
-      "color": "VERDE MILITAR",
       "satelite_id": "id_1789587911711_aexkkxr7d",
-      "uds": 80,
-      "fecha_entrada": "2026-09-17",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 80
     }
   ]
 }
