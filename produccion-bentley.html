@@ -8997,16 +8997,16 @@ function renderInversion(){
   h += '<div class="card" style="padding:0;overflow:hidden;margin-bottom:18px;">';
   h += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0;">';
   function granBox(label, val, color, borderLeft, sub){
-    return '<div style="padding:16px 18px;'+(borderLeft?'border-left:1px solid var(--card-border);':'')+'">'
-      +'<div style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;">'+label+'</div>'
-      +'<div style="font-size:20px;font-weight:800;color:'+color+';">'+fmtCopFull(val)+'</div>'
-      +(sub?'<div style="font-size:10px;color:var(--dim);margin-top:4px;">'+sub+'</div>':'')+'</div>';
+    return '<div style="padding:20px 22px;'+(borderLeft?'border-left:1px solid var(--card-border);':'')+'">'
+      +'<div style="font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;font-weight:700;margin-bottom:7px;">'+label+'</div>'
+      +'<div style="font-size:30px;font-weight:800;color:'+color+';font-variant-numeric:tabular-nums;line-height:1.1;">'+fmtCopFull(val)+'</div>'
+      +(sub?'<div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);">'+sub+'</div>':'')+'</div>';
   }
   h += granBox('Inversión total', granTotal, '#e2e8f0', false);
   h += granBox('Pagado', granPagado, '#34d399', true);
-  var subPendiente = '<div style="display:grid;grid-template-columns:auto auto;column-gap:8px;row-gap:2px;">'
-    +'<span style="justify-self:start;">🧵 Confección</span><b onclick="_invAbrirConfeccionGrupos()" style="justify-self:end;color:#f87171;font-variant-numeric:tabular-nums;cursor:pointer;text-decoration:underline dotted;text-underline-offset:2px;">'+fmtCopFull(granPendConf)+'</b>'
-    +'<span style="justify-self:start;">📦 Insumos</span><b onclick="_invAbrirInsumosGrupos()" style="justify-self:end;color:#f87171;font-variant-numeric:tabular-nums;cursor:pointer;text-decoration:underline dotted;text-underline-offset:2px;">'+fmtCopFull(granPendInsumo)+'</b>'
+  var subPendiente = '<div style="display:grid;grid-template-columns:auto auto;column-gap:14px;row-gap:6px;font-size:15px;">'
+    +'<span style="justify-self:start;color:var(--dim);">🧵 Confección</span><b onclick="_invAbrirConfeccionGrupos()" style="justify-self:end;color:#f87171;font-variant-numeric:tabular-nums;cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px;">'+fmtCopFull(granPendConf)+'</b>'
+    +'<span style="justify-self:start;color:var(--dim);">📦 Insumos</span><b onclick="_invAbrirInsumosGrupos()" style="justify-self:end;color:#f87171;font-variant-numeric:tabular-nums;cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px;">'+fmtCopFull(granPendInsumo)+'</b>'
     +'</div>';
   h += granBox('Pendiente por pagar', granPendiente, '#ef4444', true, subPendiente);
   h += '</div></div>';
