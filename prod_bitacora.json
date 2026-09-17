@@ -19313,20 +19313,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "AZUL OSCURO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1789652912012_p9xrl",
-      "ts": 1789652912012,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "por corte",
       "op_id": "OP-2026-098",
       "op_nombre": "CHAQUETA CAZADORA",
       "referencia": "CHAQUETA CAZADORA",
-      "color": "AZUL OSCURO",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1789652912012,
       "uds": 80,
-      "motivo": "por corte"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789652950341_1nzyy",
+      "ts": 1789652950341,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1787344759343_6ne7bb7f9",
+      "op_id": "OP-2026-078",
+      "color": "BEIGE",
+      "fecha_nueva": "2026-09-17",
+      "motivo": "Reubicado en tablero"
     }
   ]
 }
