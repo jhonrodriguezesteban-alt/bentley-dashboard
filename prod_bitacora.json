@@ -21020,17 +21020,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "estado": "ENTREGADO",
       "id": "evt_1789676675596_xlz53",
-      "ts": 1789676675596,
-      "user": "Jefa de Producción",
-      "tipo": "entrega_inline",
-      "ot_id": "OT-12001",
       "numero_ot": 12001,
       "op_id": "OP-0009",
+      "ot_id": "OT-12001",
+      "pendientes": 0,
+      "satelite": "ALEXANDRA FONSECA",
+      "talla": "T8",
+      "tipo": "entrega_inline",
+      "ts": 1789676675596,
       "uds_entregadas": 5,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789676684739_9c054",
+      "ts": 1789676684739,
+      "user": "Jefa de Producción",
+      "tipo": "entrega_inline",
+      "ot_id": "OT-11999",
+      "numero_ot": 11999,
+      "op_id": "OP-0009",
+      "uds_entregadas": 3,
       "pendientes": 0,
       "estado": "ENTREGADO",
-      "talla": "T8",
+      "talla": "T10",
       "satelite": "ALEXANDRA FONSECA"
     }
   ]
