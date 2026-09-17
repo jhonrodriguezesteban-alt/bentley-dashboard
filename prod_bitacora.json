@@ -19581,14 +19581,25 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1789659160889_oawe5",
-      "ts": 1789659160889,
-      "user": "Jefa de Producción",
-      "tipo": "cambiar_estado_op_all",
-      "op_id": "OP-0059",
-      "estado": "PENDIENTE_CORTAR",
       "colores": 5,
-      "nombre": "SET FRANKY"
+      "estado": "PENDIENTE_CORTAR",
+      "id": "evt_1789659160889_oawe5",
+      "nombre": "SET FRANKY",
+      "op_id": "OP-0059",
+      "tipo": "cambiar_estado_op_all",
+      "ts": 1789659160889,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789660832283_auwzw",
+      "ts": 1789660832283,
+      "user": "John Rodriguez",
+      "tipo": "diseno_prioridad",
+      "diseno_id": "id_1785251697504_gn77pob76",
+      "nombre": "CAMISA NIÑA WENDY",
+      "categoria": "CAMISAS",
+      "prio_anterior": 1,
+      "prio_nueva": 2
     }
   ]
 }
