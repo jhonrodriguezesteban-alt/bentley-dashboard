@@ -20532,16 +20532,27 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1789663386064_r1kk4",
-      "ts": 1789663386064,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782184291758_la9ni12ix",
-      "nombre": "CHALECO KENWORT",
       "categoria": "Chalecos",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1782184291758_la9ni12ix",
       "estado_anterior": "EN_REVISION_GERENCIA",
-      "estado_nuevo": "EN_CORTE_MUESTRA"
+      "estado_nuevo": "EN_CORTE_MUESTRA",
+      "id": "evt_1789663386064_r1kk4",
+      "marca": "Bentley Kids",
+      "nombre": "CHALECO KENWORT",
+      "tipo": "estado_diseno",
+      "ts": 1789663386064,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1789663526229_o4xye",
+      "ts": 1789663526229,
+      "user": "Isabel",
+      "tipo": "diseno_responsable",
+      "diseno_id": "id_1782182862281_fvrd1mdu6",
+      "nombre": "PANTALON HOUSER",
+      "categoria": "Pantalones",
+      "resp_anterior": "John",
+      "resp_nuevo": "Isa"
     }
   ]
 }
