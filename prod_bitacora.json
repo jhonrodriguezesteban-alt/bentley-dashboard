@@ -19809,16 +19809,25 @@
       "user": "John Rodriguez"
     },
     {
+      "categoria": "Chaquetas",
+      "diseno_id": "id_1785786510670_gnz0lsxxz",
+      "estado_anterior": "EN_DISENO_DIGITAL",
+      "estado_nuevo": "EN_CONFECCION_MUESTRA",
       "id": "evt_1789661241292_taf1y",
-      "ts": 1789661241292,
-      "user": "John Rodriguez",
+      "marca": "Bentley Kids",
+      "nombre": "OVERSIZED OLIVETO",
       "tipo": "estado_diseno",
+      "ts": 1789661241292,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1789661247923_jgemr",
+      "ts": 1789661247923,
+      "user": "John Rodriguez",
+      "tipo": "diseno_tela_stock",
       "diseno_id": "id_1785786510670_gnz0lsxxz",
       "nombre": "OVERSIZED OLIVETO",
-      "categoria": "Chaquetas",
-      "marca": "Bentley Kids",
-      "estado_anterior": "EN_DISENO_DIGITAL",
-      "estado_nuevo": "EN_CONFECCION_MUESTRA"
+      "hay_tela": true
     }
   ]
 }
