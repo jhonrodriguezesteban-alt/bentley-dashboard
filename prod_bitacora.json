@@ -20742,16 +20742,27 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1789664185203_4pe3z",
-      "ts": 1789664185203,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_b6ba19e4dc98431d",
-      "nombre": "CAMIBUSO PAÑO ALGODON RANGLAND",
       "categoria": "Buzos",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_b6ba19e4dc98431d",
       "estado_anterior": "EN_ESCALADO",
-      "estado_nuevo": "LISTA_PRODUCCION"
+      "estado_nuevo": "LISTA_PRODUCCION",
+      "id": "evt_1789664185203_4pe3z",
+      "marca": "Bentley Kids",
+      "nombre": "CAMIBUSO PAÑO ALGODON RANGLAND",
+      "tipo": "estado_diseno",
+      "ts": 1789664185203,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1789664919220_aojbr",
+      "ts": 1789664919220,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-0038",
+      "nombre": "CHAQUETA CAZADORA",
+      "categoria": "CHAQUETAS",
+      "colores": 8,
+      "refs": 1
     }
   ]
 }
