@@ -19340,6 +19340,17 @@
       "user": "Jefa de Producción"
     },
     {
+      "id": "evt_1789653192601_xwa7r",
+      "ts": 1789653192601,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1788448915547_0op1rluxw",
+      "op_id": "OP-0036",
+      "color": "NEGRO",
+      "fecha_nueva": "2026-09-22",
+      "motivo": "Asignación inicial"
+    },
+    {
       "bulk": true,
       "color": "CAFE",
       "estado_anterior": "ENTREGADO",
@@ -19388,20 +19399,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1789653331396_v3yks",
-      "ts": 1789653331396,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-086",
       "op_nombre": "PANTALON CHICAGO",
       "referencia": "PANTALON CHICAGO",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1789653331396,
       "uds": 68,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789653538974_4i3qz",
+      "ts": 1789653538974,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1787344781413_xbucmzppl",
+      "op_id": "OP-2026-078",
+      "color": "NEGRO",
+      "fecha_nueva": "2026-09-17",
+      "motivo": "Reubicado en tablero"
     }
   ]
 }
