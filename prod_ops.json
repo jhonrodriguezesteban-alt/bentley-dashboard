@@ -1545,19 +1545,19 @@
     },
     {
       "cantidades": {
+        "CAMEL_T4": 19,
+        "CAMEL_T6": 19,
+        "CAMEL_T8": 19,
         "CAMEL_T10": 19,
         "CAMEL_T12": 19,
         "CAMEL_T14": 19,
         "CAMEL_T16": 18,
-        "CAMEL_T4": 19,
-        "CAMEL_T6": 19,
-        "CAMEL_T8": 19,
+        "NEGRO_T6": 12,
+        "NEGRO_T8": 12,
         "NEGRO_T10": 12,
         "NEGRO_T12": 12,
         "NEGRO_T14": 12,
-        "NEGRO_T16": 12,
-        "NEGRO_T6": 12,
-        "NEGRO_T8": 12
+        "NEGRO_T16": 12
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -1587,28 +1587,14 @@
       "numero": 34,
       "referencias": [
         {
-          "cantidades": {
-            "CAMEL_T10": 19,
-            "CAMEL_T12": 19,
-            "CAMEL_T14": 19,
-            "CAMEL_T16": 18,
-            "CAMEL_T4": 19,
-            "CAMEL_T6": 19,
-            "CAMEL_T8": 19,
-            "NEGRO_T10": 12,
-            "NEGRO_T12": 12,
-            "NEGRO_T14": 12,
-            "NEGRO_T16": 12,
-            "NEGRO_T6": 12,
-            "NEGRO_T8": 12
-          },
+          "nombre": "PILOTO PANCAKE",
+          "ref": "",
           "cat": "CHAQUETAS",
+          "vmo": 1151,
           "colores": [
             "CAMEL",
             "NEGRO"
           ],
-          "nombre": "PILOTO PANCAKE",
-          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -1618,7 +1604,22 @@
             "T14",
             "T16"
           ],
-          "vmo": 1151
+          "cantidades": {
+            "CAMEL_T4": 19,
+            "CAMEL_T6": 19,
+            "CAMEL_T8": 19,
+            "CAMEL_T10": 19,
+            "CAMEL_T12": 19,
+            "CAMEL_T14": 19,
+            "CAMEL_T16": 18,
+            "NEGRO_T6": 12,
+            "NEGRO_T8": 12,
+            "NEGRO_T10": 12,
+            "NEGRO_T12": 12,
+            "NEGRO_T14": 12,
+            "NEGRO_T16": 12
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -1635,7 +1636,9 @@
         "T16"
       ],
       "total_uds": 156,
-      "updated_at": "2026-07-16"
+      "updated_at": "2026-09-17",
+      "diseno_origen_id": null,
+      "diseno_origen_nombre": null
     },
     {
       "cantidades": {
