@@ -1545,19 +1545,19 @@
     },
     {
       "cantidades": {
-        "CAMEL_T4": 19,
-        "CAMEL_T6": 19,
-        "CAMEL_T8": 19,
         "CAMEL_T10": 19,
         "CAMEL_T12": 19,
         "CAMEL_T14": 19,
         "CAMEL_T16": 18,
-        "NEGRO_T6": 12,
-        "NEGRO_T8": 12,
+        "CAMEL_T4": 19,
+        "CAMEL_T6": 19,
+        "CAMEL_T8": 19,
         "NEGRO_T10": 12,
         "NEGRO_T12": 12,
         "NEGRO_T14": 12,
-        "NEGRO_T16": 12
+        "NEGRO_T16": 12,
+        "NEGRO_T6": 12,
+        "NEGRO_T8": 12
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -1574,8 +1574,11 @@
         "rec_piloto_pancake_1099__c98_29": true,
         "rec_piloto_pancake_1099__c98_31": true,
         "rec_piloto_pancake_1099__c98_32": true,
-        "rec_piloto_pancake_1099__c98_40": true,
-        "rec_piloto_pancake_1099__c98_33||NEGRO": true
+        "rec_piloto_pancake_1099__c98_33||NEGRO": true,
+        "rec_piloto_pancake_1099__c98_40": true
+      },
+      "consumibles_desagregado": {
+        "rec_piloto_pancake_1099__c98_33": true
       },
       "cortador": "Corte Carbajal",
       "created_at": "2026-03-24",
@@ -1588,14 +1591,29 @@
       "numero": 34,
       "referencias": [
         {
-          "nombre": "PILOTO PANCAKE",
-          "ref": "",
+          "cantidades": {
+            "CAMEL_T10": 19,
+            "CAMEL_T12": 19,
+            "CAMEL_T14": 19,
+            "CAMEL_T16": 18,
+            "CAMEL_T4": 19,
+            "CAMEL_T6": 19,
+            "CAMEL_T8": 19,
+            "NEGRO_T10": 12,
+            "NEGRO_T12": 12,
+            "NEGRO_T14": 12,
+            "NEGRO_T16": 12,
+            "NEGRO_T6": 12,
+            "NEGRO_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 1151,
           "colores": [
             "CAMEL",
             "NEGRO"
           ],
+          "maquilador_id": "",
+          "nombre": "PILOTO PANCAKE",
+          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -1605,22 +1623,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "CAMEL_T4": 19,
-            "CAMEL_T6": 19,
-            "CAMEL_T8": 19,
-            "CAMEL_T10": 19,
-            "CAMEL_T12": 19,
-            "CAMEL_T14": 19,
-            "CAMEL_T16": 18,
-            "NEGRO_T6": 12,
-            "NEGRO_T8": 12,
-            "NEGRO_T10": 12,
-            "NEGRO_T12": 12,
-            "NEGRO_T14": 12,
-            "NEGRO_T16": 12
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
@@ -1637,12 +1640,7 @@
         "T16"
       ],
       "total_uds": 156,
-      "updated_at": "2026-09-17",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null,
-      "consumibles_desagregado": {
-        "rec_piloto_pancake_1099__c98_33": true
-      }
+      "updated_at": "2026-09-17"
     },
     {
       "cantidades": {
@@ -1832,10 +1830,10 @@
         }
       ],
       "subg_estados": {
+        "OP-0037||BEIGE": "PENDIENTE_CORTAR",
         "OP-0037||MARFIL": "PENDIENTE_CORTAR",
         "OP-0037||NEGRO": "PENDIENTE_CORTAR",
-        "OP-0037||ROSA": "PENDIENTE_CORTAR",
-        "OP-0037||BEIGE": "PENDIENTE_CORTAR"
+        "OP-0037||ROSA": "PENDIENTE_CORTAR"
       },
       "tallas": [
         "T4",
@@ -1861,59 +1859,59 @@
     },
     {
       "cantidades": {
-        "AZUL BEBE_T4": 14,
-        "AZUL BEBE_T6": 14,
-        "AZUL BEBE_T8": 14,
         "AZUL BEBE_T10": 20,
         "AZUL BEBE_T12": 20,
         "AZUL BEBE_T14": 20,
         "AZUL BEBE_T16": 20,
-        "AZUL OSCURO_T6": 14,
-        "AZUL OSCURO_T8": 14,
+        "AZUL BEBE_T4": 14,
+        "AZUL BEBE_T6": 14,
+        "AZUL BEBE_T8": 14,
         "AZUL OSCURO_T10": 21,
         "AZUL OSCURO_T12": 21,
         "AZUL OSCURO_T14": 21,
         "AZUL OSCURO_T16": 21,
-        "LILA_T6": 14,
-        "LILA_T8": 14,
+        "AZUL OSCURO_T6": 14,
+        "AZUL OSCURO_T8": 14,
         "LILA_T10": 19,
         "LILA_T12": 19,
         "LILA_T14": 19,
         "LILA_T16": 19,
-        "ROJO_T4": 18,
-        "ROJO_T6": 18,
-        "ROJO_T8": 18,
+        "LILA_T6": 14,
+        "LILA_T8": 14,
         "ROJO_T10": 18,
         "ROJO_T12": 18,
         "ROJO_T14": 18,
         "ROJO_T16": 18,
-        "ROSA_T4": 10,
-        "ROSA_T6": 10,
-        "ROSA_T8": 10,
+        "ROJO_T4": 18,
+        "ROJO_T6": 18,
+        "ROJO_T8": 18,
         "ROSA_T10": 10,
         "ROSA_T12": 10,
         "ROSA_T14": 10,
         "ROSA_T16": 10,
-        "SALMON_T6": 12,
-        "SALMON_T8": 12,
-        "SALMON_T10": 16,
-        "SALMON_T12": 16,
-        "SALMON_T14": 16,
-        "SALMON_T16": 16,
-        "VERDE MENTA_T4": 19,
-        "VERDE MENTA_T6": 19,
-        "VERDE MENTA_T8": 19,
+        "ROSA_T4": 10,
+        "ROSA_T6": 10,
+        "ROSA_T8": 10,
+        "SALMON_T10": 12,
+        "SALMON_T12": 12,
+        "SALMON_T14": 12,
+        "SALMON_T16": 12,
+        "SALMON_T6": 10,
+        "SALMON_T8": 10,
         "VERDE MENTA_T10": 19,
         "VERDE MENTA_T12": 19,
         "VERDE MENTA_T14": 19,
         "VERDE MENTA_T16": 19,
-        "VERDE MILITAR_T4": 19,
-        "VERDE MILITAR_T6": 19,
-        "VERDE MILITAR_T8": 19,
+        "VERDE MENTA_T4": 19,
+        "VERDE MENTA_T6": 19,
+        "VERDE MENTA_T8": 19,
         "VERDE MILITAR_T10": 19,
         "VERDE MILITAR_T12": 19,
         "VERDE MILITAR_T14": 19,
-        "VERDE MILITAR_T16": 19
+        "VERDE MILITAR_T16": 19,
+        "VERDE MILITAR_T4": 19,
+        "VERDE MILITAR_T6": 19,
+        "VERDE MILITAR_T8": 19
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -1928,15 +1926,6 @@
       ],
       "consumibles_check": {
         "rec_chaqueta_cazadora_1002__c38_19": true,
-        "rec_chaqueta_cazadora_1002__c38_20": true,
-        "rec_chaqueta_cazadora_1002__c38_21": true,
-        "rec_chaqueta_cazadora_1002__c38_22": true,
-        "rec_chaqueta_cazadora_1002__c38_25": true,
-        "rec_chaqueta_cazadora_1002__c38_26": true,
-        "rec_chaqueta_cazadora_1002__c38_27": true,
-        "rec_chaqueta_cazadora_1002__c38_28": true,
-        "rec_chaqueta_cazadora_1002__c38_29": true,
-        "rec_chaqueta_cazadora_1002__c38_31": true,
         "rec_chaqueta_cazadora_1002__c38_19||AZUL BEBE": true,
         "rec_chaqueta_cazadora_1002__c38_19||AZUL OSCURO": true,
         "rec_chaqueta_cazadora_1002__c38_19||LILA": true,
@@ -1945,8 +1934,17 @@
         "rec_chaqueta_cazadora_1002__c38_19||SALMON": true,
         "rec_chaqueta_cazadora_1002__c38_19||VERDE MENTA": true,
         "rec_chaqueta_cazadora_1002__c38_19||VERDE MILITAR": true,
+        "rec_chaqueta_cazadora_1002__c38_20": true,
+        "rec_chaqueta_cazadora_1002__c38_21": true,
+        "rec_chaqueta_cazadora_1002__c38_22": true,
+        "rec_chaqueta_cazadora_1002__c38_25": true,
+        "rec_chaqueta_cazadora_1002__c38_26": true,
+        "rec_chaqueta_cazadora_1002__c38_27": true,
+        "rec_chaqueta_cazadora_1002__c38_28": true,
+        "rec_chaqueta_cazadora_1002__c38_29": true,
         "rec_chaqueta_cazadora_1002__c38_30||AZUL BEBE": true,
-        "rec_chaqueta_cazadora_1002__c38_30||VERDE MENTA": true
+        "rec_chaqueta_cazadora_1002__c38_30||VERDE MENTA": true,
+        "rec_chaqueta_cazadora_1002__c38_31": true
       },
       "consumibles_desagregado": {
         "rec_chaqueta_cazadora_1002__c38_19": true,
@@ -1963,10 +1961,62 @@
       "numero": 38,
       "referencias": [
         {
-          "nombre": "CHAQUETA CAZADORA",
-          "ref": "",
+          "cantidades": {
+            "AZUL BEBE_T10": 20,
+            "AZUL BEBE_T12": 20,
+            "AZUL BEBE_T14": 20,
+            "AZUL BEBE_T16": 20,
+            "AZUL BEBE_T4": 14,
+            "AZUL BEBE_T6": 14,
+            "AZUL BEBE_T8": 14,
+            "AZUL OSCURO_T10": 21,
+            "AZUL OSCURO_T12": 21,
+            "AZUL OSCURO_T14": 21,
+            "AZUL OSCURO_T16": 21,
+            "AZUL OSCURO_T6": 14,
+            "AZUL OSCURO_T8": 14,
+            "LILA_T10": 19,
+            "LILA_T12": 19,
+            "LILA_T14": 19,
+            "LILA_T16": 19,
+            "LILA_T6": 14,
+            "LILA_T8": 14,
+            "ROJO_T10": 18,
+            "ROJO_T12": 18,
+            "ROJO_T14": 18,
+            "ROJO_T16": 18,
+            "ROJO_T4": 18,
+            "ROJO_T6": 18,
+            "ROJO_T8": 18,
+            "ROSA_T10": 10,
+            "ROSA_T12": 10,
+            "ROSA_T14": 10,
+            "ROSA_T16": 10,
+            "ROSA_T4": 10,
+            "ROSA_T6": 10,
+            "ROSA_T8": 10,
+            "SALMON_T10": 12,
+            "SALMON_T12": 12,
+            "SALMON_T14": 12,
+            "SALMON_T16": 12,
+            "SALMON_T6": 10,
+            "SALMON_T8": 10,
+            "VERDE MENTA_T10": 19,
+            "VERDE MENTA_T12": 19,
+            "VERDE MENTA_T14": 19,
+            "VERDE MENTA_T16": 19,
+            "VERDE MENTA_T4": 19,
+            "VERDE MENTA_T6": 19,
+            "VERDE MENTA_T8": 19,
+            "VERDE MILITAR_T10": 19,
+            "VERDE MILITAR_T12": 19,
+            "VERDE MILITAR_T14": 19,
+            "VERDE MILITAR_T16": 19,
+            "VERDE MILITAR_T4": 19,
+            "VERDE MILITAR_T6": 19,
+            "VERDE MILITAR_T8": 19
+          },
           "cat": "CHAQUETAS",
-          "vmo": 1151,
           "colores": [
             "AZUL BEBE",
             "AZUL OSCURO",
@@ -1977,6 +2027,9 @@
             "VERDE MENTA",
             "VERDE MILITAR"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA CAZADORA",
+          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -1986,62 +2039,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "AZUL BEBE_T4": 14,
-            "AZUL BEBE_T6": 14,
-            "AZUL BEBE_T8": 14,
-            "AZUL BEBE_T10": 20,
-            "AZUL BEBE_T12": 20,
-            "AZUL BEBE_T14": 20,
-            "AZUL BEBE_T16": 20,
-            "AZUL OSCURO_T6": 14,
-            "AZUL OSCURO_T8": 14,
-            "AZUL OSCURO_T10": 21,
-            "AZUL OSCURO_T12": 21,
-            "AZUL OSCURO_T14": 21,
-            "AZUL OSCURO_T16": 21,
-            "LILA_T6": 14,
-            "LILA_T8": 14,
-            "LILA_T10": 19,
-            "LILA_T12": 19,
-            "LILA_T14": 19,
-            "LILA_T16": 19,
-            "ROJO_T4": 18,
-            "ROJO_T6": 18,
-            "ROJO_T8": 18,
-            "ROJO_T10": 18,
-            "ROJO_T12": 18,
-            "ROJO_T14": 18,
-            "ROJO_T16": 18,
-            "ROSA_T4": 10,
-            "ROSA_T6": 10,
-            "ROSA_T8": 10,
-            "ROSA_T10": 10,
-            "ROSA_T12": 10,
-            "ROSA_T14": 10,
-            "ROSA_T16": 10,
-            "SALMON_T6": 12,
-            "SALMON_T8": 12,
-            "SALMON_T10": 16,
-            "SALMON_T12": 16,
-            "SALMON_T14": 16,
-            "SALMON_T16": 16,
-            "VERDE MENTA_T4": 19,
-            "VERDE MENTA_T6": 19,
-            "VERDE MENTA_T8": 19,
-            "VERDE MENTA_T10": 19,
-            "VERDE MENTA_T12": 19,
-            "VERDE MENTA_T14": 19,
-            "VERDE MENTA_T16": 19,
-            "VERDE MILITAR_T4": 19,
-            "VERDE MILITAR_T6": 19,
-            "VERDE MILITAR_T8": 19,
-            "VERDE MILITAR_T10": 19,
-            "VERDE MILITAR_T12": 19,
-            "VERDE MILITAR_T14": 19,
-            "VERDE MILITAR_T16": 19
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
@@ -2064,9 +2062,7 @@
         "T16"
       ],
       "total_uds": 620,
-      "updated_at": "2026-09-17",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-09-17"
     },
     {
       "cantidades": {
@@ -2257,10 +2253,10 @@
         }
       ],
       "subg_estados": {
-        "OP-0040||MARFIL": "PENDIENTE_CORTAR",
-        "OP-0040||ROSA 613": "PENDIENTE_CORTAR",
         "OP-0040||CAMEL": "PENDIENTE_CORTAR",
-        "OP-0040||NEGRO": "PENDIENTE_CORTAR"
+        "OP-0040||MARFIL": "PENDIENTE_CORTAR",
+        "OP-0040||NEGRO": "PENDIENTE_CORTAR",
+        "OP-0040||ROSA 613": "PENDIENTE_CORTAR"
       },
       "tallas": [
         "T6",
@@ -3471,11 +3467,11 @@
       ],
       "subg_estados": {
         "OP-0059||AVENA": "PENDIENTE_CORTAR",
+        "OP-0059||CAFE": "PENDIENTE_CORTAR",
+        "OP-0059||GRIS OSCURO": "PENDIENTE_CORTAR",
         "OP-0059||MARFIL": "PENDIENTE_CORTAR",
         "OP-0059||NEGRO": "PENDIENTE_CORTAR",
-        "OP-0059||CAFE": "PENDIENTE_CORTAR",
-        "OP-0059||VINOTINTO": "PENDIENTE_CORTAR",
-        "OP-0059||GRIS OSCURO": "PENDIENTE_CORTAR"
+        "OP-0059||VINOTINTO": "PENDIENTE_CORTAR"
       },
       "tallas": [
         "T4",
@@ -3673,6 +3669,12 @@
         "RAYAS AZUL",
         "BEIGE"
       ],
+      "consumibles_check": {
+        "rec_camiseta_basica_bk_1061__c24_21": true,
+        "rec_camiseta_basica_bk_1061__c24_22": true,
+        "rec_camiseta_basica_bk_1061__c24_25": true,
+        "rec_camiseta_basica_bk_1061__c24_26": true
+      },
       "cortador": "CARVAJAL",
       "created_at": "2025-05-26",
       "created_by": "migrado_matriz",
@@ -3973,9 +3975,9 @@
         }
       ],
       "subg_estados": {
+        "OP-0167||AVENA": "PENDIENTE_CORTAR",
         "OP-0167||CAMEL": "PENDIENTE_CORTAR",
-        "OP-0167||MARFIL": "PENDIENTE_CORTAR",
-        "OP-0167||AVENA": "PENDIENTE_CORTAR"
+        "OP-0167||MARFIL": "PENDIENTE_CORTAR"
       },
       "tallas": [
         "T4",
@@ -4599,8 +4601,7 @@
         "AVENA": false,
         "GRIS OSCURO": false
       },
-      "updated_at": "2026-07-30",
-      "subg_estados": {}
+      "updated_at": "2026-07-30"
     },
     {
       "cantidades": {
@@ -4699,8 +4700,7 @@
         "MARFIL": false,
         "NEGRO": true
       },
-      "updated_at": "2026-07-30",
-      "subg_estados": {}
+      "updated_at": "2026-07-30"
     },
     {
       "cantidades": {
@@ -4931,8 +4931,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -5372,8 +5371,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -5461,8 +5459,7 @@
       "trazos_color_solicitado": {
         "AVENA": true,
         "GRIS MEDIO": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -6121,8 +6118,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -6509,8 +6505,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -6910,8 +6905,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -7003,8 +6997,7 @@
           "lineas": 9,
           "solicitud_id": "id_1789489631878_p4wwqdwyf"
         }
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -7466,8 +7459,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -7816,8 +7808,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-08-04",
-      "subg_estados": {}
+      "updated_at": "2026-08-04"
     },
     {
       "cantidades": {
@@ -8196,6 +8187,13 @@
           "vmo": 9459
         }
       ],
+      "subg_estados": {
+        "OP-2026-112||AZUL OSCURO": "PENDIENTE_CORTAR",
+        "OP-2026-112||CAMEL": "PENDIENTE_CORTAR",
+        "OP-2026-112||MARFIL": "PENDIENTE_CORTAR",
+        "OP-2026-112||MORA LECHE": "PENDIENTE_CORTAR",
+        "OP-2026-112||NEGRO": "PENDIENTE_CORTAR"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -8209,13 +8207,6 @@
         "AZUL OSCURO": true,
         "MORA LECHE": true,
         "NEGRO": true
-      },
-      "subg_estados": {
-        "OP-2026-112||MORA LECHE": "PENDIENTE_CORTAR",
-        "OP-2026-112||MARFIL": "PENDIENTE_CORTAR",
-        "OP-2026-112||NEGRO": "PENDIENTE_CORTAR",
-        "OP-2026-112||CAMEL": "PENDIENTE_CORTAR",
-        "OP-2026-112||AZUL OSCURO": "PENDIENTE_CORTAR"
       }
     },
     {
@@ -8986,8 +8977,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -9084,8 +9074,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -9182,8 +9171,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -9262,8 +9250,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-08-24",
-      "subg_estados": {}
+      "updated_at": "2026-08-24"
     },
     {
       "cantidades": {
@@ -9342,8 +9329,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -9598,9 +9584,9 @@
       ],
       "subg_estados": {
         "OP-2026-126||AZUL OSCURO": "EN_CONFECCION",
+        "OP-2026-126||LILA": "EN_CONFECCION",
         "OP-2026-126||ROSA": "EN_CONFECCION",
-        "OP-2026-126||VERDE MILITAR": "EN_CONFECCION",
-        "OP-2026-126||LILA": "EN_CONFECCION"
+        "OP-2026-126||VERDE MILITAR": "EN_CONFECCION"
       },
       "tallas": [
         "T6",
@@ -9713,8 +9699,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -9796,6 +9781,11 @@
           "vmo": 9459
         }
       ],
+      "subg_estados": {
+        "OP-2026-128||BEIGE": "PENDIENTE_CORTAR",
+        "OP-2026-128||CAMEL": "PENDIENTE_CORTAR",
+        "OP-2026-128||NEGRO": "PENDIENTE_CORTAR"
+      },
       "tallas": [
         "T6",
         "T8",
@@ -9803,12 +9793,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {
-        "OP-2026-128||NEGRO": "PENDIENTE_CORTAR",
-        "OP-2026-128||BEIGE": "PENDIENTE_CORTAR",
-        "OP-2026-128||CAMEL": "PENDIENTE_CORTAR"
-      }
+      ]
     },
     {
       "cantidades": {
@@ -9883,8 +9868,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -9963,8 +9947,7 @@
       "trazos_color_solicitado": {
         "AZUL BEBE": true,
         "MARFIL": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -10157,8 +10140,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-08-25",
-      "subg_estados": {}
+      "updated_at": "2026-08-25"
     },
     {
       "cantidades": {
@@ -10267,8 +10249,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10391,8 +10372,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10465,8 +10445,7 @@
       "trazos_color_solicitado": {
         "AVENA": true,
         "GRIS OSCURO": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -10555,8 +10534,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10657,8 +10635,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10731,8 +10708,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10852,8 +10828,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11238,6 +11213,8 @@
       "cortador": "Corte Carbajal",
       "created_at": "2026-09-02",
       "created_by": "John Rodriguez",
+      "diseno_origen_id": "id_1782401804563_fdxl77k8w",
+      "diseno_origen_nombre": "CONJUNTO CHELSY",
       "estado_op": "EN_PROCESO",
       "fecha_op": "2026-09-02",
       "id": "OP-2026-203",
@@ -11303,10 +11280,7 @@
         "CAMEL": true,
         "GRIS": true,
         "NEGRO": true
-      },
-      "subg_estados": {},
-      "diseno_origen_id": "id_1782401804563_fdxl77k8w",
-      "diseno_origen_nombre": "CONJUNTO CHELSY"
+      }
     },
     {
       "cantidades": {
@@ -11385,8 +11359,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11473,8 +11446,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11572,8 +11544,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11612,6 +11583,8 @@
       "cortador": "Corte Carbajal",
       "created_at": "2026-09-02",
       "created_by": "John Rodriguez",
+      "diseno_origen_id": "id_1782165786544_6e86om29m",
+      "diseno_origen_nombre": "PANTALON POLLY",
       "estado_op": "EN_PROCESO",
       "fecha_op": "2026-09-02",
       "id": "OP-2026-207",
@@ -11674,10 +11647,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {},
-      "diseno_origen_id": "id_1782165786544_6e86om29m",
-      "diseno_origen_nombre": "PANTALON POLLY"
+      ]
     },
     {
       "cantidades": {
@@ -11758,8 +11728,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11891,8 +11860,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11993,8 +11961,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-09-02",
-      "subg_estados": {}
+      "updated_at": "2026-09-02"
     },
     {
       "cantidades": {
@@ -12042,6 +12009,8 @@
       "cortador": "Corte Carbajal",
       "created_at": "2026-09-02",
       "created_by": "John Rodriguez",
+      "diseno_origen_id": "id_1782402877635_t7jvdv957",
+      "diseno_origen_nombre": "CAMISETA MISO",
       "estado_op": "EN_PROCESO",
       "fecha_op": "2026-09-02",
       "id": "OP-2026-211",
@@ -12118,9 +12087,7 @@
         "MARFIL": true,
         "NEGRO": true
       },
-      "updated_at": "2026-09-16",
-      "diseno_origen_id": "id_1782402877635_t7jvdv957",
-      "diseno_origen_nombre": "CAMISETA MISO"
+      "updated_at": "2026-09-16"
     },
     {
       "cantidades": {
@@ -12240,8 +12207,7 @@
         "AZUL": true,
         "MARFIL": true,
         "VERDE": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -12384,8 +12350,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -12495,8 +12460,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -12539,6 +12503,8 @@
       "cortador": "Corte Carbajal",
       "created_at": "2026-09-02",
       "created_by": "John Rodriguez",
+      "diseno_origen_id": "id_1782178726618_4nqy6fard",
+      "diseno_origen_nombre": "CHAQUETA DISCOVERY",
       "estado_op": "EN_PROCESO",
       "fecha_op": "2026-09-02",
       "id": "OP-2026-215",
@@ -12604,10 +12570,7 @@
         "CAMEL": true,
         "NEGRO": true,
         "VERDE MILITAR": true
-      },
-      "subg_estados": {},
-      "diseno_origen_id": "id_1782178726618_4nqy6fard",
-      "diseno_origen_nombre": "CHAQUETA DISCOVERY"
+      }
     },
     {
       "cantidades": {
@@ -12657,6 +12620,8 @@
       "cortador": "Corte Carbajal",
       "created_at": "2026-09-02",
       "created_by": "John Rodriguez",
+      "diseno_origen_id": "id_1782400152280_85zhl3nb5",
+      "diseno_origen_nombre": "CAMISA CLASICA BK",
       "estado_op": "EN_PROCESO",
       "fecha_op": "2026-09-02",
       "id": "OP-2026-216",
@@ -12716,6 +12681,12 @@
           "vmo": 1151
         }
       ],
+      "subg_estados": {
+        "OP-2026-216||AZUL": "PENDIENTE_CORTAR",
+        "OP-2026-216||BLANCO": "PENDIENTE_CORTAR",
+        "OP-2026-216||NEGRO": "PENDIENTE_CORTAR",
+        "OP-2026-216||VERDE MILITAR": "PENDIENTE_CORTAR"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -12736,15 +12707,7 @@
           "solicitud_id": "id_1788983260763_py3v163mk"
         }
       ],
-      "updated_at": "2026-09-02",
-      "subg_estados": {
-        "OP-2026-216||NEGRO": "PENDIENTE_CORTAR",
-        "OP-2026-216||VERDE MILITAR": "PENDIENTE_CORTAR",
-        "OP-2026-216||AZUL": "PENDIENTE_CORTAR",
-        "OP-2026-216||BLANCO": "PENDIENTE_CORTAR"
-      },
-      "diseno_origen_id": "id_1782400152280_85zhl3nb5",
-      "diseno_origen_nombre": "CAMISA CLASICA BK"
+      "updated_at": "2026-09-02"
     },
     {
       "cantidades": {
@@ -12793,6 +12756,8 @@
       "cortador": "Corte Carbajal",
       "created_at": "2026-09-02",
       "created_by": "John Rodriguez",
+      "diseno_origen_id": "id_1782162430849_8gi3mpnjv",
+      "diseno_origen_nombre": "BODY BASICO",
       "estado_op": "EN_PROCESO",
       "fecha_op": "2026-09-02",
       "id": "OP-2026-217",
@@ -12862,10 +12827,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {},
-      "diseno_origen_id": "id_1782162430849_8gi3mpnjv",
-      "diseno_origen_nombre": "BODY BASICO"
+      ]
     },
     {
       "_nota_separacion": "Separada de OP-0010 (CAMISA SYROS) el 2026-09-04: 24 OTs reales de la migracion original sin OP propia, mal colgadas de OP-0010 por error de la carga inicial. | Archivada el 2026-09-05: produccion ya entregada/pago pendiente en su totalidad, no requiere programacion activa.",
@@ -12974,8 +12936,7 @@
         "T8",
         "T10",
         "T12"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -13073,6 +13034,11 @@
           "vmo": 1151
         }
       ],
+      "subg_estados": {
+        "OP-2026-220||BEIGE": "PENDIENTE_CORTAR",
+        "OP-2026-220||NEGRO": "PENDIENTE_CORTAR",
+        "OP-2026-220||VERDE MILITAR": "PENDIENTE_CORTAR"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -13093,12 +13059,7 @@
           "solicitud_id": "id_1789510472124_sfkvca2oy"
         }
       ],
-      "updated_at": "2026-09-14",
-      "subg_estados": {
-        "OP-2026-220||BEIGE": "PENDIENTE_CORTAR",
-        "OP-2026-220||VERDE MILITAR": "PENDIENTE_CORTAR",
-        "OP-2026-220||NEGRO": "PENDIENTE_CORTAR"
-      }
+      "updated_at": "2026-09-14"
     },
     {
       "cantidades": {
@@ -13179,8 +13140,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -13286,8 +13246,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-09-13",
-      "subg_estados": {}
+      "updated_at": "2026-09-13"
     },
     {
       "cantidades": {
@@ -13371,8 +13330,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -13438,8 +13396,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -13531,8 +13488,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-09-13",
-      "subg_estados": {}
+      "updated_at": "2026-09-13"
     },
     {
       "cantidades": {
@@ -13597,8 +13553,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-09-13",
-      "subg_estados": {}
+      "updated_at": "2026-09-13"
     },
     {
       "cantidades": {
@@ -13661,8 +13616,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-09-13",
-      "subg_estados": {}
+      "updated_at": "2026-09-13"
     },
     {
       "cantidades": {
@@ -13796,8 +13750,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -13931,8 +13884,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -14026,8 +13978,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -14132,8 +14083,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -14215,7 +14165,11 @@
         "T14",
         "T16"
       ],
-      "subg_estados": {}
+      "consumibles_check": {
+        "rec_beisbolera_armin_1132__c3_23": true,
+        "rec_beisbolera_armin_1132__c3_24": true,
+        "rec_beisbolera_armin_1132__c3_25": true
+      }
     },
     {
       "cantidades": {
