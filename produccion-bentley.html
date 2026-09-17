@@ -8609,6 +8609,7 @@ function renderOPDetalle(opId){
       if(tieneConfeccion) bk += '<button data-opid="'+op.id+'" data-color="'+esc(color)+'" onclick="modalReprogramarSateliteColor(this.dataset.opid,this.dataset.color)" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:#fbbf24;border-radius:4px;padding:2px 5px;cursor:pointer;font-size:9px;" title="Reprogramar taller">↺</button>';
     }
     bk += '<span style="font-size:10px;color:var(--green);">'+pctC+'% entregado</span>';
+    if(_opConfeccionPagadaColor(op, color)) bk += '<span title="El servicio de confección de este color ya quedó marcado como pagado en el checklist de Consumibles" style="font-size:10px;font-weight:800;color:#34d399;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.4);border-radius:5px;padding:2px 7px;white-space:nowrap;">💰 CONFECCIÓN PAGADA</span>';
     bk += '</div>';
 
     // Color sin OTs aún — mostrar cantidades planeadas
@@ -8719,6 +8720,28 @@ function renderOPDetalle(opId){
   return h;
 }
 
+// ¿Ya se marcó como pagado el servicio de confección de este color en el checklist de
+// Consumibles? Se deriva en vivo de op.consumibles_check — no toca el estado de las OTs
+// (que sigue siendo PAGO_PENDIENTE mientras no se le pague al satélite), solo refleja el
+// hecho contable de que ya se pagó la mano de obra de ese color puntual.
+function _opConfeccionPagadaColor(op, color){
+  var receta = op.receta_id ? (DB.costeo&&DB.costeo.recetas?DB.costeo.recetas.find(function(x){ return x.id===op.receta_id; }):null) : null;
+  if(!receta) receta = _planRecetaDeOp(op);
+  if(!receta) return false;
+  var comp = (receta.componentes||[]).find(function(c){
+    if(c.tipo!=='SERVICIO') return false;
+    var sv = (DB.costeo.servicios||[]).find(function(x){ return x.id===c.servicio_id; });
+    return sv && /CONFECC/i.test(sv.nombre||'');
+  });
+  if(!comp) return false;
+  var key = receta.id+'__'+comp.id;
+  var checks = op.consumibles_check||{};
+  var colores = op.colores||[];
+  if((op.consumibles_desagregado||{})[key] && colores.length>1){
+    return !!checks[key+'||'+color];
+  }
+  return !!checks[key];
+}
 // Insumos "de rutina": empaque, marquillas y etiquetado siempre se piden junto con la OP,
 // así que arrancan marcados por defecto en el checklist para que Paola no tenga que
 // tildarlos a mano cada vez (igual se pueden desmarcar si en un caso puntual falta alguno).
