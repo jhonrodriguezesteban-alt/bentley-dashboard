@@ -10790,6 +10790,18 @@ function renderDiseno(){
     };
     h += '<div class="diseno-cat-row" style="display:flex;gap:10px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px;margin-bottom:18px;">';
 
+    // ── Tarjeta DISEÑOS LISTOS PARA PRODUCCIÓN (histórico) ─────────────────────
+    var listosItems = (DB.disenos||[]).filter(function(d){
+      return d.eliminado===true && d._op_origen && (!_disFiltroMarca || d.marca===_disFiltroMarca);
+    });
+    h += '<div onclick="abrirModalDisenosListos()" style="background:linear-gradient(135deg,#0d1117 0%,#111827 100%);border:1px solid #34d39944;border-radius:10px;padding:11px 14px;min-width:160px;flex:0 0 auto;cursor:pointer;transition:border-color .15s;" onmouseenter="this.style.borderColor=\'#34d399\'" onmouseleave="this.style.borderColor=\'#34d39944\'">';
+    h += '<div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:2px;">';
+    h += '<div style="font-size:10px;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:.5px;">DISEÑOS LISTOS PARA PRODUCCIÓN</div>';
+    h += '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:26px;color:#e2e8f0;line-height:1;">'+listosItems.length+'</div>';
+    h += '</div>';
+    h += '<div style="font-size:9px;color:#64748b;margin-top:2px;">Histórico · ya convertidos a OP</div>';
+    h += '</div>';
+
     // ── Tarjeta TOTAL ────────────────────────────────────────────────────────
     h += '<div onclick="abrirModalCategoria(\'__TODOS__\')" style="background:linear-gradient(135deg,#0d1117 0%,#111827 100%);border:1px solid #3b82f644;border-radius:10px;padding:11px 14px;min-width:160px;flex:0 0 auto;cursor:pointer;transition:border-color .15s;" onmouseenter="this.style.borderColor=\'#3b82f6\'" onmouseleave="this.style.borderColor=\'#3b82f644\'">';
     h += '<div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:2px;">';
@@ -12975,6 +12987,100 @@ function abrirModalCategoria(cat){
   }
   // Envolver todo en un contenedor que maneje la apertura correcta del primer grupo
   b = b.replace(/^<\/div>/, '');
+  document.getElementById('modal-cat-body').innerHTML = b;
+  var overlay = document.getElementById('modal-categoria');
+  overlay.style.display = 'flex';
+  document.addEventListener('keydown', _modalCatKey);
+}
+
+function abrirModalDisenosListos(){
+  var GEN_COLOR = {
+    'Unisex':'#94a3b8','Mixto':'#94a3b8','Niña':'#f472b6','Niño':'#38bdf8',
+    'Mujer':'#f472b6','Hombre':'#38bdf8','Femenino':'#f472b6','Masculino':'#38bdf8'
+  };
+  var RESP_COLOR = {Carolina:'#f472b6',Isa:'#a78bfa',John:'#38bdf8',Juan:'#34d399'};
+  var MTELA_CFG = {
+    sin_tela:{label:'❌ Sin tela',color:'#f87171',bg:'rgba(248,113,113,.15)',border:'rgba(248,113,113,.4)'},
+    en_busqueda:{label:'🔍 En búsqueda',color:'#fbbf24',bg:'rgba(251,191,36,.15)',border:'rgba(251,191,36,.4)'},
+    pte_llegar:{label:'📦 Pte. llegar',color:'#fb923c',bg:'rgba(251,146,60,.15)',border:'rgba(251,146,60,.4)'},
+    asignada:{label:'🧵 Asignada',color:'#34d399',bg:'rgba(52,211,153,.15)',border:'rgba(52,211,153,.4)'}
+  };
+  var todos = (DB.disenos||[]).filter(function(d){
+    return d.eliminado===true && d._op_origen && (!_disFiltroMarca || d.marca===_disFiltroMarca);
+  }).sort(function(a,b){
+    var ca=(a.categoria||'').toUpperCase(), cb=(b.categoria||'').toUpperCase();
+    if(ca!==cb) return ca.localeCompare(cb);
+    return (a.nombre||'').toUpperCase().localeCompare((b.nombre||'').toUpperCase());
+  });
+  var filtrosEl = document.getElementById('modal-cat-filtros');
+  if(filtrosEl){ filtrosEl.style.display='none'; filtrosEl.innerHTML=''; }
+  document.getElementById('modal-cat-titulo').textContent = 'DISEÑOS LISTOS PARA PRODUCCIÓN · '+todos.length;
+  var b = '';
+  if(!todos.length){
+    b = '<div style="color:#475569;font-size:14px;padding:20px 0;">Aún no hay diseños que hayan pasado a producción.</div>';
+  } else {
+    var _lastCat = null;
+    todos.forEach(function(d){
+      var gen = d.genero||'Unisex';
+      var gc = GEN_COLOR[gen]||'#94a3b8';
+      var rc = RESP_COLOR[d.responsable]||'#64748b';
+      var thumb = (d.imagenes&&d.imagenes.length) ? d.imagenes[0].url : '';
+      var cat = d.categoria||'SIN CATEGORÍA';
+      if(cat !== _lastCat){
+        if(_lastCat !== null) b += '</div>';
+        _lastCat = cat;
+        b += '<div style="width:100%;margin:14px 0 8px;display:flex;align-items:center;gap:10px;">';
+        b += '<span style="font-size:11px;font-weight:800;color:#34d399;text-transform:uppercase;letter-spacing:1px;">'+esc(cat.toUpperCase())+'</span>';
+        b += '<div style="flex:1;height:1px;background:#34d39933;"></div>';
+        b += '</div>';
+        b += '<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;">';
+      }
+      b += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:12px;width:180px;flex:0 0 180px;overflow:hidden;">';
+      if(thumb){
+        var allImgUrls = (d.imagenes||[]).map(function(i){return i.url;});
+        var allImgJson = JSON.stringify(allImgUrls).replace(/"/g,'&quot;');
+        b += '<div style="height:110px;overflow:hidden;background:#111827;position:relative;">';
+        b += '<img src="'+thumb+'" data-url="'+thumb+'" data-urls="'+allImgJson+'" onclick="abrirLightbox(this.dataset.url,JSON.parse(this.dataset.urls))" style="width:100%;height:100%;object-fit:cover;cursor:zoom-in;" loading="lazy">';
+        b += '</div>';
+      } else {
+        b += '<div style="height:80px;background:#111827;display:flex;align-items:center;justify-content:center;"><span style="font-size:28px;opacity:.25;">👕</span></div>';
+      }
+      b += '<div style="padding:10px 11px;">';
+      b += '<div style="font-size:12px;font-weight:700;color:#e2e8f0;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="'+esc(d.nombre||'')+'">'+esc((d.nombre||'Sin nombre').toUpperCase())+'</div>';
+      b += '<div data-opid="'+esc(d._op_origen)+'" onclick="cerrarModalCategoria();_opDetalleId=this.dataset.opid;navTo(\'ops\')" style="display:inline-flex;align-items:center;gap:4px;background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.4);color:#34d399;font-size:9px;font-weight:800;border-radius:8px;padding:2px 8px;margin-bottom:6px;cursor:pointer;">✅ '+esc(fmtOpId(d._op_origen))+'</div>';
+      b += '<div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:4px;">';
+      b += '<span style="background:'+gc+'18;border:1px solid '+gc+'44;color:'+gc+';font-size:9px;font-weight:700;border-radius:8px;padding:1px 6px;">'+esc(gen.toUpperCase())+'</span>';
+      if(d.responsable) b += '<span style="background:'+rc+'22;border:1px solid '+rc+'44;color:'+rc+';font-size:9px;font-weight:700;border-radius:8px;padding:1px 6px;">'+esc(d.responsable.toUpperCase())+'</span>';
+      b += '</div>';
+      var mTelaEst = d.tela_estado||'sin_tela';
+      var mtc = MTELA_CFG[mTelaEst]||MTELA_CFG.sin_tela;
+      b += '<div style="margin-top:6px;border-top:1px solid #2c2c2e;padding-top:6px;">';
+      b += '<span style="padding:2px 8px;border-radius:10px;font-size:9px;font-weight:700;border:1px solid '+mtc.border+';background:'+mtc.bg+';color:'+mtc.color+';">'+mtc.label+'</span>';
+      if(d.tela_nota) b += '<div style="margin-top:4px;font-size:10px;color:#94a3b8;">'+esc(d.tela_nota)+'</div>';
+      b += '</div>';
+      var _mCols = d.colores_escogidos||[];
+      if(_mCols.length){
+        b += '<div style="margin-top:6px;border-top:1px solid #2c2c2e;padding-top:6px;display:flex;flex-wrap:wrap;gap:3px;">';
+        _mCols.forEach(function(col){
+          var mDotHex = col.hex || _disDetectHex(col.nombre||'') || '#6b7280';
+          b += '<div style="display:inline-flex;align-items:center;gap:3px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:1px 5px;">';
+          b += '<span style="width:10px;height:10px;border-radius:50%;background:'+mDotHex+';flex-shrink:0;display:inline-block;box-shadow:0 0 0 1.5px rgba(255,255,255,.25),inset 0 0 0 1px rgba(0,0,0,.2);"></span>';
+          b += '<span style="font-size:9px;color:#cbd5e1;font-weight:600;max-width:70px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(col.nombre||'')+'</span>';
+          b += '</div>';
+        });
+        b += '</div>';
+      }
+      if(d.nota){
+        b += '<div style="margin-top:6px;border-top:1px solid #2c2c2e;padding-top:6px;font-size:10px;color:#94a3b8;line-height:1.4;">'+esc(d.nota)+'</div>';
+      }
+      var nCom=(d.comentarios||[]).length;
+      b += '<div style="margin-top:6px;">';
+      b += '<button data-did="'+d.id+'" onclick="event.stopPropagation();cerrarModalCategoria();setTimeout(function(){abrirComentariosDiseno(this.dataset.did);}.bind(this),80)" style="display:inline-flex;align-items:center;gap:5px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.3);border-radius:6px;color:#818cf8;font-size:10px;font-weight:600;padding:3px 9px;cursor:pointer;">💬 '+(nCom?nCom+' comentario'+(nCom>1?'s':''):'Sin comentarios')+'</button>';
+      b += '</div>';
+      b += '</div></div>';
+    });
+    b += '</div>';
+  }
   document.getElementById('modal-cat-body').innerHTML = b;
   var overlay = document.getElementById('modal-categoria');
   overlay.style.display = 'flex';
