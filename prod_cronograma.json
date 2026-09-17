@@ -836,12 +836,12 @@
       "color": "ROJO",
       "entregado": true,
       "fecha_entrada": "2026-07-25",
+      "fecha_entrega_real": "2026-09-17",
       "id": "id_1784988369888_w9vff00i3",
       "op_id": "OP-0038",
       "op_nombre": "CHAQUETA CAZADORA",
       "satelite_id": "sat_10",
-      "uds": 84,
-      "fecha_entrega_real": "2026-09-17"
+      "uds": 84
     },
     {
       "color": "VERDE MENTA",
@@ -2004,7 +2004,18 @@
       "op_id": "OP-2026-102",
       "op_nombre": "CHAQUETA ONION",
       "satelite_id": "sat_17",
-      "uds": 90
+      "uds": 90,
+      "historial": [
+        {
+          "fecha_anterior": null,
+          "fecha_nueva": "2026-09-18",
+          "motivo": "Asignación inicial",
+          "by": "Jefa de Producción",
+          "at": "2026-09-17"
+        }
+      ],
+      "fecha_inicial": "2026-09-18",
+      "fecha_compromiso": "2026-09-18"
     },
     {
       "color": "MARFIL",
@@ -2052,23 +2063,22 @@
     {
       "color": "ROJO",
       "entregado": false,
+      "fecha_compromiso": "2026-09-30",
       "fecha_entrada": "2026-09-02",
+      "fecha_inicial": "2026-09-30",
+      "historial": [
+        {
+          "at": "2026-09-17",
+          "by": "Jefa de Producción",
+          "fecha_nueva": "2026-09-30",
+          "motivo": "Fecha inicial asignada"
+        }
+      ],
       "id": "id_1788359026951_1393ukjrj",
       "op_id": "OP-2026-098",
       "op_nombre": "CHAQUETA CAZADORA",
       "satelite_id": "sat_11",
-      "uds": 80,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-09-30",
-          "motivo": "Fecha inicial asignada",
-          "by": "Jefa de Producción",
-          "at": "2026-09-17"
-        }
-      ],
-      "fecha_inicial": "2026-09-30",
-      "fecha_compromiso": "2026-09-30"
+      "uds": 80
     },
     {
       "color": "BEIGE",
@@ -2270,23 +2280,22 @@
     {
       "color": "ROJO",
       "entregado": false,
+      "fecha_compromiso": "2026-09-17",
       "fecha_entrada": "2026-09-12",
+      "fecha_inicial": "2026-09-17",
+      "historial": [
+        {
+          "at": "2026-09-17",
+          "by": "Jefa de Producción",
+          "fecha_nueva": "2026-09-17",
+          "motivo": "Asignación inicial"
+        }
+      ],
       "id": "id_1789243042040_h0onf0bfk",
       "op_id": "OP-2026-110",
       "op_nombre": "PANTALON RAVE",
       "satelite_id": "sat_15",
-      "uds": 124,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-09-17",
-          "motivo": "Asignación inicial",
-          "by": "Jefa de Producción",
-          "at": "2026-09-17"
-        }
-      ],
-      "fecha_inicial": "2026-09-17",
-      "fecha_compromiso": "2026-09-17"
+      "uds": 124
     },
     {
       "color": "NEGRO",
@@ -2471,44 +2480,42 @@
     {
       "color": "FUCSIA",
       "entregado": false,
+      "fecha_compromiso": "2026-09-30",
       "fecha_entrada": "2026-09-16",
+      "fecha_inicial": "2026-09-30",
+      "historial": [
+        {
+          "at": "2026-09-17",
+          "by": "Jefa de Producción",
+          "fecha_nueva": "2026-09-30",
+          "motivo": "Fecha inicial asignada"
+        }
+      ],
       "id": "id_1789587796742_kv37yybe9",
       "op_id": "OP-2026-098",
       "op_nombre": "CHAQUETA CAZADORA",
       "satelite_id": "sat_13",
-      "uds": 36,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-09-30",
-          "motivo": "Fecha inicial asignada",
-          "by": "Jefa de Producción",
-          "at": "2026-09-17"
-        }
-      ],
-      "fecha_inicial": "2026-09-30",
-      "fecha_compromiso": "2026-09-30"
+      "uds": 36
     },
     {
       "color": "LILA",
       "entregado": false,
+      "fecha_compromiso": "2026-09-30",
       "fecha_entrada": "2026-09-16",
+      "fecha_inicial": "2026-09-30",
+      "historial": [
+        {
+          "at": "2026-09-17",
+          "by": "Jefa de Producción",
+          "fecha_nueva": "2026-09-30",
+          "motivo": "Fecha inicial asignada"
+        }
+      ],
       "id": "id_1789587821314_76p35i76i",
       "op_id": "OP-2026-098",
       "op_nombre": "CHAQUETA CAZADORA",
       "satelite_id": "sat_13",
-      "uds": 49,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-09-30",
-          "motivo": "Fecha inicial asignada",
-          "by": "Jefa de Producción",
-          "at": "2026-09-17"
-        }
-      ],
-      "fecha_inicial": "2026-09-30",
-      "fecha_compromiso": "2026-09-30"
+      "uds": 49
     },
     {
       "color": "AZUL OSCURO",
@@ -2602,18 +2609,14 @@
       "uds": 116
     },
     {
+      "color": "NEGRO",
+      "entregado": false,
+      "fecha_entrada": "2026-09-17",
       "id": "id_1789663750997_li06805yp",
       "op_id": "OP-2026-081",
       "op_nombre": "CONJUNTO MANCHESTER",
-      "color": "NEGRO",
       "satelite_id": "sat_15",
-      "uds": 84,
-      "fecha_entrada": "2026-09-17",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 84
     }
   ]
 }
