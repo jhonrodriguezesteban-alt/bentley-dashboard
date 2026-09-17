@@ -20328,15 +20328,27 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1789661732651_5qe92",
-      "ts": 1789661732651,
-      "user": "John Rodriguez",
-      "tipo": "diseno_prioridad",
-      "diseno_id": "id_1782177626959_wkvwgwxui",
-      "nombre": "BUZO BOMBER ABIERTO",
       "categoria": "Buzos",
+      "diseno_id": "id_1782177626959_wkvwgwxui",
+      "id": "evt_1789661732651_5qe92",
+      "nombre": "BUZO BOMBER ABIERTO",
       "prio_anterior": 1,
-      "prio_nueva": 2
+      "prio_nueva": 2,
+      "tipo": "diseno_prioridad",
+      "ts": 1789661732651,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1789661793559_hh3o8",
+      "ts": 1789661793559,
+      "user": "John Rodriguez",
+      "tipo": "editar_diseno",
+      "nombre": "HOODIE CAROLINA",
+      "categoria": "Buzos",
+      "marca": "Bentley Kids",
+      "prioridad": 1,
+      "kanban": "EN_REVISION_GERENCIA",
+      "proveedor": "ninguno"
     }
   ]
 }
