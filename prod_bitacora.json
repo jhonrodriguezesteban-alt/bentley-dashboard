@@ -21073,16 +21073,27 @@
       "user": "Isabel"
     },
     {
+      "categoria": "Pantalones",
+      "diseno_id": "id_1782182862281_fvrd1mdu6",
+      "estado_anterior": "EN_CONFECCION_MUESTRA",
+      "estado_nuevo": "EN_REVISION_GERENCIA",
       "id": "evt_1789682814693_hx0z4",
-      "ts": 1789682814693,
-      "user": "Isabel",
+      "marca": "Bentley Kids",
+      "nombre": "PANTALON HOUSER",
       "tipo": "estado_diseno",
+      "ts": 1789682814693,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1789682824976_caft7",
+      "ts": 1789682824976,
+      "user": "Isabel",
+      "tipo": "diseno_responsable",
       "diseno_id": "id_1782182862281_fvrd1mdu6",
       "nombre": "PANTALON HOUSER",
       "categoria": "Pantalones",
-      "marca": "Bentley Kids",
-      "estado_anterior": "EN_CONFECCION_MUESTRA",
-      "estado_nuevo": "EN_REVISION_GERENCIA"
+      "resp_anterior": "Isa",
+      "resp_nuevo": "John"
     }
   ]
 }
