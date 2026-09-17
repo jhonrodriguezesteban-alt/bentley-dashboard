@@ -20193,12 +20193,17 @@ function _trazosPrintTablaOP(op){
 // para poder reusarlos tanto en la ventana de impresión (imprimirSolicitudTrazos) como en el
 // PDF generado para compartir por WhatsApp (compartirSolicitudTrazos), sin duplicar el HTML.
 function _trazosPrintStyles(){
-  var css = 'body{font-family:Arial,sans-serif;padding:24px;color:#111;background:#fff;} h1{font-size:20px;margin-bottom:2px;} .sub{color:#666;font-size:12px;margin-bottom:18px;}';
+  // Página en horizontal con márgenes reales: la tabla de la OP tiene una columna por talla
+  // (puede haber 8+) y en vertical con poco margen el borde derecho quedaba pegado o cortado
+  // al imprimir/generar PDF. table-layout:fixed reparte el ancho disponible entre todas las
+  // columnas por igual, así nunca se sale del área imprimible sin importar cuántas tallas haya.
+  var css = '@page{ size: A4 landscape; margin: 14mm; }';
+  css += 'body{font-family:Arial,sans-serif;padding:6mm 4mm;color:#111;background:#fff;box-sizing:border-box;} h1{font-size:20px;margin-bottom:2px;} .sub{color:#666;font-size:12px;margin-bottom:18px;}';
   css += '.section{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;margin:20px 0 8px;color:#333;}';
   css += '.tipo{font-size:13px;font-weight:800;text-transform:uppercase;margin:16px 0 6px;border-bottom:2px solid #333;padding-bottom:3px;}';
-  css += 'table{border-collapse:collapse;width:100%;font-size:12px;margin-bottom:6px;}';
-  css += 'table th,table td{border:1px solid #999;padding:5px 8px;text-align:center;}';
-  css += '.optab th{background:#eee;} .optab td.colname{text-align:left;font-weight:700;} .optab td.tot{font-weight:800;background:#f5f5f5;} .optab tr.totrow td{font-weight:800;background:#eee;}';
+  css += 'table{border-collapse:collapse;width:100%;table-layout:fixed;font-size:12px;margin-bottom:6px;}';
+  css += 'table th,table td{border:1px solid #999;padding:5px 6px;text-align:center;overflow-wrap:break-word;}';
+  css += '.optab th,.optab td{width:auto;} .optab th{background:#eee;} .optab td.colname{text-align:left;font-weight:700;} .optab td.tot{font-weight:800;background:#f5f5f5;} .optab tr.totrow td{font-weight:800;background:#eee;}';
   css += '.lntab th{background:#f0f0f0;font-size:10px;text-transform:uppercase;} .lntab td{text-align:left;} .lntab td.num,.lntab td.mid{text-align:center;}';
   css += '.notas{font-size:11px;color:#555;margin-top:-4px;margin-bottom:10px;}';
   return css;
