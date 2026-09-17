@@ -19436,20 +19436,36 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "AVENA",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1789656804689_909go",
-      "ts": 1789656804689,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-103",
       "op_nombre": "CHAQUETA TORERO NIÑA",
       "referencia": "CHAQUETA TORERO NIÑA",
-      "color": "AVENA",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1789656804689,
       "uds": 90,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789656872264_130t7",
+      "ts": 1789656872264,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-126",
+      "op_nombre": "CHAQUETA CAZADORA",
+      "referencia": "CHAQUETA CAZADORA",
+      "color": "VERDE MILITAR",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 88,
+      "motivo": "EN TALLER"
     }
   ]
 }
