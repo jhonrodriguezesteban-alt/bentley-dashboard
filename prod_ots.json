@@ -23441,7 +23441,7 @@
       "created_at": "2026-01-21",
       "created_by": "migrado_matriz",
       "cumplió_fecha": true,
-      "estado": "EN_CONFECCION",
+      "estado": "ENTREGADO",
       "fecha_entrega_corte_satelite": "2026-05-18",
       "fecha_estimada_entrega": "2026-05-26",
       "fecha_op": "2026-01-21",
@@ -23463,10 +23463,19 @@
       "satelite_nombre": "ALEXANDRA FONSECA",
       "talla": "T8",
       "total_mayorista": 194700,
-      "unidades_entregadas": 0,
+      "unidades_entregadas": 3,
       "unidades_novedad": 0,
       "unidades_por_llegar": 3,
-      "valor_mo": 1060
+      "valor_mo": 1060,
+      "fecha_entrega_real": "2026-09-17",
+      "total_costo_mo": 3180,
+      "historial": [
+        {
+          "fecha": "2026-09-17T20:25:03.697Z",
+          "accion": "Entrega completa: 3 uds → ENTREGADO",
+          "user": "Jefa de Producción"
+        }
+      ]
     },
     {
       "cantidad": 3,
