@@ -1832,8 +1832,8 @@
       "subg_estados": {
         "OP-0037||BEIGE": "PENDIENTE_CORTAR",
         "OP-0037||MARFIL": "PAGO_PENDIENTE",
-        "OP-0037||NEGRO": "ALISTAMIENTO",
-        "OP-0037||ROSA": "ALISTAMIENTO"
+        "OP-0037||NEGRO": "PAGO_PENDIENTE",
+        "OP-0037||ROSA": "PAGO_PENDIENTE"
       },
       "tallas": [
         "T4",
@@ -12764,7 +12764,12 @@
         "T14",
         "T16"
       ],
-      "subg_estados": {}
+      "subg_estados": {
+        "OP-2026-214||NEGRO": "PENDIENTE_CORTAR",
+        "OP-2026-214||ROSA": "PENDIENTE_CORTAR",
+        "OP-2026-214||MARFIL": "PENDIENTE_CORTAR",
+        "OP-2026-214||CAMEL": "PENDIENTE_CORTAR"
+      }
     },
     {
       "cantidades": {
