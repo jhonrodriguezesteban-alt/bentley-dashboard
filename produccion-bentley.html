@@ -8846,14 +8846,19 @@ function _invBaseInsumoNombre(nombre){
 function _invAbrirInsumosGrupos(){
   var filas = window._invFilasCache||[];
   var porFamilia = {};
+  var porNombreOps = {}; // nombre base → {opId: {nombre, monto}} — para poder ver qué OPs lo usan
   filas.forEach(function(r){
     (r.insumoItems||[]).forEach(function(it){
       if(!porFamilia[it.familia]) porFamilia[it.familia] = {total:0, items:{}};
       porFamilia[it.familia].total += it.pendiente;
       var k = _invBaseInsumoNombre(it.nombre) || '(sin nombre)';
       porFamilia[it.familia].items[k] = (porFamilia[it.familia].items[k]||0) + it.pendiente;
+      if(!porNombreOps[k]) porNombreOps[k] = {};
+      if(!porNombreOps[k][r.op.id]) porNombreOps[k][r.op.id] = {nombre:r.op.nombre_producto, monto:0};
+      porNombreOps[k][r.op.id].monto += it.pendiente;
     });
   });
+  window._invInsumoOpsCache = porNombreOps;
   var familias = Object.keys(porFamilia).sort(function(a,b){ return porFamilia[b].total-porFamilia[a].total; });
   var body = '<div style="display:flex;flex-direction:column;gap:8px;">';
   if(!familias.length) body += '<div class="empty-state">No hay insumos pendientes por pagar.</div>';
@@ -8867,13 +8872,31 @@ function _invAbrirInsumosGrupos(){
     body += '</div>';
     body += '<div id="'+fid+'" style="display:none;flex-direction:column;gap:4px;margin-top:6px;padding-left:14px;border-left:1px dashed var(--card-border);">';
     Object.keys(info.items).sort(function(a,b){ return info.items[b]-info.items[a]; }).forEach(function(nom){
-      body += '<div style="display:flex;justify-content:space-between;padding:5px 8px;font-size:11.5px;color:#94a3b8;"><span>'+esc(nom)+'</span><span style="color:#e2e8f0;font-weight:600;">'+fmtCopFull(info.items[nom])+'</span></div>';
+      body += '<div data-nom="'+esc(nom)+'" onclick="_invAbrirInsumoOPs(this.dataset.nom)" title="Ver referencias/OP que usan este insumo" style="display:flex;justify-content:space-between;padding:5px 8px;font-size:11.5px;color:#94a3b8;cursor:pointer;border-radius:5px;" onmouseenter="this.style.background=\'rgba(255,255,255,.04)\'" onmouseleave="this.style.background=\'\'"><span style="text-decoration:underline dotted;text-underline-offset:2px;">'+esc(nom)+'</span><span style="color:#e2e8f0;font-weight:600;">'+fmtCopFull(info.items[nom])+'</span></div>';
     });
     body += '</div></div>';
   });
   body += '</div>';
   var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cerrar</button>';
   openModal('📦 INSUMOS PENDIENTES POR PAGAR — POR GRUPO', body, footer, {wide:true});
+}
+// Detalle de un insumo puntual (ya consolidado sin color): qué OPs/referencias lo tienen
+// pendiente de pagar y cuánto le corresponde a cada una — clic para ir directo a esa OP.
+function _invAbrirInsumoOPs(nombre){
+  var data = (window._invInsumoOpsCache||{})[nombre] || {};
+  var rows = Object.keys(data).map(function(opId){ return {opId:opId, nombre:data[opId].nombre, monto:data[opId].monto}; })
+    .sort(function(a,b){ return b.monto-a.monto; });
+  var body = '<div style="display:flex;flex-direction:column;gap:6px;">';
+  if(!rows.length) body += '<div class="empty-state">Sin referencias.</div>';
+  rows.forEach(function(row){
+    body += '<div data-opid="'+row.opId+'" onclick="closeModal();_opDetalleId=this.dataset.opid;navTo(\'ops\')" style="display:flex;justify-content:space-between;align-items:center;background:#0d1117;border:1px solid var(--card-border);border-radius:7px;padding:9px 12px;cursor:pointer;">';
+    body += '<div><span style="color:#0a84ff;font-weight:700;font-size:12px;">'+esc(fmtOpId(row.opId))+'</span> <span style="font-size:12px;color:#e2e8f0;">'+esc(row.nombre||'')+'</span></div>';
+    body += '<span style="font-size:13px;font-weight:700;color:#f87171;">'+fmtCopFull(row.monto)+'</span>';
+    body += '</div>';
+  });
+  body += '</div>';
+  var footer = '<button class="btn btn-ghost" onclick="closeModal()">Cerrar</button>';
+  openModal('🧵 '+esc(nombre).toUpperCase()+' — REFERENCIAS', body, footer, {wide:true});
 }
 // Confección pendiente de todas las OPs del listado, agrupada por satélite (a quién se le
 // debe pagar), con el desglose por OP al expandir.
