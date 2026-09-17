@@ -4119,6 +4119,17 @@ function _waNumero(tel){
   return d;
 }
 
+// Logo oficial de WhatsApp (glifo blanco sobre burbuja verde) en SVG inline — para usar en
+// botones "Compartir por WhatsApp" en vez de un emoji genérico (📤/↗) que no se identifica
+// de un vistazo como WhatsApp.
+function _waIconSVG(size){
+  var s = size || 14;
+  return '<svg width="'+s+'" height="'+s+'" viewBox="0 0 32 32" fill="none" style="flex-shrink:0;">'
+    + '<circle cx="16" cy="16" r="16" fill="#25D366"/>'
+    + '<path d="M23.47 8.52A10.4 10.4 0 0 0 16.02 5.4c-5.76 0-10.45 4.68-10.45 10.44 0 1.84.48 3.63 1.4 5.21L5.5 26.6l5.7-1.5a10.44 10.44 0 0 0 4.82 1.23h.01c5.76 0 10.45-4.68 10.45-10.44 0-2.79-1.09-5.41-3.06-7.37Zm-7.45 16.07h-.01a8.68 8.68 0 0 1-4.42-1.21l-.32-.19-3.38.89.9-3.29-.21-.34a8.65 8.65 0 0 1-1.33-4.61c0-4.79 3.9-8.68 8.69-8.68 2.32 0 4.5.9 6.14 2.55a8.62 8.62 0 0 1 2.54 6.14c0 4.79-3.9 8.68-8.6 8.68Zm4.76-6.5c-.26-.13-1.54-.76-1.78-.85-.24-.09-.41-.13-.59.13-.17.26-.67.85-.83 1.02-.15.17-.3.19-.56.06-.26-.13-1.09-.4-2.08-1.28-.77-.68-1.29-1.53-1.44-1.79-.15-.26-.02-.4.11-.53.12-.12.26-.3.39-.45.13-.15.17-.26.26-.43.09-.17.04-.32-.02-.45-.06-.13-.59-1.43-.81-1.95-.21-.51-.43-.44-.59-.45-.15-.01-.32-.01-.5-.01-.17 0-.45.06-.69.32-.24.26-.9.88-.9 2.15 0 1.27.92 2.5 1.05 2.67.13.17 1.81 2.77 4.4 3.88.61.27 1.09.42 1.46.54.61.19 1.17.17 1.61.1.49-.07 1.54-.63 1.75-1.24.22-.6.22-1.12.15-1.23-.06-.11-.24-.17-.5-.3Z" fill="#fff"/>'
+    + '</svg>';
+}
+
 // Resumen completo de un satélite — lo real ya en el taller + lo planeado en cola, con
 // fechas de entrega comprometidas (Cronograma), para revisar y compartir por WhatsApp.
 function verResumenSatelite(satId){
@@ -19795,7 +19806,7 @@ function _renderTrazosHistorial(){
     h += '<div style="display:flex;align-items:center;gap:8px;">';
     h += '<span style="font-size:9px;font-weight:800;background:'+estadoColor+'18;border:1px solid '+estadoColor+'40;color:'+estadoColor+';border-radius:5px;padding:3px 8px;white-space:nowrap;">'+estadoTxt+'</span>';
     if(!s.manual) h += '<button data-sid="'+s.id+'" onclick="imprimirSolicitudTrazos(this.dataset.sid)" style="background:rgba(148,163,184,.1);border:1px solid #2c2c2e;color:#94a3b8;border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;">🖨 Imprimir</button>';
-    if(!s.manual) h += '<button data-sid="'+s.id+'" onclick="event.stopPropagation();compartirSolicitudTrazos(this.dataset.sid)" title="Compartir como PDF por WhatsApp u otra app (en celular)" style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);color:#34d399;border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;">📤 Compartir</button>';
+    if(!s.manual) h += '<button data-sid="'+s.id+'" onclick="event.stopPropagation();compartirSolicitudTrazos(this.dataset.sid)" title="Enviar por WhatsApp la solicitud de trazos en PDF" style="background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.35);color:#25D366;border-radius:6px;padding:5px 10px 5px 8px;font-size:11px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:5px;">'+_waIconSVG(13)+'WhatsApp</button>';
     if(!s.manual) h += '<button data-sid="'+s.id+'" onclick="event.stopPropagation();abrirEditarSolicitudTrazos(this.dataset.sid)" style="background:rgba(10,132,255,.08);border:1px solid rgba(10,132,255,.3);color:#0a84ff;border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;">✏️ Editar</button>';
     h += '<button data-sid="'+s.id+'" onclick="event.stopPropagation();abrirRevertirSolicitudTrazos(this.dataset.sid)" title="Revertir esta solicitud (por error, duplicado, etc.)" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);color:#f87171;border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;">↩ Revertir</button>';
     h += '</div></div>';
@@ -20233,16 +20244,22 @@ function imprimirSolicitudTrazos(sid){
   w.document.close();
   setTimeout(function(){ w.print(); }, 300);
 }
-// Comparte la misma hoja como PDF real a través del selector nativo de "Compartir" del
-// celular — ahí WhatsApp aparece como una opción más, tal como cuando se comparte una foto.
-// En computador (donde no hay ese selector con archivos) cae al mismo diálogo de impresión,
-// desde el cual también se puede "Guardar como PDF" y adjuntarlo a mano.
+// Genera la misma hoja como PDF real y la manda hacia WhatsApp por la mejor vía disponible:
+// · Celular con Web Share API de archivos (iOS/Android): abre el panel nativo de compartir
+//   con el PDF ya adjunto — ahí WhatsApp aparece como una opción y al tocarla abre WhatsApp
+//   con el archivo listo para enviar, sin que el usuario tenga que ir a buscarlo.
+// · Cualquier otro caso (computador, o celular sin esa API): descarga el PDF automáticamente
+//   Y abre WhatsApp (Web o la app, según el dispositivo) en una conversación nueva con el
+//   mensaje ya escrito — solo falta adjuntar el PDF recién descargado (queda en Descargas/
+//   Downloads, listo para arrastrar o seleccionar desde el clip de WhatsApp).
+// Antes, si el navegador no tenía navigator.canShare (la mayoría de computadores) el botón
+// caía directo al diálogo de imprimir — por eso "no funcionaba": esa comprobación ahora
+// solo decide POR CUÁL camino se llega a WhatsApp, nunca si se llega o no.
 async function compartirSolicitudTrazos(sid){
   var s = (DB.trazos.solicitudes||[]).find(function(x){ return x.id===sid; });
   if(!s) return;
   var op = (DB.ops||[]).find(function(x){ return x.id===s.op_id; });
-  var puedeCompartirArchivo = navigator.canShare && window.jspdf && window.html2canvas;
-  if(!puedeCompartirArchivo){ imprimirSolicitudTrazos(sid); return; }
+  if(!window.jspdf || !window.html2canvas){ imprimirSolicitudTrazos(sid); return; }
   var host = document.createElement('div');
   host.style.cssText = 'position:fixed;left:-9999px;top:0;width:760px;background:#fff;';
   host.innerHTML = '<style>'+_trazosPrintStyles()+'</style>'+_trazosPrintContentHTML(s, op);
@@ -20269,11 +20286,14 @@ async function compartirSolicitudTrazos(sid){
     var fname = 'Trazos_'+String(fmtOpId(s.op_id)).replace(/[^A-Za-z0-9]+/g,'_')+'.pdf';
     var blob = pdf.output('blob');
     var file = new File([blob], fname, {type:'application/pdf'});
-    if(navigator.canShare({files:[file]})){
-      await navigator.share({files:[file], title:'Solicitud de trazos', text:s.op_nombre+' · '+fmtOpId(s.op_id)});
+    var textoWa = '📐 Solicitud de trazos — '+fmtOpId(s.op_id)+' '+s.op_nombre;
+    var puedeCompartirArchivo = navigator.share && navigator.canShare && navigator.canShare({files:[file]});
+    if(puedeCompartirArchivo){
+      await navigator.share({files:[file], title:'Solicitud de trazos', text:textoWa});
     } else {
       pdf.save(fname);
-      toast('PDF descargado — adjúntalo manualmente en WhatsApp', 'success');
+      window.open('https://wa.me/?text='+encodeURIComponent(textoWa+' — adjunto el PDF que se acaba de descargar ('+fname+')'), '_blank', 'noopener');
+      toast('PDF descargado y WhatsApp abierto — adjunta el archivo desde el clip 📎', 'success');
     }
   } catch(e){
     if(e && e.name==='AbortError') return; // el usuario cerró el selector de compartir, no es un error
