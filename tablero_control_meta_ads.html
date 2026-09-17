@@ -151,16 +151,16 @@ footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:v
 <div class="wrap">
 <header>
   <h1>Tablero Meta Ads</h1>
-  <div class="sub">Grupo Bentley SAS · Cuenta <b>320798102308066</b> · Datos hasta <b>03 sep 2026</b> ·
-  Actualizado <b>04 sep 2026, 16:05 (Bogotá)</b> · COP</div>
+  <div class="sub">Grupo Bentley SAS · Cuenta <b>320798102308066</b> · Datos hasta <b>09 sep 2026</b> ·
+  Actualizado <b>17 sep 2026, 09:37 (Bogotá)</b> · COP</div>
 </header>
 
 <div class="kpis">
-  <div class="kpi"><div class="l">Inversión ayer</div><div class="v">$362.590</div><div class="d">−25,6% vs. día anterior</div></div>
-  <div class="kpi"><div class="l">Promedio 7 días</div><div class="v">$494.281</div><div class="d up">+10,2% vs. semana previa</div></div>
-  <div class="kpi"><div class="l">Total 30 días</div><div class="v">$12.316.420</div><div class="d">6 campañas con gasto</div></div>
-  <div class="kpi"><div class="l">Presupuesto diario</div><div class="v">$423.066</div><div class="d">tras pausar DPA Premium</div></div>
-  <div class="kpi"><div class="l">Compras 7 días</div><div class="v">63</div><div class="d">CPA mezclado $47.020</div></div>
+  <div class="kpi"><div class="l">Inversión ayer</div><div class="v">$458.938</div><div class="d">+0.5% vs. día anterior</div></div>
+  <div class="kpi"><div class="l">Promedio 7 días</div><div class="v">$470.072</div><div class="d" style="color:var(--warn)">+9.6% vs. semana previa</div></div>
+  <div class="kpi"><div class="l">Total 30 días</div><div class="v">$13.012.404</div><div class="d">7 campañas con gasto</div></div>
+  <div class="kpi"><div class="l">Presupuesto diario</div><div class="v">$447.066</div><div class="d">configurado en conjuntos activos</div></div>
+  <div class="kpi"><div class="l">Compras 7 días</div><div class="v">60</div><div class="d">CPA mezclado $45.713</div></div>
   <div class="kpi"><div class="l">Alertas activas</div><div class="v bad" id="kAlert">—</div><div class="d">conjuntos fuera de rango</div></div>
 </div>
 
@@ -187,7 +187,7 @@ footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:v
   </table>
   </div>
   <p class="note">Hook Rate = reproducciones de video ÷ impresiones (qué tanto detiene el scroll). Hold Rate = ThruPlays ÷ reproducciones (qué tanto retiene). Los conjuntos con “—” usan catálogo o imagen, sin métricas de video. La columna <b>vs. campaña</b> compara el costo por resultado de 7 días contra el promedio de 30 días de la campaña padre; se marca alerta por encima de 120%. Cada campaña se mide contra su propio objetivo — compras en F2 y F3, visitas y vistas de página en F1 — así que los porcentajes no son comparables entre fases.</p>
-  <p class="note"><b>Referencia de campañas (30 días).</b> FASE 3 FIDELIZAR $35.481/compra · FASE 2 SOLUCIONAR $48.213/compra · FASE 1 TRÁFICO $185/visita · CALENTAMIENTO WEB $43/vista LP · FASE 1 RECORDACIÓN $2/ThruPlay.</p>
+  <p class="note"><b>Referencia de campañas (30 días).</b> FASE 3 FIDELIZAR $36.274/compra · FASE 2 SOLUCIONAR $69.674/compra · FASE 1 TRÁFICO $156/visita · CALENTAMIENTO WEB $48/vista LP · FASE 1 RECORDACIÓN $2/ThruPlay · INTERACCION WSSP MAYORISTAS $100/clic · FORMULARIO MAYORISTAS $488/lead.</p>
 </section>
 
 <!-- ============ INVERSIÓN ============ -->
@@ -209,7 +209,7 @@ footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:v
   <h2>Embudo de inversión</h2>
   <div class="card">
     <svg id="funnel" viewBox="0 0 900 330" role="img" aria-label="Embudo de inversión por fase"></svg>
-    <p class="note" style="margin-bottom:0">El embudo está invertido: la fase más angosta es la de arriba. F1 recibe 7,2% de la inversión y sostiene todo lo que ocurre debajo. Un embudo sano se ensancha arriba, no abajo — F2 y F3 solo pueden convertir a quien F1 ya trajo.</p>
+    <p class="note" style="margin-bottom:0">El embudo está invertido: la fase más angosta es la de arriba. F1 recibe 7,1% de la inversión y sostiene todo lo que ocurre debajo. Un embudo sano se ensancha arriba, no abajo — F2 y F3 solo pueden convertir a quien F1 ya trajo.</p>
   </div>
 </section>
 
@@ -260,33 +260,34 @@ Fuente: API de Meta Ads, lectura directa de la cuenta. El saldo por pagar se cap
 const FMT=n=>'$'+Math.round(n).toLocaleString('es-CO');
 const FMTK=n=>n>=1e6?'$'+(n/1e6).toFixed(1)+'M':'$'+Math.round(n/1000)+'k';
 const DAILY=[
-["2026-08-05",31593,134720,158837],["2026-08-06",31873,109787,195816],["2026-08-07",28833,154512,211409],
-["2026-08-08",29867,112883,159321],["2026-08-09",34020,148892,209786],["2026-08-10",30966,126259,132991],
-["2026-08-11",30483,130471,176548],["2026-08-12",25564,121376,166946],["2026-08-13",28830,166830,237803],
-["2026-08-14",24259,139430,186206],["2026-08-15",27140,124571,168330],["2026-08-16",25459,128209,166209],
-["2026-08-17",28313,161118,213458],["2026-08-18",28013,140410,190872],["2026-08-19",28088,214501,158819],
-["2026-08-20",30598,230526,175144],["2026-08-21",26485,249167,194121],["2026-08-22",28873,236421,179950],
-["2026-08-23",32122,276725,199942],["2026-08-24",26724,217520,143009],["2026-08-25",27545,245776,139577],
-["2026-08-26",30397,255932,142525],["2026-08-27",30557,274256,181943],["2026-08-28",28813,274141,200548],
-["2026-08-29",27429,262156,163128],["2026-08-30",34705,313233,223566],["2026-08-31",28851,262994,175413],
-["2026-09-01",33867,331435,249849],["2026-09-02",34079,242488,210679],["2026-09-03",26768,184521,151301]];
+["2026-08-18",28013,100831,190872],["2026-08-19",28088,167349,158819],["2026-08-20",30598,190386,175144],
+["2026-08-21",26485,200500,194121],["2026-08-22",28873,199239,179950],["2026-08-23",32122,226280,199942],
+["2026-08-24",26724,179863,143009],["2026-08-25",27545,200785,139577],["2026-08-26",30397,211177,142525],
+["2026-08-27",30557,227087,181943],["2026-08-28",28813,230431,200548],["2026-08-29",27429,230143,163128],
+["2026-08-30",34705,267865,223566],["2026-08-31",28851,220113,175413],["2026-09-01",33867,270697,249849],
+["2026-09-02",34079,191449,210679],["2026-09-03",26793,162006,151360],["2026-09-04",25886,118205,133011],
+["2026-09-05",31750,229060,290783],["2026-09-06",36543,199798,258435],["2026-09-07",26289,170975,180935],
+["2026-09-08",49454,219838,202753],["2026-09-09",52199,250386,185015],["2026-09-10",48787,227453,209495],
+["2026-09-11",47463,238810,189665],["2026-09-12",42259,240916,181148],["2026-09-13",59193,248677,225005],
+["2026-09-14",51969,192731,171236],["2026-09-15",55967,200549,200243],["2026-09-16",48387,187400,223151]];
 const SERIES=[{k:'F1',label:'F1 · Enganchar',hex:'#86b6ef',i:1},
               {k:'F2',label:'F2 · Solucionar',hex:'#3987e5',i:2},
               {k:'F3',label:'F3 · Fidelizar',hex:'#184f95',i:3}];
 const HEX={F1:'#86b6ef',F2:'#3987e5',F3:'#184f95'};
 const ADSETS=[
- {n:'F2 GANADORES',f:'F2',ap:'FAIL',b:100000,s:706062,r:16,cpa:44129,base:48213,u:'compras',fr:1.71,hook:null,hold:null,note:''},
- {n:'RMK | CATALOGO DPA 2.0',f:'F3',ap:'SUCCESS',b:70500,s:490917,r:4,cpa:122729,base:35481,u:'compras',fr:1.92,hook:null,hold:null,note:''},
- {n:'RMK | MIX NIÑO NIÑA 2.0',f:'F3',ap:null,b:62166,s:426154,r:16,cpa:26635,base:35481,u:'compras',fr:2.35,hook:0.4,hold:15.7,note:''},
- {n:'TESTEO 1',f:'F2',ap:null,b:40000,s:235575,r:3,cpa:78525,base:48213,u:'compras',fr:1.41,hook:56.4,hold:5.2,note:''},
- {n:'TESTEO 2 ONLY IG',f:'F2',ap:null,b:40000,s:70855,r:0,cpa:null,base:48213,u:'compras',fr:1.22,hook:77.6,hold:4.8,note:''},
- {n:'RMK | MIX CONJUNTOS | SEPT',f:'F3',ap:'LEARNING',b:20000,s:40075,r:1,cpa:40075,base:35481,u:'compras',fr:1.24,hook:51.4,hold:8.3,note:''},
- {n:'RMK | MIX BUZOS | SEPT',f:'F3',ap:'LEARNING',b:20000,s:32106,r:0,cpa:null,base:35481,u:'compras',fr:1.37,hook:67.4,hold:9.5,note:''},
- {n:'RMK | MIX CHAQUETAS | SEPT',f:'F3',ap:null,b:20000,s:31527,r:1,cpa:31527,base:35481,u:'compras',fr:1.35,hook:86.7,hold:8.1,note:''},
- {n:'RMK | MIX ABRIGOS | SEPT',f:'F3',ap:null,b:20000,s:0,r:0,cpa:null,base:35481,u:'compras',fr:0,hook:null,hold:null,note:'sin entrega'},
- {n:'TRAFICO WEB 2.0',f:'F1',ap:'SUCCESS',b:16000,s:114083,r:2449,cpa:47,base:43,u:'vistas LP',fr:1.23,hook:46.5,hold:13.6,note:''},
- {n:'ADVANTAGE (visitas perfil)',f:'F1',ap:null,b:8000,s:45616,r:284,cpa:161,base:185,u:'visitas',fr:1.19,hook:94.6,hold:9.9,note:''},
- {n:'Advantage · PROMT INDIRECTO',f:'F1',ap:null,b:6400,s:54815,r:22967,cpa:2,base:2,u:'ThruPlays',fr:1.03,hook:98.5,hold:48.1,note:''}];
+ {n:'F2 GANADORES',f:'F2',ap:'FAIL',b:100000,s:704718,r:12,cpa:58727,base:69674,u:'compras',fr:1.56,hook:null,hold:null,note:''},
+ {n:'RMK | CATALOGO DPA 2.0',f:'F3',ap:'SUCCESS',b:70500,s:507242,r:12,cpa:42270,base:36274,u:'compras',fr:2.04,hook:null,hold:null,note:''},
+ {n:'RMK | MIX NIÑO NIÑA 2.0',f:'F3',ap:'SUCCESS',b:62166,s:439641,r:15,cpa:29309,base:36274,u:'compras',fr:1.91,hook:0.7,hold:7.5,note:''},
+ {n:'MIX NIÑO + NIÑA — F2 · V2 SEPT',f:'F2',ap:'LEARNING',b:60000,s:363244,r:3,cpa:121081,base:69674,u:'compras',fr:1.28,hook:17.7,hold:2.7,note:'nuevo'},
+ {n:'TESTEO 1',f:'F2',ap:'FAIL',b:40000,s:274865,r:1,cpa:274865,base:69674,u:'compras',fr:1.36,hook:0.2,hold:8.8,note:''},
+ {n:'RMK | MIX CONJUNTOS | SEPT',f:'F3',ap:'FAIL',b:24000,s:175258,r:10,cpa:17526,base:36274,u:'compras',fr:1.21,hook:12.1,hold:4.2,note:''},
+ {n:'RMK | MIX ABRIGOS | SEPT',f:'F3',ap:'FAIL',b:20000,s:141529,r:6,cpa:23588,base:36274,u:'compras',fr:1.27,hook:23.9,hold:12.9,note:''},
+ {n:'RMK | MIX CHAQUETAS | SEPT',f:'F3',ap:'FAIL',b:20000,s:136273,r:1,cpa:136273,base:36274,u:'compras',fr:1.32,hook:65.8,hold:5.3,note:''},
+ {n:'TRAFICO WEB 2.0',f:'F1',ap:'SUCCESS',b:16000,s:112589,r:2257,cpa:50,base:48,u:'vistas LP',fr:1.23,hook:49.7,hold:13.7,note:''},
+ {n:'INTERACCION 1 WSSP MAYORISTAS SEPT',f:'F1',ap:'SUCCESS',b:12000,s:92105,r:911,cpa:101,base:100,u:'clics',fr:4.58,hook:88.4,hold:6.6,note:'frecuencia alta'},
+ {n:'ADVANTAGE (visitas perfil)',f:'F1',ap:null,b:8000,s:53571,r:430,cpa:125,base:156,u:'visitas',fr:1.22,hook:95.3,hold:9.9,note:''},
+ {n:'MAYORISTAS ADVANTAGE',f:'F1',ap:'SUCCESS',b:8000,s:52186,r:116,cpa:450,base:488,u:'leads',fr:1.44,hook:94.2,hold:9.7,note:'formulario mayoristas'},
+ {n:'Advantage · PROMT INDIRECTO',f:'F1',ap:null,b:6400,s:43574,r:18793,cpa:2,base:2,u:'ThruPlays',fr:1.06,hook:98.4,hold:48.2,note:''}];
 const MARKS=[{k:'ajuste',label:'Ajuste de presupuesto',c:'#ff9f0a'},
              {k:'lanzamiento',label:'Lanzamiento',c:'#bf5af2'},
              {k:'nota',label:'Nota',c:'#30d158'}];
@@ -466,9 +467,9 @@ function credito(){
   else if(pct>=100) al={c:'bad',ic:'🔴',t:'Techo superado',
     m:`<b>${FMT(v)}</b> por pagar sobre un techo de ${FMT(LIM)}. Meta debió generar el cobro; si no entró, la cuenta puede quedar suspendida. Verifica el medio de pago hoy.`};
   else if(pct>=80) al={c:'warn',ic:'🟡',t:'Techo por alcanzarse',
-    m:`<b>${FMT(v)}</b> por pagar (${pct.toFixed(0)}%). Al ritmo de $423.066/día quedan <b>${dias.toFixed(1)} días</b> antes del cobro. Asegura fondos en el medio de pago.`};
+    m:`<b>${FMT(v)}</b> por pagar (${pct.toFixed(0)}%). Al ritmo de $432.168/día quedan <b>${dias.toFixed(1)} días</b> antes del cobro. Asegura fondos en el medio de pago.`};
   else al={c:'ok',ic:'🟢',t:'Techo con margen',
-    m:`<b>${FMT(v)}</b> por pagar (${pct.toFixed(0)}%). Al ritmo de $423.066/día quedan <b>${dias.toFixed(1)} días</b> antes de tocar el techo.`};
+    m:`<b>${FMT(v)}</b> por pagar (${pct.toFixed(0)}%). Al ritmo de $432.168/día quedan <b>${dias.toFixed(1)} días</b> antes de tocar el techo.`};
   document.getElementById('galert').innerHTML=
     `<div class="al ${al.c}"><div class="ic">${al.ic}</div><div class="bd"><div class="t">${al.t}</div><div class="m">${al.m}</div></div></div>`;
 }
@@ -476,8 +477,8 @@ due.oninput=()=>{ const p=parseNum(due.value); due.value=p?p.toLocaleString('es-
 
 /* alertas */
 function evaluar(a){
-  if(a.b===0||a.s===0) return {k:'revisar',w:'warn',ic:'⚪',t:'Sin entrega',
-    m:`Activo con presupuesto de <b>${FMT(a.b)}/día</b> pero 0 gasto en 7 días. Revisa entrega, superposición de audiencias o rechazo de anuncios.`};
+  if(a.s===0) return {k:'revisar',w:'warn',ic:'⚪',t:'Sin entrega',
+    m:`Activo con presupuesto de <b>${a.b?FMT(a.b)+'/día':'presupuesto de campaña'}</b> pero 0 gasto en 7 días. Revisa entrega, superposición de audiencias o rechazo de anuncios.`};
   if(a.cpa===null){
     if(a.s>a.base*1.5) return {k:'pausar',w:'bad',ic:'🔴',t:'Gasto sin conversión',
       m:`<b>${FMT(a.s)}</b> gastados sin una sola conversión. Ya superaste 1,5 veces el costo objetivo de la campaña (${FMT(a.base)}).`};
