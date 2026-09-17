@@ -8828,6 +8828,21 @@ function _invResumenOP(op){
 }
 // Insumos pendientes de todas las OPs del listado, agrupados por familia (Telas, Botones,
 // Servicio/Insumo, etc.) y desglosados por insumo puntual al expandir.
+// Nombre "base" de un insumo, sin la variante de color pegada al final (ej. "TELA PAÑO
+// ALGODÓN AVENA" y "TELA PAÑO ALGODÓN GRIS CLARO" → ambos "TELA PAÑO ALGODÓN"). Los colores
+// se buscan más largos primero (2 palabras antes que 1) para no cortar mal casos como
+// "GRIS CLARO" o "AZUL OSCURO".
+var _INSUMO_COLORES = ['AZUL OSCURO','AZUL CLARO','AZUL BEBE','AZUL REY','GRIS OSCURO','GRIS CLARO','GRIS MEDIO','GRIS PERLA','VERDE MILITAR','VERDE OLIVA','VERDE PINO','VERDE OSCURO','VERDE CLARO','VERDE AGUA','VERDE BOTELLA','MORA LECHE','ROSA VIEJO','ROSA PALO','ROJO VINO','VINO TINTO',
+  'NEGRO','BLANCO','BEIGE','CAFE','CAMEL','ROJO','AZUL','VERDE','GRIS','ROSA','NARANJA','MORADO','MARFIL','MOSTAZA','TAUPE','CHOCOLATE','MILITAR','CAMUFLADO','VINOTINTO','FUCSIA','LILA','SALMON','DORADO','PLATEADO','PLATA','ORO','CRUDO','HUESO','PERLA','AMARILLO','TURQUESA','AVENA'
+].sort(function(a,b){ return b.length-a.length; });
+function _invBaseInsumoNombre(nombre){
+  var n = (nombre||'').trim().toUpperCase();
+  for(var i=0;i<_INSUMO_COLORES.length;i++){
+    var c = _INSUMO_COLORES[i];
+    if(n.length>c.length+1 && n.slice(-(c.length+1))===' '+c) return n.slice(0, n.length-c.length-1).trim();
+  }
+  return n;
+}
 function _invAbrirInsumosGrupos(){
   var filas = window._invFilasCache||[];
   var porFamilia = {};
@@ -8835,7 +8850,7 @@ function _invAbrirInsumosGrupos(){
     (r.insumoItems||[]).forEach(function(it){
       if(!porFamilia[it.familia]) porFamilia[it.familia] = {total:0, items:{}};
       porFamilia[it.familia].total += it.pendiente;
-      var k = it.nombre||'(sin nombre)';
+      var k = _invBaseInsumoNombre(it.nombre) || '(sin nombre)';
       porFamilia[it.familia].items[k] = (porFamilia[it.familia].items[k]||0) + it.pendiente;
     });
   });
