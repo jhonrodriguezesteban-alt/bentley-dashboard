@@ -4547,6 +4547,14 @@
         "GRIS OSCURO",
         "AVENA"
       ],
+      "consumibles_check": {
+        "rec_hoodie_pa_o_algodon_cerrado_1172__c78_21": true,
+        "rec_hoodie_pa_o_algodon_cerrado_1172__c78_22": true,
+        "rec_hoodie_pa_o_algodon_cerrado_1172__c78_23": true,
+        "rec_hoodie_pa_o_algodon_cerrado_1172__c78_24": true,
+        "rec_hoodie_pa_o_algodon_cerrado_1172__c78_27": true,
+        "rec_hoodie_pa_o_algodon_cerrado_1172__c78_28": true
+      },
       "cortador": "Corte Carbajal",
       "created_at": "2026-06-23",
       "created_by": "John Rodriguez",
@@ -4601,15 +4609,7 @@
         "AVENA": false,
         "GRIS OSCURO": false
       },
-      "updated_at": "2026-07-30",
-      "consumibles_check": {
-        "rec_hoodie_pa_o_algodon_cerrado_1172__c78_21": true,
-        "rec_hoodie_pa_o_algodon_cerrado_1172__c78_22": true,
-        "rec_hoodie_pa_o_algodon_cerrado_1172__c78_23": true,
-        "rec_hoodie_pa_o_algodon_cerrado_1172__c78_24": true,
-        "rec_hoodie_pa_o_algodon_cerrado_1172__c78_27": true,
-        "rec_hoodie_pa_o_algodon_cerrado_1172__c78_28": true
-      }
+      "updated_at": "2026-07-30"
     },
     {
       "cantidades": {
@@ -6001,6 +6001,18 @@
         "ROSA",
         "MARFIL"
       ],
+      "consumibles_check": {
+        "rec_chaqueta_onion_1165__c43_19||ROSA": true,
+        "rec_chaqueta_onion_1165__c43_20": true,
+        "rec_chaqueta_onion_1165__c43_21": true,
+        "rec_chaqueta_onion_1165__c43_22": true,
+        "rec_chaqueta_onion_1165__c43_23": true,
+        "rec_chaqueta_onion_1165__c43_27": true,
+        "rec_chaqueta_onion_1165__c43_28": true
+      },
+      "consumibles_desagregado": {
+        "rec_chaqueta_onion_1165__c43_19": true
+      },
       "cortador": "Corte Carbajal",
       "created_at": "2026-07-06",
       "created_by": "John Rodriguez",
@@ -6061,19 +6073,7 @@
         "MARFIL": true,
         "ROSA": true
       },
-      "updated_at": "2026-07-06",
-      "consumibles_desagregado": {
-        "rec_chaqueta_onion_1165__c43_19": true
-      },
-      "consumibles_check": {
-        "rec_chaqueta_onion_1165__c43_19||ROSA": true,
-        "rec_chaqueta_onion_1165__c43_20": true,
-        "rec_chaqueta_onion_1165__c43_21": true,
-        "rec_chaqueta_onion_1165__c43_23": true,
-        "rec_chaqueta_onion_1165__c43_22": true,
-        "rec_chaqueta_onion_1165__c43_27": true,
-        "rec_chaqueta_onion_1165__c43_28": true
-      }
+      "updated_at": "2026-07-06"
     },
     {
       "cantidades": {
@@ -6095,6 +6095,18 @@
         "VINOTINTO",
         "GRIS OSCURO"
       ],
+      "consumibles_check": {
+        "rec_chaqueta_onion_1165__c43_19||VINOTINTO": true,
+        "rec_chaqueta_onion_1165__c43_20": true,
+        "rec_chaqueta_onion_1165__c43_21": true,
+        "rec_chaqueta_onion_1165__c43_22": true,
+        "rec_chaqueta_onion_1165__c43_23": true,
+        "rec_chaqueta_onion_1165__c43_27": true,
+        "rec_chaqueta_onion_1165__c43_28": true
+      },
+      "consumibles_desagregado": {
+        "rec_chaqueta_onion_1165__c43_19": true
+      },
       "cortador": "Corte Carbajal",
       "created_at": "2026-07-06",
       "created_by": "John Rodriguez",
@@ -6147,19 +6159,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "consumibles_desagregado": {
-        "rec_chaqueta_onion_1165__c43_19": true
-      },
-      "consumibles_check": {
-        "rec_chaqueta_onion_1165__c43_19||VINOTINTO": true,
-        "rec_chaqueta_onion_1165__c43_20": true,
-        "rec_chaqueta_onion_1165__c43_21": true,
-        "rec_chaqueta_onion_1165__c43_23": true,
-        "rec_chaqueta_onion_1165__c43_27": true,
-        "rec_chaqueta_onion_1165__c43_28": true,
-        "rec_chaqueta_onion_1165__c43_22": true
-      }
+      ]
     },
     {
       "cantidades": {
@@ -8248,6 +8248,9 @@
         "AZUL OSCURO": true,
         "MORA LECHE": true,
         "NEGRO": true
+      },
+      "consumibles_desagregado": {
+        "rec_piloto_pancake_1099__c98_21": true
       }
     },
     {
@@ -8829,6 +8832,17 @@
         "VINOTINTO",
         "MARFIL"
       ],
+      "consumibles_check": {
+        "cid_1789168564507_3162__cid_1789168005390_2584": true,
+        "cid_1789168564507_3162__cid_1789168005390_3833||AZUL OSCURO": true,
+        "cid_1789168564507_3162__cid_1789168005390_3833||VINOTINTO": true,
+        "cid_1789168564507_3162__cid_1789168005390_5177": true,
+        "cid_1789168564507_3162__cid_1789168501009_9061": true,
+        "cid_1789168564507_3162__cid_1789168528657_3472": true
+      },
+      "consumibles_desagregado": {
+        "cid_1789168564507_3162__cid_1789168005390_3833": true
+      },
       "cortador": "Corte Carbajal",
       "created_at": "2026-08-21",
       "created_by": "John Rodriguez",
@@ -8903,18 +8917,7 @@
           "solicitud_id": "id_1789491800922_g75o1ktrt"
         }
       ],
-      "updated_at": "2026-08-25",
-      "consumibles_desagregado": {
-        "cid_1789168564507_3162__cid_1789168005390_3833": true
-      },
-      "consumibles_check": {
-        "cid_1789168564507_3162__cid_1789168005390_3833||VINOTINTO": true,
-        "cid_1789168564507_3162__cid_1789168005390_3833||AZUL OSCURO": true,
-        "cid_1789168564507_3162__cid_1789168005390_5177": true,
-        "cid_1789168564507_3162__cid_1789168005390_2584": true,
-        "cid_1789168564507_3162__cid_1789168501009_9061": true,
-        "cid_1789168564507_3162__cid_1789168528657_3472": true
-      }
+      "updated_at": "2026-08-25"
     },
     {
       "cantidades": {
@@ -9873,6 +9876,17 @@
         "CAFE",
         "VERDE MILITAR"
       ],
+      "consumibles_check": {
+        "rec_chaqueta_onion_1165__c43_19||CAFE": true,
+        "rec_chaqueta_onion_1165__c43_20": true,
+        "rec_chaqueta_onion_1165__c43_22": true,
+        "rec_chaqueta_onion_1165__c43_23": true,
+        "rec_chaqueta_onion_1165__c43_27": true,
+        "rec_chaqueta_onion_1165__c43_28": true
+      },
+      "consumibles_desagregado": {
+        "rec_chaqueta_onion_1165__c43_19": true
+      },
       "cortador": "Corte Carbajal",
       "created_at": "2026-08-25",
       "created_by": "John Rodriguez",
@@ -9926,18 +9940,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "consumibles_desagregado": {
-        "rec_chaqueta_onion_1165__c43_19": true
-      },
-      "consumibles_check": {
-        "rec_chaqueta_onion_1165__c43_19||CAFE": true,
-        "rec_chaqueta_onion_1165__c43_20": true,
-        "rec_chaqueta_onion_1165__c43_22": true,
-        "rec_chaqueta_onion_1165__c43_23": true,
-        "rec_chaqueta_onion_1165__c43_27": true,
-        "rec_chaqueta_onion_1165__c43_28": true
-      }
+      ]
     },
     {
       "cantidades": {
@@ -9959,6 +9962,16 @@
         "MARFIL",
         "AZUL BEBE"
       ],
+      "consumibles_check": {
+        "cid_1783366904861_1111__cid_1783366904861_2164": true,
+        "cid_1783366904861_1111__cid_1783366904861_3201": true,
+        "cid_1783366904861_1111__cid_1783366904861_4234": true,
+        "cid_1783366904861_1111__cid_1783366904861_5819": true,
+        "cid_1783366904861_1111__cid_1783366904861_9378": true
+      },
+      "consumibles_desagregado": {
+        "cid_1783366904861_1111__cid_1783366904861_6993": true
+      },
       "cortador": "Corte Carbajal",
       "created_at": "2026-08-25",
       "created_by": "John Rodriguez",
@@ -10016,16 +10029,6 @@
       "trazos_color_solicitado": {
         "AZUL BEBE": true,
         "MARFIL": true
-      },
-      "consumibles_desagregado": {
-        "cid_1783366904861_1111__cid_1783366904861_6993": true
-      },
-      "consumibles_check": {
-        "cid_1783366904861_1111__cid_1783366904861_9378": true,
-        "cid_1783366904861_1111__cid_1783366904861_2164": true,
-        "cid_1783366904861_1111__cid_1783366904861_3201": true,
-        "cid_1783366904861_1111__cid_1783366904861_4234": true,
-        "cid_1783366904861_1111__cid_1783366904861_5819": true
       }
     },
     {
@@ -10257,6 +10260,18 @@
         "VERDE MILITAR",
         "AZUL OSCURO"
       ],
+      "consumibles_check": {
+        "rec_chaleco_puffy_1150__c35_21||VERDE MILITAR": true,
+        "rec_chaleco_puffy_1150__c35_23": true,
+        "rec_chaleco_puffy_1150__c35_26": true,
+        "rec_chaleco_puffy_1150__c35_27": true,
+        "rec_chaleco_puffy_1150__c35_28": true,
+        "rec_chaleco_puffy_1150__c35_29": true,
+        "rec_chaleco_puffy_1150__c35_31": true
+      },
+      "consumibles_desagregado": {
+        "rec_chaleco_puffy_1150__c35_21": true
+      },
       "cortador": "Corte Carbajal",
       "created_at": "2026-08-25",
       "created_by": "John Rodriguez",
@@ -10328,19 +10343,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "consumibles_desagregado": {
-        "rec_chaleco_puffy_1150__c35_21": true
-      },
-      "consumibles_check": {
-        "rec_chaleco_puffy_1150__c35_21||VERDE MILITAR": true,
-        "rec_chaleco_puffy_1150__c35_23": true,
-        "rec_chaleco_puffy_1150__c35_26": true,
-        "rec_chaleco_puffy_1150__c35_27": true,
-        "rec_chaleco_puffy_1150__c35_28": true,
-        "rec_chaleco_puffy_1150__c35_29": true,
-        "rec_chaleco_puffy_1150__c35_31": true
-      }
+      ]
     },
     {
       "cantidades": {
@@ -14198,6 +14201,18 @@
         "AVENA",
         "MARFIL"
       ],
+      "consumibles_check": {
+        "rec_beisbolera_armin_1132__c3_23": true,
+        "rec_beisbolera_armin_1132__c3_24": true,
+        "rec_beisbolera_armin_1132__c3_25": true,
+        "rec_beisbolera_armin_1132__c3_26": true,
+        "rec_beisbolera_armin_1132__c3_27": true,
+        "rec_beisbolera_armin_1132__c3_28": true,
+        "rec_beisbolera_armin_1132__c3_32": true,
+        "rec_beisbolera_armin_1132__c3_33": false,
+        "rec_beisbolera_armin_1132__c3_34": true,
+        "rec_beisbolera_armin_1132__cid_1789620893371_3878": false
+      },
       "cortador": "Corte Carbajal",
       "created_at": "2026-09-15",
       "created_by": "Jefa de Producción",
@@ -14255,19 +14270,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "consumibles_check": {
-        "rec_beisbolera_armin_1132__c3_23": true,
-        "rec_beisbolera_armin_1132__c3_24": true,
-        "rec_beisbolera_armin_1132__c3_25": true,
-        "rec_beisbolera_armin_1132__c3_26": true,
-        "rec_beisbolera_armin_1132__c3_27": true,
-        "rec_beisbolera_armin_1132__c3_28": true,
-        "rec_beisbolera_armin_1132__c3_32": true,
-        "rec_beisbolera_armin_1132__c3_33": false,
-        "rec_beisbolera_armin_1132__c3_34": true,
-        "rec_beisbolera_armin_1132__cid_1789620893371_3878": false
-      }
+      ]
     },
     {
       "cantidades": {
