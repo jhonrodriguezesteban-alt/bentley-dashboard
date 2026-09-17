@@ -6648,7 +6648,14 @@ function renderOPs(){
   }
   var fDis = document.getElementById('fab-nuevo-diseno'); if(fDis) fDis.remove();
 
-  var ops = DB.ops.filter(function(op){ return op.estado_op !== 'ARCHIVADO' && op.estado_op !== 'PAGO_PENDIENTE'; });
+  // NO se excluye 'PAGO_PENDIENTE' aquí: eso describe el estado de PAGO de la OP (puede
+  // tener colores ya pagados y otros aún sin cortar), y filtrar la OP completa por ese
+  // estado la hacía desaparecer también de "Archivadas" (subgs nunca se construían para
+  // ella) — quedaba invisible tanto en el kanban activo como en el histórico. Los colores
+  // ya pagados de todas formas derivan a estado ARCHIVADO vía _subgEstadoDerivado() y caen
+  // solos en la sección "Archivadas" más abajo; solo se excluye ARCHIVADO real (OP cerrada).
+  var ops = DB.ops.filter(function(op){ return op.estado_op !== 'ARCHIVADO'; });
+  var opsActivasCount = DB.ops.filter(function(op){ return op.estado_op !== 'ARCHIVADO' && op.estado_op !== 'PAGO_PENDIENTE'; }).length;
   var opsArchivadas = DB.ops.filter(function(op){ return op.estado_op === 'ARCHIVADO'; });
 
   // Construir sub-grupos: una entrada por (op, color)
@@ -6739,7 +6746,7 @@ function renderOPs(){
 
   // ── Contador superior + buscador ─────────────────────────────────────────────
   h += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;">';
-  h += '<span style="font-size:13px;color:#64748b;">' + ops.length + ' OPs activas · ' + subgs.length + ' sub-grupos</span>';
+  h += '<span style="font-size:13px;color:#64748b;">' + opsActivasCount + ' OPs activas · ' + subgs.length + ' sub-grupos</span>';
   h += '<div style="position:relative;flex:1;min-width:200px;max-width:360px;">';
   h += '<input id="op-search-input" type="text" value="'+esc(_opBusqueda)+'" oninput="var _q=this.value,_p=this.selectionStart;_opBusqueda=_q;renderPage(\'ops\');var _el=document.getElementById(\'op-search-input\');if(_el){_el.focus();try{_el.setSelectionRange(_p,_p);}catch(e){}}" placeholder="🔍 Buscar OP o referencia..." style="width:100%;background:#0d1117;border:1px solid #2c2c2e;border-radius:20px;color:#e2e8f0;font-size:12px;padding:5px 32px 5px 14px;outline:none;box-sizing:border-box;">';
   if(_opBusqueda) h += '<button onclick="_opBusqueda=\'\';renderPage(\'ops\')" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:#475569;cursor:pointer;font-size:14px;padding:0;line-height:1;">×</button>';
@@ -6773,7 +6780,7 @@ function renderOPs(){
 
   // ── Tarjetas resumen por categoría ─────────────────────────────────────────
   if(cats.length){
-    var totalOps = ops.length;
+    var totalOps = opsActivasCount;
     var totalUds = subgs.reduce(function(a,s){ return a+s.uds; }, 0);
     var totalEnt = subgs.reduce(function(a,s){ return a+s.udsEnt; }, 0);
     var pctGlobal = totalUds ? Math.round(totalEnt/totalUds*100) : 0;
@@ -7173,7 +7180,12 @@ function renderOPs(){
   opsArchivadas.forEach(function(op){
     if(!opsArchMap[op.id]){ opsArchMap[op.id]=op; opsArchOrder.push(op.id); }
   });
-  subgs.filter(function(s){ return s.estado==='ARCHIVADO'; }).forEach(function(s){
+  // Un sub-grupo con estado 'PAGO_PENDIENTE' (colores ya pasados a Pago desde Alistamiento,
+  // ver pasarOPAPago()) también quedó cerrado en producción — debe aparecer en el histórico
+  // igual que uno ARCHIVADO, o si no la OP queda invisible: ni en el kanban activo (ningún
+  // OP_KANBAN.k es 'PAGO_PENDIENTE') ni aquí. Este era exactamente el bug reportado con OPs
+  // que salían de Alistamiento hacia Pago y "desaparecían" sin dejar rastro.
+  subgs.filter(function(s){ return s.estado==='ARCHIVADO' || s.estado==='PAGO_PENDIENTE'; }).forEach(function(s){
     if(!opsArchMap[s.op.id]){ opsArchMap[s.op.id]=s.op; opsArchOrder.push(s.op.id); }
   });
   var nArch = opsArchOrder.length;
@@ -7615,7 +7627,9 @@ function kanTouchEnd(ev){
 }
 
 function _buildSubgs(){
-  var ops = DB.ops.filter(function(op){ return op.estado_op !== 'ARCHIVADO' && op.estado_op !== 'PAGO_PENDIENTE'; });
+  // Mismo criterio que renderOPs(): no excluir 'PAGO_PENDIENTE' a nivel de OP completa,
+  // solo ARCHIVADO — ver comentario en renderOPs para el detalle del bug que esto evitaba.
+  var ops = DB.ops.filter(function(op){ return op.estado_op !== 'ARCHIVADO'; });
   var otsXop = {};
   DB.ots.forEach(function(ot){ if(ot.op_id){ (otsXop[ot.op_id]=otsXop[ot.op_id]||[]).push(ot); } });
   var result = [];
