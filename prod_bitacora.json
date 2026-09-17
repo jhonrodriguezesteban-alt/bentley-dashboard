@@ -21004,20 +21004,34 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "VERDE MILITAR",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1789676612037_keu78",
-      "ts": 1789676612037,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-098",
       "op_nombre": "CHAQUETA CAZADORA",
       "referencia": "CHAQUETA CAZADORA",
-      "color": "VERDE MILITAR",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1789676612037,
       "uds": 80,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789676675596_xlz53",
+      "ts": 1789676675596,
+      "user": "Jefa de Producción",
+      "tipo": "entrega_inline",
+      "ot_id": "OT-12001",
+      "numero_ot": 12001,
+      "op_id": "OP-0009",
+      "uds_entregadas": 5,
+      "pendientes": 0,
+      "estado": "ENTREGADO",
+      "talla": "T8",
+      "satelite": "ALEXANDRA FONSECA"
     }
   ]
 }
