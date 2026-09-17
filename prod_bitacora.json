@@ -19297,20 +19297,36 @@
       "user": "Isabel"
     },
     {
+      "bulk": true,
+      "color": "VERDE MILITAR",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1789652888930_ewylu",
+      "motivo": "EN TALLER",
+      "op_id": "OP-2026-098",
+      "op_nombre": "CHAQUETA CAZADORA",
+      "referencia": "CHAQUETA CAZADORA",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1789652888930,
+      "uds": 80,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789652912012_p9xrl",
+      "ts": 1789652912012,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-098",
       "op_nombre": "CHAQUETA CAZADORA",
       "referencia": "CHAQUETA CAZADORA",
-      "color": "VERDE MILITAR",
+      "color": "AZUL OSCURO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "bulk": true,
       "uds": 80,
-      "motivo": "EN TALLER"
+      "motivo": "por corte"
     }
   ]
 }
