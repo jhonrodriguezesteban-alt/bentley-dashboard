@@ -1181,6 +1181,7 @@
       "entregado": true,
       "fecha_compromiso": "2026-08-28",
       "fecha_entrada": "2026-08-01",
+      "fecha_entrega_real": "2026-09-17",
       "fecha_inicial": "2026-08-28",
       "historial": [
         {
@@ -1194,8 +1195,7 @@
       "op_id": "OP-2026-107",
       "op_nombre": "CONJUNTO FRANKY PRIME",
       "satelite_id": "sat_06",
-      "uds": 18,
-      "fecha_entrega_real": "2026-09-17"
+      "uds": 18
     },
     {
       "color": "MARFIL",
@@ -2144,7 +2144,18 @@
       "op_id": "OP-0037",
       "op_nombre": "CHALECO ACOLCHADO MANY",
       "satelite_id": "sat_08",
-      "uds": 132
+      "uds": 132,
+      "historial": [
+        {
+          "fecha_anterior": null,
+          "fecha_nueva": "2026-09-17",
+          "motivo": "Asignación inicial",
+          "by": "Jefa de Producción",
+          "at": "2026-09-17"
+        }
+      ],
+      "fecha_inicial": "2026-09-17",
+      "fecha_compromiso": "2026-09-17"
     },
     {
       "color": "BEIGE",
@@ -2227,12 +2238,12 @@
       "color": "AVENA",
       "entregado": true,
       "fecha_entrada": "2026-09-10",
+      "fecha_entrega_real": "2026-09-17",
       "id": "id_1789071496884_p910yuu7n",
       "op_id": "OP-2026-103",
       "op_nombre": "CHAQUETA TORERO NIÑA",
       "satelite_id": "sat_04",
-      "uds": 90,
-      "fecha_entrega_real": "2026-09-17"
+      "uds": 90
     },
     {
       "color": "AZUL BEBE",
@@ -2476,48 +2487,44 @@
       "uds": 80
     },
     {
-      "id": "id_1789656872161_ry464wy8s",
-      "op_id": "OP-2026-126",
-      "op_nombre": "CHAQUETA CAZADORA",
       "color": "VERDE MILITAR",
-      "satelite_id": "sat_05",
-      "uds": 88,
-      "fecha_entrada": "2026-09-17",
+      "entregado": false,
       "fecha_compromiso": "2026-09-23",
+      "fecha_entrada": "2026-09-17",
       "fecha_inicial": "2026-09-23",
       "historial": [
         {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-09-23",
-          "motivo": "Fecha inicial asignada",
+          "at": "2026-09-17",
           "by": "Jefa de Producción",
-          "at": "2026-09-17"
+          "fecha_nueva": "2026-09-23",
+          "motivo": "Fecha inicial asignada"
         }
       ],
-      "entregado": false,
-      "fecha_entrega_real": null
-    },
-    {
-      "id": "id_1789656891641_yx9f1v8ix",
+      "id": "id_1789656872161_ry464wy8s",
       "op_id": "OP-2026-126",
       "op_nombre": "CHAQUETA CAZADORA",
-      "color": "LILA",
       "satelite_id": "sat_05",
-      "uds": 88,
-      "fecha_entrada": "2026-09-17",
+      "uds": 88
+    },
+    {
+      "color": "LILA",
+      "entregado": false,
       "fecha_compromiso": "2026-09-18",
+      "fecha_entrada": "2026-09-17",
       "fecha_inicial": "2026-09-18",
       "historial": [
         {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-09-18",
-          "motivo": "Fecha inicial asignada",
+          "at": "2026-09-17",
           "by": "Jefa de Producción",
-          "at": "2026-09-17"
+          "fecha_nueva": "2026-09-18",
+          "motivo": "Fecha inicial asignada"
         }
       ],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "id": "id_1789656891641_yx9f1v8ix",
+      "op_id": "OP-2026-126",
+      "op_nombre": "CHAQUETA CAZADORA",
+      "satelite_id": "sat_05",
+      "uds": 88
     }
   ]
 }
