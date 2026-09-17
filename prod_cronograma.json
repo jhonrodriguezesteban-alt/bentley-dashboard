@@ -1900,23 +1900,22 @@
     {
       "color": "NEGRO",
       "entregado": false,
+      "fecha_compromiso": "2026-09-17",
       "fecha_entrada": "2026-08-21",
+      "fecha_inicial": "2026-09-17",
+      "historial": [
+        {
+          "at": "2026-09-17",
+          "by": "Jefa de Producción",
+          "fecha_nueva": "2026-09-17",
+          "motivo": "Asignación inicial"
+        }
+      ],
       "id": "id_1787344781413_xbucmzppl",
       "op_id": "OP-2026-078",
       "op_nombre": "CHAQUETA HARLEY",
       "satelite_id": "id_1786649501329_3ghknzahs",
-      "uds": 30,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-09-17",
-          "motivo": "Asignación inicial",
-          "by": "Jefa de Producción",
-          "at": "2026-09-17"
-        }
-      ],
-      "fecha_inicial": "2026-09-17",
-      "fecha_compromiso": "2026-09-17"
+      "uds": 30
     },
     {
       "color": "AVENA",
@@ -1933,33 +1932,34 @@
       "color": "CAFE",
       "entregado": true,
       "fecha_entrada": "2026-08-22",
+      "fecha_entrega_real": "2026-09-17",
       "id": "id_1787413203827_8qbekluji",
       "op_id": "OP-2026-086",
       "op_nombre": "PANTALON CHICAGO",
       "satelite_id": "sat_00",
-      "uds": 68,
-      "fecha_entrega_real": "2026-09-17"
+      "uds": 68
     },
     {
       "color": "GRIS OSCURO",
       "entregado": true,
       "fecha_entrada": "2026-08-22",
+      "fecha_entrega_real": "2026-09-17",
       "id": "id_1787413214288_2zvhxbco1",
       "op_id": "OP-2026-086",
       "op_nombre": "PANTALON CHICAGO",
       "satelite_id": "sat_00",
-      "uds": 68,
-      "fecha_entrega_real": "2026-09-17"
+      "uds": 68
     },
     {
       "color": "BEIGE",
-      "entregado": false,
+      "entregado": true,
       "fecha_entrada": "2026-08-25",
       "id": "id_1787666940842_j5lsscx46",
       "op_id": "OP-0039",
       "op_nombre": "BOTA ANCHA KENIA",
       "satelite_id": "sat_01",
-      "uds": 110
+      "uds": 110,
+      "fecha_entrega_real": "2026-09-17"
     },
     {
       "color": "BEIGE",
@@ -2006,23 +2006,23 @@
       "color": "MARFIL",
       "entregado": true,
       "fecha_entrada": "2026-08-27",
+      "fecha_entrega_real": "2026-09-17",
       "id": "id_1787860751162_ns78t8hyk",
       "op_id": "OP-2026-086",
       "op_nombre": "PANTALON CHICAGO",
       "satelite_id": "id_1785259712827_cwczmsu5r",
-      "uds": 68,
-      "fecha_entrega_real": "2026-09-17"
+      "uds": 68
     },
     {
       "color": "NEGRO",
       "entregado": true,
       "fecha_entrada": "2026-08-27",
+      "fecha_entrega_real": "2026-09-17",
       "id": "id_1787860763997_q5kqe65rc",
       "op_id": "OP-2026-086",
       "op_nombre": "PANTALON CHICAGO",
       "satelite_id": "id_1785259712827_cwczmsu5r",
-      "uds": 68,
-      "fecha_entrega_real": "2026-09-17"
+      "uds": 68
     },
     {
       "color": "ROSA",
@@ -2137,30 +2137,29 @@
     {
       "color": "BEIGE",
       "entregado": false,
+      "fecha_compromiso": "2026-09-17",
       "fecha_entrada": "2026-09-05",
+      "fecha_inicial": "2026-09-16",
+      "historial": [
+        {
+          "at": "2026-09-17",
+          "by": "Jefa de Producción",
+          "fecha_nueva": "2026-09-16",
+          "motivo": "Asignación inicial"
+        },
+        {
+          "at": "2026-09-17",
+          "by": "Jefa de Producción",
+          "fecha_anterior": "2026-09-16",
+          "fecha_nueva": "2026-09-17",
+          "motivo": "Reubicado en tablero"
+        }
+      ],
       "id": "id_1788631209296_cexg0zszb",
       "op_id": "OP-2026-085",
       "op_nombre": "PANTALON RAVE",
       "satelite_id": "id_1785259712827_cwczmsu5r",
-      "uds": 96,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-09-16",
-          "motivo": "Asignación inicial",
-          "by": "Jefa de Producción",
-          "at": "2026-09-17"
-        },
-        {
-          "fecha_anterior": "2026-09-16",
-          "fecha_nueva": "2026-09-17",
-          "motivo": "Reubicado en tablero",
-          "by": "Jefa de Producción",
-          "at": "2026-09-17"
-        }
-      ],
-      "fecha_inicial": "2026-09-16",
-      "fecha_compromiso": "2026-09-17"
+      "uds": 96
     },
     {
       "color": "NEGRO",
