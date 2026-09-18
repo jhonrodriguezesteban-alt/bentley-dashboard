@@ -316,7 +316,12 @@ tr:hover td{background:rgba(255,255,255,0.03);}
 
 /* Modal — hoja central estilo Apple */
 #modal-overlay{
-  display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;
+  /* z-index alto (no 500): este modal genérico se abre a veces DESDE dentro de otro overlay
+     ya visible (ej. #modal-categoria en z-index:9000, como al hacer "+ Color" en la ficha de
+     un diseño dentro del modal de categoría/histórico) — con z-index:500 quedaba enterrado
+     detrás y parecía que el botón no hacía nada. Se deja por debajo del lightbox (9998) y los
+     toasts (9999), que sí deben quedar siempre por encima de cualquier modal. */
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9050;
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
   align-items:center;justify-content:center;
 }
@@ -11427,6 +11432,7 @@ function _disConfirmAddColor(disId){
   guardarDisenos();
   closeModal();
   renderPage('diseno');
+  if(_modalCatRefrescar) _modalCatRefrescar();
   toast('Colores guardados','success');
 }
 function _disRemoveColor(disId, colId){
@@ -11437,6 +11443,7 @@ function _disRemoveColor(disId, colId){
   d.colores_escogidos = d.colores_escogidos.filter(function(c){ return c.id!==colId; });
   guardarDisenos();
   renderPage('diseno');
+  if(_modalCatRefrescar) _modalCatRefrescar();
   toast('Color eliminado','success');
 }
 function _disEditColorModal(disId, colId){
@@ -12878,8 +12885,16 @@ async function compartirImagenLightbox(){
   }
 }
 
+// Función a re-invocar para refrescar el contenido del overlay #modal-categoria (sin
+// cerrarlo) después de una acción que cambia datos desde DENTRO de él — como agregar/quitar
+// un color — ya que renderPage('diseno') solo repinta el kanban de fondo, no este overlay.
+// La setean tanto abrirModalCategoria() como abrirModalDisenosListos(); cerrarModalCategoria()
+// la limpia.
+var _modalCatRefrescar = null;
+
 // ── Modal Categoría ──────────────────────────────────────────────────────────
 function abrirModalCategoria(cat){
+  _modalCatRefrescar = function(){ abrirModalCategoria(cat); };
   var GEN_ORDER = {'Unisex':0,'Mixto':0,'Niña':1,'Mujer':1,'Niño':2,'Hombre':2,'Femenino':1,'Masculino':2};
   var esTodos = (cat === '__TODOS__');
   var todosBase = (DB.disenos||[]).filter(function(d){
@@ -13091,6 +13106,7 @@ function abrirModalCategoria(cat){
 }
 
 function abrirModalDisenosListos(){
+  _modalCatRefrescar = abrirModalDisenosListos;
   var GEN_COLOR = {
     'Unisex':'#94a3b8','Mixto':'#94a3b8','Niña':'#f472b6','Niño':'#38bdf8',
     'Mujer':'#f472b6','Hombre':'#38bdf8','Femenino':'#f472b6','Masculino':'#38bdf8'
@@ -13156,17 +13172,21 @@ function abrirModalDisenosListos(){
       if(d.tela_nota) b += '<div style="margin-top:4px;font-size:10px;color:#94a3b8;">'+esc(d.tela_nota)+'</div>';
       b += '</div>';
       var _mCols = d.colores_escogidos||[];
+      b += '<div style="margin-top:6px;border-top:1px solid #2c2c2e;padding-top:6px;">';
       if(_mCols.length){
-        b += '<div style="margin-top:6px;border-top:1px solid #2c2c2e;padding-top:6px;display:flex;flex-wrap:wrap;gap:3px;">';
+        b += '<div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:4px;">';
         _mCols.forEach(function(col){
           var mDotHex = col.hex || _disDetectHex(col.nombre||'') || '#6b7280';
-          b += '<div style="display:inline-flex;align-items:center;gap:3px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:1px 5px;">';
+          b += '<div style="display:inline-flex;align-items:center;gap:3px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:1px 5px 1px 3px;">';
           b += '<span style="width:10px;height:10px;border-radius:50%;background:'+mDotHex+';flex-shrink:0;display:inline-block;box-shadow:0 0 0 1.5px rgba(255,255,255,.25),inset 0 0 0 1px rgba(0,0,0,.2);"></span>';
           b += '<span style="font-size:9px;color:#cbd5e1;font-weight:600;max-width:70px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(col.nombre||'')+'</span>';
+          b += '<button data-disid="'+d.id+'" data-colid="'+esc(col.id)+'" onclick="event.stopPropagation();_disRemoveColor(this.dataset.disid,this.dataset.colid)" style="background:none;border:none;cursor:pointer;color:#475569;font-size:8px;padding:0;line-height:1;flex-shrink:0;">✕</button>';
           b += '</div>';
         });
         b += '</div>';
       }
+      b += '<button data-disid="'+d.id+'" onclick="event.stopPropagation();_disAddColorModal(this.dataset.disid)" style="font-size:9px;color:#0a84ff;background:rgba(10,132,255,.08);border:1px dashed rgba(10,132,255,.35);border-radius:10px;padding:2px 8px;cursor:pointer;font-weight:600;">+ Color</button>';
+      b += '</div>';
       if(d.nota){
         b += '<div style="margin-top:6px;border-top:1px solid #2c2c2e;padding-top:6px;font-size:10px;color:#94a3b8;line-height:1.4;">'+esc(d.nota)+'</div>';
       }
@@ -13195,6 +13215,7 @@ function cerrarModalCategoria(){
   document.getElementById('modal-categoria').style.display = 'none';
   document.removeEventListener('keydown', _modalCatKey);
   _modalCatFiltros = {prio:null, resp:null, tela:null};
+  _modalCatRefrescar = null;
   var filtrosEl=document.getElementById('modal-cat-filtros');
   if(filtrosEl) filtrosEl.style.display='none';
 }
