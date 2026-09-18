@@ -10644,6 +10644,10 @@ function setEntFiltro(mes){ _entFiltroMes = mes; renderPage('entregas'); }
 // ═══════════════════════════════════════════════════════════════════════════════
 var DIS_RESPONSABLES = ['Carolina','Isa','John','Juan'];
 var DIS_RESP_COLORS  = {Carolina:'#fbbf24',Isa:'#c084fc',John:'#34d399',Juan:'#38bdf8'};
+// El valor guardado sigue siendo 'Carolina' (no se toca nada de filtros/datos existentes),
+// pero en el módulo de Diseño su etiqueta visible debe leerse "Techpatron" en vez de su
+// nombre — así queda claro que es el área/equipo, no la persona.
+function _disRespLabel(r){ return r==='Carolina' ? 'Techpatron' : (r||''); }
 var DIS_MARCAS_DEFAULT = ['Bentley Kids','Prime','Maquilas'];
 var DIS_CATEGORIAS = ['Abrigos','Accesorios','Blusas','Bodys','Buzos','Camisetas','Camisones','Chalecos','Chaquetas','Conjuntos','Faldas','Overol','Pantalonetas','Pantalones','Tejido de Punto','Vestidos','Otro'];
 var _disPrioFiltro = 0; // 0=todas, 1,2,3
@@ -10742,7 +10746,7 @@ function verGaleriaColumnaDiseno(colKey){
       b += '<div style="padding:8px 9px;">';
       b += '<div style="font-size:9px;font-weight:700;color:'+col.color+';text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px;">'+esc(d.categoria||'')+'</div>';
       b += '<div style="font-size:11px;font-weight:700;color:#e2e8f0;line-height:1.3;margin-bottom:5px;">'+esc(d.nombre)+'</div>';
-      if(d.responsable) b += '<div style="font-size:9px;color:'+rc+';">'+esc(d.responsable)+'</div>';
+      if(d.responsable) b += '<div style="font-size:9px;color:'+rc+';">'+esc(_disRespLabel(d.responsable))+'</div>';
       b += '</div></div>';
     });
     b += '</div>';
@@ -10926,7 +10930,7 @@ function renderDiseno(){
     {v:'',         label:'Todos',    color:'#64748b', bg:'rgba(100,116,139,.12)'},
     {v:'John',     label:'John',     color:DIS_RESP_COLORS['John'],     bg:DIS_RESP_COLORS['John']+'22'},
     {v:'Isa',      label:'Isa',      color:DIS_RESP_COLORS['Isa'],      bg:DIS_RESP_COLORS['Isa']+'22'},
-    {v:'Carolina', label:'Carolina', color:DIS_RESP_COLORS['Carolina'], bg:DIS_RESP_COLORS['Carolina']+'22'},
+    {v:'Carolina', label:'Techpatron', color:DIS_RESP_COLORS['Carolina'], bg:DIS_RESP_COLORS['Carolina']+'22'},
     {v:'Juan',     label:'Juan',     color:DIS_RESP_COLORS['Juan'],     bg:DIS_RESP_COLORS['Juan']+'22'},
   ];
   h += '<div style="display:flex;align-items:center;gap:5px;background:#0f1520;border:1px solid #2c2c2e;border-radius:20px;padding:4px 10px;flex-shrink:0;">';
@@ -11044,8 +11048,8 @@ function renderDiseno(){
 
       // Fila 1: responsable (select inline) + prioridad + editar
       h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">';
-      h += '<select data-id="'+d.id+'" onchange="cambiarRespDiseno(this.dataset.id,this.value)" onclick="event.stopPropagation()" style="background:transparent;border:none;font-size:10px;font-weight:700;color:'+rc+';text-transform:uppercase;letter-spacing:.5px;cursor:pointer;padding:0;outline:none;max-width:110px;">';
-      DIS_RESPONSABLES.forEach(function(r){ h += '<option value="'+r+'"'+(d.responsable===r?' selected':'')+' style="background:#1c1c1e;color:#e2e8f0;">'+r+'</option>'; });
+      h += '<select data-id="'+d.id+'" onchange="cambiarRespDiseno(this.dataset.id,this.value)" onclick="event.stopPropagation()" style="background:transparent;border:none;font-size:10px;font-weight:700;color:'+rc+';text-transform:uppercase;letter-spacing:.5px;cursor:pointer;padding:0;outline:none;max-width:130px;">';
+      DIS_RESPONSABLES.forEach(function(r){ h += '<option value="'+r+'"'+(d.responsable===r?' selected':'')+' style="background:#1c1c1e;color:#e2e8f0;">'+esc(_disRespLabel(r))+'</option>'; });
       h += '</select>';
       var nFotos = (d.imagenes||[]).length;
       h += '<div style="display:flex;gap:4px;align-items:center;">';
@@ -11137,6 +11141,12 @@ function renderDiseno(){
         if(d.tela_precio){ h += '<span style="font-size:10px;font-weight:700;color:#fb923c;white-space:nowrap;padding:0 4px;">$'+Number(d.tela_precio).toLocaleString('es-CO')+'</span>'; }
       }
       h += '</div>';
+      h += '</div>';
+
+      // ── Ancho útil de la tela (celda editable, para planear trazos) ──────────
+      h += '<div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">';
+      h += '<span style="font-size:9px;color:#475569;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap;">Ancho útil</span>';
+      h += '<input type="text" inputmode="decimal" data-disid="'+d.id+'" value="'+esc(d.tela_ancho_util||'')+'" placeholder="ej. 1.50m" onclick="event.stopPropagation()" onblur="actualizarAnchoUtilDiseno(this.dataset.disid,this.value)" style="flex:1;min-width:0;background:#0d1117;border:1px solid #2c2c2e;border-radius:6px;color:#e2e8f0;font-size:11px;padding:3px 8px;outline:none;">';
       h += '</div>';
 
       // Dropdown estado + M² + 💬
@@ -11726,6 +11736,15 @@ function guardarTelaNotaModal(id){
 }
 // Sticker independiente de disponibilidad FÍSICA de tela — distinto de tela_estado
 // (que solo dice si ya se DECIDIÓ qué tela usar, no si hay existencia en bodega).
+async function actualizarAnchoUtilDiseno(disId, valor){
+  var d = (DB.disenos||[]).find(function(x){ return x.id===disId; });
+  if(!d) return;
+  valor = (valor||'').trim();
+  if((d.tela_ancho_util||'') === valor) return;
+  d.tela_ancho_util = valor;
+  saveLocal();
+  await guardarArchivo('disenos', {disenos: DB.disenos, disenos_cfg: DB.disenos_cfg});
+}
 async function toggleTelaStock(disId){
   var d = (DB.disenos||[]).find(function(x){ return x.id===disId; });
   if(!d) return;
@@ -11852,7 +11871,7 @@ function abrirFormDiseno(id){
   [1,2,3].forEach(function(n){ body += '<option value="'+n+'"'+(d&&disPrioNorm(d.prioridad)==n?' selected':'')+'>'+n+'</option>'; });
   body += '</select></div>';
   body += '<div class="form-group"><label class="form-label">Responsable</label><select id="dis-resp" class="form-control">';
-  DIS_RESPONSABLES.forEach(function(r){ body += '<option value="'+r+'"'+(d&&d.responsable===r?' selected':'')+'>'+r.toUpperCase()+'</option>'; });
+  DIS_RESPONSABLES.forEach(function(r){ body += '<option value="'+r+'"'+(d&&d.responsable===r?' selected':'')+'>'+esc(_disRespLabel(r).toUpperCase())+'</option>'; });
   body += '</select></div></div>';
 
   body += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">';
@@ -12157,8 +12176,10 @@ async function guardarDisenoForm(){
         for(var i=0;i<_disPendienteFotos.length;i++){
           var file = _disPendienteFotos[i];
           try {
-            var b64 = await new Promise(function(res,rej){ var r=new FileReader(); r.onload=function(e){res(e.target.result.split(',')[1]);}; r.onerror=rej; r.readAsDataURL(file); });
-            var ext = file.name.split('.').pop().toLowerCase()||'jpg';
+            var prep = await _prepararImagenParaSubir(file);
+            if(prep.error) continue;
+            var b64 = prep.dataUrl.split(',')[1];
+            var ext = prep.ext;
             var fname = 'disenos-imgs/'+nuevoId+'_'+Date.now()+'_'+i+'.'+ext;
             var putR = await fetch('https://api.github.com/repos/'+REPO+'/contents/'+fname,{method:'PUT',headers:{'Authorization':'token '+tk,'Content-Type':'application/json'},body:JSON.stringify({message:'Foto diseño: '+nombre,content:b64})});
             if(putR.ok) dis.imagenes.push({id:'img_'+Date.now()+'_'+i,url:RAW_URL+fname,tipo:'referencia',fecha:hoy(),nombre:file.name});
@@ -12190,6 +12211,58 @@ async function guardarDisenos(){
   var data = {disenos:DB.disenos||[], disenos_cfg:DB.disenos_cfg||{marcas:getDisMarcas()}};
   var ok = await guardarArchivo('disenos', data);
   if(ok) toast('Diseños guardados','success');
+}
+
+// Normaliza CUALQUIER imagen subida a JPEG liviano antes de mandarla a GitHub. Sin esto,
+// una foto tomada con la cámara de un iPhone sube tal cual en formato HEIC (el default de
+// iOS) — Safari la puede mostrar porque usa el decodificador nativo de Apple, pero Chrome,
+// Android y Windows NO saben renderizar HEIC en un <img>, así que a quien suba desde iPhone
+// le "carga bien" y a cualquier otro usuario esa foto simplemente no le aparece, aunque el
+// archivo sí exista en el repo. Convertir a JPEG aquí (vía canvas, que si el navegador puede
+// pintar el archivo también lo puede volcar a canvas) hace que el archivo guardado sea
+// universalmente compatible, y de paso lo comprime — algunas fotos de celular pesan 3-4MB.
+// Si el navegador no logra decodificar el archivo (ej. HEIC en uno sin ese códec) se sube el
+// original tal cual como último recurso, y se avisa al usuario.
+function _prepararImagenOriginal(file){
+  return new Promise(function(resolve, reject){
+    var fr = new FileReader();
+    fr.onload = function(e){
+      var ext = (file.name.split('.').pop()||'jpg').toLowerCase();
+      resolve({dataUrl:e.target.result, ext:ext, convertido:false});
+    };
+    fr.onerror = reject;
+    fr.readAsDataURL(file);
+  });
+}
+function _prepararImagenParaSubir(file){
+  return new Promise(function(resolve){
+    var url = URL.createObjectURL(file);
+    var img = new Image();
+    var terminado = false;
+    var fallback = function(){ if(terminado) return; terminado=true; URL.revokeObjectURL(url); _prepararImagenOriginal(file).then(resolve).catch(function(){ resolve({dataUrl:null, ext:null, convertido:false, error:true}); }); };
+    img.onload = function(){
+      if(terminado) return; terminado = true;
+      try{
+        var MAXD = 1600;
+        var w = img.naturalWidth||img.width, h = img.naturalHeight||img.height;
+        if(!w || !h) throw new Error('sin dimensiones');
+        if(w > MAXD || h > MAXD){
+          if(w>=h){ h = Math.round(h*MAXD/w); w = MAXD; } else { w = Math.round(w*MAXD/h); h = MAXD; }
+        }
+        var canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        var dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+        URL.revokeObjectURL(url);
+        resolve({dataUrl:dataUrl, ext:'jpg', convertido:true});
+      } catch(e){
+        URL.revokeObjectURL(url);
+        _prepararImagenOriginal(file).then(resolve).catch(function(){ resolve({dataUrl:null, ext:null, convertido:false, error:true}); });
+      }
+    };
+    img.onerror = fallback;
+    img.src = url;
+  });
 }
 
 // ─── Fotos de diseño ──────────────────────────────────────────────────────────
@@ -12286,14 +12359,11 @@ async function subirFotosDiseno(files){
   for(var i=0; i<files.length; i++){
     var file = files[i];
     try {
-      var dataUrl = await new Promise(function(res,rej){
-        var r = new FileReader();
-        r.onload = function(e){ res(e.target.result); };
-        r.onerror = rej;
-        r.readAsDataURL(file);
-      });
+      var prep = await _prepararImagenParaSubir(file);
+      if(prep.error){ errores++; continue; }
+      var dataUrl = prep.dataUrl;
       var b64 = dataUrl.split(',')[1];
-      var ext = file.name.split('.').pop().toLowerCase()||'jpg';
+      var ext = prep.ext;
       var imgId = 'img_'+Date.now()+'_'+i;
       var fname = 'disenos-imgs/'+id+'_'+Date.now()+'_'+i+'.'+ext;
       var putR = await fetch('https://api.github.com/repos/'+REPO+'/contents/'+fname,{
@@ -12663,8 +12733,10 @@ async function agregarComentarioDiseno(){
       for(var i=0;i<_comentImgsPendientes.length;i++){
         var file = _comentImgsPendientes[i];
         try{
-          var b64 = await new Promise(function(res,rej){ var r=new FileReader(); r.onload=function(e){res(e.target.result.split(',')[1]);}; r.onerror=rej; r.readAsDataURL(file); });
-          var ext = (file.name.split('.').pop()||'jpg').toLowerCase();
+          var prep = await _prepararImagenParaSubir(file);
+          if(prep.error) continue;
+          var b64 = prep.dataUrl.split(',')[1];
+          var ext = prep.ext;
           var fname = 'disenos-imgs/coment_'+d.id+'_'+cid+'_'+i+'.'+ext;
           var putR = await fetch('https://api.github.com/repos/'+REPO+'/contents/'+fname,{method:'PUT',headers:{'Authorization':'token '+tk,'Content-Type':'application/json'},body:JSON.stringify({message:'Foto comentario: '+d.nombre,content:b64})});
           if(putR.ok) nuevoC.imagenes.push({id:'ci_'+Date.now()+'_'+i, url:RAW_URL+fname});
@@ -12873,7 +12945,7 @@ function abrirModalCategoria(cat){
     fb+='<span style="font-size:9px;color:#334155;text-transform:uppercase;letter-spacing:.5px;margin-left:6px;white-space:nowrap;">Responsable</span>';
     responsables.forEach(function(r){
       var c=RESP_COLOR[r]||'#94a3b8';
-      fb+=_chip('resp',r,r,c,_modalCatFiltros.resp===r);
+      fb+=_chip('resp',r,esc(_disRespLabel(r)),c,_modalCatFiltros.resp===r);
     });
   }
   // Tela
@@ -12949,7 +13021,7 @@ function abrirModalCategoria(cat){
       b += '<div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:2px;">';
       b += '<span style="background:'+gc+'18;border:1px solid '+gc+'44;color:'+gc+';font-size:9px;font-weight:700;border-radius:8px;padding:1px 6px;">'+esc(gen.toUpperCase())+'</span>';
       if(d.responsable){
-        b += '<span style="background:'+rc+'22;border:1px solid '+rc+'44;color:'+rc+';font-size:9px;font-weight:700;border-radius:8px;padding:1px 6px;">'+esc(d.responsable.toUpperCase())+'</span>';
+        b += '<span style="background:'+rc+'22;border:1px solid '+rc+'44;color:'+rc+';font-size:9px;font-weight:700;border-radius:8px;padding:1px 6px;">'+esc(_disRespLabel(d.responsable).toUpperCase())+'</span>';
       }
       b += '</div>';
       if(d.imagenes&&d.imagenes.length>0){
@@ -13075,7 +13147,7 @@ function abrirModalDisenosListos(){
       b += '<div data-opid="'+esc(d._op_origen)+'" onclick="cerrarModalCategoria();_opDetalleId=this.dataset.opid;navTo(\'ops\')" style="display:inline-flex;align-items:center;gap:4px;background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.4);color:#34d399;font-size:9px;font-weight:800;border-radius:8px;padding:2px 8px;margin-bottom:6px;cursor:pointer;">✅ '+esc(fmtOpId(d._op_origen))+'</div>';
       b += '<div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:4px;">';
       b += '<span style="background:'+gc+'18;border:1px solid '+gc+'44;color:'+gc+';font-size:9px;font-weight:700;border-radius:8px;padding:1px 6px;">'+esc(gen.toUpperCase())+'</span>';
-      if(d.responsable) b += '<span style="background:'+rc+'22;border:1px solid '+rc+'44;color:'+rc+';font-size:9px;font-weight:700;border-radius:8px;padding:1px 6px;">'+esc(d.responsable.toUpperCase())+'</span>';
+      if(d.responsable) b += '<span style="background:'+rc+'22;border:1px solid '+rc+'44;color:'+rc+';font-size:9px;font-weight:700;border-radius:8px;padding:1px 6px;">'+esc(_disRespLabel(d.responsable).toUpperCase())+'</span>';
       b += '</div>';
       var mTelaEst = d.tela_estado||'sin_tela';
       var mtc = MTELA_CFG[mTelaEst]||MTELA_CFG.sin_tela;
@@ -20349,9 +20421,32 @@ var _tecpatronTab = 'trazos';
 var _tpBusq = '';
 function setTecpatronTab(t){ _tecpatronTab = t; renderPage('tecpatron'); }
 
+// Reconciliación: líneas que ya quedaron con Generado+Impreso marcados ANTES de que
+// existiera _tecpatronAutoArchivar() (o cuyo guardado se perdió por cualquier razón) se
+// quedaban "atascadas" para siempre en Trazos pendientes — el auto-archivo solo corría
+// dentro de los onchange de los checkboxes, así que si nadie los volvía a tocar nunca se
+// disparaba. Este barrido corre cada vez que se abre TecPatrón y corrige cualquier línea
+// que ya cumplió su ciclo pero quedó sin recogido=true, guardando solo si hubo cambios.
+function _tecpatronReconciliarPendientes(){
+  var cambio = false;
+  (DB.trazos.solicitudes||[]).forEach(function(s){
+    (s.lineas||[]).forEach(function(l){
+      if(l.generado && l.impreso && !l.recogido){
+        l.recogido = true; l.recogido_en = l.recogido_en || hoy();
+        cambio = true;
+      }
+    });
+  });
+  if(cambio){
+    saveLocal();
+    guardarTrazos().then(function(ok){ if(ok) toast('Se archivaron trazos que ya estaban listos y quedaron atascados','info'); });
+  }
+  return cambio;
+}
 function renderTecPatron(){
   if(!DB.trazos) DB.trazos = {solicitudes:[]};
   if(!DB.costeo) DB.costeo = {recetas:[]};
+  _tecpatronReconciliarPendientes();
   var h = '<div style="padding:18px 16px 80px;">';
   h += '<div style="margin-bottom:14px;"><div style="font-size:22px;font-weight:800;color:var(--accent);">🧵 Techpatron</div>';
   h += '<div style="font-size:11px;color:#64748b;">Trazos por hacer y ficha de vida de cada producto</div></div>';
@@ -20448,6 +20543,9 @@ function _renderTecPatronTrazosPendientes(sols){
 // "Trazos enviados" — historial de líneas ya recogidas por producción. Sin esto, en
 // cuanto Jhon marca "Ya lo recogí" la línea desaparece por completo del lado de
 // Carolina y ella pierde el rastro de lo que ya entregó.
+// Misma tarjeta detallada que Trazos pendientes (tallas, cantidad, ancho, rotación,
+// orientación, colores, notas, imagen adjunta) — antes esta vista solo mostraba una línea
+// de texto por trazo, sin la información completa que sí se ve del lado de "pendientes".
 function _renderTecPatronTrazosEnviados(){
   var items = [];
   (DB.trazos.solicitudes||[]).forEach(function(s){
@@ -20456,26 +20554,55 @@ function _renderTecPatronTrazosEnviados(){
     });
   });
   if(!items.length) return '<div style="text-align:center;padding:30px;color:#374151;">Todavía no hay trazos enviados (recogidos por producción).</div>';
-  items.sort(function(a,b){ return (b.linea.recogido_en||'').localeCompare(a.linea.recogido_en||''); });
 
   var porOp = {}; var orden = [];
   items.forEach(function(it){
-    if(!porOp[it.sol.op_id]){ porOp[it.sol.op_id] = {op_id:it.sol.op_id, op_nombre:it.sol.op_nombre, items:[]}; orden.push(it.sol.op_id); }
-    porOp[it.sol.op_id].items.push(it);
+    if(!porOp[it.sol.op_id]){ porOp[it.sol.op_id] = {op_id:it.sol.op_id, op_nombre:it.sol.op_nombre, items:[], ultimaFecha:''}; orden.push(it.sol.op_id); }
+    var g = porOp[it.sol.op_id];
+    if((it.linea.recogido_en||'') > g.ultimaFecha) g.ultimaFecha = it.linea.recogido_en||'';
+    g.items.push(it);
   });
+  orden.sort(function(a,b){ return porOp[b].ultimaFecha.localeCompare(porOp[a].ultimaFecha); });
 
-  var h = '<div>';
+  var h = '';
   orden.forEach(function(opId){
     var g = porOp[opId];
-    h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:10px;padding:12px 14px;margin-bottom:6px;opacity:.75;">';
-    h += '<div style="margin-bottom:6px;"><span style="font-family:var(--bebas);font-size:13px;color:#0a84ff;">'+esc(fmtOpId(opId))+'</span> <span style="font-size:12px;font-weight:700;color:#e2e8f0;">'+esc(g.op_nombre)+'</span></div>';
-    g.items.forEach(function(it){
-      var tt = _trazoTipoInfo(it.linea.tipo);
-      h += '<div style="font-size:11px;color:#94a3b8;padding:4px 0;border-left:2px solid '+tt.color+';padding-left:8px;margin-bottom:3px;">'+tt.l+' · tallas '+(it.linea.tallas||[]).join(', ')+' · '+(it.linea.colores||[]).join(', ')+' <span style="color:#475569;">· recogido '+fmtDate(it.linea.recogido_en)+'</span></div>';
+    var imgProd = _catalogoImagen(g.op_nombre);
+    h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:10px;padding:16px;margin-bottom:12px;">';
+    h += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">';
+    if(imgProd) h += '<img src="'+esc(imgProd)+'" onclick="_tpAmpliarImagen(this.src)" style="width:56px;height:56px;object-fit:cover;border-radius:9px;border:1px solid #2c2c2e;flex-shrink:0;cursor:pointer;">';
+    h += '<div><span style="font-family:var(--bebas);font-size:22px;color:#0a84ff;">'+esc(fmtOpId(opId))+'</span> <span style="font-size:19px;font-weight:700;color:#e2e8f0;">'+esc(g.op_nombre)+'</span>';
+    h += '<div style="font-size:13px;color:#64748b;margin-top:2px;">Último recogido '+fmtDate(g.ultimaFecha)+'</div></div>';
+    h += '</div>';
+    TRAZO_TIPOS.forEach(function(tt){
+      var lns = g.items.filter(function(it){ return it.linea.tipo===tt.k; });
+      if(!lns.length) return;
+      h += '<div style="font-size:15px;font-weight:800;color:'+tt.color+';text-transform:uppercase;letter-spacing:.5px;margin:14px 0 8px;">'+tt.l+'</div>';
+      lns.forEach(function(it){
+        var l = it.linea, s = it.sol;
+        function campo(label, valor){
+          return '<div><div style="font-size:12px;color:#94a3b8;text-transform:uppercase;letter-spacing:.3px;">'+label+'</div><div style="font-size:18px;color:#f1f5f9;font-weight:600;">'+valor+'</div></div>';
+        }
+        h += '<div style="background:#0d1117;border:1px solid #2c2c2e;border-left:4px solid '+tt.color+';border-radius:8px;padding:14px 16px;margin-bottom:10px;opacity:.85;">';
+        if(l.tipo==='ADICIONAL'&&l.tipo_custom) h += '<div style="font-size:18px;font-weight:800;color:'+tt.color+';margin-bottom:10px;">'+esc(l.tipo_custom)+'</div>';
+        h += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px 18px;margin-bottom:12px;">';
+        h += campo('Tallas', '<b>'+esc(_trazoTallasConMarcadas(l))+'</b>');
+        h += campo('Cantidad', l.cantidad_trazos+' trazo(s)');
+        h += campo('Ancho útil', l.ancho_util+'m');
+        h += campo('Rotación', esc(_trazoSentidoInfo(l.sentido).l));
+        h += campo('Orientación', esc(_trazoOrientacionInfo(l.orientacion).l));
+        h += campo('Colores', '<span style="color:#fbbf24;">'+esc((l.colores||[]).join(', '))+'</span>');
+        h += '</div>';
+        if(l.notas) h += '<div style="font-size:15px;color:#cbd5e1;background:rgba(255,255,255,.03);border-radius:6px;padding:8px 12px;margin-bottom:12px;">📝 '+esc(l.notas)+'</div>';
+        h += '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);">';
+        h += _tecpatronImagenLineaHTML(l, s.id);
+        h += '<span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:#34d399;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);border-radius:7px;padding:5px 12px;white-space:nowrap;">✅ Recogido '+fmtDate(l.recogido_en)+'</span>';
+        h += '</div>';
+        h += '</div>';
+      });
     });
     h += '</div>';
   });
-  h += '</div>';
   return h;
 }
 // Imagen de referencia adjunta a una línea de trazo (opcional) — sigue el mismo patrón de
@@ -20501,14 +20628,12 @@ async function tecpatronSubirImagenLinea(input){
   var tk = GT || localStorage.getItem('bentley_gh_token') || '';
   if(!tk){ toast('Sin token GitHub','error'); return; }
   try {
-    var dataUrl = await new Promise(function(res,rej){
-      var fr = new FileReader();
-      fr.onload = function(e){ res(e.target.result); };
-      fr.onerror = rej;
-      fr.readAsDataURL(file);
-    });
+    toast('Procesando imagen...','info');
+    var prep = await _prepararImagenParaSubir(file);
+    if(prep.error){ toast('No se pudo leer esta imagen','error'); return; }
+    var dataUrl = prep.dataUrl;
     var b64 = dataUrl.split(',')[1];
-    var ext = (file.name.split('.').pop()||'jpg').toLowerCase();
+    var ext = prep.ext;
     var fname = 'tecpatron-imgs/trazo_'+lid+'_'+Date.now()+'.'+ext;
     toast('Subiendo imagen...','info');
     var putR = await fetch('https://api.github.com/repos/'+REPO+'/contents/'+fname,{
@@ -20522,7 +20647,7 @@ async function tecpatronSubirImagenLinea(input){
       l.imagen_url = RAW_URL + fname;
       l.imagen_url_blob = blobId;
       var ok = await guardarTrazos();
-      if(ok) toast('Imagen adjuntada','success');
+      if(ok) toast(prep.convertido?'Imagen adjuntada':'Imagen adjuntada — pero este formato puede no verse en todos los navegadores','success');
       renderPage('tecpatron');
     } else { toast('Error al subir la imagen','error'); }
   } catch(e){ toast('Error al subir la imagen','error'); }
@@ -20584,14 +20709,12 @@ async function tpSubirImagenPrincipal(input){
   var tk = GT || localStorage.getItem('bentley_gh_token') || '';
   if(!tk){ toast('Sin token GitHub','error'); return; }
   try {
-    var dataUrl = await new Promise(function(res,rej){
-      var fr = new FileReader();
-      fr.onload = function(e){ res(e.target.result); };
-      fr.onerror = rej;
-      fr.readAsDataURL(file);
-    });
+    toast('Procesando imagen...','info');
+    var prep = await _prepararImagenParaSubir(file);
+    if(prep.error){ toast('No se pudo leer esta imagen','error'); return; }
+    var dataUrl = prep.dataUrl;
     var b64 = dataUrl.split(',')[1];
-    var ext = (file.name.split('.').pop()||'jpg').toLowerCase();
+    var ext = prep.ext;
     var fname = 'tecpatron-imgs/'+rid+'_principal_'+Date.now()+'.'+ext;
     toast('Subiendo imagen...','info');
     var putR = await fetch('https://api.github.com/repos/'+REPO+'/contents/'+fname,{
@@ -20792,14 +20915,12 @@ async function tpSubirFotoPromedio(input){
   var tk = GT || localStorage.getItem('bentley_gh_token') || '';
   if(!tk){ toast('Sin token GitHub','error'); return; }
   try {
-    var dataUrl = await new Promise(function(res,rej){
-      var fr = new FileReader();
-      fr.onload = function(e){ res(e.target.result); };
-      fr.onerror = rej;
-      fr.readAsDataURL(file);
-    });
+    toast('Procesando imagen...','info');
+    var prep = await _prepararImagenParaSubir(file);
+    if(prep.error){ toast('No se pudo leer esta imagen','error'); return; }
+    var dataUrl = prep.dataUrl;
     var b64 = dataUrl.split(',')[1];
-    var ext = (file.name.split('.').pop()||'jpg').toLowerCase();
+    var ext = prep.ext;
     var fid = uid();
     var fname = 'tecpatron-imgs/'+rid+'_promedio_'+fid+'.'+ext;
     toast('Subiendo imagen...','info');
