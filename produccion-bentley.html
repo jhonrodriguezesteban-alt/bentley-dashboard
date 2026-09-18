@@ -20337,8 +20337,14 @@ async function compartirSolicitudTrazos(sid){
   if(!s) return;
   var op = (DB.ops||[]).find(function(x){ return x.id===s.op_id; });
   if(!window.jspdf || !window.html2canvas){ imprimirSolicitudTrazos(sid); return; }
+  // El margen real tiene que ir en ESTE div (el que html2canvas realmente captura), no
+  // confiar en el `body{padding:...}` de _trazosPrintStyles(): ese selector solo tiene efecto
+  // cuando el HTML vive en un documento de verdad con su propio <body> (como en la ventana
+  // de imprimirSolicitudTrazos) — aquí "host" es un div cualquiera dentro de la página del
+  // dashboard, así que ese `body{}` no le aplicaba nunca y el contenido quedaba pegado al
+  // borde exacto del div (y por tanto del PDF), sin importar qué margen tuviera el CSS.
   var host = document.createElement('div');
-  host.style.cssText = 'position:fixed;left:-9999px;top:0;width:760px;background:#fff;';
+  host.style.cssText = 'position:fixed;left:-9999px;top:0;width:760px;background:#fff;padding:28px 24px;box-sizing:border-box;';
   host.innerHTML = '<style>'+_trazosPrintStyles()+'</style>'+_trazosPrintContentHTML(s, op);
   document.body.appendChild(host);
   try {
