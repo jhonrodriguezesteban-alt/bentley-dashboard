@@ -21141,19 +21141,30 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1789751218673_sphra",
-      "ts": 1789751218673,
-      "user": "John Rodriguez",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-235",
-      "op_nombre": "CHALECO ROGGER",
       "categoria": "CHALECOS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-09-18",
-      "total_uds": 300,
+      "id": "evt_1789751218673_sphra",
+      "op_id": "OP-2026-235",
+      "op_nombre": "CHALECO ROGGER",
       "referencias": [
         "CHALECO ROGGER"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 300,
+      "ts": 1789751218673,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1789751781002_ryd8z",
+      "ts": 1789751781002,
+      "user": "Isabel",
+      "tipo": "diseno_comentario",
+      "diseno_id": "id_1785786510670_gnz0lsxxz",
+      "nombre": "OVERSIZED OLIVETO",
+      "categoria": "Chaquetas",
+      "tiene_imagen": false,
+      "extracto": "Para este modelo necesitamos bajar el revoque del cuello 2cm y rectificar cuello"
     }
   ]
 }
