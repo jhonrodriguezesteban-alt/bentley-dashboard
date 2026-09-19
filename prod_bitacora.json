@@ -21373,20 +21373,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "CAMEL",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1789824485953_rpjn1",
-      "ts": 1789824485953,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-215",
       "op_nombre": "CHAQUETA DISCOVERY",
       "referencia": "CHAQUETA DISCOVERY",
-      "color": "CAMEL",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1789824485953,
       "uds": 96,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789851341200_sboil",
+      "ts": 1789851341200,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-0008",
+      "nombre": "BUZO YINKY",
+      "categoria": "BUZOS",
+      "colores": 18,
+      "refs": 1
     }
   ]
 }
