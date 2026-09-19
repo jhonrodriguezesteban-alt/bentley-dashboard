@@ -21308,20 +21308,37 @@
       "user": "John Rodriguez"
     },
     {
+      "bulk": true,
+      "color": "CAMEL",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1789824271819_a44w8",
-      "ts": 1789824271819,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-095",
       "op_nombre": "CHAQUETA SUEDE OLD MONEY",
       "referencia": "CHAQUETA SUEDE OLD MONEY",
-      "color": "CAMEL",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1789824271819,
       "uds": 96,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1789824298024_a035w",
+      "ts": 1789824298024,
+      "user": "Jefa de Producción",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-203",
+      "op_nombre": "CONJUNTO CHELSY",
+      "categoria": "CONJUNTOS",
+      "total_ots": 7,
+      "total_uds": 132,
+      "colores": [
+        "CAMEL"
+      ],
+      "referencias": [
+        "CONJUNTO CHELSY"
+      ]
     }
   ]
 }
