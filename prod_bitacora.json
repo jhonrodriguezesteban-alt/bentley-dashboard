@@ -21298,14 +21298,30 @@
       "user": "John Rodriguez"
     },
     {
+      "color": "NEGRO",
       "id": "evt_1789764063430_dow21",
-      "ts": 1789764063430,
-      "user": "John Rodriguez",
-      "tipo": "planeacion_asignar",
+      "mes": "2026-11",
       "op_id": "OP-2026-072",
       "op_nombre": "BLUSA MANGA LARGA SELENA",
-      "color": "NEGRO",
-      "mes": "2026-11"
+      "tipo": "planeacion_asignar",
+      "ts": 1789764063430,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1789824271819_a44w8",
+      "ts": 1789824271819,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-095",
+      "op_nombre": "CHAQUETA SUEDE OLD MONEY",
+      "referencia": "CHAQUETA SUEDE OLD MONEY",
+      "color": "CAMEL",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 96,
+      "motivo": "EN TALLER"
     }
   ]
 }
