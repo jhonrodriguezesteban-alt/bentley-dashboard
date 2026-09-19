@@ -23285,9 +23285,22 @@
       "cumplió_fecha": true,
       "estado": "PAGO_PENDIENTE",
       "fecha_entrega_corte_satelite": "2026-05-18",
+      "fecha_entrega_real": "2026-09-17",
       "fecha_estimada_entrega": "2026-05-26",
       "fecha_op": "2026-01-21",
       "fecha_ot": "2026-03-11",
+      "historial": [
+        {
+          "accion": "Entrega completa: 6 uds → ENTREGADO",
+          "fecha": "2026-09-17T20:24:16.313Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-17T20:24:54.617Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "OT-11992",
       "migrado": true,
       "motivo_incumplimiento": "",
@@ -23304,25 +23317,12 @@
       "satelite_id": "sat_03",
       "satelite_nombre": "ALEXANDRA FONSECA",
       "talla": "T8",
+      "total_costo_mo": 6360,
       "total_mayorista": 389400,
       "unidades_entregadas": 6,
       "unidades_novedad": 0,
       "unidades_por_llegar": 6,
-      "valor_mo": 1060,
-      "fecha_entrega_real": "2026-09-17",
-      "total_costo_mo": 6360,
-      "historial": [
-        {
-          "fecha": "2026-09-17T20:24:16.313Z",
-          "accion": "Entrega completa: 6 uds → ENTREGADO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-17T20:24:54.617Z",
-          "accion": "Pasado a Pago desde Alistamiento",
-          "user": "Jefa de Producción"
-        }
-      ]
+      "valor_mo": 1060
     },
     {
       "cantidad": 6,
@@ -23348,8 +23348,8 @@
           "usuario": "migrado_matriz"
         },
         {
-          "fecha": "2026-09-17T20:24:02.418Z",
           "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-17T20:24:02.418Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -23402,8 +23402,8 @@
           "usuario": "migrado_matriz"
         },
         {
-          "fecha": "2026-09-17T20:24:02.418Z",
           "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-17T20:24:02.418Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -23443,9 +23443,27 @@
       "cumplió_fecha": true,
       "estado": "PAGO_PENDIENTE",
       "fecha_entrega_corte_satelite": "2026-05-18",
+      "fecha_entrega_real": "2026-09-17",
       "fecha_estimada_entrega": "2026-05-26",
       "fecha_op": "2026-01-21",
       "fecha_ot": "2026-03-11",
+      "historial": [
+        {
+          "accion": "Entrega completa: 3 uds → ENTREGADO",
+          "fecha": "2026-09-17T20:25:03.697Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Entrega completa: 3 uds → ENTREGADO",
+          "fecha": "2026-09-17T20:25:45.272Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-17T20:26:11.768Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "OT-11995",
       "migrado": true,
       "motivo_incumplimiento": "",
@@ -23462,30 +23480,12 @@
       "satelite_id": "sat_03",
       "satelite_nombre": "ALEXANDRA FONSECA",
       "talla": "T8",
+      "total_costo_mo": 3180,
       "total_mayorista": 194700,
       "unidades_entregadas": 3,
       "unidades_novedad": 0,
       "unidades_por_llegar": 3,
-      "valor_mo": 1060,
-      "fecha_entrega_real": "2026-09-17",
-      "total_costo_mo": 3180,
-      "historial": [
-        {
-          "fecha": "2026-09-17T20:25:03.697Z",
-          "accion": "Entrega completa: 3 uds → ENTREGADO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-17T20:25:45.272Z",
-          "accion": "Entrega completa: 3 uds → ENTREGADO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-17T20:26:11.768Z",
-          "accion": "Pasado a Pago desde Alistamiento",
-          "user": "Jefa de Producción"
-        }
-      ]
+      "valor_mo": 1060
     },
     {
       "cantidad": 3,
@@ -23511,8 +23511,8 @@
           "usuario": "migrado_matriz"
         },
         {
-          "fecha": "2026-09-17T20:24:10.865Z",
           "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-17T20:24:10.865Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -23565,18 +23565,18 @@
           "usuario": "migrado_matriz"
         },
         {
+          "accion": "Pasado a Pago desde Alistamiento",
           "fecha": "2026-09-17T20:24:10.865Z",
-          "accion": "Pasado a Pago desde Alistamiento",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:26:03.928Z",
           "accion": "Entrega completa: 3 uds → ENTREGADO",
+          "fecha": "2026-09-17T20:26:03.928Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:26:11.768Z",
           "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-17T20:26:11.768Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -23599,12 +23599,12 @@
       "satelite_id": "sat_03",
       "satelite_nombre": "ALEXANDRA FONSECA",
       "talla": "T12",
+      "total_costo_mo": 3180,
       "total_mayorista": 194700,
       "unidades_entregadas": 3,
       "unidades_novedad": 0,
       "unidades_por_llegar": 0,
-      "valor_mo": 1060,
-      "total_costo_mo": 3180
+      "valor_mo": 1060
     },
     {
       "cantidad": 3,
@@ -23617,9 +23617,22 @@
       "cumplió_fecha": true,
       "estado": "PAGO_PENDIENTE",
       "fecha_entrega_corte_satelite": "2026-05-18",
+      "fecha_entrega_real": "2026-09-17",
       "fecha_estimada_entrega": "2026-05-26",
       "fecha_op": "2026-01-21",
       "fecha_ot": "2026-03-11",
+      "historial": [
+        {
+          "accion": "Entrega completa: 3 uds → ENTREGADO",
+          "fecha": "2026-09-17T20:24:43.552Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-17T20:24:48.393Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "OT-11998",
       "migrado": true,
       "motivo_incumplimiento": "",
@@ -23636,25 +23649,12 @@
       "satelite_id": "sat_03",
       "satelite_nombre": "ALEXANDRA FONSECA",
       "talla": "T8",
+      "total_costo_mo": 3180,
       "total_mayorista": 194700,
       "unidades_entregadas": 3,
       "unidades_novedad": 0,
       "unidades_por_llegar": 3,
-      "valor_mo": 1060,
-      "fecha_entrega_real": "2026-09-17",
-      "total_costo_mo": 3180,
-      "historial": [
-        {
-          "fecha": "2026-09-17T20:24:43.552Z",
-          "accion": "Entrega completa: 3 uds → ENTREGADO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-17T20:24:48.393Z",
-          "accion": "Pasado a Pago desde Alistamiento",
-          "user": "Jefa de Producción"
-        }
-      ]
+      "valor_mo": 1060
     },
     {
       "cantidad": 3,
@@ -23680,18 +23680,18 @@
           "usuario": "migrado_matriz"
         },
         {
+          "accion": "Pasado a Pago desde Alistamiento",
           "fecha": "2026-09-17T20:24:08.385Z",
-          "accion": "Pasado a Pago desde Alistamiento",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:24:37.528Z",
           "accion": "Entrega completa: 3 uds → ENTREGADO",
+          "fecha": "2026-09-17T20:24:37.528Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:24:48.393Z",
           "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-17T20:24:48.393Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -23714,12 +23714,12 @@
       "satelite_id": "sat_03",
       "satelite_nombre": "ALEXANDRA FONSECA",
       "talla": "T10",
+      "total_costo_mo": 3180,
       "total_mayorista": 194700,
       "unidades_entregadas": 3,
       "unidades_novedad": 0,
       "unidades_por_llegar": 0,
-      "valor_mo": 1060,
-      "total_costo_mo": 3180
+      "valor_mo": 1060
     },
     {
       "cantidad": 2,
@@ -23745,8 +23745,8 @@
           "usuario": "migrado_matriz"
         },
         {
-          "fecha": "2026-09-17T20:24:08.385Z",
           "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-17T20:24:08.385Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -23786,9 +23786,27 @@
       "cumplió_fecha": true,
       "estado": "PAGO_PENDIENTE",
       "fecha_entrega_corte_satelite": "2026-05-18",
+      "fecha_entrega_real": "2026-09-17",
       "fecha_estimada_entrega": "2026-05-26",
       "fecha_op": "2026-01-21",
       "fecha_ot": "2026-03-11",
+      "historial": [
+        {
+          "accion": "Entrega completa: 5 uds → ENTREGADO",
+          "fecha": "2026-09-17T20:24:19.633Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Entrega completa: 5 uds → ENTREGADO",
+          "fecha": "2026-09-17T20:24:32.857Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-17T20:24:51.089Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "OT-12001",
       "migrado": true,
       "motivo_incumplimiento": "",
@@ -23805,30 +23823,12 @@
       "satelite_id": "sat_03",
       "satelite_nombre": "ALEXANDRA FONSECA",
       "talla": "T8",
+      "total_costo_mo": 5300,
       "total_mayorista": 324500,
       "unidades_entregadas": 5,
       "unidades_novedad": 0,
       "unidades_por_llegar": 5,
-      "valor_mo": 1060,
-      "fecha_entrega_real": "2026-09-17",
-      "total_costo_mo": 5300,
-      "historial": [
-        {
-          "fecha": "2026-09-17T20:24:19.633Z",
-          "accion": "Entrega completa: 5 uds → ENTREGADO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-17T20:24:32.857Z",
-          "accion": "Entrega completa: 5 uds → ENTREGADO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-17T20:24:51.089Z",
-          "accion": "Pasado a Pago desde Alistamiento",
-          "user": "Jefa de Producción"
-        }
-      ]
+      "valor_mo": 1060
     },
     {
       "cantidad": 4,
@@ -23854,8 +23854,8 @@
           "usuario": "migrado_matriz"
         },
         {
-          "fecha": "2026-09-17T20:24:05.938Z",
           "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-17T20:24:05.938Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -23908,8 +23908,8 @@
           "usuario": "migrado_matriz"
         },
         {
-          "fecha": "2026-09-17T20:24:05.938Z",
           "accion": "Pasado a Pago desde Alistamiento",
+          "fecha": "2026-09-17T20:24:05.938Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -72149,8 +72149,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-18T12:02:24.967Z",
           "accion": "Taller asignado: VIVIANA AGUIRRE",
+          "fecha": "2026-09-18T12:02:24.967Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -72193,8 +72193,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-18T12:02:24.967Z",
           "accion": "Taller asignado: VIVIANA AGUIRRE",
+          "fecha": "2026-09-18T12:02:24.967Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -72237,8 +72237,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-18T12:02:24.968Z",
           "accion": "Taller asignado: VIVIANA AGUIRRE",
+          "fecha": "2026-09-18T12:02:24.968Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -72281,8 +72281,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-18T12:02:24.968Z",
           "accion": "Taller asignado: VIVIANA AGUIRRE",
+          "fecha": "2026-09-18T12:02:24.968Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -72325,8 +72325,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-18T12:02:24.968Z",
           "accion": "Taller asignado: VIVIANA AGUIRRE",
+          "fecha": "2026-09-18T12:02:24.968Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -72369,8 +72369,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-18T12:02:24.968Z",
           "accion": "Taller asignado: VIVIANA AGUIRRE",
+          "fecha": "2026-09-18T12:02:24.968Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -74341,6 +74341,11 @@
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
           "fecha": "2026-09-15T19:17:14.349Z",
           "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-09-19T13:30:02.155Z",
+          "accion": "Taller asignado: YOLANDA CAMACHO",
+          "user": "Jefa de Producción"
         }
       ],
       "id": "id_1786987567371_rn0efw49q",
@@ -74350,7 +74355,7 @@
       "numero_ot": 13129,
       "op_id": "OP-2026-111",
       "referencia": "1058T8",
-      "satelite_id": "id_1782597405790_ec1t6571y",
+      "satelite_id": "id_1789247533373_gilb89jyc",
       "talla": "T8",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
@@ -74380,6 +74385,11 @@
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
           "fecha": "2026-09-15T19:17:14.349Z",
           "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-09-19T13:30:02.155Z",
+          "accion": "Taller asignado: YOLANDA CAMACHO",
+          "user": "Jefa de Producción"
         }
       ],
       "id": "id_1786987567371_uf26vtvw0",
@@ -74389,7 +74399,7 @@
       "numero_ot": 13130,
       "op_id": "OP-2026-111",
       "referencia": "1058T10",
-      "satelite_id": "id_1782597405790_ec1t6571y",
+      "satelite_id": "id_1789247533373_gilb89jyc",
       "talla": "T10",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
@@ -74419,6 +74429,11 @@
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
           "fecha": "2026-09-15T19:17:14.349Z",
           "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-09-19T13:30:02.155Z",
+          "accion": "Taller asignado: YOLANDA CAMACHO",
+          "user": "Jefa de Producción"
         }
       ],
       "id": "id_1786987567371_20s7v6t6k",
@@ -74428,7 +74443,7 @@
       "numero_ot": 13131,
       "op_id": "OP-2026-111",
       "referencia": "1058T12",
-      "satelite_id": "id_1782597405790_ec1t6571y",
+      "satelite_id": "id_1789247533373_gilb89jyc",
       "talla": "T12",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
@@ -74458,6 +74473,11 @@
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
           "fecha": "2026-09-15T19:17:14.349Z",
           "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-09-19T13:30:02.155Z",
+          "accion": "Taller asignado: YOLANDA CAMACHO",
+          "user": "Jefa de Producción"
         }
       ],
       "id": "id_1786987567371_7hbaquzdx",
@@ -74467,7 +74487,7 @@
       "numero_ot": 13132,
       "op_id": "OP-2026-111",
       "referencia": "1058T16",
-      "satelite_id": "id_1782597405790_ec1t6571y",
+      "satelite_id": "id_1789247533373_gilb89jyc",
       "talla": "T16",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
@@ -82017,6 +82037,7 @@
       "created_at": "2026-08-29",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-17",
       "fecha_ot": "2026-07-30",
       "historial": [
         {
@@ -82030,8 +82051,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:22:43.052Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:22:43.052Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -82046,8 +82067,7 @@
       "talla": "T6",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 11561,
-      "fecha_corte": "2026-09-17"
+      "valor_mo": 11561
     },
     {
       "cantidad": 12,
@@ -82056,6 +82076,7 @@
       "created_at": "2026-08-29",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-17",
       "fecha_ot": "2026-07-30",
       "historial": [
         {
@@ -82069,8 +82090,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:22:43.053Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:22:43.053Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -82085,8 +82106,7 @@
       "talla": "T8",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 11561,
-      "fecha_corte": "2026-09-17"
+      "valor_mo": 11561
     },
     {
       "cantidad": 12,
@@ -82095,6 +82115,7 @@
       "created_at": "2026-08-29",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-17",
       "fecha_ot": "2026-07-30",
       "historial": [
         {
@@ -82108,8 +82129,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:22:43.053Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:22:43.053Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -82124,8 +82145,7 @@
       "talla": "T10",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 11561,
-      "fecha_corte": "2026-09-17"
+      "valor_mo": 11561
     },
     {
       "cantidad": 16,
@@ -82134,6 +82154,7 @@
       "created_at": "2026-08-29",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-17",
       "fecha_ot": "2026-07-30",
       "historial": [
         {
@@ -82147,8 +82168,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:22:43.053Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:22:43.053Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -82163,8 +82184,7 @@
       "talla": "T12",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 11561,
-      "fecha_corte": "2026-09-17"
+      "valor_mo": 11561
     },
     {
       "cantidad": 16,
@@ -82173,6 +82193,7 @@
       "created_at": "2026-08-29",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-17",
       "fecha_ot": "2026-07-30",
       "historial": [
         {
@@ -82186,8 +82207,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:22:43.053Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:22:43.053Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -82202,8 +82223,7 @@
       "talla": "T14",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 11561,
-      "fecha_corte": "2026-09-17"
+      "valor_mo": 11561
     },
     {
       "cantidad": 16,
@@ -82212,6 +82232,7 @@
       "created_at": "2026-08-29",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-17",
       "fecha_ot": "2026-07-30",
       "historial": [
         {
@@ -82225,8 +82246,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:22:43.053Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:22:43.053Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -82241,8 +82262,7 @@
       "talla": "T16",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 11561,
-      "fecha_corte": "2026-09-17"
+      "valor_mo": 11561
     },
     {
       "cantidad": 8,
@@ -82463,8 +82483,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:23:32.036Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:23:32.036Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -82502,8 +82522,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:23:32.036Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:23:32.036Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -82541,8 +82561,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:23:32.036Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:23:32.036Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -82580,8 +82600,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:23:32.036Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:23:32.036Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -82619,8 +82639,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:23:32.036Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:23:32.036Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -82658,8 +82678,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:23:32.036Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:23:32.036Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -82683,6 +82703,7 @@
       "created_at": "2026-09-02",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-17",
       "fecha_ot": "2026-07-30",
       "historial": [
         {
@@ -82701,8 +82722,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:22:25.579Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:22:25.579Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -82717,8 +82738,7 @@
       "talla": "T10",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 11561,
-      "fecha_corte": "2026-09-17"
+      "valor_mo": 11561
     },
     {
       "cantidad": 8,
@@ -82727,6 +82747,7 @@
       "created_at": "2026-09-02",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-17",
       "fecha_ot": "2026-07-30",
       "historial": [
         {
@@ -82745,8 +82766,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:22:25.579Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:22:25.579Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -82761,8 +82782,7 @@
       "talla": "T14",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 11561,
-      "fecha_corte": "2026-09-17"
+      "valor_mo": 11561
     },
     {
       "cantidad": 8,
@@ -84378,7 +84398,20 @@
       "created_at": "2026-09-04",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-19",
       "fecha_ot": "2026-07-28",
+      "historial": [
+        {
+          "accion": "Taller asignado: NIEVES CRISTANCHO",
+          "fecha": "2026-09-19T13:24:22.994Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:24:31.653Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1788534249998_dfzewnkqq",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA SUEDE OLD MONEY",
@@ -84386,24 +84419,11 @@
       "numero_ot": 13455,
       "op_id": "OP-2026-095",
       "referencia": "1119T4",
+      "satelite_id": "sat_17",
       "talla": "T4",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 8934,
-      "satelite_id": "sat_17",
-      "historial": [
-        {
-          "fecha": "2026-09-19T13:24:22.994Z",
-          "accion": "Taller asignado: NIEVES CRISTANCHO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-19T13:24:31.653Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "fecha_corte": "2026-09-19"
+      "valor_mo": 8934
     },
     {
       "cantidad": 8,
@@ -84412,7 +84432,20 @@
       "created_at": "2026-09-04",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-19",
       "fecha_ot": "2026-07-28",
+      "historial": [
+        {
+          "accion": "Taller asignado: NIEVES CRISTANCHO",
+          "fecha": "2026-09-19T13:24:22.994Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:24:31.653Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1788534249998_ntu5vrf0x",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA SUEDE OLD MONEY",
@@ -84420,24 +84453,11 @@
       "numero_ot": 13456,
       "op_id": "OP-2026-095",
       "referencia": "1119T6",
+      "satelite_id": "sat_17",
       "talla": "T6",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 8934,
-      "satelite_id": "sat_17",
-      "historial": [
-        {
-          "fecha": "2026-09-19T13:24:22.994Z",
-          "accion": "Taller asignado: NIEVES CRISTANCHO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-19T13:24:31.653Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "fecha_corte": "2026-09-19"
+      "valor_mo": 8934
     },
     {
       "cantidad": 12,
@@ -84446,7 +84466,20 @@
       "created_at": "2026-09-04",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-19",
       "fecha_ot": "2026-07-28",
+      "historial": [
+        {
+          "accion": "Taller asignado: NIEVES CRISTANCHO",
+          "fecha": "2026-09-19T13:24:22.995Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:24:31.653Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1788534249998_k5tmhwybp",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA SUEDE OLD MONEY",
@@ -84454,24 +84487,11 @@
       "numero_ot": 13457,
       "op_id": "OP-2026-095",
       "referencia": "1119T8",
+      "satelite_id": "sat_17",
       "talla": "T8",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 8934,
-      "satelite_id": "sat_17",
-      "historial": [
-        {
-          "fecha": "2026-09-19T13:24:22.995Z",
-          "accion": "Taller asignado: NIEVES CRISTANCHO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-19T13:24:31.653Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "fecha_corte": "2026-09-19"
+      "valor_mo": 8934
     },
     {
       "cantidad": 12,
@@ -84480,7 +84500,20 @@
       "created_at": "2026-09-04",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-19",
       "fecha_ot": "2026-07-28",
+      "historial": [
+        {
+          "accion": "Taller asignado: NIEVES CRISTANCHO",
+          "fecha": "2026-09-19T13:24:22.995Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:24:31.653Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1788534249998_477v09gkb",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA SUEDE OLD MONEY",
@@ -84488,24 +84521,11 @@
       "numero_ot": 13458,
       "op_id": "OP-2026-095",
       "referencia": "1119T10",
+      "satelite_id": "sat_17",
       "talla": "T10",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 8934,
-      "satelite_id": "sat_17",
-      "historial": [
-        {
-          "fecha": "2026-09-19T13:24:22.995Z",
-          "accion": "Taller asignado: NIEVES CRISTANCHO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-19T13:24:31.653Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "fecha_corte": "2026-09-19"
+      "valor_mo": 8934
     },
     {
       "cantidad": 16,
@@ -84514,7 +84534,20 @@
       "created_at": "2026-09-04",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-19",
       "fecha_ot": "2026-07-28",
+      "historial": [
+        {
+          "accion": "Taller asignado: NIEVES CRISTANCHO",
+          "fecha": "2026-09-19T13:24:22.995Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:24:31.653Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1788534249998_428s3dz49",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA SUEDE OLD MONEY",
@@ -84522,24 +84555,11 @@
       "numero_ot": 13459,
       "op_id": "OP-2026-095",
       "referencia": "1119T12",
+      "satelite_id": "sat_17",
       "talla": "T12",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 8934,
-      "satelite_id": "sat_17",
-      "historial": [
-        {
-          "fecha": "2026-09-19T13:24:22.995Z",
-          "accion": "Taller asignado: NIEVES CRISTANCHO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-19T13:24:31.653Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "fecha_corte": "2026-09-19"
+      "valor_mo": 8934
     },
     {
       "cantidad": 20,
@@ -84548,7 +84568,20 @@
       "created_at": "2026-09-04",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-19",
       "fecha_ot": "2026-07-28",
+      "historial": [
+        {
+          "accion": "Taller asignado: NIEVES CRISTANCHO",
+          "fecha": "2026-09-19T13:24:22.995Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:24:31.653Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1788534249998_6voe7j1ak",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA SUEDE OLD MONEY",
@@ -84556,24 +84589,11 @@
       "numero_ot": 13460,
       "op_id": "OP-2026-095",
       "referencia": "1119T14",
+      "satelite_id": "sat_17",
       "talla": "T14",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 8934,
-      "satelite_id": "sat_17",
-      "historial": [
-        {
-          "fecha": "2026-09-19T13:24:22.995Z",
-          "accion": "Taller asignado: NIEVES CRISTANCHO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-19T13:24:31.653Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "fecha_corte": "2026-09-19"
+      "valor_mo": 8934
     },
     {
       "cantidad": 20,
@@ -84582,7 +84602,20 @@
       "created_at": "2026-09-04",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-19",
       "fecha_ot": "2026-07-28",
+      "historial": [
+        {
+          "accion": "Taller asignado: NIEVES CRISTANCHO",
+          "fecha": "2026-09-19T13:24:22.995Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:24:31.653Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1788534249998_yhu9bq4oj",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA SUEDE OLD MONEY",
@@ -84590,24 +84623,11 @@
       "numero_ot": 13461,
       "op_id": "OP-2026-095",
       "referencia": "1119T16",
+      "satelite_id": "sat_17",
       "talla": "T16",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 8934,
-      "satelite_id": "sat_17",
-      "historial": [
-        {
-          "fecha": "2026-09-19T13:24:22.995Z",
-          "accion": "Taller asignado: NIEVES CRISTANCHO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-19T13:24:31.653Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "fecha_corte": "2026-09-19"
+      "valor_mo": 8934
     },
     {
       "cantidad": 17,
@@ -90378,8 +90398,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:20:50.974Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:20:50.974Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -90417,8 +90437,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:20:50.975Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:20:50.975Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -90456,8 +90476,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:20:50.975Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:20:50.975Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -90481,7 +90501,15 @@
       "created_at": "2026-09-16",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-17",
       "fecha_ot": "2026-07-30",
+      "historial": [
+        {
+          "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:23:15.778Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1789570084400_ljham77en",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA CAZADORA",
@@ -90492,15 +90520,7 @@
       "talla": "T10",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 11561,
-      "historial": [
-        {
-          "fecha": "2026-09-17T20:23:15.778Z",
-          "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "fecha_corte": "2026-09-17"
+      "valor_mo": 11561
     },
     {
       "cantidad": 12,
@@ -90509,7 +90529,15 @@
       "created_at": "2026-09-16",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-17",
       "fecha_ot": "2026-07-30",
+      "historial": [
+        {
+          "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:23:15.778Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1789570084400_5l4v6glsp",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA CAZADORA",
@@ -90520,15 +90548,7 @@
       "talla": "T12",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 11561,
-      "historial": [
-        {
-          "fecha": "2026-09-17T20:23:15.778Z",
-          "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "fecha_corte": "2026-09-17"
+      "valor_mo": 11561
     },
     {
       "cantidad": 12,
@@ -90537,7 +90557,15 @@
       "created_at": "2026-09-16",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-17",
       "fecha_ot": "2026-07-30",
+      "historial": [
+        {
+          "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:23:15.778Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1789570084400_fhxssive6",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA CAZADORA",
@@ -90548,15 +90576,7 @@
       "talla": "T14",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 11561,
-      "historial": [
-        {
-          "fecha": "2026-09-17T20:23:15.778Z",
-          "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "fecha_corte": "2026-09-17"
+      "valor_mo": 11561
     },
     {
       "cantidad": 12,
@@ -90565,7 +90585,15 @@
       "created_at": "2026-09-16",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-17",
       "fecha_ot": "2026-07-30",
+      "historial": [
+        {
+          "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:23:15.778Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1789570084400_65j0iu4ma",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA CAZADORA",
@@ -90576,15 +90604,7 @@
       "talla": "T16",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 11561,
-      "historial": [
-        {
-          "fecha": "2026-09-17T20:23:15.778Z",
-          "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "fecha_corte": "2026-09-17"
+      "valor_mo": 11561
     },
     {
       "cantidad": 10,
@@ -90607,8 +90627,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:21:19.670Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:21:19.670Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -90646,8 +90666,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:21:19.670Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:21:19.670Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -90685,8 +90705,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:21:19.670Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:21:19.670Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -90724,8 +90744,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:21:19.670Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:21:19.670Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -90763,8 +90783,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:22:55.420Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:22:55.420Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -90802,8 +90822,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:22:55.420Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:22:55.420Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -90841,8 +90861,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:22:55.420Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:22:55.420Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -90880,8 +90900,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:22:55.420Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:22:55.420Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -90919,8 +90939,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:22:55.420Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:22:55.420Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -90958,8 +90978,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-17T20:22:55.420Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-17T20:22:55.420Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -91767,7 +91787,20 @@
       "created_at": "2026-09-16",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-19",
       "fecha_ot": "2026-09-02",
+      "historial": [
+        {
+          "accion": "Taller asignado: ELIZABETH HERNANDEZ FORERO",
+          "fecha": "2026-09-19T13:27:08.574Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:27:16.270Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1789595610108_9id557s46",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA DISCOVERY",
@@ -91775,24 +91808,11 @@
       "numero_ot": 13716,
       "op_id": "OP-2026-215",
       "referencia": "T4",
+      "satelite_id": "id_1789824418634_ojryqap9f",
       "talla": "T4",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "satelite_id": "id_1789824418634_ojryqap9f",
-      "historial": [
-        {
-          "fecha": "2026-09-19T13:27:08.574Z",
-          "accion": "Taller asignado: ELIZABETH HERNANDEZ FORERO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-19T13:27:16.270Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "fecha_corte": "2026-09-19"
+      "valor_mo": 1151
     },
     {
       "cantidad": 8,
@@ -91801,7 +91821,20 @@
       "created_at": "2026-09-16",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-19",
       "fecha_ot": "2026-09-02",
+      "historial": [
+        {
+          "accion": "Taller asignado: ELIZABETH HERNANDEZ FORERO",
+          "fecha": "2026-09-19T13:27:08.574Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:27:16.270Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1789595610108_x46jhcb1t",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA DISCOVERY",
@@ -91809,24 +91842,11 @@
       "numero_ot": 13717,
       "op_id": "OP-2026-215",
       "referencia": "T6",
+      "satelite_id": "id_1789824418634_ojryqap9f",
       "talla": "T6",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "satelite_id": "id_1789824418634_ojryqap9f",
-      "historial": [
-        {
-          "fecha": "2026-09-19T13:27:08.574Z",
-          "accion": "Taller asignado: ELIZABETH HERNANDEZ FORERO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-19T13:27:16.270Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "fecha_corte": "2026-09-19"
+      "valor_mo": 1151
     },
     {
       "cantidad": 16,
@@ -91835,7 +91855,20 @@
       "created_at": "2026-09-16",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-19",
       "fecha_ot": "2026-09-02",
+      "historial": [
+        {
+          "accion": "Taller asignado: ELIZABETH HERNANDEZ FORERO",
+          "fecha": "2026-09-19T13:27:08.574Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:27:16.270Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1789595610108_5kycixt9e",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA DISCOVERY",
@@ -91843,24 +91876,11 @@
       "numero_ot": 13718,
       "op_id": "OP-2026-215",
       "referencia": "T8",
+      "satelite_id": "id_1789824418634_ojryqap9f",
       "talla": "T8",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "satelite_id": "id_1789824418634_ojryqap9f",
-      "historial": [
-        {
-          "fecha": "2026-09-19T13:27:08.574Z",
-          "accion": "Taller asignado: ELIZABETH HERNANDEZ FORERO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-19T13:27:16.270Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "fecha_corte": "2026-09-19"
+      "valor_mo": 1151
     },
     {
       "cantidad": 16,
@@ -91869,7 +91889,20 @@
       "created_at": "2026-09-16",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-19",
       "fecha_ot": "2026-09-02",
+      "historial": [
+        {
+          "accion": "Taller asignado: ELIZABETH HERNANDEZ FORERO",
+          "fecha": "2026-09-19T13:27:08.574Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:27:16.270Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1789595610108_b3ajuvpqv",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA DISCOVERY",
@@ -91877,24 +91910,11 @@
       "numero_ot": 13719,
       "op_id": "OP-2026-215",
       "referencia": "T10",
+      "satelite_id": "id_1789824418634_ojryqap9f",
       "talla": "T10",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "satelite_id": "id_1789824418634_ojryqap9f",
-      "historial": [
-        {
-          "fecha": "2026-09-19T13:27:08.574Z",
-          "accion": "Taller asignado: ELIZABETH HERNANDEZ FORERO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-19T13:27:16.270Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "fecha_corte": "2026-09-19"
+      "valor_mo": 1151
     },
     {
       "cantidad": 16,
@@ -91903,7 +91923,20 @@
       "created_at": "2026-09-16",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-19",
       "fecha_ot": "2026-09-02",
+      "historial": [
+        {
+          "accion": "Taller asignado: ELIZABETH HERNANDEZ FORERO",
+          "fecha": "2026-09-19T13:27:08.574Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:27:16.270Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1789595610108_3uqwh4ivg",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA DISCOVERY",
@@ -91911,24 +91944,11 @@
       "numero_ot": 13720,
       "op_id": "OP-2026-215",
       "referencia": "T12",
+      "satelite_id": "id_1789824418634_ojryqap9f",
       "talla": "T12",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "satelite_id": "id_1789824418634_ojryqap9f",
-      "historial": [
-        {
-          "fecha": "2026-09-19T13:27:08.574Z",
-          "accion": "Taller asignado: ELIZABETH HERNANDEZ FORERO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-19T13:27:16.270Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "fecha_corte": "2026-09-19"
+      "valor_mo": 1151
     },
     {
       "cantidad": 16,
@@ -91937,7 +91957,20 @@
       "created_at": "2026-09-16",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-19",
       "fecha_ot": "2026-09-02",
+      "historial": [
+        {
+          "accion": "Taller asignado: ELIZABETH HERNANDEZ FORERO",
+          "fecha": "2026-09-19T13:27:08.574Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:27:16.270Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1789595610108_swlvrlfhq",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA DISCOVERY",
@@ -91945,24 +91978,11 @@
       "numero_ot": 13721,
       "op_id": "OP-2026-215",
       "referencia": "T14",
+      "satelite_id": "id_1789824418634_ojryqap9f",
       "talla": "T14",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "satelite_id": "id_1789824418634_ojryqap9f",
-      "historial": [
-        {
-          "fecha": "2026-09-19T13:27:08.574Z",
-          "accion": "Taller asignado: ELIZABETH HERNANDEZ FORERO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-19T13:27:16.270Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "fecha_corte": "2026-09-19"
+      "valor_mo": 1151
     },
     {
       "cantidad": 16,
@@ -91971,7 +91991,20 @@
       "created_at": "2026-09-16",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-19",
       "fecha_ot": "2026-09-02",
+      "historial": [
+        {
+          "accion": "Taller asignado: ELIZABETH HERNANDEZ FORERO",
+          "fecha": "2026-09-19T13:27:08.574Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:27:16.270Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1789595610108_a0s006l0c",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA DISCOVERY",
@@ -91979,24 +92012,11 @@
       "numero_ot": 13722,
       "op_id": "OP-2026-215",
       "referencia": "T16",
+      "satelite_id": "id_1789824418634_ojryqap9f",
       "talla": "T16",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "satelite_id": "id_1789824418634_ojryqap9f",
-      "historial": [
-        {
-          "fecha": "2026-09-19T13:27:08.574Z",
-          "accion": "Taller asignado: ELIZABETH HERNANDEZ FORERO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-19T13:27:16.270Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "fecha_corte": "2026-09-19"
+      "valor_mo": 1151
     },
     {
       "cantidad": 8,
@@ -92145,7 +92165,20 @@
       "created_at": "2026-09-16",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-19",
       "fecha_ot": "2026-09-02",
+      "historial": [
+        {
+          "accion": "Taller asignado: LUZ MIRIAM PULIDO",
+          "fecha": "2026-09-19T13:27:44.270Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:28:05.799Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1789595610108_7q21k12as",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA DISCOVERY",
@@ -92153,24 +92186,11 @@
       "numero_ot": 13730,
       "op_id": "OP-2026-215",
       "referencia": "T4",
+      "satelite_id": "id_1789247121946_bk6io1hch",
       "talla": "T4",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "satelite_id": "id_1789247121946_bk6io1hch",
-      "historial": [
-        {
-          "fecha": "2026-09-19T13:27:44.270Z",
-          "accion": "Taller asignado: LUZ MIRIAM PULIDO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-19T13:28:05.799Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "fecha_corte": "2026-09-19"
+      "valor_mo": 1151
     },
     {
       "cantidad": 8,
@@ -92179,7 +92199,20 @@
       "created_at": "2026-09-16",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-19",
       "fecha_ot": "2026-09-02",
+      "historial": [
+        {
+          "accion": "Taller asignado: LUZ MIRIAM PULIDO",
+          "fecha": "2026-09-19T13:27:44.270Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:28:05.799Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1789595610108_eowqefddk",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA DISCOVERY",
@@ -92187,24 +92220,11 @@
       "numero_ot": 13731,
       "op_id": "OP-2026-215",
       "referencia": "T6",
+      "satelite_id": "id_1789247121946_bk6io1hch",
       "talla": "T6",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "satelite_id": "id_1789247121946_bk6io1hch",
-      "historial": [
-        {
-          "fecha": "2026-09-19T13:27:44.270Z",
-          "accion": "Taller asignado: LUZ MIRIAM PULIDO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-19T13:28:05.799Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "fecha_corte": "2026-09-19"
+      "valor_mo": 1151
     },
     {
       "cantidad": 16,
@@ -92213,7 +92233,20 @@
       "created_at": "2026-09-16",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-19",
       "fecha_ot": "2026-09-02",
+      "historial": [
+        {
+          "accion": "Taller asignado: LUZ MIRIAM PULIDO",
+          "fecha": "2026-09-19T13:27:44.270Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:28:05.800Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1789595610108_mh4chwtac",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA DISCOVERY",
@@ -92221,24 +92254,11 @@
       "numero_ot": 13732,
       "op_id": "OP-2026-215",
       "referencia": "T8",
+      "satelite_id": "id_1789247121946_bk6io1hch",
       "talla": "T8",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "satelite_id": "id_1789247121946_bk6io1hch",
-      "historial": [
-        {
-          "fecha": "2026-09-19T13:27:44.270Z",
-          "accion": "Taller asignado: LUZ MIRIAM PULIDO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-19T13:28:05.800Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "fecha_corte": "2026-09-19"
+      "valor_mo": 1151
     },
     {
       "cantidad": 16,
@@ -92247,7 +92267,20 @@
       "created_at": "2026-09-16",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-19",
       "fecha_ot": "2026-09-02",
+      "historial": [
+        {
+          "accion": "Taller asignado: LUZ MIRIAM PULIDO",
+          "fecha": "2026-09-19T13:27:44.270Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:28:05.800Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1789595610108_2jpr7jl97",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA DISCOVERY",
@@ -92255,24 +92288,11 @@
       "numero_ot": 13733,
       "op_id": "OP-2026-215",
       "referencia": "T10",
+      "satelite_id": "id_1789247121946_bk6io1hch",
       "talla": "T10",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "satelite_id": "id_1789247121946_bk6io1hch",
-      "historial": [
-        {
-          "fecha": "2026-09-19T13:27:44.270Z",
-          "accion": "Taller asignado: LUZ MIRIAM PULIDO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-19T13:28:05.800Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "fecha_corte": "2026-09-19"
+      "valor_mo": 1151
     },
     {
       "cantidad": 16,
@@ -92281,7 +92301,20 @@
       "created_at": "2026-09-16",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-19",
       "fecha_ot": "2026-09-02",
+      "historial": [
+        {
+          "accion": "Taller asignado: LUZ MIRIAM PULIDO",
+          "fecha": "2026-09-19T13:27:44.270Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:28:05.800Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1789595610108_uy9vodo5b",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA DISCOVERY",
@@ -92289,24 +92322,11 @@
       "numero_ot": 13734,
       "op_id": "OP-2026-215",
       "referencia": "T12",
+      "satelite_id": "id_1789247121946_bk6io1hch",
       "talla": "T12",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "satelite_id": "id_1789247121946_bk6io1hch",
-      "historial": [
-        {
-          "fecha": "2026-09-19T13:27:44.270Z",
-          "accion": "Taller asignado: LUZ MIRIAM PULIDO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-19T13:28:05.800Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "fecha_corte": "2026-09-19"
+      "valor_mo": 1151
     },
     {
       "cantidad": 16,
@@ -92315,7 +92335,20 @@
       "created_at": "2026-09-16",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-19",
       "fecha_ot": "2026-09-02",
+      "historial": [
+        {
+          "accion": "Taller asignado: LUZ MIRIAM PULIDO",
+          "fecha": "2026-09-19T13:27:44.270Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:28:05.800Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1789595610108_iwm0x3fs5",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA DISCOVERY",
@@ -92323,24 +92356,11 @@
       "numero_ot": 13735,
       "op_id": "OP-2026-215",
       "referencia": "T14",
+      "satelite_id": "id_1789247121946_bk6io1hch",
       "talla": "T14",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "satelite_id": "id_1789247121946_bk6io1hch",
-      "historial": [
-        {
-          "fecha": "2026-09-19T13:27:44.270Z",
-          "accion": "Taller asignado: LUZ MIRIAM PULIDO",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-19T13:28:05.800Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "fecha_corte": "2026-09-19"
+      "valor_mo": 1151
     },
     {
       "cantidad": 16,
@@ -92349,7 +92369,20 @@
       "created_at": "2026-09-16",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-19",
       "fecha_ot": "2026-09-02",
+      "historial": [
+        {
+          "accion": "Taller asignado: LUZ MIRIAM PULIDO",
+          "fecha": "2026-09-19T13:27:44.270Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:28:05.800Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1789595610108_3byg8yt9h",
       "motivo_incumplimiento": "",
       "nombre": "CHAQUETA DISCOVERY",
@@ -92357,311 +92390,249 @@
       "numero_ot": 13736,
       "op_id": "OP-2026-215",
       "referencia": "T16",
+      "satelite_id": "id_1789247121946_bk6io1hch",
       "talla": "T16",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "satelite_id": "id_1789247121946_bk6io1hch",
+      "valor_mo": 1151
+    },
+    {
+      "cantidad": 12,
+      "categoria": "CONJUNTOS",
+      "color": "CAMEL",
+      "created_at": "2026-09-19",
+      "created_by": "Jefa de Producción",
+      "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-09-19",
+      "fecha_ot": "2026-09-02",
       "historial": [
         {
-          "fecha": "2026-09-19T13:27:44.270Z",
-          "accion": "Taller asignado: LUZ MIRIAM PULIDO",
+          "accion": "Taller asignado: GRACIELA GUERRERO MOLINA",
+          "fecha": "2026-09-19T13:25:15.351Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-19T13:28:05.800Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:25:21.304Z",
           "user": "Jefa de Producción"
         }
       ],
-      "fecha_corte": "2026-09-19"
-    },
-    {
       "id": "id_1789824298024_48ymsv1hx",
+      "motivo_incumplimiento": "",
+      "nombre": "CONJUNTO CHELSY",
+      "notas": "",
       "numero_ot": 13737,
       "op_id": "OP-2026-203",
-      "categoria": "CONJUNTOS",
-      "nombre": "CONJUNTO CHELSY",
       "referencia": "T4",
-      "color": "CAMEL",
-      "talla": "T4",
-      "cantidad": 12,
-      "valor_mo": 1151,
-      "fecha_ot": "2026-09-02",
       "satelite_id": "id_1789247306328_smd3rq88s",
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
+      "talla": "T4",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 1151
+    },
+    {
+      "cantidad": 12,
+      "categoria": "CONJUNTOS",
+      "color": "CAMEL",
+      "created_at": "2026-09-19",
+      "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_corte": "2026-09-19",
+      "fecha_ot": "2026-09-02",
       "historial": [
         {
-          "fecha": "2026-09-19T13:25:15.351Z",
           "accion": "Taller asignado: GRACIELA GUERRERO MOLINA",
+          "fecha": "2026-09-19T13:25:15.352Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-19T13:25:21.304Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:25:21.304Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-19",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-09-19"
-    },
-    {
       "id": "id_1789824298024_p9og9yrzm",
+      "motivo_incumplimiento": "",
+      "nombre": "CONJUNTO CHELSY",
+      "notas": "",
       "numero_ot": 13738,
       "op_id": "OP-2026-203",
-      "categoria": "CONJUNTOS",
-      "nombre": "CONJUNTO CHELSY",
       "referencia": "T6",
-      "color": "CAMEL",
-      "talla": "T6",
-      "cantidad": 12,
-      "valor_mo": 1151,
-      "fecha_ot": "2026-09-02",
       "satelite_id": "id_1789247306328_smd3rq88s",
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
+      "talla": "T6",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 1151
+    },
+    {
+      "cantidad": 12,
+      "categoria": "CONJUNTOS",
+      "color": "CAMEL",
+      "created_at": "2026-09-19",
+      "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_corte": "2026-09-19",
+      "fecha_ot": "2026-09-02",
       "historial": [
         {
-          "fecha": "2026-09-19T13:25:15.352Z",
           "accion": "Taller asignado: GRACIELA GUERRERO MOLINA",
+          "fecha": "2026-09-19T13:25:15.352Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-19T13:25:21.304Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:25:21.304Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-19",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-09-19"
-    },
-    {
       "id": "id_1789824298024_it3m5w4s9",
+      "motivo_incumplimiento": "",
+      "nombre": "CONJUNTO CHELSY",
+      "notas": "",
       "numero_ot": 13739,
       "op_id": "OP-2026-203",
-      "categoria": "CONJUNTOS",
-      "nombre": "CONJUNTO CHELSY",
       "referencia": "T8",
-      "color": "CAMEL",
-      "talla": "T8",
-      "cantidad": 12,
-      "valor_mo": 1151,
-      "fecha_ot": "2026-09-02",
       "satelite_id": "id_1789247306328_smd3rq88s",
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
+      "talla": "T8",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 1151
+    },
+    {
+      "cantidad": 24,
+      "categoria": "CONJUNTOS",
+      "color": "CAMEL",
+      "created_at": "2026-09-19",
+      "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_corte": "2026-09-19",
+      "fecha_ot": "2026-09-02",
       "historial": [
         {
-          "fecha": "2026-09-19T13:25:15.352Z",
           "accion": "Taller asignado: GRACIELA GUERRERO MOLINA",
+          "fecha": "2026-09-19T13:25:15.352Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-19T13:25:21.304Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:25:21.304Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-19",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-09-19"
-    },
-    {
       "id": "id_1789824298024_ond293r1n",
+      "motivo_incumplimiento": "",
+      "nombre": "CONJUNTO CHELSY",
+      "notas": "",
       "numero_ot": 13740,
       "op_id": "OP-2026-203",
-      "categoria": "CONJUNTOS",
-      "nombre": "CONJUNTO CHELSY",
       "referencia": "T10",
-      "color": "CAMEL",
-      "talla": "T10",
-      "cantidad": 24,
-      "valor_mo": 1151,
-      "fecha_ot": "2026-09-02",
       "satelite_id": "id_1789247306328_smd3rq88s",
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
+      "talla": "T10",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 1151
+    },
+    {
+      "cantidad": 24,
+      "categoria": "CONJUNTOS",
+      "color": "CAMEL",
+      "created_at": "2026-09-19",
+      "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_corte": "2026-09-19",
+      "fecha_ot": "2026-09-02",
       "historial": [
         {
-          "fecha": "2026-09-19T13:25:15.352Z",
           "accion": "Taller asignado: GRACIELA GUERRERO MOLINA",
+          "fecha": "2026-09-19T13:25:15.352Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-19T13:25:21.304Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:25:21.304Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-19",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-09-19"
-    },
-    {
       "id": "id_1789824298024_j3geqsmae",
+      "motivo_incumplimiento": "",
+      "nombre": "CONJUNTO CHELSY",
+      "notas": "",
       "numero_ot": 13741,
       "op_id": "OP-2026-203",
-      "categoria": "CONJUNTOS",
-      "nombre": "CONJUNTO CHELSY",
       "referencia": "T12",
-      "color": "CAMEL",
-      "talla": "T12",
-      "cantidad": 24,
-      "valor_mo": 1151,
-      "fecha_ot": "2026-09-02",
       "satelite_id": "id_1789247306328_smd3rq88s",
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
+      "talla": "T12",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 1151
+    },
+    {
+      "cantidad": 24,
+      "categoria": "CONJUNTOS",
+      "color": "CAMEL",
+      "created_at": "2026-09-19",
+      "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_corte": "2026-09-19",
+      "fecha_ot": "2026-09-02",
       "historial": [
         {
-          "fecha": "2026-09-19T13:25:15.352Z",
           "accion": "Taller asignado: GRACIELA GUERRERO MOLINA",
+          "fecha": "2026-09-19T13:25:15.352Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-19T13:25:21.304Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:25:21.304Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-19",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-09-19"
-    },
-    {
       "id": "id_1789824298024_xp37tszr5",
+      "motivo_incumplimiento": "",
+      "nombre": "CONJUNTO CHELSY",
+      "notas": "",
       "numero_ot": 13742,
       "op_id": "OP-2026-203",
-      "categoria": "CONJUNTOS",
-      "nombre": "CONJUNTO CHELSY",
       "referencia": "T14",
-      "color": "CAMEL",
-      "talla": "T14",
-      "cantidad": 24,
-      "valor_mo": 1151,
-      "fecha_ot": "2026-09-02",
       "satelite_id": "id_1789247306328_smd3rq88s",
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
+      "talla": "T14",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "EN_CONFECCION",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [
-        {
-          "fecha": "2026-09-19T13:25:15.352Z",
-          "accion": "Taller asignado: GRACIELA GUERRERO MOLINA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-09-19T13:25:21.304Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "created_at": "2026-09-19",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-09-19"
+      "valor_mo": 1151
     },
     {
-      "id": "id_1789824298024_spqji9js3",
-      "numero_ot": 13743,
-      "op_id": "OP-2026-203",
-      "categoria": "CONJUNTOS",
-      "nombre": "CONJUNTO CHELSY",
-      "referencia": "T16",
-      "color": "CAMEL",
-      "talla": "T16",
       "cantidad": 24,
-      "valor_mo": 1151,
-      "fecha_ot": "2026-09-02",
-      "satelite_id": "id_1789247306328_smd3rq88s",
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
-      "unidades_entregadas": 0,
-      "unidades_novedad": 0,
+      "categoria": "CONJUNTOS",
+      "color": "CAMEL",
+      "created_at": "2026-09-19",
+      "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_corte": "2026-09-19",
+      "fecha_ot": "2026-09-02",
       "historial": [
         {
-          "fecha": "2026-09-19T13:25:15.352Z",
           "accion": "Taller asignado: GRACIELA GUERRERO MOLINA",
+          "fecha": "2026-09-19T13:25:15.352Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-09-19T13:25:21.304Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-09-19T13:25:21.304Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-09-19",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-09-19"
+      "id": "id_1789824298024_spqji9js3",
+      "motivo_incumplimiento": "",
+      "nombre": "CONJUNTO CHELSY",
+      "notas": "",
+      "numero_ot": 13743,
+      "op_id": "OP-2026-203",
+      "referencia": "T16",
+      "satelite_id": "id_1789247306328_smd3rq88s",
+      "talla": "T16",
+      "unidades_entregadas": 0,
+      "unidades_novedad": 0,
+      "valor_mo": 1151
     }
   ]
 }
