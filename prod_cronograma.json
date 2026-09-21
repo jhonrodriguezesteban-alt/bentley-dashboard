@@ -455,6 +455,7 @@
       "entregado": true,
       "fecha_compromiso": "2026-08-21",
       "fecha_entrada": "2026-07-02",
+      "fecha_entrega_real": "2026-09-17",
       "fecha_inicial": "2026-08-18",
       "historial": [
         {
@@ -475,14 +476,14 @@
       "op_id": "OP-0009",
       "op_nombre": "GABAN PARIS",
       "satelite_id": "sat_03",
-      "uds": 6,
-      "fecha_entrega_real": "2026-09-17"
+      "uds": 6
     },
     {
       "color": "ROSA",
       "entregado": true,
       "fecha_compromiso": "2026-08-21",
       "fecha_entrada": "2026-07-02",
+      "fecha_entrega_real": "2026-09-17",
       "fecha_inicial": "2026-08-21",
       "historial": [
         {
@@ -496,14 +497,14 @@
       "op_id": "OP-0009",
       "op_nombre": "GABAN PARIS",
       "satelite_id": "sat_03",
-      "uds": 3,
-      "fecha_entrega_real": "2026-09-17"
+      "uds": 3
     },
     {
       "color": "NEGRO",
       "entregado": true,
       "fecha_compromiso": "2026-08-21",
       "fecha_entrada": "2026-07-02",
+      "fecha_entrega_real": "2026-09-17",
       "fecha_inicial": "2026-08-21",
       "historial": [
         {
@@ -517,14 +518,14 @@
       "op_id": "OP-0009",
       "op_nombre": "GABAN PARIS",
       "satelite_id": "sat_03",
-      "uds": 3,
-      "fecha_entrega_real": "2026-09-17"
+      "uds": 3
     },
     {
       "color": "CAMEL",
       "entregado": true,
       "fecha_compromiso": "2026-08-21",
       "fecha_entrada": "2026-07-02",
+      "fecha_entrega_real": "2026-09-17",
       "fecha_inicial": "2026-08-21",
       "historial": [
         {
@@ -538,8 +539,7 @@
       "op_id": "OP-0009",
       "op_nombre": "GABAN PARIS",
       "satelite_id": "sat_03",
-      "uds": 5,
-      "fecha_entrega_real": "2026-09-17"
+      "uds": 5
     },
     {
       "color": "BEIGE",
@@ -965,23 +965,22 @@
     {
       "color": "ROSA",
       "entregado": false,
+      "fecha_compromiso": "2026-09-23",
       "fecha_entrada": "2026-07-28",
+      "fecha_inicial": "2026-09-23",
+      "historial": [
+        {
+          "at": "2026-09-17",
+          "by": "Jefa de Producción",
+          "fecha_nueva": "2026-09-23",
+          "motivo": "Fecha inicial asignada"
+        }
+      ],
       "id": "id_1785257214322_07s7va4s1",
       "op_id": "OP-0038",
       "op_nombre": "CHAQUETA CAZADORA",
       "satelite_id": "id_1787947670302_jbputq1ae",
-      "uds": 70,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-09-23",
-          "motivo": "Fecha inicial asignada",
-          "by": "Jefa de Producción",
-          "at": "2026-09-17"
-        }
-      ],
-      "fecha_inicial": "2026-09-23",
-      "fecha_compromiso": "2026-09-23"
+      "uds": 70
     },
     {
       "color": "SALMON",
@@ -2216,7 +2215,7 @@
     },
     {
       "color": "NEGRO",
-      "entregado": false,
+      "entregado": true,
       "fecha_compromiso": "2026-09-18",
       "fecha_entrada": "2026-09-03",
       "fecha_inicial": "2026-09-18",
@@ -2232,7 +2231,8 @@
       "op_id": "OP-2026-080",
       "op_nombre": "CONJUNTO ISABELLA",
       "satelite_id": "sat_01",
-      "uds": 48
+      "uds": 48,
+      "fecha_entrega_real": "2026-09-21"
     },
     {
       "color": "BEIGE",
@@ -2536,23 +2536,22 @@
     {
       "color": "ROSA",
       "entregado": false,
+      "fecha_compromiso": "2026-09-23",
       "fecha_entrada": "2026-09-16",
+      "fecha_inicial": "2026-09-23",
+      "historial": [
+        {
+          "at": "2026-09-17",
+          "by": "Jefa de Producción",
+          "fecha_nueva": "2026-09-23",
+          "motivo": "Fecha inicial asignada"
+        }
+      ],
       "id": "id_1789569351546_8271fdw0o",
       "op_id": "OP-2026-126",
       "op_nombre": "CHAQUETA CAZADORA",
       "satelite_id": "id_1787947670302_jbputq1ae",
-      "uds": 88,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-09-23",
-          "motivo": "Fecha inicial asignada",
-          "by": "Jefa de Producción",
-          "at": "2026-09-17"
-        }
-      ],
-      "fecha_inicial": "2026-09-23",
-      "fecha_compromiso": "2026-09-23"
+      "uds": 88
     },
     {
       "color": "ROSA",
@@ -2756,74 +2755,53 @@
       "uds": 84
     },
     {
+      "color": "SALMON",
+      "entregado": false,
+      "fecha_entrada": "2026-09-17",
       "id": "id_1789676595780_exyswz83p",
       "op_id": "OP-2026-098",
       "op_nombre": "CHAQUETA CAZADORA",
-      "color": "SALMON",
-      "satelite_id": null,
-      "uds": 48,
-      "fecha_entrada": "2026-09-17",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 48
     },
     {
+      "color": "CAMEL",
+      "entregado": false,
+      "fecha_entrada": "2026-09-19",
       "id": "id_1789824271661_m9n02p78f",
       "op_id": "OP-2026-095",
       "op_nombre": "CHAQUETA SUEDE OLD MONEY",
-      "color": "CAMEL",
       "satelite_id": "sat_17",
-      "uds": 96,
-      "fecha_entrada": "2026-09-19",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 96
     },
     {
+      "color": "CAMEL",
+      "entregado": false,
+      "fecha_entrada": "2026-09-19",
       "id": "id_1789824321317_5if7grcpa",
       "op_id": "OP-2026-203",
       "op_nombre": "CONJUNTO CHELSY",
-      "color": "CAMEL",
       "satelite_id": "id_1789247306328_smd3rq88s",
-      "uds": 132,
-      "fecha_entrada": "2026-09-19",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 132
     },
     {
+      "color": "NEGRO",
+      "entregado": false,
+      "fecha_entrada": "2026-09-19",
       "id": "id_1789824436274_4oc69lant",
       "op_id": "OP-2026-215",
       "op_nombre": "CHAQUETA DISCOVERY",
-      "color": "NEGRO",
       "satelite_id": "id_1789824418634_ojryqap9f",
-      "uds": 96,
-      "fecha_entrada": "2026-09-19",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 96
     },
     {
+      "color": "CAMEL",
+      "entregado": false,
+      "fecha_entrada": "2026-09-19",
       "id": "id_1789824485804_m3eb2btnc",
       "op_id": "OP-2026-215",
       "op_nombre": "CHAQUETA DISCOVERY",
-      "color": "CAMEL",
       "satelite_id": "id_1789247121946_bk6io1hch",
-      "uds": 96,
-      "fecha_entrada": "2026-09-19",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 96
     }
   ]
 }
