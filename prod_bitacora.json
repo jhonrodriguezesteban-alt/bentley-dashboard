@@ -21536,19 +21536,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "VINOTINTO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1790006076461_3t0kr",
-      "ts": 1790006076461,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-102",
       "op_nombre": "CHAQUETA ONION",
       "referencia": "CHAQUETA ONION",
-      "color": "VINOTINTO",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1790006076461,
+      "uds": 90,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790006146448_2plba",
+      "ts": 1790006146448,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-078",
+      "op_nombre": "CHAQUETA HARLEY",
+      "referencia": "CHAQUETA HARLEY",
+      "color": "BEIGE",
       "talla": "todas las tallas",
       "estado_anterior": "ENTREGADO",
       "estado_nuevo": "ENTREGADO",
       "bulk": true,
-      "uds": 90,
+      "uds": 102,
       "motivo": "ENTREGADO"
     }
   ]
