@@ -21520,19 +21520,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1790006040259_vsfl5",
-      "ts": 1790006040259,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-080",
       "op_nombre": "CONJUNTO ISABELLA",
       "referencia": "CONJUNTO ISABELLA",
-      "color": "NEGRO",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1790006040259,
+      "uds": 48,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790006076461_3t0kr",
+      "ts": 1790006076461,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-102",
+      "op_nombre": "CHAQUETA ONION",
+      "referencia": "CHAQUETA ONION",
+      "color": "VINOTINTO",
       "talla": "todas las tallas",
       "estado_anterior": "ENTREGADO",
       "estado_nuevo": "ENTREGADO",
       "bulk": true,
-      "uds": 48,
+      "uds": 90,
       "motivo": "ENTREGADO"
     }
   ]
