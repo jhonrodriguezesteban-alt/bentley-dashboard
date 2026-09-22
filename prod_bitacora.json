@@ -21654,16 +21654,33 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1790111064605_zpnxm",
-      "ts": 1790111064605,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782401927717_21tmv43pe",
-      "nombre": "CONJUNTO JACOBO",
       "categoria": "Conjuntos",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1782401927717_21tmv43pe",
       "estado_anterior": "EN_CORTE_MUESTRA",
-      "estado_nuevo": "EN_REVISION_GERENCIA"
+      "estado_nuevo": "EN_REVISION_GERENCIA",
+      "id": "evt_1790111064605_zpnxm",
+      "marca": "Bentley Kids",
+      "nombre": "CONJUNTO JACOBO",
+      "tipo": "estado_diseno",
+      "ts": 1790111064605,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1790115727973_vpuyl",
+      "ts": 1790115727973,
+      "user": "John Rodriguez",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-099",
+      "op_nombre": "BEISBOLERA 2.0",
+      "categoria": "CHAQUETAS",
+      "total_ots": 6,
+      "total_uds": 80,
+      "colores": [
+        "GRIS OSCURO"
+      ],
+      "referencias": [
+        "BEISBOLERA 2.0"
+      ]
     }
   ]
 }
