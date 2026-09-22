@@ -7303,12 +7303,32 @@ async function cambiarEstadoOPAll(opId, estado){
   var op = DB.ops.find(function(o){ return o.id===opId; });
   if(!op) return;
   var colores = op.colores && op.colores.length ? op.colores : ['—'];
-  colores.forEach(function(color){ _setSubgEstado(opId, color, estado); });
+  var progNuevo = _ESTADO_PROGRESO[estado] || 0;
+  var protegidos = [];
+  var movidos = [];
+  colores.forEach(function(color){
+    // Este arrastre mueve TODOS los colores de la OP de una — pero si algunos ya iban más
+    // adelantados que los demás (ej. uno ya en Confección mientras los otros seguían en Nuevas
+    // Programaciones), aplicar el destino a ciegas los hacía RETROCEDER también a ellos sin que
+    // el usuario los tocara. Un color ya más avanzado que el destino de este arrastre se protege
+    // y no se toca — para revertirlo de verdad hay que hacerlo explícitamente, color por color.
+    var otsColor = (DB.ots||[]).filter(function(o){ return o.op_id===opId && (o.color||'').toUpperCase()===(color||'').toUpperCase(); });
+    var manualActual = _getSubgEstado(opId, color);
+    var estadoActual = _estadoEfectivo(manualActual, _subgEstadoDerivado(otsColor), otsColor);
+    var progActual = _ESTADO_PROGRESO[estadoActual] || 0;
+    if(estadoActual!=='NOVEDAD' && progNuevo < progActual){ protegidos.push(color); return; }
+    _setSubgEstado(opId, color, estado);
+    movidos.push(color);
+  });
   saveLocal();
   renderPage('ops');
   var ok1 = await guardarArchivo('ops', {ops: DB.ops});
   var ok2 = await guardarArchivo('ots', {ots: DB.ots});
-  if(ok1 && ok2){ _logEvt('cambiar_estado_op_all', {op_id:opId, estado:estado, colores:colores.length, nombre:op.nombre_producto}); toast('Estado actualizado', 'success'); }
+  if(ok1 && ok2){
+    _logEvt('cambiar_estado_op_all', {op_id:opId, estado:estado, colores:movidos.length, protegidos:protegidos, nombre:op.nombre_producto});
+    if(protegidos.length) toast('Estado actualizado — '+protegidos.join(', ')+' no se movió por estar más adelantado', 'info');
+    else toast('Estado actualizado', 'success');
+  }
   else toast('Error al guardar estado', 'error');
 }
 function _separarReferencias(opId){
@@ -10491,15 +10511,27 @@ async function generarOTsParaColor(opId, color){
   if(yaTiene){ toast('Este color ya tiene OTs generadas','warning'); return; }
   var refs = op.referencias || [{nombre:op.nombre_producto, ref:'', cat:op.categoria, vmo:0, colores:op.colores||[], tallas:op.tallas||[], cantidades:op.cantidades||{}}];
   var otNum=nextOTNum(), newOTs=[];
+  // Estado inicial de las OTs: antes quedaba fijo en CORTE_POR_ALISTAR sin importar nada, así
+  // que un color "SIN OTs" que el usuario apenas quería dejar en Pendiente por Cortar saltaba
+  // directo a Corte por Alistar en cuanto se generaban sus OTs — no había forma de pasarlo
+  // color por color por Pendiente por Cortar. Ahora respeta el estado en el que ya estaba la
+  // tarjeta (el override manual guardado en subg_estados, si el usuario ya la había movido) y
+  // solo si no hay ninguno cae a PENDIENTE_CORTAR — nunca directo a Corte por Alistar.
+  var estadoManual = _getSubgEstado(opId, color);
+  var estadoInicial = (estadoManual && estadoManual!=='POR_REVISAR') ? estadoManual : 'PENDIENTE_CORTAR';
   refs.forEach(function(ref){
     if((ref.colores||[]).indexOf(color)<0) return;
     (ref.tallas||[]).forEach(function(talla){
       var qty=(ref.cantidades||{})[color+'_'+talla]; if(!qty) return;
-      newOTs.push({id:uid(), numero_ot:otNum++, op_id:opId, categoria:ref.cat, nombre:ref.nombre, referencia:(ref.ref||'')+talla, color:color, talla:talla, cantidad:qty, valor_mo:ref.vmo||0, fecha_ot:op.fecha_op||hoy(), satelite_id:ref.maquilador_id||null, fecha_entrega_corte_satelite:null, fecha_estimada_entrega:null, fecha_entrega_real:null, unidades_entregadas:0, unidades_novedad:0, estado:'CORTE_POR_ALISTAR', nt_corte_satelite:null, nt_ingreso_planta:null, op_effi:null, cumplió_fecha:null, motivo_incumplimiento:'', notas:'', historial:[], created_at:hoy(), created_by:getUser()});
+      newOTs.push({id:uid(), numero_ot:otNum++, op_id:opId, categoria:ref.cat, nombre:ref.nombre, referencia:(ref.ref||'')+talla, color:color, talla:talla, cantidad:qty, valor_mo:ref.vmo||0, fecha_ot:op.fecha_op||hoy(), satelite_id:ref.maquilador_id||null, fecha_entrega_corte_satelite:null, fecha_estimada_entrega:null, fecha_entrega_real:null, unidades_entregadas:0, unidades_novedad:0, estado:estadoInicial, nt_corte_satelite:null, nt_ingreso_planta:null, op_effi:null, cumplió_fecha:null, motivo_incumplimiento:'', notas:'', historial:[], created_at:hoy(), created_by:getUser()});
     });
   });
   if(!newOTs.length){ toast('No hay cantidades definidas para '+color+' en esta OP','error'); return; }
   DB.ots=DB.ots.concat(newOTs);
+  // El override manual ya cumplió su propósito (fijar el estado inicial de las OTs reales) —
+  // se limpia para que de ahora en adelante el estado derivado real de las OTs mande, igual
+  // que para cualquier otro color con OTs de verdad.
+  if(op.subg_estados) delete op.subg_estados[_subgKey(opId, color)];
   _logEvt('generar_ots', {
     op_id: opId,
     op_nombre: op.nombre_producto,
@@ -10507,12 +10539,15 @@ async function generarOTsParaColor(opId, color){
     total_ots: newOTs.length,
     total_uds: newOTs.reduce(function(s,o){ return s+(o.cantidad||0); },0),
     colores: [color],
+    estado_inicial: estadoInicial,
     referencias: refs.map(function(r){ return r.nombre; })
   });
   saveLocal();
   var ok=await guardarArchivo('ots',{ots:DB.ots});
-  if(ok){
-    toast(newOTs.length+' OTs generadas para '+color+' → Corte por Alistar','success');
+  var ok2=await guardarArchivo('ops',{ops:DB.ops});
+  if(ok && ok2){
+    var ETIQUETAS={PENDIENTE_CORTAR:'Pendiente por Cortar',CORTE_POR_ALISTAR:'Corte por Alistar',EN_CONFECCION:'En Confección',ALISTAMIENTO:'Alistamiento'};
+    toast(newOTs.length+' OTs generadas para '+color+' → '+(ETIQUETAS[estadoInicial]||estadoInicial),'success');
     document.getElementById('page-content').innerHTML=renderOPDetalle(opId);
   }
 }
