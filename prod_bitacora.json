@@ -21683,19 +21683,35 @@
       "user": "John Rodriguez"
     },
     {
+      "bulk": false,
+      "color": "GRIS OSCURO",
+      "estado_anterior": "POR_REVISAR",
+      "estado_nuevo": "POR_REVISAR",
       "id": "evt_1790115757317_g8quh",
+      "motivo": "error",
+      "op_id": "OP-2026-099",
+      "op_nombre": "BEISBOLERA 2.0",
+      "referencia": "BEISBOLERA 2.0",
+      "talla": "T6",
+      "tipo": "estado_ot",
       "ts": 1790115757317,
+      "uds": 8,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1790115770295_yysdx",
+      "ts": 1790115770295,
       "user": "John Rodriguez",
       "tipo": "estado_ot",
       "op_id": "OP-2026-099",
       "op_nombre": "BEISBOLERA 2.0",
       "referencia": "BEISBOLERA 2.0",
       "color": "GRIS OSCURO",
-      "talla": "T6",
+      "talla": "todas las tallas",
       "estado_anterior": "POR_REVISAR",
       "estado_nuevo": "POR_REVISAR",
-      "bulk": false,
-      "uds": 8,
+      "bulk": true,
+      "uds": 80,
       "motivo": "error"
     }
   ]
