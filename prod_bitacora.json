@@ -21699,20 +21699,30 @@
       "user": "John Rodriguez"
     },
     {
+      "bulk": true,
+      "color": "GRIS OSCURO",
+      "estado_anterior": "POR_REVISAR",
+      "estado_nuevo": "POR_REVISAR",
       "id": "evt_1790115770295_yysdx",
-      "ts": 1790115770295,
-      "user": "John Rodriguez",
-      "tipo": "estado_ot",
+      "motivo": "error",
       "op_id": "OP-2026-099",
       "op_nombre": "BEISBOLERA 2.0",
       "referencia": "BEISBOLERA 2.0",
-      "color": "GRIS OSCURO",
       "talla": "todas las tallas",
-      "estado_anterior": "POR_REVISAR",
-      "estado_nuevo": "POR_REVISAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1790115770295,
       "uds": 80,
-      "motivo": "error"
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1790116071458_ky2ql",
+      "ts": 1790116071458,
+      "user": "John Rodriguez",
+      "tipo": "cambiar_estado_op_all",
+      "op_id": "OP-2026-223",
+      "estado": "PENDIENTE_CORTAR",
+      "colores": 2,
+      "nombre": "CONJUNTO JACOBO"
     }
   ]
 }
