@@ -21584,15 +21584,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1790026322828_58y5p",
-      "ts": 1790026322828,
-      "user": "Isabel",
-      "tipo": "diseno_comentario",
-      "diseno_id": "id_1782160552657_bg8wo6gbq",
-      "nombre": "SET SOLOMUN",
       "categoria": "Conjuntos",
+      "diseno_id": "id_1782160552657_bg8wo6gbq",
+      "extracto": "Cambios realizados. Listo para prueba de tallas 4-8-12-16",
+      "id": "evt_1790026322828_58y5p",
+      "nombre": "SET SOLOMUN",
       "tiene_imagen": false,
-      "extracto": "Cambios realizados. Listo para prueba de tallas 4-8-12-16"
+      "tipo": "diseno_comentario",
+      "ts": 1790026322828,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1790089088091_szayu",
+      "ts": 1790089088091,
+      "user": "John Rodriguez",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-216",
+      "op_nombre": "CAMISA CLASICA BK",
+      "referencia": "CAMISA CLASICA BK",
+      "color": "BLANCO",
+      "talla": "T4",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "PENDIENTE_CORTAR",
+      "bulk": false,
+      "uds": 8,
+      "motivo": "color todavia no se ha cortado"
     }
   ]
 }
