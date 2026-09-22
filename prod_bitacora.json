@@ -21797,20 +21797,36 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MARFIL",
+      "estado_anterior": "PENDIENTE_CORTAR",
+      "estado_nuevo": "PENDIENTE_CORTAR",
       "id": "evt_1790116787355_8whug",
+      "motivo": "por corte",
+      "op_id": "OP-2026-212",
+      "op_nombre": "CAMISETA COCOA",
+      "referencia": "CAMISETA COCOA",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1790116787355,
+      "uds": 76,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790116823101_9vz69",
+      "ts": 1790116823101,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-212",
       "op_nombre": "CAMISETA COCOA",
       "referencia": "CAMISETA COCOA",
-      "color": "MARFIL",
+      "color": "AZUL",
       "talla": "todas las tallas",
-      "estado_anterior": "PENDIENTE_CORTAR",
-      "estado_nuevo": "PENDIENTE_CORTAR",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "bulk": true,
-      "uds": 76,
-      "motivo": "por corte"
+      "uds": 71,
+      "motivo": "en insumos"
     }
   ]
 }
