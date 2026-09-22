@@ -21742,14 +21742,31 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1790116269291_gxvls",
-      "ts": 1790116269291,
-      "user": "John Rodriguez",
-      "tipo": "cambiar_estado_op_all",
-      "op_id": "OP-2026-203",
-      "estado": "PENDIENTE_CORTAR",
       "colores": 3,
-      "nombre": "CONJUNTO CHELSY"
+      "estado": "PENDIENTE_CORTAR",
+      "id": "evt_1790116269291_gxvls",
+      "nombre": "CONJUNTO CHELSY",
+      "op_id": "OP-2026-203",
+      "tipo": "cambiar_estado_op_all",
+      "ts": 1790116269291,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1790116452228_6hrup",
+      "ts": 1790116452228,
+      "user": "Jefa de Producción",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-212",
+      "op_nombre": "CAMISETA COCOA",
+      "categoria": "CAMISETAS",
+      "total_ots": 7,
+      "total_uds": 76,
+      "colores": [
+        "VERDE"
+      ],
+      "referencias": [
+        "CAMISETA COCOA"
+      ]
     }
   ]
 }
