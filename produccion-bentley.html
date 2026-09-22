@@ -4117,6 +4117,12 @@ function pconfAsignarTodoSatelite(satId){
 }
 
 // Número de WhatsApp normalizado (E.164 sin '+') a partir del campo telefono del satélite.
+// Detecta celular (iOS/Android) vs computador — usado para decidir si tiene sentido usar el
+// panel nativo de compartir del sistema (navigator.share): en celular WhatsApp aparece ahí
+// como una app más; en Mac/Windows ese panel no incluye a WhatsApp Desktop como destino.
+function _esMobile(){
+  return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent||'');
+}
 function _waNumero(tel){
   var d = (tel||'').replace(/\D/g,'');
   if(!d) return '';
@@ -20358,6 +20364,13 @@ async function compartirSolicitudTrazos(sid){
   if(!s) return;
   var op = (DB.ops||[]).find(function(x){ return x.id===s.op_id; });
   if(!window.jspdf || !window.html2canvas){ imprimirSolicitudTrazos(sid); return; }
+  // En computador, abrir la pestaña de WhatsApp AHORA MISMO (en blanco) — no después de
+  // generar el PDF. Safari (y otros) solo permiten window.open si ocurre de forma síncrona
+  // dentro del clic del usuario; html2canvas tarda un momento, y para cuando termina ya se
+  // perdió esa "activación de usuario" y el navegador bloquea el popup en silencio (sin
+  // avisar) — eso era lo que hacía que "no abriera de una". Reutilizamos esta pestaña ya
+  // abierta y solo le cambiamos la URL más adelante, una vez armado el texto.
+  var waTab = _esMobile() ? null : window.open('', '_blank');
   // El margen real tiene que ir en ESTE div (el que html2canvas realmente captura), no
   // confiar en el `body{padding:...}` de _trazosPrintStyles(): ese selector solo tiene efecto
   // cuando el HTML vive en un documento de verdad con su propio <body> (como en la ventana
@@ -20391,15 +20404,24 @@ async function compartirSolicitudTrazos(sid){
     var blob = pdf.output('blob');
     var file = new File([blob], fname, {type:'application/pdf'});
     var textoWa = '📐 Solicitud de trazos — '+fmtOpId(s.op_id)+' '+s.op_nombre;
-    var puedeCompartirArchivo = navigator.share && navigator.canShare && navigator.canShare({files:[file]});
+    // navigator.canShare({files}) da "true" también en Mac/Windows (Safari y Chrome lo
+    // soportan ahí), pero el panel de compartir de escritorio NO tiene a WhatsApp como
+    // destino (solo AirDrop/Mail/Mensajes/Notas) — WhatsApp Desktop no se registra como
+    // extensión de compartir del sistema. Por eso en computador el botón "abría algo" pero
+    // nunca llegaba a WhatsApp. Solo tiene sentido usar ese panel nativo en celular, donde
+    // WhatsApp SÍ aparece ahí como una app más.
+    var puedeCompartirArchivo = _esMobile() && navigator.share && navigator.canShare && navigator.canShare({files:[file]});
     if(puedeCompartirArchivo){
+      if(waTab) waTab.close();
       await navigator.share({files:[file], title:'Solicitud de trazos', text:textoWa});
     } else {
       pdf.save(fname);
-      window.open('https://wa.me/?text='+encodeURIComponent(textoWa+' — adjunto el PDF que se acaba de descargar ('+fname+')'), '_blank', 'noopener');
+      var waUrl = 'https://wa.me/?text='+encodeURIComponent(textoWa+' — adjunto el PDF que se acaba de descargar ('+fname+')');
+      if(waTab && !waTab.closed) waTab.location.href = waUrl; else window.open(waUrl, '_blank', 'noopener');
       toast('PDF descargado y WhatsApp abierto — adjunta el archivo desde el clip 📎', 'success');
     }
   } catch(e){
+    if(waTab && !waTab.closed) waTab.close();
     if(e && e.name==='AbortError') return; // el usuario cerró el selector de compartir, no es un error
     toast('No se pudo generar el PDF para compartir', 'error');
   } finally {
