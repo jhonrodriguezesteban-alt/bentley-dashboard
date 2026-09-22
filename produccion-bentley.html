@@ -9548,7 +9548,20 @@ async function _confirmarCambioEstadoOT(){
   var estadoGrupo = _subgEstadoDerivado(otsDelColor);
   // Si todas las OTs quedaron ENTREGADO ahora, mover a ALISTAMIENTO (no ARCHIVADO)
   if(estadoGrupo === 'ARCHIVADO') estadoGrupo = 'ALISTAMIENTO';
-  _setSubgEstado(ot.op_id, ot.color, estadoGrupo);
+  if(todasTallas){
+    // Bulk: todas las OTs del color ya quedaron en el mismo estado arriba, así que
+    // _setSubgEstado (que además sincroniza las OTs) es seguro y mantiene todo consistente.
+    _setSubgEstado(ot.op_id, ot.color, estadoGrupo);
+  } else {
+    // Individual: SOLO se cambió una talla. _setSubgEstado no se puede usar aquí — resincroniza
+    // TODAS las OTs del color al estado derivado del grupo, lo que revierte silenciosamente el
+    // cambio recién hecho en cuanto el resto de tallas del color (que siguen en otro estado)
+    // "gana" en _subgEstadoDerivado. Por eso revertir una sola talla "no se pasaba": el cambio
+    // se aplicaba y de inmediato quedaba pisado por este mismo recálculo. Aquí solo se anota el
+    // estado agregado del grupo (para el badge de la tarjeta), sin tocar las demás OTs.
+    var op = DB.ops.find(function(o){ return o.id===ot.op_id; });
+    if(op){ if(!op.subg_estados) op.subg_estados = {}; op.subg_estados[_subgKey(ot.op_id, ot.color)] = estadoGrupo; }
+  }
 
   // Cronograma: auto-registrar cuando entra a EN_CONFECCION
   if(nuevoEstado === 'EN_CONFECCION' && typeof _cronAutoSync === 'function'){
