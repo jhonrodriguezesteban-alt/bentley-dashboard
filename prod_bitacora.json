@@ -21829,19 +21829,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "CAMEL",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1790116837803_84kq8",
+      "motivo": "por corte",
+      "op_id": "OP-2026-212",
+      "op_nombre": "CAMISETA COCOA",
+      "referencia": "CAMISETA COCOA",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1790116837803,
+      "uds": 110,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790116852345_bh7aq",
+      "ts": 1790116852345,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-212",
       "op_nombre": "CAMISETA COCOA",
       "referencia": "CAMISETA COCOA",
-      "color": "CAMEL",
+      "color": "VERDE",
       "talla": "todas las tallas",
       "estado_anterior": "CORTE_POR_ALISTAR",
       "estado_nuevo": "CORTE_POR_ALISTAR",
       "bulk": true,
-      "uds": 110,
+      "uds": 58,
       "motivo": "por corte"
     }
   ]
