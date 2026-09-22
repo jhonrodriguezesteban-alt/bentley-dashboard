@@ -21786,15 +21786,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1790116759552_gzaib",
-      "ts": 1790116759552,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-212",
-      "nombre": "CAMISETA COCOA",
       "categoria": "CAMISETAS",
       "colores": 4,
-      "refs": 1
+      "id": "evt_1790116759552_gzaib",
+      "nombre": "CAMISETA COCOA",
+      "op_id": "OP-2026-212",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1790116759552,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790116787355_8whug",
+      "ts": 1790116787355,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-212",
+      "op_nombre": "CAMISETA COCOA",
+      "referencia": "CAMISETA COCOA",
+      "color": "MARFIL",
+      "talla": "todas las tallas",
+      "estado_anterior": "PENDIENTE_CORTAR",
+      "estado_nuevo": "PENDIENTE_CORTAR",
+      "bulk": true,
+      "uds": 76,
+      "motivo": "por corte"
     }
   ]
 }
