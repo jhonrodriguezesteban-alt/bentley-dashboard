@@ -21725,21 +21725,31 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1790116113826_ihrin",
-      "ts": 1790116113826,
-      "user": "John Rodriguez",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-212",
-      "op_nombre": "CAMISETA COCOA",
       "categoria": "CAMISETAS",
-      "total_ots": 7,
-      "total_uds": 76,
       "colores": [
         "MARFIL"
       ],
+      "id": "evt_1790116113826_ihrin",
+      "op_id": "OP-2026-212",
+      "op_nombre": "CAMISETA COCOA",
       "referencias": [
         "CAMISETA COCOA"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 7,
+      "total_uds": 76,
+      "ts": 1790116113826,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1790116269291_gxvls",
+      "ts": 1790116269291,
+      "user": "John Rodriguez",
+      "tipo": "cambiar_estado_op_all",
+      "op_id": "OP-2026-203",
+      "estado": "PENDIENTE_CORTAR",
+      "colores": 3,
+      "nombre": "CONJUNTO CHELSY"
     }
   ]
 }
