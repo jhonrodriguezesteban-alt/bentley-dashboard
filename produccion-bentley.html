@@ -20428,10 +20428,28 @@ async function compartirSolicitudTrazos(sid){
       if(waTab) waTab.close();
       await navigator.share({files:[file], title:'Solicitud de trazos', text:textoWa});
     } else {
+      // Límite real del navegador, no un bug: ninguna página web puede adjuntar un archivo
+      // por su cuenta dentro del cuadro de mensaje de WhatsApp Web — sería un hueco de
+      // seguridad enorme (cualquier sitio podría mandar archivos a tus chats sin que tocaras
+      // nada). Por eso el PDF se descarga aparte y hay que adjuntarlo a mano una sola vez con
+      // el clip 📎. Como un simple toast (que desaparece solo) se estaba pasando por alto y la
+      // gente le daba "Enviar" sin adjuntar nada, esto ahora es un modal que hay que cerrar,
+      // con el paso explicado y el nombre exacto del archivo para buscarlo en Descargas.
       pdf.save(fname);
-      var waUrl = 'https://wa.me/?text='+encodeURIComponent(textoWa+' — adjunto el PDF que se acaba de descargar ('+fname+')');
+      var waUrl = 'https://wa.me/?text='+encodeURIComponent(textoWa);
       if(waTab && !waTab.closed) waTab.location.href = waUrl; else window.open(waUrl, '_blank', 'noopener');
-      toast('PDF descargado y WhatsApp abierto — adjunta el archivo desde el clip 📎', 'success');
+      openModal('📎 Falta adjuntar el PDF', ''
+        + '<div style="font-size:14px;color:#e2e8f0;line-height:1.6;">'
+        + 'El PDF ya se descargó a tu carpeta de <b>Descargas</b> con este nombre:</div>'
+        + '<div style="background:#0d1117;border:1px solid #2c2c2e;border-radius:8px;padding:10px 14px;margin:10px 0;font-family:monospace;font-size:13px;color:#34d399;word-break:break-all;">'+esc(fname)+'</div>'
+        + '<div style="font-size:14px;color:#e2e8f0;line-height:1.6;">'
+        + 'WhatsApp Web ya se abrió con el mensaje listo, pero <b>el PDF no se adjunta solo</b> — ningún sitio web puede hacer eso por seguridad. Antes de darle Enviar:</div>'
+        + '<ol style="font-size:13px;color:#cbd5e1;line-height:1.8;padding-left:20px;margin:10px 0;">'
+        + '<li>En la conversación de WhatsApp, haz clic en el clip 📎 (o arrastra el archivo).</li>'
+        + '<li>Elige <b>Documento</b> y busca <b>'+esc(fname)+'</b> en Descargas.</li>'
+        + '<li>Ahora sí, dale Enviar.</li>'
+        + '</ol>',
+        '<button onclick="closeModal()" class="btn btn-primary">Entendido</button>');
     }
   } catch(e){
     if(waTab && !waTab.closed) waTab.close();
