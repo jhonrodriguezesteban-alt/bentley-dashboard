@@ -21666,21 +21666,37 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1790115727973_vpuyl",
-      "ts": 1790115727973,
-      "user": "John Rodriguez",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-099",
-      "op_nombre": "BEISBOLERA 2.0",
       "categoria": "CHAQUETAS",
-      "total_ots": 6,
-      "total_uds": 80,
       "colores": [
         "GRIS OSCURO"
       ],
+      "id": "evt_1790115727973_vpuyl",
+      "op_id": "OP-2026-099",
+      "op_nombre": "BEISBOLERA 2.0",
       "referencias": [
         "BEISBOLERA 2.0"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 6,
+      "total_uds": 80,
+      "ts": 1790115727973,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1790115757317_g8quh",
+      "ts": 1790115757317,
+      "user": "John Rodriguez",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-099",
+      "op_nombre": "BEISBOLERA 2.0",
+      "referencia": "BEISBOLERA 2.0",
+      "color": "GRIS OSCURO",
+      "talla": "T6",
+      "estado_anterior": "POR_REVISAR",
+      "estado_nuevo": "POR_REVISAR",
+      "bulk": false,
+      "uds": 8,
+      "motivo": "error"
     }
   ]
 }
