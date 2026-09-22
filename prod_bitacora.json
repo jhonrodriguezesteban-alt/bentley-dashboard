@@ -21595,20 +21595,52 @@
       "user": "Isabel"
     },
     {
+      "bulk": false,
+      "color": "BLANCO",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "PENDIENTE_CORTAR",
       "id": "evt_1790089088091_szayu",
+      "motivo": "color todavia no se ha cortado",
+      "op_id": "OP-2026-216",
+      "op_nombre": "CAMISA CLASICA BK",
+      "referencia": "CAMISA CLASICA BK",
+      "talla": "T4",
+      "tipo": "estado_ot",
       "ts": 1790089088091,
+      "uds": 8,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1790089113061_9f9jz",
+      "ts": 1790089113061,
       "user": "John Rodriguez",
       "tipo": "estado_ot",
       "op_id": "OP-2026-216",
       "op_nombre": "CAMISA CLASICA BK",
       "referencia": "CAMISA CLASICA BK",
-      "color": "BLANCO",
+      "color": "VERDE MILITAR",
       "talla": "T4",
       "estado_anterior": "CORTE_POR_ALISTAR",
       "estado_nuevo": "PENDIENTE_CORTAR",
       "bulk": false,
       "uds": 8,
-      "motivo": "color todavia no se ha cortado"
+      "motivo": "color no cortado"
+    },
+    {
+      "id": "evt_1790089115566_czcwr",
+      "ts": 1790089115566,
+      "user": "John Rodriguez",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-216",
+      "op_nombre": "CAMISA CLASICA BK",
+      "referencia": "CAMISA CLASICA BK",
+      "color": "VERDE MILITAR",
+      "talla": "T4",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "PENDIENTE_CORTAR",
+      "bulk": false,
+      "uds": 8,
+      "motivo": "color no cortado"
     }
   ]
 }
