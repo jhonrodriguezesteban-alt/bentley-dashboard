@@ -22009,21 +22009,37 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1790194624824_jh60e",
-      "ts": 1790194624824,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-203",
-      "op_nombre": "CONJUNTO CHELSY",
       "categoria": "CONJUNTOS",
-      "total_ots": 7,
-      "total_uds": 132,
       "colores": [
         "NEGRO"
       ],
+      "id": "evt_1790194624824_jh60e",
+      "op_id": "OP-2026-203",
+      "op_nombre": "CONJUNTO CHELSY",
       "referencias": [
         "CONJUNTO CHELSY"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 7,
+      "total_uds": 132,
+      "ts": 1790194624824,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790194693895_juj3l",
+      "ts": 1790194693895,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-203",
+      "op_nombre": "CONJUNTO CHELSY",
+      "referencia": "CONJUNTO CHELSY",
+      "color": "GRIS",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 132,
+      "motivo": "EN TALLER"
     }
   ]
 }
