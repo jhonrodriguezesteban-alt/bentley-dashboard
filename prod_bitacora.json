@@ -22078,22 +22078,38 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1790210782603_ii6on",
-      "ts": 1790210782603,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-083",
-      "op_nombre": "CONJUNTO CHICAGO",
       "categoria": "CONJUNTOS",
-      "total_ots": 14,
-      "total_uds": 160,
       "colores": [
         "GRIS MEDIO",
         "AVENA"
       ],
+      "id": "evt_1790210782603_ii6on",
+      "op_id": "OP-2026-083",
+      "op_nombre": "CONJUNTO CHICAGO",
       "referencias": [
         "CONJUNTO CHICAGO"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 14,
+      "total_uds": 160,
+      "ts": 1790210782603,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790269512372_ticz6",
+      "ts": 1790269512372,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-079",
+      "op_nombre": "BEISBOLERA ARMIN",
+      "referencia": "BEISBOLERA ARMIN",
+      "color": "AVENA",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 100,
+      "motivo": "EN TALLER"
     }
   ]
 }
