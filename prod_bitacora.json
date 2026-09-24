@@ -22042,20 +22042,30 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1790194716085_jk4mt",
-      "ts": 1790194716085,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-203",
       "op_nombre": "CONJUNTO CHELSY",
       "referencia": "CONJUNTO CHELSY",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1790194716085,
       "uds": 132,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790209893535_42z7n",
+      "ts": 1790209893535,
+      "user": "Jefa de Producción",
+      "tipo": "cambiar_estado_op_all",
+      "op_id": "OP-2026-076",
+      "estado": "POR_REVISAR",
+      "colores": 1,
+      "nombre": "CHALECO PUFFY"
     }
   ]
 }
