@@ -22068,14 +22068,32 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1790209902704_lzz3w",
-      "ts": 1790209902704,
-      "user": "Jefa de Producción",
-      "tipo": "cambiar_estado_op_all",
-      "op_id": "OP-2026-076",
-      "estado": "POR_REVISAR",
       "colores": 1,
-      "nombre": "CHALECO PUFFY"
+      "estado": "POR_REVISAR",
+      "id": "evt_1790209902704_lzz3w",
+      "nombre": "CHALECO PUFFY",
+      "op_id": "OP-2026-076",
+      "tipo": "cambiar_estado_op_all",
+      "ts": 1790209902704,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790210782603_ii6on",
+      "ts": 1790210782603,
+      "user": "Jefa de Producción",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-083",
+      "op_nombre": "CONJUNTO CHICAGO",
+      "categoria": "CONJUNTOS",
+      "total_ots": 14,
+      "total_uds": 160,
+      "colores": [
+        "GRIS MEDIO",
+        "AVENA"
+      ],
+      "referencias": [
+        "CONJUNTO CHICAGO"
+      ]
     }
   ]
 }
