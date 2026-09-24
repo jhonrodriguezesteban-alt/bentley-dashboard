@@ -22128,19 +22128,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MARFIL",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1790269548509_4sxkc",
-      "ts": 1790269548509,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-079",
       "op_nombre": "BEISBOLERA ARMIN",
       "referencia": "BEISBOLERA ARMIN",
-      "color": "MARFIL",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1790269548509,
+      "uds": 100,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790269583854_bb8vw",
+      "ts": 1790269583854,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-216",
+      "op_nombre": "CAMISA CLASICA BK",
+      "referencia": "CAMISA CLASICA BK",
+      "color": "AZUL",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 100,
+      "uds": 96,
       "motivo": "EN TALLER"
     }
   ]
