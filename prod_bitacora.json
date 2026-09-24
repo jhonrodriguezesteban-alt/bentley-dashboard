@@ -22192,19 +22192,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "ROJO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1790272452471_zbb9a",
-      "ts": 1790272452471,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-110",
       "op_nombre": "PANTALON RAVE",
       "referencia": "PANTALON RAVE",
-      "color": "ROJO",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1790272452471,
+      "uds": 124,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790272556829_lp24u",
+      "ts": 1790272556829,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-103",
+      "op_nombre": "CHAQUETA TORERO NIÑA",
+      "referencia": "CHAQUETA TORERO NIÑA",
+      "color": "AZUL BEBE",
       "talla": "todas las tallas",
       "estado_anterior": "ENTREGADO",
       "estado_nuevo": "ENTREGADO",
       "bulk": true,
-      "uds": 124,
+      "uds": 90,
       "motivo": "ENTREGADO"
     }
   ]
