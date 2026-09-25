@@ -22456,20 +22456,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "VINOTINTO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1790355714474_wfnbx",
-      "ts": 1790355714474,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-236",
       "op_nombre": "OVERSIZED CAPOTA",
       "referencia": "OVERSIZED CAPOTA",
-      "color": "VINOTINTO",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1790355714474,
       "uds": 46,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790355818476_r0ucw",
+      "ts": 1790355818476,
+      "user": "Isabel",
+      "tipo": "diseno_comentario",
+      "diseno_id": "id_1782163486159_zfdud2g3z",
+      "nombre": "BLUSA MANGA BOLERO",
+      "categoria": "Blusas",
+      "tiene_imagen": false,
+      "extracto": "Muestras confeccionadas. En talla 4 y 16. Me gustaría probar las muestras para v"
     }
   ]
 }
