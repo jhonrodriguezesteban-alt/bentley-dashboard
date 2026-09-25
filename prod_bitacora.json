@@ -22439,21 +22439,37 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1790355679813_c63vd",
-      "ts": 1790355679813,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-236",
-      "op_nombre": "OVERSIZED CAPOTA",
       "categoria": "CHAQUETAS",
-      "total_ots": 7,
-      "total_uds": 46,
       "colores": [
         "VINOTINTO"
       ],
+      "id": "evt_1790355679813_c63vd",
+      "op_id": "OP-2026-236",
+      "op_nombre": "OVERSIZED CAPOTA",
       "referencias": [
         "OVERSIZED CAPOTA"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 7,
+      "total_uds": 46,
+      "ts": 1790355679813,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790355714474_wfnbx",
+      "ts": 1790355714474,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-236",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "referencia": "OVERSIZED CAPOTA",
+      "color": "VINOTINTO",
+      "talla": "todas las tallas",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": true,
+      "uds": 46,
+      "motivo": "ENTREGADO"
     }
   ]
 }
