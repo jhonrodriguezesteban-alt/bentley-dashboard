@@ -8301,7 +8301,7 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-111||NEGRO": "ALISTAMIENTO",
+        "OP-2026-111||NEGRO": "PAGO_PENDIENTE",
         "OP-2026-111||VERDE MILITAR": "EN_CONFECCION",
         "OP-2026-111||VINOTINTO": "EN_CONFECCION"
       },
@@ -14944,6 +14944,70 @@
         "T16"
       ],
       "subg_estados": {}
+    },
+    {
+      "id": "OP-2026-236",
+      "numero": 236,
+      "fecha_op": "2026-09-25",
+      "cortador": "Corte Carbajal",
+      "categoria": "CHAQUETAS",
+      "nombre_producto": "OVERSIZED CAPOTA",
+      "colores": [
+        "VINOTINTO"
+      ],
+      "tallas": [
+        "T4",
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ],
+      "cantidades": {
+        "VINOTINTO_T4": 10,
+        "VINOTINTO_T6": 6,
+        "VINOTINTO_T8": 6,
+        "VINOTINTO_T10": 6,
+        "VINOTINTO_T12": 6,
+        "VINOTINTO_T14": 6,
+        "VINOTINTO_T16": 6
+      },
+      "referencias": [
+        {
+          "nombre": "OVERSIZED CAPOTA",
+          "ref": "1058",
+          "cat": "CHAQUETAS",
+          "vmo": 10510,
+          "colores": [
+            "VINOTINTO"
+          ],
+          "tallas": [
+            "T4",
+            "T6",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "cantidades": {
+            "VINOTINTO_T4": 10,
+            "VINOTINTO_T6": 6,
+            "VINOTINTO_T8": 6,
+            "VINOTINTO_T10": 6,
+            "VINOTINTO_T12": 6,
+            "VINOTINTO_T14": 6,
+            "VINOTINTO_T16": 6
+          },
+          "totalUds": 46,
+          "maquilador_id": ""
+        }
+      ],
+      "op_effi": null,
+      "estado_op": "EN_PROCESO",
+      "created_at": "2026-09-25",
+      "created_by": "Jefa de Producción"
     }
   ]
 }
