@@ -22208,20 +22208,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "AZUL BEBE",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1790272556829_lp24u",
-      "ts": 1790272556829,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-103",
       "op_nombre": "CHAQUETA TORERO NIÑA",
       "referencia": "CHAQUETA TORERO NIÑA",
-      "color": "AZUL BEBE",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1790272556829,
       "uds": 90,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790341944164_wlili",
+      "ts": 1790341944164,
+      "user": "Isabel",
+      "tipo": "diseno_comentario",
+      "diseno_id": "id_1782165872122_zq49y8n9x",
+      "nombre": "BLAZER DONATELLA NIÑA CORTO",
+      "categoria": "Chaquetas",
+      "tiene_imagen": false,
+      "extracto": "Prueba de tallas realizada, pendiente probar a modelos. \nEn cuanto al trazo añad"
     }
   ]
 }
