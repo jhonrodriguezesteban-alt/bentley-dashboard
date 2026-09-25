@@ -22362,20 +22362,30 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MARFIL",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1790346242523_dslx4",
-      "ts": 1790346242523,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-211",
       "op_nombre": "CAMISETA MISO",
       "referencia": "CAMISETA MISO",
-      "color": "MARFIL",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1790346242523,
       "uds": 106,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790346383718_y59ew",
+      "ts": 1790346383718,
+      "user": "Elías - Conductor",
+      "tipo": "mercancia",
+      "descripcion": "Llevar lonas centro",
+      "destino": "",
+      "fecha": "2026-09-25",
+      "hora": ""
     }
   ]
 }
