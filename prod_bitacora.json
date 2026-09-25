@@ -22398,14 +22398,30 @@
       "user": "Elías - Conductor"
     },
     {
-      "id": "evt_1790346484104_4kezc",
-      "ts": 1790346484104,
-      "user": "Jefa de Producción",
-      "tipo": "mercancia",
       "descripcion": "llevar mercancia al centro",
       "destino": "NEOS- SAN- CONTENEDOR",
       "fecha": "2026-09-25",
-      "hora": ""
+      "hora": "",
+      "id": "evt_1790346484104_4kezc",
+      "tipo": "mercancia",
+      "ts": 1790346484104,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790354709134_mrduy",
+      "ts": 1790354709134,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-111",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "referencia": "OVERSIZED CAPOTA",
+      "color": "NEGRO",
+      "talla": "todas las tallas",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": true,
+      "uds": 72,
+      "motivo": "ENTREGADO"
     }
   ]
 }
