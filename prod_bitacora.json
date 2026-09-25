@@ -22424,16 +22424,33 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1790355673198_jj9im",
-      "ts": 1790355673198,
-      "user": "Jefa de Producción",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-236",
-      "op_nombre": "OVERSIZED CAPOTA",
       "categoria": "CHAQUETAS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-09-25",
+      "id": "evt_1790355673198_jj9im",
+      "op_id": "OP-2026-236",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "referencias": [
+        "OVERSIZED CAPOTA"
+      ],
+      "tipo": "crear_op",
       "total_uds": 46,
+      "ts": 1790355673198,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790355679813_c63vd",
+      "ts": 1790355679813,
+      "user": "Jefa de Producción",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-236",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "categoria": "CHAQUETAS",
+      "total_ots": 7,
+      "total_uds": 46,
+      "colores": [
+        "VINOTINTO"
+      ],
       "referencias": [
         "OVERSIZED CAPOTA"
       ]
