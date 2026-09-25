@@ -22330,19 +22330,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "VERDE MILITAR",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1790343504253_ks94j",
-      "ts": 1790343504253,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-215",
       "op_nombre": "CHAQUETA DISCOVERY",
       "referencia": "CHAQUETA DISCOVERY",
-      "color": "VERDE MILITAR",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1790343504253,
+      "uds": 96,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790346216036_h071z",
+      "ts": 1790346216036,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-211",
+      "op_nombre": "CAMISETA MISO",
+      "referencia": "CAMISETA MISO",
+      "color": "NEGRO",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 96,
+      "uds": 100,
       "motivo": "EN TALLER"
     }
   ]
