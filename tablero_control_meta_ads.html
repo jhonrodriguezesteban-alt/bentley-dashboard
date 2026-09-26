@@ -151,16 +151,16 @@ footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:v
 <div class="wrap">
 <header>
   <h1>Tablero Meta Ads</h1>
-  <div class="sub">Grupo Bentley SAS · Cuenta <b>320798102308066</b> · Datos hasta <b>24 sep 2026</b> ·
-  Actualizado <b>25 sep 2026, 08:15 (Bogotá)</b> · COP</div>
+  <div class="sub">Grupo Bentley SAS · Cuenta <b>320798102308066</b> · Datos hasta <b>25 sep 2026</b> ·
+  Actualizado <b>26 sep 2026, 08:12 (Bogotá)</b> · COP</div>
 </header>
 
 <div class="kpis">
-  <div class="kpi"><div class="l">Inversión ayer</div><div class="v">$417.501</div><div class="d">+4,8% vs. día anterior</div></div>
-  <div class="kpi"><div class="l">Promedio 7 días</div><div class="v">$453.261</div><div class="d">−3,3% vs. semana previa</div></div>
-  <div class="kpi"><div class="l">Total 30 días</div><div class="v">$13.585.447</div><div class="d">7 campañas con gasto</div></div>
+  <div class="kpi"><div class="l">Inversión ayer</div><div class="v">$445.463</div><div class="d">+6,4% vs. día anterior</div></div>
+  <div class="kpi"><div class="l">Promedio 7 días</div><div class="v">$457.883</div><div class="d">−0,4% vs. semana previa</div></div>
+  <div class="kpi"><div class="l">Total 30 días</div><div class="v">$13.647.830</div><div class="d">7 campañas con gasto</div></div>
   <div class="kpi"><div class="l">Presupuesto diario</div><div class="v">$455.866</div><div class="d">configurado en conjuntos activos</div></div>
-  <div class="kpi"><div class="l">Compras 7 días</div><div class="v">62</div><div class="d">CPA mezclado $45.443</div></div>
+  <div class="kpi"><div class="l">Compras 7 días</div><div class="v">69</div><div class="d">CPA mezclado $41.319</div></div>
   <div class="kpi"><div class="l">Alertas activas</div><div class="v bad" id="kAlert">—</div><div class="d">conjuntos fuera de rango</div></div>
 </div>
 
@@ -187,7 +187,7 @@ footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:v
   </table>
   </div>
   <p class="note">Hook Rate = reproducciones de video ÷ impresiones (qué tanto detiene el scroll). Hold Rate = ThruPlays ÷ reproducciones (qué tanto retiene). Los conjuntos con “—” usan catálogo o imagen, sin métricas de video. La columna <b>vs. campaña</b> compara el costo por resultado de 7 días contra el promedio de 30 días de la campaña padre; se marca alerta por encima de 120%. Cada campaña se mide contra su propio objetivo — compras en F2 y F3, visitas y vistas de página en F1 — así que los porcentajes no son comparables entre fases.</p>
-  <p class="note"><b>Referencia de campañas (30 días).</b> FASE 3 FIDELIZAR $39.056/compra · FASE 2 SOLUCIONAR $65.961/compra · FASE 1 TRÁFICO $140/visita · CALENTAMIENTO WEB $47/vista LP · FASE 1 RECORDACIÓN $2,29/ThruPlay · INTERACCION WSSP MAYORISTAS $105/clic · FORMULARIO MAYORISTAS $534/lead.</p>
+  <p class="note"><b>Referencia de campañas (30 días).</b> FASE 3 FIDELIZAR $38.483/compra · FASE 2 SOLUCIONAR $64.439/compra · FASE 1 TRÁFICO $137/visita · CALENTAMIENTO WEB $47/vista LP · FASE 1 RECORDACIÓN $2,33/ThruPlay · INTERACCION WSSP MAYORISTAS $105/clic · FORMULARIO MAYORISTAS $528/lead.</p>
 </section>
 
 <!-- ============ INVERSIÓN ============ -->
@@ -260,32 +260,32 @@ Fuente: API de Meta Ads, lectura directa de la cuenta. El saldo por pagar se cap
 const FMT=n=>'$'+Math.round(n).toLocaleString('es-CO');
 const FMTK=n=>n>=1e6?'$'+(n/1e6).toFixed(1)+'M':'$'+Math.round(n/1000)+'k';
 const DAILY=[
-["2026-08-26",30397,211177,142525],["2026-08-27",30557,227087,181943],["2026-08-28",28813,230431,200548],["2026-08-29",27429,230143,163128],
-["2026-08-30",34705,267865,223566],["2026-08-31",28851,220113,175413],["2026-09-01",33867,270697,249849],["2026-09-02",34079,191449,210679],
-["2026-09-03",26793,162006,151360],["2026-09-04",25886,118205,133011],["2026-09-05",31750,229060,290783],["2026-09-06",36543,199798,258435],
-["2026-09-07",26289,170975,180935],["2026-09-08",49454,219838,202753],["2026-09-09",52199,250386,185015],["2026-09-10",48787,227453,209495],
-["2026-09-11",47463,238810,189665],["2026-09-12",42259,240916,181148],["2026-09-13",59193,248677,225005],["2026-09-14",51969,192731,171236],
-["2026-09-15",55967,200549,200250],["2026-09-16",48579,188000,223468],["2026-09-17",43736,223955,206524],["2026-09-18",45713,198068,170350],
-["2026-09-19",47266,214226,173237],["2026-09-20",49016,193997,186610],["2026-09-21",56856,253473,210980],["2026-09-22",52020,230148,274809],
-["2026-09-23",51263,157813,189481],["2026-09-24",53205,190197,174099]];
+["2026-08-27",30557,227087,181943],["2026-08-28",28813,230431,200548],["2026-08-29",27429,230143,163128],["2026-08-30",34705,267865,223566],
+["2026-08-31",28851,220113,175413],["2026-09-01",33867,270697,249849],["2026-09-02",34079,191449,210679],["2026-09-03",26793,162006,151360],
+["2026-09-04",25886,118205,133011],["2026-09-05",31750,229060,290783],["2026-09-06",36543,199798,258435],["2026-09-07",26289,170975,180935],
+["2026-09-08",49454,219838,202753],["2026-09-09",52199,250386,185015],["2026-09-10",48787,227453,209495],["2026-09-11",47463,238810,189665],
+["2026-09-12",42259,240916,181148],["2026-09-13",59193,248677,225005],["2026-09-14",51969,192731,171236],["2026-09-15",55967,200549,200250],
+["2026-09-16",48579,188000,223468],["2026-09-17",43736,223955,206524],["2026-09-18",45713,198068,170350],["2026-09-19",47266,214226,173237],
+["2026-09-20",49016,193997,186610],["2026-09-21",56856,253473,210980],["2026-09-22",52020,230148,274809],["2026-09-23",51263,157834,189481],
+["2026-09-24",53322,190597,174580],["2026-09-25",44413,191936,209114]];
 const SERIES=[{k:'F1',label:'F1 · Enganchar',hex:'#86b6ef',i:1},
               {k:'F2',label:'F2 · Solucionar',hex:'#3987e5',i:2},
               {k:'F3',label:'F3 · Fidelizar',hex:'#184f95',i:3}];
 const HEX={F1:'#86b6ef',F2:'#3987e5',F3:'#184f95'};
 const ADSETS=[
- {n:'F2 GANADORES',f:'F2',ap:'SUCCESS',b:100000,s:696927,r:9,cpa:77436,base:65961,u:'compras',fr:1.56,hook:20.0,hold:5.1,note:''},
- {n:'RMK | CATALOGO DPA 2.0',f:'F3',ap:'SUCCESS',b:70500,s:488952,r:10,cpa:48895,base:39056,u:'compras',fr:2.25,hook:null,hold:null,note:''},
- {n:'RMK | MIX NIÑO NIÑA 2.0',f:'F3',ap:'SUCCESS',b:62166,s:428079,r:10,cpa:42808,base:39056,u:'compras',fr:2.05,hook:43.6,hold:4.0,note:''},
- {n:'MIX NIÑO + NIÑA — F2 · V2 SEPT',f:'F2',ap:'FAIL',b:60000,s:458964,r:16,cpa:28685,base:65961,u:'compras',fr:1.78,hook:4.1,hold:7.8,note:''},
- {n:'TESTEO 1',f:'F2',ap:'FAIL',b:40000,s:282031,r:4,cpa:70508,base:65961,u:'compras',fr:1.45,hook:46.9,hold:7.7,note:''},
- {n:'RMK | MIX CONJUNTOS | SEPT',f:'F3',ap:'FAIL',b:28800,s:171583,r:5,cpa:34317,base:39056,u:'compras',fr:1.45,hook:93.0,hold:5.3,note:''},
- {n:'RMK | MIX ABRIGOS | SEPT',f:'F3',ap:'FAIL',b:24000,s:150746,r:7,cpa:21535,base:39056,u:'compras',fr:1.62,hook:65.8,hold:16.5,note:''},
- {n:'RMK | MIX CHAQUETAS | SEPT',f:'F3',ap:null,b:20000,s:140206,r:1,cpa:140206,base:39056,u:'compras',fr:1.87,hook:0.1,hold:13.3,note:'1 sola compra en 7 días'},
- {n:'TRAFICO WEB 2.0',f:'F1',ap:'SUCCESS',b:16000,s:111315,r:2695,cpa:41.30,base:47.36,u:'vistas LP',fr:1.22,hook:55.9,hold:12.6,note:''},
- {n:'INTERACCION 1 WSSP MAYORISTAS SEPT',f:'F1',ap:'SUCCESS',b:12000,s:82657,r:734,cpa:112.61,base:104.92,u:'clics',fr:2.22,hook:91.7,hold:10.1,note:'frecuencia sobre 2,0'},
- {n:'ADVANTAGE (visitas perfil)',f:'F1',ap:null,b:8000,s:58718,r:453,cpa:129.62,base:139.80,u:'visitas',fr:1.15,hook:95.2,hold:9.3,note:''},
- {n:'MAYORISTAS ADVANTAGE',f:'F1',ap:null,b:8000,s:57680,r:100,cpa:576.80,base:533.78,u:'leads',fr:1.43,hook:93.5,hold:9.9,note:'formulario mayoristas'},
- {n:'Advantage · PROMT INDIRECTO',f:'F1',ap:null,b:6400,s:44969,r:18005,cpa:2.4976,base:2.2944,u:'ThruPlays',fr:1.03,hook:98.5,hold:46.1,note:''}];
+ {n:'F2 GANADORES',f:'F2',ap:'SUCCESS',b:100000,s:714820,r:9,cpa:79424,base:64439,u:'compras',fr:1.57,hook:20.8,hold:5.1,note:''},
+ {n:'RMK | CATALOGO DPA 2.0',f:'F3',ap:'SUCCESS',b:70500,s:490744,r:8,cpa:61343,base:38483,u:'compras',fr:2.30,hook:null,hold:null,note:''},
+ {n:'RMK | MIX NIÑO NIÑA 2.0',f:'F3',ap:'LEARNING',b:62166,s:432425,r:11,cpa:39311,base:38483,u:'compras',fr:2.03,hook:54.3,hold:3.9,note:'en aprendizaje'},
+ {n:'MIX NIÑO + NIÑA — F2 · V2 SEPT',f:'F2',ap:'FAIL',b:60000,s:430890,r:20,cpa:21544,base:64439,u:'compras',fr:1.77,hook:3.9,hold:7.9,note:''},
+ {n:'TESTEO 1',f:'F2',ap:'FAIL',b:40000,s:286501,r:4,cpa:71625,base:64439,u:'compras',fr:1.40,hook:58.4,hold:7.9,note:''},
+ {n:'RMK | MIX CONJUNTOS | SEPT',f:'F3',ap:'FAIL',b:28800,s:191840,r:7,cpa:27406,base:38483,u:'compras',fr:1.50,hook:93.2,hold:5.4,note:''},
+ {n:'RMK | MIX ABRIGOS | SEPT',f:'F3',ap:'FAIL',b:24000,s:163516,r:7,cpa:23359,base:38483,u:'compras',fr:1.55,hook:77.9,hold:16.3,note:''},
+ {n:'RMK | MIX CHAQUETAS | SEPT',f:'F3',ap:'FAIL',b:20000,s:140286,r:3,cpa:46762,base:38483,u:'compras',fr:1.91,hook:0.3,hold:15.6,note:'creativo sin reproducciones'},
+ {n:'TRAFICO WEB 2.0',f:'F1',ap:'SUCCESS',b:16000,s:110443,r:2698,cpa:40.9351,base:47.3153,u:'vistas LP',fr:1.19,hook:57,hold:12.8,note:''},
+ {n:'INTERACCION 1 WSSP MAYORISTAS SEPT',f:'F1',ap:'SUCCESS',b:12000,s:84131,r:752,cpa:111.8763,base:104.8842,u:'clics',fr:2.20,hook:91.6,hold:10.3,note:'frecuencia sobre 2,0'},
+ {n:'ADVANTAGE (visitas perfil)',f:'F1',ap:null,b:8000,s:55622,r:429,cpa:129.655,base:136.8217,u:'visitas',fr:1.15,hook:95.4,hold:9.3,note:''},
+ {n:'MAYORISTAS ADVANTAGE',f:'F1',ap:'SUCCESS',b:8000,s:58604,r:99,cpa:591.9596,base:528.2989,u:'leads',fr:1.39,hook:93.8,hold:10.2,note:'formulario mayoristas'},
+ {n:'Advantage · PROMT INDIRECTO',f:'F1',ap:null,b:6400,s:45356,r:17733,cpa:2.5577,base:2.3306,u:'ThruPlays',fr:1.03,hook:98.4,hold:45.9,note:''}];
 const MARKS=[{k:'ajuste',label:'Ajuste de presupuesto',c:'#ff9f0a'},
              {k:'lanzamiento',label:'Lanzamiento',c:'#bf5af2'},
              {k:'nota',label:'Nota',c:'#30d158'}];
