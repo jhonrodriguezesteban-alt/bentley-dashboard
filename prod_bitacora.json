@@ -22832,19 +22832,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1790725303336_td52b",
-      "ts": 1790725303336,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-085",
       "op_nombre": "PANTALON RAVE",
       "referencia": "PANTALON RAVE",
-      "color": "NEGRO",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1790725303336,
+      "uds": 120,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790725583861_b3nol",
+      "ts": 1790725583861,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-080",
+      "op_nombre": "CONJUNTO ISABELLA",
+      "referencia": "CONJUNTO ISABELLA",
+      "color": "BEIGE",
       "talla": "todas las tallas",
       "estado_anterior": "ENTREGADO",
       "estado_nuevo": "ENTREGADO",
       "bulk": true,
-      "uds": 120,
+      "uds": 48,
       "motivo": "ENTREGADO"
     }
   ]
