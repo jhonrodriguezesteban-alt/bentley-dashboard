@@ -1569,7 +1569,7 @@
     },
     {
       "color": "NEGRO",
-      "entregado": false,
+      "entregado": true,
       "fecha_compromiso": "2026-09-18",
       "fecha_entrada": "2026-08-20",
       "fecha_inicial": "2026-09-18",
@@ -1585,7 +1585,8 @@
       "op_id": "OP-2026-116",
       "op_nombre": "BOMBON",
       "satelite_id": "id_1786636077061_o9ixkldbe",
-      "uds": 10
+      "uds": 10,
+      "fecha_entrega_real": "2026-09-29"
     },
     {
       "color": "GRIS CLARO",
@@ -2370,6 +2371,7 @@
       "entregado": true,
       "fecha_compromiso": "2026-09-24",
       "fecha_entrada": "2026-09-10",
+      "fecha_entrega_real": "2026-09-25",
       "fecha_inicial": "2026-09-24",
       "historial": [
         {
@@ -2383,8 +2385,7 @@
       "op_id": "OP-2026-111",
       "op_nombre": "OVERSIZED CAPOTA",
       "satelite_id": "id_1786636234858_ymxshf44o",
-      "uds": 72,
-      "fecha_entrega_real": "2026-09-25"
+      "uds": 72
     },
     {
       "color": "AVENA",
@@ -2871,46 +2872,34 @@
       "uds": 96
     },
     {
+      "color": "VERDE MILITAR",
+      "entregado": false,
+      "fecha_entrada": "2026-09-25",
       "id": "id_1790343482919_qa98j9jw5",
       "op_id": "OP-2026-215",
       "op_nombre": "CHAQUETA DISCOVERY",
-      "color": "VERDE MILITAR",
       "satelite_id": "id_1790343464316_t9qsof62u",
-      "uds": 96,
-      "fecha_entrada": "2026-09-25",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 96
     },
     {
+      "color": "NEGRO",
+      "entregado": false,
+      "fecha_entrada": "2026-09-25",
       "id": "id_1790346215931_bge0rz6gp",
       "op_id": "OP-2026-211",
       "op_nombre": "CAMISETA MISO",
-      "color": "NEGRO",
       "satelite_id": "id_1785259712827_cwczmsu5r",
-      "uds": 100,
-      "fecha_entrada": "2026-09-25",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 100
     },
     {
+      "color": "MARFIL",
+      "entregado": false,
+      "fecha_entrada": "2026-09-25",
       "id": "id_1790346242430_a7qr4lzlg",
       "op_id": "OP-2026-211",
       "op_nombre": "CAMISETA MISO",
-      "color": "MARFIL",
       "satelite_id": "id_1785259712827_cwczmsu5r",
-      "uds": 106,
-      "fecha_entrada": "2026-09-25",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 106
     }
   ]
 }
