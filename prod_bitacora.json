@@ -22725,19 +22725,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "AZUL",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1790722769263_wdoyd",
+      "motivo": "EN TALLER",
+      "op_id": "OP-2026-212",
+      "op_nombre": "CAMISETA COCOA",
+      "referencia": "CAMISETA COCOA",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1790722769263,
+      "uds": 71,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790722788266_8qvfm",
+      "ts": 1790722788266,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-212",
       "op_nombre": "CAMISETA COCOA",
       "referencia": "CAMISETA COCOA",
-      "color": "AZUL",
+      "color": "CAMEL",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 71,
+      "uds": 110,
       "motivo": "EN TALLER"
     }
   ]
