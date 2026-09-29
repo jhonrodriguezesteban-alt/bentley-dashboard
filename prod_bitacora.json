@@ -22757,20 +22757,36 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "VERDE",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1790722806021_oko81",
-      "ts": 1790722806021,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-212",
       "op_nombre": "CAMISETA COCOA",
       "referencia": "CAMISETA COCOA",
-      "color": "VERDE",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1790722806021,
       "uds": 58,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790724687378_baaxl",
+      "ts": 1790724687378,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-107",
+      "op_nombre": "CONJUNTO FRANKY PR",
+      "referencia": "CONJUNTO FRANKY PRIME",
+      "color": "AVENA",
+      "talla": "M",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": false,
+      "uds": 30,
+      "motivo": "ENTREGADO"
     }
   ]
 }
