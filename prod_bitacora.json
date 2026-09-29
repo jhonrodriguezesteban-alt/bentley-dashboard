@@ -22816,20 +22816,36 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "BEIGE",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1790725269210_cnd2z",
-      "ts": 1790725269210,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-0037",
       "op_nombre": "CHALECO ACOLCHADO MANY",
       "referencia": "CHALECO ACOLCHADO MANY",
-      "color": "BEIGE",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1790725269210,
       "uds": 63,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790725303336_td52b",
+      "ts": 1790725303336,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-085",
+      "op_nombre": "PANTALON RAVE",
+      "referencia": "PANTALON RAVE",
+      "color": "NEGRO",
+      "talla": "todas las tallas",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": true,
+      "uds": 120,
+      "motivo": "ENTREGADO"
     }
   ]
 }
