@@ -22805,15 +22805,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1790725246288_qcy39",
-      "ts": 1790725246288,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-0037",
-      "nombre": "CHALECO ACOLCHADO MANY",
       "categoria": "CHALECOS",
       "colores": 4,
-      "refs": 1
+      "id": "evt_1790725246288_qcy39",
+      "nombre": "CHALECO ACOLCHADO MANY",
+      "op_id": "OP-0037",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1790725246288,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790725269210_cnd2z",
+      "ts": 1790725269210,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0037",
+      "op_nombre": "CHALECO ACOLCHADO MANY",
+      "referencia": "CHALECO ACOLCHADO MANY",
+      "color": "BEIGE",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 63,
+      "motivo": "EN TALLER"
     }
   ]
 }
