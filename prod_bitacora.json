@@ -22773,20 +22773,36 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": false,
+      "color": "AVENA",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1790724687378_baaxl",
-      "ts": 1790724687378,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-107",
       "op_nombre": "CONJUNTO FRANKY PR",
       "referencia": "CONJUNTO FRANKY PRIME",
-      "color": "AVENA",
       "talla": "M",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": false,
+      "tipo": "estado_ot",
+      "ts": 1790724687378,
       "uds": 30,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790725050906_in7sw",
+      "ts": 1790725050906,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-099",
+      "op_nombre": "BEISBOLERA 2.0",
+      "referencia": "BEISBOLERA 2.0",
+      "color": "GRIS OSCURO",
+      "talla": "todas las tallas",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
+      "bulk": true,
+      "uds": 80,
+      "motivo": "en insumos"
     }
   ]
 }
