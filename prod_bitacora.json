@@ -23068,20 +23068,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1790782740073_mij3s",
-      "ts": 1790782740073,
-      "user": "Jefa de Producción",
-      "tipo": "cambiar_estado_op_all",
-      "op_id": "OP-2026-211",
-      "estado": "POR_REVISAR",
       "colores": 0,
+      "estado": "POR_REVISAR",
+      "id": "evt_1790782740073_mij3s",
+      "nombre": "CAMISETA MISO",
+      "op_id": "OP-2026-211",
       "protegidos": [
         "CAFE",
         "NEGRO",
         "VERDE",
         "MARFIL"
       ],
-      "nombre": "CAMISETA MISO"
+      "tipo": "cambiar_estado_op_all",
+      "ts": 1790782740073,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790798213994_6m8cm",
+      "ts": 1790798213994,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-203",
+      "nombre": "CONJUNTO CHELSY",
+      "categoria": "CONJUNTOS",
+      "colores": 3,
+      "refs": 1
     }
   ]
 }
