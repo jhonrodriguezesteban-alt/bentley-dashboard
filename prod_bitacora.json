@@ -23220,20 +23220,32 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1790803539858_ple72",
-      "ts": 1790803539858,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-0040",
       "op_nombre": "PANTALON DONATELLA",
       "referencia": "PANTALON DONATELLA",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1790803539858,
       "uds": 84,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790804399386_od0ty",
+      "ts": 1790804399386,
+      "user": "Isabel",
+      "tipo": "estado_diseno",
+      "diseno_id": "id_1782160552657_bg8wo6gbq",
+      "nombre": "SET SOLOMUN",
+      "categoria": "Conjuntos",
+      "marca": "Bentley Kids",
+      "estado_anterior": "EN_ESCALADO",
+      "estado_nuevo": "EN_CONFECCION_MUESTRA"
     }
   ]
 }
