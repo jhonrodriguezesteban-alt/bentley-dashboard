@@ -4620,8 +4620,8 @@
       "precio_detal": 99000,
       "precio_mayorista": 69000,
       "precio_web": 99900,
-      "producto": "BEISBOLERA ARMIN - REF: 1132",
-      "precios_pvp": true
+      "precios_pvp": true,
+      "producto": "BEISBOLERA ARMIN - REF: 1132"
     },
     {
       "precio_detal": 0,
@@ -4894,6 +4894,13 @@
       "precio_web": 129900,
       "precios_pvp": true,
       "producto": "CONJUNTO SOLOMUN"
+    },
+    {
+      "producto": "CONJUNTO CHELSY",
+      "precio_mayorista": 75000,
+      "precio_detal": 105000,
+      "precio_web": 100000,
+      "precios_pvp": true
     }
   ],
   "puestos": [
@@ -6106,10 +6113,10 @@
           "tipo": "MATERIAL"
         },
         {
+          "cantidad": 1,
           "id": "cid_1789620893371_3878",
-          "tipo": "SERVICIO",
           "servicio_id": "cid_1789620888476_4095",
-          "cantidad": 1
+          "tipo": "SERVICIO"
         }
       ],
       "id": "rec_beisbolera_armin_1132",
@@ -46215,6 +46222,7 @@
   "referencias_asignadas": {
     "ABRIGO FROZEN - REF: 1136": "1233",
     "ABRIGO LUXOR - REF: 1135": "1213",
+    "BEISBOLERA ARMIN - REF: 1132": "1234",
     "BLAZER DONATELLA": "1212",
     "BLUSA BOLERO": "1226",
     "BLUSA COSMO": "1182",
@@ -46267,8 +46275,7 @@
     "VESTIDO KIKI": "1189",
     "VESTIDO MINI DRESS": "1185",
     "VESTIDO SOUL - REF: 1104": "1186",
-    "WASHMAN": "1198",
-    "BEISBOLERA ARMIN - REF: 1132": "1234"
+    "WASHMAN": "1198"
   },
   "servicios": [
     {
@@ -47049,14 +47056,14 @@
       "nombre": "servicio de confeccion chaleco kenwort"
     },
     {
+      "costo_unitario": 5000,
       "id": "cid_1789620888476_4095",
-      "nombre": "BORDADO ARMIN",
-      "costo_unitario": 5000
+      "nombre": "BORDADO ARMIN"
     },
     {
+      "costo_unitario": 5000,
       "id": "cid_1789620889646_2781",
-      "nombre": "BORDADO ARMIN",
-      "costo_unitario": 5000
+      "nombre": "BORDADO ARMIN"
     }
   ],
   "tarifas_cif": [
