@@ -13425,27 +13425,27 @@
     },
     {
       "cantidades": {
-        "BEIGE_T10": 18,
-        "BEIGE_T12": 18,
-        "BEIGE_T14": 18,
-        "BEIGE_T16": 18,
         "BEIGE_T4": 8,
         "BEIGE_T6": 8,
-        "BEIGE_T8": 18,
-        "NEGRO_T10": 18,
-        "NEGRO_T12": 18,
-        "NEGRO_T14": 18,
-        "NEGRO_T16": 18,
-        "NEGRO_T4": 8,
-        "NEGRO_T6": 8,
-        "NEGRO_T8": 18,
-        "VERDE MILITAR_T10": 18,
-        "VERDE MILITAR_T12": 18,
-        "VERDE MILITAR_T14": 18,
-        "VERDE MILITAR_T16": 18,
+        "BEIGE_T8": 16,
+        "BEIGE_T10": 16,
+        "BEIGE_T12": 16,
+        "BEIGE_T14": 16,
+        "BEIGE_T16": 16,
         "VERDE MILITAR_T4": 8,
         "VERDE MILITAR_T6": 8,
-        "VERDE MILITAR_T8": 18
+        "VERDE MILITAR_T8": 16,
+        "VERDE MILITAR_T10": 16,
+        "VERDE MILITAR_T12": 16,
+        "VERDE MILITAR_T14": 16,
+        "VERDE MILITAR_T16": 16,
+        "NEGRO_T4": 8,
+        "NEGRO_T6": 8,
+        "NEGRO_T8": 17,
+        "NEGRO_T10": 17,
+        "NEGRO_T12": 17,
+        "NEGRO_T14": 17,
+        "NEGRO_T16": 17
       },
       "categoria": "CONJUNTOS",
       "colores": [
@@ -13483,38 +13483,15 @@
       "receta_nombre": "CONJUNTO DAKOTA",
       "referencias": [
         {
-          "cantidades": {
-            "BEIGE_T10": 18,
-            "BEIGE_T12": 18,
-            "BEIGE_T14": 18,
-            "BEIGE_T16": 18,
-            "BEIGE_T4": 8,
-            "BEIGE_T6": 8,
-            "BEIGE_T8": 18,
-            "NEGRO_T10": 18,
-            "NEGRO_T12": 18,
-            "NEGRO_T14": 18,
-            "NEGRO_T16": 18,
-            "NEGRO_T4": 8,
-            "NEGRO_T6": 8,
-            "NEGRO_T8": 18,
-            "VERDE MILITAR_T10": 18,
-            "VERDE MILITAR_T12": 18,
-            "VERDE MILITAR_T14": 18,
-            "VERDE MILITAR_T16": 18,
-            "VERDE MILITAR_T4": 8,
-            "VERDE MILITAR_T6": 8,
-            "VERDE MILITAR_T8": 18
-          },
+          "nombre": "CONJUNTO DAKOTA",
+          "ref": "1217",
           "cat": "CONJUNTOS",
+          "vmo": 1151,
           "colores": [
             "BEIGE",
             "VERDE MILITAR",
             "NEGRO"
           ],
-          "maquilador_id": "",
-          "nombre": "CONJUNTO DAKOTA",
-          "ref": "1217",
           "tallas": [
             "T4",
             "T6",
@@ -13524,7 +13501,30 @@
             "T14",
             "T16"
           ],
-          "vmo": 1151
+          "cantidades": {
+            "BEIGE_T4": 8,
+            "BEIGE_T6": 8,
+            "BEIGE_T8": 16,
+            "BEIGE_T10": 16,
+            "BEIGE_T12": 16,
+            "BEIGE_T14": 16,
+            "BEIGE_T16": 16,
+            "VERDE MILITAR_T4": 8,
+            "VERDE MILITAR_T6": 8,
+            "VERDE MILITAR_T8": 16,
+            "VERDE MILITAR_T10": 16,
+            "VERDE MILITAR_T12": 16,
+            "VERDE MILITAR_T14": 16,
+            "VERDE MILITAR_T16": 16,
+            "NEGRO_T4": 8,
+            "NEGRO_T6": 8,
+            "NEGRO_T8": 17,
+            "NEGRO_T10": 17,
+            "NEGRO_T12": 17,
+            "NEGRO_T14": 17,
+            "NEGRO_T16": 17
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -13552,7 +13552,7 @@
           "solicitud_id": "id_1789510472124_sfkvca2oy"
         }
       ],
-      "updated_at": "2026-09-14"
+      "updated_at": "2026-09-30"
     },
     {
       "cantidades": {
