@@ -22977,19 +22977,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "BEIGE",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1790782321620_vz2ud",
+      "motivo": "en insumos",
+      "op_id": "OP-2026-220",
+      "op_nombre": "CONJUNTO DAKOTA",
+      "referencia": "CONJUNTO DAKOTA",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1790782321620,
+      "uds": 96,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790782450249_qpxw3",
+      "ts": 1790782450249,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-220",
       "op_nombre": "CONJUNTO DAKOTA",
       "referencia": "CONJUNTO DAKOTA",
-      "color": "BEIGE",
+      "color": "NEGRO",
       "talla": "todas las tallas",
       "estado_anterior": "CORTE_POR_ALISTAR",
       "estado_nuevo": "CORTE_POR_ALISTAR",
       "bulk": true,
-      "uds": 96,
+      "uds": 101,
       "motivo": "en insumos"
     }
   ]
