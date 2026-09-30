@@ -23161,15 +23161,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1790803380913_8r3de",
-      "ts": 1790803380913,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-214",
-      "nombre": "BLAZER DONATELLA",
       "categoria": "CHAQUETAS",
       "colores": 4,
-      "refs": 1
+      "id": "evt_1790803380913_8r3de",
+      "nombre": "BLAZER DONATELLA",
+      "op_id": "OP-2026-214",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1790803380913,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790803461897_ghor0",
+      "ts": 1790803461897,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0040",
+      "op_nombre": "PANTALON DONATELLA",
+      "referencia": "PANTALON DONATELLA",
+      "color": "CAMEL",
+      "talla": "todas las tallas",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
+      "bulk": true,
+      "uds": 84,
+      "motivo": "en insumos"
     }
   ]
 }
