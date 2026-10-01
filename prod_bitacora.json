@@ -23403,16 +23403,27 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1790865491412_asi12",
-      "ts": 1790865491412,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1785255139718_q7nn7ajws",
-      "nombre": "PANTALON TRENCH",
       "categoria": "Pantalones",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1785255139718_q7nn7ajws",
       "estado_anterior": "EN_CORTE_MUESTRA",
-      "estado_nuevo": "EN_REVISION_GERENCIA"
+      "estado_nuevo": "EN_REVISION_GERENCIA",
+      "id": "evt_1790865491412_asi12",
+      "marca": "Bentley Kids",
+      "nombre": "PANTALON TRENCH",
+      "tipo": "estado_diseno",
+      "ts": 1790865491412,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1790868021112_093x1",
+      "ts": 1790868021112,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1785257229218_95gxizfdu",
+      "op_id": "OP-0038",
+      "color": "SALMON",
+      "fecha_nueva": "2026-10-03",
+      "motivo": "Asignación inicial"
     }
   ]
 }
