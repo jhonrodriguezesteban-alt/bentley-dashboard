@@ -24244,19 +24244,35 @@
       "user": "John Rodriguez"
     },
     {
+      "bulk": true,
+      "color": "CAMEL",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1790896760955_jnx62",
-      "ts": 1790896760955,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-125",
       "op_nombre": "OVERSIZED CAPOTA",
       "referencia": "OVERSIZED CAPOTA",
-      "color": "CAMEL",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1790896760955,
+      "uds": 80,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790896789511_pkn0l",
+      "ts": 1790896789511,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0033",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "referencia": "OVERSIZED CAPOTA",
+      "color": "VINOTINTO",
       "talla": "todas las tallas",
       "estado_anterior": "CORTE_POR_ALISTAR",
       "estado_nuevo": "CORTE_POR_ALISTAR",
       "bulk": true,
-      "uds": 80,
+      "uds": 130,
       "motivo": "en insumos"
     }
   ]
