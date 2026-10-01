@@ -10,7 +10,6 @@
     ],
     "2026-09": [
       "OP-2026-100||NEGRO",
-      "OP-2026-090||VINOTINTO",
       "OP-2026-089||MARFIL",
       "OP-2026-090||GRIS OSCURO",
       "OP-2026-119||AZUL OSCURO",
@@ -147,7 +146,8 @@
       "OP-2026-222||MARFIL",
       "OP-2026-222||NEGRO",
       "OP-2026-222||VINOTINTO",
-      "OP-2026-222||ROJO"
+      "OP-2026-222||ROJO",
+      "OP-2026-090||VINOTINTO"
     ],
     "2026-10": [
       "OP-2026-213||BEIGE",
@@ -1437,70 +1437,70 @@
       "uds": 132
     },
     {
-      "key": "OP-0040||CAMEL",
-      "op_id": "OP-0040",
-      "op_nombre": "PANTALON DONATELLA",
       "categoria": "PANTALONES",
       "color": "CAMEL",
-      "uds": 84,
-      "mes_planeado": "2026-09",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-10-01"
-    },
-    {
-      "key": "OP-0040||NEGRO",
+      "fecha_deteccion": "2026-10-01",
+      "key": "OP-0040||CAMEL",
+      "mes_planeado": "2026-09",
       "op_id": "OP-0040",
       "op_nombre": "PANTALON DONATELLA",
+      "uds": 84
+    },
+    {
       "categoria": "PANTALONES",
       "color": "NEGRO",
-      "uds": 84,
-      "mes_planeado": "2026-09",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-10-01"
-    },
-    {
-      "key": "OP-0040||MARFIL",
+      "fecha_deteccion": "2026-10-01",
+      "key": "OP-0040||NEGRO",
+      "mes_planeado": "2026-09",
       "op_id": "OP-0040",
       "op_nombre": "PANTALON DONATELLA",
+      "uds": 84
+    },
+    {
       "categoria": "PANTALONES",
       "color": "MARFIL",
-      "uds": 84,
-      "mes_planeado": "2026-09",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-10-01"
+      "fecha_deteccion": "2026-10-01",
+      "key": "OP-0040||MARFIL",
+      "mes_planeado": "2026-09",
+      "op_id": "OP-0040",
+      "op_nombre": "PANTALON DONATELLA",
+      "uds": 84
     },
     {
-      "key": "OP-2026-220||NEGRO",
-      "op_id": "OP-2026-220",
-      "op_nombre": "CONJUNTO DAKOTA",
       "categoria": "CONJUNTOS",
       "color": "NEGRO",
-      "uds": 101,
-      "mes_planeado": "2026-09",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-10-01"
-    },
-    {
-      "key": "OP-2026-220||VERDE MILITAR",
+      "fecha_deteccion": "2026-10-01",
+      "key": "OP-2026-220||NEGRO",
+      "mes_planeado": "2026-09",
       "op_id": "OP-2026-220",
       "op_nombre": "CONJUNTO DAKOTA",
+      "uds": 101
+    },
+    {
       "categoria": "CONJUNTOS",
       "color": "VERDE MILITAR",
-      "uds": 96,
-      "mes_planeado": "2026-09",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-10-01"
-    },
-    {
-      "key": "OP-2026-220||BEIGE",
+      "fecha_deteccion": "2026-10-01",
+      "key": "OP-2026-220||VERDE MILITAR",
+      "mes_planeado": "2026-09",
       "op_id": "OP-2026-220",
       "op_nombre": "CONJUNTO DAKOTA",
+      "uds": 96
+    },
+    {
       "categoria": "CONJUNTOS",
       "color": "BEIGE",
-      "uds": 96,
-      "mes_planeado": "2026-09",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-10-01"
+      "fecha_deteccion": "2026-10-01",
+      "key": "OP-2026-220||BEIGE",
+      "mes_planeado": "2026-09",
+      "op_id": "OP-2026-220",
+      "op_nombre": "CONJUNTO DAKOTA",
+      "uds": 96
     }
   ],
   "confirmadas": {
