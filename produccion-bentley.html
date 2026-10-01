@@ -1024,14 +1024,32 @@ try {
 var FB_ROOT = 'bentley-prod';
 var _fbOwnWrite = {}; // evita re-render cuando el propio usuario acaba de guardar
 
+// Firebase NO acepta . # $ / [ ] en los nombres de campo. La OP-0008 usa tallas "T6/8" y
+// "T10/12", así que sus cantidades tienen llaves como "ROSA_T6/8": desde que se editó esa OP
+// TODA escritura de OPs a Firebase fallaba en silencio (solo un console.warn) y Firebase
+// quedó congelado con las OPs de esa fecha. Como la app arrancaba desde Firebase, al recargar
+// "volvían" los estados viejos. Se codifican esos caracteres al escribir y se decodifican al leer.
+function _fbEncKey(k){ return String(k).replace(/[%.#$\/\[\]]/g, function(c){ return '%'+('0'+c.charCodeAt(0).toString(16).toUpperCase()).slice(-2); }); }
+function _fbDecKey(k){ return k.indexOf('%')<0 ? k : k.replace(/%(25|2E|23|24|2F|5B|5D)/g, function(m,h){ return String.fromCharCode(parseInt(h,16)); }); }
+function _fbEncKeys(v){
+  if(Array.isArray(v)) return v.map(_fbEncKeys);
+  if(v && typeof v==='object'){ var o={}; Object.keys(v).forEach(function(k){ o[_fbEncKey(k)] = _fbEncKeys(v[k]); }); return o; }
+  return v;
+}
+function _fbDecKeys(v){
+  if(Array.isArray(v)) return v.map(_fbDecKeys);
+  if(v && typeof v==='object'){ var o={}; Object.keys(v).forEach(function(k){ o[_fbDecKey(k)] = _fbDecKeys(v[k]); }); return o; }
+  return v;
+}
 async function _fbSet(key, data){
   if(!_fbDb) return;
-  try { if(_fbAuthReady) await _fbAuthReady; await _fbDb.ref(FB_ROOT+'/'+key).set(data); } catch(e){ console.warn('FB write '+key, e); }
+  try { if(_fbAuthReady) await _fbAuthReady; await _fbDb.ref(FB_ROOT+'/'+key).set(_fbEncKeys(data)); }
+  catch(e){ console.warn('FB write '+key, e); toast('No se pudo sincronizar '+key+' en tiempo real — los demás lo verán al recargar', 'warning'); }
 }
 
 async function _fbGet(key){
   if(!_fbDb) return null;
-  try { if(_fbAuthReady) await _fbAuthReady; var s = await _fbDb.ref(FB_ROOT+'/'+key).get(); return s.exists() ? s.val() : null; } catch(e){ return null; }
+  try { if(_fbAuthReady) await _fbAuthReady; var s = await _fbDb.ref(FB_ROOT+'/'+key).get(); return s.exists() ? _fbDecKeys(s.val()) : null; } catch(e){ return null; }
 }
 
 function _fbApplyKey(key, d){
@@ -1083,7 +1101,7 @@ async function _fbMigrarSiVacio(){
       sim:       {active:(DB.sim||{}).active||[], data:(DB.sim||{}).data||{}},
       costeo:    DB.costeo||{mp:[],servicios:[],puestos:[],tarifas_cif:[],params:{},recetas:[],precios_pt:[]}
     };
-    var promises = Object.keys(migrar).map(function(k){ return _fbDb.ref(FB_ROOT+'/'+k).set(migrar[k]); });
+    var promises = Object.keys(migrar).map(function(k){ return _fbDb.ref(FB_ROOT+'/'+k).set(_fbEncKeys(migrar[k])); });
     await Promise.all(promises);
     console.log('✅ Datos migrados a Firebase correctamente');
     toast('Firebase sincronizado — sync en tiempo real activo ⚡', 'success');
@@ -1095,7 +1113,7 @@ async function _fbMigrarSiVacio(){
 // abiertas con una versión anterior se recargan solas (esperando a que terminen de guardar).
 // Sin esto, una pestaña vieja olvidada en un computador seguía guardando con la lógica
 // anterior y deshaciendo cambios de todos los demás.
-var APP_VERSION = 20261001.3;
+var APP_VERSION = 20261001.4;
 function _vigilarVersionApp(){
   if(!_fbDb) return;
   _fbDb.ref(FB_ROOT+'/app_version').on('value', function(snap){
@@ -1133,6 +1151,7 @@ async function _iniciarListenersFirebase(){
       if(key !== 'bitacora' && !_MERGE3_KEYS[key] && _fbOwnWrite[key]) return;
       var d = snap.val();
       if(!d) return;
+      d = _fbDecKeys(d);
       if(_MERGE3_KEYS[key]){
         // Solo se acepta lo escrito por esta versión (trae _v3ts) y más nuevo que lo ya visto:
         // las pestañas con versiones viejas escribían aquí su copia local sin fusionar.
