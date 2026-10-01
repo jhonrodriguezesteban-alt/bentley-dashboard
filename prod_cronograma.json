@@ -714,8 +714,7 @@
       "id": "id_1783030889777_yqi3k8nd5",
       "op_id": "OP-0051",
       "op_nombre": "CAZADORA ANIMALITOS",
-      "uds": 160,
-      "satelite_id": null
+      "uds": 160
     },
     {
       "color": "MARFIL",
@@ -935,23 +934,22 @@
     {
       "color": "SALMON",
       "entregado": false,
+      "fecha_compromiso": "2026-10-03",
       "fecha_entrada": "2026-07-28",
+      "fecha_inicial": "2026-10-03",
+      "historial": [
+        {
+          "at": "2026-10-01",
+          "by": "Jefa de Producción",
+          "fecha_nueva": "2026-10-03",
+          "motivo": "Fecha inicial asignada"
+        }
+      ],
       "id": "id_1785257229218_95gxizfdu",
       "op_id": "OP-0038",
       "op_nombre": "CHAQUETA CAZADORA",
       "satelite_id": "id_1786635928136_jgb934912",
-      "uds": 68,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-10-03",
-          "motivo": "Fecha inicial asignada",
-          "by": "Jefa de Producción",
-          "at": "2026-10-01"
-        }
-      ],
-      "fecha_inicial": "2026-10-03",
-      "fecha_compromiso": "2026-10-03"
+      "uds": 68
     },
     {
       "color": "NEGRO",
@@ -1317,8 +1315,7 @@
       "id": "id_1787069214330_c22mlokm3",
       "op_id": "OP-2026-104",
       "op_nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS",
-      "uds": 7,
-      "satelite_id": null
+      "uds": 7
     },
     {
       "color": "CAMEL",
@@ -1914,8 +1911,7 @@
       "id": "id_1788448915547_0op1rluxw",
       "op_id": "OP-0036",
       "op_nombre": "PANTALON DRILL ANCHO",
-      "uds": 70,
-      "satelite_id": null
+      "uds": 70
     },
     {
       "color": "ROSA",
@@ -2184,7 +2180,7 @@
     },
     {
       "color": "NEGRO",
-      "entregado": false,
+      "entregado": true,
       "fecha_compromiso": "2026-09-25",
       "fecha_entrada": "2026-09-15",
       "fecha_inicial": "2026-09-25",
@@ -2200,7 +2196,8 @@
       "op_id": "OP-2026-234",
       "op_nombre": "CHAQUETA HARLEY",
       "satelite_id": "sat_08",
-      "uds": 102
+      "uds": 102,
+      "fecha_entrega_real": "2026-10-01"
     },
     {
       "color": "ROSA",
