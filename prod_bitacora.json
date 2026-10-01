@@ -24234,14 +24234,30 @@
       "user": "John Rodriguez"
     },
     {
+      "color": "GRIS CLARO",
       "id": "evt_1790896737761_nf3w2",
-      "ts": 1790896737761,
-      "user": "John Rodriguez",
-      "tipo": "planeacion_asignar",
+      "mes": "2026-10",
       "op_id": "OP-2026-199",
       "op_nombre": "CONJUNTO MANCHESTER",
-      "color": "GRIS CLARO",
-      "mes": "2026-10"
+      "tipo": "planeacion_asignar",
+      "ts": 1790896737761,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1790896760955_jnx62",
+      "ts": 1790896760955,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-125",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "referencia": "OVERSIZED CAPOTA",
+      "color": "CAMEL",
+      "talla": "todas las tallas",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
+      "bulk": true,
+      "uds": 80,
+      "motivo": "en insumos"
     }
   ]
 }
