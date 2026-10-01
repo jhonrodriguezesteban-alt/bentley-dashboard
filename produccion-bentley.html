@@ -1113,7 +1113,7 @@ async function _fbMigrarSiVacio(){
 // abiertas con una versión anterior se recargan solas (esperando a que terminen de guardar).
 // Sin esto, una pestaña vieja olvidada en un computador seguía guardando con la lógica
 // anterior y deshaciendo cambios de todos los demás.
-var APP_VERSION = 20261001.4;
+var APP_VERSION = 20261001.5;
 function _vigilarVersionApp(){
   if(!_fbDb) return;
   _fbDb.ref(FB_ROOT+'/app_version').on('value', function(snap){
@@ -4214,7 +4214,7 @@ function _pconfPoolUnits(){
 // Carga REAL ya asignada a un satélite (lo que ya está en el taller confeccionando),
 // para que al planear se vea la realidad y no solo lo que aún falta por organizar.
 function _pconfCargaRealSatelite(satId){
-  var ESTADOS_EN_TALLER = {ASIGNADO:1, EN_CONFECCION:1, NOVEDAD:1, ALISTAMIENTO:1};
+  var ESTADOS_EN_TALLER = {ASIGNADO:1, EN_CONFECCION:1, NOVEDAD:1, ALISTAMIENTO:1, ENTREGADO_PARCIAL:1};
   var map = {};
   (DB.ots||[]).forEach(function(ot){
     if(ot.satelite_id!==satId || !ESTADOS_EN_TALLER[ot.estado]) return;
@@ -6062,10 +6062,11 @@ function renderDashboard(){
   h += '</div>';
 
   // ── KPI cards estilo referencia ─────────────────────────────────────────────
-  var opsActivas = DB.ops.filter(function(op){ return op.estado!=='COMPLETADO'&&op.estado!=='CERRADO'; });
+  // estado_op (no 'estado', que no existe en las OPs): antes contaba TODAS las OPs como activas.
+  var opsActivas = DB.ops.filter(function(op){ return op.estado_op!=='COMPLETADO'&&op.estado_op!=='ARCHIVADO'&&op.estado_op!=='PAGO_PENDIENTE'; });
   var novCount = DB.ots.filter(function(o){ return o.estado==='NOVEDAD'; }).length;
   // Uds pendientes de entregar (backlog total en planta)
-  var udsPendientes = DB.ots.filter(function(o){ return o.estado!=='ENTREGADO'&&o.estado!=='ARCHIVADO'; }).reduce(function(a,o){ return a+(o.cantidad||0); },0);
+  var udsPendientes = DB.ots.reduce(function(a,o){ return a+_udsPendientesOT(o); },0);
   // Cortes del mes actual: OTs que YA se cortaron (avanzaron más allá de PENDIENTE_CORTAR),
   // agrupadas por la fecha REAL de corte (fecha_corte, la que queda al confirmar el corte en
   // Monitoreo Producción) — no por fecha_ot, que es cuando se creó/programó la OT y puede ser
@@ -6486,9 +6487,9 @@ function renderDashboardPro(){
   var totalUdsPeriodo = entregadasScope.reduce(function(a,o){ return a+_udsEnt(o); },0);
 
   // ── KPIs ejecutivos ──────────────────────────────────────────────────────────
-  var opsActivas = DB.ops.filter(function(op){ return op.estado!=='COMPLETADO'&&op.estado!=='CERRADO'; }).length;
+  var opsActivas = DB.ops.filter(function(op){ return op.estado_op!=='COMPLETADO'&&op.estado_op!=='ARCHIVADO'&&op.estado_op!=='PAGO_PENDIENTE'; }).length;
   var udsConf = DB.ots.filter(function(o){ return o.estado==='EN_CONFECCION'; }).reduce(function(a,o){ return a+(o.cantidad||0); },0);
-  var udsPendientes = DB.ots.filter(function(o){ return o.estado!=='ENTREGADO'&&o.estado!=='ARCHIVADO'; }).reduce(function(a,o){ return a+(o.cantidad||0); },0);
+  var udsPendientes = DB.ots.reduce(function(a,o){ return a+_udsPendientesOT(o); },0);
   var satActivos = DB.satelites.filter(function(s){ return s.activo; }).length;
   var novCount = DB.ots.filter(function(o){ return o.estado==='NOVEDAD'; }).length;
   var otsEntregadasTodas = DB.ots.filter(function(o){ return _esOtFabricada(o)&&o.fecha_entrega_real&&o.fecha_estimada_entrega; });
@@ -6835,6 +6836,14 @@ function _estadoEfectivo(manual, derivado, otsColor){
   return manual;
 }
 
+// Unidades que todavía faltan por entregar de una OT. Antes se contaba la cantidad completa de
+// todo lo que no fuera ENTREGADO, así que lo ya pasado a pago/alistamiento y las entregas
+// parciales inflaban el "pendiente por entregar" del Dashboard.
+function _udsPendientesOT(o){
+  if(!o || o.estado==='ENTREGADO' || o.estado==='PAGO_PENDIENTE' || o.estado==='ALISTAMIENTO' || o.estado==='ARCHIVADO') return 0;
+  if(o.estado==='ENTREGADO_PARCIAL') return Math.max(0, (o.cantidad||0) - (o.unidades_entregadas||0));
+  return o.cantidad||0;
+}
 function _subgEstadoDerivado(otsColor){
   if(!otsColor.length) return 'POR_REVISAR';
   if(otsColor.every(function(o){ return o.estado==='POR_REVISAR'; })) return 'POR_REVISAR';
@@ -9687,17 +9696,23 @@ function mostrarKPIDetalle(opId, filtro){
 function _cambiarEstadoOT(otId){
   var ot = (DB.ots||[]).find(function(o){ return o.id===otId; });
   if(!ot) return;
+  // ALISTAMIENTO y PAGO_PENDIENTE también son estados reales de OT (los ponen el kanban y
+  // "Pasar a pago"); antes no estaban aquí y el modal mostraba el código crudo. Pago pendiente
+  // se muestra pero no se ofrece como destino: debe hacerse con "Pasar a pago", que además
+  // genera el registro en Pagos.
   var ESTADOS_LABELS = {
-    POR_REVISAR:'Por revisar', PENDIENTE_CORTAR:'Pendiente cortar',
+    POR_REVISAR:'Nuevas programaciones', PENDIENTE_CORTAR:'Pendiente cortar',
     CORTE_POR_ALISTAR:'Corte / Alistar', ASIGNADO:'Asignado al satélite',
     EN_CONFECCION:'En confección', ENTREGADO_PARCIAL:'Entregado parcial',
-    ENTREGADO:'Entregado completo', NOVEDAD:'Novedad'
+    ENTREGADO:'Entregado completo', NOVEDAD:'Novedad', ALISTAMIENTO:'Alistamiento',
+    PAGO_PENDIENTE:'Pago pendiente'
   };
   var ESTADO_COLORS = {
     POR_REVISAR:'#94a3b8', PENDIENTE_CORTAR:'#fbbf24', CORTE_POR_ALISTAR:'#f97316',
     ASIGNADO:'#60a5fa', EN_CONFECCION:'#a855f7', ENTREGADO_PARCIAL:'#34d399',
-    ENTREGADO:'#22c55e', NOVEDAD:'#ef4444'
+    ENTREGADO:'#22c55e', NOVEDAD:'#ef4444', ALISTAMIENTO:'#a855f7', PAGO_PENDIENTE:'#c084fc'
   };
+  var NO_SELECCIONABLES = {PAGO_PENDIENTE:1};
 
   var body = '<input type="hidden" id="cot-otid" value="'+esc(otId)+'">';
   body += '<div style="background:#0d1117;border:1px solid #2c2c2e;border-radius:8px;padding:10px 14px;margin-bottom:16px;">';
@@ -9732,7 +9747,7 @@ function _cambiarEstadoOT(otId){
   body += '<label class="form-label">Nuevo estado</label>';
   body += '<div style="display:flex;flex-direction:column;gap:6px;">';
   Object.keys(ESTADOS_LABELS).forEach(function(k){
-    if(k===ot.estado) return;
+    if(k===ot.estado || NO_SELECCIONABLES[k]) return;
     body += '<label style="display:flex;align-items:center;gap:10px;background:#0d1117;border:1px solid #2c2c2e;border-radius:8px;padding:9px 12px;cursor:pointer;" onmouseover="this.style.borderColor=\''+(ESTADO_COLORS[k]||'#2c2c2e')+'55\'" onmouseout="this.style.borderColor=\'#2c2c2e\'">';
     body += '<input type="radio" name="cot-estado" value="'+k+'" style="accent-color:'+(ESTADO_COLORS[k]||'#0a84ff')+';width:15px;height:15px;">';
     body += '<span style="font-size:12px;font-weight:600;color:'+(ESTADO_COLORS[k]||'#e2e8f0')+'">'+(ESTADOS_LABELS[k])+'</span>';
@@ -14468,7 +14483,9 @@ function renderCronograma(){
   // respaldo por si algún flujo de reasignación no la llamó) y se fusionan duplicados del
   // mismo (OP, color) — solo podían aparecer por una corrupción de datos vieja, nunca por el
   // flujo normal, pero dejaban una copia "fantasma" congelada con el taller/estado viejo.
-  var ACTIVO_PROD = {POR_REVISAR:1,PENDIENTE_CORTAR:1,CORTE_POR_ALISTAR:1,ASIGNADO:1,EN_CONFECCION:1,NOVEDAD:1};
+  // ENTREGADO_PARCIAL sigue en proceso (faltan unidades): sin él, una entrega parcial cerraba
+  // la entrada del Cronograma como si ya se hubiera entregado todo.
+  var ACTIVO_PROD = {POR_REVISAR:1,PENDIENTE_CORTAR:1,CORTE_POR_ALISTAR:1,ASIGNADO:1,EN_CONFECCION:1,NOVEDAD:1,ENTREGADO_PARCIAL:1};
   var cronCambios = false;
   var _cronPorClave = {};
   (DB.cronograma||[]).forEach(function(e){
@@ -15240,7 +15257,9 @@ function _loadSimData(){
 
 var SIM_PALETTE = ["AMARILLO","AVENA","AZUL","AZUL BEBE","AZUL OSC","AZUL OSCURO","AZUL ORTENCIA","AZUL REY","BEIGE","BLANCO","CAFÉ","CAMEL","CAMUFLADO AZUL","CAMUFLADO GRIS","CAMUFLADO GRIS CLARO","CAMUFLADO VERDE","CURUBA","DORADO","FUCSIA","GRIS","GRIS CLARO","GRIS MEDIO","GRIS OSCURO","GUAYABA","LILA","MARFIL","MORA LECHE","MOSTAZA","MULTICOLOR","NARANJA","NEGRO","PALO ROSA","PEACH","PLATA","ROJO","ROSA","ROSA CLARO","ROSA OSCURO","ROSADO","SALMON","TERRACOTA","TORNASOL","VERDE","VERDE LIMA","VERDE LIMON","VERDE MANZANA","VERDE MENTA","VERDE MILITAR","VERDE OLIVA","VERDE PINO","VINOTINTO"];
 
-var TALLAS_DEFAULT = ['2','4','6','8','10','12','14','16'];
+// Antes se llamaba TALLAS_DEFAULT y, al redeclararse aquí, pisaba la lista global de tallas
+// (T4…T16) que usa "Nueva OP" — el formulario proponía tallas '2','4'… sin la T.
+var TALLAS_SIM = ['2','4','6','8','10','12','14','16'];
 var TALLAS_BEBE    = ['3M','6M','9M','12M','18M','24M'];
 
 var _ETAPA_COLOR_SIM = {CON_PROVEEDOR:'#fb923c',EN_DISENO_DIGITAL:'#a855f7',EN_CORTE_MUESTRA:'#f97316',EN_CONFECCION_MUESTRA:'#0a84ff',EN_REVISION_GERENCIA:'#fbbf24',EN_ESCALADO:'#34d399'};
@@ -15418,7 +15437,7 @@ function renderSimulador(){
       h += '<input type="number" min="0" placeholder="Cant." data-did="'+simKey+'" data-ci="'+ci+'" oninput="simLlenarTodas(this.dataset.did,parseInt(this.dataset.ci),parseInt(this.value)||0)" style="width:52px;text-align:center;background:#1c1c1e;border:1px solid #334155;border-radius:6px;color:#0a84ff;font-size:12px;font-weight:700;padding:4px 6px;-webkit-appearance:none;-moz-appearance:textfield;">';
       h += '</div>';
       h += '<div style="display:flex;flex-wrap:wrap;gap:6px;">';
-      TALLAS_DEFAULT.forEach(function(t){
+      TALLAS_SIM.forEach(function(t){
         var qty = col.tallas[t]||'';
         h += '<div style="display:flex;flex-direction:column;align-items:center;gap:2px;">';
         h += '<span style="font-size:9px;color:#64748b;font-weight:600;">'+t+'</span>';
@@ -15834,16 +15853,16 @@ async function guardarEntregasMasivas(opId){
 function simLlenarTodas(did, ci, qty){
   var sim = _getSimData(did);
   if(!sim.colores[ci]) return;
-  TALLAS_DEFAULT.forEach(function(t){ sim.colores[ci].tallas[t] = qty > 0 ? qty : 0; });
+  TALLAS_SIM.forEach(function(t){ sim.colores[ci].tallas[t] = qty > 0 ? qty : 0; });
   _setSimData(did, sim);
   // Actualizar inputs sin re-render completo
   var safeKey = did.replace(/:/g,'__c__');
-  TALLAS_DEFAULT.forEach(function(t){
+  TALLAS_SIM.forEach(function(t){
     var inp = document.querySelector('input[data-did="'+did+'"][data-ci="'+ci+'"][data-talla="'+t+'"]');
     if(inp){ inp.value = qty > 0 ? qty : ''; }
   });
   // Actualizar contadores
-  var colUds = qty > 0 ? qty * TALLAS_DEFAULT.length : 0;
+  var colUds = qty > 0 ? qty * TALLAS_SIM.length : 0;
   var colEl = document.getElementById('sim-col-uds-'+safeKey+'-'+ci);
   if(colEl) colEl.textContent = colUds + ' uds';
   colEl && (colEl.style.color = colUds > 0 ? '#34d399' : '#475569');
