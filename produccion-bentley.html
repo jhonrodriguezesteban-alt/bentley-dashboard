@@ -1036,11 +1036,10 @@ async function _fbGet(key){
 
 function _fbApplyKey(key, d){
   if(!d) return;
-  if(key==='ops')       { DB.ops = d.ops||[]; }
-  else if(key==='ots')  { DB.ots = d.ots||[]; }
-  else if(key==='disenos') { DB.disenos = d.disenos||[]; DB.disenos_cfg = d.disenos_cfg||{}; }
-  else if(key==='logistica') { if(!DB.logistica) DB.logistica={tareas:[]}; DB.logistica.tareas = d.tareas||[]; }
-  else if(key==='satelites') { DB.satelites = d.satelites||[]; }
+  // OPs/OTs/diseños/logística/satélites/cronograma: fusionar con lo local en vez de
+  // reemplazar — antes un update de otro usuario borraba lo que este usuario acababa de
+  // cambiar y aún se estaba guardando.
+  if(_MERGE3_KEYS[key]) { _aplicarRemoto(key, d); }
   else if(key==='costos_mo') { DB.costos_mo = {precios:d.precios||[], pagos:d.pagos||[]}; }
   else if(key==='bitacora')  {
     // Merge por ID — nunca reemplazar eventos locales aún no guardados
@@ -1101,7 +1100,9 @@ async function _iniciarListenersFirebase(){
     _fbDb.ref(FB_ROOT+'/'+key).on('value', function(snap){
       // Para bitácora: NUNCA ignorar el echo propio — el merge por ID es idempotente
       // y bloquear el listener causaría perder eventos de otros usuarios en la ventana de escritura
-      if(key !== 'bitacora' && _fbOwnWrite[key]) return;
+      // Para OPs/OTs/etc. tampoco se ignora: ahora se FUSIONA (merge de 3 vías), así que el eco
+      // propio no pisa nada y no se pierde lo que otro usuario guardó en esa misma ventana.
+      if(key !== 'bitacora' && !_MERGE3_KEYS[key] && _fbOwnWrite[key]) return;
       var d = snap.val();
       if(!d) return;
       _fbApplyKey(key, d);
@@ -1697,12 +1698,13 @@ var _bc = null;
     _bc.onmessage = function(e){
       var d = e.data;
       if(!d || d.type !== 'db_update') return;
-      if(d.key==='ops')        DB.ops        = d.data;
-      else if(d.key==='ots')   DB.ots        = d.data;
-      else if(d.key==='satelites') DB.satelites = d.data;
-      else if(d.key==='disenos'){ DB.disenos = d.data.disenos||[]; DB.disenos_cfg = d.data.disenos_cfg||{}; }
+      // Fusionar (no reemplazar) para no perder lo que esta pestaña todavía no ha guardado.
+      if(d.key==='ops')        _aplicarRemoto('ops', {ops: d.data});
+      else if(d.key==='ots')   _aplicarRemoto('ots', {ots: d.data});
+      else if(d.key==='satelites') _aplicarRemoto('satelites', {satelites: d.data});
+      else if(d.key==='disenos') _aplicarRemoto('disenos', {disenos: d.data.disenos||[], disenos_cfg: d.data.disenos_cfg||{}});
       else if(d.key==='prog_ops') DB.prog_ops = d.data;
-      else if(d.key==='costos_mo') DB.costos_mo = d.data;
+      else if(d.key==='costos_mo') _aplicarRemoto('costos_mo', d.data);
       saveLocal();
       renderPage(currentPage);
       updateNovBadge();
@@ -1747,7 +1749,136 @@ function _mergePlaneacionData(remoteData, localData){
   var trazosResult = Object.assign({}, remTrazos, locTrazos);
   return {meses:mesesResult, confirmadas:confResult, disenos_plan:disPResult, historial_corte:histResult, trazos:trazosResult};
 }
+// ─── Merge de 3 vías (base / remoto / local) ───────────────────────────────────
+// Causa raíz de "muevo un estado y no cambia": el merge anterior no sabía QUÉ había
+// cambiado el usuario, así que adivinaba con reglas fijas ("gana el estado más avanzado",
+// "gana el remoto en todo lo demás"). Resultado: cualquier movimiento HACIA ATRÁS, una
+// reasignación de taller o un borrado se perdían en silencio en cuanto otra persona había
+// guardado algo en medio. Ahora se guarda una copia del último estado conocido del servidor
+// (_syncBase) y se compara: lo que el usuario cambió respecto a esa base gana; lo que no
+// tocó se toma del servidor. Así los cambios de dos personas sobre registros distintos
+// conviven, y un retroceso deliberado ya no se "corrige" solo.
+var _syncBase = {}; // key -> JSON (string) del último estado conocido del servidor
+var _MERGE3_KEYS = {ops:1, ots:1, satelites:1, disenos:1, logistica:1, cronograma:1, costos_mo:1, trazos:1};
+function _dbWrap(key){
+  if(key==='costos_mo') return {precios: (DB.costos_mo||{}).precios||[], pagos: (DB.costos_mo||{}).pagos||[]};
+  if(key==='trazos') return {solicitudes: (DB.trazos||{}).solicitudes||[]};
+  if(key==='ops') return {ops: DB.ops||[]};
+  if(key==='ots') return {ots: DB.ots||[]};
+  if(key==='satelites') return {satelites: DB.satelites||[]};
+  if(key==='disenos') return {disenos: DB.disenos||[], disenos_cfg: DB.disenos_cfg||{}};
+  if(key==='logistica') return {tareas: (DB.logistica||{}).tareas||[]};
+  if(key==='cronograma') return {cronograma: DB.cronograma||[]};
+  return null;
+}
+function _dbUnwrap(key, d){
+  d = d||{};
+  if(key==='costos_mo'){ DB.costos_mo = {precios: d.precios||[], pagos: d.pagos||[]}; return; }
+  if(key==='trazos'){
+    DB.trazos = {solicitudes: d.solicitudes||[]};
+    DB.trazos.solicitudes.forEach(function(s){ if(s && !Array.isArray(s.lineas)) s.lineas = []; });
+    return;
+  }
+  if(key==='ops') DB.ops = d.ops||[];
+  else if(key==='ots'){
+    DB.ots = d.ots||[];
+    // Firebase descarta los arreglos vacíos: sin esto, una OT llegada desde Firebase no trae
+    // "historial" y varios flujos que hacen ot.historial.push(...) se caían.
+    DB.ots.forEach(function(o){ if(o && !Array.isArray(o.historial)) o.historial = []; });
+  }
+  else if(key==='satelites') DB.satelites = d.satelites||[];
+  else if(key==='disenos'){ DB.disenos = d.disenos||[]; DB.disenos_cfg = d.disenos_cfg||DB.disenos_cfg||{}; }
+  else if(key==='logistica'){ if(!DB.logistica) DB.logistica={tareas:[]}; DB.logistica.tareas = d.tareas||[]; }
+  else if(key==='cronograma') DB.cronograma = d.cronograma||[];
+}
+function _setSyncBase(key, data){
+  if(!_MERGE3_KEYS[key]) return;
+  try { _syncBase[key] = (typeof data==='string') ? data : JSON.stringify(data); } catch(e){}
+}
+// Aplica datos que llegaron del servidor (Firebase, GitHub u otra pestaña) sin pisar los
+// cambios locales que todavía no se han terminado de guardar.
+function _aplicarRemoto(key, remote){
+  if(!remote) return;
+  if(_MERGE3_KEYS[key] && _syncBase[key]) _dbUnwrap(key, _mergeArrayData(key, remote, _dbWrap(key)));
+  else _dbUnwrap(key, remote);
+  _setSyncBase(key, remote);
+}
+function _isPlainObj(v){ return !!v && typeof v==='object' && !Array.isArray(v); }
+function _esVacio(v){ return v===null || v===undefined || (Array.isArray(v) && !v.length) || (_isPlainObj(v) && !Object.keys(v).length); }
+// Serialización estable para COMPARAR: ignora el orden de las llaves y trata null / [] / {}
+// igual que "no existe" — Firebase devuelve las llaves ordenadas y descarta los vacíos,
+// y sin esto la misma OT vista desde GitHub y desde Firebase parecía "cambiada".
+function _stableStr(v){
+  if(v===undefined) return 'undefined';
+  if(v===null || typeof v!=='object') return JSON.stringify(v);
+  if(Array.isArray(v)) return '['+v.map(_stableStr).join(',')+']';
+  return '{'+Object.keys(v).sort().filter(function(k){ return !_esVacio(v[k]); }).map(function(k){ return JSON.stringify(k)+':'+_stableStr(v[k]); }).join(',')+'}';
+}
+function _m3key(item){
+  if(item && typeof item==='object'){
+    if(item.id!=null) return 'id:'+item.id;
+    if(item.url) return 'url:'+item.url;
+  }
+  return 'v:'+_stableStr(item);
+}
+function _merge3(base, rem, loc){
+  var sb = _stableStr(base), sr = _stableStr(rem), sl = _stableStr(loc);
+  if(sl===sb) return rem;   // el usuario no tocó esto → manda el servidor
+  if(sr===sb) return loc;   // nadie más lo tocó → manda el usuario
+  if(sl===sr) return loc;
+  if(_isPlainObj(rem) && _isPlainObj(loc)){
+    var b = _isPlainObj(base) ? base : {};
+    var out = {}, keys = {};
+    Object.keys(b).concat(Object.keys(rem), Object.keys(loc)).forEach(function(k){ keys[k]=1; });
+    Object.keys(keys).forEach(function(k){
+      var inB = !_esVacio(b[k]), inR = Object.prototype.hasOwnProperty.call(rem,k), inL = Object.prototype.hasOwnProperty.call(loc,k);
+      if(inR && inL){ out[k] = _merge3(inB ? b[k] : (Array.isArray(loc[k]) ? [] : (_isPlainObj(loc[k]) ? {} : undefined)), rem[k], loc[k]); return; }
+      if(inR){ if(inB && _stableStr(rem[k])===_stableStr(b[k])) return; out[k]=rem[k]; return; } // local lo borró
+      if(inL){ if(inB && _stableStr(loc[k])===_stableStr(b[k])) return; out[k]=loc[k]; return; } // remoto lo borró
+    });
+    return out;
+  }
+  if(Array.isArray(rem) && Array.isArray(loc)){
+    var bMap={}, rMap={}, lMap={}, order=[], seen={};
+    // Si un arreglo trae dos elementos con el mismo id (pasa en datos migrados, ej. dos OTs
+    // distintas con "OT-12597"), se les distingue por orden de aparición para no fundirlas
+    // en una sola y perder una.
+    function keysDe(arr){ var cnt={}; return arr.map(function(x){ var k=_m3key(x); cnt[k]=(cnt[k]||0)+1; return cnt[k]>1 ? k+'#'+cnt[k] : k; }); }
+    var bArr = Array.isArray(base)?base:[], bK = keysDe(bArr), rK = keysDe(rem), lK = keysDe(loc);
+    bArr.forEach(function(x,i){ bMap[bK[i]]=x; });
+    rem.forEach(function(x,i){ var k=rK[i]; rMap[k]=x; if(!seen[k]){ seen[k]=1; order.push(k); } });
+    loc.forEach(function(x,i){ var k=lK[i]; lMap[k]=x; if(!seen[k]){ seen[k]=1; order.push(k); } });
+    var out2 = [];
+    order.forEach(function(k){
+      var inB = k in bMap, inR = k in rMap, inL = k in lMap;
+      if(inR && inL){ out2.push(inB ? _merge3(bMap[k], rMap[k], lMap[k]) : lMap[k]); return; }
+      if(inR){ if(inB && _stableStr(rMap[k])===_stableStr(bMap[k])) return; out2.push(rMap[k]); return; } // borrado local
+      if(inL){ if(inB && _stableStr(lMap[k])===_stableStr(bMap[k])) return; out2.push(lMap[k]); return; } // borrado remoto
+    });
+    return out2;
+  }
+  return loc; // mismo valor simple cambiado por ambos lados → gana la acción más reciente (este usuario)
+}
+// La API de contenidos de GitHub NO devuelve el contenido de archivos de más de 1 MB
+// (prod_ots.json pesa ~2 MB): llega content:"" y antes eso tumbaba el merge en silencio
+// (atob('') → JSON.parse falla → se guardaba la copia local completa encima de todo).
+async function _ghLeerJSON(fileData, key, tk){
+  if(fileData && fileData.content && fileData.encoding !== 'none'){
+    return JSON.parse(decodeURIComponent(escape(atob(fileData.content.replace(/\n/g,'')))));
+  }
+  var r = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + FILES[key] + '?t=' + Date.now(), {
+    // Sin 'Cache-Control': api.github.com no lo permite en CORS y la petición fallaba
+    // (el ?t= de la URL ya evita la caché).
+    headers: {'Authorization': 'token ' + tk, 'Accept': 'application/vnd.github.raw'}
+  });
+  if(!r.ok) throw new Error('raw '+r.status);
+  return await r.json();
+}
+
 function _mergeArrayData(key, remoteData, localData){
+  if(_MERGE3_KEYS[key] && _syncBase[key]){
+    try { return _merge3(JSON.parse(_syncBase[key]), remoteData, localData); } catch(e){}
+  }
   function byId(arr, id){ for(var i=0;i<arr.length;i++){ if(arr[i].id===id) return i; } return -1; }
   function mergeOps(remArr, locArr){
     // IMPORTANTE: cuando el mismo id ya existe en remoto, el remoto GANA por defecto —
@@ -1788,7 +1919,7 @@ function _mergeArrayData(key, remoteData, localData){
   }
   // Progreso de una OT (mismo criterio que _ESTADO_PROGRESO de OPs) — para decidir si
   // el estado local de una OT va más avanzado que el remoto y por eso sí debe ganar.
-  var _OT_ESTADO_PROGRESO = {POR_REVISAR:0,PENDIENTE_CORTAR:1,CORTE_POR_ALISTAR:2,ASIGNADO:3,EN_CONFECCION:4,ENTREGADO_PARCIAL:5,NOVEDAD:5,ENTREGADO:6};
+  var _OT_ESTADO_PROGRESO = {POR_REVISAR:0,PENDIENTE_CORTAR:1,CORTE_POR_ALISTAR:2,ASIGNADO:3,EN_CONFECCION:4,ENTREGADO_PARCIAL:5,NOVEDAD:5,ALISTAMIENTO:5,ENTREGADO:6,PAGO_PENDIENTE:7};
   function mergeById(remArr, locArr){
     // Mismo criterio que mergeOps: el remoto gana por defecto en cualquier campo (evita
     // que una pestaña vieja reescriba correcciones ya guardadas, como un op_id corregido).
@@ -1879,8 +2010,14 @@ async function _guardarArchivoCore(key, data){
   _saving[key] = true;
   // Escribir a Firebase PRIMERO — visible para todos los usuarios al instante.
   // Para bitácora: merge con Firebase antes de escribir para no perder eventos de otros usuarios.
-  _fbOwnWrite[key] = true;
-  if(key === 'bitacora' && _fbDb){
+  // Excepción: OPs/OTs/diseños/satélites/logística/cronograma NO se escriben aquí sin
+  // fusionar — esa copia local podía estar desactualizada y, al llegarle a los demás por
+  // el listener en vivo, les revertía cambios recientes ("lo vi cambiar y se devolvió").
+  // Para esas llaves Firebase se actualiza más abajo con el resultado YA fusionado.
+  if(_MERGE3_KEYS[key]){
+    // nada aquí
+  } else if(key === 'bitacora' && _fbDb){
+    _fbOwnWrite[key] = true;
     _fbGet('bitacora').then(function(fbCurrent){
       var dataToFb = data;
       if(fbCurrent && (fbCurrent.eventos||[]).length > 0){
@@ -1892,6 +2029,7 @@ async function _guardarArchivoCore(key, data){
       _fbSet('bitacora', dataToFb).then(function(){ setTimeout(function(){ _fbOwnWrite['bitacora']=false; }, 2000); });
     });
   } else {
+    _fbOwnWrite[key] = true;
     _fbSet(key, data).then(function(){ setTimeout(function(){ _fbOwnWrite[key]=false; }, 2000); });
   }
   var tk = GT || localStorage.getItem('bentley_gh_token') || '';
@@ -1909,25 +2047,37 @@ async function _guardarArchivoCore(key, data){
       if(getR.ok){
         var cur = await getR.json();
         sha = cur.sha || null;
-        // Si el SHA remoto difiere del último que conocemos (otro usuario guardó), hacer merge
+        // Si el SHA remoto difiere del último que conocemos (otro usuario guardó), hacer merge.
+        // Con base de 3 vías disponible se fusiona SIEMPRE (si nadie más guardó, el merge no
+        // cambia nada) — antes, si el SHA local no estaba en caché (pasaba con OTs), no se
+        // fusionaba y la copia local completa se escribía encima de los cambios de otros.
         var shaCambio = sha && _fileShas[key] && sha !== _fileShas[key];
-        if((shaCambio || needsMerge) && (key==='ops'||key==='ots'||key==='satelites'||key==='disenos'||key==='logistica'||key==='cronograma'||key==='planeacion')){
+        var hayBase3 = _MERGE3_KEYS[key] && _syncBase[key];
+        // Si el SHA remoto es el mismo que ya conocemos, nadie más guardó: el remoto ES la base
+        // y fusionar no cambiaría nada — se evita descargar de nuevo el archivo (OTs = 3 MB).
+        if((shaCambio || needsMerge || (hayBase3 && sha !== _fileShas[key])) && (_MERGE3_KEYS[key]||key==='planeacion')){
           try{
-            var remoteRaw = JSON.parse(decodeURIComponent(escape(atob(cur.content.replace(/\n/g,'')))));
-            dataToSave = _mergeArrayData(key, remoteRaw, data);
+            var remoteRaw = await _ghLeerJSON(cur, key, tk);
+            // Fusionar contra lo que hay en memoria AHORA (no contra la foto tomada al llamar
+            // guardarArchivo): mientras este guardado esperaba, pudo llegar por Firebase un
+            // cambio de otro usuario que ya actualizó la base — usar la foto vieja haría
+            // pasar ese valor viejo por "cambio local" y revertiría al otro usuario.
+            var localNow = _MERGE3_KEYS[key] ? _dbWrap(key) : data;
+            dataToSave = _mergeArrayData(key, remoteRaw, localNow);
             // Actualizar DB en memoria con el merge para que el siguiente save también sea consistente
-            if(key==='ops')             DB.ops                  = dataToSave.ops;
-            else if(key==='ots')        DB.ots                  = dataToSave.ots;
-            else if(key==='satelites')  DB.satelites             = dataToSave.satelites;
-            else if(key==='disenos'){   DB.disenos               = dataToSave.disenos; DB.disenos_cfg = dataToSave.disenos_cfg||DB.disenos_cfg; }
-            else if(key==='logistica')  DB.logistica.tareas      = dataToSave.tareas;
-            else if(key==='cronograma') DB.cronograma            = dataToSave.cronograma;
+            if(_MERGE3_KEYS[key])       _dbUnwrap(key, dataToSave);
             else if(key==='planeacion') DB.planeacion            = dataToSave;
             saveLocal();
-          }catch(e){ dataToSave = data; }
+          }catch(e){
+            // Sin poder leer el remoto no se puede fusionar con seguridad: reintentar en vez de
+            // escribir la copia local completa encima de los cambios de los demás.
+            if(hayBase3 && attempt < 2) throw e;
+            dataToSave = data;
+          }
         }
         _fileShas[key] = sha;
       }
+      var savedStr = JSON.stringify(dataToSave);
       var content = btoa(unescape(encodeURIComponent(JSON.stringify(dataToSave, null, 2))));
       var body = { message: 'Produccion Bentley: actualizar ' + key, content: content };
       if(sha) body.sha = sha;
@@ -1939,6 +2089,7 @@ async function _guardarArchivoCore(key, data){
       if(putR.ok){
         var res = await putR.json();
         if(res.content && res.content.sha) _fileShas[key] = res.content.sha;
+        _setSyncBase(key, savedStr); // lo que quedó en el servidor pasa a ser la nueva base
         _saving[key] = false;
         // Broadcast instantáneo a otras pestañas del mismo dispositivo
         if(_bc) try{ _bc.postMessage({type:'db_update', key:key, data: key==='ops'?DB.ops : key==='ots'?DB.ots : key==='satelites'?DB.satelites : key==='disenos'?{disenos:DB.disenos,disenos_cfg:DB.disenos_cfg} : key==='prog_ops'?DB.prog_ops : DB.costos_mo}); }catch(e){}
@@ -1992,28 +2143,13 @@ async function _autoSyncTick(){
       if(_etag) _fileETags[key] = _etag;
       var fileData = await r.json();
       if(_fileShas[key] && _fileShas[key] === fileData.sha) continue;
-      var prevSha = _fileShas[key];
+      var shaAntesA = _fileShas[key];
+      var parsed = await _ghLeerJSON(fileData, key, tk);
+      if(_saving[key] || _fileShas[key] !== shaAntesA) continue;
       _fileShas[key] = fileData.sha;
-      var parsed = JSON.parse(decodeURIComponent(escape(atob(fileData.content.replace(/\n/g,'')))));
       var prevDisenos = (key==='disenos') ? (DB.disenos||[]).map(function(d){return d.id;}) : null;
-      if(key==='disenos'){ DB.disenos = parsed.disenos||[]; DB.disenos_cfg = parsed.disenos_cfg||{}; }
-      else if(key==='ots'){
-        // Si ya teníamos datos locales más recientes (SHA propio != SHA previo remoto),
-        // hacer merge en lugar de reemplazar para no perder cambios locales no confirmados
-        if(prevSha && DB.ots && DB.ots.length){
-          var merged = _mergeArrayData('ots', parsed, {ots: DB.ots});
-          DB.ots = merged.ots||[];
-        } else { DB.ots = parsed.ots||[]; }
-      }
-      else if(key==='ops'){
-        if(prevSha && DB.ops && DB.ops.length){
-          var mergedO = _mergeArrayData('ops', parsed, {ops: DB.ops});
-          DB.ops = mergedO.ops||[];
-        } else { DB.ops = parsed.ops||[]; }
-      }
-      else if(key==='satelites'){ DB.satelites = parsed.satelites||[]; }
+      if(_MERGE3_KEYS[key]){ _aplicarRemoto(key, parsed); }
       else if(key==='prog_ops'){ DB.prog_ops = parsed.ops_plan||[]; }
-      else if(key==='costos_mo'){ DB.costos_mo = {precios:parsed.precios||[], pagos:parsed.pagos||[]}; }
       else if(key==='sim'){ DB.sim = {active:parsed.active||[], data:parsed.data||{}}; _simActive=DB.sim.active; _simData=DB.sim.data; }
       else if(key==='cronograma'){ DB.cronograma = parsed.cronograma||[]; }
       // Detectar diseños nuevos y notificar
@@ -2068,11 +2204,14 @@ async function _fastSyncTick(){
     var isFirst = !_fastSyncSha;
     _fastSyncSha = fileData.sha;
     if(isFirst) return; // primera carga: solo calibrar sha
-    var parsed = JSON.parse(decodeURIComponent(escape(atob(fileData.content.replace(/\n/g,'')))));
+    var shaAntesD = _fileShas['disenos'];
+    var parsed = await _ghLeerJSON(fileData, 'disenos', tk);
+    if(_saving['disenos'] || _fileShas['disenos'] !== shaAntesD) return;
     var prevPrios = {};
     (DB.disenos||[]).forEach(function(d){ prevPrios[d.id] = d.prioridad; });
-    DB.disenos = parsed.disenos || [];
-    DB.disenos_cfg = parsed.disenos_cfg || {};
+    // Fusionar (no reemplazar): antes, si alguien movía una tarjeta de Diseño mientras otro
+    // guardaba, cada 2 s este sondeo la devolvía a su columna anterior.
+    _aplicarRemoto('disenos', {disenos: parsed.disenos || [], disenos_cfg: parsed.disenos_cfg || {}});
     // Detectar cambios de prioridad para notificar
     var prioNames = {1:'P1 🔴', 2:'P2 🟡', 3:'P3 ⚪'};
     (DB.disenos||[]).forEach(function(d){
@@ -2109,11 +2248,18 @@ async function _opSyncTick(){
       if(etag) _fileETags[key] = etag;
       var fd = await r.json();
       if(_fileShas[key] && _fileShas[key] === fd.sha) continue;
+      // Antes: reemplazaba DB.ops/DB.ots completos cada segundo — si el usuario acababa de
+      // mover un estado y su guardado aún no había empezado (ej. se guardan OPs y luego OTs,
+      // una tras otra), el cambio desaparecía de pantalla y después se guardaba ya revertido.
+      // Además prod_ots.json pesa >1 MB y su contenido llegaba vacío, así que fallaba en
+      // silencio pero igual marcaba el SHA como visto. Ahora se lee bien y se FUSIONA.
+      var shaAntes = _fileShas[key];
+      var parsed = await _ghLeerJSON(fd, key, tk);
+      // Si mientras se descargaba empezó/terminó un guardado propio, esta lectura ya es vieja:
+      // aplicarla revertiría en pantalla lo recién guardado.
+      if(_saving[key] || _fileShas[key] !== shaAntes) continue;
+      _aplicarRemoto(key, parsed);
       _fileShas[key] = fd.sha;
-      var parsed = JSON.parse(decodeURIComponent(escape(atob(fd.content.replace(/\n/g,'')))));
-      if(key==='ops')            DB.ops        = parsed.ops||[];
-      else if(key==='ots')       DB.ots        = parsed.ots||[];
-      else if(key==='satelites') DB.satelites  = parsed.satelites||[];
       changed = true;
     } catch(e){ /* silencioso */ }
   }
@@ -2518,6 +2664,17 @@ async function cargarDatos(){
     if(bitR.ok){ var d14 = await bitR.json(); DB.bitacora = {eventos: d14.eventos||[]}; }
     else { if(!DB.bitacora) DB.bitacora = {eventos:[]}; }
     if(DB.satelites.length === 0) seedSatelites();
+    // Base del merge de 3 vías = lo que acaba de llegar del servidor (antes de cualquier
+    // reparación local, para que esas reparaciones sí cuenten como cambio a guardar).
+    Object.keys(_MERGE3_KEYS).forEach(function(k){ _setSyncBase(k, _dbWrap(k)); });
+    // Cronograma, satélites y logística se leen de GitHub Pages, que puede tardar varios
+    // minutos en reflejar un guardado; Firebase siempre tiene la última versión → se
+    // fusiona encima para no arrancar con datos viejos.
+    if(_fbDb){
+      for(var _fk of ['cronograma','satelites','logistica']){
+        try { var _fv = await _fbGet(_fk); if(_fv) _aplicarRemoto(_fk, _fv); } catch(e){}
+      }
+    }
     // Reparar silenciosamente estados Kanban stale al cargar datos frescos
     try { await _repararSubgEstados(true); } catch(e){}
     saveLocal();
@@ -2559,6 +2716,7 @@ async function cargarDatos(){
           var fbProg = await _fbGet('prog_ops');
           if(fbProg) DB.prog_ops = fbProg.ops_plan||[];
           if(!DB.satelites || DB.satelites.length === 0) seedSatelites();
+          Object.keys(_MERGE3_KEYS).forEach(function(k){ _setSyncBase(k, _dbWrap(k)); });
           try { await _repararSubgEstados(true); } catch(re){}
           saveLocal();
           fbLoaded = true;
@@ -7576,16 +7734,19 @@ async function _repararSubgEstados(silent){
         op.subg_estados[_subgKey(op.id, color)] = estadoDer;
       }
     });
-    // Colores del OP que NO tienen OTs → forzar POR_REVISAR para limpiar estados stale
+    // Colores SIN OTs: antes se forzaban a POR_REVISAR en CADA arranque de la app, así que
+    // si alguien movía un color sin OTs de "Nuevas programaciones" a "Pte. de Cortar" (algo
+    // válido: se planea antes de generar las OTs), al abrir la app cualquier usuario lo
+    // devolvía solo. Ahora solo se limpia la marca si ese color ya no existe en la OP
+    // (renombrado/eliminado), que era el único caso realmente "viejo".
     var coloresOP = op.colores && op.colores.length ? op.colores : [];
     if(op.subg_estados){
       Object.keys(op.subg_estados).forEach(function(k){
         var parts = k.split('||');
         if(parts[0] !== op.id) return;
         var colorKey = parts[1];
-        if(coloresConOTs.indexOf(colorKey) === -1){
-          // Este color no tiene OTs → resetear a POR_REVISAR
-          op.subg_estados[k] = 'POR_REVISAR';
+        if(coloresConOTs.indexOf(colorKey) === -1 && coloresOP.length && coloresOP.indexOf(colorKey) === -1 && colorKey !== '—'){
+          delete op.subg_estados[k];
         }
       });
     }
