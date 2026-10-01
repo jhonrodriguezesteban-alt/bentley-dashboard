@@ -23415,6 +23415,17 @@
       "user": "Isabel"
     },
     {
+      "id": "evt_1790868021112_093x1",
+      "ts": 1790868021112,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1785257229218_95gxizfdu",
+      "op_id": "OP-0038",
+      "color": "SALMON",
+      "fecha_nueva": "2026-10-03",
+      "motivo": "Asignación inicial"
+    },
+    {
       "bulk": true,
       "color": "NEGRO",
       "estado_anterior": "ENTREGADO",
@@ -23458,20 +23469,30 @@
       "user": "Carolina Telles"
     },
     {
+      "bulk": true,
+      "color": "LILA",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1790888437027_pbir0",
-      "ts": 1790888437027,
-      "user": "Carolina Telles",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-126",
       "op_nombre": "CHAQUETA CAZADORA",
       "referencia": "CHAQUETA CAZADORA",
-      "color": "LILA",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1790888437027,
       "uds": 104,
-      "motivo": "ENTREGADO"
+      "user": "Carolina Telles"
+    },
+    {
+      "id": "evt_1790893456053_9cx7p",
+      "ts": 1790893456053,
+      "user": "Jefa de Producción",
+      "tipo": "taller",
+      "descripcion": "recoger a marcela peña  dejar en vapor",
+      "destino": "suba",
+      "fecha": "2026-10-02",
+      "hora": ""
     }
   ]
 }
