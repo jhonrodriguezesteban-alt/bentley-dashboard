@@ -1090,11 +1090,39 @@ async function _fbMigrarSiVacio(){
   } catch(e){ console.warn('FB migración:', e); }
 }
 
+// Versión de esta copia de la app. Al publicar una versión nueva se sube este número y se
+// escribe el mismo valor en Firebase (bentley-prod/app_version): las pestañas que sigan
+// abiertas con una versión anterior se recargan solas (esperando a que terminen de guardar).
+// Sin esto, una pestaña vieja olvidada en un computador seguía guardando con la lógica
+// anterior y deshaciendo cambios de todos los demás.
+var APP_VERSION = 20261001.3;
+function _vigilarVersionApp(){
+  if(!_fbDb) return;
+  _fbDb.ref(FB_ROOT+'/app_version').on('value', function(snap){
+    var v = snap.val();
+    if(!v || !v.v || !(v.v > APP_VERSION)) return;
+    var clave = 'bentley_reload_v';
+    if(sessionStorage.getItem(clave) === String(v.v)){
+      // Ya se recargó una vez por esta versión y sigue llegando la vieja (caché del CDN).
+      toast('Hay una versión nueva de la app — recarga la página (Cmd+Shift+R / Ctrl+F5)', 'warning');
+      return;
+    }
+    toast('Hay una versión nueva de la app — se recargará en unos segundos', 'info');
+    var intentos = 0;
+    (function esperar(){
+      var guardando = Object.keys(_saving).some(function(k){ return _saving[k]; });
+      if(guardando && intentos++ < 30){ setTimeout(esperar, 1000); return; }
+      sessionStorage.setItem(clave, String(v.v));
+      setTimeout(function(){ location.replace(location.pathname + '?v=' + v.v); }, 2500);
+    })();
+  });
+}
 var _fbListenersActive = false;
 async function _iniciarListenersFirebase(){
   if(!_fbDb || _fbListenersActive) return;
   _fbListenersActive = true;
   if(_fbAuthReady) await _fbAuthReady;
+  _vigilarVersionApp();
   var KEYS = ['ops','ots','disenos','logistica','satelites','costos_mo','bitacora','cronograma','prog_ops','planeacion','planeacion_confeccion','sim','usuarios','costeo','trazos'];
   KEYS.forEach(function(key){
     _fbDb.ref(FB_ROOT+'/'+key).on('value', function(snap){
@@ -1105,6 +1133,12 @@ async function _iniciarListenersFirebase(){
       if(key !== 'bitacora' && !_MERGE3_KEYS[key] && _fbOwnWrite[key]) return;
       var d = snap.val();
       if(!d) return;
+      if(_MERGE3_KEYS[key]){
+        // Solo se acepta lo escrito por esta versión (trae _v3ts) y más nuevo que lo ya visto:
+        // las pestañas con versiones viejas escribían aquí su copia local sin fusionar.
+        if(!d._v3ts || d._v3ts <= (_fbVerVisto[key]||0)) return;
+        _fbVerVisto[key] = d._v3ts;
+      }
       _fbApplyKey(key, d);
       saveLocal();
       updateNovBadge();
@@ -1759,6 +1793,7 @@ function _mergePlaneacionData(remoteData, localData){
 // tocó se toma del servidor. Así los cambios de dos personas sobre registros distintos
 // conviven, y un retroceso deliberado ya no se "corrige" solo.
 var _syncBase = {}; // key -> JSON (string) del último estado conocido del servidor
+var _fbVerVisto = {}; // key -> última marca _v3ts aceptada desde Firebase
 var _MERGE3_KEYS = {ops:1, ots:1, satelites:1, disenos:1, logistica:1, cronograma:1, costos_mo:1, trazos:1};
 function _dbWrap(key){
   if(key==='costos_mo') return {precios: (DB.costos_mo||{}).precios||[], pagos: (DB.costos_mo||{}).pagos||[]};
@@ -2094,8 +2129,13 @@ async function _guardarArchivoCore(key, data){
         // Broadcast instantáneo a otras pestañas del mismo dispositivo
         if(_bc) try{ _bc.postMessage({type:'db_update', key:key, data: key==='ops'?DB.ops : key==='ots'?DB.ots : key==='satelites'?DB.satelites : key==='disenos'?{disenos:DB.disenos,disenos_cfg:DB.disenos_cfg} : key==='prog_ops'?DB.prog_ops : DB.costos_mo}); }catch(e){}
         // ── Mirror a Firebase para sync en tiempo real ──────────────────────
+        // Con marca _v3ts: los demás clientes nuevos solo aceptan de Firebase lo que trae esta
+        // marca (ver listener) — así ignoran las copias viejas que escriben pestañas abiertas
+        // con versiones anteriores de la app, que eran las que revertían cambios.
         _fbOwnWrite[key] = true;
-        _fbSet(key, dataToSave).then(function(){ setTimeout(function(){ _fbOwnWrite[key]=false; }, 2000); });
+        var _fbPayload = dataToSave;
+        if(_MERGE3_KEYS[key]){ var _ts3 = Date.now(); _fbPayload = Object.assign({}, dataToSave, {_v3ts: _ts3}); _fbVerVisto[key] = _ts3; }
+        _fbSet(key, _fbPayload).then(function(){ setTimeout(function(){ _fbOwnWrite[key]=false; }, 2000); });
         // ────────────────────────────────────────────────────────────────────
         var si = document.getElementById('sync-time');
         if(si){ si.textContent = '✓ Sync ' + new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}); si.style.color = 'var(--green)'; }
@@ -2524,17 +2564,39 @@ async function cargarDatos(){
     var t = Date.now();
     var tk = GT || localStorage.getItem('bentley_gh_token') || '';
     var _apiBase = 'https://api.github.com/repos/' + REPO + '/contents/';
-    var _apiH = tk ? {'Authorization': 'token ' + tk, 'Cache-Control': 'no-cache'} : {};
+    // IMPORTANTE: sin 'Cache-Control'. api.github.com no lo acepta en CORS, así que con ese
+    // encabezado TODA esta carga fallaba y la app terminaba arrancando desde Firebase (ver el
+    // catch de abajo) — y Firebase podía tener una copia vieja escrita por otra pestaña. Por
+    // eso al recargar "volvían" estados que ya se habían cambiado. El ?t= evita la caché.
+    var _apiH = tk ? {'Authorization': 'token ' + tk} : {};
     var _useApi = !!tk;
 
     // Ops (< 1MB): Contents API → base64 + SHA inmediato
     // OTs (1.95 MB > límite Contents API): Accept: raw → JSON directo sin base64
     // Sin token: RAW URL (~1 min de lag vs 5-10 min de Pages)
-    var _rawH = _useApi ? {'Authorization': 'token ' + tk, 'Accept': 'application/vnd.github.raw', 'Cache-Control': 'no-cache'} : null;
+    var _rawH = _useApi ? {'Authorization': 'token ' + tk, 'Accept': 'application/vnd.github.raw'} : null;
+    // Lectura fresca por API (GitHub Pages tarda minutos en reflejar cada guardado).
+    var _apiRaw = function(key){ return _useApi ? fetch(_apiBase + FILES[key] + '?t=' + t, {headers: _rawH}) : fetch(BASE_URL + FILES[key] + '?t=' + t); };
+    // Todas las lecturas arrancan YA en paralelo (antes iban una tras otra y el arranque
+    // tardaba ~20 s); más abajo solo se espera cada respuesta en su turno.
+    var _sinFallo = function(p){ return p ? p.catch(function(e){ return {ok:false, _err:e}; }) : Promise.resolve({ok:false}); };
+    var _pre = {
+      disenos: tk ? _sinFallo(fetch(_apiBase + FILES['disenos'] + '?t=' + t, {headers: {'Authorization': 'token ' + tk}})) : null,
+      prog:    _sinFallo(fetch(BASE_URL + 'prod_prog_ops.json?t=' + t)),
+      mo:      _sinFallo(_apiRaw('costos_mo')),
+      usr:     _sinFallo(fetch(BASE_URL + 'prod_usuarios.json?t=' + t)),
+      sim:     _sinFallo(fetch(BASE_URL + 'prod_simulador.json?t=' + t)),
+      log:     _sinFallo(_apiRaw('logistica')),
+      planconf:_sinFallo(fetch(BASE_URL + 'prod_planeacion_confeccion.json?t=' + t)),
+      costeo:  tk ? _sinFallo(fetch(_apiBase + FILES['costeo'] + '?t=' + t, {headers: {'Authorization': 'token ' + tk}})) : null,
+      trazos:  tk ? _sinFallo(fetch(_apiBase + FILES['trazos'] + '?t=' + t, {headers: {'Authorization': 'token ' + tk}})) : null,
+      cron:    _sinFallo(_apiRaw('cronograma')),
+      bit:     _sinFallo(fetch(BASE_URL + 'prod_bitacora.json?t=' + t))
+    };
     var [satR, opsR, otsR, catR] = await Promise.all([
-      fetch(BASE_URL + 'prod_satelites.json?t=' + t),
-      _useApi ? fetch(_apiBase + FILES['ops'], {headers: _apiH}) : fetch(RAW_URL + FILES['ops'] + '?t=' + t),
-      _useApi ? fetch(_apiBase + FILES['ots'], {headers: _rawH}) : fetch(RAW_URL + FILES['ots'] + '?t=' + t),
+      _apiRaw('satelites'),
+      _useApi ? fetch(_apiBase + FILES['ops'] + '?t=' + t, {headers: _apiH}) : fetch(RAW_URL + FILES['ops'] + '?t=' + t),
+      _useApi ? fetch(_apiBase + FILES['ots'] + '?t=' + t, {headers: _rawH}) : fetch(RAW_URL + FILES['ots'] + '?t=' + t),
       fetch(BASE_URL + 'prod_catalogo.json?t=' + t)
     ]);
     if(satR.ok){ var d = await satR.json(); DB.satelites = d.satelites || []; }
@@ -2558,9 +2620,7 @@ async function cargarDatos(){
     var disLoaded = false;
     if(tk){
       try {
-        var disApiR = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + FILES['disenos'], {
-          headers: {'Authorization': 'token ' + tk, 'Cache-Control': 'no-cache'}
-        });
+        var disApiR = await _pre.disenos;
         if(disApiR.ok){
           var disApiData = await disApiR.json();
           _fileShas['disenos'] = disApiData.sha;
@@ -2582,16 +2642,16 @@ async function cargarDatos(){
     }
     // Migrar URLs viejas de GitHub Pages a raw.githubusercontent para preview inmediato
     DB.disenos.forEach(function(dis){ (dis.imagenes||[]).forEach(function(img){ if(img.url && img.url.indexOf(BASE_URL+'disenos-imgs/')===0){ img.url = RAW_URL+'disenos-imgs/'+img.url.split('disenos-imgs/')[1]; } }); });
-    var progR = await fetch(BASE_URL + 'prod_prog_ops.json?t=' + t);
+    var progR = await _pre.prog;
     if(progR.ok){ var d6 = await progR.json(); DB.prog_ops = d6.ops_plan || []; }
-    var moR = await fetch(BASE_URL + 'prod_costos_mo.json?t=' + t);
+    var moR = await _pre.mo;
     if(moR.ok){ var d7 = await moR.json(); DB.costos_mo = {precios: d7.precios||[], pagos: d7.pagos||[]}; }
-    var usrR = await fetch(BASE_URL + 'prod_usuarios.json?t=' + t);
+    var usrR = await _pre.usr;
     if(usrR.ok){ var d8 = await usrR.json(); _mergeRemoteUsers(d8.usuarios||{}); }
-    var simR = await fetch(BASE_URL + 'prod_simulador.json?t=' + t);
+    var simR = await _pre.sim;
     if(simR.ok){ var d9 = await simR.json(); DB.sim={active:d9.active||[],data:d9.data||{}}; _simActive=DB.sim.active; _simData=DB.sim.data; }
     else { var lsRaw=localStorage.getItem('bentley_sim_data'); if(lsRaw){ try{ var lsP=JSON.parse(lsRaw); DB.sim={active:lsP.active||[],data:lsP.data||lsP}; _simActive=DB.sim.active; _simData=DB.sim.data; }catch(e){} } }
-    var logR = await fetch(BASE_URL + 'prod_logistica.json?t=' + t);
+    var logR = await _pre.log;
     if(logR.ok){ var d10 = await logR.json(); DB.logistica = {tareas: d10.tareas||[]}; }
     // Planeación en su propio try/catch — si CUALQUIER otro fetch de este bloque falla,
     // el catch general de más abajo no debe hacer que Planeación se quede con datos viejos
@@ -2609,7 +2669,7 @@ async function cargarDatos(){
         if(planR2.ok){ var d11c = await planR2.json(); DB.planeacion = {meses: d11c.meses||{}, disenos_plan: d11c.disenos_plan||{}, historial_corte: d11c.historial_corte||[], confirmadas: d11c.confirmadas||{}, trazos: d11c.trazos||{}}; }
       } catch(planE2){ console.warn('Planeación: no se pudo cargar fresco, se mantiene lo que había en memoria', planE2); }
     }
-    var planConfR = await fetch(BASE_URL + 'prod_planeacion_confeccion.json?t=' + t);
+    var planConfR = await _pre.planconf;
     if(planConfR.ok){ var d11b = await planConfR.json(); DB.planeacion_confeccion = {por_satelite: d11b.por_satelite||{}}; }
     else { DB.planeacion_confeccion = {por_satelite:{}}; }
     // Costeo se edita seguido y necesita reflejarse al instante — igual que OPs/OTs/Diseños,
@@ -2618,9 +2678,7 @@ async function cargarDatos(){
     var costeoLoaded = false;
     if(tk){
       try {
-        var costeoApiR = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + FILES['costeo'], {
-          headers: {'Authorization': 'token ' + tk, 'Cache-Control': 'no-cache'}
-        });
+        var costeoApiR = await _pre.costeo;
         if(costeoApiR.ok){
           var costeoApiData = await costeoApiR.json();
           _fileShas['costeo'] = costeoApiData.sha;
@@ -2639,9 +2697,7 @@ async function cargarDatos(){
     var trazosLoaded = false;
     if(tk){
       try {
-        var trazosApiR = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + FILES['trazos'], {
-          headers: {'Authorization': 'token ' + tk, 'Cache-Control': 'no-cache'}
-        });
+        var trazosApiR = await _pre.trazos;
         if(trazosApiR.ok){
           var trazosApiData = await trazosApiR.json();
           _fileShas['trazos'] = trazosApiData.sha;
@@ -2657,24 +2713,19 @@ async function cargarDatos(){
         if(trazosR.ok){ var d12tb = await trazosR.json(); DB.trazos = {solicitudes: d12tb.solicitudes||[]}; }
       } catch(e){}
     }
-    var cronR = await fetch(BASE_URL + 'prod_cronograma.json?t=' + t);
+    var cronR = await _pre.cron;
+    // Si alguna lectura clave falló por red, mejor caer al respaldo completo de Firebase (catch)
+    // que arrancar con una colección vacía.
+    if(moR._err || logR._err || cronR._err) throw new Error('Fallo de red cargando datos');
     if(cronR.ok){ var d13 = await cronR.json(); DB.cronograma = d13.cronograma||[]; }
     else { DB.cronograma = []; }
-    var bitR = await fetch(BASE_URL + 'prod_bitacora.json?t=' + t);
+    var bitR = await _pre.bit;
     if(bitR.ok){ var d14 = await bitR.json(); DB.bitacora = {eventos: d14.eventos||[]}; }
     else { if(!DB.bitacora) DB.bitacora = {eventos:[]}; }
     if(DB.satelites.length === 0) seedSatelites();
     // Base del merge de 3 vías = lo que acaba de llegar del servidor (antes de cualquier
     // reparación local, para que esas reparaciones sí cuenten como cambio a guardar).
     Object.keys(_MERGE3_KEYS).forEach(function(k){ _setSyncBase(k, _dbWrap(k)); });
-    // Cronograma, satélites y logística se leen de GitHub Pages, que puede tardar varios
-    // minutos en reflejar un guardado; Firebase siempre tiene la última versión → se
-    // fusiona encima para no arrancar con datos viejos.
-    if(_fbDb){
-      for(var _fk of ['cronograma','satelites','logistica']){
-        try { var _fv = await _fbGet(_fk); if(_fv) _aplicarRemoto(_fk, _fv); } catch(e){}
-      }
-    }
     // Reparar silenciosamente estados Kanban stale al cargar datos frescos
     try { await _repararSubgEstados(true); } catch(e){}
     saveLocal();
