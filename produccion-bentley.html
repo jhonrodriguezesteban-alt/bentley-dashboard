@@ -14228,20 +14228,57 @@ function renderCronograma(){
   // Auto-cerrar entradas activas cuyo color ya NO tiene ninguna OT en producción real
   // (se entregó, sea por confirmarEntregaInline/Guardar todas o cualquier otro camino
   // que no pase por el modal "Cambiar estado" — esos flujos nunca marcaban el cronograma).
+  // También: la ÚNICA forma de crear una entrada es _cronAutoSync(), siempre atada a una OT
+  // real en ese momento — así que si hoy una entrada no tiene NINGUNA OT que la respalde, no
+  // es "dato manual", es basura huérfana (el color se borró/renombró/reestructuró después) y
+  // hay que quitarla, o si no se queda mostrándose para siempre sin que nada la pueda tocar
+  // (reportado: colores ya entregados o reasignados que seguían apareciendo). De paso se
+  // resincroniza el taller si quedó desactualizado (mismo caso que _cronSyncSatelite, como
+  // respaldo por si algún flujo de reasignación no la llamó) y se fusionan duplicados del
+  // mismo (OP, color) — solo podían aparecer por una corrupción de datos vieja, nunca por el
+  // flujo normal, pero dejaban una copia "fantasma" congelada con el taller/estado viejo.
   var ACTIVO_PROD = {POR_REVISAR:1,PENDIENTE_CORTAR:1,CORTE_POR_ALISTAR:1,ASIGNADO:1,EN_CONFECCION:1,NOVEDAD:1};
-  var cronCerrados = false;
-  (DB.cronograma||[]).filter(function(e){ return !e.entregado; }).forEach(function(e){
-    var otsColor = (DB.ots||[]).filter(function(o){ return o.op_id===e.op_id && o.color===e.color; });
-    if(!otsColor.length) return; // sin OTs asociadas — no tocar, puede ser dato viejo/manual
-    var sigueEnProceso = otsColor.some(function(o){ return ACTIVO_PROD[o.estado]; });
-    if(!sigueEnProceso){
-      e.entregado = true;
-      var fechasReales = otsColor.map(function(o){ return o.fecha_entrega_real; }).filter(Boolean).sort();
-      e.fecha_entrega_real = fechasReales.length ? fechasReales[fechasReales.length-1] : hoy();
-      cronCerrados = true;
-    }
+  var cronCambios = false;
+  var _cronPorClave = {};
+  (DB.cronograma||[]).forEach(function(e){
+    var k = e.op_id+'||'+(e.color||'');
+    (_cronPorClave[k] = _cronPorClave[k] || []).push(e);
   });
-  if(cronCerrados) guardarCronograma();
+  var cronLimpio = [];
+  Object.keys(_cronPorClave).forEach(function(k){
+    var grupo = _cronPorClave[k];
+    if(grupo.length > 1){
+      // Duplicados del mismo (OP,color): conservar el más completo (con fecha de compromiso,
+      // o si no el de más historial) y descartar el resto.
+      grupo.sort(function(a,b){
+        var sa = (a.fecha_compromiso?2:0) + (a.historial||[]).length;
+        var sb = (b.fecha_compromiso?2:0) + (b.historial||[]).length;
+        return sb-sa;
+      });
+      grupo = [grupo[0]];
+      cronCambios = true;
+    }
+    var e = grupo[0];
+    var otsColor = (DB.ots||[]).filter(function(o){ return o.op_id===e.op_id && o.color===e.color; });
+    if(!otsColor.length){
+      if(!e.entregado) cronCambios = true; // se descarta la huérfana, no se agrega a cronLimpio
+      return;
+    }
+    if(!e.entregado){
+      var sigueEnProceso = otsColor.some(function(o){ return ACTIVO_PROD[o.estado]; });
+      if(!sigueEnProceso){
+        e.entregado = true;
+        var fechasReales = otsColor.map(function(o){ return o.fecha_entrega_real; }).filter(Boolean).sort();
+        e.fecha_entrega_real = fechasReales.length ? fechasReales[fechasReales.length-1] : hoy();
+        cronCambios = true;
+      } else {
+        var satReal = otsColor[0].satelite_id || null;
+        if(e.satelite_id !== satReal){ e.satelite_id = satReal; cronCambios = true; }
+      }
+    }
+    cronLimpio.push(e);
+  });
+  if(cronCambios){ DB.cronograma = cronLimpio; guardarCronograma(); }
 
   // Rango de días: ventana de 21 columnas que se desplaza con cronNav() (◀ Hoy ▶),
   // en vez de un rango fijo que solo dejaba ver 2 días hacia atrás.
