@@ -23415,20 +23415,31 @@
       "user": "Isabel"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1790874144877_l9ok9",
-      "ts": 1790874144877,
-      "user": "Carolina Telles",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-234",
       "op_nombre": "CHAQUETA HARLEY",
       "referencia": "CHAQUETA HARLEY",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1790874144877,
       "uds": 102,
-      "motivo": "ENTREGADO"
+      "user": "Carolina Telles"
+    },
+    {
+      "id": "evt_1790888396667_bmlwg",
+      "ts": 1790888396667,
+      "user": "Carolina Telles",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-126",
+      "nombre": "CHAQUETA CAZADORA",
+      "categoria": "CHAQUETAS",
+      "colores": 4,
+      "refs": 1
     }
   ]
 }
