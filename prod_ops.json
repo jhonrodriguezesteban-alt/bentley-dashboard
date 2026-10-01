@@ -5819,7 +5819,7 @@
       ],
       "subg_estados": {
         "OP-2026-085||BEIGE": "PAGO_PENDIENTE",
-        "OP-2026-085||CAMEL": "ALISTAMIENTO",
+        "OP-2026-085||CAMEL": "PAGO_PENDIENTE",
         "OP-2026-085||NEGRO": "PAGO_PENDIENTE",
         "OP-2026-085||VERDE MILITAR": "EN_CONFECCION"
       },
@@ -7857,7 +7857,7 @@
         "OP-2026-107||CAFE": "EN_CONFECCION",
         "OP-2026-107||GRIS OSCURO": "EN_CONFECCION",
         "OP-2026-107||MARFIL": "EN_CONFECCION",
-        "OP-2026-107||VINOTINTO": "ALISTAMIENTO"
+        "OP-2026-107||VINOTINTO": "PAGO_PENDIENTE"
       },
       "tallas": [
         "M"
@@ -9920,7 +9920,7 @@
       ],
       "subg_estados": {
         "OP-2026-126||AZUL OSCURO": "EN_CONFECCION",
-        "OP-2026-126||LILA": "ALISTAMIENTO",
+        "OP-2026-126||LILA": "PAGO_PENDIENTE",
         "OP-2026-126||ROSA": "EN_CONFECCION",
         "OP-2026-126||VERDE MILITAR": "EN_CONFECCION"
       },
@@ -13095,39 +13095,31 @@
     },
     {
       "cantidades": {
-        "AZUL_T10": 16,
-        "AZUL_T12": 16,
-        "AZUL_T14": 16,
-        "AZUL_T16": 16,
-        "AZUL_T4": 8,
-        "AZUL_T6": 8,
-        "AZUL_T8": 16,
-        "BLANCO_T10": 16,
-        "BLANCO_T12": 16,
-        "BLANCO_T14": 16,
-        "BLANCO_T16": 16,
-        "BLANCO_T4": 8,
-        "BLANCO_T6": 8,
-        "BLANCO_T8": 16,
+        "NEGRO_T4": 8,
+        "NEGRO_T6": 8,
+        "NEGRO_T8": 16,
         "NEGRO_T10": 16,
         "NEGRO_T12": 16,
         "NEGRO_T14": 16,
         "NEGRO_T16": 16,
-        "NEGRO_T4": 8,
-        "NEGRO_T6": 8,
-        "NEGRO_T8": 16,
-        "VERDE MILITAR_T10": 16,
-        "VERDE MILITAR_T12": 16,
-        "VERDE MILITAR_T14": 16,
-        "VERDE MILITAR_T16": 16,
-        "VERDE MILITAR_T4": 8,
-        "VERDE MILITAR_T6": 8,
-        "VERDE MILITAR_T8": 16
+        "AZUL_T4": 8,
+        "AZUL_T6": 8,
+        "AZUL_T8": 16,
+        "AZUL_T10": 16,
+        "AZUL_T12": 16,
+        "AZUL_T14": 16,
+        "AZUL_T16": 16,
+        "BLANCO_T4": 8,
+        "BLANCO_T6": 8,
+        "BLANCO_T8": 16,
+        "BLANCO_T10": 16,
+        "BLANCO_T12": 16,
+        "BLANCO_T14": 16,
+        "BLANCO_T16": 16
       },
       "categoria": "CAMISAS",
       "colores": [
         "NEGRO",
-        "VERDE MILITAR",
         "AZUL",
         "BLANCO"
       ],
@@ -13151,46 +13143,15 @@
       "numero": 216,
       "referencias": [
         {
-          "cantidades": {
-            "AZUL_T10": 16,
-            "AZUL_T12": 16,
-            "AZUL_T14": 16,
-            "AZUL_T16": 16,
-            "AZUL_T4": 8,
-            "AZUL_T6": 8,
-            "AZUL_T8": 16,
-            "BLANCO_T10": 16,
-            "BLANCO_T12": 16,
-            "BLANCO_T14": 16,
-            "BLANCO_T16": 16,
-            "BLANCO_T4": 8,
-            "BLANCO_T6": 8,
-            "BLANCO_T8": 16,
-            "NEGRO_T10": 16,
-            "NEGRO_T12": 16,
-            "NEGRO_T14": 16,
-            "NEGRO_T16": 16,
-            "NEGRO_T4": 8,
-            "NEGRO_T6": 8,
-            "NEGRO_T8": 16,
-            "VERDE MILITAR_T10": 16,
-            "VERDE MILITAR_T12": 16,
-            "VERDE MILITAR_T14": 16,
-            "VERDE MILITAR_T16": 16,
-            "VERDE MILITAR_T4": 8,
-            "VERDE MILITAR_T6": 8,
-            "VERDE MILITAR_T8": 16
-          },
+          "nombre": "CAMISA CLASICA BK",
+          "ref": "",
           "cat": "CAMISAS",
+          "vmo": 1151,
           "colores": [
             "NEGRO",
-            "VERDE MILITAR",
             "AZUL",
             "BLANCO"
           ],
-          "maquilador_id": "",
-          "nombre": "CAMISA CLASICA BK",
-          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -13200,7 +13161,30 @@
             "T14",
             "T16"
           ],
-          "vmo": 1151
+          "cantidades": {
+            "NEGRO_T4": 8,
+            "NEGRO_T6": 8,
+            "NEGRO_T8": 16,
+            "NEGRO_T10": 16,
+            "NEGRO_T12": 16,
+            "NEGRO_T14": 16,
+            "NEGRO_T16": 16,
+            "AZUL_T4": 8,
+            "AZUL_T6": 8,
+            "AZUL_T8": 16,
+            "AZUL_T10": 16,
+            "AZUL_T12": 16,
+            "AZUL_T14": 16,
+            "AZUL_T16": 16,
+            "BLANCO_T4": 8,
+            "BLANCO_T6": 8,
+            "BLANCO_T8": 16,
+            "BLANCO_T10": 16,
+            "BLANCO_T12": 16,
+            "BLANCO_T14": 16,
+            "BLANCO_T16": 16
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -13229,7 +13213,7 @@
           "solicitud_id": "id_1788983260763_py3v163mk"
         }
       ],
-      "updated_at": "2026-09-02"
+      "updated_at": "2026-10-01"
     },
     {
       "cantidades": {
