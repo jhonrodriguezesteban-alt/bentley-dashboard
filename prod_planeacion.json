@@ -28,8 +28,6 @@
       "OP-2026-122||CAFE",
       "OP-2026-123||MARFIL",
       "OP-2026-123||NEGRO",
-      "OP-0040||CAMEL",
-      "OP-0040||NEGRO",
       "OP-0040||ROSA 613",
       "OP-2026-125||GRIS OSCURO",
       "OP-2026-125||CAMEL",
@@ -71,7 +69,6 @@
       "OP-2026-199||AZUL BEBE",
       "OP-2026-199||GRIS CLARO",
       "OP-2026-199||CAFE",
-      "OP-0040||MARFIL",
       "OP-2026-201||ROSA",
       "OP-2026-201||VINOTINTO",
       "OP-2026-201||CAFE",
@@ -150,10 +147,7 @@
       "OP-2026-222||MARFIL",
       "OP-2026-222||NEGRO",
       "OP-2026-222||VINOTINTO",
-      "OP-2026-222||ROJO",
-      "OP-2026-220||NEGRO",
-      "OP-2026-220||VERDE MILITAR",
-      "OP-2026-220||BEIGE"
+      "OP-2026-222||ROJO"
     ],
     "2026-10": [
       "OP-2026-213||BEIGE",
@@ -1344,103 +1338,169 @@
       "uds": 132
     },
     {
-      "key": "OP-2026-212||AZUL",
-      "op_id": "OP-2026-212",
-      "op_nombre": "CAMISETA COCOA",
       "categoria": "CAMISETAS",
       "color": "AZUL",
-      "uds": 71,
-      "mes_planeado": "2026-09",
       "estado_al_salir": "EN_CONFECCION",
-      "fecha_deteccion": "2026-09-30"
-    },
-    {
-      "key": "OP-2026-212||CAMEL",
+      "fecha_deteccion": "2026-09-30",
+      "key": "OP-2026-212||AZUL",
+      "mes_planeado": "2026-09",
       "op_id": "OP-2026-212",
       "op_nombre": "CAMISETA COCOA",
+      "uds": 71
+    },
+    {
       "categoria": "CAMISETAS",
       "color": "CAMEL",
-      "uds": 110,
-      "mes_planeado": "2026-09",
       "estado_al_salir": "EN_CONFECCION",
-      "fecha_deteccion": "2026-09-30"
-    },
-    {
-      "key": "OP-2026-212||VERDE",
+      "fecha_deteccion": "2026-09-30",
+      "key": "OP-2026-212||CAMEL",
+      "mes_planeado": "2026-09",
       "op_id": "OP-2026-212",
       "op_nombre": "CAMISETA COCOA",
+      "uds": 110
+    },
+    {
       "categoria": "CAMISETAS",
       "color": "VERDE",
-      "uds": 58,
-      "mes_planeado": "2026-09",
       "estado_al_salir": "EN_CONFECCION",
-      "fecha_deteccion": "2026-09-30"
+      "fecha_deteccion": "2026-09-30",
+      "key": "OP-2026-212||VERDE",
+      "mes_planeado": "2026-09",
+      "op_id": "OP-2026-212",
+      "op_nombre": "CAMISETA COCOA",
+      "uds": 58
     },
     {
-      "key": "OP-0037||BEIGE",
-      "op_id": "OP-0037",
-      "op_nombre": "CHALECO ACOLCHADO MANY",
       "categoria": "CHALECOS",
       "color": "BEIGE",
-      "uds": 63,
-      "mes_planeado": "2026-09",
       "estado_al_salir": "EN_CONFECCION",
-      "fecha_deteccion": "2026-09-30"
+      "fecha_deteccion": "2026-09-30",
+      "key": "OP-0037||BEIGE",
+      "mes_planeado": "2026-09",
+      "op_id": "OP-0037",
+      "op_nombre": "CHALECO ACOLCHADO MANY",
+      "uds": 63
     },
     {
-      "key": "OP-2026-083||GRIS MEDIO",
-      "op_id": "OP-2026-083",
-      "op_nombre": "CONJUNTO CHICAGO",
       "categoria": "CONJUNTOS",
       "color": "GRIS MEDIO",
-      "uds": 80,
-      "mes_planeado": "2026-09",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-09-30"
-    },
-    {
-      "key": "OP-2026-083||AVENA",
+      "fecha_deteccion": "2026-09-30",
+      "key": "OP-2026-083||GRIS MEDIO",
+      "mes_planeado": "2026-09",
       "op_id": "OP-2026-083",
       "op_nombre": "CONJUNTO CHICAGO",
+      "uds": 80
+    },
+    {
       "categoria": "CONJUNTOS",
       "color": "AVENA",
-      "uds": 80,
-      "mes_planeado": "2026-09",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-09-30"
+      "fecha_deteccion": "2026-09-30",
+      "key": "OP-2026-083||AVENA",
+      "mes_planeado": "2026-09",
+      "op_id": "OP-2026-083",
+      "op_nombre": "CONJUNTO CHICAGO",
+      "uds": 80
     },
     {
-      "key": "OP-2026-099||GRIS OSCURO",
-      "op_id": "OP-2026-099",
-      "op_nombre": "BEISBOLERA 2.0",
       "categoria": "CHAQUETAS",
       "color": "GRIS OSCURO",
-      "uds": 80,
-      "mes_planeado": "2026-09",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-09-30"
+      "fecha_deteccion": "2026-09-30",
+      "key": "OP-2026-099||GRIS OSCURO",
+      "mes_planeado": "2026-09",
+      "op_id": "OP-2026-099",
+      "op_nombre": "BEISBOLERA 2.0",
+      "uds": 80
     },
     {
-      "key": "OP-2026-203||GRIS",
-      "op_id": "OP-2026-203",
-      "op_nombre": "CONJUNTO CHELSY",
       "categoria": "CONJUNTOS",
       "color": "GRIS",
-      "uds": 132,
-      "mes_planeado": "2026-10",
       "estado_al_salir": "EN_CONFECCION",
-      "fecha_deteccion": "2026-09-30"
-    },
-    {
-      "key": "OP-2026-203||NEGRO",
+      "fecha_deteccion": "2026-09-30",
+      "key": "OP-2026-203||GRIS",
+      "mes_planeado": "2026-10",
       "op_id": "OP-2026-203",
       "op_nombre": "CONJUNTO CHELSY",
+      "uds": 132
+    },
+    {
       "categoria": "CONJUNTOS",
       "color": "NEGRO",
-      "uds": 132,
-      "mes_planeado": "2026-10",
       "estado_al_salir": "EN_CONFECCION",
-      "fecha_deteccion": "2026-09-30"
+      "fecha_deteccion": "2026-09-30",
+      "key": "OP-2026-203||NEGRO",
+      "mes_planeado": "2026-10",
+      "op_id": "OP-2026-203",
+      "op_nombre": "CONJUNTO CHELSY",
+      "uds": 132
+    },
+    {
+      "key": "OP-0040||CAMEL",
+      "op_id": "OP-0040",
+      "op_nombre": "PANTALON DONATELLA",
+      "categoria": "PANTALONES",
+      "color": "CAMEL",
+      "uds": 84,
+      "mes_planeado": "2026-09",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-10-01"
+    },
+    {
+      "key": "OP-0040||NEGRO",
+      "op_id": "OP-0040",
+      "op_nombre": "PANTALON DONATELLA",
+      "categoria": "PANTALONES",
+      "color": "NEGRO",
+      "uds": 84,
+      "mes_planeado": "2026-09",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-10-01"
+    },
+    {
+      "key": "OP-0040||MARFIL",
+      "op_id": "OP-0040",
+      "op_nombre": "PANTALON DONATELLA",
+      "categoria": "PANTALONES",
+      "color": "MARFIL",
+      "uds": 84,
+      "mes_planeado": "2026-09",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-10-01"
+    },
+    {
+      "key": "OP-2026-220||NEGRO",
+      "op_id": "OP-2026-220",
+      "op_nombre": "CONJUNTO DAKOTA",
+      "categoria": "CONJUNTOS",
+      "color": "NEGRO",
+      "uds": 101,
+      "mes_planeado": "2026-09",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-10-01"
+    },
+    {
+      "key": "OP-2026-220||VERDE MILITAR",
+      "op_id": "OP-2026-220",
+      "op_nombre": "CONJUNTO DAKOTA",
+      "categoria": "CONJUNTOS",
+      "color": "VERDE MILITAR",
+      "uds": 96,
+      "mes_planeado": "2026-09",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-10-01"
+    },
+    {
+      "key": "OP-2026-220||BEIGE",
+      "op_id": "OP-2026-220",
+      "op_nombre": "CONJUNTO DAKOTA",
+      "categoria": "CONJUNTOS",
+      "color": "BEIGE",
+      "uds": 96,
+      "mes_planeado": "2026-09",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-10-01"
     }
   ],
   "confirmadas": {
