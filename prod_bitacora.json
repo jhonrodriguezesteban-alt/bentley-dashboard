@@ -24907,13 +24907,51 @@
       "user": "John Rodriguez"
     },
     {
+      "color": "AZUL OSCURO",
       "id": "evt_1790897211872_pnrdv",
-      "ts": 1790897211872,
-      "user": "John Rodriguez",
-      "tipo": "planeacion_asignar",
+      "mes": "2026-10",
       "op_id": "OP-2026-113",
       "op_nombre": "CHAQUETA RALPH",
-      "color": "AZUL OSCURO",
+      "tipo": "planeacion_asignar",
+      "ts": 1790897211872,
+      "user": "John Rodriguez"
+    },
+    {
+      "categoria": "CHAQUETAS",
+      "colores": [
+        "NEGRO",
+        "BEIGE"
+      ],
+      "id": "evt_1790897212260_9m0y1",
+      "op_id": "OP-2026-100",
+      "op_nombre": "CHAQUETA HARLEY",
+      "referencias": [
+        "CHAQUETA HARLEY"
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 12,
+      "total_uds": 240,
+      "ts": 1790897212260,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790897220659_4t75m",
+      "ts": 1790897220659,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-217",
+      "op_nombre": "BODY BASICO",
+      "color": "NEGRO",
+      "mes": "2026-10"
+    },
+    {
+      "id": "evt_1790897224416_8mm2n",
+      "ts": 1790897224416,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-089",
+      "op_nombre": "CHAQUETA MARIPOSAS",
+      "color": "ROSA",
       "mes": "2026-10"
     }
   ]
