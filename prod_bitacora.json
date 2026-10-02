@@ -26321,20 +26321,29 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1790980708822_o7qd9",
-      "ts": 1790980708822,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-220",
       "op_nombre": "CONJUNTO DAKOTA",
       "referencia": "CONJUNTO DAKOTA",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1790980708822,
       "uds": 101,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790980800635_aa4b2",
+      "ts": 1790980800635,
+      "user": "Jefa de Producción",
+      "tipo": "satelite_crear",
+      "nombre": "JONATAN ROJAS CASTRO",
+      "personas": 1,
+      "capacidad": 0
     }
   ]
 }
