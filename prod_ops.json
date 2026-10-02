@@ -486,7 +486,13 @@
       "subg_estados": {
         "OP-0010||AZUL BEBE": "CORTE_POR_ALISTAR",
         "OP-0010||AZUL OSCURO": "CORTE_POR_ALISTAR",
-        "OP-0010||CAMEL": "CORTE_POR_ALISTAR"
+        "OP-0010||CAMEL": "CORTE_POR_ALISTAR",
+        "OP-0010||GATOS MARFIL": "ALISTAMIENTO",
+        "OP-0010||ROSA CLARO": "ALISTAMIENTO",
+        "OP-0010||ANIMAL PRINT LILA": "ALISTAMIENTO",
+        "OP-0010||ANIMAL PRINT ROSA": "ALISTAMIENTO",
+        "OP-0010||ROSADO": "ALISTAMIENTO",
+        "OP-0010||LOVER BLANCO": "ALISTAMIENTO"
       },
       "tallas": [
         "T10"
@@ -2917,7 +2923,8 @@
         "OP-0051||DINO MUSICA AZUL OSC": "EN_CONFECCION",
         "OP-0051||LEONES MARFIL": "EN_CONFECCION",
         "OP-0051||PERROS DORMIDOS MARFIL": "EN_CONFECCION",
-        "OP-0051||ROJO": "EN_CONFECCION"
+        "OP-0051||ROJO": "EN_CONFECCION",
+        "OP-0051||AZUL OSCURO": "CORTE_POR_ALISTAR"
       },
       "tallas": [
         "T8",
@@ -3186,7 +3193,6 @@
         }
       ],
       "subg_estados": {
-        "OP-0054||BEIGE": "PENDIENTE_CORTAR",
         "OP-0054||CAFÉ": "PAGO_PENDIENTE",
         "OP-0054||GRIS OSCURO": "PAGO_PENDIENTE",
         "OP-0054||ROSA": "EN_CONFECCION",
@@ -3584,7 +3590,6 @@
         "OP-0059||CAFE": "PENDIENTE_CORTAR",
         "OP-0059||GRIS OSCURO": "PENDIENTE_CORTAR",
         "OP-0059||MARFIL": "PENDIENTE_CORTAR",
-        "OP-0059||NEGRO": "PENDIENTE_CORTAR",
         "OP-0059||VINOTINTO": "PENDIENTE_CORTAR"
       },
       "tallas": [
@@ -4090,7 +4095,6 @@
       ],
       "subg_estados": {
         "OP-0167||AVENA": "PENDIENTE_CORTAR",
-        "OP-0167||CAMEL": "PENDIENTE_CORTAR",
         "OP-0167||MARFIL": "PENDIENTE_CORTAR"
       },
       "tallas": [
@@ -4645,7 +4649,8 @@
         "OP-2026-073||CAMEL": "POR_REVISAR",
         "OP-2026-073||GRIS CLARO": "POR_REVISAR",
         "OP-2026-073||MARFIL": "POR_REVISAR",
-        "OP-2026-073||NEGRO": "POR_REVISAR"
+        "OP-2026-073||NEGRO": "POR_REVISAR",
+        "OP-2026-073||BEIGE": "POR_REVISAR"
       },
       "tallas": [
         "T4",
@@ -4741,7 +4746,10 @@
         "GRIS OSCURO": false
       },
       "updated_at": "2026-07-30",
-      "subg_estados": {}
+      "subg_estados": {
+        "OP-2026-074||GRIS OSCURO": "POR_REVISAR",
+        "OP-2026-074||AVENA": "POR_REVISAR"
+      }
     },
     {
       "cantidades": {
@@ -4846,7 +4854,11 @@
         "NEGRO": true
       },
       "updated_at": "2026-07-30",
-      "subg_estados": {}
+      "subg_estados": {
+        "OP-2026-075||NEGRO": "POR_REVISAR",
+        "OP-2026-075||CAFE": "POR_REVISAR",
+        "OP-2026-075||MARFIL": "POR_REVISAR"
+      }
     },
     {
       "cantidades": {
@@ -4908,7 +4920,7 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-076||BEIGE": "POR_REVISAR"
+        "OP-2026-076||BEIGE": "PENDIENTE_CORTAR"
       },
       "tallas": [
         "T4",
@@ -5292,7 +5304,8 @@
       ],
       "subg_estados": {
         "OP-2026-080||BEIGE": "PAGO_PENDIENTE",
-        "OP-2026-080||NEGRO": "PAGO_PENDIENTE"
+        "OP-2026-080||NEGRO": "PAGO_PENDIENTE",
+        "OP-2026-080||CAMEL": "POR_REVISAR"
       },
       "tallas": [
         "T8",
@@ -5626,8 +5639,8 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-083||AVENA": "PENDIENTE_CORTAR",
-        "OP-2026-083||GRIS MEDIO": "PENDIENTE_CORTAR"
+        "OP-2026-083||AVENA": "CORTE_POR_ALISTAR",
+        "OP-2026-083||GRIS MEDIO": "CORTE_POR_ALISTAR"
       },
       "tallas": [
         "T4",
@@ -6443,7 +6456,6 @@
       "subg_estados": {
         "OP-0190||AZUL OSCURO": "EN_CONFECCION",
         "OP-0190||NEGRO": "PAGO_PENDIENTE",
-        "OP-0190||VERDE": "POR_REVISAR",
         "OP-0190||VERDE MILITAR": "EN_CONFECCION",
         "OP-0190||VERDE PINO": "ALISTAMIENTO"
       },
@@ -7000,7 +7012,7 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-098||AZUL OSCURO": "PENDIENTE_CORTAR",
+        "OP-2026-098||AZUL OSCURO": "ALISTAMIENTO",
         "OP-2026-098||FUCSIA": "EN_CONFECCION",
         "OP-2026-098||LILA": "EN_CONFECCION",
         "OP-2026-098||NEGRO": "EN_CONFECCION",
@@ -7118,7 +7130,8 @@
       ],
       "subg_estados": {
         "OP-2026-099||VINOTINTO": "PENDIENTE_CORTAR",
-        "OP-2026-099||GRIS OSCURO": "CORTE_POR_ALISTAR"
+        "OP-2026-099||GRIS OSCURO": "CORTE_POR_ALISTAR",
+        "OP-2026-099||CAFE": "CORTE_POR_ALISTAR"
       },
       "tallas": [
         "T6",
@@ -7229,7 +7242,10 @@
           "solicitud_id": "id_1789489631878_p4wwqdwyf"
         }
       ],
-      "subg_estados": {}
+      "subg_estados": {
+        "OP-2026-100||NEGRO": "CORTE_POR_ALISTAR",
+        "OP-2026-100||BEIGE": "CORTE_POR_ALISTAR"
+      }
     },
     {
       "cantidades": {
@@ -7312,7 +7328,8 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-101||ROSA": "PAGO_PENDIENTE"
+        "OP-2026-101||ROSA": "PAGO_PENDIENTE",
+        "OP-2026-101||MARFIL": "POR_REVISAR"
       },
       "tallas": [
         "T6",
@@ -7416,7 +7433,8 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-102||VINOTINTO": "PAGO_PENDIENTE"
+        "OP-2026-102||VINOTINTO": "PAGO_PENDIENTE",
+        "OP-2026-102||GRIS OSCURO": "POR_REVISAR"
       },
       "tallas": [
         "T6",
@@ -8069,7 +8087,12 @@
         "T16"
       ],
       "updated_at": "2026-08-04",
-      "subg_estados": {}
+      "subg_estados": {
+        "OP-2026-109||NEGRO": "POR_REVISAR",
+        "OP-2026-109||TAUPE": "POR_REVISAR",
+        "OP-2026-109||CHOCOLATE": "POR_REVISAR",
+        "OP-2026-109||MARFIL": "POR_REVISAR"
+      }
     },
     {
       "cantidades": {
@@ -8326,7 +8349,9 @@
         "OP-2026-111||VERDE MILITAR": "EN_CONFECCION",
         "OP-2026-111||VINOTINTO": "EN_CONFECCION",
         "OP-2026-111||CAMEL": "CORTE_POR_ALISTAR",
-        "OP-2026-111||MORA LECHE": "CORTE_POR_ALISTAR"
+        "OP-2026-111||MORA LECHE": "CORTE_POR_ALISTAR",
+        "OP-2026-111||MARFIL": "POR_REVISAR",
+        "OP-2026-111||CAFE": "POR_REVISAR"
       },
       "tallas": [
         "T4",
@@ -8593,7 +8618,8 @@
       ],
       "subg_estados": {
         "OP-2026-113||CAMEL": "EN_CONFECCION",
-        "OP-2026-113||NEGRO": "EN_CONFECCION"
+        "OP-2026-113||NEGRO": "EN_CONFECCION",
+        "OP-2026-113||AZUL OSCURO": "POR_REVISAR"
       },
       "tallas": [
         "T6",
@@ -9584,7 +9610,10 @@
         "T16"
       ],
       "updated_at": "2026-08-24",
-      "subg_estados": {}
+      "subg_estados": {
+        "OP-2026-123||NEGRO": "POR_REVISAR",
+        "OP-2026-123||MARFIL": "POR_REVISAR"
+      }
     },
     {
       "cantidades": {
@@ -9796,7 +9825,8 @@
         "OP-2026-125||CAMEL": "CORTE_POR_ALISTAR",
         "OP-2026-125||MORA LECHE": "CORTE_POR_ALISTAR",
         "OP-2026-125||NEGRO": "EN_CONFECCION",
-        "OP-2026-125||VERDE MILITAR": "CORTE_POR_ALISTAR"
+        "OP-2026-125||VERDE MILITAR": "CORTE_POR_ALISTAR",
+        "OP-2026-125||GRIS OSCURO": "PENDIENTE_CORTAR"
       },
       "tallas": [
         "T6",
@@ -10533,7 +10563,12 @@
         "T16"
       ],
       "updated_at": "2026-08-25",
-      "subg_estados": {}
+      "subg_estados": {
+        "OP-2026-192||NEGRO": "POR_REVISAR",
+        "OP-2026-192||ROSA": "POR_REVISAR",
+        "OP-2026-192||AZUL BEBE": "POR_REVISAR",
+        "OP-2026-192||MARFIL": "POR_REVISAR"
+      }
     },
     {
       "cantidades": {
@@ -11067,7 +11102,10 @@
         "T14",
         "T16"
       ],
-      "subg_estados": {}
+      "subg_estados": {},
+      "consumibles_desagregado": {
+        "cid_1789264125616_3759__cid_1789263938874_4812": true
+      }
     },
     {
       "cantidades": {
@@ -11734,7 +11772,7 @@
         "NEGRO": true
       },
       "subg_estados": {
-        "OP-2026-203||CAMEL": "PENDIENTE_CORTAR",
+        "OP-2026-203||CAMEL": "EN_CONFECCION",
         "OP-2026-203||NEGRO": "EN_CONFECCION",
         "OP-2026-203||GRIS": "EN_CONFECCION"
       }
@@ -12447,7 +12485,12 @@
         "T16"
       ],
       "updated_at": "2026-09-02",
-      "subg_estados": {}
+      "subg_estados": {
+        "OP-2026-210||NEGRO": "POR_REVISAR",
+        "OP-2026-210||CAFE": "POR_REVISAR",
+        "OP-2026-210||BEIGE": "POR_REVISAR",
+        "OP-2026-210||MARFIL": "POR_REVISAR"
+      }
     },
     {
       "cantidades": {
@@ -12525,10 +12568,8 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-211||CAFE": "PENDIENTE_CORTAR",
         "OP-2026-211||MARFIL": "EN_CONFECCION",
-        "OP-2026-211||NEGRO": "EN_CONFECCION",
-        "OP-2026-211||VERDE": "PENDIENTE_CORTAR"
+        "OP-2026-211||NEGRO": "EN_CONFECCION"
       },
       "tallas": [
         "T4",
@@ -13157,9 +13198,8 @@
       ],
       "subg_estados": {
         "OP-2026-216||AZUL": "EN_CONFECCION",
-        "OP-2026-216||BLANCO": "POR_REVISAR",
-        "OP-2026-216||NEGRO": "EN_CONFECCION",
-        "OP-2026-216||VERDE MILITAR": "POR_REVISAR"
+        "OP-2026-216||BLANCO": "PENDIENTE_CORTAR",
+        "OP-2026-216||NEGRO": "EN_CONFECCION"
       },
       "tallas": [
         "T4",
@@ -13737,7 +13777,12 @@
         "T16"
       ],
       "updated_at": "2026-09-13",
-      "subg_estados": {}
+      "subg_estados": {
+        "OP-2026-222||NEGRO": "POR_REVISAR",
+        "OP-2026-222||VINOTINTO": "POR_REVISAR",
+        "OP-2026-222||ROJO": "POR_REVISAR",
+        "OP-2026-222||MARFIL": "POR_REVISAR"
+      }
     },
     {
       "cantidades": {
@@ -13896,7 +13941,9 @@
         "T14",
         "T16"
       ],
-      "subg_estados": {}
+      "subg_estados": {
+        "OP-2026-224||NEGRO": "POR_REVISAR"
+      }
     },
     {
       "cantidades": {
@@ -13989,7 +14036,11 @@
         "T16"
       ],
       "updated_at": "2026-09-13",
-      "subg_estados": {}
+      "subg_estados": {
+        "OP-2026-225||TAUPE": "POR_REVISAR",
+        "OP-2026-225||GRIS MEDIO": "POR_REVISAR",
+        "OP-2026-225||GRIS OSCURO": "POR_REVISAR"
+      }
     },
     {
       "cantidades": {
@@ -14055,7 +14106,9 @@
         "T16"
       ],
       "updated_at": "2026-09-13",
-      "subg_estados": {}
+      "subg_estados": {
+        "OP-2026-226||POR DEFINIR": "POR_REVISAR"
+      }
     },
     {
       "cantidades": {
@@ -14121,7 +14174,9 @@
         "T16"
       ],
       "updated_at": "2026-09-13",
-      "subg_estados": {}
+      "subg_estados": {
+        "OP-2026-227||POR DEFINIR": "POR_REVISAR"
+      }
     },
     {
       "cantidades": {
