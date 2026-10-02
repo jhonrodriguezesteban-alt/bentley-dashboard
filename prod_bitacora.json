@@ -26264,20 +26264,29 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "AZUL OSCURO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1790979566493_la9be",
-      "ts": 1790979566493,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-0190",
       "op_nombre": "CHAQUETA SAN POLOS PILOTO + CAMICHAQUETA SAN POLOS HOMBRE + CHAQUETA ROMPEVIENTOS BK",
       "referencia": "CAMICHAQUETA SAN POLOS HOMBRE",
-      "color": "AZUL OSCURO",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1790979566493,
       "uds": 160,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790980642904_48ox5",
+      "ts": 1790980642904,
+      "user": "Jefa de Producción",
+      "tipo": "satelite_crear",
+      "nombre": "MAGNOLIA VANEGAS",
+      "personas": 2,
+      "capacidad": 0
     }
   ]
 }
