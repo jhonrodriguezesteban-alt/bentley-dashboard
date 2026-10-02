@@ -26098,16 +26098,32 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1790975961860_je70x",
-      "ts": 1790975961860,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782182862281_fvrd1mdu6",
-      "nombre": "PANTALON HOUSER",
       "categoria": "Pantalones",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1782182862281_fvrd1mdu6",
       "estado_anterior": "EN_REVISION_GERENCIA",
-      "estado_nuevo": "LISTA_PRODUCCION"
+      "estado_nuevo": "LISTA_PRODUCCION",
+      "id": "evt_1790975961860_je70x",
+      "marca": "Bentley Kids",
+      "nombre": "PANTALON HOUSER",
+      "tipo": "estado_diseno",
+      "ts": 1790975961860,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1790978463034_05urb",
+      "ts": 1790978463034,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0036",
+      "op_nombre": "PANTALON DRILL ANCHO",
+      "referencia": "PANTALON DRILL ANCHO",
+      "color": "BEIGE",
+      "talla": "todas las tallas",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": true,
+      "uds": 44,
+      "motivo": "ENTREGADO"
     }
   ]
 }
