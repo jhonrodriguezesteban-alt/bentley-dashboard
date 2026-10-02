@@ -26126,20 +26126,30 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1790978504524_ll8xn",
-      "ts": 1790978504524,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-0036",
       "op_nombre": "PANTALON DRILL ANCHO",
       "referencia": "PANTALON DRILL ANCHO",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1790978504524,
       "uds": 70,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790978779413_wljwy",
+      "ts": 1790978779413,
+      "user": "Jefa de Producción",
+      "tipo": "asignar_satelite",
+      "op_id": "OP-0190",
+      "ref": "CAMICHAQUETA SAN POLOS HOMBRE",
+      "color": "VERDE MILITAR",
+      "satelite": "YUDY CAROLINA CELIS QUINTERO"
     }
   ]
 }
