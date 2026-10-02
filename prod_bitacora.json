@@ -26289,20 +26289,36 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "BEIGE",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1790980661033_0g4nd",
+      "motivo": "EN TALLER",
+      "op_id": "OP-2026-220",
+      "op_nombre": "CONJUNTO DAKOTA",
+      "referencia": "CONJUNTO DAKOTA",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1790980661033,
+      "uds": 96,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790980704049_iz30v",
+      "ts": 1790980704049,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-220",
       "op_nombre": "CONJUNTO DAKOTA",
       "referencia": "CONJUNTO DAKOTA",
-      "color": "BEIGE",
+      "color": "NEGRO",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 96,
-      "motivo": "EN TALLER"
+      "uds": 101,
+      "motivo": "ENTREGADO"
     }
   ]
 }
