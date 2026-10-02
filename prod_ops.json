@@ -10821,9 +10821,12 @@
         "GRIS OSCURO"
       ],
       "consumibles_check": {
+        "rec_hoodie_pa_o_algodon_cerrado_1172__c78_21||AVENA": true,
         "rec_hoodie_pa_o_algodon_cerrado_1172__c78_27": true,
-        "rec_hoodie_pa_o_algodon_cerrado_1172__c78_28": true,
-        "rec_hoodie_pa_o_algodon_cerrado_1172__c78_21||AVENA": true
+        "rec_hoodie_pa_o_algodon_cerrado_1172__c78_28": true
+      },
+      "consumibles_desagregado": {
+        "rec_hoodie_pa_o_algodon_cerrado_1172__c78_21": true
       },
       "cortador": "Corte Carbajal",
       "created_at": "2026-08-25",
@@ -10878,9 +10881,6 @@
       "trazos_color_solicitado": {
         "AVENA": true,
         "GRIS OSCURO": true
-      },
-      "consumibles_desagregado": {
-        "rec_hoodie_pa_o_algodon_cerrado_1172__c78_21": true
       }
     },
     {
@@ -11015,11 +11015,11 @@
         "MARFIL"
       ],
       "consumibles_check": {
+        "cid_1789264125616_3759__cid_1789263938874_4812||AVENA": true,
+        "cid_1789264125616_3759__cid_1789263938874_4812||CAFE": true,
         "cid_1789264125616_3759__cid_1789263938874_4993": true,
         "cid_1789264125616_3759__cid_1789263938874_8127": true,
-        "cid_1789264125616_3759__cid_1789263938874_8973": true,
-        "cid_1789264125616_3759__cid_1789263938874_4812||CAFE": true,
-        "cid_1789264125616_3759__cid_1789263938874_4812||AVENA": true
+        "cid_1789264125616_3759__cid_1789263938874_8973": true
       },
       "consumibles_desagregado": {
         "cid_1789264125616_3759__cid_1789263938874_4812": true
@@ -11211,8 +11211,8 @@
         "VINOTINTO"
       ],
       "consumibles_check": {
-        "rec_conjunto_hoodie_capota_p_a_1178__c58_21": true,
-        "rec_conjunto_hoodie_capota_p_a_1178__c58_19||CAFE": true
+        "rec_conjunto_hoodie_capota_p_a_1178__c58_19||CAFE": true,
+        "rec_conjunto_hoodie_capota_p_a_1178__c58_21": true
       },
       "consumibles_desagregado": {
         "rec_conjunto_hoodie_capota_p_a_1178__c58_19": true
@@ -11567,12 +11567,15 @@
         "MARFIL"
       ],
       "consumibles_check": {
+        "rec_pantalon_chicago_1179__c88_21||AVENA": true,
+        "rec_pantalon_chicago_1179__c88_21||CAFE": true,
         "rec_pantalon_chicago_1179__c88_22": true,
         "rec_pantalon_chicago_1179__c88_27": true,
         "rec_pantalon_chicago_1179__c88_28": true,
-        "rec_pantalon_chicago_1179__c88_29": true,
-        "rec_pantalon_chicago_1179__c88_21||CAFE": true,
-        "rec_pantalon_chicago_1179__c88_21||AVENA": true
+        "rec_pantalon_chicago_1179__c88_29": true
+      },
+      "consumibles_desagregado": {
+        "rec_pantalon_chicago_1179__c88_21": true
       },
       "cortador": "Corte Carbajal",
       "created_at": "2026-08-25",
@@ -11646,10 +11649,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "consumibles_desagregado": {
-        "rec_pantalon_chicago_1179__c88_21": true
-      }
+      ]
     },
     {
       "cantidades": {
@@ -12970,7 +12970,14 @@
         "MARFIL": true,
         "NEGRO": true
       },
-      "updated_at": "2026-09-30"
+      "updated_at": "2026-09-30",
+      "trazos_solicitudes": [
+        {
+          "solicitud_id": "id_1790985232576_0y6pubf7h",
+          "fecha": "2026-10-02",
+          "lineas": 4
+        }
+      ]
     },
     {
       "cantidades": {
