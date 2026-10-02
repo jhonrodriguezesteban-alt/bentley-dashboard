@@ -1820,8 +1820,8 @@
         }
       ],
       "subg_estados": {
-        "OP-0036||BEIGE": "EN_CONFECCION",
-        "OP-0036||NEGRO": "EN_CONFECCION"
+        "OP-0036||BEIGE": "ALISTAMIENTO",
+        "OP-0036||NEGRO": "ALISTAMIENTO"
       },
       "tallas": [
         "T6",
@@ -6446,9 +6446,9 @@
         }
       ],
       "subg_estados": {
-        "OP-0190||AZUL OSCURO": "EN_CONFECCION",
+        "OP-0190||AZUL OSCURO": "ALISTAMIENTO",
         "OP-0190||NEGRO": "PAGO_PENDIENTE",
-        "OP-0190||VERDE MILITAR": "EN_CONFECCION",
+        "OP-0190||VERDE MILITAR": "ALISTAMIENTO",
         "OP-0190||VERDE PINO": "ALISTAMIENTO"
       },
       "tallas": [
@@ -9814,7 +9814,7 @@
         "OP-2026-125||GRIS OSCURO": "PENDIENTE_CORTAR",
         "OP-2026-125||MORA LECHE": "CORTE_POR_ALISTAR",
         "OP-2026-125||NEGRO": "EN_CONFECCION",
-        "OP-2026-125||VERDE MILITAR": "CORTE_POR_ALISTAR"
+        "OP-2026-125||VERDE MILITAR": "EN_CONFECCION"
       },
       "tallas": [
         "T6",
@@ -13526,8 +13526,8 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-220||BEIGE": "CORTE_POR_ALISTAR",
-        "OP-2026-220||NEGRO": "CORTE_POR_ALISTAR",
+        "OP-2026-220||BEIGE": "EN_CONFECCION",
+        "OP-2026-220||NEGRO": "EN_CONFECCION",
         "OP-2026-220||VERDE MILITAR": "CORTE_POR_ALISTAR"
       },
       "tallas": [
@@ -13747,7 +13747,13 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-09-13"
+      "updated_at": "2026-09-13",
+      "trazos_color_solicitado": {
+        "NEGRO": true,
+        "VINOTINTO": true,
+        "ROJO": true,
+        "MARFIL": true
+      }
     },
     {
       "cantidades": {
