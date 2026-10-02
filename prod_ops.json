@@ -11637,7 +11637,10 @@
         "T12",
         "T14",
         "T16"
-      ]
+      ],
+      "consumibles_desagregado": {
+        "rec_pantalon_chicago_1179__c88_21": true
+      }
     },
     {
       "cantidades": {
@@ -12953,12 +12956,12 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-09-30",
       "trazos_color_solicitado": {
-        "NEGRO": true,
+        "CAMEL": true,
         "MARFIL": true,
-        "CAMEL": true
-      }
+        "NEGRO": true
+      },
+      "updated_at": "2026-09-30"
     },
     {
       "cantidades": {
@@ -13752,20 +13755,20 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-09-13",
       "trazos_color_solicitado": {
+        "MARFIL": true,
         "NEGRO": true,
-        "VINOTINTO": true,
         "ROJO": true,
-        "MARFIL": true
+        "VINOTINTO": true
       },
       "trazos_solicitudes": [
         {
-          "solicitud_id": "id_1790983782408_jxt0zvfsp",
           "fecha": "2026-10-02",
-          "lineas": 4
+          "lineas": 4,
+          "solicitud_id": "id_1790983782408_jxt0zvfsp"
         }
-      ]
+      ],
+      "updated_at": "2026-09-13"
     },
     {
       "cantidades": {
