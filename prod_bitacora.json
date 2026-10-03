@@ -27033,13 +27033,29 @@
       "user": "Jefa de Producción"
     },
     {
+      "capacidad": 0,
       "id": "evt_1791034396080_zsmor",
-      "ts": 1791034396080,
-      "user": "Jefa de Producción",
-      "tipo": "satelite_crear",
       "nombre": "DAYANA JOYA ROJAS",
       "personas": 1,
-      "capacidad": 0
+      "tipo": "satelite_crear",
+      "ts": 1791034396080,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1791035985730_t71zq",
+      "ts": 1791035985730,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-220",
+      "op_nombre": "CONJUNTO DAKOTA",
+      "referencia": "CONJUNTO DAKOTA",
+      "color": "VERDE MILITAR",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 96,
+      "motivo": "EN TALLER"
     }
   ]
 }
