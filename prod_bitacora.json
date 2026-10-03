@@ -27042,43 +27042,43 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "VERDE MILITAR",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1791035985730_t71zq",
-      "ts": 1791035985730,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-220",
       "op_nombre": "CONJUNTO DAKOTA",
       "referencia": "CONJUNTO DAKOTA",
-      "color": "VERDE MILITAR",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1791035985730,
       "uds": 96,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
     },
     {
+      "categoria": "Chaquetas",
+      "diseno_id": "id_1782165872122_zq49y8n9x",
       "id": "evt_1791041385423_bzbtc",
-      "ts": 1791041385423,
-      "user": "Isabel",
-      "tipo": "diseno_responsable",
-      "diseno_id": "id_1782165872122_zq49y8n9x",
       "nombre": "BLAZER DONATELLA NIÑA CORTO",
-      "categoria": "Chaquetas",
       "resp_anterior": "Carolina",
-      "resp_nuevo": "John"
+      "resp_nuevo": "John",
+      "tipo": "diseno_responsable",
+      "ts": 1791041385423,
+      "user": "Isabel"
     },
     {
-      "id": "evt_1791041398023_9envu",
-      "ts": 1791041398023,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782165872122_zq49y8n9x",
-      "nombre": "BLAZER DONATELLA NIÑA CORTO",
       "categoria": "Chaquetas",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1782165872122_zq49y8n9x",
       "estado_anterior": "EN_CONFECCION_MUESTRA",
-      "estado_nuevo": "LISTA_PRODUCCION"
+      "estado_nuevo": "LISTA_PRODUCCION",
+      "id": "evt_1791041398023_9envu",
+      "marca": "Bentley Kids",
+      "nombre": "BLAZER DONATELLA NIÑA CORTO",
+      "tipo": "estado_diseno",
+      "ts": 1791041398023,
+      "user": "Isabel"
     }
   ]
 }
