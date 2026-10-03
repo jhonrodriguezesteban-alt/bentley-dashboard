@@ -27316,15 +27316,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1791043231180_4r7j7",
-      "ts": 1791043231180,
-      "user": "Isabel",
-      "tipo": "diseno_comentario",
-      "diseno_id": "id_1782401927717_21tmv43pe",
-      "nombre": "CONJUNTO JACOBO",
       "categoria": "Conjuntos",
+      "diseno_id": "id_1782401927717_21tmv43pe",
+      "extracto": "La capota aún no está como debería. Se realizó modificaciones en diseño. \nNuevo ",
+      "id": "evt_1791043231180_4r7j7",
+      "nombre": "CONJUNTO JACOBO",
       "tiene_imagen": false,
-      "extracto": "La capota aún no está como debería. Se realizó modificaciones en diseño. \nNuevo "
+      "tipo": "diseno_comentario",
+      "ts": 1791043231180,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1791043307664_8juwi",
+      "ts": 1791043307664,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0033",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "referencia": "OVERSIZED CAPOTA",
+      "color": "VINOTINTO",
+      "talla": "todas las tallas",
+      "estado_anterior": "PENDIENTE_CORTAR",
+      "estado_nuevo": "PENDIENTE_CORTAR",
+      "bulk": true,
+      "uds": 130,
+      "motivo": "por corte"
     }
   ]
 }
