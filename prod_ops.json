@@ -1627,7 +1627,7 @@
         "OP-0033||MORA LECHE": "PAGO_PENDIENTE",
         "OP-0033||NEGRO": "PAGO_PENDIENTE",
         "OP-0033||VERDE MILITAR": "PAGO_PENDIENTE",
-        "OP-0033||VINOTINTO": "PENDIENTE_CORTAR"
+        "OP-0033||VINOTINTO": "CORTE_POR_ALISTAR"
       },
       "tallas": [
         "T4",
@@ -5551,8 +5551,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -6343,8 +6342,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -7724,8 +7722,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -8344,9 +8341,9 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-111||CAFE": "PENDIENTE_CORTAR",
+        "OP-2026-111||CAFE": "POR_REVISAR",
         "OP-2026-111||CAMEL": "CORTE_POR_ALISTAR",
-        "OP-2026-111||MARFIL": "PENDIENTE_CORTAR",
+        "OP-2026-111||MARFIL": "POR_REVISAR",
         "OP-2026-111||MORA LECHE": "CORTE_POR_ALISTAR",
         "OP-2026-111||NEGRO": "PAGO_PENDIENTE",
         "OP-2026-111||VERDE MILITAR": "EN_CONFECCION",
@@ -9310,8 +9307,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -9528,8 +9524,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -9692,8 +9687,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10073,8 +10067,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10266,8 +10259,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10363,8 +10355,7 @@
           "lineas": 4,
           "solicitud_id": "id_1790790479249_1vpqaiqs9"
         }
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10689,8 +10680,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10822,8 +10812,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -10904,8 +10893,7 @@
       "trazos_color_solicitado": {
         "AVENA": true,
         "GRIS OSCURO": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -11002,8 +10990,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11115,8 +11102,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11194,8 +11180,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11320,8 +11305,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11888,8 +11872,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -11976,8 +11959,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -12188,8 +12170,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -12274,8 +12255,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -12408,8 +12388,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -12617,38 +12596,30 @@
     },
     {
       "cantidades": {
-        "AZUL_T10": 11,
-        "AZUL_T12": 11,
-        "AZUL_T14": 11,
-        "AZUL_T16": 11,
-        "AZUL_T4": 8,
-        "AZUL_T6": 8,
-        "AZUL_T8": 11,
-        "CAMEL_T10": 18,
-        "CAMEL_T12": 18,
-        "CAMEL_T14": 18,
-        "CAMEL_T16": 18,
-        "CAMEL_T4": 10,
-        "CAMEL_T6": 10,
-        "CAMEL_T8": 18,
-        "MARFIL_T10": 12,
-        "MARFIL_T12": 12,
-        "MARFIL_T14": 12,
-        "MARFIL_T16": 12,
-        "MARFIL_T4": 8,
-        "MARFIL_T6": 8,
-        "MARFIL_T8": 12,
+        "VERDE_T4": 9,
+        "VERDE_T6": 9,
+        "VERDE_T8": 8,
         "VERDE_T10": 8,
         "VERDE_T12": 8,
         "VERDE_T14": 8,
         "VERDE_T16": 8,
-        "VERDE_T4": 9,
-        "VERDE_T6": 9,
-        "VERDE_T8": 8
+        "CAMEL_T4": 10,
+        "CAMEL_T6": 10,
+        "CAMEL_T8": 18,
+        "CAMEL_T10": 18,
+        "CAMEL_T12": 18,
+        "CAMEL_T14": 18,
+        "CAMEL_T16": 18,
+        "AZUL_T4": 8,
+        "AZUL_T6": 8,
+        "AZUL_T8": 11,
+        "AZUL_T10": 11,
+        "AZUL_T12": 11,
+        "AZUL_T14": 11,
+        "AZUL_T16": 11
       },
       "categoria": "CAMISETAS",
       "colores": [
-        "MARFIL",
         "VERDE",
         "CAMEL",
         "AZUL"
@@ -12675,46 +12646,15 @@
       "numero": 212,
       "referencias": [
         {
-          "cantidades": {
-            "AZUL_T10": 11,
-            "AZUL_T12": 11,
-            "AZUL_T14": 11,
-            "AZUL_T16": 11,
-            "AZUL_T4": 8,
-            "AZUL_T6": 8,
-            "AZUL_T8": 11,
-            "CAMEL_T10": 18,
-            "CAMEL_T12": 18,
-            "CAMEL_T14": 18,
-            "CAMEL_T16": 18,
-            "CAMEL_T4": 10,
-            "CAMEL_T6": 10,
-            "CAMEL_T8": 18,
-            "MARFIL_T10": 12,
-            "MARFIL_T12": 12,
-            "MARFIL_T14": 12,
-            "MARFIL_T16": 12,
-            "MARFIL_T4": 8,
-            "MARFIL_T6": 8,
-            "MARFIL_T8": 12,
-            "VERDE_T10": 8,
-            "VERDE_T12": 8,
-            "VERDE_T14": 8,
-            "VERDE_T16": 8,
-            "VERDE_T4": 9,
-            "VERDE_T6": 9,
-            "VERDE_T8": 8
-          },
+          "nombre": "CAMISETA COCOA",
+          "ref": "",
           "cat": "CAMISETAS",
+          "vmo": 1151,
           "colores": [
-            "MARFIL",
             "VERDE",
             "CAMEL",
             "AZUL"
           ],
-          "maquilador_id": "",
-          "nombre": "CAMISETA COCOA",
-          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -12724,7 +12664,30 @@
             "T14",
             "T16"
           ],
-          "vmo": 1151
+          "cantidades": {
+            "VERDE_T4": 9,
+            "VERDE_T6": 9,
+            "VERDE_T8": 8,
+            "VERDE_T10": 8,
+            "VERDE_T12": 8,
+            "VERDE_T14": 8,
+            "VERDE_T16": 8,
+            "CAMEL_T4": 10,
+            "CAMEL_T6": 10,
+            "CAMEL_T8": 18,
+            "CAMEL_T10": 18,
+            "CAMEL_T12": 18,
+            "CAMEL_T14": 18,
+            "CAMEL_T16": 18,
+            "AZUL_T4": 8,
+            "AZUL_T6": 8,
+            "AZUL_T8": 11,
+            "AZUL_T10": 11,
+            "AZUL_T12": 11,
+            "AZUL_T14": 11,
+            "AZUL_T16": 11
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -12747,7 +12710,7 @@
         "MARFIL": true,
         "VERDE": true
       },
-      "updated_at": "2026-09-22"
+      "updated_at": "2026-10-03"
     },
     {
       "cantidades": {
@@ -12893,8 +12856,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -13381,8 +13343,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "_nota_separacion": "Separada de OP-0010 (CAMISA SYROS) el 2026-09-04: 24 OTs reales de la migracion original sin OP propia, mal colgadas de OP-0010 por error de la carga inicial. | Archivada el 2026-09-05: produccion ya entregada/pago pendiente en su totalidad, no requiere programacion activa.",
@@ -13491,8 +13452,7 @@
         "T8",
         "T10",
         "T12"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -13601,7 +13561,7 @@
       "subg_estados": {
         "OP-2026-220||BEIGE": "EN_CONFECCION",
         "OP-2026-220||NEGRO": "EN_CONFECCION",
-        "OP-2026-220||VERDE MILITAR": "EN_CONFECCION"
+        "OP-2026-220||VERDE MILITAR": "CORTE_POR_ALISTAR"
       },
       "tallas": [
         "T4",
@@ -13704,8 +13664,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -14362,8 +14321,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -14500,8 +14458,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -14608,8 +14565,7 @@
           "lineas": 2,
           "solicitud_id": "id_1790787543603_ng1v8m2k"
         }
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -14714,8 +14670,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
@@ -14812,8 +14767,7 @@
       "trazos_color_solicitado": {
         "AVENA": true,
         "MARFIL": true
-      },
-      "subg_estados": {}
+      }
     },
     {
       "cantidades": {
@@ -15055,8 +15009,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {}
+      ]
     },
     {
       "cantidades": {
