@@ -27017,20 +27017,29 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1791034075062_p6llz",
-      "ts": 1791034075062,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-100",
       "op_nombre": "CHAQUETA HARLEY",
       "referencia": "CHAQUETA HARLEY",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1791034075062,
       "uds": 120,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1791034396080_zsmor",
+      "ts": 1791034396080,
+      "user": "Jefa de Producción",
+      "tipo": "satelite_crear",
+      "nombre": "DAYANA JOYA ROJAS",
+      "personas": 1,
+      "capacidad": 0
     }
   ]
 }
