@@ -4776,11 +4776,14 @@
         "MARFIL"
       ],
       "consumibles_check": {
+        "rec_hoodie_pa_o_algodon_abierto_1177__c77_21||MARFIL": true,
+        "rec_hoodie_pa_o_algodon_abierto_1177__c77_21||NEGRO": true,
         "rec_hoodie_pa_o_algodon_abierto_1177__c77_23": true,
         "rec_hoodie_pa_o_algodon_abierto_1177__c77_27": true,
-        "rec_hoodie_pa_o_algodon_abierto_1177__c77_28": true,
-        "rec_hoodie_pa_o_algodon_abierto_1177__c77_21||MARFIL": true,
-        "rec_hoodie_pa_o_algodon_abierto_1177__c77_21||NEGRO": true
+        "rec_hoodie_pa_o_algodon_abierto_1177__c77_28": true
+      },
+      "consumibles_desagregado": {
+        "rec_hoodie_pa_o_algodon_abierto_1177__c77_21": true
       },
       "cortador": "Corte Carbajal",
       "created_at": "2026-06-23",
@@ -4854,10 +4857,7 @@
         "MARFIL": false,
         "NEGRO": true
       },
-      "updated_at": "2026-07-30",
-      "consumibles_desagregado": {
-        "rec_hoodie_pa_o_algodon_abierto_1177__c77_21": true
-      }
+      "updated_at": "2026-07-30"
     },
     {
       "cantidades": {
@@ -10064,7 +10064,10 @@
         "T12",
         "T14",
         "T16"
-      ]
+      ],
+      "consumibles_desagregado": {
+        "cid_1783368475768_2164__cid_1783368475768_4295": true
+      }
     },
     {
       "cantidades": {
@@ -10723,10 +10726,13 @@
         "CAFE"
       ],
       "consumibles_check": {
+        "rec_hoodie_pa_o_algodon_abierto_1177__c77_21||AZUL BEBE": true,
         "rec_hoodie_pa_o_algodon_abierto_1177__c77_23": true,
         "rec_hoodie_pa_o_algodon_abierto_1177__c77_27": true,
-        "rec_hoodie_pa_o_algodon_abierto_1177__c77_28": true,
-        "rec_hoodie_pa_o_algodon_abierto_1177__c77_21||AZUL BEBE": true
+        "rec_hoodie_pa_o_algodon_abierto_1177__c77_28": true
+      },
+      "consumibles_desagregado": {
+        "rec_hoodie_pa_o_algodon_abierto_1177__c77_21": true
       },
       "cortador": "Corte Carbajal",
       "created_at": "2026-08-25",
@@ -10806,10 +10812,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "consumibles_desagregado": {
-        "rec_hoodie_pa_o_algodon_abierto_1177__c77_21": true
-      }
+      ]
     },
     {
       "cantidades": {
@@ -11026,10 +11029,10 @@
       "consumibles_check": {
         "cid_1789264125616_3759__cid_1789263938874_4812||AVENA": true,
         "cid_1789264125616_3759__cid_1789263938874_4812||CAFE": true,
+        "cid_1789264125616_3759__cid_1789263938874_4812||NEGRO": true,
         "cid_1789264125616_3759__cid_1789263938874_4993": true,
         "cid_1789264125616_3759__cid_1789263938874_8127": true,
-        "cid_1789264125616_3759__cid_1789263938874_8973": true,
-        "cid_1789264125616_3759__cid_1789263938874_4812||NEGRO": true
+        "cid_1789264125616_3759__cid_1789263938874_8973": true
       },
       "consumibles_desagregado": {
         "cid_1789264125616_3759__cid_1789263938874_4812": true
@@ -11222,8 +11225,8 @@
       ],
       "consumibles_check": {
         "rec_conjunto_hoodie_capota_p_a_1178__c58_19||CAFE": true,
-        "rec_conjunto_hoodie_capota_p_a_1178__c58_21": true,
-        "rec_conjunto_hoodie_capota_p_a_1178__c58_19||VINOTINTO": true
+        "rec_conjunto_hoodie_capota_p_a_1178__c58_19||VINOTINTO": true,
+        "rec_conjunto_hoodie_capota_p_a_1178__c58_21": true
       },
       "consumibles_desagregado": {
         "rec_conjunto_hoodie_capota_p_a_1178__c58_19": true
@@ -11458,9 +11461,12 @@
         "ROSA"
       ],
       "consumibles_check": {
-        "cid_1789266683478_7780__cid_1789266530297_8597": true,
         "cid_1789266683478_7780__cid_1789266530296_1277||GRIS CLARO": true,
-        "cid_1789266683478_7780__cid_1789266530296_1277||VINOTINTO": true
+        "cid_1789266683478_7780__cid_1789266530296_1277||VINOTINTO": true,
+        "cid_1789266683478_7780__cid_1789266530297_8597": true
+      },
+      "consumibles_desagregado": {
+        "cid_1789266683478_7780__cid_1789266530296_1277": true
       },
       "cortador": "Corte Carbajal",
       "created_at": "2026-08-25",
@@ -11541,10 +11547,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "consumibles_desagregado": {
-        "cid_1789266683478_7780__cid_1789266530296_1277": true
-      }
+      ]
     },
     {
       "cantidades": {
@@ -11585,12 +11588,12 @@
       "consumibles_check": {
         "rec_pantalon_chicago_1179__c88_21||AVENA": true,
         "rec_pantalon_chicago_1179__c88_21||CAFE": true,
+        "rec_pantalon_chicago_1179__c88_21||MARFIL": true,
+        "rec_pantalon_chicago_1179__c88_21||NEGRO": true,
         "rec_pantalon_chicago_1179__c88_22": true,
         "rec_pantalon_chicago_1179__c88_27": true,
         "rec_pantalon_chicago_1179__c88_28": true,
-        "rec_pantalon_chicago_1179__c88_29": true,
-        "rec_pantalon_chicago_1179__c88_21||MARFIL": true,
-        "rec_pantalon_chicago_1179__c88_21||NEGRO": true
+        "rec_pantalon_chicago_1179__c88_29": true
       },
       "consumibles_desagregado": {
         "rec_pantalon_chicago_1179__c88_21": true
@@ -11811,6 +11814,9 @@
         "cid_1789097974344_840__cid_1789097790625_4877": true,
         "cid_1789097974344_840__cid_1789097790625_8971||AZUL BEBE": true
       },
+      "consumibles_desagregado": {
+        "cid_1789097974344_840__cid_1789097790625_8971": true
+      },
       "cortador": "Corte Carbajal",
       "created_at": "2026-09-02",
       "created_by": "John Rodriguez",
@@ -11866,10 +11872,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "consumibles_desagregado": {
-        "cid_1789097974344_840__cid_1789097790625_8971": true
-      }
+      ]
     },
     {
       "cantidades": {
