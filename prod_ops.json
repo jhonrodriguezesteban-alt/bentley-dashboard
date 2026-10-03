@@ -12502,20 +12502,20 @@
     },
     {
       "cantidades": {
-        "MARFIL_T10": 16,
-        "MARFIL_T12": 16,
-        "MARFIL_T14": 16,
-        "MARFIL_T16": 16,
-        "MARFIL_T4": 16,
-        "MARFIL_T6": 10,
-        "MARFIL_T8": 16,
+        "NEGRO_T4": 10,
+        "NEGRO_T6": 10,
+        "NEGRO_T8": 16,
         "NEGRO_T10": 16,
         "NEGRO_T12": 16,
         "NEGRO_T14": 16,
         "NEGRO_T16": 16,
-        "NEGRO_T4": 10,
-        "NEGRO_T6": 10,
-        "NEGRO_T8": 16
+        "MARFIL_T4": 10,
+        "MARFIL_T6": 10,
+        "MARFIL_T8": 16,
+        "MARFIL_T10": 16,
+        "MARFIL_T12": 16,
+        "MARFIL_T14": 16,
+        "MARFIL_T16": 16
       },
       "categoria": "CAMISETAS",
       "colores": [
@@ -12539,30 +12539,14 @@
       "numero": 211,
       "referencias": [
         {
-          "cantidades": {
-            "MARFIL_T10": 16,
-            "MARFIL_T12": 16,
-            "MARFIL_T14": 16,
-            "MARFIL_T16": 16,
-            "MARFIL_T4": 16,
-            "MARFIL_T6": 10,
-            "MARFIL_T8": 16,
-            "NEGRO_T10": 16,
-            "NEGRO_T12": 16,
-            "NEGRO_T14": 16,
-            "NEGRO_T16": 16,
-            "NEGRO_T4": 10,
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 16
-          },
+          "nombre": "CAMISETA MISO",
+          "ref": "",
           "cat": "CAMISETAS",
+          "vmo": 1151,
           "colores": [
             "NEGRO",
             "MARFIL"
           ],
-          "maquilador_id": "",
-          "nombre": "CAMISETA MISO",
-          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -12572,7 +12556,23 @@
             "T14",
             "T16"
           ],
-          "vmo": 1151
+          "cantidades": {
+            "NEGRO_T4": 10,
+            "NEGRO_T6": 10,
+            "NEGRO_T8": 16,
+            "NEGRO_T10": 16,
+            "NEGRO_T12": 16,
+            "NEGRO_T14": 16,
+            "NEGRO_T16": 16,
+            "MARFIL_T4": 10,
+            "MARFIL_T6": 10,
+            "MARFIL_T8": 16,
+            "MARFIL_T10": 16,
+            "MARFIL_T12": 16,
+            "MARFIL_T14": 16,
+            "MARFIL_T16": 16
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -12592,31 +12592,31 @@
         "MARFIL": true,
         "NEGRO": true
       },
-      "updated_at": "2026-10-01"
+      "updated_at": "2026-10-03"
     },
     {
       "cantidades": {
-        "VERDE_T4": 9,
-        "VERDE_T6": 9,
-        "VERDE_T8": 8,
-        "VERDE_T10": 8,
-        "VERDE_T12": 8,
-        "VERDE_T14": 8,
-        "VERDE_T16": 8,
-        "CAMEL_T4": 10,
-        "CAMEL_T6": 10,
-        "CAMEL_T8": 18,
+        "AZUL_T10": 11,
+        "AZUL_T12": 11,
+        "AZUL_T14": 11,
+        "AZUL_T16": 11,
+        "AZUL_T4": 8,
+        "AZUL_T6": 8,
+        "AZUL_T8": 11,
         "CAMEL_T10": 18,
         "CAMEL_T12": 18,
         "CAMEL_T14": 18,
         "CAMEL_T16": 18,
-        "AZUL_T4": 8,
-        "AZUL_T6": 8,
-        "AZUL_T8": 11,
-        "AZUL_T10": 11,
-        "AZUL_T12": 11,
-        "AZUL_T14": 11,
-        "AZUL_T16": 11
+        "CAMEL_T4": 10,
+        "CAMEL_T6": 10,
+        "CAMEL_T8": 18,
+        "VERDE_T10": 8,
+        "VERDE_T12": 8,
+        "VERDE_T14": 8,
+        "VERDE_T16": 8,
+        "VERDE_T4": 9,
+        "VERDE_T6": 9,
+        "VERDE_T8": 8
       },
       "categoria": "CAMISETAS",
       "colores": [
@@ -12628,9 +12628,9 @@
         "cid_1789099590026_4465__cid_1789098939231_4271": true,
         "cid_1789099590026_4465__cid_1789098939231_6321": true,
         "cid_1789099590026_4465__cid_1789098939231_6321||AZUL": true,
+        "cid_1789099590026_4465__cid_1789098939231_6321||CAMEL": true,
         "cid_1789099590026_4465__cid_1789098939231_6321||MARFIL": true,
         "cid_1789099590026_4465__cid_1789098939231_6321||VERDE": true,
-        "cid_1789099590026_4465__cid_1789098939231_6321||CAMEL": true,
         "cid_1789099590026_4465__cid_1789098939231_6756": true
       },
       "consumibles_desagregado": {
@@ -12648,15 +12648,38 @@
       "numero": 212,
       "referencias": [
         {
-          "nombre": "CAMISETA COCOA",
-          "ref": "",
+          "cantidades": {
+            "AZUL_T10": 11,
+            "AZUL_T12": 11,
+            "AZUL_T14": 11,
+            "AZUL_T16": 11,
+            "AZUL_T4": 8,
+            "AZUL_T6": 8,
+            "AZUL_T8": 11,
+            "CAMEL_T10": 18,
+            "CAMEL_T12": 18,
+            "CAMEL_T14": 18,
+            "CAMEL_T16": 18,
+            "CAMEL_T4": 10,
+            "CAMEL_T6": 10,
+            "CAMEL_T8": 18,
+            "VERDE_T10": 8,
+            "VERDE_T12": 8,
+            "VERDE_T14": 8,
+            "VERDE_T16": 8,
+            "VERDE_T4": 9,
+            "VERDE_T6": 9,
+            "VERDE_T8": 8
+          },
           "cat": "CAMISETAS",
-          "vmo": 1151,
           "colores": [
             "VERDE",
             "CAMEL",
             "AZUL"
           ],
+          "maquilador_id": "",
+          "nombre": "CAMISETA COCOA",
+          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -12666,30 +12689,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "VERDE_T4": 9,
-            "VERDE_T6": 9,
-            "VERDE_T8": 8,
-            "VERDE_T10": 8,
-            "VERDE_T12": 8,
-            "VERDE_T14": 8,
-            "VERDE_T16": 8,
-            "CAMEL_T4": 10,
-            "CAMEL_T6": 10,
-            "CAMEL_T8": 18,
-            "CAMEL_T10": 18,
-            "CAMEL_T12": 18,
-            "CAMEL_T14": 18,
-            "CAMEL_T16": 18,
-            "AZUL_T4": 8,
-            "AZUL_T6": 8,
-            "AZUL_T8": 11,
-            "AZUL_T10": 11,
-            "AZUL_T12": 11,
-            "AZUL_T14": 11,
-            "AZUL_T16": 11
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
