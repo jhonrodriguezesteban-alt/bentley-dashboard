@@ -27001,19 +27001,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "CAFE",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1791033389668_m0062",
-      "ts": 1791033389668,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-099",
       "op_nombre": "BEISBOLERA 2.0",
       "referencia": "BEISBOLERA 2.0",
-      "color": "CAFE",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1791033389668,
+      "uds": 80,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1791034075062_p6llz",
+      "ts": 1791034075062,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-100",
+      "op_nombre": "CHAQUETA HARLEY",
+      "referencia": "CHAQUETA HARLEY",
+      "color": "NEGRO",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 80,
+      "uds": 120,
       "motivo": "EN TALLER"
     }
   ]
