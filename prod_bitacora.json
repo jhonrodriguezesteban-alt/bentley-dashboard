@@ -27359,19 +27359,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MORA LECHE",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1791043393429_ytmg2",
+      "motivo": "por corte",
+      "op_id": "OP-2026-111",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "referencia": "OVERSIZED CAPOTA",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1791043393429,
+      "uds": 84,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1791043410138_5nsyi",
+      "ts": 1791043410138,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-111",
       "op_nombre": "OVERSIZED CAPOTA",
       "referencia": "OVERSIZED CAPOTA",
-      "color": "MORA LECHE",
+      "color": "CAFE",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
+      "estado_anterior": "PENDIENTE_CORTAR",
+      "estado_nuevo": "PENDIENTE_CORTAR",
       "bulk": true,
-      "uds": 84,
+      "uds": 108,
       "motivo": "por corte"
     }
   ]
