@@ -26355,20 +26355,30 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "CAMEL",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1790980981846_idys1",
-      "ts": 1790980981846,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-125",
       "op_nombre": "OVERSIZED CAPOTA",
       "referencia": "OVERSIZED CAPOTA",
-      "color": "CAMEL",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1790980981846,
       "uds": 80,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1790995026313_wv95h",
+      "ts": 1790995026313,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-197",
+      "op_nombre": "CHAQUETA BAGGY PINZAS",
+      "color": "MARFIL",
+      "mes": "2026-11"
     }
   ]
 }
