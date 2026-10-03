@@ -26831,14 +26831,30 @@
       "user": "John Rodriguez"
     },
     {
+      "color": "NEGRO",
       "id": "evt_1790996391307_3yt92",
-      "ts": 1790996391307,
-      "user": "John Rodriguez",
-      "tipo": "planeacion_asignar",
+      "mes": "2026-11",
       "op_id": "OP-2026-209",
       "op_nombre": "BLUSA COSMO",
-      "color": "NEGRO",
-      "mes": "2026-11"
+      "tipo": "planeacion_asignar",
+      "ts": 1790996391307,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1791033190001_ioppb",
+      "ts": 1791033190001,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-099",
+      "op_nombre": "BEISBOLERA 2.0",
+      "referencia": "BEISBOLERA 2.0",
+      "color": "GRIS OSCURO",
+      "talla": "todas las tallas",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": true,
+      "uds": 80,
+      "motivo": "EN TALLER"
     }
   ]
 }
