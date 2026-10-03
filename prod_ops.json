@@ -7127,7 +7127,7 @@
       ],
       "subg_estados": {
         "OP-2026-099||CAFE": "CORTE_POR_ALISTAR",
-        "OP-2026-099||GRIS OSCURO": "CORTE_POR_ALISTAR",
+        "OP-2026-099||GRIS OSCURO": "ALISTAMIENTO",
         "OP-2026-099||VINOTINTO": "PENDIENTE_CORTAR"
       },
       "tallas": [
@@ -9997,6 +9997,9 @@
         "cid_1783368475768_2164__cid_1783368475768_5574": true,
         "cid_1783368475768_2164__cid_1783368475768_6797": true
       },
+      "consumibles_desagregado": {
+        "cid_1783368475768_2164__cid_1783368475768_4295": true
+      },
       "cortador": "Corte Carbajal",
       "created_at": "2026-08-25",
       "created_by": "John Rodriguez",
@@ -10064,10 +10067,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "consumibles_desagregado": {
-        "cid_1783368475768_2164__cid_1783368475768_4295": true
-      }
+      ]
     },
     {
       "cantidades": {
@@ -14783,8 +14783,7 @@
       "trazos_color_solicitado": {
         "AVENA": true,
         "MARFIL": true
-      },
-      "consumibles_desagregado": {}
+      }
     },
     {
       "cantidades": {
