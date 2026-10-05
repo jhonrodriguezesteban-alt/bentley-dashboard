@@ -27573,13 +27573,25 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1791201238913_yzuff",
-      "ts": 1791201238913,
-      "user": "John Rodriguez",
-      "tipo": "diseno_tela_stock",
       "diseno_id": "id_1782407030796_2wtw2rjf3",
+      "hay_tela": true,
+      "id": "evt_1791201238913_yzuff",
       "nombre": "SET CHALECO VIENA",
-      "hay_tela": true
+      "tipo": "diseno_tela_stock",
+      "ts": 1791201238913,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1791201265828_nqzc9",
+      "ts": 1791201265828,
+      "user": "John Rodriguez",
+      "tipo": "estado_diseno",
+      "diseno_id": "id_1782163486159_zfdud2g3z",
+      "nombre": "BLUSA MANGA BOLERO",
+      "categoria": "Blusas",
+      "marca": "Bentley Kids",
+      "estado_anterior": "EN_ESCALADO",
+      "estado_nuevo": "LISTA_PRODUCCION"
     }
   ]
 }
