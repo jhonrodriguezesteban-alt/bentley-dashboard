@@ -117,43 +117,47 @@ window._cxcToggle=function(gid){
   var el=document.getElementById(gid);
   if(el)el.style.display=(el.style.display==="none"?"block":"none");
 };
+
+// Cartera en la ventana flotante del módulo (mismo diseño que Rubros / CxP)
+function _cxcEsc(t){return String(t==null?"":t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
 function abrirDrawerCxC2(){
-  var list=document.getElementById("cxc2-list");
-  var html="";
   var clientes=_cxcAgrupar(_CXC_DATA2);
+  var tot=0,cr=[0,0],mo=[0,0],ok=[0,0];
+  _CXC_DATA2.forEach(function(f){var v=f.valor||0,d=f.dias_mora||0;tot+=v;var t=d>90?cr:(d>30?mo:ok);t[0]++;t[1]+=v;});
+  var pct=function(v){return tot?(v/tot*100):0;};
+  var sh='<div style="margin-bottom:16px">'+
+    '<div style="display:flex;height:10px;border-radius:6px;overflow:hidden;margin-bottom:10px">'+
+    '<div style="width:'+pct(cr[1])+'%;background:#ff3b30"></div><div style="width:'+pct(mo[1])+'%;background:#ffd60a"></div><div style="width:'+pct(ok[1])+'%;background:#30d158"></div></div>'+
+    '<div style="display:flex;justify-content:space-between;gap:10px;font-size:.66rem;color:rgba(255,255,255,.55)">'+
+    '<span><b style="color:#ff3b30">● '+cr[0]+' facturas críticas &gt;90d</b> · '+_copCxc2(cr[1])+'</span>'+
+    '<span><b style="color:#ffd60a">● '+mo[0]+' en mora 30–90d</b> · '+_copCxc2(mo[1])+'</span>'+
+    '<span><b style="color:#30d158">● '+ok[0]+' facturas al día</b> · '+_copCxc2(ok[1])+'</span></div></div>';
   clientes.forEach(function(cl,idx){
-    var mora=cl.mora_max;
-    var col=mora>90?"#ff3b30":mora>30?"#ffd60a":"#30d158";
-    var sem=mora>90?"🔴":mora>30?"🟡":"🟢";
-    var label=mora>90?"CRÍTICO":mora>30?"EN MORA":"AL DÍA";
-    var gid="cxc2-cli-"+idx;
-    html+='<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);'+
-           'border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer" onclick="_cxcToggle(\''+gid+'\')">';
-    html+='<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">';
-    html+='<div style="font-size:.82rem;font-weight:600;color:#fff;max-width:65%">'+cl.tercero+'</div>';
-    html+='<div style="font-size:1rem;font-weight:700;color:#00d4ff">'+_copCxc2(cl.valor)+'</div>';
-    html+='</div>';
-    html+='<div style="display:flex;gap:12px;font-size:.65rem;align-items:center">';
-    html+='<span style="background:rgba(255,255,255,.06);border-radius:4px;padding:2px 7px;color:rgba(255,255,255,.45)">'+( cl.area||"")+'</span>';
-    html+='<span>'+sem+' <b style="color:'+col+'">'+mora+' días</b> mora</span>';
-    html+='<span style="color:rgba(255,255,255,.4)">'+cl.facturas.length+' factura'+(cl.facturas.length===1?"":"s")+'</span>';
-    html+='<span style="background:'+col+'22;color:'+col+';border-radius:4px;padding:1px 6px;font-size:.58rem;font-weight:700">'+label+'</span>';
-    html+='</div>';
-    html+='<div id="'+gid+'" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.08)">';
+    var m=cl.mora_max, col=m>90?"#ff3b30":(m>30?"#ffd60a":"#30d158"), sem=m>90?"🔴":(m>30?"🟡":"🟢");
+    var gid="cxc2f-"+idx, nf=cl.facturas.length;
+    sh+='<div class="fn-dr-nom-emp" style="cursor:pointer" onclick="_cxcToggle(\''+gid+'\')">'+
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">'+
+      '<div style="font-size:.8rem;font-weight:500;color:#fff;flex:1;line-height:1.3">'+_cxcEsc(cl.tercero)+'</div>'+
+      '<div style="font-size:.88rem;font-weight:700;color:#00d4ff;white-space:nowrap">'+_copCxc2(cl.valor)+'</div></div>'+
+      '<div style="font-size:.68rem;color:rgba(255,255,255,.4);margin-top:4px">'+sem+' '+m+' días mora · '+nf+' factura'+(nf===1?'':'s')+' ›</div>'+
+      '<div id="'+gid+'" style="display:none;margin-top:8px;padding-top:6px;border-top:1px solid rgba(255,255,255,.06)">';
     cl.facturas.slice().sort(function(a,b){return (b.dias_mora||0)-(a.dias_mora||0);}).forEach(function(f){
-      var fm=f.dias_mora||0;
-      var fc=fm>90?"#ff3b30":fm>30?"#ffd60a":"#30d158";
-      html+='<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:.68rem;border-bottom:1px solid rgba(255,255,255,.04)">';
-      html+='<span style="color:rgba(255,255,255,.5)">'+(f.fecha||"")+' · <b style="color:'+fc+'">'+fm+'d</b> mora</span>';
-      html+='<span style="color:#fff;font-weight:600">'+_copCxc2(f.valor)+'</span>';
-      html+='</div>';
+      var fm=f.dias_mora||0, fc=fm>90?"#ff3b30":(fm>30?"#ffd60a":"#30d158");
+      sh+='<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:.68rem">'+
+        '<span style="color:rgba(255,255,255,.5)">'+_cxcEsc(f.fecha||"")+' · <b style="color:'+fc+'">'+fm+'d</b> mora</span>'+
+        '<span style="color:#fff;font-weight:600">'+_copCxc2(f.valor)+'</span></div>';
     });
-    html+='</div>';
-    html+='</div>';
+    sh+='</div></div>';
   });
-  list.innerHTML=html;
-  document.getElementById("cxc2-overlay").style.display="block";
-  document.getElementById("cxc2-drawer").style.transform="translateX(0)";
+  sh+='<div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(0,212,255,.25);display:flex;justify-content:space-between;align-items:center">'+
+    '<span style="font-size:.6rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.1em">Total</span>'+
+    '<span style="font-size:1.3rem;font-weight:700;color:#00d4ff">'+_copCxc2(tot)+'</span></div>';
+  document.getElementById("f2-dr-name").textContent="📥 Cartera por cobrar";
+  document.getElementById("f2-dr-sub").textContent=clientes.length+" deudores · "+_copCxc2(tot)+" total";
+  document.getElementById("f2-dr-stats").innerHTML=sh;
+  var cv=document.getElementById("f2-dr-chart"); if(cv)cv.style.display="none";
+  document.getElementById("f2-overlay").classList.add("open");
+  document.getElementById("f2-drawer").classList.add("open");
 }
 function cerrarDrawerCxC2(){
   document.getElementById("cxc2-drawer").style.transform="translateX(100%)";
