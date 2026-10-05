@@ -27594,16 +27594,27 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1791201306096_3mi7v",
-      "ts": 1791201306096,
-      "user": "John Rodriguez",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_6e172690a79b4df7",
-      "nombre": "CONJUNTO BOMBER CORTA",
       "categoria": "Conjuntos",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_6e172690a79b4df7",
       "estado_anterior": "EN_ESCALADO",
-      "estado_nuevo": "LISTA_PRODUCCION"
+      "estado_nuevo": "LISTA_PRODUCCION",
+      "id": "evt_1791201306096_3mi7v",
+      "marca": "Bentley Kids",
+      "nombre": "CONJUNTO BOMBER CORTA",
+      "tipo": "estado_diseno",
+      "ts": 1791201306096,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1791201544581_rxzp1",
+      "ts": 1791201544581,
+      "user": "John Rodriguez",
+      "tipo": "diseno_prioridad",
+      "diseno_id": "id_1782402947292_6msznburw",
+      "nombre": "BLUSA BOLERO",
+      "categoria": "Blusas",
+      "prio_anterior": 1,
+      "prio_nueva": 2
     }
   ]
 }
