@@ -27661,15 +27661,39 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1791202766105_c5rio",
-      "ts": 1791202766105,
-      "user": "John Rodriguez",
-      "tipo": "diseno_prioridad",
-      "diseno_id": "id_1782178496030_9b5425c8t",
-      "nombre": "CHAQUETA LIFE",
       "categoria": "Chaquetas",
+      "diseno_id": "id_1782178496030_9b5425c8t",
+      "id": "evt_1791202766105_c5rio",
+      "nombre": "CHAQUETA LIFE",
       "prio_anterior": 1,
-      "prio_nueva": 2
+      "prio_nueva": 2,
+      "tipo": "diseno_prioridad",
+      "ts": 1791202766105,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1791202787214_ejqto",
+      "ts": 1791202787214,
+      "user": "John Rodriguez",
+      "tipo": "estado_diseno",
+      "diseno_id": "id_1783442665798_0ct0jgrrq",
+      "nombre": "CAMISETA OLD MONEY",
+      "categoria": "Camisetas",
+      "marca": "Bentley Kids",
+      "estado_anterior": "EN_REVISION_GERENCIA",
+      "estado_nuevo": "LISTA_PRODUCCION"
+    },
+    {
+      "id": "evt_1791202791065_5nuya",
+      "ts": 1791202791065,
+      "user": "John Rodriguez",
+      "tipo": "estado_diseno",
+      "diseno_id": "id_1782176715936_haqr83rc3",
+      "nombre": "THANK CALIFORNIA",
+      "categoria": "Camisetas",
+      "marca": "Bentley Kids",
+      "estado_anterior": "EN_REVISION_GERENCIA",
+      "estado_nuevo": "LISTA_PRODUCCION"
     }
   ]
 }
