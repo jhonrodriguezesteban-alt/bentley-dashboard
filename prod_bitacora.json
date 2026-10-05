@@ -27719,15 +27719,31 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1791203530705_ayvmh",
-      "ts": 1791203530705,
-      "user": "John Rodriguez",
-      "tipo": "diseno_prioridad",
-      "diseno_id": "id_1782402947292_6msznburw",
-      "nombre": "BLUSA BOLERO",
       "categoria": "Blusas",
+      "diseno_id": "id_1782402947292_6msznburw",
+      "id": "evt_1791203530705_ayvmh",
+      "nombre": "BLUSA BOLERO",
       "prio_anterior": 1,
-      "prio_nueva": 2
+      "prio_nueva": 2,
+      "tipo": "diseno_prioridad",
+      "ts": 1791203530705,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1791209585868_472u3",
+      "ts": 1791209585868,
+      "user": "Carolina Telles",
+      "tipo": "estado_ot",
+      "op_id": "OP-0038",
+      "op_nombre": "CHAQUETA CAZADORA",
+      "referencia": "CHAQUETA CAZADORA",
+      "color": "SALMON",
+      "talla": "todas las tallas",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": true,
+      "uds": 88,
+      "motivo": "ENTREGADO"
     }
   ]
 }
