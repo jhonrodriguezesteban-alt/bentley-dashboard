@@ -27696,15 +27696,27 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1791203288100_p8ky8",
-      "ts": 1791203288100,
-      "user": "John Rodriguez",
-      "tipo": "diseno_prioridad",
-      "diseno_id": "id_9f96fe6d51ca4f0c",
-      "nombre": "VESTIDO MINI DRESS",
       "categoria": "Vestidos",
+      "diseno_id": "id_9f96fe6d51ca4f0c",
+      "id": "evt_1791203288100_p8ky8",
+      "nombre": "VESTIDO MINI DRESS",
       "prio_anterior": 3,
-      "prio_nueva": 1
+      "prio_nueva": 1,
+      "tipo": "diseno_prioridad",
+      "ts": 1791203288100,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1791203494794_gb0an",
+      "ts": 1791203494794,
+      "user": "John Rodriguez",
+      "tipo": "estado_diseno",
+      "diseno_id": "id_1782165545751_7o1s2haz5",
+      "nombre": "BLUSA POLLY",
+      "categoria": "Blusas",
+      "marca": "Bentley Kids",
+      "estado_anterior": "EN_ESCALADO",
+      "estado_nuevo": "LISTA_PRODUCCION"
     }
   ]
 }
