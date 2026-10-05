@@ -27730,20 +27730,31 @@
       "user": "John Rodriguez"
     },
     {
+      "bulk": true,
+      "color": "SALMON",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1791209585868_472u3",
-      "ts": 1791209585868,
-      "user": "Carolina Telles",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-0038",
       "op_nombre": "CHAQUETA CAZADORA",
       "referencia": "CHAQUETA CAZADORA",
-      "color": "SALMON",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1791209585868,
       "uds": 88,
-      "motivo": "ENTREGADO"
+      "user": "Carolina Telles"
+    },
+    {
+      "id": "evt_1791211112646_fbn5s",
+      "ts": 1791211112646,
+      "user": "Jefa de Producción",
+      "tipo": "cambiar_estado_op_all",
+      "op_id": "OP-0059",
+      "estado": "CORTE_POR_ALISTAR",
+      "colores": 5,
+      "protegidos": [],
+      "nombre": "SET FRANKY"
     }
   ]
 }
