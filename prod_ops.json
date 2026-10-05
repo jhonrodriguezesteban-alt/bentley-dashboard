@@ -3580,11 +3580,11 @@
         }
       ],
       "subg_estados": {
-        "OP-0059||AVENA": "PENDIENTE_CORTAR",
-        "OP-0059||CAFE": "PENDIENTE_CORTAR",
-        "OP-0059||GRIS OSCURO": "PENDIENTE_CORTAR",
-        "OP-0059||MARFIL": "PENDIENTE_CORTAR",
-        "OP-0059||VINOTINTO": "PENDIENTE_CORTAR"
+        "OP-0059||AVENA": "CORTE_POR_ALISTAR",
+        "OP-0059||CAFE": "CORTE_POR_ALISTAR",
+        "OP-0059||GRIS OSCURO": "CORTE_POR_ALISTAR",
+        "OP-0059||MARFIL": "CORTE_POR_ALISTAR",
+        "OP-0059||VINOTINTO": "CORTE_POR_ALISTAR"
       },
       "tallas": [
         "T4",
@@ -11471,6 +11471,8 @@
       "cortador": "Corte Carbajal",
       "created_at": "2026-08-25",
       "created_by": "John Rodriguez",
+      "diseno_origen_id": "id_6e172690a79b4df7",
+      "diseno_origen_nombre": "CONJUNTO BOMBER CORTA",
       "estado_op": "EN_PROCESO",
       "fecha_op": "2026-08-25",
       "id": "OP-2026-201",
@@ -11547,9 +11549,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "diseno_origen_id": "id_6e172690a79b4df7",
-      "diseno_origen_nombre": "CONJUNTO BOMBER CORTA"
+      ]
     },
     {
       "cantidades": {
@@ -11822,6 +11822,8 @@
       "cortador": "Corte Carbajal",
       "created_at": "2026-09-02",
       "created_by": "John Rodriguez",
+      "diseno_origen_id": "id_130ad86fcd0f4fe3",
+      "diseno_origen_nombre": "HOODIE CAROLINA",
       "estado_op": "EN_PROCESO",
       "fecha_op": "2026-09-02",
       "id": "OP-2026-204",
@@ -11874,9 +11876,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "diseno_origen_id": "id_130ad86fcd0f4fe3",
-      "diseno_origen_nombre": "HOODIE CAROLINA"
+      ]
     },
     {
       "cantidades": {
@@ -12506,20 +12506,20 @@
     },
     {
       "cantidades": {
-        "NEGRO_T4": 10,
-        "NEGRO_T6": 10,
-        "NEGRO_T8": 16,
+        "MARFIL_T10": 16,
+        "MARFIL_T12": 16,
+        "MARFIL_T14": 16,
+        "MARFIL_T16": 16,
+        "MARFIL_T4": 10,
+        "MARFIL_T6": 10,
+        "MARFIL_T8": 16,
         "NEGRO_T10": 16,
         "NEGRO_T12": 16,
         "NEGRO_T14": 16,
         "NEGRO_T16": 16,
-        "MARFIL_T4": 10,
-        "MARFIL_T6": 10,
-        "MARFIL_T8": 16,
-        "MARFIL_T10": 16,
-        "MARFIL_T12": 16,
-        "MARFIL_T14": 16,
-        "MARFIL_T16": 16
+        "NEGRO_T4": 10,
+        "NEGRO_T6": 10,
+        "NEGRO_T8": 16
       },
       "categoria": "CAMISETAS",
       "colores": [
@@ -12543,14 +12543,30 @@
       "numero": 211,
       "referencias": [
         {
-          "nombre": "CAMISETA MISO",
-          "ref": "",
+          "cantidades": {
+            "MARFIL_T10": 16,
+            "MARFIL_T12": 16,
+            "MARFIL_T14": 16,
+            "MARFIL_T16": 16,
+            "MARFIL_T4": 10,
+            "MARFIL_T6": 10,
+            "MARFIL_T8": 16,
+            "NEGRO_T10": 16,
+            "NEGRO_T12": 16,
+            "NEGRO_T14": 16,
+            "NEGRO_T16": 16,
+            "NEGRO_T4": 10,
+            "NEGRO_T6": 10,
+            "NEGRO_T8": 16
+          },
           "cat": "CAMISETAS",
-          "vmo": 1151,
           "colores": [
             "NEGRO",
             "MARFIL"
           ],
+          "maquilador_id": "",
+          "nombre": "CAMISETA MISO",
+          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -12560,23 +12576,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T4": 10,
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 16,
-            "NEGRO_T10": 16,
-            "NEGRO_T12": 16,
-            "NEGRO_T14": 16,
-            "NEGRO_T16": 16,
-            "MARFIL_T4": 10,
-            "MARFIL_T6": 10,
-            "MARFIL_T8": 16,
-            "MARFIL_T10": 16,
-            "MARFIL_T12": 16,
-            "MARFIL_T14": 16,
-            "MARFIL_T16": 16
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
@@ -12911,6 +12911,8 @@
       "cortador": "Corte Carbajal",
       "created_at": "2026-09-02",
       "created_by": "John Rodriguez",
+      "diseno_origen_id": "id_1782165872122_zq49y8n9x",
+      "diseno_origen_nombre": "BLAZER DONATELLA NIÑA CORTO",
       "estado_op": "EN_PROCESO",
       "fecha_op": "2026-09-02",
       "id": "OP-2026-214",
@@ -12991,9 +12993,7 @@
           "solicitud_id": "id_1790985232576_0y6pubf7h"
         }
       ],
-      "updated_at": "2026-09-30",
-      "diseno_origen_id": "id_1782165872122_zq49y8n9x",
-      "diseno_origen_nombre": "BLAZER DONATELLA NIÑA CORTO"
+      "updated_at": "2026-09-30"
     },
     {
       "cantidades": {
