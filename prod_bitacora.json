@@ -27435,20 +27435,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MARFIL",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1791053160453_iz2ns",
-      "ts": 1791053160453,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-079",
       "op_nombre": "BEISBOLERA ARMIN",
       "referencia": "BEISBOLERA ARMIN",
-      "color": "MARFIL",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1791053160453,
       "uds": 100,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1791200438757_32byl",
+      "ts": 1791200438757,
+      "user": "John Rodriguez",
+      "tipo": "diseno_prioridad",
+      "diseno_id": "id_1785786510670_gnz0lsxxz",
+      "nombre": "OVERSIZED OLIVETO",
+      "categoria": "Chaquetas",
+      "prio_anterior": 1,
+      "prio_nueva": 2
     }
   ]
 }
