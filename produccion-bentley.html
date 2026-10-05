@@ -1113,7 +1113,7 @@ async function _fbMigrarSiVacio(){
 // abiertas con una versión anterior se recargan solas (esperando a que terminen de guardar).
 // Sin esto, una pestaña vieja olvidada en un computador seguía guardando con la lógica
 // anterior y deshaciendo cambios de todos los demás.
-var APP_VERSION = 20261005.1;
+var APP_VERSION = 20261005.2;
 function _vigilarVersionApp(){
   if(!_fbDb) return;
   _fbDb.ref(FB_ROOT+'/app_version').on('value', function(snap){
@@ -1372,8 +1372,10 @@ function getCurrentUserId(){
   if(s){ try{ return JSON.parse(s).user||null; }catch(e){} }
   return null;
 }
+// Planeación (meses, diseños planificados, confección por taller): Jhon y la Jefa de Producción.
 function _canEditPlan(){
-  return getCurrentUserId() === 'jhon';
+  var u = getCurrentUserId();
+  return u === 'jhon' || u === 'produccion';
 }
 function initUser(){
   document.getElementById('badge-user').textContent = getUser();
@@ -1813,7 +1815,10 @@ function _mergePlaneacionData(remoteData, localData){
 // conviven, y un retroceso deliberado ya no se "corrige" solo.
 var _syncBase = {}; // key -> JSON (string) del último estado conocido del servidor
 var _fbVerVisto = {}; // key -> última marca _v3ts aceptada desde Firebase
-var _MERGE3_KEYS = {ops:1, ots:1, satelites:1, disenos:1, logistica:1, cronograma:1, costos_mo:1, trazos:1};
+// planeacion / planeacion_confeccion entran al merge de 3 vías desde oct-2026, cuando la
+// Jefa de Producción también quedó editando Planeación: con el merge viejo ("local gana por
+// mes") dos editores se pisaban la asignación de meses y no se veían en vivo.
+var _MERGE3_KEYS = {ops:1, ots:1, satelites:1, disenos:1, logistica:1, cronograma:1, costos_mo:1, trazos:1, planeacion:1, planeacion_confeccion:1};
 function _dbWrap(key){
   if(key==='costos_mo') return {precios: (DB.costos_mo||{}).precios||[], pagos: (DB.costos_mo||{}).pagos||[]};
   if(key==='trazos') return {solicitudes: (DB.trazos||{}).solicitudes||[]};
@@ -1823,6 +1828,8 @@ function _dbWrap(key){
   if(key==='disenos') return {disenos: DB.disenos||[], disenos_cfg: DB.disenos_cfg||{}};
   if(key==='logistica') return {tareas: (DB.logistica||{}).tareas||[]};
   if(key==='cronograma') return {cronograma: DB.cronograma||[]};
+  if(key==='planeacion'){ var p=DB.planeacion||{}; return {meses:p.meses||{}, disenos_plan:p.disenos_plan||{}, historial_corte:p.historial_corte||[], confirmadas:p.confirmadas||{}, trazos:p.trazos||{}}; }
+  if(key==='planeacion_confeccion') return {por_satelite: (DB.planeacion_confeccion||{}).por_satelite||{}};
   return null;
 }
 function _dbUnwrap(key, d){
@@ -1844,6 +1851,8 @@ function _dbUnwrap(key, d){
   else if(key==='disenos'){ DB.disenos = d.disenos||[]; DB.disenos_cfg = d.disenos_cfg||DB.disenos_cfg||{}; }
   else if(key==='logistica'){ if(!DB.logistica) DB.logistica={tareas:[]}; DB.logistica.tareas = d.tareas||[]; }
   else if(key==='cronograma') DB.cronograma = d.cronograma||[];
+  else if(key==='planeacion') DB.planeacion = {meses:d.meses||{}, disenos_plan:d.disenos_plan||{}, historial_corte:d.historial_corte||[], confirmadas:d.confirmadas||{}, trazos:d.trazos||{}};
+  else if(key==='planeacion_confeccion') DB.planeacion_confeccion = {por_satelite: d.por_satelite||{}};
 }
 function _setSyncBase(key, data){
   if(!_MERGE3_KEYS[key]) return;
@@ -2437,7 +2446,7 @@ function _planLimpiarConfirmadoSiDesplan(disId){
   }
 }
 function _planDisSetUds(disId, uds){
-  if(!_canEditPlan()){ toast('Solo Jhon puede editar la planeación','warning'); return; }
+  if(!_canEditPlan()){ toast('Solo Jhon o la Jefa de Producción pueden editar la planeación','warning'); return; }
   if(!DB.planeacion) DB.planeacion = {meses:{}, disenos_plan:{}};
   if(!DB.planeacion.disenos_plan) DB.planeacion.disenos_plan = {};
   if(!DB.planeacion.disenos_plan[disId]) DB.planeacion.disenos_plan[disId] = {uds:0, mes:''};
@@ -2465,7 +2474,7 @@ function _planDisSetUds(disId, uds){
 }
 
 function _planDisSetMes(disId, mes){
-  if(!_canEditPlan()){ toast('Solo Jhon puede editar la planeación','warning'); return; }
+  if(!_canEditPlan()){ toast('Solo Jhon o la Jefa de Producción pueden editar la planeación','warning'); return; }
   if(!DB.planeacion) DB.planeacion = {meses:{}, disenos_plan:{}};
   if(!DB.planeacion.disenos_plan) DB.planeacion.disenos_plan = {};
   if(!DB.planeacion.disenos_plan[disId]) DB.planeacion.disenos_plan[disId] = {uds:0, mes:''};
@@ -2476,7 +2485,7 @@ function _planDisSetMes(disId, mes){
   renderPage('planeacion');
 }
 function _planDisRemove(disId){
-  if(!_canEditPlan()){ toast('Solo Jhon puede editar la planeación','warning'); return; }
+  if(!_canEditPlan()){ toast('Solo Jhon o la Jefa de Producción pueden editar la planeación','warning'); return; }
   if(!DB.planeacion || !DB.planeacion.disenos_plan) return;
   if(DB.planeacion.disenos_plan[disId]){
     DB.planeacion.disenos_plan[disId].uds = 0;
@@ -4336,7 +4345,7 @@ function pconfDrop(e, satId){
 }
 
 function pconfAsignarASatelite(key, satId){
-  if(!_canEditPlan()){ toast('Solo Jhon puede editar este tablero','warning'); return; }
+  if(!_canEditPlan()){ toast('Solo Jhon o la Jefa de Producción pueden editar este tablero','warning'); return; }
   if(!DB.planeacion_confeccion) DB.planeacion_confeccion = {por_satelite:{}};
   var ps = DB.planeacion_confeccion.por_satelite;
   Object.keys(ps).forEach(function(s){ ps[s] = (ps[s]||[]).filter(function(k){ return k!==key; }); });
@@ -4350,7 +4359,7 @@ function pconfAsignarASatelite(key, satId){
 function pconfQuitarDeCola(key){ pconfAsignarASatelite(key, null); }
 
 function pconfMover(satId, key, dir){
-  if(!_canEditPlan()){ toast('Solo Jhon puede editar este tablero','warning'); return; }
+  if(!_canEditPlan()){ toast('Solo Jhon o la Jefa de Producción pueden editar este tablero','warning'); return; }
   var ps = (DB.planeacion_confeccion||{}).por_satelite || {};
   var arr = ps[satId]; if(!arr) return;
   var i = arr.indexOf(key); if(i<0) return;
@@ -4382,7 +4391,7 @@ function _pconfAplicarAsignacion(key, satId){
 }
 
 function pconfAsignarProduccion(key, satId){
-  if(!_canEditPlan()){ toast('Solo Jhon puede asignar a producción','warning'); return; }
+  if(!_canEditPlan()){ toast('Solo Jhon o la Jefa de Producción pueden asignar a producción','warning'); return; }
   var n = _pconfAplicarAsignacion(key, satId);
   if(!n){ toast('Sin OTs pendientes para asignar (revisa si ya se asignaron)','warning'); renderPage('planconf'); return; }
   Promise.all([guardarArchivo('ots',{ots:DB.ots}), guardarPlaneacionConfeccion()]).then(function(res){
@@ -4393,7 +4402,7 @@ function pconfAsignarProduccion(key, satId){
 }
 
 function pconfAsignarTodoSatelite(satId){
-  if(!_canEditPlan()){ toast('Solo Jhon puede asignar a producción','warning'); return; }
+  if(!_canEditPlan()){ toast('Solo Jhon o la Jefa de Producción pueden asignar a producción','warning'); return; }
   var keys = (((DB.planeacion_confeccion||{}).por_satelite||{})[satId]||[]).slice();
   if(!keys.length) return;
   var total = 0;
@@ -4878,7 +4887,7 @@ function renderPlaneacionConfeccion(){
 }
 
 function _planAsignar(opId, mesKey){
-  if(!_canEditPlan()){ toast('Solo Jhon puede editar la planeación','warning'); return; }
+  if(!_canEditPlan()){ toast('Solo Jhon o la Jefa de Producción pueden editar la planeación','warning'); return; }
   if(!DB.planeacion) DB.planeacion = {meses:{}};
   if(!DB.planeacion.meses) DB.planeacion.meses = {};
   // Quitar de todos los meses
@@ -5414,7 +5423,7 @@ function renderPlaneacion(){
   if(!_canEditPlan()){
     h += '<div style="display:flex;align-items:center;gap:10px;background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.3);border-radius:10px;padding:10px 16px;margin-bottom:14px;">';
     h += '<span style="font-size:16px;">🔒</span>';
-    h += '<div style="font-size:12px;font-weight:700;color:#f59e0b;">Modo visualización — solo Jhon puede editar este módulo</div>';
+    h += '<div style="font-size:12px;font-weight:700;color:#f59e0b;">Modo visualización — solo Jhon y la Jefa de Producción pueden editar este módulo</div>';
     h += '</div>';
   }
 
