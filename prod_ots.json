@@ -94454,7 +94454,7 @@
       "color": "NEGRO",
       "created_at": "2026-09-16",
       "created_by": "Jefa de Producción",
-      "estado": "EN_CONFECCION",
+      "estado": "ENTREGADO",
       "fecha_corte": "2026-09-16",
       "fecha_ot": "2026-09-02",
       "historial": [
@@ -94472,6 +94472,21 @@
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
           "fecha": "2026-09-25T14:23:35.929Z",
           "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-10-06T19:40:29.334Z",
+          "accion": "Entrega completa: 10 uds → ENTREGADO",
+          "user": "Carolina Telles"
+        },
+        {
+          "fecha": "2026-10-06T19:40:31.006Z",
+          "accion": "Entrega completa: 10 uds → ENTREGADO",
+          "user": "Carolina Telles"
+        },
+        {
+          "fecha": "2026-10-06T19:40:32.014Z",
+          "accion": "Entrega completa: 10 uds → ENTREGADO",
+          "user": "Carolina Telles"
         }
       ],
       "id": "id_1789595466300_73jij39l7",
@@ -94483,9 +94498,11 @@
       "referencia": "T4",
       "satelite_id": "id_1785259712827_cwczmsu5r",
       "talla": "T4",
-      "unidades_entregadas": 0,
+      "unidades_entregadas": 10,
       "unidades_novedad": 0,
-      "valor_mo": 1151
+      "valor_mo": 1151,
+      "fecha_entrega_real": "2026-10-06",
+      "total_costo_mo": 11510
     },
     {
       "cantidad": 10,
