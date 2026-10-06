@@ -27933,14 +27933,26 @@
       "user": "Jefa de Producción"
     },
     {
+      "colores": 2,
+      "estado": "CORTE_POR_ALISTAR",
       "id": "evt_1791248188077_mqgas",
+      "nombre": "CHAQUETA MARIPOSAS",
+      "op_id": "OP-2026-130",
+      "tipo": "cambiar_estado_op_all",
       "ts": 1791248188077,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1791248196787_lbot1",
+      "ts": 1791248196787,
       "user": "Jefa de Producción",
       "tipo": "cambiar_estado_op_all",
-      "op_id": "OP-2026-130",
+      "op_id": "OP-2026-101",
       "estado": "CORTE_POR_ALISTAR",
-      "colores": 2,
-      "protegidos": [],
+      "colores": 1,
+      "protegidos": [
+        "ROSA"
+      ],
       "nombre": "CHAQUETA MARIPOSAS"
     }
   ]
