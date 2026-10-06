@@ -28055,15 +28055,52 @@
       "user": "Carolina Telles"
     },
     {
-      "id": "evt_1791316492053_kc3sz",
-      "ts": 1791316492053,
-      "user": "Isabel",
-      "tipo": "diseno_comentario",
-      "diseno_id": "id_1782240897563_3lix3vy1y",
-      "nombre": "CAMIBUSO HOUSER",
       "categoria": "Buzos",
+      "diseno_id": "id_1782240897563_3lix3vy1y",
+      "extracto": "Confirmados los cambios. Listo para producción",
+      "id": "evt_1791316492053_kc3sz",
+      "nombre": "CAMIBUSO HOUSER",
       "tiene_imagen": false,
-      "extracto": "Confirmados los cambios. Listo para producción"
+      "tipo": "diseno_comentario",
+      "ts": 1791316492053,
+      "user": "Isabel"
+    },
+    {
+      "categoria": "Buzos",
+      "diseno_id": "id_1782240897563_3lix3vy1y",
+      "id": "evt_1791316502768_6hssj",
+      "nombre": "CAMIBUSO HOUSER",
+      "resp_anterior": "Isa",
+      "resp_nuevo": "John",
+      "tipo": "diseno_responsable",
+      "ts": 1791316502768,
+      "user": "Isabel"
+    },
+    {
+      "categoria": "Buzos",
+      "diseno_id": "id_1782240897563_3lix3vy1y",
+      "estado_anterior": "EN_CORTE_MUESTRA",
+      "estado_nuevo": "LISTA_PRODUCCION",
+      "id": "evt_1791316512774_vcezg",
+      "marca": "Bentley Kids",
+      "nombre": "CAMIBUSO HOUSER",
+      "tipo": "estado_diseno",
+      "ts": 1791316512774,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1791317775225_r9e18",
+      "ts": 1791317775225,
+      "user": "Jefa de Producción",
+      "tipo": "cambiar_estado_op_all",
+      "op_id": "OP-2026-130",
+      "estado": "PENDIENTE_CORTAR",
+      "colores": 0,
+      "protegidos": [
+        "MARFIL",
+        "AZUL BEBE"
+      ],
+      "nombre": "CHAQUETA MARIPOSAS"
     }
   ]
 }
