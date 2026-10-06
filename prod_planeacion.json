@@ -10,7 +10,6 @@
     ],
     "2026-09": [
       "OP-2026-125||GRIS OSCURO",
-      "OP-2026-111||MARFIL",
       "OP-2026-111||CAFE",
       "OP-2026-127||ROSA",
       "OP-2026-127||GRIS OSCURO"
@@ -107,7 +106,8 @@
       "OP-2026-204||AZUL BEBE",
       "OP-2026-123||MARFIL",
       "OP-2026-123||NEGRO",
-      "OP-2026-198||BEIGE"
+      "OP-2026-198||BEIGE",
+      "OP-2026-111||MARFIL"
     ],
     "2026-11": [
       "OP-2026-124||MARFIL CANADA",
@@ -1565,59 +1565,59 @@
       "uds": 120
     },
     {
-      "key": "OP-0059||MARFIL",
-      "op_id": "OP-0059",
-      "op_nombre": "SET FRANKY",
       "categoria": "CONJUNTOS",
       "color": "MARFIL",
-      "uds": 112,
-      "mes_planeado": "2026-09",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-10-05"
-    },
-    {
-      "key": "OP-0059||AVENA",
+      "fecha_deteccion": "2026-10-05",
+      "key": "OP-0059||MARFIL",
+      "mes_planeado": "2026-09",
       "op_id": "OP-0059",
       "op_nombre": "SET FRANKY",
+      "uds": 112
+    },
+    {
       "categoria": "CONJUNTOS",
       "color": "AVENA",
-      "uds": 104,
-      "mes_planeado": "2026-09",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-10-05"
-    },
-    {
-      "key": "OP-0059||GRIS OSCURO",
+      "fecha_deteccion": "2026-10-05",
+      "key": "OP-0059||AVENA",
+      "mes_planeado": "2026-09",
       "op_id": "OP-0059",
       "op_nombre": "SET FRANKY",
+      "uds": 104
+    },
+    {
       "categoria": "CONJUNTOS",
       "color": "GRIS OSCURO",
-      "uds": 72,
-      "mes_planeado": "2026-09",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-10-05"
-    },
-    {
-      "key": "OP-0059||VINOTINTO",
+      "fecha_deteccion": "2026-10-05",
+      "key": "OP-0059||GRIS OSCURO",
+      "mes_planeado": "2026-09",
       "op_id": "OP-0059",
       "op_nombre": "SET FRANKY",
+      "uds": 72
+    },
+    {
       "categoria": "CONJUNTOS",
       "color": "VINOTINTO",
-      "uds": 42,
-      "mes_planeado": "2026-09",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-10-05"
-    },
-    {
-      "key": "OP-0059||CAFE",
+      "fecha_deteccion": "2026-10-05",
+      "key": "OP-0059||VINOTINTO",
+      "mes_planeado": "2026-09",
       "op_id": "OP-0059",
       "op_nombre": "SET FRANKY",
+      "uds": 42
+    },
+    {
       "categoria": "CONJUNTOS",
       "color": "CAFE",
-      "uds": 42,
-      "mes_planeado": "2026-09",
       "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-10-05"
+      "fecha_deteccion": "2026-10-05",
+      "key": "OP-0059||CAFE",
+      "mes_planeado": "2026-09",
+      "op_id": "OP-0059",
+      "op_nombre": "SET FRANKY",
+      "uds": 42
     }
   ],
   "confirmadas": {
