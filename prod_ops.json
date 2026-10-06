@@ -10406,6 +10406,10 @@
           "vmo": 1151
         }
       ],
+      "subg_estados": {
+        "OP-2026-130||AZUL BEBE": "CORTE_POR_ALISTAR",
+        "OP-2026-130||MARFIL": "CORTE_POR_ALISTAR"
+      },
       "tallas": [
         "T6",
         "T8",
@@ -10424,11 +10428,7 @@
           "lineas": 4,
           "solicitud_id": "id_1790790479249_1vpqaiqs9"
         }
-      ],
-      "subg_estados": {
-        "OP-2026-130||MARFIL": "CORTE_POR_ALISTAR",
-        "OP-2026-130||AZUL BEBE": "CORTE_POR_ALISTAR"
-      }
+      ]
     },
     {
       "cantidades": {
@@ -14007,7 +14007,11 @@
         "T12",
         "T14",
         "T16"
-      ]
+      ],
+      "trazos_color_solicitado": {
+        "MARFIL": true,
+        "GRIS JASPED": true
+      }
     },
     {
       "cantidades": {
