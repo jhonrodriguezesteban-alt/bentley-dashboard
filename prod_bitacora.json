@@ -27943,17 +27943,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1791248196787_lbot1",
-      "ts": 1791248196787,
-      "user": "Jefa de Producción",
-      "tipo": "cambiar_estado_op_all",
-      "op_id": "OP-2026-101",
-      "estado": "CORTE_POR_ALISTAR",
       "colores": 1,
+      "estado": "CORTE_POR_ALISTAR",
+      "id": "evt_1791248196787_lbot1",
+      "nombre": "CHAQUETA MARIPOSAS",
+      "op_id": "OP-2026-101",
       "protegidos": [
         "ROSA"
       ],
-      "nombre": "CHAQUETA MARIPOSAS"
+      "tipo": "cambiar_estado_op_all",
+      "ts": 1791248196787,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1791302812239_sd1ac",
+      "ts": 1791302812239,
+      "user": "Carolina Telles",
+      "tipo": "entrega_inline",
+      "ot_id": "id_1785598190835_btih99fq2",
+      "numero_ot": 13055,
+      "op_id": "OP-2026-107",
+      "uds_entregadas": 20,
+      "pendientes": 10,
+      "estado": "NOVEDAD",
+      "talla": "M",
+      "satelite": "ISABEL PARRA"
     }
   ]
 }
