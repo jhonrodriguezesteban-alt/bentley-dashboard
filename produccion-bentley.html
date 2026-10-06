@@ -1074,7 +1074,11 @@ function _fbApplyKey(key, d){
   else if(key==='planeacion'){ DB.planeacion = _mergePlaneacionData(d, DB.planeacion); }
   else if(key==='planeacion_confeccion'){ DB.planeacion_confeccion = {por_satelite:d.por_satelite||{}}; }
   else if(key==='sim')       { DB.sim={active:d.active||[],data:d.data||{}}; _simActive=DB.sim.active; _simData=DB.sim.data; }
-  else if(key==='usuarios')  { DB.usuarios = d.usuarios||[]; }
+  else if(key==='usuarios')  {
+    DB.usuarios = d.usuarios||[];
+    // Cambios de módulos hechos por Jhon (admin) se aplican en vivo al menú de cada usuario.
+    if(d.usuarios && typeof d.usuarios==='object' && !Array.isArray(d.usuarios)){ _mergeRemoteUsers(d.usuarios); _reaplicarAccesoUsuario(); }
+  }
   else if(key==='costeo')    { DB.costeo = d; }
   else if(key==='trazos')    { DB.trazos = {solicitudes: d.solicitudes||[]}; }
 }
@@ -1113,7 +1117,7 @@ async function _fbMigrarSiVacio(){
 // abiertas con una versión anterior se recargan solas (esperando a que terminen de guardar).
 // Sin esto, una pestaña vieja olvidada en un computador seguía guardando con la lógica
 // anterior y deshaciendo cambios de todos los demás.
-var APP_VERSION = 20261005.2;
+var APP_VERSION = 20261006.1;
 function _vigilarVersionApp(){
   if(!_fbDb) return;
   _fbDb.ref(FB_ROOT+'/app_version').on('value', function(snap){
@@ -1398,6 +1402,10 @@ function openSettings(){
   document.getElementById('settings-overlay').style.display = 'flex';
 }
 
+function _reaplicarAccesoUsuario(){
+  var uid = getCurrentUserId();
+  if(uid) try{ applyModuleAccess(uid); }catch(e){}
+}
 function applyModuleAccess(uid){
   var allowed = _getModules(uid);
   document.querySelectorAll('.nav-item[data-page]').forEach(function(el){
@@ -2675,7 +2683,7 @@ async function cargarDatos(){
     var moR = await _pre.mo;
     if(moR.ok){ var d7 = await moR.json(); DB.costos_mo = {precios: d7.precios||[], pagos: d7.pagos||[]}; }
     var usrR = await _pre.usr;
-    if(usrR.ok){ var d8 = await usrR.json(); _mergeRemoteUsers(d8.usuarios||{}); }
+    if(usrR.ok){ var d8 = await usrR.json(); _mergeRemoteUsers(d8.usuarios||{}); _reaplicarAccesoUsuario(); }
     var simR = await _pre.sim;
     if(simR.ok){ var d9 = await simR.json(); DB.sim={active:d9.active||[],data:d9.data||{}}; _simActive=DB.sim.active; _simData=DB.sim.data; }
     else { var lsRaw=localStorage.getItem('bentley_sim_data'); if(lsRaw){ try{ var lsP=JSON.parse(lsRaw); DB.sim={active:lsP.active||[],data:lsP.data||lsP}; _simActive=DB.sim.active; _simData=DB.sim.data; }catch(e){} } }
@@ -20184,8 +20192,9 @@ function renderTrazos(){
   h += '<div style="font-size:11px;color:#64748b;">Solicitudes de trazos a Techpatron</div></div>';
   h += '</div>';
 
-  var tabs = [{k:'pendientes',l:'📦 Pendientes por cortar'},{k:'historial',l:'📋 Historial'},{k:'recoger',l:'🚚 Por recoger'}];
-  h += '<div style="display:flex;gap:6px;margin-bottom:16px;">';
+  var _nFotosTz = _trazosConFoto().length;
+  var tabs = [{k:'pendientes',l:'📦 Pendientes por cortar'},{k:'historial',l:'📋 Historial'},{k:'recoger',l:'🚚 Por recoger'},{k:'fotos',l:'📷 Fotos de trazos'+(_nFotosTz?' · '+_nFotosTz:'')}];
+  h += '<div style="display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;">';
   tabs.forEach(function(t){
     var a = _trazosTab===t.k;
     h += '<button onclick="setTrazosTab(\''+t.k+'\')" style="padding:7px 14px;font-size:12px;font-weight:700;border-radius:8px;border:1px solid '+(a?'#0a84ff':'#2c2c2e')+';background:'+(a?'rgba(10,132,255,.1)':'transparent')+';color:'+(a?'#0a84ff':'#64748b')+';cursor:pointer;">'+t.l+'</button>';
@@ -20194,6 +20203,7 @@ function renderTrazos(){
 
   if(_trazosTab==='pendientes') h += _renderTrazosPendientes();
   else if(_trazosTab==='historial') h += _renderTrazosHistorial();
+  else if(_trazosTab==='fotos') h += _renderTrazosFotos();
   else h += _renderTrazosPorRecoger();
 
   h += '</div>';
@@ -20287,10 +20297,67 @@ function _trazosRenderLineasSolicitud(s){
       h += '<div style="font-size:11px;color:#cbd5e1;">'+(l.tipo==='ADICIONAL'&&l.tipo_custom?'<b>'+esc(l.tipo_custom)+'</b> · ':'')+'Tallas <b>'+esc(_trazoTallasConMarcadas(l))+'</b> · '+l.cantidad_trazos+' trazo(s) · '+l.ancho_util+'m · '+esc(_trazoSentidoInfo(l.sentido).l)+' · '+esc(_trazoOrientacionInfo(l.orientacion).l)+' · colores: <span style="color:#fbbf24;">'+(l.colores||[]).join(', ')+'</span></div>';
       if(l.notas) h += '<div style="font-size:10px;color:#94a3b8;margin-top:2px;">📝 '+esc(l.notas)+'</div>';
       h += '<div style="font-size:10px;color:#64748b;margin-top:2px;">'+estTxt+'</div>';
+      if(_trazoFotoUrl(l)) h += '<div style="margin-top:6px;">'+_trazoFotoHTML(l, 90)+'</div>';
       h += '</div>';
     });
   });
   return h || '<div style="font-size:11px;color:#374151;padding:6px 0;">Sin líneas.</div>';
+}
+
+// ── Fotos de trazos (las que Techpatron adjunta a cada línea) ─────────────────────
+// Antes solo se veían en Techpatron → Trazos enviados, como miniatura de 26px junto al
+// botón "Cambiar"; desde el módulo Trazos no había forma de verlas.
+function _trazoFotoUrl(l){
+  if(!l) return '';
+  return (l.imagen_url_blob && _fotosBlob[l.imagen_url_blob]) || l.imagen_url || '';
+}
+function _trazoFotoHTML(l, px){
+  var u = _trazoFotoUrl(l);
+  if(!u) return '';
+  px = px || 56;
+  return '<img src="'+esc(u)+'" loading="lazy" onclick="event.stopPropagation();_tpAmpliarImagen(this.src)" title="Ver foto del trazo" style="width:'+px+'px;height:'+px+'px;object-fit:cover;border-radius:7px;border:1px solid #2c2c2e;cursor:zoom-in;flex-shrink:0;background:#0d1117;">';
+}
+function _trazosConFoto(){
+  var out = [];
+  ((DB.trazos||{}).solicitudes||[]).forEach(function(s){
+    (s.lineas||[]).forEach(function(l){ if(_trazoFotoUrl(l)) out.push({sol:s, linea:l}); });
+  });
+  return out;
+}
+function _renderTrazosFotos(){
+  var items = _trazosConFoto();
+  if(!items.length) return '<div style="text-align:center;padding:40px;color:#374151;">Techpatron todavía no ha adjuntado fotos de trazos.</div>';
+  var porOp = {}, orden = [];
+  items.forEach(function(it){
+    var k = it.sol.op_id;
+    if(!porOp[k]){ porOp[k] = {op_id:k, op_nombre:it.sol.op_nombre, items:[], ult:''}; orden.push(k); }
+    porOp[k].items.push(it);
+    var f = it.linea.recogido_en || it.sol.enviada_en || '';
+    if(f > porOp[k].ult) porOp[k].ult = f;
+  });
+  orden.sort(function(a,b){ return porOp[b].ult.localeCompare(porOp[a].ult); });
+  var h = '<div style="font-size:11px;color:#64748b;margin-bottom:12px;">Fotos que Techpatron adjunta a cada trazo · clic en una foto para ampliarla</div>';
+  orden.forEach(function(opId){
+    var g = porOp[opId];
+    h += '<div style="background:#0a0d14;border:1px solid #2c2c2e;border-radius:10px;padding:14px;margin-bottom:10px;">';
+    h += '<div style="margin-bottom:10px;"><span style="font-family:var(--bebas);font-size:16px;color:#0a84ff;">'+esc(fmtOpId(opId))+'</span> <span style="font-size:14px;font-weight:700;color:#e2e8f0;">'+esc(g.op_nombre||'')+'</span>';
+    h += ' <span style="font-size:10px;color:#64748b;">· '+g.items.length+' foto'+(g.items.length!==1?'s':'')+'</span></div>';
+    h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;">';
+    g.items.forEach(function(it){
+      var l = it.linea, tt = _trazoTipoInfo(l.tipo);
+      var est = l.recogido ? '✅ Recogido '+fmtDate(l.recogido_en) : l.impreso ? '🚚 Por recoger' : l.generado ? '🖨 Generado' : '⏳ Enviado';
+      h += '<div style="background:#0d1117;border:1px solid #2c2c2e;border-top:3px solid '+tt.color+';border-radius:8px;overflow:hidden;">';
+      h += '<img src="'+esc(_trazoFotoUrl(l))+'" loading="lazy" onclick="_tpAmpliarImagen(this.src)" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block;cursor:zoom-in;background:#000;">';
+      h += '<div style="padding:7px 9px;font-size:10px;line-height:1.5;color:#cbd5e1;">';
+      h += '<div style="font-weight:800;color:'+tt.color+';text-transform:uppercase;">'+esc(l.tipo==='ADICIONAL'&&l.tipo_custom?l.tipo_custom:tt.l)+'</div>';
+      h += '<div>Tallas <b>'+esc(_trazoTallasConMarcadas(l))+'</b></div>';
+      h += '<div style="color:#fbbf24;">'+esc((l.colores||[]).join(', '))+'</div>';
+      h += '<div style="color:#64748b;">'+est+'</div>';
+      h += '</div></div>';
+    });
+    h += '</div></div>';
+  });
+  return h;
 }
 
 function _renderTrazosHistorial(){
@@ -20309,6 +20376,8 @@ function _renderTrazosHistorial(){
     h += '<div data-detid="'+detId+'" onclick="_trazosToggleOp(this.dataset.detid)" style="cursor:pointer;flex:1;min-width:0;"><span style="font-family:var(--bebas);font-size:14px;color:#0a84ff;">'+esc(fmtOpId(s.op_id))+'</span> <span style="font-size:13px;font-weight:700;color:#e2e8f0;">'+esc(s.op_nombre)+'</span>';
     h += '<div style="font-size:10px;color:#64748b;margin-top:2px;">'+(s.manual?'Marcada':'Enviada')+' '+fmtDate(s.enviada_en)+' por '+esc(s.creado_por)+(s.manual?'':(' · '+totalLineas+' línea'+(totalLineas!==1?'s':'')))+' · <span style="text-decoration:underline dotted;">ver detalle</span></div></div>';
     h += '<div style="display:flex;align-items:center;gap:8px;">';
+    var _nfS = (s.lineas||[]).filter(function(l){ return _trazoFotoUrl(l); }).length;
+    if(_nfS) h += '<span data-detid="'+detId+'" onclick="_trazosToggleOp(this.dataset.detid)" title="Ver las fotos de esta solicitud" style="cursor:pointer;font-size:9px;font-weight:800;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.35);color:#c084fc;border-radius:5px;padding:3px 8px;white-space:nowrap;">📷 '+_nfS+' foto'+(_nfS!==1?'s':'')+'</span>';
     h += '<span style="font-size:9px;font-weight:800;background:'+estadoColor+'18;border:1px solid '+estadoColor+'40;color:'+estadoColor+';border-radius:5px;padding:3px 8px;white-space:nowrap;">'+estadoTxt+'</span>';
     if(!s.manual) h += '<button data-sid="'+s.id+'" onclick="imprimirSolicitudTrazos(this.dataset.sid)" style="background:rgba(148,163,184,.1);border:1px solid #2c2c2e;color:#94a3b8;border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;">🖨 Imprimir</button>';
     if(!s.manual) h += '<button data-sid="'+s.id+'" onclick="event.stopPropagation();compartirSolicitudTrazos(this.dataset.sid)" title="Enviar por WhatsApp la solicitud de trazos en PDF" style="background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.35);color:#25D366;border-radius:6px;padding:5px 10px 5px 8px;font-size:11px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:5px;">'+_waIconSVG(13)+'WhatsApp</button>';
@@ -20351,6 +20420,7 @@ function _renderTrazosPorRecoger(){
       g.items.forEach(function(it){
         var tt = _trazoTipoInfo(it.linea.tipo);
         h += '<div style="display:flex;align-items:center;gap:10px;background:#0d1117;border:1px solid #2c2c2e;border-left:3px solid '+tt.color+';border-radius:7px;padding:8px 12px;margin-bottom:5px;flex-wrap:wrap;">';
+        h += _trazoFotoHTML(it.linea, 56);
         h += '<div style="flex:1;min-width:200px;font-size:11px;color:#cbd5e1;">'+tt.l+' · tallas <b>'+(it.linea.tallas||[]).join(', ')+'</b> · '+it.linea.cantidad_trazos+' trazo(s) · '+it.linea.ancho_util+'m · <span style="color:#fbbf24;">'+(it.linea.colores||[]).join(', ')+'</span></div>';
         h += '<button data-sid="'+it.sol.id+'" data-lid="'+it.linea.id+'" onclick="marcarTrazoRecogido(this.dataset.sid,this.dataset.lid)" style="background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.35);color:#34d399;border-radius:7px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;flex-shrink:0;">✓ Ya lo recogí</button>';
         h += '</div>';
@@ -20367,6 +20437,7 @@ function _renderTrazosPorRecoger(){
     recogidos.forEach(function(it){
       var tt = _trazoTipoInfo(it.linea.tipo);
       h += '<div style="display:flex;align-items:center;gap:10px;background:#0a0d14;border:1px solid #2c2c2e;border-left:3px solid '+tt.color+';border-radius:9px;padding:8px 14px;margin-bottom:5px;opacity:.7;">';
+      h += _trazoFotoHTML(it.linea, 44);
       h += '<div style="flex:1;min-width:0;font-size:11px;color:#94a3b8;"><span style="font-family:var(--bebas);font-size:12px;color:#0a84ff;">'+esc(fmtOpId(it.sol.op_id))+'</span> '+esc(it.sol.op_nombre)+' · '+tt.l+' · tallas '+(it.linea.tallas||[]).join(', ')+' · '+(it.linea.colores||[]).join(', ')+'</div>';
       h += '<div style="font-size:10px;color:#475569;white-space:nowrap;">Recogido '+fmtDate(it.linea.recogido_en)+'</div>';
       h += '<button data-sid="'+it.sol.id+'" data-lid="'+it.linea.id+'" onclick="revertirTrazoRecogido(this.dataset.sid,this.dataset.lid)" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);color:#f87171;border-radius:6px;padding:4px 9px;font-size:10px;cursor:pointer;white-space:nowrap;">↩ Revertir</button>';
@@ -21122,7 +21193,7 @@ function _tecpatronImagenLineaHTML(l, sid){
   var inpId = 'tecp-img-'+sid+'-'+l.id;
   var preview = l.imagen_url_blob && _fotosBlob[l.imagen_url_blob] ? _fotosBlob[l.imagen_url_blob] : l.imagen_url;
   var h = '<div style="display:flex;align-items:center;gap:6px;">';
-  if(preview) h += '<img src="'+esc(preview)+'" onclick="window.open(\''+esc(preview)+'\',\'_blank\')" style="width:26px;height:26px;object-fit:cover;border-radius:5px;border:1px solid #2c2c2e;cursor:pointer;" title="Ver imagen adjunta">';
+  if(preview) h += '<img src="'+esc(preview)+'" onclick="_tpAmpliarImagen(this.src)" style="width:64px;height:64px;object-fit:cover;border-radius:7px;border:1px solid #2c2c2e;cursor:zoom-in;" title="Ver foto del trazo">';
   h += '<input type="file" accept="image/*" data-sid="'+sid+'" data-lid="'+l.id+'" onchange="tecpatronSubirImagenLinea(this)" style="display:none;" id="'+inpId+'">';
   h += '<label for="'+inpId+'" style="font-size:10px;color:#64748b;border:1px solid #2c2c2e;border-radius:5px;padding:4px 8px;cursor:pointer;white-space:nowrap;">'+(preview?'📎 Cambiar':'📎 Adjuntar imagen')+'</label>';
   h += '</div>';
