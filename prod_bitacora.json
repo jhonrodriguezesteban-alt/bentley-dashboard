@@ -28066,41 +28066,27 @@
       "user": "Isabel"
     },
     {
-      "categoria": "Buzos",
-      "diseno_id": "id_1782240897563_3lix3vy1y",
       "id": "evt_1791316502768_6hssj",
-      "nombre": "CAMIBUSO HOUSER",
-      "resp_anterior": "Isa",
-      "resp_nuevo": "John",
-      "tipo": "diseno_responsable",
       "ts": 1791316502768,
-      "user": "Isabel"
-    },
-    {
-      "categoria": "Buzos",
+      "user": "Isabel",
+      "tipo": "diseno_responsable",
       "diseno_id": "id_1782240897563_3lix3vy1y",
-      "estado_anterior": "EN_CORTE_MUESTRA",
-      "estado_nuevo": "LISTA_PRODUCCION",
-      "id": "evt_1791316512774_vcezg",
-      "marca": "Bentley Kids",
       "nombre": "CAMIBUSO HOUSER",
-      "tipo": "estado_diseno",
-      "ts": 1791316512774,
-      "user": "Isabel"
+      "categoria": "Buzos",
+      "resp_anterior": "Isa",
+      "resp_nuevo": "John"
     },
     {
-      "id": "evt_1791317775225_r9e18",
-      "ts": 1791317775225,
-      "user": "Jefa de Producción",
-      "tipo": "cambiar_estado_op_all",
-      "op_id": "OP-2026-130",
-      "estado": "PENDIENTE_CORTAR",
-      "colores": 0,
-      "protegidos": [
-        "MARFIL",
-        "AZUL BEBE"
-      ],
-      "nombre": "CHAQUETA MARIPOSAS"
+      "id": "evt_1791316512774_vcezg",
+      "ts": 1791316512774,
+      "user": "Isabel",
+      "tipo": "estado_diseno",
+      "diseno_id": "id_1782240897563_3lix3vy1y",
+      "nombre": "CAMIBUSO HOUSER",
+      "categoria": "Buzos",
+      "marca": "Bentley Kids",
+      "estado_anterior": "EN_CORTE_MUESTRA",
+      "estado_nuevo": "LISTA_PRODUCCION"
     }
   ]
 }
