@@ -7837,10 +7837,10 @@
     },
     {
       "cantidades": {
+        "MARFIL_M": 42,
         "AVENA_M": 30,
-        "CAFE_M": 24,
         "GRIS OSCURO_M": 18,
-        "MARFIL_M": 40,
+        "CAFE_M": 24,
         "VINOTINTO_M": 18
       },
       "categoria": "CONJUNTOS",
@@ -7868,14 +7868,10 @@
       "numero": 107,
       "referencias": [
         {
-          "cantidades": {
-            "AVENA_M": 30,
-            "CAFE_M": 24,
-            "GRIS OSCURO_M": 18,
-            "MARFIL_M": 40,
-            "VINOTINTO_M": 18
-          },
+          "nombre": "CONJUNTO FRANKY PR",
+          "ref": "",
           "cat": "CONJUNTOS",
+          "vmo": 1151,
           "colores": [
             "MARFIL",
             "AVENA",
@@ -7883,13 +7879,17 @@
             "CAFE",
             "VINOTINTO"
           ],
-          "maquilador_id": "",
-          "nombre": "CONJUNTO FRANKY PR",
-          "ref": "",
           "tallas": [
             "M"
           ],
-          "vmo": 1151
+          "cantidades": {
+            "MARFIL_M": 42,
+            "AVENA_M": 30,
+            "GRIS OSCURO_M": 18,
+            "CAFE_M": 24,
+            "VINOTINTO_M": 18
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -7902,7 +7902,9 @@
       "tallas": [
         "M"
       ],
-      "updated_at": "2026-08-01"
+      "updated_at": "2026-10-06",
+      "diseno_origen_id": null,
+      "diseno_origen_nombre": null
     },
     {
       "cantidades": {
