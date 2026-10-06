@@ -28000,20 +28000,31 @@
       "user": "Carolina Telles"
     },
     {
+      "bulk": false,
+      "color": "MARFIL",
+      "estado_anterior": "ENTREGADO_PARCIAL",
+      "estado_nuevo": "ENTREGADO_PARCIAL",
       "id": "evt_1791303548421_j963m",
-      "ts": 1791303548421,
-      "user": "Carolina Telles",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-107",
       "op_nombre": "CONJUNTO FRANKY PR",
       "referencia": "CONJUNTO FRANKY PRIME",
-      "color": "MARFIL",
       "talla": "M",
-      "estado_anterior": "ENTREGADO_PARCIAL",
-      "estado_nuevo": "ENTREGADO_PARCIAL",
-      "bulk": false,
+      "tipo": "estado_ot",
+      "ts": 1791303548421,
       "uds": 40,
-      "motivo": "ENTREGADO"
+      "user": "Carolina Telles"
+    },
+    {
+      "id": "evt_1791303574248_at3yl",
+      "ts": 1791303574248,
+      "user": "Carolina Telles",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-107",
+      "nombre": "CONJUNTO FRANKY PR",
+      "categoria": "CONJUNTOS",
+      "colores": 5,
+      "refs": 1
     }
   ]
 }
