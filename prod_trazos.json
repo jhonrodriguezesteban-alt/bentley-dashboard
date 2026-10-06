@@ -1429,44 +1429,61 @@
       "op_nombre": "BLAZER DONATELLA"
     },
     {
-      "id": "id_1791293869659_gt4k1nla0",
-      "op_id": "OP-2026-223",
-      "op_nombre": "CONJUNTO JACOBO",
       "categoria": "CONJUNTOS",
-      "creado_por": "Isabel",
       "creado_en": "2026-10-06",
-      "estado": "ENVIADA",
+      "creado_por": "Isabel",
       "enviada_en": "2026-10-06",
+      "estado": "ENVIADA",
+      "id": "id_1791293869659_gt4k1nla0",
       "lineas": [
         {
-          "id": "id_1791293817486_kni16py4s",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T4",
-            "T6"
-          ],
-          "marcadas_por_talla": {
-            "T4": 1,
-            "T6": 1
-          },
-          "cantidad_trazos": 1,
           "ancho_util": 147,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "",
+          "cantidad_trazos": 1,
           "colores": [
             "MARFIL",
             "GRIS JASPED"
           ],
           "generado": false,
+          "id": "id_1791293817486_kni16py4s",
           "impreso": false,
-          "recogido": false
-        },
-        {
-          "id": "id_1791293846516_tbce1bxzc",
+          "marcadas_por_talla": {
+            "T4": 1,
+            "T6": 1
+          },
+          "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T4",
+            "T6"
+          ],
           "tipo": "TELA_PRINCIPAL",
           "tipo_custom": "",
+          "imagen_url": "https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/tecpatron-imgs/trazo_id_1791293817486_kni16py4s_1791326684688.jpg",
+          "imagen_url_blob": "tp_1791326685788"
+        },
+        {
+          "ancho_util": 147,
+          "cantidad_trazos": 1,
+          "colores": [
+            "MARFIL",
+            "GRIS JASPED"
+          ],
+          "generado": false,
+          "id": "id_1791293846516_tbce1bxzc",
+          "impreso": false,
+          "marcadas_por_talla": {
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1,
+            "T8": 1
+          },
+          "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
           "tallas": [
             "T8",
             "T10",
@@ -1474,27 +1491,12 @@
             "T14",
             "T16"
           ],
-          "marcadas_por_talla": {
-            "T8": 1,
-            "T10": 1,
-            "T12": 1,
-            "T14": 1,
-            "T16": 1
-          },
-          "cantidad_trazos": 1,
-          "ancho_util": 147,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "",
-          "colores": [
-            "MARFIL",
-            "GRIS JASPED"
-          ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
         }
-      ]
+      ],
+      "op_id": "OP-2026-223",
+      "op_nombre": "CONJUNTO JACOBO"
     }
   ]
 }
