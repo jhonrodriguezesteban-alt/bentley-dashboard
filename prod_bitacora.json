@@ -28146,18 +28146,34 @@
       "user": "Isabel"
     },
     {
+      "estado": "NOVEDAD",
       "id": "evt_1791322636486_tqfan",
-      "ts": 1791322636486,
-      "user": "Carolina Telles",
-      "tipo": "entrega_inline",
-      "ot_id": "id_1785598190835_y88i00aif",
       "numero_ot": 13057,
       "op_id": "OP-2026-107",
-      "uds_entregadas": 13,
+      "ot_id": "id_1785598190835_y88i00aif",
       "pendientes": 11,
-      "estado": "NOVEDAD",
+      "satelite": "MARCELA PEÑA",
       "talla": "M",
-      "satelite": "MARCELA PEÑA"
+      "tipo": "entrega_inline",
+      "ts": 1791322636486,
+      "uds_entregadas": 13,
+      "user": "Carolina Telles"
+    },
+    {
+      "id": "evt_1791322737357_aalom",
+      "ts": 1791322737357,
+      "user": "Carolina Telles",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-107",
+      "op_nombre": "CONJUNTO FRANKY PR",
+      "referencia": "CONJUNTO FRANKY PRIME",
+      "color": "CAFE",
+      "talla": "M",
+      "estado_anterior": "ENTREGADO_PARCIAL",
+      "estado_nuevo": "ENTREGADO_PARCIAL",
+      "bulk": false,
+      "uds": 24,
+      "motivo": "ENTREGADO"
     }
   ]
 }
