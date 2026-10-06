@@ -28066,27 +28066,52 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1791316502768_6hssj",
-      "ts": 1791316502768,
-      "user": "Isabel",
-      "tipo": "diseno_responsable",
-      "diseno_id": "id_1782240897563_3lix3vy1y",
-      "nombre": "CAMIBUSO HOUSER",
       "categoria": "Buzos",
+      "diseno_id": "id_1782240897563_3lix3vy1y",
+      "id": "evt_1791316502768_6hssj",
+      "nombre": "CAMIBUSO HOUSER",
       "resp_anterior": "Isa",
-      "resp_nuevo": "John"
+      "resp_nuevo": "John",
+      "tipo": "diseno_responsable",
+      "ts": 1791316502768,
+      "user": "Isabel"
     },
     {
-      "id": "evt_1791316512774_vcezg",
-      "ts": 1791316512774,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1782240897563_3lix3vy1y",
-      "nombre": "CAMIBUSO HOUSER",
       "categoria": "Buzos",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1782240897563_3lix3vy1y",
       "estado_anterior": "EN_CORTE_MUESTRA",
-      "estado_nuevo": "LISTA_PRODUCCION"
+      "estado_nuevo": "LISTA_PRODUCCION",
+      "id": "evt_1791316512774_vcezg",
+      "marca": "Bentley Kids",
+      "nombre": "CAMIBUSO HOUSER",
+      "tipo": "estado_diseno",
+      "ts": 1791316512774,
+      "user": "Isabel"
+    },
+    {
+      "colores": 0,
+      "estado": "PENDIENTE_CORTAR",
+      "id": "evt_1791317775225_r9e18",
+      "nombre": "CHAQUETA MARIPOSAS",
+      "op_id": "OP-2026-130",
+      "protegidos": [
+        "MARFIL",
+        "AZUL BEBE"
+      ],
+      "tipo": "cambiar_estado_op_all",
+      "ts": 1791317775225,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1791318192853_o9zi9",
+      "ts": 1791318192853,
+      "user": "Isabel",
+      "tipo": "diseno_comentario",
+      "diseno_id": "id_1784480344159_33uewgfjm",
+      "nombre": "CHAQUETA BAGGY PINZAS PR VERSION KIDS",
+      "categoria": "Chaquetas",
+      "tiene_imagen": false,
+      "extracto": "Modificaciones realizadas en largo de manga y corrimos una talla. La talla 16 pa"
     }
   ]
 }
