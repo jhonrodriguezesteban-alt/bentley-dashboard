@@ -7202,18 +7202,18 @@
     },
     {
       "cantidades": {
-        "BEIGE_T10": 20,
-        "BEIGE_T12": 20,
-        "BEIGE_T14": 20,
-        "BEIGE_T16": 30,
-        "BEIGE_T6": 10,
-        "BEIGE_T8": 20,
-        "NEGRO_T10": 20,
-        "NEGRO_T12": 20,
-        "NEGRO_T14": 20,
-        "NEGRO_T16": 30,
         "NEGRO_T6": 10,
-        "NEGRO_T8": 20
+        "NEGRO_T8": 17,
+        "NEGRO_T10": 17,
+        "NEGRO_T12": 17,
+        "NEGRO_T14": 17,
+        "NEGRO_T16": 20,
+        "BEIGE_T6": 11,
+        "BEIGE_T8": 13,
+        "BEIGE_T10": 13,
+        "BEIGE_T12": 13,
+        "BEIGE_T14": 13,
+        "BEIGE_T16": 30
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -7248,27 +7248,14 @@
       "receta_nombre": "CHAQUETA HARLEY - REF: 1107",
       "referencias": [
         {
-          "cantidades": {
-            "BEIGE_T10": 20,
-            "BEIGE_T12": 20,
-            "BEIGE_T14": 20,
-            "BEIGE_T16": 30,
-            "BEIGE_T6": 10,
-            "BEIGE_T8": 20,
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 30,
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 20
-          },
+          "nombre": "CHAQUETA HARLEY",
+          "ref": "1107",
           "cat": "CHAQUETAS",
+          "vmo": 8934,
           "colores": [
             "NEGRO",
             "BEIGE"
           ],
-          "nombre": "CHAQUETA HARLEY",
-          "ref": "1107",
           "tallas": [
             "T6",
             "T8",
@@ -7277,8 +7264,21 @@
             "T14",
             "T16"
           ],
-          "totalUds": 240,
-          "vmo": 8934
+          "cantidades": {
+            "NEGRO_T6": 10,
+            "NEGRO_T8": 17,
+            "NEGRO_T10": 17,
+            "NEGRO_T12": 17,
+            "NEGRO_T14": 17,
+            "NEGRO_T16": 20,
+            "BEIGE_T6": 11,
+            "BEIGE_T8": 13,
+            "BEIGE_T10": 13,
+            "BEIGE_T12": 13,
+            "BEIGE_T14": 13,
+            "BEIGE_T16": 30
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -7303,7 +7303,10 @@
           "lineas": 9,
           "solicitud_id": "id_1789489631878_p4wwqdwyf"
         }
-      ]
+      ],
+      "updated_at": "2026-10-07",
+      "diseno_origen_id": null,
+      "diseno_origen_nombre": null
     },
     {
       "cantidades": {
@@ -15386,6 +15389,9 @@
         "rec_oversized_capota_1058__c82_28": true,
         "rec_oversized_capota_1058__c82_30": true,
         "rec_oversized_capota_1058__c82_31": true
+      },
+      "subg_estados": {
+        "OP-2026-237||VINOTINTO": "EN_CONFECCION"
       }
     }
   ]
