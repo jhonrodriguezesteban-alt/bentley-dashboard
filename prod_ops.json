@@ -10365,18 +10365,18 @@
     },
     {
       "cantidades": {
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 12,
+        "AZUL BEBE_T10": 20,
+        "AZUL BEBE_T12": 20,
+        "AZUL BEBE_T14": 20,
+        "AZUL BEBE_T16": 20,
+        "AZUL BEBE_T6": 12,
+        "AZUL BEBE_T8": 12,
         "MARFIL_T10": 24,
         "MARFIL_T12": 24,
         "MARFIL_T14": 24,
         "MARFIL_T16": 24,
-        "AZUL BEBE_T6": 12,
-        "AZUL BEBE_T8": 12,
-        "AZUL BEBE_T10": 20,
-        "AZUL BEBE_T12": 20,
-        "AZUL BEBE_T14": 20,
-        "AZUL BEBE_T16": 20
+        "MARFIL_T6": 12,
+        "MARFIL_T8": 12
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -10388,8 +10388,8 @@
         "cid_1783366904861_1111__cid_1783366904861_3201": true,
         "cid_1783366904861_1111__cid_1783366904861_4234": true,
         "cid_1783366904861_1111__cid_1783366904861_5819": true,
-        "cid_1783366904861_1111__cid_1783366904861_9378": true,
-        "cid_1783366904861_1111__cid_1783366904861_6993||MARFIL": true
+        "cid_1783366904861_1111__cid_1783366904861_6993||MARFIL": true,
+        "cid_1783366904861_1111__cid_1783366904861_9378": true
       },
       "consumibles_desagregado": {
         "cid_1783366904861_1111__cid_1783366904861_6993": true
@@ -10406,14 +10406,28 @@
       "receta_nombre": "CHAQUETA MARIPOSAS",
       "referencias": [
         {
-          "nombre": "CHAQUETA MARIPOSAS",
-          "ref": "1166",
+          "cantidades": {
+            "AZUL BEBE_T10": 20,
+            "AZUL BEBE_T12": 20,
+            "AZUL BEBE_T14": 20,
+            "AZUL BEBE_T16": 20,
+            "AZUL BEBE_T6": 12,
+            "AZUL BEBE_T8": 12,
+            "MARFIL_T10": 24,
+            "MARFIL_T12": 24,
+            "MARFIL_T14": 24,
+            "MARFIL_T16": 24,
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 1151,
           "colores": [
             "MARFIL",
             "AZUL BEBE"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA MARIPOSAS",
+          "ref": "1166",
           "tallas": [
             "T6",
             "T8",
@@ -10422,21 +10436,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 12,
-            "MARFIL_T10": 24,
-            "MARFIL_T12": 24,
-            "MARFIL_T14": 24,
-            "MARFIL_T16": 24,
-            "AZUL BEBE_T6": 12,
-            "AZUL BEBE_T8": 12,
-            "AZUL BEBE_T10": 20,
-            "AZUL BEBE_T12": 20,
-            "AZUL BEBE_T14": 20,
-            "AZUL BEBE_T16": 20
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
@@ -10462,9 +10462,7 @@
           "solicitud_id": "id_1790790479249_1vpqaiqs9"
         }
       ],
-      "updated_at": "2026-10-07",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-10-07"
     },
     {
       "cantidades": {
