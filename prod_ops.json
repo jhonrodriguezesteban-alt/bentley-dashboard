@@ -7163,7 +7163,10 @@
         "T12",
         "T14",
         "T16"
-      ]
+      ],
+      "trazos_color_solicitado": {
+        "VINOTINTO": true
+      }
     },
     {
       "cantidades": {
@@ -14375,9 +14378,12 @@
       ],
       "consumibles_check": {
         "cid_1789270650807_2385__cid_1789270603948_2945": true,
-        "cid_1789270650807_2385__cid_1789270603948_2945||MISO - NEGRO 200": true,
+        "cid_1789270650807_2385__cid_1789270603948_2945||MARFIL -120": true,
         "cid_1789270650807_2385__cid_1789270603948_2945||MISO - BEIGE 322": true,
-        "cid_1789270650807_2385__cid_1789270603948_2945||MARFIL -120": true
+        "cid_1789270650807_2385__cid_1789270603948_2945||MISO - NEGRO 200": true
+      },
+      "consumibles_desagregado": {
+        "cid_1789270650807_2385__cid_1789270603948_2945": true
       },
       "cortador": "Corte Carbajal",
       "corte_ok_color": {
@@ -14472,10 +14478,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "consumibles_desagregado": {
-        "cid_1789270650807_2385__cid_1789270603948_2945": true
-      }
+      ]
     },
     {
       "cantidades": {
