@@ -6203,18 +6203,18 @@
     },
     {
       "cantidades": {
-        "MARFIL_T10": 12,
-        "MARFIL_T12": 16,
-        "MARFIL_T14": 16,
-        "MARFIL_T16": 16,
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 12,
+        "ROSA_T6": 12,
+        "ROSA_T8": 12,
         "ROSA_T10": 12,
         "ROSA_T12": 16,
         "ROSA_T14": 16,
         "ROSA_T16": 16,
-        "ROSA_T6": 12,
-        "ROSA_T8": 12
+        "MARFIL_T6": 20,
+        "MARFIL_T8": 20,
+        "MARFIL_T10": 20,
+        "MARFIL_T12": 42,
+        "MARFIL_T14": 42,
+        "MARFIL_T16": 42
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -6245,27 +6245,14 @@
       "receta_nombre": "CHAQUETA ONION - REF: 1165",
       "referencias": [
         {
-          "cantidades": {
-            "MARFIL_T10": 12,
-            "MARFIL_T12": 16,
-            "MARFIL_T14": 16,
-            "MARFIL_T16": 16,
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 12,
-            "ROSA_T10": 12,
-            "ROSA_T12": 16,
-            "ROSA_T14": 16,
-            "ROSA_T16": 16,
-            "ROSA_T6": 12,
-            "ROSA_T8": 12
-          },
+          "nombre": "CHAQUETA MARIPOSAS",
+          "ref": "1166",
           "cat": "CHAQUETAS",
+          "vmo": 9000,
           "colores": [
             "ROSA",
             "MARFIL"
           ],
-          "nombre": "CHAQUETA MARIPOSAS",
-          "ref": "1166",
           "tallas": [
             "T6",
             "T8",
@@ -6274,7 +6261,21 @@
             "T14",
             "T16"
           ],
-          "vmo": 9000
+          "cantidades": {
+            "ROSA_T6": 12,
+            "ROSA_T8": 12,
+            "ROSA_T10": 12,
+            "ROSA_T12": 16,
+            "ROSA_T14": 16,
+            "ROSA_T16": 16,
+            "MARFIL_T6": 20,
+            "MARFIL_T8": 20,
+            "MARFIL_T10": 20,
+            "MARFIL_T12": 42,
+            "MARFIL_T14": 42,
+            "MARFIL_T16": 42
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -6300,7 +6301,9 @@
           "solicitud_id": "id_1790791093528_rig3s8h36"
         }
       ],
-      "updated_at": "2026-07-06"
+      "updated_at": "2026-10-07",
+      "diseno_origen_id": null,
+      "diseno_origen_nombre": null
     },
     {
       "cantidades": {
