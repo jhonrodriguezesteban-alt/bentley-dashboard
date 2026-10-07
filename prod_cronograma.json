@@ -714,8 +714,7 @@
       "id": "id_1783030889777_yqi3k8nd5",
       "op_id": "OP-0051",
       "op_nombre": "CAZADORA ANIMALITOS",
-      "uds": 160,
-      "satelite_id": null
+      "uds": 160
     },
     {
       "color": "MARFIL",
@@ -763,12 +762,12 @@
       "color": "AZUL OSCURO",
       "entregado": true,
       "fecha_entrada": "2026-07-16",
+      "fecha_entrega_real": "2026-07-16",
       "id": "id_1784241648634_nmjgvzwqv",
       "op_id": "OP-0190",
       "op_nombre": "CHAQUETA SAN POLOS PILOTO + CAMICHAQUETA SAN POLOS HOMBRE + CHAQUETA ROMPEVIENTOS BK",
       "satelite_id": "sat_10",
-      "uds": 20,
-      "fecha_entrega_real": "2026-07-16"
+      "uds": 20
     },
     {
       "color": "AZUL OSCURO",
@@ -1119,6 +1118,7 @@
       "entregado": true,
       "fecha_compromiso": "2026-08-28",
       "fecha_entrada": "2026-08-01",
+      "fecha_entrega_real": "2026-10-06",
       "fecha_inicial": "2026-08-28",
       "historial": [
         {
@@ -1132,8 +1132,7 @@
       "op_id": "OP-2026-107",
       "op_nombre": "CONJUNTO FRANKY PRIME",
       "satelite_id": "sat_16",
-      "uds": 18,
-      "fecha_entrega_real": "2026-10-06"
+      "uds": 18
     },
     {
       "color": "MARFIL",
@@ -1318,8 +1317,7 @@
       "id": "id_1787069214330_c22mlokm3",
       "op_id": "OP-2026-104",
       "op_nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS",
-      "uds": 7,
-      "satelite_id": null
+      "uds": 7
     },
     {
       "color": "CAMEL",
@@ -2290,11 +2288,11 @@
           "motivo": "Asignación inicial"
         },
         {
+          "at": "2026-10-03",
+          "by": "Jefa de Producción",
           "fecha_anterior": "2026-10-02",
           "fecha_nueva": "2026-10-05",
-          "motivo": "Reubicado en tablero",
-          "by": "Jefa de Producción",
-          "at": "2026-10-03"
+          "motivo": "Reubicado en tablero"
         }
       ],
       "id": "id_1789587434355_3wzqnaxzi",
@@ -2570,6 +2568,7 @@
       "entregado": true,
       "fecha_compromiso": "2026-10-01",
       "fecha_entrada": "2026-09-24",
+      "fecha_entrega_real": "2026-10-03",
       "fecha_inicial": "2026-10-01",
       "historial": [
         {
@@ -2583,8 +2582,7 @@
       "op_id": "OP-2026-079",
       "op_nombre": "BEISBOLERA ARMIN",
       "satelite_id": "sat_04",
-      "uds": 100,
-      "fecha_entrega_real": "2026-10-03"
+      "uds": 100
     },
     {
       "color": "AZUL",
@@ -2789,66 +2787,65 @@
       "uds": 80
     },
     {
+      "color": "GRIS OSCURO",
+      "entregado": false,
+      "fecha_entrada": "2026-10-03",
+      "historial": [
+        {
+          "accion": "Corrección: se había marcado entregado por error — vuelve a pendiente (en confección), 80 uds",
+          "fecha": "2026-10-07T00:24:37.000Z",
+          "user": "John Rodriguez"
+        }
+      ],
       "id": "id_1791033233460_2amf6zm9o",
       "op_id": "OP-2026-099",
       "op_nombre": "BEISBOLERA 2.0",
-      "color": "GRIS OSCURO",
       "satelite_id": "sat_04",
-      "uds": 80,
-      "fecha_entrada": "2026-10-03",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [
-        {
-          "fecha": "2026-10-07T00:24:37.000Z",
-          "user": "John Rodriguez",
-          "accion": "Corrección: se había marcado entregado por error — vuelve a pendiente (en confección), 80 uds"
-        }
-      ],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 80
     },
     {
+      "color": "CAFE",
+      "entregado": false,
+      "fecha_entrada": "2026-10-03",
       "id": "id_1791033389539_mm7v3pqa8",
       "op_id": "OP-2026-099",
       "op_nombre": "BEISBOLERA 2.0",
-      "color": "CAFE",
       "satelite_id": "sat_04",
-      "uds": 80,
-      "fecha_entrada": "2026-10-03",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 80
     },
     {
+      "color": "NEGRO",
+      "entregado": false,
+      "fecha_entrada": "2026-10-03",
       "id": "id_1791034074900_u5ldsbavp",
       "op_id": "OP-2026-100",
       "op_nombre": "CHAQUETA HARLEY",
-      "color": "NEGRO",
       "satelite_id": "id_1790962829340_pi9hqnt0f",
-      "uds": 120,
-      "fecha_entrada": "2026-10-03",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 120
     },
     {
+      "color": "VERDE MILITAR",
+      "entregado": false,
+      "fecha_entrada": "2026-10-03",
       "id": "id_1791035985572_unp0rsl7v",
       "op_id": "OP-2026-220",
       "op_nombre": "CONJUNTO DAKOTA",
-      "color": "VERDE MILITAR",
       "satelite_id": "id_1791034396080_jplfjc1os",
-      "uds": 96,
-      "fecha_entrada": "2026-10-03",
+      "uds": 96
+    },
+    {
+      "id": "id_1791404249926_41lo09zia",
+      "op_id": "OP-2026-130",
+      "op_nombre": "CHAQUETA MARIPOSAS",
+      "color": "MARFIL",
+      "satelite_id": "sat_02",
+      "uds": 12,
+      "fecha_entrada": "2026-10-07",
       "fecha_compromiso": null,
       "fecha_inicial": null,
       "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "entregado": true,
+      "fecha_entrega_real": "2026-10-07"
     }
   ]
 }
