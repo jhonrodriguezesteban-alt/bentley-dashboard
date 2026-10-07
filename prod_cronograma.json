@@ -2794,13 +2794,19 @@
       "op_nombre": "BEISBOLERA 2.0",
       "color": "GRIS OSCURO",
       "satelite_id": "sat_04",
-      "uds": 8,
+      "uds": 80,
       "fecha_entrada": "2026-10-03",
       "fecha_compromiso": null,
       "fecha_inicial": null,
-      "historial": [],
-      "entregado": true,
-      "fecha_entrega_real": "2026-10-03"
+      "historial": [
+        {
+          "fecha": "2026-10-07T00:24:37.000Z",
+          "user": "John Rodriguez",
+          "accion": "Corrección: se había marcado entregado por error — vuelve a pendiente (en confección), 80 uds"
+        }
+      ],
+      "entregado": false,
+      "fecha_entrega_real": null
     },
     {
       "id": "id_1791033389539_mm7v3pqa8",
