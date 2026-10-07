@@ -1117,7 +1117,7 @@ async function _fbMigrarSiVacio(){
 // abiertas con una versión anterior se recargan solas (esperando a que terminen de guardar).
 // Sin esto, una pestaña vieja olvidada en un computador seguía guardando con la lógica
 // anterior y deshaciendo cambios de todos los demás.
-var APP_VERSION = 20261006.1;
+var APP_VERSION = 20261006.2;
 function _vigilarVersionApp(){
   if(!_fbDb) return;
   _fbDb.ref(FB_ROOT+'/app_version').on('value', function(snap){
@@ -4366,6 +4366,84 @@ function pconfAsignarASatelite(key, satId){
 }
 function pconfQuitarDeCola(key){ pconfAsignarASatelite(key, null); }
 
+// ── Asignar taller con botón (alternativa a arrastrar) ─────────────────────────────
+// Abre la lista de satélites activos con buscador arriba: primero los que tienen la
+// categoría de la prenda en sus especialidades, con su carga actual (taller + cola).
+var _pconfAsigKey = null;
+function _pconfCatNorm(c){ return String(c||'').toUpperCase().replace(/\s+PR$/,'').trim(); }
+function pconfAbrirAsignar(key){
+  if(!_canEditPlan()){ toast('Solo Jhon o la Jefa de Producción pueden editar este tablero','warning'); return; }
+  _pconfAsigKey = key;
+  var parsed = _planParseKey(key);
+  var op = (DB.ops||[]).find(function(o){ return o.id===parsed.opId; });
+  if(!op) return;
+  var uds = _planColorUdsHistorico(op, parsed.color);
+  var cat = _pconfCatNorm(op.categoria);
+  var porSat = (DB.planeacion_confeccion||{}).por_satelite||{};
+  var actual = null;
+  Object.keys(porSat).forEach(function(sid){ if((porSat[sid]||[]).indexOf(key)>=0) actual = sid; });
+  var full = _pconfFullUnits(); var fm = {}; full.forEach(function(u){ fm[u.key]=u; });
+  var sats = (DB.satelites||[]).filter(function(x){ return x.activo; }).map(function(x){
+    var esp = (x.especialidades||[]).map(_pconfCatNorm);
+    var hace = !!cat && esp.some(function(e){ return e && (cat===e || cat.indexOf(e)===0 || e.indexOf(cat)===0); });
+    var udsCola = (porSat[x.id]||[]).reduce(function(sm,k){ return sm+((fm[k]||{}).uds||0); },0);
+    var udsTaller = 0; try{ udsTaller = _pconfCargaRealSatelite(x.id).reduce(function(sm,u){ return sm+u.uds; },0); }catch(e){}
+    return {s:x, hace:hace, esp:esp, udsCola:udsCola, udsTaller:udsTaller};
+  });
+  sats.sort(function(a,b){ return (b.hace-a.hace) || String(a.s.nombre||'').localeCompare(String(b.s.nombre||'')); });
+
+  var h = '<div style="display:flex;align-items:center;gap:10px;background:#141820;border:1px solid #2c2c2e;border-radius:9px;padding:9px 12px;margin-bottom:12px;">';
+  h += '<span style="font-size:11px;font-weight:800;color:#0a84ff;">'+esc(fmtOpId(op.id))+'</span>';
+  h += '<span style="font-size:12px;font-weight:700;color:#e2e8f0;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(op.nombre_producto||'')+'</span>';
+  if(parsed.color && parsed.color!=='—') h += '<span style="font-size:9px;font-weight:700;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);border-radius:3px;color:#0a84ff;padding:1px 6px;text-transform:uppercase;">'+esc(parsed.color)+'</span>';
+  h += '<span style="font-size:13px;font-weight:800;color:#fbbf24;white-space:nowrap;">'+(uds||0).toLocaleString('es-CO')+' <span style="font-size:9px;color:#64748b;">uds</span></span>';
+  h += '</div>';
+  h += '<div style="position:relative;margin-bottom:10px;">';
+  h += '<span style="position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:13px;pointer-events:none;">🔍</span>';
+  h += '<input id="pconf-asig-busq" type="text" autocomplete="off" oninput="_pconfAsigFiltrar(this.value)" onkeydown="if(event.key===\'Enter\'){event.preventDefault();_pconfAsigPrimero();}" placeholder="Buscar taller por nombre o especialidad…" style="width:100%;box-sizing:border-box;background:#0d1117;border:1px solid #2c2c2e;border-radius:8px;color:var(--text);padding:10px 12px 10px 32px;font-size:14px;outline:none;">';
+  h += '</div>';
+  if(cat) h += '<div style="font-size:10px;color:#64748b;margin-bottom:8px;">Primero los talleres que hacen <b style="color:#34d399;">'+esc(cat)+'</b> · Enter asigna el primero de la lista</div>';
+  h += '<div id="pconf-asig-lista" style="display:flex;flex-direction:column;gap:6px;max-height:55vh;overflow-y:auto;">';
+  sats.forEach(function(it){
+    var x = it.s, esActual = x.id===actual;
+    var txt = (String(x.nombre||'')+' '+it.esp.join(' ')).toUpperCase();
+    h += '<button type="button" class="pconf-asig-item" data-sat="'+esc(x.id)+'" data-txt="'+esc(txt)+'" onclick="pconfConfirmarAsignar(this.dataset.sat)" '+(esActual?'disabled':'')+' style="display:flex;align-items:center;gap:10px;text-align:left;width:100%;background:'+(esActual?'rgba(52,211,153,.08)':'#141820')+';border:1px solid '+(esActual?'rgba(52,211,153,.45)':(it.hace?'rgba(52,211,153,.25)':'#2c2c2e'))+';border-radius:9px;padding:9px 12px;cursor:'+(esActual?'default':'pointer')+';color:inherit;">';
+    h += '<div style="display:flex;align-items:center;gap:10px;width:100%;">';
+    h += '<div style="flex:1;min-width:0;">';
+    h += '<div style="font-size:13px;font-weight:800;color:#e2e8f0;">🧑‍🏭 '+esc(x.nombre||'')+(esActual?' <span style="font-size:9px;color:#34d399;">· ASIGNADO AHORA</span>':'')+(it.hace?' <span style="font-size:9px;font-weight:800;color:#34d399;background:rgba(52,211,153,.12);border-radius:4px;padding:1px 6px;margin-left:4px;">✓ HACE '+esc(cat)+'</span>':'')+'</div>';
+    h += '<div style="font-size:10px;color:#64748b;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(it.esp.length?esc(it.esp.join(' · ')):'Sin especialidades registradas')+'</div>';
+    h += '</div>';
+    h += '<div style="text-align:right;flex-shrink:0;font-size:10px;line-height:1.5;">';
+    h += '<div><span style="color:#fbbf24;font-weight:800;">'+it.udsTaller.toLocaleString('es-CO')+'</span> <span style="color:#64748b;">en taller</span></div>';
+    h += '<div><span style="color:#34d399;font-weight:800;">'+it.udsCola.toLocaleString('es-CO')+'</span> <span style="color:#64748b;">en cola</span></div>';
+    if(x.capacidad_semanal) h += '<div style="color:#475569;">cap. '+Number(x.capacidad_semanal).toLocaleString('es-CO')+'/sem</div>';
+    h += '</div>';
+    h += '</div>';
+    h += '</button>';
+  });
+  h += '</div>';
+  openModal('🧑‍🏭 Asignar taller', h, '<button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>', {wide:false});
+  setTimeout(function(){ var i=document.getElementById('pconf-asig-busq'); if(i) i.focus(); }, 60);
+}
+function _pconfAsigFiltrar(q){
+  q = String(q||'').trim().toUpperCase();
+  document.querySelectorAll('#pconf-asig-lista .pconf-asig-item').forEach(function(b){
+    b.style.display = (!q || (b.dataset.txt||'').indexOf(q)>=0) ? '' : 'none';
+  });
+}
+function _pconfAsigPrimero(){
+  var b = Array.prototype.find.call(document.querySelectorAll('#pconf-asig-lista .pconf-asig-item'), function(x){ return x.style.display!=='none' && !x.disabled; });
+  if(b) pconfConfirmarAsignar(b.dataset.sat);
+}
+function pconfConfirmarAsignar(satId){
+  var key = _pconfAsigKey; if(!key || !satId) return;
+  _pconfAsigKey = null;
+  closeModal();
+  pconfAsignarASatelite(key, satId);
+  var p = _planParseKey(key);
+  toast(fmtOpId(p.opId)+(p.color&&p.color!=='—'?' '+p.color:'')+' → '+getSatNombre(satId), 'success');
+}
+
 function pconfMover(satId, key, dir){
   if(!_canEditPlan()){ toast('Solo Jhon o la Jefa de Producción pueden editar este tablero','warning'); return; }
   var ps = (DB.planeacion_confeccion||{}).por_satelite || {};
@@ -4696,7 +4774,7 @@ function renderPlaneacionConfeccion(){
   if(!puedeEditar){
     h += '<div style="display:flex;align-items:center;gap:10px;background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.3);border-radius:10px;padding:10px 16px;margin-bottom:14px;">';
     h += '<span style="font-size:16px;">🔒</span>';
-    h += '<div style="font-size:12px;font-weight:700;color:#f59e0b;">Modo visualización — solo Jhon puede editar este tablero</div>';
+    h += '<div style="font-size:12px;font-weight:700;color:#f59e0b;">Modo visualización — solo Jhon y la Jefa de Producción pueden editar este tablero</div>';
     h += '</div>';
   }
 
@@ -4785,7 +4863,8 @@ function renderPlaneacionConfeccion(){
           // Se puede arrastrar a un satélite en cualquier estado del Kanban — sirve para
           // planear con anticipación. Solo el botón "✅ Asignar a producción" exige que ya
           // esté cortado de verdad (eso lo valida _pconfAplicarAsignacion más abajo).
-          h += _pconfUnitCard(u, {draggable:puedeEditar});
+          var btnAsig = puedeEditar ? '<button data-key="'+esc(u.key)+'" onclick="event.stopPropagation();pconfAbrirAsignar(this.dataset.key)" style="width:100%;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.4);color:#4da3ff;border-radius:6px;padding:5px 8px;cursor:pointer;font-size:10px;font-weight:800;" title="Elegir el taller para esta referencia">🧑‍🏭 Asignar taller</button>' : '';
+          h += _pconfUnitCard(u, {draggable:puedeEditar, buttons:btnAsig});
         });
         h += '</div></details>';
       });
@@ -4869,6 +4948,7 @@ function renderPlaneacionConfeccion(){
         if(puedeEditar){
           btns += '<button data-sat="'+esc(s.id)+'" data-key="'+esc(u.key)+'" onclick="pconfMover(this.dataset.sat,this.dataset.key,-1)" '+(i===0?'disabled':'')+' style="background:none;border:none;color:'+(i===0?'#334155':'#94a3b8')+';font-size:12px;cursor:'+(i===0?'default':'pointer')+';padding:2px 3px;" title="Subir">▲</button>';
           btns += '<button data-sat="'+esc(s.id)+'" data-key="'+esc(u.key)+'" onclick="pconfMover(this.dataset.sat,this.dataset.key,1)" '+(i===units.length-1?'disabled':'')+' style="background:none;border:none;color:'+(i===units.length-1?'#334155':'#94a3b8')+';font-size:12px;cursor:'+(i===units.length-1?'default':'pointer')+';padding:2px 3px;" title="Bajar">▼</button>';
+          btns += '<button data-key="'+esc(u.key)+'" onclick="pconfAbrirAsignar(this.dataset.key)" style="background:none;border:none;color:#4da3ff;font-size:11px;cursor:pointer;padding:2px 3px;" title="Cambiar de taller">⇄</button>';
           btns += '<button data-key="'+esc(u.key)+'" onclick="pconfQuitarDeCola(this.dataset.key)" style="background:none;border:none;color:#f87171;font-size:11px;cursor:pointer;padding:2px 3px;" title="Quitar de la cola">✕</button>';
           if(yaCortado){
             btns += '<button data-key="'+esc(u.key)+'" data-sat="'+esc(s.id)+'" onclick="pconfAsignarProduccion(this.dataset.key,this.dataset.sat)" style="background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.4);color:#34d399;border-radius:5px;padding:3px 8px;cursor:pointer;font-size:10px;font-weight:700;white-space:nowrap;" title="Enlazar con el Kanban de producción">✅ Asignar</button>';
