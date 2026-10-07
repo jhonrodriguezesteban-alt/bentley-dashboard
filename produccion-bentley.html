@@ -1117,7 +1117,7 @@ async function _fbMigrarSiVacio(){
 // abiertas con una versión anterior se recargan solas (esperando a que terminen de guardar).
 // Sin esto, una pestaña vieja olvidada en un computador seguía guardando con la lógica
 // anterior y deshaciendo cambios de todos los demás.
-var APP_VERSION = 20261006.2;
+var APP_VERSION = 20261006.3;
 function _vigilarVersionApp(){
   if(!_fbDb) return;
   _fbDb.ref(FB_ROOT+'/app_version').on('value', function(snap){
@@ -4293,16 +4293,21 @@ function _pconfPoolUnits(){
 // Carga REAL ya asignada a un satélite (lo que ya está en el taller confeccionando),
 // para que al planear se vea la realidad y no solo lo que aún falta por organizar.
 function _pconfCargaRealSatelite(satId){
-  var ESTADOS_EN_TALLER = {ASIGNADO:1, EN_CONFECCION:1, NOVEDAD:1, ALISTAMIENTO:1, ENTREGADO_PARCIAL:1};
+  // ALISTAMIENTO ya NO cuenta: es la prenda devuelta por el taller (la app la trata como
+  // entregada) — dejarla aquí inflaba la carga y hacía ver al taller más lleno de lo real.
+  // ENTREGADO_PARCIAL cuenta solo lo que aún tiene el taller (cantidad − entregadas).
+  var ESTADOS_EN_TALLER = {ASIGNADO:1, EN_CONFECCION:1, NOVEDAD:1, ENTREGADO_PARCIAL:1};
   var map = {};
   (DB.ots||[]).forEach(function(ot){
     if(ot.satelite_id!==satId || !ESTADOS_EN_TALLER[ot.estado]) return;
+    var udsEnPoder = (ot.cantidad||0) - (ot.estado==='ENTREGADO_PARCIAL' ? (ot.unidades_entregadas||0) : 0);
+    if(udsEnPoder<=0) return;
     var op = (DB.ops||[]).find(function(o){ return o.id===ot.op_id; });
     if(!op) return;
     var color = ot.color||'—';
     var key = _planKey(op.id, color);
     if(!map[key]) map[key] = {op:op, color:color, uds:0, key:key, estado:_planEstadoColor(op,color)};
-    map[key].uds += (ot.cantidad||0);
+    map[key].uds += udsEnPoder;
   });
   return Object.keys(map).map(function(k){ return map[k]; });
 }
@@ -4875,8 +4880,48 @@ function renderPlaneacionConfeccion(){
 
   // ── Grid de satélites — carga real ya en el taller + cola de planeación ─────
   var satelites = (DB.satelites||[]).filter(function(s){ return s.activo; });
-  h += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">';
+
+  // Cola limpia: una referencia que ya pasó a producción (En Confección en adelante, o con
+  // todas sus OTs ya con taller) ya NO es "en cola" — está en "Ya en el taller" o ya se
+  // entregó. Se saca de la cola para no contarla dos veces ni hacer ver al taller ocupado.
+  var _ESTADOS_COLA = {POR_REVISAR:1, PENDIENTE_CORTAR:1, CORTE_POR_ALISTAR:1};
+  var _colaConsumida = function(k){
+    var u = fullMapByKey[k];
+    if(!u) return !mapByKey[k]; // ya no existe (archivada / entregada del todo)
+    if(!_ESTADOS_COLA[u.estado]) return true;
+    var otsC = (DB.ots||[]).filter(function(o){ return o.op_id===u.op.id && (o.color||'—')===u.color; });
+    return otsC.length>0 && otsC.every(function(o){ return !!o.satelite_id && o.estado!=='CORTE_POR_ALISTAR' && o.estado!=='PENDIENTE_CORTAR' && o.estado!=='POR_REVISAR'; });
+  };
+  var _limpias = 0;
+  Object.keys(porSat).forEach(function(sid){
+    var antes = (porSat[sid]||[]).length;
+    var despues = (porSat[sid]||[]).filter(function(k){ return !_colaConsumida(k); });
+    if(despues.length!==antes){ _limpias += antes-despues.length; if(puedeEditar) porSat[sid] = despues; }
+  });
+  if(_limpias && puedeEditar) guardarPlaneacionConfeccion();
+
+  // Carga de cada taller (con el mismo filtro de mes) para ordenarlos de MÁS a MENOS
+  // producción en su poder: primero lo que ya tiene en el taller, luego lo que tiene en cola.
+  var _cargaSat = {};
+  satelites.forEach(function(s){
+    var ks = (porSat[s.id]||[]).filter(function(k){ return (fullMapByKey[k] || mapByKey[k]) && !_colaConsumida(k); });
+    var us = ks.map(function(k){ return fullMapByKey[k] || mapByKey[k]; });
+    var cr = _pconfCargaRealSatelite(s.id);
+    if(_pconfFiltroMes){
+      var fm = function(u){ var m = assignedSet[u.key]||''; return _pconfFiltroMes==='sin_mes' ? !m : m===_pconfFiltroMes; };
+      us = us.filter(fm); cr = cr.filter(fm);
+    }
+    var real = cr.reduce(function(a,u){ return a+u.uds; },0), cola = us.reduce(function(a,u){ return a+u.uds; },0);
+    _cargaSat[s.id] = {real:real, cola:cola, total:real+cola};
+  });
+  satelites.sort(function(a,b){
+    var A=_cargaSat[a.id], B=_cargaSat[b.id];
+    return (B.total-A.total) || (B.real-A.real) || String(a.nombre||'').localeCompare(String(b.nombre||''));
+  });
+
+  h += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;">';
   h += '<div style="font-size:13px;font-weight:800;color:#e2e8f0;">🧑‍🏭 Talleres</div>';
+  h += '<div style="font-size:10px;color:#64748b;">Ordenados de más a menos carga (en el taller + en cola)'+(_limpias?' · <span style="color:#34d399;">'+_limpias+' ref. ya en producción salieron de la cola</span>':'')+'</div>';
   h += '<div style="position:relative;">';
   h += '<span style="position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:12px;pointer-events:none;">🔍</span>';
   h += '<input type="text" value="'+esc(_pconfBusqSat)+'" oninput="_pconfBusqSat=this.value;_pconfFiltrarSat()" placeholder="Buscar satélite..." style="background:#0d1117;border:1px solid #2c2c2e;border-radius:6px;color:var(--text);padding:6px 10px 6px 28px;font-size:12px;width:200px;outline:none;">';
@@ -4886,7 +4931,7 @@ function renderPlaneacionConfeccion(){
   satelites.forEach(function(s){
     // Resuelve contra el universo completo (cualquier estado) — limpia solo lo que ya
     // no existe en absoluto (OP archivada, color entregado del todo, etc.)
-    var keys = (porSat[s.id]||[]).filter(function(k){ return fullMapByKey[k] || mapByKey[k]; });
+    var keys = (porSat[s.id]||[]).filter(function(k){ return (fullMapByKey[k] || mapByKey[k]) && !_colaConsumida(k); });
     var units = keys.map(function(k){ return fullMapByKey[k] || mapByKey[k]; });
     var cargaReal = _pconfCargaRealSatelite(s.id);
     // Mismo filtro de mes que arriba — aplicado tanto a la cola de planeación como a lo
@@ -4905,8 +4950,9 @@ function renderPlaneacionConfeccion(){
     h += '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">';
     h += '<div data-sat="'+esc(s.id)+'" onclick="verResumenSatelite(this.dataset.sat)" style="font-size:12px;font-weight:800;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0;cursor:pointer;" onmouseover="this.style.textDecoration=\'underline\'" onmouseout="this.style.textDecoration=\'none\'" title="Ver resumen completo y compartir por WhatsApp">🧑‍🏭 '+esc(s.nombre)+'</div>';
     h += '<div style="text-align:right;flex-shrink:0;">';
-    h += '<div style="font-size:16px;font-weight:900;color:'+(units.length?'#34d399':'#334155')+';line-height:1;">'+udsCola.toLocaleString('es-CO')+'<span style="font-size:9px;font-weight:700;color:#64748b;margin-left:2px;">uds</span></div>';
-    h += '<div style="font-size:9px;color:#64748b;white-space:nowrap;">'+units.length+' ref. en cola</div>';
+    var _tot = udsReal+udsCola;
+    h += '<div style="font-size:16px;font-weight:900;color:'+(_tot?'#e2e8f0':'#334155')+';line-height:1;">'+_tot.toLocaleString('es-CO')+'<span style="font-size:9px;font-weight:700;color:#64748b;margin-left:2px;">uds</span></div>';
+    h += '<div style="font-size:9px;color:#64748b;white-space:nowrap;"><span style="color:#fbbf24;">'+udsReal.toLocaleString('es-CO')+' taller</span> · <span style="color:#34d399;">'+udsCola.toLocaleString('es-CO')+' cola</span></div>';
     h += '</div>';
     h += '</div>';
     if(cargaReal.length){
