@@ -1117,7 +1117,7 @@ async function _fbMigrarSiVacio(){
 // abiertas con una versión anterior se recargan solas (esperando a que terminen de guardar).
 // Sin esto, una pestaña vieja olvidada en un computador seguía guardando con la lógica
 // anterior y deshaciendo cambios de todos los demás.
-var APP_VERSION = 20261006.3;
+var APP_VERSION = 20261006.4;
 function _vigilarVersionApp(){
   if(!_fbDb) return;
   _fbDb.ref(FB_ROOT+'/app_version').on('value', function(snap){
@@ -1163,6 +1163,9 @@ async function _iniciarListenersFirebase(){
         _fbVerVisto[key] = d._v3ts;
       }
       _fbApplyKey(key, d);
+      // Cambio de OTs/OPs hecho por otra persona (ej. Paula asigna taller): la planeación se
+      // ajusta sola. Solo lo ejecutan los editores de Planeación para no multiplicar escrituras.
+      if((key==='ots' || key==='ops') && _canEditPlan()) _planReconciliarProgramar(3000);
       saveLocal();
       updateNovBadge();
       renderPage(currentPage);
@@ -2161,6 +2164,7 @@ async function _guardarArchivoCore(key, data){
         var res = await putR.json();
         if(res.content && res.content.sha) _fileShas[key] = res.content.sha;
         _setSyncBase(key, savedStr); // lo que quedó en el servidor pasa a ser la nueva base
+        if(key==='ots' || key==='ops') _planReconciliarProgramar(1500);
         _saving[key] = false;
         // Broadcast instantáneo a otras pestañas del mismo dispositivo
         if(_bc) try{ _bc.postMessage({type:'db_update', key:key, data: key==='ops'?DB.ops : key==='ots'?DB.ots : key==='satelites'?DB.satelites : key==='disenos'?{disenos:DB.disenos,disenos_cfg:DB.disenos_cfg} : key==='prog_ops'?DB.prog_ops : DB.costos_mo}); }catch(e){}
@@ -2770,6 +2774,7 @@ async function cargarDatos(){
     // ────────────────────────────────────────────────────────────────────────
     var msg = 'Datos cargados: ' + DB.ops.length + ' OPs, ' + DB.ots.length + ' OTs, ' + CATALOGO.length + ' refs SKU';
     toast(msg, 'success');
+    _planReconciliarProgramar(2500);
   } catch(e){
     // Intentar Firebase antes de caer a localStorage
     var fbLoaded = false;
@@ -2807,6 +2812,7 @@ async function cargarDatos(){
           try { await _repararSubgEstados(true); } catch(re){}
           saveLocal();
           fbLoaded = true;
+          _planReconciliarProgramar(2500);
           // Solo actualizar el indicador de sync, sin toast alarmante
           var si = document.getElementById('sync-time');
           if(si){ si.textContent = '⚡ Firebase'; si.style.color = '#38bdf8'; }
@@ -4312,6 +4318,123 @@ function _pconfCargaRealSatelite(satId){
   return Object.keys(map).map(function(k){ return map[k]; });
 }
 
+// ══ Reconciliación AUTÓNOMA de la planeación con la realidad de producción ══════════
+// La planeación (meses de corte + cola por taller) es un plan; la realidad la mueven las
+// OTs. Esta función ajusta el plan sola, sin que nadie tenga que moverlo a mano:
+//  • Si a una referencia ya se le asignó taller en las OTs y es OTRO taller distinto al
+//    planeado → se pasa a la cola de ese taller (los cambios de último momento son normales).
+//  • Si se le asignó taller en OTs y no estaba en ninguna cola → se agrega a la de ese taller.
+//  • Si ya está en confección / alistamiento / pago pendiente / entregada (o la OP se
+//    archivó) → sale de la cola y de los meses de Planeación (queda en el historial de corte).
+// Corre al cargar la app, después de guardar OTs/OPs y cuando llega un cambio en vivo.
+var _planRecTimer = null, _planRecCorriendo = false;
+function _planReconciliarProgramar(ms){
+  clearTimeout(_planRecTimer);
+  _planRecTimer = setTimeout(function(){ try{ _planReconciliarAuto(); }catch(e){ console.warn('[planRec]', e); } }, ms||1500);
+}
+function _planReconciliarAuto(){
+  if(_planRecCorriendo || !getCurrentUserId()) return false;
+  if(!(DB.ops||[]).length || !(DB.ots||[]).length) return false; // datos incompletos: no tocar nada
+  if(_saving['planeacion'] || _saving['planeacion_confeccion']){ _planReconciliarProgramar(2000); return false; }
+  _planRecCorriendo = true;
+  try{
+    var norm = function(c){ return String(c||'—').trim().toUpperCase(); };
+    var opById = {}; DB.ops.forEach(function(o){ if(o) opById[o.id]=o; });
+    var otsBy = {};
+    DB.ots.forEach(function(o){ if(!o||!o.op_id) return; var k=o.op_id+'||'+norm(o.color); (otsBy[k]=otsBy[k]||[]).push(o); });
+    var PRE = {POR_REVISAR:1, PENDIENTE_CORTAR:1, CORTE_POR_ALISTAR:1};
+    var info = function(key){
+      var p = _planParseKey(key); var op = opById[p.opId];
+      if(!op || op.estado_op==='ARCHIVADO') return null;
+      var cols = (op.colores&&op.colores.length) ? op.colores.map(norm) : ['—'];
+      if(cols.indexOf(norm(p.color))<0) return null;
+      return {op:op, color:p.color, estado:_planEstadoColor(op, p.color), ots:otsBy[op.id+'||'+norm(p.color)]||[]};
+    };
+    var satMayoritario = function(ots){
+      var c = {}; ots.forEach(function(o){ if(o.satelite_id) c[o.satelite_id]=(c[o.satelite_id]||0)+(o.cantidad||1); });
+      var best=null; Object.keys(c).forEach(function(k){ if(!best || c[k]>c[best]) best=k; }); return best;
+    };
+    var satActivo = {}; (DB.satelites||[]).forEach(function(x){ satActivo[x.id]=true; });
+    var log = [];
+
+    // 1) Cola por taller (Planeación de Confección)
+    if(!DB.planeacion_confeccion) DB.planeacion_confeccion = {por_satelite:{}};
+    var ps = DB.planeacion_confeccion.por_satelite || {};
+    var nuevo = {}, visto = {}, cambioPC = false;
+    Object.keys(ps).forEach(function(sid){ if(!nuevo[sid]) nuevo[sid]=[]; });
+    Object.keys(ps).forEach(function(sid){
+      (ps[sid]||[]).forEach(function(k){
+        if(visto[k]){ cambioPC = true; return; } // duplicada en dos talleres
+        visto[k] = true;
+        var i = info(k);
+        if(!i){ cambioPC = true; log.push('quitada (ya no existe) '+k); return; }
+        var enProduccion = !PRE[i.estado] || (i.ots.length && i.ots.every(function(o){ return o.satelite_id && !PRE[o.estado]; }));
+        if(enProduccion){ cambioPC = true; log.push('sale de cola ('+i.estado+') '+k); return; }
+        var real = satMayoritario(i.ots);
+        var dest = (real && satActivo[real] && real!==sid) ? real : sid;
+        if(dest!==sid){ cambioPC = true; log.push('movida '+k+': '+getSatNombre(sid)+' → '+getSatNombre(dest)); }
+        (nuevo[dest]=nuevo[dest]||[]).push(k);
+      });
+    });
+    // Taller asignado en OTs (todavía sin pasar a confección) que no estaba planeado → a su cola
+    DB.ops.forEach(function(op){
+      if(!op || op.estado_op==='ARCHIVADO') return;
+      ((op.colores&&op.colores.length)?op.colores:['—']).forEach(function(color){
+        var k = _planKey(op.id, color);
+        if(visto[k]) return;
+        var ots = otsBy[op.id+'||'+norm(color)]||[];
+        var conTallerPre = ots.filter(function(o){ return o.satelite_id && PRE[o.estado]; });
+        if(!conTallerPre.length) return;
+        if(!PRE[_planEstadoColor(op, color)]) return;
+        var sat = satMayoritario(conTallerPre);
+        if(!sat || !satActivo[sat]) return;
+        (nuevo[sat]=nuevo[sat]||[]).push(k); visto[k] = true; cambioPC = true;
+        log.push('agregada a cola de '+getSatNombre(sat)+' '+k);
+      });
+    });
+
+    // 2) Meses de Planeación (corte): lo que ya se cortó/avanzó sale del mes → historial
+    if(!DB.planeacion) DB.planeacion = {meses:{}, disenos_plan:{}, historial_corte:[], confirmadas:{}, trazos:{}};
+    var meses = DB.planeacion.meses || {};
+    if(!DB.planeacion.historial_corte) DB.planeacion.historial_corte = [];
+    var hist = DB.planeacion.historial_corte, histK = {}; hist.forEach(function(x){ histK[x.key]=true; });
+    var mesesNuevo = {}, cambioPL = false;
+    Object.keys(meses).forEach(function(mk){
+      var arr = meses[mk]||[];
+      mesesNuevo[mk] = arr.filter(function(k){
+        if(String(k).indexOf('||')<0) return true; // formato viejo: lo migra la vista de Planeación
+        var i = info(k);
+        if(!i){ cambioPL = true; return false; }
+        if(i.estado==='POR_REVISAR' || i.estado==='PENDIENTE_CORTAR') return true;
+        cambioPL = true;
+        if(!histK[k]){
+          hist.push({key:k, op_id:i.op.id, op_nombre:i.op.nombre_producto, categoria:i.op.categoria, color:i.color,
+                     uds:_planColorUdsHistorico(i.op, i.color), mes_planeado:mk, estado_al_salir:i.estado, fecha_deteccion:hoy()});
+          histK[k] = true;
+        }
+        log.push('sale de '+mk+' ('+i.estado+') '+k);
+        return false;
+      });
+    });
+
+    if(cambioPC){
+      Object.keys(nuevo).forEach(function(sid){ if(!nuevo[sid].length && !(ps[sid]||[]).length) delete nuevo[sid]; });
+      DB.planeacion_confeccion.por_satelite = nuevo;
+      guardarPlaneacionConfeccion();
+    }
+    if(cambioPL){
+      DB.planeacion.meses = mesesNuevo;
+      guardarArchivo('planeacion', {meses:DB.planeacion.meses, disenos_plan:DB.planeacion.disenos_plan||{}, historial_corte:DB.planeacion.historial_corte||[], confirmadas:DB.planeacion.confirmadas||{}, trazos:DB.planeacion.trazos||{}});
+    }
+    if(cambioPC || cambioPL){
+      saveLocal();
+      console.log('[planRec] ajustes automáticos:', log);
+      if(currentPage==='planconf' || currentPage==='planeacion') renderPage(currentPage);
+    }
+    return cambioPC || cambioPL;
+  } finally { _planRecCorriendo = false; }
+}
+
 function guardarPlaneacionConfeccion(){
   if(!DB.planeacion_confeccion) DB.planeacion_confeccion = {por_satelite:{}};
   return guardarArchivo('planeacion_confeccion', {por_satelite: DB.planeacion_confeccion.por_satelite||{}});
@@ -4896,9 +5019,9 @@ function renderPlaneacionConfeccion(){
   Object.keys(porSat).forEach(function(sid){
     var antes = (porSat[sid]||[]).length;
     var despues = (porSat[sid]||[]).filter(function(k){ return !_colaConsumida(k); });
-    if(despues.length!==antes){ _limpias += antes-despues.length; if(puedeEditar) porSat[sid] = despues; }
+    if(despues.length!==antes){ _limpias += antes-despues.length; }
   });
-  if(_limpias && puedeEditar) guardarPlaneacionConfeccion();
+  if(_limpias) _planReconciliarProgramar(800);
 
   // Carga de cada taller (con el mismo filtro de mes) para ordenarlos de MÁS a MENOS
   // producción en su poder: primero lo que ya tiene en el taller, luego lo que tiene en cola.
