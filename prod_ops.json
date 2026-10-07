@@ -1487,33 +1487,33 @@
         "BEIGE_T12": 17,
         "BEIGE_T14": 17,
         "BEIGE_T16": 17,
-        "MORA LECHE_T4": 12,
-        "MORA LECHE_T6": 12,
-        "MORA LECHE_T8": 12,
         "MORA LECHE_T10": 12,
         "MORA LECHE_T12": 12,
         "MORA LECHE_T14": 12,
         "MORA LECHE_T16": 12,
-        "NEGRO_T4": 13,
-        "NEGRO_T6": 13,
-        "NEGRO_T8": 13,
+        "MORA LECHE_T4": 12,
+        "MORA LECHE_T6": 12,
+        "MORA LECHE_T8": 12,
         "NEGRO_T10": 13,
         "NEGRO_T12": 13,
         "NEGRO_T14": 13,
         "NEGRO_T16": 13,
-        "VERDE MILITAR_T4": 10,
-        "VERDE MILITAR_T8": 10,
+        "NEGRO_T4": 13,
+        "NEGRO_T6": 13,
+        "NEGRO_T8": 13,
         "VERDE MILITAR_T10": 13,
         "VERDE MILITAR_T12": 13,
         "VERDE MILITAR_T14": 13,
         "VERDE MILITAR_T16": 13,
-        "VINOTINTO_T4": 24,
-        "VINOTINTO_T6": 13,
-        "VINOTINTO_T8": 13,
+        "VERDE MILITAR_T4": 10,
+        "VERDE MILITAR_T8": 10,
         "VINOTINTO_T10": 13,
         "VINOTINTO_T12": 13,
         "VINOTINTO_T14": 13,
-        "VINOTINTO_T16": 13
+        "VINOTINTO_T16": 13,
+        "VINOTINTO_T4": 24,
+        "VINOTINTO_T6": 13,
+        "VINOTINTO_T8": 13
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -1573,10 +1573,40 @@
       "numero": 33,
       "referencias": [
         {
-          "nombre": "OVERSIZED CAPOTA",
-          "ref": "",
+          "cantidades": {
+            "BEIGE_T10": 17,
+            "BEIGE_T12": 17,
+            "BEIGE_T14": 17,
+            "BEIGE_T16": 17,
+            "MORA LECHE_T10": 12,
+            "MORA LECHE_T12": 12,
+            "MORA LECHE_T14": 12,
+            "MORA LECHE_T16": 12,
+            "MORA LECHE_T4": 12,
+            "MORA LECHE_T6": 12,
+            "MORA LECHE_T8": 12,
+            "NEGRO_T10": 13,
+            "NEGRO_T12": 13,
+            "NEGRO_T14": 13,
+            "NEGRO_T16": 13,
+            "NEGRO_T4": 13,
+            "NEGRO_T6": 13,
+            "NEGRO_T8": 13,
+            "VERDE MILITAR_T10": 13,
+            "VERDE MILITAR_T12": 13,
+            "VERDE MILITAR_T14": 13,
+            "VERDE MILITAR_T16": 13,
+            "VERDE MILITAR_T4": 10,
+            "VERDE MILITAR_T8": 10,
+            "VINOTINTO_T10": 13,
+            "VINOTINTO_T12": 13,
+            "VINOTINTO_T14": 13,
+            "VINOTINTO_T16": 13,
+            "VINOTINTO_T4": 24,
+            "VINOTINTO_T6": 13,
+            "VINOTINTO_T8": 13
+          },
           "cat": "CHAQUETAS",
-          "vmo": 1151,
           "colores": [
             "BEIGE",
             "MORA LECHE",
@@ -1584,6 +1614,9 @@
             "VERDE MILITAR",
             "VINOTINTO"
           ],
+          "maquilador_id": "",
+          "nombre": "OVERSIZED CAPOTA",
+          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -1593,40 +1626,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "BEIGE_T10": 17,
-            "BEIGE_T12": 17,
-            "BEIGE_T14": 17,
-            "BEIGE_T16": 17,
-            "MORA LECHE_T4": 12,
-            "MORA LECHE_T6": 12,
-            "MORA LECHE_T8": 12,
-            "MORA LECHE_T10": 12,
-            "MORA LECHE_T12": 12,
-            "MORA LECHE_T14": 12,
-            "MORA LECHE_T16": 12,
-            "NEGRO_T4": 13,
-            "NEGRO_T6": 13,
-            "NEGRO_T8": 13,
-            "NEGRO_T10": 13,
-            "NEGRO_T12": 13,
-            "NEGRO_T14": 13,
-            "NEGRO_T16": 13,
-            "VERDE MILITAR_T4": 10,
-            "VERDE MILITAR_T8": 10,
-            "VERDE MILITAR_T10": 13,
-            "VERDE MILITAR_T12": 13,
-            "VERDE MILITAR_T14": 13,
-            "VERDE MILITAR_T16": 13,
-            "VINOTINTO_T4": 24,
-            "VINOTINTO_T6": 13,
-            "VINOTINTO_T8": 13,
-            "VINOTINTO_T10": 13,
-            "VINOTINTO_T12": 13,
-            "VINOTINTO_T14": 13,
-            "VINOTINTO_T16": 13
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
@@ -1656,9 +1656,7 @@
           "solicitud_id": "id_1789587664861_rcstc8182"
         }
       ],
-      "updated_at": "2026-10-07",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-10-07"
     },
     {
       "cantidades": {
@@ -2371,7 +2369,7 @@
         }
       ],
       "subg_estados": {
-        "OP-0040||CAMEL": "CORTE_POR_ALISTAR",
+        "OP-0040||CAMEL": "EN_CONFECCION",
         "OP-0040||MARFIL": "CORTE_POR_ALISTAR",
         "OP-0040||NEGRO": "CORTE_POR_ALISTAR",
         "OP-0040||ROSA 613": "CORTE_POR_ALISTAR"
@@ -3592,7 +3590,7 @@
         "OP-0059||AVENA": "CORTE_POR_ALISTAR",
         "OP-0059||CAFE": "CORTE_POR_ALISTAR",
         "OP-0059||GRIS OSCURO": "CORTE_POR_ALISTAR",
-        "OP-0059||MARFIL": "CORTE_POR_ALISTAR",
+        "OP-0059||MARFIL": "EN_CONFECCION",
         "OP-0059||VINOTINTO": "CORTE_POR_ALISTAR"
       },
       "tallas": [
@@ -6206,18 +6204,18 @@
     },
     {
       "cantidades": {
-        "ROSA_T6": 12,
-        "ROSA_T8": 12,
+        "MARFIL_T10": 20,
+        "MARFIL_T12": 42,
+        "MARFIL_T14": 42,
+        "MARFIL_T16": 42,
+        "MARFIL_T6": 20,
+        "MARFIL_T8": 20,
         "ROSA_T10": 12,
         "ROSA_T12": 16,
         "ROSA_T14": 16,
         "ROSA_T16": 16,
-        "MARFIL_T6": 20,
-        "MARFIL_T8": 20,
-        "MARFIL_T10": 20,
-        "MARFIL_T12": 42,
-        "MARFIL_T14": 42,
-        "MARFIL_T16": 42
+        "ROSA_T6": 12,
+        "ROSA_T8": 12
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -6225,14 +6223,14 @@
         "MARFIL"
       ],
       "consumibles_check": {
+        "rec_chaqueta_onion_1165__c43_19||MARFIL": true,
         "rec_chaqueta_onion_1165__c43_19||ROSA": true,
         "rec_chaqueta_onion_1165__c43_20": true,
         "rec_chaqueta_onion_1165__c43_21": true,
         "rec_chaqueta_onion_1165__c43_22": true,
         "rec_chaqueta_onion_1165__c43_23": true,
         "rec_chaqueta_onion_1165__c43_27": true,
-        "rec_chaqueta_onion_1165__c43_28": true,
-        "rec_chaqueta_onion_1165__c43_19||MARFIL": true
+        "rec_chaqueta_onion_1165__c43_28": true
       },
       "consumibles_desagregado": {
         "rec_chaqueta_onion_1165__c43_19": true
@@ -6249,14 +6247,28 @@
       "receta_nombre": "CHAQUETA ONION - REF: 1165",
       "referencias": [
         {
-          "nombre": "CHAQUETA MARIPOSAS",
-          "ref": "1166",
+          "cantidades": {
+            "MARFIL_T10": 20,
+            "MARFIL_T12": 42,
+            "MARFIL_T14": 42,
+            "MARFIL_T16": 42,
+            "MARFIL_T6": 20,
+            "MARFIL_T8": 20,
+            "ROSA_T10": 12,
+            "ROSA_T12": 16,
+            "ROSA_T14": 16,
+            "ROSA_T16": 16,
+            "ROSA_T6": 12,
+            "ROSA_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 9000,
           "colores": [
             "ROSA",
             "MARFIL"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA MARIPOSAS",
+          "ref": "1166",
           "tallas": [
             "T6",
             "T8",
@@ -6265,21 +6277,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "ROSA_T6": 12,
-            "ROSA_T8": 12,
-            "ROSA_T10": 12,
-            "ROSA_T12": 16,
-            "ROSA_T14": 16,
-            "ROSA_T16": 16,
-            "MARFIL_T6": 20,
-            "MARFIL_T8": 20,
-            "MARFIL_T10": 20,
-            "MARFIL_T12": 42,
-            "MARFIL_T14": 42,
-            "MARFIL_T16": 42
-          },
-          "maquilador_id": ""
+          "vmo": 9000
         }
       ],
       "subg_estados": {
@@ -6305,9 +6303,7 @@
           "solicitud_id": "id_1790791093528_rig3s8h36"
         }
       ],
-      "updated_at": "2026-10-07",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-10-07"
     },
     {
       "cantidades": {
@@ -7202,18 +7198,18 @@
     },
     {
       "cantidades": {
-        "NEGRO_T6": 10,
-        "NEGRO_T8": 17,
+        "BEIGE_T10": 13,
+        "BEIGE_T12": 13,
+        "BEIGE_T14": 13,
+        "BEIGE_T16": 30,
+        "BEIGE_T6": 11,
+        "BEIGE_T8": 13,
         "NEGRO_T10": 17,
         "NEGRO_T12": 17,
         "NEGRO_T14": 17,
         "NEGRO_T16": 20,
-        "BEIGE_T6": 11,
-        "BEIGE_T8": 13,
-        "BEIGE_T10": 13,
-        "BEIGE_T12": 13,
-        "BEIGE_T14": 13,
-        "BEIGE_T16": 30
+        "NEGRO_T6": 10,
+        "NEGRO_T8": 17
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -7248,14 +7244,28 @@
       "receta_nombre": "CHAQUETA HARLEY - REF: 1107",
       "referencias": [
         {
-          "nombre": "CHAQUETA HARLEY",
-          "ref": "1107",
+          "cantidades": {
+            "BEIGE_T10": 13,
+            "BEIGE_T12": 13,
+            "BEIGE_T14": 13,
+            "BEIGE_T16": 30,
+            "BEIGE_T6": 11,
+            "BEIGE_T8": 13,
+            "NEGRO_T10": 17,
+            "NEGRO_T12": 17,
+            "NEGRO_T14": 17,
+            "NEGRO_T16": 20,
+            "NEGRO_T6": 10,
+            "NEGRO_T8": 17
+          },
           "cat": "CHAQUETAS",
-          "vmo": 8934,
           "colores": [
             "NEGRO",
             "BEIGE"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA HARLEY",
+          "ref": "1107",
           "tallas": [
             "T6",
             "T8",
@@ -7264,21 +7274,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 17,
-            "NEGRO_T10": 17,
-            "NEGRO_T12": 17,
-            "NEGRO_T14": 17,
-            "NEGRO_T16": 20,
-            "BEIGE_T6": 11,
-            "BEIGE_T8": 13,
-            "BEIGE_T10": 13,
-            "BEIGE_T12": 13,
-            "BEIGE_T14": 13,
-            "BEIGE_T16": 30
-          },
-          "maquilador_id": ""
+          "vmo": 8934
         }
       ],
       "subg_estados": {
@@ -7304,18 +7300,16 @@
           "solicitud_id": "id_1789489631878_p4wwqdwyf"
         }
       ],
-      "updated_at": "2026-10-07",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-10-07"
     },
     {
       "cantidades": {
-        "ROSA_T6": 12,
-        "ROSA_T8": 12,
         "ROSA_T10": 12,
         "ROSA_T12": 19,
         "ROSA_T14": 19,
-        "ROSA_T16": 19
+        "ROSA_T16": 19,
+        "ROSA_T6": 12,
+        "ROSA_T8": 12
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -7348,13 +7342,21 @@
       "receta_id": "cid_1783366904861_1111",
       "referencias": [
         {
-          "nombre": "CHAQUETA MARIPOSAS",
-          "ref": "1166",
+          "cantidades": {
+            "ROSA_T10": 12,
+            "ROSA_T12": 19,
+            "ROSA_T14": 19,
+            "ROSA_T16": 19,
+            "ROSA_T6": 12,
+            "ROSA_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 9000,
           "colores": [
             "ROSA"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA MARIPOSAS",
+          "ref": "1166",
           "tallas": [
             "T6",
             "T8",
@@ -7363,15 +7365,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "ROSA_T6": 12,
-            "ROSA_T8": 12,
-            "ROSA_T10": 12,
-            "ROSA_T12": 19,
-            "ROSA_T14": 19,
-            "ROSA_T16": 19
-          },
-          "maquilador_id": ""
+          "vmo": 9000
         }
       ],
       "subg_estados": {
@@ -7396,9 +7390,7 @@
           "solicitud_id": "id_1790790785574_ybm00p4xb"
         }
       ],
-      "updated_at": "2026-10-07",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-10-07"
     },
     {
       "cantidades": {
@@ -10044,7 +10036,7 @@
       "subg_estados": {
         "OP-2026-126||AZUL OSCURO": "EN_CONFECCION",
         "OP-2026-126||LILA": "PAGO_PENDIENTE",
-        "OP-2026-126||ROSA": "EN_CONFECCION",
+        "OP-2026-126||ROSA": "PAGO_PENDIENTE",
         "OP-2026-126||VERDE MILITAR": "EN_CONFECCION"
       },
       "tallas": [
@@ -10384,15 +10376,15 @@
       "consumibles_check": {
         "cid_1783366904861_1111__cid_1783366904861_2164": true,
         "cid_1783366904861_1111__cid_1783366904861_3201": true,
+        "cid_1783366904861_1111__cid_1783366904861_3961||MARFIL": true,
         "cid_1783366904861_1111__cid_1783366904861_4234": true,
         "cid_1783366904861_1111__cid_1783366904861_5819": true,
         "cid_1783366904861_1111__cid_1783366904861_6993||MARFIL": true,
-        "cid_1783366904861_1111__cid_1783366904861_9378": true,
-        "cid_1783366904861_1111__cid_1783366904861_3961||MARFIL": true
+        "cid_1783366904861_1111__cid_1783366904861_9378": true
       },
       "consumibles_desagregado": {
-        "cid_1783366904861_1111__cid_1783366904861_6993": true,
-        "cid_1783366904861_1111__cid_1783366904861_3961": true
+        "cid_1783366904861_1111__cid_1783366904861_3961": true,
+        "cid_1783366904861_1111__cid_1783366904861_6993": true
       },
       "cortador": "Corte Carbajal",
       "created_at": "2026-08-25",
@@ -15319,40 +15311,56 @@
       ]
     },
     {
-      "id": "OP-2026-237",
-      "numero": 237,
-      "fecha_op": "2026-10-07",
-      "cortador": "Corte Carbajal",
-      "categoria": "CHAQUETAS",
-      "nombre_producto": "OVERSIZED CAPOTA",
-      "colores": [
-        "VINOTINTO"
-      ],
-      "tallas": [
-        "T6",
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
       "cantidades": {
-        "VINOTINTO_T6": 21,
-        "VINOTINTO_T8": 21,
         "VINOTINTO_T10": 21,
         "VINOTINTO_T12": 21,
         "VINOTINTO_T14": 21,
-        "VINOTINTO_T16": 21
+        "VINOTINTO_T16": 21,
+        "VINOTINTO_T6": 21,
+        "VINOTINTO_T8": 21
       },
+      "categoria": "CHAQUETAS",
+      "colores": [
+        "VINOTINTO"
+      ],
+      "consumibles_check": {
+        "rec_oversized_capota_1058__c82_20": true,
+        "rec_oversized_capota_1058__c82_21": true,
+        "rec_oversized_capota_1058__c82_22": true,
+        "rec_oversized_capota_1058__c82_23": true,
+        "rec_oversized_capota_1058__c82_24": true,
+        "rec_oversized_capota_1058__c82_25": true,
+        "rec_oversized_capota_1058__c82_28": true,
+        "rec_oversized_capota_1058__c82_30": true,
+        "rec_oversized_capota_1058__c82_31": true
+      },
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-10-07",
+      "created_by": "Jefa de Producción",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-10-07",
+      "id": "OP-2026-237",
+      "nombre_producto": "OVERSIZED CAPOTA",
+      "numero": 237,
+      "receta_id": "rec_oversized_capota_1058",
+      "receta_nombre": "OVERSIZED CAPOTA - REF: 1058",
       "referencias": [
         {
-          "nombre": "OVERSIZED CAPOTA",
-          "ref": "1058",
+          "cantidades": {
+            "VINOTINTO_T10": 21,
+            "VINOTINTO_T12": 21,
+            "VINOTINTO_T14": 21,
+            "VINOTINTO_T16": 21,
+            "VINOTINTO_T6": 21,
+            "VINOTINTO_T8": 21
+          },
           "cat": "CHAQUETAS",
-          "vmo": 10510,
           "colores": [
             "VINOTINTO"
           ],
+          "maquilador_id": "",
+          "nombre": "OVERSIZED CAPOTA",
+          "ref": "1058",
           "tallas": [
             "T6",
             "T8",
@@ -15361,38 +15369,21 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "VINOTINTO_T6": 21,
-            "VINOTINTO_T8": 21,
-            "VINOTINTO_T10": 21,
-            "VINOTINTO_T12": 21,
-            "VINOTINTO_T14": 21,
-            "VINOTINTO_T16": 21
-          },
           "totalUds": 126,
-          "maquilador_id": ""
+          "vmo": 10510
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-10-07",
-      "created_by": "Jefa de Producción",
-      "receta_id": "rec_oversized_capota_1058",
-      "receta_nombre": "OVERSIZED CAPOTA - REF: 1058",
-      "consumibles_check": {
-        "rec_oversized_capota_1058__c82_21": true,
-        "rec_oversized_capota_1058__c82_22": true,
-        "rec_oversized_capota_1058__c82_20": true,
-        "rec_oversized_capota_1058__c82_23": true,
-        "rec_oversized_capota_1058__c82_24": true,
-        "rec_oversized_capota_1058__c82_25": true,
-        "rec_oversized_capota_1058__c82_28": true,
-        "rec_oversized_capota_1058__c82_30": true,
-        "rec_oversized_capota_1058__c82_31": true
-      },
       "subg_estados": {
         "OP-2026-237||VINOTINTO": "EN_CONFECCION"
-      }
+      },
+      "tallas": [
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ]
     }
   ]
 }
