@@ -28518,20 +28518,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MARFIL",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1791404343984_e26wz",
-      "ts": 1791404343984,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-130",
       "op_nombre": "CHAQUETA MARIPOSAS",
       "referencia": "CHAQUETA MARIPOSAS",
-      "color": "MARFIL",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1791404343984,
       "uds": 120,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1791404437398_03zi6",
+      "ts": 1791404437398,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-089",
+      "nombre": "CHAQUETA MARIPOSAS",
+      "categoria": "CHAQUETAS",
+      "colores": 2,
+      "refs": 1
     }
   ]
 }
