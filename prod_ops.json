@@ -7304,23 +7304,16 @@
     },
     {
       "cantidades": {
-        "MARFIL_T10": 12,
-        "MARFIL_T12": 16,
-        "MARFIL_T14": 16,
-        "MARFIL_T16": 16,
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 12,
+        "ROSA_T6": 12,
+        "ROSA_T8": 12,
         "ROSA_T10": 12,
         "ROSA_T12": 19,
         "ROSA_T14": 19,
-        "ROSA_T16": 19,
-        "ROSA_T6": 12,
-        "ROSA_T8": 12
+        "ROSA_T16": 19
       },
       "categoria": "CHAQUETAS",
       "colores": [
-        "ROSA",
-        "MARFIL"
+        "ROSA"
       ],
       "consumibles_check": {
         "cid_1783366904861_1111__cid_1783366904861_1827": false,
@@ -7349,28 +7342,13 @@
       "receta_id": "cid_1783366904861_1111",
       "referencias": [
         {
-          "cantidades": {
-            "MARFIL_T10": 12,
-            "MARFIL_T12": 16,
-            "MARFIL_T14": 16,
-            "MARFIL_T16": 16,
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 12,
-            "ROSA_T10": 12,
-            "ROSA_T12": 19,
-            "ROSA_T14": 19,
-            "ROSA_T16": 19,
-            "ROSA_T6": 12,
-            "ROSA_T8": 12
-          },
-          "cat": "CHAQUETAS",
-          "colores": [
-            "ROSA",
-            "MARFIL"
-          ],
-          "maquilador_id": "",
           "nombre": "CHAQUETA MARIPOSAS",
           "ref": "1166",
+          "cat": "CHAQUETAS",
+          "vmo": 9000,
+          "colores": [
+            "ROSA"
+          ],
           "tallas": [
             "T6",
             "T8",
@@ -7379,7 +7357,15 @@
             "T14",
             "T16"
           ],
-          "vmo": 9000
+          "cantidades": {
+            "ROSA_T6": 12,
+            "ROSA_T8": 12,
+            "ROSA_T10": 12,
+            "ROSA_T12": 19,
+            "ROSA_T14": 19,
+            "ROSA_T16": 19
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -7404,7 +7390,9 @@
           "solicitud_id": "id_1790790785574_ybm00p4xb"
         }
       ],
-      "updated_at": "2026-08-27"
+      "updated_at": "2026-10-07",
+      "diseno_origen_id": null,
+      "diseno_origen_nombre": null
     },
     {
       "cantidades": {
