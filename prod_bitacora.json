@@ -28577,15 +28577,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1791404521363_t1xvj",
-      "ts": 1791404521363,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-101",
-      "nombre": "CHAQUETA MARIPOSAS",
       "categoria": "CHAQUETAS",
       "colores": 1,
-      "refs": 1
+      "id": "evt_1791404521363_t1xvj",
+      "nombre": "CHAQUETA MARIPOSAS",
+      "op_id": "OP-2026-101",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1791404521363,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1791404695826_02w6e",
+      "ts": 1791404695826,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-125",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "referencia": "OVERSIZED CAPOTA",
+      "color": "MORA LECHE",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 60,
+      "motivo": "EN TALLER"
     }
   ]
 }
