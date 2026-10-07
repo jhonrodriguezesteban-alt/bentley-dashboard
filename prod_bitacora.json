@@ -28339,22 +28339,38 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1791389767285_wbosm",
-      "ts": 1791389767285,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-130",
-      "op_nombre": "CHAQUETA MARIPOSAS",
       "categoria": "CHAQUETAS",
-      "total_ots": 12,
-      "total_uds": 208,
       "colores": [
         "MARFIL",
         "AZUL BEBE"
       ],
+      "id": "evt_1791389767285_wbosm",
+      "op_id": "OP-2026-130",
+      "op_nombre": "CHAQUETA MARIPOSAS",
       "referencias": [
         "CHAQUETA MARIPOSAS"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 12,
+      "total_uds": 208,
+      "ts": 1791389767285,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1791389781009_opimq",
+      "ts": 1791389781009,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-130",
+      "op_nombre": "CHAQUETA MARIPOSAS",
+      "referencia": "CHAQUETA MARIPOSAS",
+      "color": "AZUL BEBE",
+      "talla": "todas las tallas",
+      "estado_anterior": "PENDIENTE_CORTAR",
+      "estado_nuevo": "PENDIENTE_CORTAR",
+      "bulk": true,
+      "uds": 104,
+      "motivo": "por corte"
     }
   ]
 }
