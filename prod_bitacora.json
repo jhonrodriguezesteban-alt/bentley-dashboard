@@ -29616,15 +29616,31 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1791498943185_geqn6",
-      "ts": 1791498943185,
-      "user": "Isabel",
-      "tipo": "diseno_responsable",
-      "diseno_id": "id_1782407030796_2wtw2rjf3",
-      "nombre": "SET CHALECO VIENA",
       "categoria": "Conjuntos",
+      "diseno_id": "id_1782407030796_2wtw2rjf3",
+      "id": "evt_1791498943185_geqn6",
+      "nombre": "SET CHALECO VIENA",
       "resp_anterior": "Isa",
-      "resp_nuevo": "John"
+      "resp_nuevo": "John",
+      "tipo": "diseno_responsable",
+      "ts": 1791498943185,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1791499053398_cz8j6",
+      "ts": 1791499053398,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-111",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "referencia": "OVERSIZED CAPOTA",
+      "color": "MORA LECHE",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 84,
+      "motivo": "EN TALLER"
     }
   ]
 }
