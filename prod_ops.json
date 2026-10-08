@@ -6899,37 +6899,37 @@
     },
     {
       "cantidades": {
-        "NEGRO_T10": 8,
-        "NEGRO_T14": 8,
         "FUCSIA_T10": 12,
         "FUCSIA_T12": 12,
         "FUCSIA_T14": 12,
-        "SALMON_T10": 12,
-        "SALMON_T12": 12,
-        "SALMON_T14": 12,
-        "SALMON_T16": 12,
-        "LILA_T8": 10,
         "LILA_T10": 13,
         "LILA_T12": 13,
         "LILA_T14": 13,
-        "VERDE MILITAR_T6": 8,
-        "VERDE MILITAR_T8": 12,
-        "VERDE MILITAR_T10": 12,
-        "VERDE MILITAR_T12": 16,
-        "VERDE MILITAR_T14": 16,
-        "VERDE MILITAR_T16": 16,
-        "ROSA_T6": 8,
-        "ROSA_T8": 12,
+        "LILA_T8": 10,
+        "NEGRO_T10": 8,
+        "NEGRO_T14": 8,
+        "ROJO_T10": 12,
+        "ROJO_T12": 16,
+        "ROJO_T14": 16,
+        "ROJO_T16": 16,
+        "ROJO_T6": 8,
+        "ROJO_T8": 12,
         "ROSA_T10": 12,
         "ROSA_T12": 14,
         "ROSA_T14": 14,
         "ROSA_T16": 14,
-        "ROJO_T6": 8,
-        "ROJO_T8": 12,
-        "ROJO_T10": 12,
-        "ROJO_T12": 16,
-        "ROJO_T14": 16,
-        "ROJO_T16": 16
+        "ROSA_T6": 8,
+        "ROSA_T8": 12,
+        "SALMON_T10": 12,
+        "SALMON_T12": 12,
+        "SALMON_T14": 12,
+        "SALMON_T16": 12,
+        "VERDE MILITAR_T10": 12,
+        "VERDE MILITAR_T12": 16,
+        "VERDE MILITAR_T14": 16,
+        "VERDE MILITAR_T16": 16,
+        "VERDE MILITAR_T6": 8,
+        "VERDE MILITAR_T8": 12
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -6970,10 +6970,40 @@
       "receta_nombre": "CHAQUETA CAZADORA - REF: 1002",
       "referencias": [
         {
-          "nombre": "CHAQUETA CAZADORA",
-          "ref": "1002",
+          "cantidades": {
+            "FUCSIA_T10": 12,
+            "FUCSIA_T12": 12,
+            "FUCSIA_T14": 12,
+            "LILA_T10": 13,
+            "LILA_T12": 13,
+            "LILA_T14": 13,
+            "LILA_T8": 10,
+            "NEGRO_T10": 8,
+            "NEGRO_T14": 8,
+            "ROJO_T10": 12,
+            "ROJO_T12": 16,
+            "ROJO_T14": 16,
+            "ROJO_T16": 16,
+            "ROJO_T6": 8,
+            "ROJO_T8": 12,
+            "ROSA_T10": 12,
+            "ROSA_T12": 14,
+            "ROSA_T14": 14,
+            "ROSA_T16": 14,
+            "ROSA_T6": 8,
+            "ROSA_T8": 12,
+            "SALMON_T10": 12,
+            "SALMON_T12": 12,
+            "SALMON_T14": 12,
+            "SALMON_T16": 12,
+            "VERDE MILITAR_T10": 12,
+            "VERDE MILITAR_T12": 16,
+            "VERDE MILITAR_T14": 16,
+            "VERDE MILITAR_T16": 16,
+            "VERDE MILITAR_T6": 8,
+            "VERDE MILITAR_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 11561,
           "colores": [
             "NEGRO",
             "FUCSIA",
@@ -6983,6 +7013,9 @@
             "ROSA",
             "ROJO"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA CAZADORA",
+          "ref": "1002",
           "tallas": [
             "T4",
             "T6",
@@ -6992,40 +7025,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T10": 8,
-            "NEGRO_T14": 8,
-            "FUCSIA_T10": 12,
-            "FUCSIA_T12": 12,
-            "FUCSIA_T14": 12,
-            "SALMON_T10": 12,
-            "SALMON_T12": 12,
-            "SALMON_T14": 12,
-            "SALMON_T16": 12,
-            "LILA_T8": 10,
-            "LILA_T10": 13,
-            "LILA_T12": 13,
-            "LILA_T14": 13,
-            "VERDE MILITAR_T6": 8,
-            "VERDE MILITAR_T8": 12,
-            "VERDE MILITAR_T10": 12,
-            "VERDE MILITAR_T12": 16,
-            "VERDE MILITAR_T14": 16,
-            "VERDE MILITAR_T16": 16,
-            "ROSA_T6": 8,
-            "ROSA_T8": 12,
-            "ROSA_T10": 12,
-            "ROSA_T12": 14,
-            "ROSA_T14": 14,
-            "ROSA_T16": 14,
-            "ROJO_T6": 8,
-            "ROJO_T8": 12,
-            "ROJO_T10": 12,
-            "ROJO_T12": 16,
-            "ROJO_T14": 16,
-            "ROJO_T16": 16
-          },
-          "maquilador_id": ""
+          "vmo": 11561
         }
       ],
       "subg_estados": {
@@ -7047,9 +7047,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-10-08",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-10-08"
     },
     {
       "cantidades": {
@@ -15346,6 +15344,66 @@
         "T14",
         "T16"
       ]
+    },
+    {
+      "id": "OP-2026-238",
+      "numero": 238,
+      "fecha_op": "2026-10-08",
+      "cortador": "Corte Carbajal",
+      "categoria": "PANTALONES",
+      "nombre_producto": "PANTALON DRILL ANCHO",
+      "colores": [
+        "BEIGE"
+      ],
+      "tallas": [
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ],
+      "cantidades": {
+        "BEIGE_T6": 10,
+        "BEIGE_T8": 10,
+        "BEIGE_T10": 10,
+        "BEIGE_T12": 16,
+        "BEIGE_T14": 16,
+        "BEIGE_T16": 16
+      },
+      "referencias": [
+        {
+          "nombre": "PANTALON DRILL ANCHO",
+          "ref": "1095",
+          "cat": "PANTALONES",
+          "vmo": 7883,
+          "colores": [
+            "BEIGE"
+          ],
+          "tallas": [
+            "T6",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "cantidades": {
+            "BEIGE_T6": 10,
+            "BEIGE_T8": 10,
+            "BEIGE_T10": 10,
+            "BEIGE_T12": 16,
+            "BEIGE_T14": 16,
+            "BEIGE_T16": 16
+          },
+          "totalUds": 78,
+          "maquilador_id": ""
+        }
+      ],
+      "op_effi": null,
+      "estado_op": "EN_PROCESO",
+      "created_at": "2026-10-08",
+      "created_by": "Jefa de Producción"
     }
   ]
 }
