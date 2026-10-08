@@ -74556,7 +74556,7 @@
       "color": "MARFIL",
       "created_at": "2026-08-01",
       "created_by": "Jefa de Producción",
-      "estado": "ENTREGADO",
+      "estado": "PAGO_PENDIENTE",
       "fecha_entrega_real": "2026-10-06",
       "fecha_ot": "2026-08-01",
       "historial": [
@@ -74578,6 +74578,11 @@
         {
           "fecha": "2026-10-08T15:29:38.161Z",
           "accion": "Estado cambiado: ENTREGADO_PARCIAL → ENTREGADO. Motivo: ENTREGADO",
+          "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-10-08T15:29:51.518Z",
+          "accion": "Pasado a Pago desde Alistamiento",
           "user": "Jefa de Producción"
         }
       ],
