@@ -1133,7 +1133,7 @@ async function _fbMigrarSiVacio(){
 // abiertas con una versión anterior se recargan solas (esperando a que terminen de guardar).
 // Sin esto, una pestaña vieja olvidada en un computador seguía guardando con la lógica
 // anterior y deshaciendo cambios de todos los demás.
-var APP_VERSION = 20261008.3;
+var APP_VERSION = 20261008.4;
 function _vigilarVersionApp(){
   if(!_fbDb) return;
   _fbDb.ref(FB_ROOT+'/app_version').on('value', function(snap){
@@ -10126,6 +10126,16 @@ function _cambiarEstadoOT(otId){
     body += '<span style="font-size:12px;color:#60a5fa;font-weight:600;">Aplicar a <strong>todas las tallas</strong> de este color ('+(otsDelMismoColor.length+1)+' OTs)</span>';
     body += '</label>';
   }
+  // Corrección de "Entregado" puesto por error: por defecto el cambio masivo NO toca las
+  // tallas ya entregadas (protege entregas reales). Jhon y la Jefa de Producción pueden
+  // marcar esta casilla para revertirlas también (motivo obligatorio, queda en historial).
+  var nEntregadasColor = otsColorCompleto.filter(function(o){ return o.estado==='ENTREGADO'; }).length;
+  if(nEntregadasColor && _canEditPlan()){
+    body += '<label style="display:flex;align-items:flex-start;gap:10px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.35);border-radius:9px;padding:10px 14px;cursor:pointer;margin-bottom:14px;">';
+    body += '<input type="checkbox" id="cot-revertir-entregadas" style="accent-color:#ef4444;width:16px;height:16px;margin-top:1px;" onchange="if(this.checked){var t=document.getElementById(\'cot-todas-tallas\');if(t)t.checked=true;}">';
+    body += '<span style="font-size:12px;color:#f87171;font-weight:600;line-height:1.45;">↩ Revertir también las <strong>'+nEntregadasColor+' talla'+(nEntregadasColor!==1?'s':'')+' ya ENTREGADA'+(nEntregadasColor!==1?'S':'')+'</strong> (corrección de un error)<br><span style="font-weight:400;color:#94a3b8;font-size:11px;">Se borran sus unidades entregadas y la entrega vuelve a pendiente en el Cronograma. Si ya se generó un pago, revísalo en Pagos.</span></span>';
+    body += '</label>';
+  }
 
   body += '<div class="form-group" style="margin-bottom:14px;">';
   body += '<label class="form-label">Nuevo estado</label>';
@@ -10156,6 +10166,8 @@ async function _confirmarCambioEstadoOT(){
   var nuevoEstado = '';
   radios.forEach(function(r){ if(r.checked) nuevoEstado = r.value; });
   var todasTallas = !!(document.getElementById('cot-todas-tallas')||{checked:false}).checked;
+  var revertirEntregadas = !!(document.getElementById('cot-revertir-entregadas')||{checked:false}).checked && _canEditPlan();
+  if(revertirEntregadas) todasTallas = (DB.ots||[]).filter(function(o){ return o.op_id===opIdCtx && o.color===colorCtx; }).length>1 ? true : todasTallas;
   var opIdCtx  = ((document.getElementById('cot-opid')||{}).value||'').trim();
   var colorCtx = ((document.getElementById('cot-color')||{}).value||'').trim();
 
@@ -10173,13 +10185,14 @@ async function _confirmarCambioEstadoOT(){
   otsACambiar.forEach(function(o){
     var estadoAnterior = o.estado;
     // No revertir OTs ya ENTREGADO cuando se aplica masivamente (solo la OT original si estaba en ese estado)
-    if(todasTallas && estadoAnterior === 'ENTREGADO' && nuevoEstado !== 'ENTREGADO' && nuevoEstado !== 'ENTREGADO_PARCIAL'){
-      return; // skip OTs entregadas en modo bulk
+    if(todasTallas && !revertirEntregadas && estadoAnterior === 'ENTREGADO' && nuevoEstado !== 'ENTREGADO' && nuevoEstado !== 'ENTREGADO_PARCIAL'){
+      return; // skip OTs entregadas en modo bulk (salvo corrección explícita)
     }
     o.estado = nuevoEstado;
 
-    // Limpiar campos de entrega si se revierte desde ENTREGADO (solo en cambio individual)
-    if(!todasTallas && estadoAnterior==='ENTREGADO' && nuevoEstado!=='ENTREGADO' && nuevoEstado!=='ENTREGADO_PARCIAL'){
+    // Limpiar campos de entrega si se revierte desde ENTREGADO (individual, o masivo con corrección)
+    if((!todasTallas || revertirEntregadas) && estadoAnterior==='ENTREGADO' && nuevoEstado!=='ENTREGADO' && nuevoEstado!=='ENTREGADO_PARCIAL'){
+      o._revertidaEntrega = true;
       o.unidades_entregadas = 0;
       o.fecha_entrega_real  = null;
       o.unidades_novedad    = 0;
@@ -10188,7 +10201,7 @@ async function _confirmarCambioEstadoOT(){
     if(!o.historial) o.historial = [];
     o.historial.push({
       fecha: new Date().toISOString(),
-      accion: 'Estado cambiado'+(todasTallas?' (todas las tallas)':'')+': '+estadoAnterior+' → '+nuevoEstado+'. Motivo: '+motivo,
+      accion: 'Estado cambiado'+(todasTallas?' (todas las tallas)':'')+(o._revertidaEntrega?' [corrección de entrega]':'')+': '+estadoAnterior+' → '+nuevoEstado+'. Motivo: '+motivo,
       user: getUser()
     });
   });
@@ -10220,6 +10233,22 @@ async function _confirmarCambioEstadoOT(){
   // Cronograma: marcar como entregado cuando el grupo pasa a ALISTAMIENTO
   if(estadoGrupo === 'ALISTAMIENTO' && typeof _cronMarcarEntregado === 'function'){
     _cronMarcarEntregado(ot.op_id, ot.color);
+  }
+  // Corrección de entrega: si se revirtieron tallas entregadas y el color ya no está
+  // completo, su entrega en el Cronograma vuelve a pendiente.
+  var _huboReversion = otsACambiar.some(function(o){ return o._revertidaEntrega; });
+  otsACambiar.forEach(function(o){ delete o._revertidaEntrega; });
+  if(_huboReversion && estadoGrupo !== 'ALISTAMIENTO'){
+    var _cambioCron = false;
+    (DB.cronograma||[]).forEach(function(e){
+      if(e.op_id===ot.op_id && (e.color||'—')===(ot.color||'—') && e.entregado){
+        e.entregado = false; e.fecha_entrega_real = null;
+        if(!e.historial) e.historial = [];
+        e.historial.push({fecha:new Date().toISOString(), user:getUser(), accion:'Entrega revertida (corrección): '+motivo});
+        _cambioCron = true;
+      }
+    });
+    if(_cambioCron && typeof guardarCronograma==='function') guardarCronograma();
   }
 
   // Bitácora: cambio de estado de OT(s)
