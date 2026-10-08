@@ -2358,8 +2358,7 @@
       "subg_estados": {
         "OP-0040||CAMEL": "EN_CONFECCION",
         "OP-0040||MARFIL": "EN_CONFECCION",
-        "OP-0040||NEGRO": "EN_CONFECCION",
-        "OP-0040||ROSA 613": "CORTE_POR_ALISTAR"
+        "OP-0040||NEGRO": "EN_CONFECCION"
       },
       "tallas": [
         "T6",
@@ -12167,7 +12166,11 @@
         "T12",
         "T14",
         "T16"
-      ]
+      ],
+      "trazos_color_solicitado": {
+        "BEIGE": true,
+        "NEGRO": true
+      }
     },
     {
       "cantidades": {
@@ -13056,8 +13059,7 @@
       "subg_estados": {
         "OP-2026-214||CAMEL": "POR_REVISAR",
         "OP-2026-214||MARFIL": "POR_REVISAR",
-        "OP-2026-214||NEGRO": "POR_REVISAR",
-        "OP-2026-214||ROSA": "POR_REVISAR"
+        "OP-2026-214||NEGRO": "POR_REVISAR"
       },
       "tallas": [
         "T6",
@@ -15346,40 +15348,51 @@
       ]
     },
     {
-      "id": "OP-2026-238",
-      "numero": 238,
-      "fecha_op": "2026-10-08",
-      "cortador": "Corte Carbajal",
-      "categoria": "PANTALONES",
-      "nombre_producto": "PANTALON DRILL ANCHO",
-      "colores": [
-        "BEIGE"
-      ],
-      "tallas": [
-        "T6",
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
       "cantidades": {
-        "BEIGE_T6": 10,
-        "BEIGE_T8": 10,
         "BEIGE_T10": 10,
         "BEIGE_T12": 16,
         "BEIGE_T14": 16,
-        "BEIGE_T16": 16
+        "BEIGE_T16": 16,
+        "BEIGE_T6": 10,
+        "BEIGE_T8": 10
       },
+      "categoria": "PANTALONES",
+      "colores": [
+        "BEIGE"
+      ],
+      "consumibles_check": {
+        "rec_pantalon_drill_ancho_1095__c91_19": true,
+        "rec_pantalon_drill_ancho_1095__c91_20": true,
+        "rec_pantalon_drill_ancho_1095__c91_21": true,
+        "rec_pantalon_drill_ancho_1095__c91_24": true
+      },
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-10-08",
+      "created_by": "Jefa de Producción",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-10-08",
+      "id": "OP-2026-238",
+      "nombre_producto": "PANTALON DRILL ANCHO",
+      "numero": 238,
+      "receta_id": "rec_pantalon_drill_ancho_1095",
+      "receta_nombre": "PANTALON DRILL ANCHO - REF: 1095",
       "referencias": [
         {
-          "nombre": "PANTALON DRILL ANCHO",
-          "ref": "1095",
+          "cantidades": {
+            "BEIGE_T10": 10,
+            "BEIGE_T12": 16,
+            "BEIGE_T14": 16,
+            "BEIGE_T16": 16,
+            "BEIGE_T6": 10,
+            "BEIGE_T8": 10
+          },
           "cat": "PANTALONES",
-          "vmo": 7883,
           "colores": [
             "BEIGE"
           ],
+          "maquilador_id": "",
+          "nombre": "PANTALON DRILL ANCHO",
+          "ref": "1095",
           "tallas": [
             "T6",
             "T8",
@@ -15388,71 +15401,64 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "BEIGE_T6": 10,
-            "BEIGE_T8": 10,
-            "BEIGE_T10": 10,
-            "BEIGE_T12": 16,
-            "BEIGE_T14": 16,
-            "BEIGE_T16": 16
-          },
           "totalUds": 78,
-          "maquilador_id": ""
+          "vmo": 7883
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-10-08",
-      "created_by": "Jefa de Producción",
-      "receta_id": "rec_pantalon_drill_ancho_1095",
-      "receta_nombre": "PANTALON DRILL ANCHO - REF: 1095",
-      "consumibles_check": {
-        "rec_pantalon_drill_ancho_1095__c91_19": true,
-        "rec_pantalon_drill_ancho_1095__c91_20": true,
-        "rec_pantalon_drill_ancho_1095__c91_21": true,
-        "rec_pantalon_drill_ancho_1095__c91_24": true
-      },
       "subg_estados": {
         "OP-2026-238||BEIGE": "EN_CONFECCION"
-      }
-    },
-    {
-      "id": "OP-2026-239",
-      "numero": 239,
-      "fecha_op": "2026-10-08",
-      "cortador": "Corte Carbajal",
-      "categoria": "PANTALONES",
-      "nombre_producto": "PANTALON RAVE",
-      "colores": [
-        "NEGRO"
-      ],
+      },
       "tallas": [
-        "T4",
         "T6",
         "T8",
         "T10",
         "T12",
         "T14",
         "T16"
-      ],
+      ]
+    },
+    {
       "cantidades": {
-        "NEGRO_T4": 11,
-        "NEGRO_T6": 11,
-        "NEGRO_T8": 11,
         "NEGRO_T10": 11,
         "NEGRO_T12": 11,
         "NEGRO_T14": 11,
-        "NEGRO_T16": 11
+        "NEGRO_T16": 11,
+        "NEGRO_T4": 11,
+        "NEGRO_T6": 11,
+        "NEGRO_T8": 11
       },
+      "categoria": "PANTALONES",
+      "colores": [
+        "NEGRO"
+      ],
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-10-08",
+      "created_by": "Jefa de Producción",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-10-08",
+      "id": "OP-2026-239",
+      "nombre_producto": "PANTALON RAVE",
+      "numero": 239,
+      "receta_id": "rec_pantalon_rave_1063",
+      "receta_nombre": "PANTALON RAVE - REF: 1063",
       "referencias": [
         {
-          "nombre": "PANTALON RAVE",
-          "ref": "1063",
+          "cantidades": {
+            "NEGRO_T10": 11,
+            "NEGRO_T12": 11,
+            "NEGRO_T14": 11,
+            "NEGRO_T16": 11,
+            "NEGRO_T4": 11,
+            "NEGRO_T6": 11,
+            "NEGRO_T8": 11
+          },
           "cat": "PANTALONES",
-          "vmo": 5255,
           "colores": [
             "NEGRO"
           ],
+          "maquilador_id": "",
+          "nombre": "PANTALON RAVE",
+          "ref": "1063",
           "tallas": [
             "T4",
             "T6",
@@ -15462,25 +15468,19 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T4": 11,
-            "NEGRO_T6": 11,
-            "NEGRO_T8": 11,
-            "NEGRO_T10": 11,
-            "NEGRO_T12": 11,
-            "NEGRO_T14": 11,
-            "NEGRO_T16": 11
-          },
           "totalUds": 77,
-          "maquilador_id": ""
+          "vmo": 5255
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-10-08",
-      "created_by": "Jefa de Producción",
-      "receta_id": "rec_pantalon_rave_1063",
-      "receta_nombre": "PANTALON RAVE - REF: 1063"
+      "tallas": [
+        "T4",
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ]
     }
   ]
 }
