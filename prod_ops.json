@@ -2269,24 +2269,24 @@
     },
     {
       "cantidades": {
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 12,
-        "MARFIL_T10": 12,
-        "MARFIL_T12": 16,
-        "MARFIL_T14": 16,
-        "MARFIL_T16": 16,
-        "CAMEL_T6": 12,
-        "CAMEL_T8": 12,
         "CAMEL_T10": 12,
         "CAMEL_T12": 16,
         "CAMEL_T14": 16,
         "CAMEL_T16": 16,
-        "NEGRO_T6": 12,
-        "NEGRO_T8": 12,
+        "CAMEL_T6": 12,
+        "CAMEL_T8": 12,
+        "MARFIL_T10": 12,
+        "MARFIL_T12": 16,
+        "MARFIL_T14": 16,
+        "MARFIL_T16": 16,
+        "MARFIL_T6": 12,
+        "MARFIL_T8": 12,
         "NEGRO_T10": 12,
         "NEGRO_T12": 16,
         "NEGRO_T14": 16,
-        "NEGRO_T16": 16
+        "NEGRO_T16": 16,
+        "NEGRO_T6": 12,
+        "NEGRO_T8": 12
       },
       "categoria": "PANTALONES",
       "colores": [
@@ -2298,8 +2298,8 @@
         "rec_pantalon_donatella_1127__c90_21||CAMEL": true,
         "rec_pantalon_donatella_1127__c90_21||MARFIL": true,
         "rec_pantalon_donatella_1127__c90_21||NEGRO": true,
-        "rec_pantalon_donatella_1127__c90_23": true,
-        "rec_pantalon_donatella_1127__c90_22": true
+        "rec_pantalon_donatella_1127__c90_22": true,
+        "rec_pantalon_donatella_1127__c90_23": true
       },
       "consumibles_desagregado": {
         "rec_pantalon_donatella_1127__c90_21": true
@@ -2315,15 +2315,35 @@
       "numero": 40,
       "referencias": [
         {
-          "nombre": "PANTALON DONATELLA",
-          "ref": "",
+          "cantidades": {
+            "CAMEL_T10": 12,
+            "CAMEL_T12": 16,
+            "CAMEL_T14": 16,
+            "CAMEL_T16": 16,
+            "CAMEL_T6": 12,
+            "CAMEL_T8": 12,
+            "MARFIL_T10": 12,
+            "MARFIL_T12": 16,
+            "MARFIL_T14": 16,
+            "MARFIL_T16": 16,
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 12,
+            "NEGRO_T10": 12,
+            "NEGRO_T12": 16,
+            "NEGRO_T14": 16,
+            "NEGRO_T16": 16,
+            "NEGRO_T6": 12,
+            "NEGRO_T8": 12
+          },
           "cat": "PANTALONES",
-          "vmo": 1151,
           "colores": [
             "MARFIL",
             "CAMEL",
             "NEGRO"
           ],
+          "maquilador_id": "",
+          "nombre": "PANTALON DONATELLA",
+          "ref": "",
           "tallas": [
             "T6",
             "T8",
@@ -2332,27 +2352,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 12,
-            "MARFIL_T10": 12,
-            "MARFIL_T12": 16,
-            "MARFIL_T14": 16,
-            "MARFIL_T16": 16,
-            "CAMEL_T6": 12,
-            "CAMEL_T8": 12,
-            "CAMEL_T10": 12,
-            "CAMEL_T12": 16,
-            "CAMEL_T14": 16,
-            "CAMEL_T16": 16,
-            "NEGRO_T6": 12,
-            "NEGRO_T8": 12,
-            "NEGRO_T10": 12,
-            "NEGRO_T12": 16,
-            "NEGRO_T14": 16,
-            "NEGRO_T16": 16
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
@@ -2376,9 +2376,7 @@
         "NEGRO": true,
         "ROSA 613": false
       },
-      "updated_at": "2026-10-07",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-10-07"
     },
     {
       "categoria": "CHAQUETAS",
@@ -9919,30 +9917,30 @@
     },
     {
       "cantidades": {
-        "AZUL OSCURO_T6": 8,
-        "AZUL OSCURO_T8": 12,
         "AZUL OSCURO_T10": 12,
         "AZUL OSCURO_T12": 16,
         "AZUL OSCURO_T14": 16,
         "AZUL OSCURO_T16": 16,
-        "VERDE MILITAR_T6": 12,
-        "VERDE MILITAR_T8": 12,
-        "VERDE MILITAR_T10": 16,
-        "VERDE MILITAR_T12": 16,
-        "VERDE MILITAR_T14": 16,
-        "VERDE MILITAR_T16": 16,
-        "ROSA_T6": 15,
-        "ROSA_T8": 15,
+        "AZUL OSCURO_T6": 8,
+        "AZUL OSCURO_T8": 12,
+        "LILA_T10": 19,
+        "LILA_T12": 19,
+        "LILA_T14": 19,
+        "LILA_T16": 19,
+        "LILA_T6": 14,
+        "LILA_T8": 14,
         "ROSA_T10": 15,
         "ROSA_T12": 15,
         "ROSA_T14": 15,
         "ROSA_T16": 15,
-        "LILA_T6": 14,
-        "LILA_T8": 14,
-        "LILA_T10": 19,
-        "LILA_T12": 19,
-        "LILA_T14": 19,
-        "LILA_T16": 19
+        "ROSA_T6": 15,
+        "ROSA_T8": 15,
+        "VERDE MILITAR_T10": 16,
+        "VERDE MILITAR_T12": 16,
+        "VERDE MILITAR_T14": 16,
+        "VERDE MILITAR_T16": 16,
+        "VERDE MILITAR_T6": 12,
+        "VERDE MILITAR_T8": 12
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -9975,16 +9973,42 @@
       "receta_nombre": "CHAQUETA CAZADORA - REF: 1002",
       "referencias": [
         {
-          "nombre": "CHAQUETA CAZADORA",
-          "ref": "1002",
+          "cantidades": {
+            "AZUL OSCURO_T10": 12,
+            "AZUL OSCURO_T12": 16,
+            "AZUL OSCURO_T14": 16,
+            "AZUL OSCURO_T16": 16,
+            "AZUL OSCURO_T6": 8,
+            "AZUL OSCURO_T8": 12,
+            "LILA_T10": 19,
+            "LILA_T12": 19,
+            "LILA_T14": 19,
+            "LILA_T16": 19,
+            "LILA_T6": 14,
+            "LILA_T8": 14,
+            "ROSA_T10": 15,
+            "ROSA_T12": 15,
+            "ROSA_T14": 15,
+            "ROSA_T16": 15,
+            "ROSA_T6": 15,
+            "ROSA_T8": 15,
+            "VERDE MILITAR_T10": 16,
+            "VERDE MILITAR_T12": 16,
+            "VERDE MILITAR_T14": 16,
+            "VERDE MILITAR_T16": 16,
+            "VERDE MILITAR_T6": 12,
+            "VERDE MILITAR_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 11561,
           "colores": [
             "AZUL OSCURO",
             "VERDE MILITAR",
             "ROSA",
             "LILA"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA CAZADORA",
+          "ref": "1002",
           "tallas": [
             "T6",
             "T8",
@@ -9993,33 +10017,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "AZUL OSCURO_T6": 8,
-            "AZUL OSCURO_T8": 12,
-            "AZUL OSCURO_T10": 12,
-            "AZUL OSCURO_T12": 16,
-            "AZUL OSCURO_T14": 16,
-            "AZUL OSCURO_T16": 16,
-            "VERDE MILITAR_T6": 12,
-            "VERDE MILITAR_T8": 12,
-            "VERDE MILITAR_T10": 16,
-            "VERDE MILITAR_T12": 16,
-            "VERDE MILITAR_T14": 16,
-            "VERDE MILITAR_T16": 16,
-            "ROSA_T6": 15,
-            "ROSA_T8": 15,
-            "ROSA_T10": 15,
-            "ROSA_T12": 15,
-            "ROSA_T14": 15,
-            "ROSA_T16": 15,
-            "LILA_T6": 14,
-            "LILA_T8": 14,
-            "LILA_T10": 19,
-            "LILA_T12": 19,
-            "LILA_T14": 19,
-            "LILA_T16": 19
-          },
-          "maquilador_id": ""
+          "vmo": 11561
         }
       ],
       "subg_estados": {
@@ -10036,9 +10034,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-10-08",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-10-08"
     },
     {
       "cantidades": {
@@ -12982,24 +12978,24 @@
     },
     {
       "cantidades": {
-        "NEGRO_T6": 12,
-        "NEGRO_T8": 12,
-        "NEGRO_T10": 12,
-        "NEGRO_T12": 16,
-        "NEGRO_T14": 16,
-        "NEGRO_T16": 16,
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 12,
+        "CAMEL_T10": 12,
+        "CAMEL_T12": 16,
+        "CAMEL_T14": 16,
+        "CAMEL_T16": 16,
+        "CAMEL_T6": 12,
+        "CAMEL_T8": 12,
         "MARFIL_T10": 12,
         "MARFIL_T12": 16,
         "MARFIL_T14": 16,
         "MARFIL_T16": 16,
-        "CAMEL_T6": 12,
-        "CAMEL_T8": 12,
-        "CAMEL_T10": 12,
-        "CAMEL_T12": 16,
-        "CAMEL_T14": 16,
-        "CAMEL_T16": 16
+        "MARFIL_T6": 12,
+        "MARFIL_T8": 12,
+        "NEGRO_T10": 12,
+        "NEGRO_T12": 16,
+        "NEGRO_T14": 16,
+        "NEGRO_T16": 16,
+        "NEGRO_T6": 12,
+        "NEGRO_T8": 12
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -13012,9 +13008,9 @@
         "cid_1789265184371_8805__cid_1789264693764_7370||MARFIL": true,
         "cid_1789265184371_8805__cid_1789264693764_7370||NEGRO": true,
         "cid_1789265184371_8805__cid_1789264693764_7370||ROSA": false,
+        "cid_1789265184371_8805__cid_1789264693764_8448": true,
         "cid_1789265184371_8805__cid_1789264889217_1174": true,
-        "cid_1789265184371_8805__cid_1789264988481_9936": true,
-        "cid_1789265184371_8805__cid_1789264693764_8448": true
+        "cid_1789265184371_8805__cid_1789264988481_9936": true
       },
       "consumibles_desagregado": {
         "cid_1789265184371_8805__cid_1789264693764_7370": true
@@ -13031,15 +13027,35 @@
       "numero": 214,
       "referencias": [
         {
-          "nombre": "BLAZER DONATELLA",
-          "ref": "",
+          "cantidades": {
+            "CAMEL_T10": 12,
+            "CAMEL_T12": 16,
+            "CAMEL_T14": 16,
+            "CAMEL_T16": 16,
+            "CAMEL_T6": 12,
+            "CAMEL_T8": 12,
+            "MARFIL_T10": 12,
+            "MARFIL_T12": 16,
+            "MARFIL_T14": 16,
+            "MARFIL_T16": 16,
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 12,
+            "NEGRO_T10": 12,
+            "NEGRO_T12": 16,
+            "NEGRO_T14": 16,
+            "NEGRO_T16": 16,
+            "NEGRO_T6": 12,
+            "NEGRO_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 1151,
           "colores": [
             "NEGRO",
             "MARFIL",
             "CAMEL"
           ],
+          "maquilador_id": "",
+          "nombre": "BLAZER DONATELLA",
+          "ref": "",
           "tallas": [
             "T6",
             "T8",
@@ -13048,27 +13064,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T6": 12,
-            "NEGRO_T8": 12,
-            "NEGRO_T10": 12,
-            "NEGRO_T12": 16,
-            "NEGRO_T14": 16,
-            "NEGRO_T16": 16,
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 12,
-            "MARFIL_T10": 12,
-            "MARFIL_T12": 16,
-            "MARFIL_T14": 16,
-            "MARFIL_T16": 16,
-            "CAMEL_T6": 12,
-            "CAMEL_T8": 12,
-            "CAMEL_T10": 12,
-            "CAMEL_T12": 16,
-            "CAMEL_T14": 16,
-            "CAMEL_T16": 16
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
@@ -13779,30 +13775,30 @@
     },
     {
       "cantidades": {
-        "MARFIL_T10": 20,
-        "MARFIL_T12": 20,
-        "MARFIL_T14": 20,
-        "MARFIL_T16": 20,
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 12,
-        "NEGRO_T10": 20,
-        "NEGRO_T12": 20,
-        "NEGRO_T14": 20,
-        "NEGRO_T16": 20,
         "NEGRO_T6": 12,
         "NEGRO_T8": 12,
-        "ROJO_T10": 20,
-        "ROJO_T12": 20,
-        "ROJO_T14": 20,
-        "ROJO_T16": 20,
+        "NEGRO_T10": 19,
+        "NEGRO_T12": 19,
+        "NEGRO_T14": 19,
+        "NEGRO_T16": 19,
+        "VINOTINTO_T6": 12,
+        "VINOTINTO_T8": 12,
+        "VINOTINTO_T10": 18,
+        "VINOTINTO_T12": 18,
+        "VINOTINTO_T14": 18,
+        "VINOTINTO_T16": 18,
         "ROJO_T6": 12,
         "ROJO_T8": 12,
-        "VINOTINTO_T10": 20,
-        "VINOTINTO_T12": 20,
-        "VINOTINTO_T14": 20,
-        "VINOTINTO_T16": 20,
-        "VINOTINTO_T6": 12,
-        "VINOTINTO_T8": 12
+        "ROJO_T10": 19,
+        "ROJO_T12": 19,
+        "ROJO_T14": 19,
+        "ROJO_T16": 19,
+        "MARFIL_T6": 10,
+        "MARFIL_T8": 10,
+        "MARFIL_T10": 16,
+        "MARFIL_T12": 16,
+        "MARFIL_T14": 16,
+        "MARFIL_T16": 16
       },
       "categoria": "CONJUNTOS",
       "colores": [
@@ -13848,42 +13844,16 @@
       "numero": 222,
       "referencias": [
         {
-          "cantidades": {
-            "MARFIL_T10": 20,
-            "MARFIL_T12": 20,
-            "MARFIL_T14": 20,
-            "MARFIL_T16": 20,
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 12,
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "NEGRO_T6": 12,
-            "NEGRO_T8": 12,
-            "ROJO_T10": 20,
-            "ROJO_T12": 20,
-            "ROJO_T14": 20,
-            "ROJO_T16": 20,
-            "ROJO_T6": 12,
-            "ROJO_T8": 12,
-            "VINOTINTO_T10": 20,
-            "VINOTINTO_T12": 20,
-            "VINOTINTO_T14": 20,
-            "VINOTINTO_T16": 20,
-            "VINOTINTO_T6": 12,
-            "VINOTINTO_T8": 12
-          },
+          "nombre": "SET SOLOMUN",
+          "ref": "1228",
           "cat": "CONJUNTOS",
+          "vmo": 1151,
           "colores": [
             "NEGRO",
             "VINOTINTO",
             "ROJO",
             "MARFIL"
           ],
-          "maquilador_id": "",
-          "nombre": "SET SOLOMUN",
-          "ref": "1228",
           "tallas": [
             "T6",
             "T8",
@@ -13892,7 +13862,33 @@
             "T14",
             "T16"
           ],
-          "vmo": 1151
+          "cantidades": {
+            "NEGRO_T6": 12,
+            "NEGRO_T8": 12,
+            "NEGRO_T10": 19,
+            "NEGRO_T12": 19,
+            "NEGRO_T14": 19,
+            "NEGRO_T16": 19,
+            "VINOTINTO_T6": 12,
+            "VINOTINTO_T8": 12,
+            "VINOTINTO_T10": 18,
+            "VINOTINTO_T12": 18,
+            "VINOTINTO_T14": 18,
+            "VINOTINTO_T16": 18,
+            "ROJO_T6": 12,
+            "ROJO_T8": 12,
+            "ROJO_T10": 19,
+            "ROJO_T12": 19,
+            "ROJO_T14": 19,
+            "ROJO_T16": 19,
+            "MARFIL_T6": 10,
+            "MARFIL_T8": 10,
+            "MARFIL_T10": 16,
+            "MARFIL_T12": 16,
+            "MARFIL_T14": 16,
+            "MARFIL_T16": 16
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -13922,7 +13918,7 @@
           "solicitud_id": "id_1790983782408_jxt0zvfsp"
         }
       ],
-      "updated_at": "2026-09-13"
+      "updated_at": "2026-10-08"
     },
     {
       "cantidades": {
