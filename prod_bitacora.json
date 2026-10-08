@@ -28853,19 +28853,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "AVENA",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1791473441089_b9ve4",
+      "motivo": "EN TALLER",
+      "op_id": "OP-0059",
+      "op_nombre": "SET FRANKY",
+      "referencia": "SET FRANKY",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1791473441089,
+      "uds": 104,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1791473518155_ui45u",
+      "ts": 1791473518155,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-0059",
       "op_nombre": "SET FRANKY",
       "referencia": "SET FRANKY",
-      "color": "AVENA",
+      "color": "VINOTINTO",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 104,
+      "uds": 42,
       "motivo": "EN TALLER"
     }
   ]
