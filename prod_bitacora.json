@@ -28823,18 +28823,34 @@
       "user": "Jefa de Producción"
     },
     {
+      "estado": "ENTREGADO",
       "id": "evt_1791473368409_khpl8",
-      "ts": 1791473368409,
-      "user": "Jefa de Producción",
-      "tipo": "entrega_inline",
-      "ot_id": "id_1785598190835_y88i00aif",
       "numero_ot": 13057,
       "op_id": "OP-2026-107",
-      "uds_entregadas": 13,
+      "ot_id": "id_1785598190835_y88i00aif",
       "pendientes": 11,
-      "estado": "ENTREGADO",
+      "satelite": "MARCELA PEÑA",
       "talla": "M",
-      "satelite": "MARCELA PEÑA"
+      "tipo": "entrega_inline",
+      "ts": 1791473368409,
+      "uds_entregadas": 13,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1791473378243_v5lhx",
+      "ts": 1791473378243,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-107",
+      "op_nombre": "CONJUNTO FRANKY PR",
+      "referencia": "CONJUNTO FRANKY PRIME",
+      "color": "MARFIL",
+      "talla": "M",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": false,
+      "uds": 42,
+      "motivo": "ENTREGADO"
     }
   ]
 }
