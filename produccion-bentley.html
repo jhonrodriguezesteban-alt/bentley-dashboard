@@ -1133,7 +1133,7 @@ async function _fbMigrarSiVacio(){
 // abiertas con una versión anterior se recargan solas (esperando a que terminen de guardar).
 // Sin esto, una pestaña vieja olvidada en un computador seguía guardando con la lógica
 // anterior y deshaciendo cambios de todos los demás.
-var APP_VERSION = 20261008.4;
+var APP_VERSION = 20261008.5;
 function _vigilarVersionApp(){
   if(!_fbDb) return;
   _fbDb.ref(FB_ROOT+'/app_version').on('value', function(snap){
@@ -4356,6 +4356,9 @@ function _pconfCargaRealSatelite(satId){
 //  • Si ya está en confección / alistamiento / pago pendiente / entregada (o la OP se
 //    archivó) → sale de la cola y de los meses de Planeación (queda en el historial de corte).
 // Corre al cargar la app, después de guardar OTs/OPs y cuando llega un cambio en vivo.
+// Proveedores externos (Fenio, Mariluz Tejidos, Floyd, Taipan…) están en Satélites con
+// tipo "maquila": producen por su cuenta, no son talleres de confección a planear.
+function _esSatMaquila(s){ return !!s && String(s.tipo||'').toLowerCase()==='maquila'; }
 var _planRecTimer = null, _planRecCorriendo = false;
 function _planReconciliarProgramar(ms){
   clearTimeout(_planRecTimer);
@@ -4383,7 +4386,8 @@ function _planReconciliarAuto(){
       var c = {}; ots.forEach(function(o){ if(o.satelite_id) c[o.satelite_id]=(c[o.satelite_id]||0)+(o.cantidad||1); });
       var best=null; Object.keys(c).forEach(function(k){ if(!best || c[k]>c[best]) best=k; }); return best;
     };
-    var satActivo = {}; (DB.satelites||[]).forEach(function(x){ satActivo[x.id]=true; });
+    var satActivo = {}, satMaquila = {};
+    (DB.satelites||[]).forEach(function(x){ if(_esSatMaquila(x)) satMaquila[x.id]=true; else satActivo[x.id]=true; });
     var log = [];
 
     // 1) Cola por taller (Planeación de Confección)
@@ -4395,6 +4399,7 @@ function _planReconciliarAuto(){
       (ps[sid]||[]).forEach(function(k){
         if(visto[k]){ cambioPC = true; return; } // duplicada en dos talleres
         visto[k] = true;
+        if(satMaquila[sid]){ cambioPC = true; log.push('quitada (proveedor externo) '+k); return; }
         var i = info(k);
         if(!i){ cambioPC = true; log.push('quitada (ya no existe) '+k); return; }
         var enProduccion = !PRE[i.estado] || (i.ots.length && i.ots.every(function(o){ return o.satelite_id && !PRE[o.estado]; }));
@@ -4540,7 +4545,7 @@ function pconfAbrirAsignar(key){
   var actual = null;
   Object.keys(porSat).forEach(function(sid){ if((porSat[sid]||[]).indexOf(key)>=0) actual = sid; });
   var full = _pconfFullUnits(); var fm = {}; full.forEach(function(u){ fm[u.key]=u; });
-  var sats = (DB.satelites||[]).filter(function(x){ return x.activo; }).map(function(x){
+  var sats = (DB.satelites||[]).filter(function(x){ return x.activo && !_esSatMaquila(x); }).map(function(x){
     var esp = (x.especialidades||[]).map(_pconfCatNorm);
     var hace = !!cat && esp.some(function(e){ return e && (cat===e || cat.indexOf(e)===0 || e.indexOf(cat)===0); });
     var udsCola = (porSat[x.id]||[]).reduce(function(sm,k){ return sm+((fm[k]||{}).uds||0); },0);
@@ -5048,7 +5053,7 @@ function renderPlaneacionConfeccion(){
   h += '</div>';
 
   // ── Grid de satélites — carga real ya en el taller + cola de planeación ─────
-  var satelites = (DB.satelites||[]).filter(function(s){ return s.activo; });
+  var satelites = (DB.satelites||[]).filter(function(s){ return s.activo && !_esSatMaquila(s); });
 
   // Cola limpia: una referencia que ya pasó a producción (En Confección en adelante, o con
   // todas sus OTs ya con taller) ya NO es "en cola" — está en "Ya en el taller" o ya se
