@@ -1117,7 +1117,7 @@ async function _fbMigrarSiVacio(){
 // abiertas con una versión anterior se recargan solas (esperando a que terminen de guardar).
 // Sin esto, una pestaña vieja olvidada en un computador seguía guardando con la lógica
 // anterior y deshaciendo cambios de todos los demás.
-var APP_VERSION = 20261006.4;
+var APP_VERSION = 20261008.1;
 function _vigilarVersionApp(){
   if(!_fbDb) return;
   _fbDb.ref(FB_ROOT+'/app_version').on('value', function(snap){
@@ -4758,6 +4758,23 @@ function verDetalleCargaSatelite(satId, opId){
   openModal('🏭 '+esc(fmtOpId(op.id))+' — '+esc(op.nombre_producto||''), h, '', {wide:false});
 }
 
+// Fecha comprometida en Cronograma para (op,color) EN ESE TALLER (si hay varias entregas
+// del mismo color en talleres distintos); si no, cae a la de cualquier taller.
+function _pconfFechaEntregaSat(opId, color, satId){
+  var c = (color||'—');
+  var e = (DB.cronograma||[]).find(function(x){ return x.op_id===opId && (x.color||'—')===c && x.satelite_id===satId && !x.entregado && x.fecha_compromiso; });
+  return e ? e.fecha_compromiso : _pconfFechaEntrega(opId, color);
+}
+// Etiqueta de fecha de entrega con semáforo: vencida (rojo), ≤3 días (ámbar), al día (verde).
+function _pconfFechaBadge(f, extra){
+  if(!f) return '<span style="font-size:9px;color:#475569;white-space:nowrap;">sin fecha</span>';
+  var hoyS = hoy();
+  var dias = Math.round((new Date(f+'T00:00:00') - new Date(hoyS+'T00:00:00'))/86400000);
+  var col = dias<0 ? '#ef4444' : dias<=3 ? '#fbbf24' : '#34d399';
+  var txt = dias<0 ? '⚠ Vencida '+fmtDate(f) : '📅 '+fmtDate(f);
+  return '<span title="'+(dias<0?'Venció hace '+(-dias)+' día(s)':dias===0?'Vence hoy':'Faltan '+dias+' día(s)')+'" style="font-size:9px;font-weight:800;color:'+col+';background:'+col+'18;border:1px solid '+col+'44;border-radius:4px;padding:1px 5px;white-space:nowrap;">'+txt+(extra||'')+'</span>';
+}
+
 // Fecha de entrega ya comprometida en Cronograma para ese (op,color), si la tiene.
 function _pconfFechaEntrega(opId, color){
   var e = (DB.cronograma||[]).find(function(x){ return x.op_id===opId && (x.color||'—')===(color||'—') && !x.entregado && x.fecha_compromiso; });
@@ -4785,7 +4802,7 @@ function _pconfUnitCard(u, opts){
   if(u.color && u.color!=='—') h += '<span style="font-size:8px;font-weight:700;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);border-radius:3px;color:#0a84ff;padding:1px 5px;text-transform:uppercase;white-space:nowrap;display:inline-block;margin-bottom:5px;">'+esc(u.color)+'</span>';
   h += '<div style="border-top:1px solid #2c2c2e;padding-top:5px;display:flex;align-items:center;justify-content:space-between;gap:6px;">';
   h += '<span style="font-size:12px;font-weight:800;color:#fbbf24;">'+u.uds.toLocaleString('es-CO')+'<span style="font-size:8px;font-weight:600;color:#64748b;margin-left:2px;">uds</span></span>';
-  h += fecha ? '<span style="font-size:9px;font-weight:700;color:#34d399;white-space:nowrap;">📅 '+esc(fmtDate(fecha))+'</span>' : '<span style="font-size:8px;color:#374151;white-space:nowrap;">sin fecha</span>';
+  h += _pconfFechaBadge(fecha);
   h += '</div>';
   if(opts.buttons) h += '<div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-top:6px;">'+opts.buttons+'</div>';
   return h+'</div>';
@@ -5082,9 +5099,17 @@ function renderPlaneacionConfeccion(){
       // Consolidado por OP — una sola tarjeta aunque tenga varios colores; clic abre el detalle.
       var porOpReal = {}, ordenOpReal = [];
       cargaReal.forEach(function(u){
-        if(!porOpReal[u.op.id]){ porOpReal[u.op.id] = {op:u.op, items:[], uds:0}; ordenOpReal.push(u.op.id); }
+        if(!porOpReal[u.op.id]){ porOpReal[u.op.id] = {op:u.op, items:[], uds:0, fechas:[]}; ordenOpReal.push(u.op.id); }
         porOpReal[u.op.id].items.push(u);
         porOpReal[u.op.id].uds += u.uds;
+        var fC = _pconfFechaEntregaSat(u.op.id, u.color, s.id);
+        if(fC && porOpReal[u.op.id].fechas.indexOf(fC)<0) porOpReal[u.op.id].fechas.push(fC);
+      });
+      // Primero lo que vence antes; lo que no tiene fecha, al final.
+      ordenOpReal.forEach(function(id){ porOpReal[id].fechas.sort(); });
+      ordenOpReal.sort(function(a,b){
+        var fa = porOpReal[a].fechas[0]||'9999', fb = porOpReal[b].fechas[0]||'9999';
+        return fa.localeCompare(fb);
       });
       h += '<details open style="background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.2);border-radius:8px;overflow:hidden;flex-shrink:0;">';
       h += '<summary style="display:flex;align-items:center;gap:6px;padding:6px 10px;cursor:pointer;list-style:none;font-size:10px;font-weight:700;color:#fbbf24;">🏭 Ya en el taller (realidad) · '+ordenOpReal.length+' OP · '+udsReal.toLocaleString('es-CO')+' uds</summary>';
@@ -5096,6 +5121,8 @@ function renderPlaneacionConfeccion(){
         h += '<div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">';
         h += '<span style="font-size:10px;font-weight:800;color:#0a84ff;">'+esc(fmtOpId(g.op.id))+'</span>';
         h += '<span style="font-size:9px;color:#475569;">'+g.items.length+' color'+(g.items.length!==1?'es':'')+'</span>';
+        h += '<span style="flex:1;"></span>';
+        h += _pconfFechaBadge(g.fechas[0], g.fechas.length>1 ? ' +'+(g.fechas.length-1) : '');
         h += '</div>';
         h += '<div style="font-size:11px;font-weight:700;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(g.op.nombre_producto||g.op.id)+'</div>';
         h += '</div>';
