@@ -29604,16 +29604,27 @@
       "user": "Isabel"
     },
     {
+      "categoria": "Conjuntos",
+      "diseno_id": "id_1782407030796_2wtw2rjf3",
+      "estado_anterior": "EN_CONFECCION_MUESTRA",
+      "estado_nuevo": "EN_REVISION_GERENCIA",
       "id": "evt_1791498934986_n3k03",
-      "ts": 1791498934986,
-      "user": "Isabel",
+      "marca": "Bentley Kids",
+      "nombre": "SET CHALECO VIENA",
       "tipo": "estado_diseno",
+      "ts": 1791498934986,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1791498943185_geqn6",
+      "ts": 1791498943185,
+      "user": "Isabel",
+      "tipo": "diseno_responsable",
       "diseno_id": "id_1782407030796_2wtw2rjf3",
       "nombre": "SET CHALECO VIENA",
       "categoria": "Conjuntos",
-      "marca": "Bentley Kids",
-      "estado_anterior": "EN_CONFECCION_MUESTRA",
-      "estado_nuevo": "EN_REVISION_GERENCIA"
+      "resp_anterior": "Isa",
+      "resp_nuevo": "John"
     }
   ]
 }
