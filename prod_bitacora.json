@@ -28837,20 +28837,36 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": false,
+      "color": "MARFIL",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1791473378243_v5lhx",
-      "ts": 1791473378243,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-107",
       "op_nombre": "CONJUNTO FRANKY PR",
       "referencia": "CONJUNTO FRANKY PRIME",
-      "color": "MARFIL",
       "talla": "M",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": false,
+      "tipo": "estado_ot",
+      "ts": 1791473378243,
       "uds": 42,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1791473441089_b9ve4",
+      "ts": 1791473441089,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0059",
+      "op_nombre": "SET FRANKY",
+      "referencia": "SET FRANKY",
+      "color": "AVENA",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 104,
+      "motivo": "EN TALLER"
     }
   ]
 }
