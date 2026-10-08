@@ -29643,20 +29643,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MORA LECHE",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1791499060894_gudci",
-      "ts": 1791499060894,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-111",
       "op_nombre": "OVERSIZED CAPOTA",
       "referencia": "OVERSIZED CAPOTA",
-      "color": "MORA LECHE",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1791499060894,
       "uds": 84,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1791499145861_8v3dc",
+      "ts": 1791499145861,
+      "user": "Isabel",
+      "tipo": "diseno_comentario",
+      "diseno_id": "id_1787602844206_a4wg3bqtn",
+      "nombre": "PANTALON NEVADO",
+      "categoria": "Pantalones",
+      "tiene_imagen": false,
+      "extracto": "Muestra confeccionada en tela snowy de vitral, se ve bonita. Pero no sé va a des"
     }
   ]
 }
