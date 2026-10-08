@@ -12174,9 +12174,9 @@
       },
       "trazos_solicitudes": [
         {
-          "solicitud_id": "id_1791497078235_1tc6st3o6",
           "fecha": "2026-10-08",
-          "lineas": 2
+          "lineas": 2,
+          "solicitud_id": "id_1791497078235_1tc6st3o6"
         }
       ]
     },
@@ -12509,9 +12509,9 @@
       },
       "trazos_solicitudes": [
         {
-          "solicitud_id": "id_1791497235701_h4z6df6de",
           "fecha": "2026-10-08",
-          "lineas": 2
+          "lineas": 2,
+          "solicitud_id": "id_1791497235701_h4z6df6de"
         }
       ]
     },
@@ -15499,7 +15499,10 @@
         "T12",
         "T14",
         "T16"
-      ]
+      ],
+      "consumibles_check": {
+        "rec_pantalon_rave_1063__c96_23": true
+      }
     }
   ]
 }
