@@ -28885,20 +28885,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "VINOTINTO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1791473533968_93si3",
-      "ts": 1791473533968,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-0059",
       "op_nombre": "SET FRANKY",
       "referencia": "SET FRANKY",
-      "color": "VINOTINTO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1791473533968,
       "uds": 42,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1791474489254_4gwra",
+      "ts": 1791474489254,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1790194693792_owlwabw3h",
+      "op_id": "OP-2026-203",
+      "color": "GRIS",
+      "fecha_nueva": "2026-10-09",
+      "motivo": "Asignación inicial"
     }
   ]
 }
