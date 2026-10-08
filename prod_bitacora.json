@@ -28924,16 +28924,27 @@
       "user": "Isabel"
     },
     {
+      "categoria": "Blusas",
+      "diseno_id": "id_1782168315610_al7ir6cd2",
+      "estado_anterior": "EN_CORTE_MUESTRA",
+      "estado_nuevo": "EN_REVISION_GERENCIA",
       "id": "evt_1791479299550_cc39g",
-      "ts": 1791479299550,
-      "user": "Isabel",
+      "marca": "Bentley Kids",
+      "nombre": "POLO MAJO",
       "tipo": "estado_diseno",
+      "ts": 1791479299550,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1791479323257_6vew1",
+      "ts": 1791479323257,
+      "user": "Isabel",
+      "tipo": "diseno_responsable",
       "diseno_id": "id_1782168315610_al7ir6cd2",
       "nombre": "POLO MAJO",
       "categoria": "Blusas",
-      "marca": "Bentley Kids",
-      "estado_anterior": "EN_CORTE_MUESTRA",
-      "estado_nuevo": "EN_REVISION_GERENCIA"
+      "resp_anterior": "Isa",
+      "resp_nuevo": "John"
     }
   ]
 }
