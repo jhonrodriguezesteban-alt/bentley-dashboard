@@ -28780,15 +28780,47 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1791416949638_8td5m",
-      "ts": 1791416949638,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-0040",
-      "nombre": "PANTALON DONATELLA",
       "categoria": "PANTALONES",
       "colores": 3,
-      "refs": 1
+      "id": "evt_1791416949638_8td5m",
+      "nombre": "PANTALON DONATELLA",
+      "op_id": "OP-0040",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1791416949638,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1791473358295_id208",
+      "ts": 1791473358295,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-107",
+      "op_nombre": "CONJUNTO FRANKY PR",
+      "referencia": "CONJUNTO FRANKY PRIME",
+      "color": "CAFE",
+      "talla": "M",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": false,
+      "uds": 24,
+      "motivo": "ENTREGADO"
+    },
+    {
+      "id": "evt_1791473361292_57v0w",
+      "ts": 1791473361292,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-107",
+      "op_nombre": "CONJUNTO FRANKY PR",
+      "referencia": "CONJUNTO FRANKY PRIME",
+      "color": "CAFE",
+      "talla": "M",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": false,
+      "uds": 24,
+      "motivo": "ENTREGADO"
     }
   ]
 }
