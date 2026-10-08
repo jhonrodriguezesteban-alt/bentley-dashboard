@@ -1133,7 +1133,7 @@ async function _fbMigrarSiVacio(){
 // abiertas con una versión anterior se recargan solas (esperando a que terminen de guardar).
 // Sin esto, una pestaña vieja olvidada en un computador seguía guardando con la lógica
 // anterior y deshaciendo cambios de todos los demás.
-var APP_VERSION = 20261008.2;
+var APP_VERSION = 20261008.3;
 function _vigilarVersionApp(){
   if(!_fbDb) return;
   _fbDb.ref(FB_ROOT+'/app_version').on('value', function(snap){
@@ -4332,6 +4332,9 @@ function _pconfCargaRealSatelite(satId){
   var map = {};
   (DB.ots||[]).forEach(function(ot){
     if(ot.satelite_id!==satId || !ESTADOS_EN_TALLER[ot.estado]) return;
+    // NOVEDAD con unidades ya entregadas = entrega con faltante (ej. llegó 31 de 32): la
+    // prenda ya volvió a planta, no está en poder del taller → no cuenta como carga.
+    if(ot.estado==='NOVEDAD' && (ot.unidades_entregadas||0)>0) return;
     var udsEnPoder = (ot.cantidad||0) - (ot.estado==='ENTREGADO_PARCIAL' ? (ot.unidades_entregadas||0) : 0);
     if(udsEnPoder<=0) return;
     var op = (DB.ops||[]).find(function(o){ return o.id===ot.op_id; });
