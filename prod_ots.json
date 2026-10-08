@@ -26182,7 +26182,7 @@
       "created_at": "2026-01-21",
       "created_by": "migrado_matriz",
       "cumplió_fecha": true,
-      "estado": "EN_CONFECCION",
+      "estado": "PAGO_PENDIENTE",
       "fecha_entrega_corte_satelite": "2026-05-14",
       "fecha_estimada_entrega": "2026-05-29",
       "fecha_op": "2026-01-21",
@@ -26204,11 +26204,17 @@
       "satelite_nombre": "STELLA BUSTOS",
       "talla": "T10",
       "total_mayorista": 21999.53,
-      "unidades_entregadas": 0,
+      "unidades_entregadas": 1,
       "unidades_novedad": 0,
       "unidades_por_llegar": 1,
       "valor_mo": 1061,
-      "historial": []
+      "historial": [
+        {
+          "accion": "Estado cambiado: EN_CONFECCION → PAGO_PENDIENTE. Motivo: corrección — Stella Bustos ya había entregado (quedó rezagada en la migración; resto de la OP pasó a pago el 15-sep)",
+          "fecha": "2026-10-08T23:07:55.000Z",
+          "user": "John Rodriguez"
+        }
+      ]
     },
     {
       "cantidad": 1,
@@ -26651,7 +26657,7 @@
       "created_at": "2026-01-21",
       "created_by": "migrado_matriz",
       "cumplió_fecha": true,
-      "estado": "EN_CONFECCION",
+      "estado": "PAGO_PENDIENTE",
       "fecha_entrega_corte_satelite": "2026-05-14",
       "fecha_estimada_entrega": "2026-05-29",
       "fecha_op": "2026-01-21",
@@ -26673,11 +26679,17 @@
       "satelite_nombre": "STELLA BUSTOS",
       "talla": "T12",
       "total_mayorista": 21999.53,
-      "unidades_entregadas": 0,
+      "unidades_entregadas": 1,
       "unidades_novedad": 0,
       "unidades_por_llegar": 1,
       "valor_mo": 1061,
-      "historial": []
+      "historial": [
+        {
+          "accion": "Estado cambiado: EN_CONFECCION → PAGO_PENDIENTE. Motivo: corrección — Stella Bustos ya había entregado (quedó rezagada en la migración; resto de la OP pasó a pago el 15-sep)",
+          "fecha": "2026-10-08T23:07:55.000Z",
+          "user": "John Rodriguez"
+        }
+      ]
     },
     {
       "cantidad": 1,
