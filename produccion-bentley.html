@@ -1047,9 +1047,25 @@ async function _fbSet(key, data){
   catch(e){ console.warn('FB write '+key, e); toast('No se pudo sincronizar '+key+' en tiempo real — los demás lo verán al recargar', 'warning'); }
 }
 
+// Promesa con límite de tiempo — ninguna espera de red puede colgar la app indefinidamente.
+function _conTimeout(p, ms, etiqueta){
+  return Promise.race([p, new Promise(function(_, rej){ setTimeout(function(){ rej(new Error('timeout '+(etiqueta||'')+' '+ms+'ms')); }, ms); })]);
+}
+// fetch con límite de tiempo (AbortController): si GitHub no responde, falla en vez de colgar.
+function _fetchTO(url, opts, ms){
+  ms = ms || 25000;
+  var ctl = (typeof AbortController!=='undefined') ? new AbortController() : null;
+  var o = Object.assign({}, opts||{}); if(ctl) o.signal = ctl.signal;
+  var tm = setTimeout(function(){ if(ctl) ctl.abort(); }, ms);
+  return _conTimeout(fetch(url, o), ms+500, 'fetch').finally(function(){ clearTimeout(tm); });
+}
 async function _fbGet(key){
   if(!_fbDb) return null;
-  try { if(_fbAuthReady) await _fbAuthReady; var s = await _fbDb.ref(FB_ROOT+'/'+key).get(); return s.exists() ? _fbDecKeys(s.val()) : null; } catch(e){ return null; }
+  try {
+    if(_fbAuthReady) await _conTimeout(_fbAuthReady, 8000, 'fbAuth');
+    var s = await _conTimeout(_fbDb.ref(FB_ROOT+'/'+key).get(), 12000, 'fbGet '+key);
+    return s.exists() ? _fbDecKeys(s.val()) : null;
+  } catch(e){ console.warn('[fbGet]', key, e && e.message); return null; }
 }
 
 function _fbApplyKey(key, d){
@@ -1117,7 +1133,7 @@ async function _fbMigrarSiVacio(){
 // abiertas con una versión anterior se recargan solas (esperando a que terminen de guardar).
 // Sin esto, una pestaña vieja olvidada en un computador seguía guardando con la lógica
 // anterior y deshaciendo cambios de todos los demás.
-var APP_VERSION = 20261008.1;
+var APP_VERSION = 20261008.2;
 function _vigilarVersionApp(){
   if(!_fbDb) return;
   _fbDb.ref(FB_ROOT+'/app_version').on('value', function(snap){
@@ -2600,6 +2616,15 @@ function recargarApp(){
 async function cargarDatos(){
   var dlEl = document.getElementById('data-loading');
   if(dlEl){ dlEl.style.display='flex'; }
+  // Seguro: si algo de la red se queda colgado, la pantalla de carga no puede quedar
+  // bloqueando la app para siempre — a los 40 s se quita y se avisa.
+  var _dlWatch = setTimeout(function(){
+    if(dlEl && dlEl.style.display!=='none'){
+      dlEl.style.display='none';
+      try{ renderPage(currentPage); }catch(e){}
+      toast('La conexión está lenta — mostrando lo último guardado. Toca ↻ para reintentar.','warning');
+    }
+  }, 40000);
   try {
     var t = Date.now();
     var tk = GT || localStorage.getItem('bentley_gh_token') || '';
@@ -2616,28 +2641,28 @@ async function cargarDatos(){
     // Sin token: RAW URL (~1 min de lag vs 5-10 min de Pages)
     var _rawH = _useApi ? {'Authorization': 'token ' + tk, 'Accept': 'application/vnd.github.raw'} : null;
     // Lectura fresca por API (GitHub Pages tarda minutos en reflejar cada guardado).
-    var _apiRaw = function(key){ return _useApi ? fetch(_apiBase + FILES[key] + '?t=' + t, {headers: _rawH}) : fetch(BASE_URL + FILES[key] + '?t=' + t); };
+    var _apiRaw = function(key){ return _useApi ? _fetchTO(_apiBase + FILES[key] + '?t=' + t, {headers: _rawH}) : _fetchTO(BASE_URL + FILES[key] + '?t=' + t); };
     // Todas las lecturas arrancan YA en paralelo (antes iban una tras otra y el arranque
     // tardaba ~20 s); más abajo solo se espera cada respuesta en su turno.
     var _sinFallo = function(p){ return p ? p.catch(function(e){ return {ok:false, _err:e}; }) : Promise.resolve({ok:false}); };
     var _pre = {
-      disenos: tk ? _sinFallo(fetch(_apiBase + FILES['disenos'] + '?t=' + t, {headers: {'Authorization': 'token ' + tk}})) : null,
-      prog:    _sinFallo(fetch(BASE_URL + 'prod_prog_ops.json?t=' + t)),
+      disenos: tk ? _sinFallo(_fetchTO(_apiBase + FILES['disenos'] + '?t=' + t, {headers: {'Authorization': 'token ' + tk}})) : null,
+      prog:    _sinFallo(_fetchTO(BASE_URL + 'prod_prog_ops.json?t=' + t)),
       mo:      _sinFallo(_apiRaw('costos_mo')),
-      usr:     _sinFallo(fetch(BASE_URL + 'prod_usuarios.json?t=' + t)),
-      sim:     _sinFallo(fetch(BASE_URL + 'prod_simulador.json?t=' + t)),
+      usr:     _sinFallo(_fetchTO(BASE_URL + 'prod_usuarios.json?t=' + t)),
+      sim:     _sinFallo(_fetchTO(BASE_URL + 'prod_simulador.json?t=' + t)),
       log:     _sinFallo(_apiRaw('logistica')),
-      planconf:_sinFallo(fetch(BASE_URL + 'prod_planeacion_confeccion.json?t=' + t)),
-      costeo:  tk ? _sinFallo(fetch(_apiBase + FILES['costeo'] + '?t=' + t, {headers: {'Authorization': 'token ' + tk}})) : null,
-      trazos:  tk ? _sinFallo(fetch(_apiBase + FILES['trazos'] + '?t=' + t, {headers: {'Authorization': 'token ' + tk}})) : null,
+      planconf:_sinFallo(_fetchTO(BASE_URL + 'prod_planeacion_confeccion.json?t=' + t)),
+      costeo:  tk ? _sinFallo(_fetchTO(_apiBase + FILES['costeo'] + '?t=' + t, {headers: {'Authorization': 'token ' + tk}})) : null,
+      trazos:  tk ? _sinFallo(_fetchTO(_apiBase + FILES['trazos'] + '?t=' + t, {headers: {'Authorization': 'token ' + tk}})) : null,
       cron:    _sinFallo(_apiRaw('cronograma')),
-      bit:     _sinFallo(fetch(BASE_URL + 'prod_bitacora.json?t=' + t))
+      bit:     _sinFallo(_fetchTO(BASE_URL + 'prod_bitacora.json?t=' + t))
     };
     var [satR, opsR, otsR, catR] = await Promise.all([
       _apiRaw('satelites'),
-      _useApi ? fetch(_apiBase + FILES['ops'] + '?t=' + t, {headers: _apiH}) : fetch(RAW_URL + FILES['ops'] + '?t=' + t),
-      _useApi ? fetch(_apiBase + FILES['ots'] + '?t=' + t, {headers: _rawH}) : fetch(RAW_URL + FILES['ots'] + '?t=' + t),
-      fetch(BASE_URL + 'prod_catalogo.json?t=' + t)
+      _useApi ? _fetchTO(_apiBase + FILES['ops'] + '?t=' + t, {headers: _apiH}) : _fetchTO(RAW_URL + FILES['ops'] + '?t=' + t),
+      _useApi ? _fetchTO(_apiBase + FILES['ots'] + '?t=' + t, {headers: _rawH}) : _fetchTO(RAW_URL + FILES['ots'] + '?t=' + t),
+      _fetchTO(BASE_URL + 'prod_catalogo.json?t=' + t)
     ]);
     if(satR.ok){ var d = await satR.json(); DB.satelites = d.satelites || []; }
     if(opsR.ok){
@@ -2677,7 +2702,7 @@ async function cargarDatos(){
       if(localDB){ try { var lp = JSON.parse(localDB); if(lp.disenos && lp.disenos.length){ DB.disenos = lp.disenos; DB.disenos_cfg = lp.disenos_cfg||{}; disLoaded = true; } } catch(e){} }
     }
     if(!disLoaded){
-      var disR = await fetch(BASE_URL + 'prod_disenos.json?t=' + t);
+      var disR = await _fetchTO(BASE_URL + 'prod_disenos.json?t=' + t);
       if(disR.ok){ var d5b = await disR.json(); DB.disenos = d5b.disenos || []; DB.disenos_cfg = d5b.disenos_cfg || {}; }
     }
     // Migrar URLs viejas de GitHub Pages a raw.githubusercontent para preview inmediato
@@ -2700,12 +2725,12 @@ async function cargarDatos(){
       var planFb = _fbDb ? await _fbGet('planeacion') : null;
       if(planFb){ DB.planeacion = {meses: planFb.meses||{}, disenos_plan: planFb.disenos_plan||{}, historial_corte: planFb.historial_corte||[], confirmadas: planFb.confirmadas||{}, trazos: planFb.trazos||{}}; }
       else {
-        var planR = await fetch(BASE_URL + 'prod_planeacion.json?t=' + t);
+        var planR = await _fetchTO(BASE_URL + 'prod_planeacion.json?t=' + t);
         if(planR.ok){ var d11 = await planR.json(); DB.planeacion = {meses: d11.meses||{}, disenos_plan: d11.disenos_plan||{}, historial_corte: d11.historial_corte||[], confirmadas: d11.confirmadas||{}, trazos: d11.trazos||{}}; }
       }
     } catch(planE){
       try {
-        var planR2 = await fetch(BASE_URL + 'prod_planeacion.json?t=' + t);
+        var planR2 = await _fetchTO(BASE_URL + 'prod_planeacion.json?t=' + t);
         if(planR2.ok){ var d11c = await planR2.json(); DB.planeacion = {meses: d11c.meses||{}, disenos_plan: d11c.disenos_plan||{}, historial_corte: d11c.historial_corte||[], confirmadas: d11c.confirmadas||{}, trazos: d11c.trazos||{}}; }
       } catch(planE2){ console.warn('Planeación: no se pudo cargar fresco, se mantiene lo que había en memoria', planE2); }
     }
@@ -2729,7 +2754,7 @@ async function cargarDatos(){
       } catch(e){}
     }
     if(!costeoLoaded){
-      var costeoR = await fetch(BASE_URL + 'prod_costeo.json?t=' + t);
+      var costeoR = await _fetchTO(BASE_URL + 'prod_costeo.json?t=' + t);
       if(costeoR.ok){ var d12b = await costeoR.json(); DB.costeo = {mp:d12b.mp||[],servicios:d12b.servicios||[],puestos:d12b.puestos||[],tarifas_cif:d12b.tarifas_cif||[],params:d12b.params||{},recetas:d12b.recetas||[],precios_pt:d12b.precios_pt||[],receta_map:d12b.receta_map||{}}; }
     }
     if(!DB.planeacion) DB.planeacion = {meses:{}};
@@ -2749,7 +2774,7 @@ async function cargarDatos(){
     }
     if(!trazosLoaded){
       try {
-        var trazosR = await fetch(BASE_URL + 'prod_trazos.json?t=' + t);
+        var trazosR = await _fetchTO(BASE_URL + 'prod_trazos.json?t=' + t);
         if(trazosR.ok){ var d12tb = await trazosR.json(); DB.trazos = {solicitudes: d12tb.solicitudes||[]}; }
       } catch(e){}
     }
@@ -2826,6 +2851,7 @@ async function cargarDatos(){
       toast('Sin conexión — usando datos locales', 'warning');
     }
   }
+  clearTimeout(_dlWatch);
   if(dlEl){ dlEl.style.display='none'; }
   updateNovBadge();
   renderPage(currentPage);
