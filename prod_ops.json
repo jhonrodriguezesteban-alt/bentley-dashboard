@@ -11102,6 +11102,11 @@
           "vmo": 9459
         }
       ],
+      "subg_estados": {
+        "OP-2026-196||BEIGE": "POR_REVISAR",
+        "OP-2026-196||CAMEL": "POR_REVISAR",
+        "OP-2026-196||NEGRO": "POR_REVISAR"
+      },
       "tallas": [
         "T6",
         "T8",
@@ -11109,12 +11114,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {
-        "OP-2026-196||CAMEL": "POR_REVISAR",
-        "OP-2026-196||NEGRO": "POR_REVISAR",
-        "OP-2026-196||BEIGE": "POR_REVISAR"
-      }
+      ]
     },
     {
       "cantidades": {
@@ -14457,48 +14457,32 @@
     },
     {
       "cantidades": {
-        "MARFIL -120_T10": 12,
-        "MARFIL -120_T12": 16,
-        "MARFIL -120_T14": 16,
-        "MARFIL -120_T16": 16,
-        "MARFIL -120_T4": 8,
-        "MARFIL -120_T6": 8,
-        "MARFIL -120_T8": 12,
-        "MISO -  CAFE 300_T10": 12,
-        "MISO -  CAFE 300_T12": 16,
-        "MISO -  CAFE 300_T14": 16,
-        "MISO -  CAFE 300_T16": 16,
-        "MISO -  CAFE 300_T4": 8,
-        "MISO -  CAFE 300_T6": 8,
-        "MISO -  CAFE 300_T8": 12,
-        "MISO - BEIGE 322_T10": 12,
-        "MISO - BEIGE 322_T12": 16,
-        "MISO - BEIGE 322_T14": 16,
-        "MISO - BEIGE 322_T16": 16,
-        "MISO - BEIGE 322_T4": 8,
-        "MISO - BEIGE 322_T6": 8,
-        "MISO - BEIGE 322_T8": 12,
+        "MISO - NEGRO 200_T4": 8,
+        "MISO - NEGRO 200_T6": 8,
+        "MISO - NEGRO 200_T8": 12,
         "MISO - NEGRO 200_T10": 12,
         "MISO - NEGRO 200_T12": 16,
         "MISO - NEGRO 200_T14": 16,
         "MISO - NEGRO 200_T16": 16,
-        "MISO - NEGRO 200_T4": 8,
-        "MISO - NEGRO 200_T6": 8,
-        "MISO - NEGRO 200_T8": 12,
-        "VERDE MILITAR_T10": 12,
-        "VERDE MILITAR_T12": 16,
-        "VERDE MILITAR_T14": 16,
-        "VERDE MILITAR_T16": 16,
-        "VERDE MILITAR_T4": 8,
-        "VERDE MILITAR_T6": 8,
-        "VERDE MILITAR_T8": 12
+        "MISO - BEIGE 322_T4": 8,
+        "MISO - BEIGE 322_T6": 8,
+        "MISO - BEIGE 322_T8": 12,
+        "MISO - BEIGE 322_T10": 12,
+        "MISO - BEIGE 322_T12": 16,
+        "MISO - BEIGE 322_T14": 16,
+        "MISO - BEIGE 322_T16": 16,
+        "MARFIL -120_T4": 8,
+        "MARFIL -120_T6": 8,
+        "MARFIL -120_T8": 12,
+        "MARFIL -120_T10": 12,
+        "MARFIL -120_T12": 16,
+        "MARFIL -120_T14": 16,
+        "MARFIL -120_T16": 16
       },
       "categoria": "BUZOS",
       "colores": [
         "MISO - NEGRO 200",
-        "MISO -  CAFE 300",
         "MISO - BEIGE 322",
-        "VERDE MILITAR",
         "MARFIL -120"
       ],
       "consumibles_check": {
@@ -14538,54 +14522,15 @@
       "receta_nombre": "CAMIBUSO HOUSER",
       "referencias": [
         {
-          "cantidades": {
-            "MARFIL -120_T10": 12,
-            "MARFIL -120_T12": 16,
-            "MARFIL -120_T14": 16,
-            "MARFIL -120_T16": 16,
-            "MARFIL -120_T4": 8,
-            "MARFIL -120_T6": 8,
-            "MARFIL -120_T8": 12,
-            "MISO -  CAFE 300_T10": 12,
-            "MISO -  CAFE 300_T12": 16,
-            "MISO -  CAFE 300_T14": 16,
-            "MISO -  CAFE 300_T16": 16,
-            "MISO -  CAFE 300_T4": 8,
-            "MISO -  CAFE 300_T6": 8,
-            "MISO -  CAFE 300_T8": 12,
-            "MISO - BEIGE 322_T10": 12,
-            "MISO - BEIGE 322_T12": 16,
-            "MISO - BEIGE 322_T14": 16,
-            "MISO - BEIGE 322_T16": 16,
-            "MISO - BEIGE 322_T4": 8,
-            "MISO - BEIGE 322_T6": 8,
-            "MISO - BEIGE 322_T8": 12,
-            "MISO - NEGRO 200_T10": 12,
-            "MISO - NEGRO 200_T12": 16,
-            "MISO - NEGRO 200_T14": 16,
-            "MISO - NEGRO 200_T16": 16,
-            "MISO - NEGRO 200_T4": 8,
-            "MISO - NEGRO 200_T6": 8,
-            "MISO - NEGRO 200_T8": 12,
-            "VERDE MILITAR_T10": 12,
-            "VERDE MILITAR_T12": 16,
-            "VERDE MILITAR_T14": 16,
-            "VERDE MILITAR_T16": 16,
-            "VERDE MILITAR_T4": 8,
-            "VERDE MILITAR_T6": 8,
-            "VERDE MILITAR_T8": 12
-          },
-          "cat": "BUZOS",
-          "colores": [
-            "MISO - NEGRO 200",
-            "MISO -  CAFE 300",
-            "MISO - BEIGE 322",
-            "VERDE MILITAR",
-            "MARFIL -120"
-          ],
-          "maquilador_id": "",
           "nombre": "CAMIBUSO HOUSER",
           "ref": "1222",
+          "cat": "BUZOS",
+          "vmo": 1151,
+          "colores": [
+            "MISO - NEGRO 200",
+            "MISO - BEIGE 322",
+            "MARFIL -120"
+          ],
           "tallas": [
             "T4",
             "T6",
@@ -14595,8 +14540,30 @@
             "T14",
             "T16"
           ],
-          "totalUds": 440,
-          "vmo": 1151
+          "cantidades": {
+            "MISO - NEGRO 200_T4": 8,
+            "MISO - NEGRO 200_T6": 8,
+            "MISO - NEGRO 200_T8": 12,
+            "MISO - NEGRO 200_T10": 12,
+            "MISO - NEGRO 200_T12": 16,
+            "MISO - NEGRO 200_T14": 16,
+            "MISO - NEGRO 200_T16": 16,
+            "MISO - BEIGE 322_T4": 8,
+            "MISO - BEIGE 322_T6": 8,
+            "MISO - BEIGE 322_T8": 12,
+            "MISO - BEIGE 322_T10": 12,
+            "MISO - BEIGE 322_T12": 16,
+            "MISO - BEIGE 322_T14": 16,
+            "MISO - BEIGE 322_T16": 16,
+            "MARFIL -120_T4": 8,
+            "MARFIL -120_T6": 8,
+            "MARFIL -120_T8": 12,
+            "MARFIL -120_T10": 12,
+            "MARFIL -120_T12": 16,
+            "MARFIL -120_T14": 16,
+            "MARFIL -120_T16": 16
+          },
+          "maquilador_id": ""
         }
       ],
       "tallas": [
@@ -14619,7 +14586,8 @@
           "lineas": 3,
           "solicitud_id": "id_1791382341570_a7f4j96cm"
         }
-      ]
+      ],
+      "updated_at": "2026-10-08"
     },
     {
       "cantidades": {
