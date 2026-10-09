@@ -10367,23 +10367,23 @@
     },
     {
       "cantidades": {
-        "AZUL BEBE_T10": 20,
-        "AZUL BEBE_T12": 20,
-        "AZUL BEBE_T14": 20,
-        "AZUL BEBE_T16": 20,
-        "AZUL BEBE_T6": 12,
-        "AZUL BEBE_T8": 12,
+        "MARFIL_T6": 12,
+        "MARFIL_T8": 12,
         "MARFIL_T10": 24,
         "MARFIL_T12": 24,
         "MARFIL_T14": 24,
         "MARFIL_T16": 24,
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 12
+        "VERDE JADE_T6": 12,
+        "VERDE JADE_T8": 12,
+        "VERDE JADE_T10": 24,
+        "VERDE JADE_T12": 24,
+        "VERDE JADE_T14": 24,
+        "VERDE JADE_T16": 24
       },
       "categoria": "CHAQUETAS",
       "colores": [
         "MARFIL",
-        "AZUL BEBE"
+        "VERDE JADE"
       ],
       "consumibles_check": {
         "cid_1783366904861_1111__cid_1783366904861_2164": true,
@@ -10410,28 +10410,14 @@
       "receta_nombre": "CHAQUETA MARIPOSAS",
       "referencias": [
         {
-          "cantidades": {
-            "AZUL BEBE_T10": 20,
-            "AZUL BEBE_T12": 20,
-            "AZUL BEBE_T14": 20,
-            "AZUL BEBE_T16": 20,
-            "AZUL BEBE_T6": 12,
-            "AZUL BEBE_T8": 12,
-            "MARFIL_T10": 24,
-            "MARFIL_T12": 24,
-            "MARFIL_T14": 24,
-            "MARFIL_T16": 24,
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 12
-          },
-          "cat": "CHAQUETAS",
-          "colores": [
-            "MARFIL",
-            "AZUL BEBE"
-          ],
-          "maquilador_id": "",
           "nombre": "CHAQUETA MARIPOSAS",
           "ref": "1166",
+          "cat": "CHAQUETAS",
+          "vmo": 1151,
+          "colores": [
+            "MARFIL",
+            "VERDE JADE"
+          ],
           "tallas": [
             "T6",
             "T8",
@@ -10440,7 +10426,21 @@
             "T14",
             "T16"
           ],
-          "vmo": 1151
+          "cantidades": {
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 12,
+            "MARFIL_T10": 24,
+            "MARFIL_T12": 24,
+            "MARFIL_T14": 24,
+            "MARFIL_T16": 24,
+            "VERDE JADE_T6": 12,
+            "VERDE JADE_T8": 12,
+            "VERDE JADE_T10": 24,
+            "VERDE JADE_T12": 24,
+            "VERDE JADE_T14": 24,
+            "VERDE JADE_T16": 24
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -10466,7 +10466,9 @@
           "solicitud_id": "id_1790790479249_1vpqaiqs9"
         }
       ],
-      "updated_at": "2026-10-07"
+      "updated_at": "2026-10-09",
+      "diseno_origen_id": null,
+      "diseno_origen_nombre": null
     },
     {
       "cantidades": {
