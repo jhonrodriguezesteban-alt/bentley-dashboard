@@ -2398,25 +2398,91 @@
       "op_nombre": "PANTALON HOUSER"
     },
     {
-      "id": "id_1791585802032_imh9mhqfa",
-      "op_id": "OP-2026-204",
-      "op_nombre": "HOODIE CAROLINA",
       "categoria": "BUZOS",
+      "creado_en": "2026-10-09",
+      "creado_por": "Isabel",
+      "enviada_en": "2026-10-09",
+      "estado": "ENVIADA",
+      "id": "id_1791585802032_imh9mhqfa",
+      "lineas": [
+        {
+          "ancho_util": 172,
+          "cantidad_trazos": 1,
+          "colores": [
+            "AZUL BEBE",
+            "MARFIL"
+          ],
+          "generado": false,
+          "id": "id_1791585756642_ny0p8hvfi",
+          "impreso": false,
+          "marcadas_por_talla": {
+            "T4": 1,
+            "T6": 1
+          },
+          "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T4",
+            "T6"
+          ],
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
+        },
+        {
+          "ancho_util": 172,
+          "cantidad_trazos": 1,
+          "colores": [
+            "AZUL BEBE",
+            "MARFIL"
+          ],
+          "generado": false,
+          "id": "id_1791585791731_5imcpe5tr",
+          "impreso": false,
+          "marcadas_por_talla": {
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1,
+            "T8": 1
+          },
+          "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
+        }
+      ],
+      "op_id": "OP-2026-204",
+      "op_nombre": "HOODIE CAROLINA"
+    },
+    {
+      "id": "id_1791586261809_h1q69ktmk",
+      "op_id": "OP-2026-197",
+      "op_nombre": "CHAQUETA BAGGY PINZAS",
+      "categoria": "CHAQUETAS",
       "creado_por": "Isabel",
       "creado_en": "2026-10-09",
       "estado": "ENVIADA",
       "enviada_en": "2026-10-09",
       "lineas": [
         {
-          "id": "id_1791585756642_ny0p8hvfi",
+          "id": "id_1791586066632_hpanz14gf",
           "tipo": "TELA_PRINCIPAL",
           "tipo_custom": "",
           "tallas": [
-            "T4",
             "T6"
           ],
           "marcadas_por_talla": {
-            "T4": 1,
             "T6": 1
           },
           "cantidad_trazos": 1,
@@ -2425,7 +2491,9 @@
           "orientacion": "AL_HILO",
           "notas": "",
           "colores": [
-            "AZUL BEBE",
+            "AVENA",
+            "CAFE",
+            "NEGRO",
             "MARFIL"
           ],
           "generado": false,
@@ -2433,22 +2501,14 @@
           "recogido": false
         },
         {
-          "id": "id_1791585791731_5imcpe5tr",
+          "id": "id_1791586109052_9gjmp93ho",
           "tipo": "TELA_PRINCIPAL",
           "tipo_custom": "",
           "tallas": [
-            "T8",
-            "T10",
-            "T12",
-            "T14",
-            "T16"
+            "T8"
           ],
           "marcadas_por_talla": {
-            "T8": 1,
-            "T10": 1,
-            "T12": 1,
-            "T14": 1,
-            "T16": 1
+            "T8": 1
           },
           "cantidad_trazos": 1,
           "ancho_util": 172,
@@ -2456,7 +2516,121 @@
           "orientacion": "AL_HILO",
           "notas": "",
           "colores": [
-            "AZUL BEBE",
+            "AVENA",
+            "CAFE",
+            "NEGRO",
+            "MARFIL"
+          ],
+          "generado": false,
+          "impreso": false,
+          "recogido": false
+        },
+        {
+          "id": "id_1791586140527_o9ajtehk8",
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": "",
+          "tallas": [
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "marcadas_por_talla": {
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1
+          },
+          "cantidad_trazos": 2,
+          "ancho_util": 172,
+          "sentido": "DOS_DIRECCIONES",
+          "orientacion": "AL_HILO",
+          "notas": "",
+          "colores": [
+            "AVENA",
+            "CAFE",
+            "NEGRO",
+            "MARFIL"
+          ],
+          "generado": false,
+          "impreso": false,
+          "recogido": false
+        },
+        {
+          "id": "id_1791586176191_ztzs8i39u",
+          "tipo": "FORRO",
+          "tipo_custom": "",
+          "tallas": [
+            "T6"
+          ],
+          "marcadas_por_talla": {
+            "T6": 1
+          },
+          "cantidad_trazos": 1,
+          "ancho_util": 146,
+          "sentido": "DOS_DIRECCIONES",
+          "orientacion": "AL_HILO",
+          "notas": "",
+          "colores": [
+            "AVENA",
+            "CAFE",
+            "NEGRO",
+            "MARFIL"
+          ],
+          "generado": false,
+          "impreso": false,
+          "recogido": false
+        },
+        {
+          "id": "id_1791586204764_tdhcq68nq",
+          "tipo": "FORRO",
+          "tipo_custom": "",
+          "tallas": [
+            "T8"
+          ],
+          "marcadas_por_talla": {
+            "T8": 1
+          },
+          "cantidad_trazos": 1,
+          "ancho_util": 146,
+          "sentido": "DOS_DIRECCIONES",
+          "orientacion": "AL_HILO",
+          "notas": "",
+          "colores": [
+            "AVENA",
+            "CAFE",
+            "NEGRO",
+            "MARFIL"
+          ],
+          "generado": false,
+          "impreso": false,
+          "recogido": false
+        },
+        {
+          "id": "id_1791586244365_jegze52hz",
+          "tipo": "FORRO",
+          "tipo_custom": "",
+          "tallas": [
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "marcadas_por_talla": {
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1
+          },
+          "cantidad_trazos": 1,
+          "ancho_util": 146,
+          "sentido": "DOS_DIRECCIONES",
+          "orientacion": "AL_HILO",
+          "notas": "",
+          "colores": [
+            "AVENA",
+            "CAFE",
+            "NEGRO",
             "MARFIL"
           ],
           "generado": false,
