@@ -29724,15 +29724,26 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1791505829580_ej54u",
-      "ts": 1791505829580,
-      "user": "John Rodriguez",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-229",
-      "nombre": "PANTALON HOUSER",
       "categoria": "PANTALONES",
       "colores": 3,
-      "refs": 1
+      "id": "evt_1791505829580_ej54u",
+      "nombre": "PANTALON HOUSER",
+      "op_id": "OP-2026-229",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1791505829580,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1791505965058_omgqs",
+      "ts": 1791505965058,
+      "user": "John Rodriguez",
+      "tipo": "cambiar_estado_op_all",
+      "op_id": "OP-2026-196",
+      "estado": "POR_REVISAR",
+      "colores": 3,
+      "protegidos": [],
+      "nombre": "CHAQUETA RALPH"
     }
   ]
 }
