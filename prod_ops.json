@@ -9375,6 +9375,12 @@
           "vmo": 1151
         }
       ],
+      "subg_estados": {
+        "OP-2026-120||AZUL OSCURO": "POR_REVISAR",
+        "OP-2026-120||NEGRO": "POR_REVISAR",
+        "OP-2026-120||ROSA": "POR_REVISAR",
+        "OP-2026-120||VERDE MILITAR": "POR_REVISAR"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -9383,13 +9389,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {
-        "OP-2026-120||AZUL OSCURO": "POR_REVISAR",
-        "OP-2026-120||ROSA": "POR_REVISAR",
-        "OP-2026-120||NEGRO": "POR_REVISAR",
-        "OP-2026-120||VERDE MILITAR": "POR_REVISAR"
-      }
+      ]
     },
     {
       "cantidades": {
@@ -14463,27 +14463,27 @@
     },
     {
       "cantidades": {
-        "MISO - NEGRO 200_T4": 8,
-        "MISO - NEGRO 200_T6": 8,
-        "MISO - NEGRO 200_T8": 12,
-        "MISO - NEGRO 200_T10": 12,
-        "MISO - NEGRO 200_T12": 16,
-        "MISO - NEGRO 200_T14": 16,
-        "MISO - NEGRO 200_T16": 16,
-        "MISO - BEIGE 322_T4": 8,
-        "MISO - BEIGE 322_T6": 8,
-        "MISO - BEIGE 322_T8": 12,
+        "MARFIL -120_T10": 12,
+        "MARFIL -120_T12": 16,
+        "MARFIL -120_T14": 16,
+        "MARFIL -120_T16": 16,
+        "MARFIL -120_T4": 8,
+        "MARFIL -120_T6": 8,
+        "MARFIL -120_T8": 12,
         "MISO - BEIGE 322_T10": 12,
         "MISO - BEIGE 322_T12": 16,
         "MISO - BEIGE 322_T14": 16,
         "MISO - BEIGE 322_T16": 16,
-        "MARFIL -120_T4": 8,
-        "MARFIL -120_T6": 8,
-        "MARFIL -120_T8": 12,
-        "MARFIL -120_T10": 12,
-        "MARFIL -120_T12": 16,
-        "MARFIL -120_T14": 16,
-        "MARFIL -120_T16": 16
+        "MISO - BEIGE 322_T4": 8,
+        "MISO - BEIGE 322_T6": 8,
+        "MISO - BEIGE 322_T8": 12,
+        "MISO - NEGRO 200_T10": 12,
+        "MISO - NEGRO 200_T12": 16,
+        "MISO - NEGRO 200_T14": 16,
+        "MISO - NEGRO 200_T16": 16,
+        "MISO - NEGRO 200_T4": 8,
+        "MISO - NEGRO 200_T6": 8,
+        "MISO - NEGRO 200_T8": 12
       },
       "categoria": "BUZOS",
       "colores": [
@@ -14528,15 +14528,38 @@
       "receta_nombre": "CAMIBUSO HOUSER",
       "referencias": [
         {
-          "nombre": "CAMIBUSO HOUSER",
-          "ref": "1222",
+          "cantidades": {
+            "MARFIL -120_T10": 12,
+            "MARFIL -120_T12": 16,
+            "MARFIL -120_T14": 16,
+            "MARFIL -120_T16": 16,
+            "MARFIL -120_T4": 8,
+            "MARFIL -120_T6": 8,
+            "MARFIL -120_T8": 12,
+            "MISO - BEIGE 322_T10": 12,
+            "MISO - BEIGE 322_T12": 16,
+            "MISO - BEIGE 322_T14": 16,
+            "MISO - BEIGE 322_T16": 16,
+            "MISO - BEIGE 322_T4": 8,
+            "MISO - BEIGE 322_T6": 8,
+            "MISO - BEIGE 322_T8": 12,
+            "MISO - NEGRO 200_T10": 12,
+            "MISO - NEGRO 200_T12": 16,
+            "MISO - NEGRO 200_T14": 16,
+            "MISO - NEGRO 200_T16": 16,
+            "MISO - NEGRO 200_T4": 8,
+            "MISO - NEGRO 200_T6": 8,
+            "MISO - NEGRO 200_T8": 12
+          },
           "cat": "BUZOS",
-          "vmo": 1151,
           "colores": [
             "MISO - NEGRO 200",
             "MISO - BEIGE 322",
             "MARFIL -120"
           ],
+          "maquilador_id": "",
+          "nombre": "CAMIBUSO HOUSER",
+          "ref": "1222",
           "tallas": [
             "T4",
             "T6",
@@ -14546,32 +14569,14 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "MISO - NEGRO 200_T4": 8,
-            "MISO - NEGRO 200_T6": 8,
-            "MISO - NEGRO 200_T8": 12,
-            "MISO - NEGRO 200_T10": 12,
-            "MISO - NEGRO 200_T12": 16,
-            "MISO - NEGRO 200_T14": 16,
-            "MISO - NEGRO 200_T16": 16,
-            "MISO - BEIGE 322_T4": 8,
-            "MISO - BEIGE 322_T6": 8,
-            "MISO - BEIGE 322_T8": 12,
-            "MISO - BEIGE 322_T10": 12,
-            "MISO - BEIGE 322_T12": 16,
-            "MISO - BEIGE 322_T14": 16,
-            "MISO - BEIGE 322_T16": 16,
-            "MARFIL -120_T4": 8,
-            "MARFIL -120_T6": 8,
-            "MARFIL -120_T8": 12,
-            "MARFIL -120_T10": 12,
-            "MARFIL -120_T12": 16,
-            "MARFIL -120_T14": 16,
-            "MARFIL -120_T16": 16
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
+      "subg_estados": {
+        "OP-2026-228||MARFIL -120": "POR_REVISAR",
+        "OP-2026-228||MISO - BEIGE 322": "POR_REVISAR",
+        "OP-2026-228||MISO - NEGRO 200": "POR_REVISAR"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -14593,12 +14598,7 @@
           "solicitud_id": "id_1791382341570_a7f4j96cm"
         }
       ],
-      "updated_at": "2026-10-08",
-      "subg_estados": {
-        "OP-2026-228||MISO - NEGRO 200": "POR_REVISAR",
-        "OP-2026-228||MISO - BEIGE 322": "POR_REVISAR",
-        "OP-2026-228||MARFIL -120": "POR_REVISAR"
-      }
+      "updated_at": "2026-10-08"
     },
     {
       "cantidades": {
@@ -14708,6 +14708,11 @@
           "vmo": 1151
         }
       ],
+      "subg_estados": {
+        "OP-2026-229||MARFIL -120": "POR_REVISAR",
+        "OP-2026-229||MISO - BEIGE 322": "POR_REVISAR",
+        "OP-2026-229||MISO - NEGRO 200": "POR_REVISAR"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -14717,38 +14722,26 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-10-08",
-      "subg_estados": {
-        "OP-2026-229||MISO - NEGRO 200": "POR_REVISAR",
-        "OP-2026-229||MISO - BEIGE 322": "POR_REVISAR",
-        "OP-2026-229||MARFIL -120": "POR_REVISAR"
-      }
+      "updated_at": "2026-10-08"
     },
     {
       "cantidades": {
-        "FUCSIA 618_T10": 18,
-        "FUCSIA 618_T12": 18,
-        "FUCSIA 618_T14": 18,
-        "FUCSIA 618_T16": 18,
-        "FUCSIA 618_T6": 10,
-        "FUCSIA 618_T8": 18,
-        "MARFIL -100_T10": 18,
-        "MARFIL -100_T12": 18,
-        "MARFIL -100_T14": 18,
-        "MARFIL -100_T16": 18,
-        "MARFIL -100_T6": 10,
-        "MARFIL -100_T8": 18,
+        "NEGRO -200_T6": 10,
+        "NEGRO -200_T8": 18,
         "NEGRO -200_T10": 18,
         "NEGRO -200_T12": 18,
         "NEGRO -200_T14": 18,
         "NEGRO -200_T16": 18,
-        "NEGRO -200_T6": 10,
-        "NEGRO -200_T8": 18
+        "FUCSIA 618_T6": 10,
+        "FUCSIA 618_T8": 18,
+        "FUCSIA 618_T10": 18,
+        "FUCSIA 618_T12": 18,
+        "FUCSIA 618_T14": 18,
+        "FUCSIA 618_T16": 18
       },
       "categoria": "BLUSAS",
       "colores": [
         "NEGRO -200",
-        "MARFIL -100",
         "FUCSIA 618"
       ],
       "consumibles_check": {
@@ -14780,35 +14773,14 @@
       "receta_nombre": "BLUSA MANGA BOLERO",
       "referencias": [
         {
-          "cantidades": {
-            "FUCSIA 618_T10": 18,
-            "FUCSIA 618_T12": 18,
-            "FUCSIA 618_T14": 18,
-            "FUCSIA 618_T16": 18,
-            "FUCSIA 618_T6": 10,
-            "FUCSIA 618_T8": 18,
-            "MARFIL -100_T10": 18,
-            "MARFIL -100_T12": 18,
-            "MARFIL -100_T14": 18,
-            "MARFIL -100_T16": 18,
-            "MARFIL -100_T6": 10,
-            "MARFIL -100_T8": 18,
-            "NEGRO -200_T10": 18,
-            "NEGRO -200_T12": 18,
-            "NEGRO -200_T14": 18,
-            "NEGRO -200_T16": 18,
-            "NEGRO -200_T6": 10,
-            "NEGRO -200_T8": 18
-          },
-          "cat": "BLUSAS",
-          "colores": [
-            "NEGRO -200",
-            "MARFIL -100",
-            "FUCSIA 618"
-          ],
-          "maquilador_id": "",
           "nombre": "BLUSA MANGA BOLERO",
           "ref": "1199",
+          "cat": "BLUSAS",
+          "vmo": 1151,
+          "colores": [
+            "NEGRO -200",
+            "FUCSIA 618"
+          ],
           "tallas": [
             "T6",
             "T8",
@@ -14817,8 +14789,21 @@
             "T14",
             "T16"
           ],
-          "totalUds": 300,
-          "vmo": 1151
+          "cantidades": {
+            "NEGRO -200_T6": 10,
+            "NEGRO -200_T8": 18,
+            "NEGRO -200_T10": 18,
+            "NEGRO -200_T12": 18,
+            "NEGRO -200_T14": 18,
+            "NEGRO -200_T16": 18,
+            "FUCSIA 618_T6": 10,
+            "FUCSIA 618_T8": 18,
+            "FUCSIA 618_T10": 18,
+            "FUCSIA 618_T12": 18,
+            "FUCSIA 618_T14": 18,
+            "FUCSIA 618_T16": 18
+          },
+          "maquilador_id": ""
         }
       ],
       "tallas": [
@@ -14839,7 +14824,8 @@
           "lineas": 2,
           "solicitud_id": "id_1790787543603_ng1v8m2k"
         }
-      ]
+      ],
+      "updated_at": "2026-10-09"
     },
     {
       "cantidades": {
@@ -15586,69 +15572,98 @@
       ]
     },
     {
-      "id": "OP-2026-240",
-      "numero": 240,
-      "fecha_op": "2026-10-08",
-      "cortador": "Corte Carbajal",
+      "cantidades": {
+        "AZUL OSCURO_T10": 20,
+        "AZUL OSCURO_T12": 20,
+        "AZUL OSCURO_T14": 20,
+        "AZUL OSCURO_T16": 20,
+        "AZUL OSCURO_T4": 10,
+        "AZUL OSCURO_T6": 10,
+        "AZUL OSCURO_T8": 20,
+        "GRIS OSCURO_T10": 20,
+        "GRIS OSCURO_T12": 20,
+        "GRIS OSCURO_T14": 20,
+        "GRIS OSCURO_T16": 20,
+        "GRIS OSCURO_T4": 10,
+        "GRIS OSCURO_T6": 10,
+        "GRIS OSCURO_T8": 20,
+        "MARFIL_T10": 20,
+        "MARFIL_T12": 20,
+        "MARFIL_T14": 20,
+        "MARFIL_T16": 20,
+        "MARFIL_T4": 10,
+        "MARFIL_T6": 10,
+        "MARFIL_T8": 20,
+        "NEGRO_T10": 20,
+        "NEGRO_T12": 20,
+        "NEGRO_T14": 20,
+        "NEGRO_T16": 20,
+        "NEGRO_T4": 10,
+        "NEGRO_T6": 10,
+        "NEGRO_T8": 20
+      },
       "categoria": "CONJUNTOS",
-      "nombre_producto": "CONJUNTO CHILLY",
       "colores": [
         "MARFIL",
         "NEGRO",
         "GRIS OSCURO",
         "AZUL OSCURO"
       ],
-      "tallas": [
-        "T4",
-        "T6",
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
-      "cantidades": {
-        "MARFIL_T4": 10,
-        "MARFIL_T6": 10,
-        "MARFIL_T8": 20,
-        "MARFIL_T10": 20,
-        "MARFIL_T12": 20,
-        "MARFIL_T14": 20,
-        "MARFIL_T16": 20,
-        "NEGRO_T4": 10,
-        "NEGRO_T6": 10,
-        "NEGRO_T8": 20,
-        "NEGRO_T10": 20,
-        "NEGRO_T12": 20,
-        "NEGRO_T14": 20,
-        "NEGRO_T16": 20,
-        "GRIS OSCURO_T4": 10,
-        "GRIS OSCURO_T6": 10,
-        "GRIS OSCURO_T8": 20,
-        "GRIS OSCURO_T10": 20,
-        "GRIS OSCURO_T12": 20,
-        "GRIS OSCURO_T14": 20,
-        "GRIS OSCURO_T16": 20,
-        "AZUL OSCURO_T4": 10,
-        "AZUL OSCURO_T6": 10,
-        "AZUL OSCURO_T8": 20,
-        "AZUL OSCURO_T10": 20,
-        "AZUL OSCURO_T12": 20,
-        "AZUL OSCURO_T14": 20,
-        "AZUL OSCURO_T16": 20
+      "consumibles_desagregado": {
+        "rec_conjunto_chilly_1153__c51_21": true
       },
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-10-08",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-10-08",
+      "id": "OP-2026-240",
+      "nombre_producto": "CONJUNTO CHILLY",
+      "numero": 240,
+      "receta_id": "rec_conjunto_chilly_1153",
+      "receta_nombre": "CONJUNTO CHILLY - REF: 1153",
       "referencias": [
         {
-          "nombre": "CONJUNTO CHILLY",
-          "ref": "1153",
+          "cantidades": {
+            "AZUL OSCURO_T10": 20,
+            "AZUL OSCURO_T12": 20,
+            "AZUL OSCURO_T14": 20,
+            "AZUL OSCURO_T16": 20,
+            "AZUL OSCURO_T4": 10,
+            "AZUL OSCURO_T6": 10,
+            "AZUL OSCURO_T8": 20,
+            "GRIS OSCURO_T10": 20,
+            "GRIS OSCURO_T12": 20,
+            "GRIS OSCURO_T14": 20,
+            "GRIS OSCURO_T16": 20,
+            "GRIS OSCURO_T4": 10,
+            "GRIS OSCURO_T6": 10,
+            "GRIS OSCURO_T8": 20,
+            "MARFIL_T10": 20,
+            "MARFIL_T12": 20,
+            "MARFIL_T14": 20,
+            "MARFIL_T16": 20,
+            "MARFIL_T4": 10,
+            "MARFIL_T6": 10,
+            "MARFIL_T8": 20,
+            "NEGRO_T10": 20,
+            "NEGRO_T12": 20,
+            "NEGRO_T14": 20,
+            "NEGRO_T16": 20,
+            "NEGRO_T4": 10,
+            "NEGRO_T6": 10,
+            "NEGRO_T8": 20
+          },
           "cat": "CONJUNTOS",
-          "vmo": 10510,
           "colores": [
             "MARFIL",
             "NEGRO",
             "GRIS OSCURO",
             "AZUL OSCURO"
           ],
+          "maquilador_id": "",
+          "nombre": "CONJUNTO CHILLY",
+          "ref": "1153",
           "tallas": [
             "T4",
             "T6",
@@ -15658,62 +15673,9 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "MARFIL_T4": 10,
-            "MARFIL_T6": 10,
-            "MARFIL_T8": 20,
-            "MARFIL_T10": 20,
-            "MARFIL_T12": 20,
-            "MARFIL_T14": 20,
-            "MARFIL_T16": 20,
-            "NEGRO_T4": 10,
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 20,
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "GRIS OSCURO_T4": 10,
-            "GRIS OSCURO_T6": 10,
-            "GRIS OSCURO_T8": 20,
-            "GRIS OSCURO_T10": 20,
-            "GRIS OSCURO_T12": 20,
-            "GRIS OSCURO_T14": 20,
-            "GRIS OSCURO_T16": 20,
-            "AZUL OSCURO_T4": 10,
-            "AZUL OSCURO_T6": 10,
-            "AZUL OSCURO_T8": 20,
-            "AZUL OSCURO_T10": 20,
-            "AZUL OSCURO_T12": 20,
-            "AZUL OSCURO_T14": 20,
-            "AZUL OSCURO_T16": 20
-          },
           "totalUds": 480,
-          "maquilador_id": ""
+          "vmo": 10510
         }
-      ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-10-08",
-      "created_by": "John Rodriguez",
-      "receta_id": "rec_conjunto_chilly_1153",
-      "receta_nombre": "CONJUNTO CHILLY - REF: 1153",
-      "consumibles_desagregado": {
-        "rec_conjunto_chilly_1153__c51_21": true
-      }
-    },
-    {
-      "id": "OP-2026-241",
-      "numero": 241,
-      "fecha_op": "2026-10-08",
-      "cortador": "Corte Carbajal",
-      "categoria": "CONJUNTOS",
-      "nombre_producto": "CONJUNTO SUECIA",
-      "colores": [
-        "MARFIL",
-        "CAFE",
-        "GRIS CLARO",
-        "GRIS OSCURO"
       ],
       "tallas": [
         "T4",
@@ -15723,49 +15685,96 @@
         "T12",
         "T14",
         "T16"
-      ],
+      ]
+    },
+    {
       "cantidades": {
-        "MARFIL_T4": 10,
-        "MARFIL_T6": 10,
-        "MARFIL_T8": 20,
-        "MARFIL_T10": 20,
-        "MARFIL_T12": 20,
-        "MARFIL_T14": 20,
-        "MARFIL_T16": 20,
-        "CAFE_T4": 10,
-        "CAFE_T6": 10,
-        "CAFE_T8": 20,
         "CAFE_T10": 20,
         "CAFE_T12": 20,
         "CAFE_T14": 20,
         "CAFE_T16": 20,
-        "GRIS CLARO_T4": 10,
-        "GRIS CLARO_T6": 10,
-        "GRIS CLARO_T8": 20,
+        "CAFE_T4": 10,
+        "CAFE_T6": 10,
+        "CAFE_T8": 20,
         "GRIS CLARO_T10": 20,
         "GRIS CLARO_T12": 20,
         "GRIS CLARO_T14": 20,
         "GRIS CLARO_T16": 20,
-        "GRIS OSCURO_T4": 10,
-        "GRIS OSCURO_T6": 10,
-        "GRIS OSCURO_T8": 20,
+        "GRIS CLARO_T4": 10,
+        "GRIS CLARO_T6": 10,
+        "GRIS CLARO_T8": 20,
         "GRIS OSCURO_T10": 20,
         "GRIS OSCURO_T12": 20,
         "GRIS OSCURO_T14": 20,
-        "GRIS OSCURO_T16": 20
+        "GRIS OSCURO_T16": 20,
+        "GRIS OSCURO_T4": 10,
+        "GRIS OSCURO_T6": 10,
+        "GRIS OSCURO_T8": 20,
+        "MARFIL_T10": 20,
+        "MARFIL_T12": 20,
+        "MARFIL_T14": 20,
+        "MARFIL_T16": 20,
+        "MARFIL_T4": 10,
+        "MARFIL_T6": 10,
+        "MARFIL_T8": 20
       },
+      "categoria": "CONJUNTOS",
+      "colores": [
+        "MARFIL",
+        "CAFE",
+        "GRIS CLARO",
+        "GRIS OSCURO"
+      ],
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-10-08",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-10-08",
+      "id": "OP-2026-241",
+      "nombre_producto": "CONJUNTO SUECIA",
+      "numero": 241,
       "referencias": [
         {
-          "nombre": "CONJUNTO SUECIA",
-          "ref": "1236",
+          "cantidades": {
+            "CAFE_T10": 20,
+            "CAFE_T12": 20,
+            "CAFE_T14": 20,
+            "CAFE_T16": 20,
+            "CAFE_T4": 10,
+            "CAFE_T6": 10,
+            "CAFE_T8": 20,
+            "GRIS CLARO_T10": 20,
+            "GRIS CLARO_T12": 20,
+            "GRIS CLARO_T14": 20,
+            "GRIS CLARO_T16": 20,
+            "GRIS CLARO_T4": 10,
+            "GRIS CLARO_T6": 10,
+            "GRIS CLARO_T8": 20,
+            "GRIS OSCURO_T10": 20,
+            "GRIS OSCURO_T12": 20,
+            "GRIS OSCURO_T14": 20,
+            "GRIS OSCURO_T16": 20,
+            "GRIS OSCURO_T4": 10,
+            "GRIS OSCURO_T6": 10,
+            "GRIS OSCURO_T8": 20,
+            "MARFIL_T10": 20,
+            "MARFIL_T12": 20,
+            "MARFIL_T14": 20,
+            "MARFIL_T16": 20,
+            "MARFIL_T4": 10,
+            "MARFIL_T6": 10,
+            "MARFIL_T8": 20
+          },
           "cat": "CONJUNTOS",
-          "vmo": 1151,
           "colores": [
             "MARFIL",
             "CAFE",
             "GRIS CLARO",
             "GRIS OSCURO"
           ],
+          "maquilador_id": "",
+          "nombre": "CONJUNTO SUECIA",
+          "ref": "1236",
           "tallas": [
             "T4",
             "T6",
@@ -15775,44 +15784,19 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "MARFIL_T4": 10,
-            "MARFIL_T6": 10,
-            "MARFIL_T8": 20,
-            "MARFIL_T10": 20,
-            "MARFIL_T12": 20,
-            "MARFIL_T14": 20,
-            "MARFIL_T16": 20,
-            "CAFE_T4": 10,
-            "CAFE_T6": 10,
-            "CAFE_T8": 20,
-            "CAFE_T10": 20,
-            "CAFE_T12": 20,
-            "CAFE_T14": 20,
-            "CAFE_T16": 20,
-            "GRIS CLARO_T4": 10,
-            "GRIS CLARO_T6": 10,
-            "GRIS CLARO_T8": 20,
-            "GRIS CLARO_T10": 20,
-            "GRIS CLARO_T12": 20,
-            "GRIS CLARO_T14": 20,
-            "GRIS CLARO_T16": 20,
-            "GRIS OSCURO_T4": 10,
-            "GRIS OSCURO_T6": 10,
-            "GRIS OSCURO_T8": 20,
-            "GRIS OSCURO_T10": 20,
-            "GRIS OSCURO_T12": 20,
-            "GRIS OSCURO_T14": 20,
-            "GRIS OSCURO_T16": 20
-          },
           "totalUds": 480,
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-10-08",
-      "created_by": "John Rodriguez"
+      "tallas": [
+        "T4",
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ]
     }
   ]
 }
