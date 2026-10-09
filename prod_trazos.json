@@ -1876,25 +1876,25 @@
             "MARFIL"
           ],
           "generado": true,
+          "generado_en": "2026-10-09",
           "id": "id_1791381870638_2a7z15rhm",
           "imagen_url": "https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/tecpatron-imgs/trazo_id_1791381870638_2a7z15rhm_1791576473613.jpg",
           "imagen_url_blob": "tp_1791576474556",
           "impreso": true,
+          "impreso_en": "2026-10-09",
           "marcadas_por_talla": {
             "T4": 1
           },
           "notas": "1 rollo de marfil",
           "orientacion": "AL_HILO",
           "recogido": true,
+          "recogido_en": "2026-10-09",
           "sentido": "DOS_DIRECCIONES",
           "tallas": [
             "T4"
           ],
           "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "generado_en": "2026-10-09",
-          "impreso_en": "2026-10-09",
-          "recogido_en": "2026-10-09"
+          "tipo_custom": ""
         },
         {
           "ancho_util": 172,
@@ -2138,7 +2138,9 @@
             "T4"
           ],
           "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": ""
+          "tipo_custom": "",
+          "imagen_url": "https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/tecpatron-imgs/trazo_id_1791497180315_ba4pj1yfp_1791578392297.jpg",
+          "imagen_url_blob": "tp_1791578393274"
         },
         {
           "ancho_util": 151,
@@ -2178,42 +2180,58 @@
       "op_nombre": "BLUSA COSMO"
     },
     {
-      "id": "id_1791578219686_g63eykuo1",
-      "op_id": "OP-2026-209",
-      "op_nombre": "BLUSA COSMO",
       "categoria": "BLUSAS",
-      "creado_por": "Isabel",
       "creado_en": "2026-10-09",
-      "estado": "ENVIADA",
+      "creado_por": "Isabel",
       "enviada_en": "2026-10-09",
+      "estado": "ENVIADA",
+      "id": "id_1791578219686_g63eykuo1",
       "lineas": [
         {
-          "id": "id_1791578193161_nn7ssqj65",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T4"
-          ],
-          "marcadas_por_talla": {
-            "T4": 2
-          },
-          "cantidad_trazos": 1,
           "ancho_util": 156,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "",
+          "cantidad_trazos": 1,
           "colores": [
             "NEGRO",
             "PALO DE ROSA"
           ],
           "generado": false,
+          "id": "id_1791578193161_nn7ssqj65",
           "impreso": false,
-          "recogido": false
+          "marcadas_por_talla": {
+            "T4": 2
+          },
+          "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T4"
+          ],
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
         },
         {
+          "ancho_util": 155,
+          "cantidad_trazos": 2,
+          "colores": [
+            "NEGRO",
+            "PALO DE ROSA"
+          ],
+          "generado": false,
           "id": "id_1791578217299_hftjrfqle",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
+          "impreso": false,
+          "marcadas_por_talla": {
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1,
+            "T6": 1,
+            "T8": 1
+          },
+          "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
           "tallas": [
             "T6",
             "T8",
@@ -2222,28 +2240,12 @@
             "T14",
             "T16"
           ],
-          "marcadas_por_talla": {
-            "T6": 1,
-            "T8": 1,
-            "T10": 1,
-            "T12": 1,
-            "T14": 1,
-            "T16": 1
-          },
-          "cantidad_trazos": 2,
-          "ancho_util": 155,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "",
-          "colores": [
-            "NEGRO",
-            "PALO DE ROSA"
-          ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
         }
-      ]
+      ],
+      "op_id": "OP-2026-209",
+      "op_nombre": "BLUSA COSMO"
     }
   ]
 }
