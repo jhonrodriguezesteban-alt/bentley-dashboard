@@ -11241,9 +11241,16 @@
       "trazos_color_solicitado": {
         "AVENA": true,
         "CAFE": true,
-        "NEGRO": true,
-        "MARFIL": true
-      }
+        "MARFIL": true,
+        "NEGRO": true
+      },
+      "trazos_solicitudes": [
+        {
+          "solicitud_id": "id_1791586261809_h1q69ktmk",
+          "fecha": "2026-10-09",
+          "lineas": 6
+        }
+      ]
     },
     {
       "cantidades": {
@@ -12067,9 +12074,9 @@
       },
       "trazos_solicitudes": [
         {
-          "solicitud_id": "id_1791585802032_imh9mhqfa",
           "fecha": "2026-10-09",
-          "lineas": 2
+          "lineas": 2,
+          "solicitud_id": "id_1791585802032_imh9mhqfa"
         }
       ]
     },
