@@ -10367,18 +10367,18 @@
     },
     {
       "cantidades": {
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 12,
         "MARFIL_T10": 24,
         "MARFIL_T12": 24,
         "MARFIL_T14": 24,
         "MARFIL_T16": 24,
-        "VERDE JADE_T6": 12,
-        "VERDE JADE_T8": 12,
+        "MARFIL_T6": 12,
+        "MARFIL_T8": 12,
         "VERDE JADE_T10": 24,
         "VERDE JADE_T12": 24,
         "VERDE JADE_T14": 24,
-        "VERDE JADE_T16": 24
+        "VERDE JADE_T16": 24,
+        "VERDE JADE_T6": 12,
+        "VERDE JADE_T8": 12
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -10410,14 +10410,28 @@
       "receta_nombre": "CHAQUETA MARIPOSAS",
       "referencias": [
         {
-          "nombre": "CHAQUETA MARIPOSAS",
-          "ref": "1166",
+          "cantidades": {
+            "MARFIL_T10": 24,
+            "MARFIL_T12": 24,
+            "MARFIL_T14": 24,
+            "MARFIL_T16": 24,
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 12,
+            "VERDE JADE_T10": 24,
+            "VERDE JADE_T12": 24,
+            "VERDE JADE_T14": 24,
+            "VERDE JADE_T16": 24,
+            "VERDE JADE_T6": 12,
+            "VERDE JADE_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 1151,
           "colores": [
             "MARFIL",
             "VERDE JADE"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA MARIPOSAS",
+          "ref": "1166",
           "tallas": [
             "T6",
             "T8",
@@ -10426,21 +10440,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 12,
-            "MARFIL_T10": 24,
-            "MARFIL_T12": 24,
-            "MARFIL_T14": 24,
-            "MARFIL_T16": 24,
-            "VERDE JADE_T6": 12,
-            "VERDE JADE_T8": 12,
-            "VERDE JADE_T10": 24,
-            "VERDE JADE_T12": 24,
-            "VERDE JADE_T14": 24,
-            "VERDE JADE_T16": 24
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
@@ -10466,9 +10466,7 @@
           "solicitud_id": "id_1790790479249_1vpqaiqs9"
         }
       ],
-      "updated_at": "2026-10-09",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-10-09"
     },
     {
       "cantidades": {
@@ -11440,118 +11438,6 @@
         "T14",
         "T16"
       ]
-    },
-    {
-      "cantidades": {
-        "CHOCOLATE_T10": 20,
-        "CHOCOLATE_T12": 20,
-        "CHOCOLATE_T14": 20,
-        "CHOCOLATE_T16": 20,
-        "CHOCOLATE_T6": 10,
-        "CHOCOLATE_T8": 20,
-        "MARFIL_T10": 20,
-        "MARFIL_T12": 20,
-        "MARFIL_T14": 20,
-        "MARFIL_T16": 20,
-        "MARFIL_T6": 10,
-        "MARFIL_T8": 20,
-        "NEGRO_T10": 20,
-        "NEGRO_T12": 20,
-        "NEGRO_T14": 20,
-        "NEGRO_T16": 20,
-        "NEGRO_T6": 10,
-        "NEGRO_T8": 20,
-        "TAUPE_T10": 20,
-        "TAUPE_T12": 20,
-        "TAUPE_T14": 20,
-        "TAUPE_T16": 20,
-        "TAUPE_T6": 10,
-        "TAUPE_T8": 20
-      },
-      "categoria": "CONJUNTOS",
-      "colores": [
-        "NEGRO",
-        "TAUPE",
-        "CHOCOLATE",
-        "MARFIL"
-      ],
-      "consumibles_check": {
-        "rec_conjunto_oslo_1180__c62_20": true,
-        "rec_conjunto_oslo_1180__c62_21": true
-      },
-      "cortador": "Corte Carbajal",
-      "created_at": "2026-08-25",
-      "created_by": "John Rodriguez",
-      "estado_op": "EN_PROCESO",
-      "fecha_op": "2026-08-25",
-      "id": "OP-2026-200",
-      "nombre_producto": "CONJUNTO OSLO",
-      "numero": 200,
-      "receta_id": "rec_conjunto_oslo_1180",
-      "referencias": [
-        {
-          "cantidades": {
-            "CHOCOLATE_T10": 20,
-            "CHOCOLATE_T12": 20,
-            "CHOCOLATE_T14": 20,
-            "CHOCOLATE_T16": 20,
-            "CHOCOLATE_T6": 10,
-            "CHOCOLATE_T8": 20,
-            "MARFIL_T10": 20,
-            "MARFIL_T12": 20,
-            "MARFIL_T14": 20,
-            "MARFIL_T16": 20,
-            "MARFIL_T6": 10,
-            "MARFIL_T8": 20,
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 20,
-            "TAUPE_T10": 20,
-            "TAUPE_T12": 20,
-            "TAUPE_T14": 20,
-            "TAUPE_T16": 20,
-            "TAUPE_T6": 10,
-            "TAUPE_T8": 20
-          },
-          "cat": "CONJUNTOS",
-          "colores": [
-            "NEGRO",
-            "TAUPE",
-            "CHOCOLATE",
-            "MARFIL"
-          ],
-          "maquilador_id": "",
-          "nombre": "CONJUNTO OSLO",
-          "ref": "1176",
-          "tallas": [
-            "T6",
-            "T8",
-            "T10",
-            "T12",
-            "T14",
-            "T16"
-          ],
-          "vmo": 8000
-        }
-      ],
-      "subg_estados": {
-        "OP-2026-200||CHOCOLATE": "POR_REVISAR",
-        "OP-2026-200||MARFIL": "POR_REVISAR",
-        "OP-2026-200||NEGRO": "POR_REVISAR",
-        "OP-2026-200||TAUPE": "POR_REVISAR"
-      },
-      "tallas": [
-        "T6",
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
-      "updated_at": "2026-08-25"
     },
     {
       "cantidades": {
@@ -14728,18 +14614,18 @@
     },
     {
       "cantidades": {
-        "NEGRO -200_T6": 10,
-        "NEGRO -200_T8": 18,
+        "FUCSIA 618_T10": 18,
+        "FUCSIA 618_T12": 18,
+        "FUCSIA 618_T14": 18,
+        "FUCSIA 618_T16": 18,
+        "FUCSIA 618_T6": 10,
+        "FUCSIA 618_T8": 18,
         "NEGRO -200_T10": 18,
         "NEGRO -200_T12": 18,
         "NEGRO -200_T14": 18,
         "NEGRO -200_T16": 18,
-        "FUCSIA 618_T6": 10,
-        "FUCSIA 618_T8": 18,
-        "FUCSIA 618_T10": 18,
-        "FUCSIA 618_T12": 18,
-        "FUCSIA 618_T14": 18,
-        "FUCSIA 618_T16": 18
+        "NEGRO -200_T6": 10,
+        "NEGRO -200_T8": 18
       },
       "categoria": "BLUSAS",
       "colores": [
@@ -14775,14 +14661,28 @@
       "receta_nombre": "BLUSA MANGA BOLERO",
       "referencias": [
         {
-          "nombre": "BLUSA MANGA BOLERO",
-          "ref": "1199",
+          "cantidades": {
+            "FUCSIA 618_T10": 18,
+            "FUCSIA 618_T12": 18,
+            "FUCSIA 618_T14": 18,
+            "FUCSIA 618_T16": 18,
+            "FUCSIA 618_T6": 10,
+            "FUCSIA 618_T8": 18,
+            "NEGRO -200_T10": 18,
+            "NEGRO -200_T12": 18,
+            "NEGRO -200_T14": 18,
+            "NEGRO -200_T16": 18,
+            "NEGRO -200_T6": 10,
+            "NEGRO -200_T8": 18
+          },
           "cat": "BLUSAS",
-          "vmo": 1151,
           "colores": [
             "NEGRO -200",
             "FUCSIA 618"
           ],
+          "maquilador_id": "",
+          "nombre": "BLUSA MANGA BOLERO",
+          "ref": "1199",
           "tallas": [
             "T6",
             "T8",
@@ -14791,21 +14691,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO -200_T6": 10,
-            "NEGRO -200_T8": 18,
-            "NEGRO -200_T10": 18,
-            "NEGRO -200_T12": 18,
-            "NEGRO -200_T14": 18,
-            "NEGRO -200_T16": 18,
-            "FUCSIA 618_T6": 10,
-            "FUCSIA 618_T8": 18,
-            "FUCSIA 618_T10": 18,
-            "FUCSIA 618_T12": 18,
-            "FUCSIA 618_T14": 18,
-            "FUCSIA 618_T16": 18
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "tallas": [
@@ -15801,12 +15687,44 @@
       ]
     },
     {
-      "id": "OP-2026-242",
-      "numero": 242,
-      "fecha_op": "2026-10-09",
-      "cortador": "Corte Carbajal",
+      "cantidades": {
+        "ALASKA - GRIS OSCURP_T10": 20,
+        "ALASKA - GRIS OSCURP_T12": 20,
+        "ALASKA - GRIS OSCURP_T14": 20,
+        "ALASKA - GRIS OSCURP_T16": 20,
+        "ALASKA - GRIS OSCURP_T4": 10,
+        "ALASKA - GRIS OSCURP_T6": 10,
+        "ALASKA - GRIS OSCURP_T8": 20,
+        "CANADA - MARFIL_T10": 24,
+        "CANADA - MARFIL_T12": 24,
+        "CANADA - MARFIL_T14": 24,
+        "CANADA - MARFIL_T16": 24,
+        "CANADA - MARFIL_T4": 12,
+        "CANADA - MARFIL_T6": 12,
+        "CANADA - MARFIL_T8": 24,
+        "LOVELY - MARFIL_T10": 20,
+        "LOVELY - MARFIL_T12": 20,
+        "LOVELY - MARFIL_T14": 20,
+        "LOVELY - MARFIL_T16": 20,
+        "LOVELY - MARFIL_T4": 10,
+        "LOVELY - MARFIL_T6": 10,
+        "LOVELY - MARFIL_T8": 20,
+        "NEGRO- NASHVILLE (LETRA ROJA)_T10": 20,
+        "NEGRO- NASHVILLE (LETRA ROJA)_T12": 20,
+        "NEGRO- NASHVILLE (LETRA ROJA)_T14": 20,
+        "NEGRO- NASHVILLE (LETRA ROJA)_T16": 20,
+        "NEGRO- NASHVILLE (LETRA ROJA)_T4": 10,
+        "NEGRO- NASHVILLE (LETRA ROJA)_T6": 10,
+        "NEGRO- NASHVILLE (LETRA ROJA)_T8": 20,
+        "SILLY GOOSE - AZUL OSCURO_T10": 20,
+        "SILLY GOOSE - AZUL OSCURO_T12": 20,
+        "SILLY GOOSE - AZUL OSCURO_T14": 20,
+        "SILLY GOOSE - AZUL OSCURO_T16": 20,
+        "SILLY GOOSE - AZUL OSCURO_T4": 10,
+        "SILLY GOOSE - AZUL OSCURO_T6": 10,
+        "SILLY GOOSE - AZUL OSCURO_T8": 20
+      },
       "categoria": "BUZOS",
-      "nombre_producto": "RANGLAND SOFT",
       "colores": [
         "CANADA - MARFIL",
         "ALASKA - GRIS OSCURP",
@@ -15814,58 +15732,56 @@
         "NEGRO- NASHVILLE (LETRA ROJA)",
         "LOVELY - MARFIL"
       ],
-      "tallas": [
-        "T4",
-        "T6",
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
-      "cantidades": {
-        "CANADA - MARFIL_T4": 12,
-        "CANADA - MARFIL_T6": 12,
-        "CANADA - MARFIL_T8": 24,
-        "CANADA - MARFIL_T10": 24,
-        "CANADA - MARFIL_T12": 24,
-        "CANADA - MARFIL_T14": 24,
-        "CANADA - MARFIL_T16": 24,
-        "ALASKA - GRIS OSCURP_T4": 10,
-        "ALASKA - GRIS OSCURP_T6": 10,
-        "ALASKA - GRIS OSCURP_T8": 20,
-        "ALASKA - GRIS OSCURP_T10": 20,
-        "ALASKA - GRIS OSCURP_T12": 20,
-        "ALASKA - GRIS OSCURP_T14": 20,
-        "ALASKA - GRIS OSCURP_T16": 20,
-        "SILLY GOOSE - AZUL OSCURO_T4": 10,
-        "SILLY GOOSE - AZUL OSCURO_T6": 10,
-        "SILLY GOOSE - AZUL OSCURO_T8": 20,
-        "SILLY GOOSE - AZUL OSCURO_T10": 20,
-        "SILLY GOOSE - AZUL OSCURO_T12": 20,
-        "SILLY GOOSE - AZUL OSCURO_T14": 20,
-        "SILLY GOOSE - AZUL OSCURO_T16": 20,
-        "NEGRO- NASHVILLE (LETRA ROJA)_T4": 10,
-        "NEGRO- NASHVILLE (LETRA ROJA)_T6": 10,
-        "NEGRO- NASHVILLE (LETRA ROJA)_T8": 20,
-        "NEGRO- NASHVILLE (LETRA ROJA)_T10": 20,
-        "NEGRO- NASHVILLE (LETRA ROJA)_T12": 20,
-        "NEGRO- NASHVILLE (LETRA ROJA)_T14": 20,
-        "NEGRO- NASHVILLE (LETRA ROJA)_T16": 20,
-        "LOVELY - MARFIL_T4": 10,
-        "LOVELY - MARFIL_T6": 10,
-        "LOVELY - MARFIL_T8": 20,
-        "LOVELY - MARFIL_T10": 20,
-        "LOVELY - MARFIL_T12": 20,
-        "LOVELY - MARFIL_T14": 20,
-        "LOVELY - MARFIL_T16": 20
-      },
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-10-09",
+      "created_by": "John Rodriguez",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-10-09",
+      "id": "OP-2026-242",
+      "nombre_producto": "RANGLAND SOFT",
+      "numero": 242,
+      "receta_id": "rec_rangland_soft_1105",
+      "receta_nombre": "RANGLAND SOFT - REF: 1105",
       "referencias": [
         {
-          "nombre": "RANGLAND SOFT",
-          "ref": "1105",
+          "cantidades": {
+            "ALASKA - GRIS OSCURP_T10": 20,
+            "ALASKA - GRIS OSCURP_T12": 20,
+            "ALASKA - GRIS OSCURP_T14": 20,
+            "ALASKA - GRIS OSCURP_T16": 20,
+            "ALASKA - GRIS OSCURP_T4": 10,
+            "ALASKA - GRIS OSCURP_T6": 10,
+            "ALASKA - GRIS OSCURP_T8": 20,
+            "CANADA - MARFIL_T10": 24,
+            "CANADA - MARFIL_T12": 24,
+            "CANADA - MARFIL_T14": 24,
+            "CANADA - MARFIL_T16": 24,
+            "CANADA - MARFIL_T4": 12,
+            "CANADA - MARFIL_T6": 12,
+            "CANADA - MARFIL_T8": 24,
+            "LOVELY - MARFIL_T10": 20,
+            "LOVELY - MARFIL_T12": 20,
+            "LOVELY - MARFIL_T14": 20,
+            "LOVELY - MARFIL_T16": 20,
+            "LOVELY - MARFIL_T4": 10,
+            "LOVELY - MARFIL_T6": 10,
+            "LOVELY - MARFIL_T8": 20,
+            "NEGRO- NASHVILLE (LETRA ROJA)_T10": 20,
+            "NEGRO- NASHVILLE (LETRA ROJA)_T12": 20,
+            "NEGRO- NASHVILLE (LETRA ROJA)_T14": 20,
+            "NEGRO- NASHVILLE (LETRA ROJA)_T16": 20,
+            "NEGRO- NASHVILLE (LETRA ROJA)_T4": 10,
+            "NEGRO- NASHVILLE (LETRA ROJA)_T6": 10,
+            "NEGRO- NASHVILLE (LETRA ROJA)_T8": 20,
+            "SILLY GOOSE - AZUL OSCURO_T10": 20,
+            "SILLY GOOSE - AZUL OSCURO_T12": 20,
+            "SILLY GOOSE - AZUL OSCURO_T14": 20,
+            "SILLY GOOSE - AZUL OSCURO_T16": 20,
+            "SILLY GOOSE - AZUL OSCURO_T4": 10,
+            "SILLY GOOSE - AZUL OSCURO_T6": 10,
+            "SILLY GOOSE - AZUL OSCURO_T8": 20
+          },
           "cat": "BUZOS",
-          "vmo": 5781,
           "colores": [
             "CANADA - MARFIL",
             "ALASKA - GRIS OSCURP",
@@ -15873,6 +15789,9 @@
             "NEGRO- NASHVILLE (LETRA ROJA)",
             "LOVELY - MARFIL"
           ],
+          "maquilador_id": "",
+          "nombre": "RANGLAND SOFT",
+          "ref": "1105",
           "tallas": [
             "T4",
             "T6",
@@ -15882,53 +15801,19 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "CANADA - MARFIL_T4": 12,
-            "CANADA - MARFIL_T6": 12,
-            "CANADA - MARFIL_T8": 24,
-            "CANADA - MARFIL_T10": 24,
-            "CANADA - MARFIL_T12": 24,
-            "CANADA - MARFIL_T14": 24,
-            "CANADA - MARFIL_T16": 24,
-            "ALASKA - GRIS OSCURP_T4": 10,
-            "ALASKA - GRIS OSCURP_T6": 10,
-            "ALASKA - GRIS OSCURP_T8": 20,
-            "ALASKA - GRIS OSCURP_T10": 20,
-            "ALASKA - GRIS OSCURP_T12": 20,
-            "ALASKA - GRIS OSCURP_T14": 20,
-            "ALASKA - GRIS OSCURP_T16": 20,
-            "SILLY GOOSE - AZUL OSCURO_T4": 10,
-            "SILLY GOOSE - AZUL OSCURO_T6": 10,
-            "SILLY GOOSE - AZUL OSCURO_T8": 20,
-            "SILLY GOOSE - AZUL OSCURO_T10": 20,
-            "SILLY GOOSE - AZUL OSCURO_T12": 20,
-            "SILLY GOOSE - AZUL OSCURO_T14": 20,
-            "SILLY GOOSE - AZUL OSCURO_T16": 20,
-            "NEGRO- NASHVILLE (LETRA ROJA)_T4": 10,
-            "NEGRO- NASHVILLE (LETRA ROJA)_T6": 10,
-            "NEGRO- NASHVILLE (LETRA ROJA)_T8": 20,
-            "NEGRO- NASHVILLE (LETRA ROJA)_T10": 20,
-            "NEGRO- NASHVILLE (LETRA ROJA)_T12": 20,
-            "NEGRO- NASHVILLE (LETRA ROJA)_T14": 20,
-            "NEGRO- NASHVILLE (LETRA ROJA)_T16": 20,
-            "LOVELY - MARFIL_T4": 10,
-            "LOVELY - MARFIL_T6": 10,
-            "LOVELY - MARFIL_T8": 20,
-            "LOVELY - MARFIL_T10": 20,
-            "LOVELY - MARFIL_T12": 20,
-            "LOVELY - MARFIL_T14": 20,
-            "LOVELY - MARFIL_T16": 20
-          },
           "totalUds": 624,
-          "maquilador_id": ""
+          "vmo": 5781
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-10-09",
-      "created_by": "John Rodriguez",
-      "receta_id": "rec_rangland_soft_1105",
-      "receta_nombre": "RANGLAND SOFT - REF: 1105"
+      "tallas": [
+        "T4",
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ]
     }
   ]
 }
