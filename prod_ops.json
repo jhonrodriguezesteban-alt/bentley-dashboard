@@ -4900,13 +4900,13 @@
         "BEIGE"
       ],
       "consumibles_check": {
+        "rec_chaleco_puffy_1150__c35_21": true,
         "rec_chaleco_puffy_1150__c35_22": true,
         "rec_chaleco_puffy_1150__c35_23": true,
         "rec_chaleco_puffy_1150__c35_26": true,
         "rec_chaleco_puffy_1150__c35_27": true,
         "rec_chaleco_puffy_1150__c35_28": true,
-        "rec_chaleco_puffy_1150__c35_29": true,
-        "rec_chaleco_puffy_1150__c35_21": true
+        "rec_chaleco_puffy_1150__c35_29": true
       },
       "cortador": "Corte Carbajal",
       "created_at": "2026-06-23",
@@ -6329,14 +6329,14 @@
         "GRIS OSCURO"
       ],
       "consumibles_check": {
+        "rec_chaqueta_onion_1165__c43_19||GRIS OSCURO": true,
         "rec_chaqueta_onion_1165__c43_19||VINOTINTO": true,
         "rec_chaqueta_onion_1165__c43_20": true,
         "rec_chaqueta_onion_1165__c43_21": true,
         "rec_chaqueta_onion_1165__c43_22": true,
         "rec_chaqueta_onion_1165__c43_23": true,
         "rec_chaqueta_onion_1165__c43_27": true,
-        "rec_chaqueta_onion_1165__c43_28": true,
-        "rec_chaqueta_onion_1165__c43_19||GRIS OSCURO": true
+        "rec_chaqueta_onion_1165__c43_28": true
       },
       "consumibles_desagregado": {
         "rec_chaqueta_onion_1165__c43_19": true
@@ -7404,6 +7404,7 @@
       ],
       "consumibles_check": {
         "rec_chaqueta_onion_1165__c43_19": false,
+        "rec_chaqueta_onion_1165__c43_19||GRIS OSCURO": true,
         "rec_chaqueta_onion_1165__c43_19||VINOTINTO": true,
         "rec_chaqueta_onion_1165__c43_20": true,
         "rec_chaqueta_onion_1165__c43_21||GRIS OSCURO": true,
@@ -7412,8 +7413,7 @@
         "rec_chaqueta_onion_1165__c43_23": true,
         "rec_chaqueta_onion_1165__c43_27": true,
         "rec_chaqueta_onion_1165__c43_28||VINOTINTO": true,
-        "rec_chaqueta_onion_1165__c43_29": false,
-        "rec_chaqueta_onion_1165__c43_19||GRIS OSCURO": true
+        "rec_chaqueta_onion_1165__c43_29": false
       },
       "consumibles_desagregado": {
         "rec_chaqueta_onion_1165__c43_19": true,
@@ -14732,12 +14732,19 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-10-08",
       "trazos_color_solicitado": {
-        "MISO - NEGRO 200": true,
+        "MARFIL -120": true,
         "MISO - BEIGE 322": true,
-        "MARFIL -120": true
-      }
+        "MISO - NEGRO 200": true
+      },
+      "updated_at": "2026-10-08",
+      "trazos_solicitudes": [
+        {
+          "solicitud_id": "id_1791585227361_finruai4i",
+          "fecha": "2026-10-09",
+          "lineas": 3
+        }
+      ]
     },
     {
       "cantidades": {
@@ -14821,6 +14828,10 @@
           "vmo": 1151
         }
       ],
+      "subg_estados": {
+        "OP-2026-230||FUCSIA 618": "POR_REVISAR",
+        "OP-2026-230||NEGRO -200": "POR_REVISAR"
+      },
       "tallas": [
         "T6",
         "T8",
@@ -14840,11 +14851,7 @@
           "solicitud_id": "id_1790787543603_ng1v8m2k"
         }
       ],
-      "updated_at": "2026-10-09",
-      "subg_estados": {
-        "OP-2026-230||NEGRO -200": "POR_REVISAR",
-        "OP-2026-230||FUCSIA 618": "POR_REVISAR"
-      }
+      "updated_at": "2026-10-09"
     },
     {
       "cantidades": {
