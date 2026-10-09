@@ -1520,7 +1520,7 @@
           "colores": [
             "VINOTINTO"
           ],
-          "generado": false,
+          "generado": true,
           "id": "id_1791380492552_lys0sktvd",
           "impreso": false,
           "marcadas_por_talla": {
@@ -1536,7 +1536,8 @@
             "T8"
           ],
           "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": ""
+          "tipo_custom": "",
+          "generado_en": "2026-10-09"
         },
         {
           "ancho_util": 172,
@@ -1990,45 +1991,61 @@
       "op_nombre": "CAMIBUSO HOUSER"
     },
     {
-      "id": "id_1791497078235_1tc6st3o6",
-      "op_id": "OP-2026-206",
-      "op_nombre": "PANTALON TRENCH",
       "categoria": "PANTALONES",
-      "creado_por": "Isabel",
       "creado_en": "2026-10-08",
-      "estado": "ENVIADA",
+      "creado_por": "Isabel",
       "enviada_en": "2026-10-08",
+      "estado": "ENVIADA",
+      "id": "id_1791497078235_1tc6st3o6",
       "lineas": [
         {
-          "id": "id_1791497008650_u1b7y2q0p",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T4",
-            "T6"
-          ],
-          "marcadas_por_talla": {
-            "T4": 1,
-            "T6": 1
-          },
-          "cantidad_trazos": 3,
           "ancho_util": 150,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "",
+          "cantidad_trazos": 3,
           "colores": [
             "BEIGE",
             "NEGRO",
             "VERDE MILITAR"
           ],
           "generado": false,
+          "id": "id_1791497008650_u1b7y2q0p",
           "impreso": false,
-          "recogido": false
+          "marcadas_por_talla": {
+            "T4": 1,
+            "T6": 1
+          },
+          "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T4",
+            "T6"
+          ],
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
         },
         {
+          "ancho_util": 150,
+          "cantidad_trazos": 3,
+          "colores": [
+            "BEIGE",
+            "NEGRO",
+            "VERDE MILITAR"
+          ],
+          "generado": false,
           "id": "id_1791497068981_2lcz4pdbc",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
+          "impreso": false,
+          "marcadas_por_talla": {
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1,
+            "T8": 1
+          },
+          "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
           "tallas": [
             "T8",
             "T10",
@@ -2036,66 +2053,66 @@
             "T14",
             "T16"
           ],
-          "marcadas_por_talla": {
-            "T8": 1,
-            "T10": 1,
-            "T12": 1,
-            "T14": 1,
-            "T16": 1
-          },
-          "cantidad_trazos": 3,
-          "ancho_util": 150,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "",
-          "colores": [
-            "BEIGE",
-            "NEGRO",
-            "VERDE MILITAR"
-          ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
         }
-      ]
+      ],
+      "op_id": "OP-2026-206",
+      "op_nombre": "PANTALON TRENCH"
     },
     {
-      "id": "id_1791497235701_h4z6df6de",
-      "op_id": "OP-2026-209",
-      "op_nombre": "BLUSA COSMO",
       "categoria": "BLUSAS",
-      "creado_por": "Isabel",
       "creado_en": "2026-10-08",
-      "estado": "ENVIADA",
+      "creado_por": "Isabel",
       "enviada_en": "2026-10-08",
+      "estado": "ENVIADA",
+      "id": "id_1791497235701_h4z6df6de",
       "lineas": [
         {
-          "id": "id_1791497180315_ba4pj1yfp",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T4"
-          ],
-          "marcadas_por_talla": {
-            "T4": 1
-          },
-          "cantidad_trazos": 2,
           "ancho_util": 151,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "",
+          "cantidad_trazos": 2,
           "colores": [
             "BEIGE",
             "TAUPE"
           ],
           "generado": false,
+          "id": "id_1791497180315_ba4pj1yfp",
           "impreso": false,
-          "recogido": false
+          "marcadas_por_talla": {
+            "T4": 1
+          },
+          "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T4"
+          ],
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
         },
         {
+          "ancho_util": 151,
+          "cantidad_trazos": 2,
+          "colores": [
+            "BEIGE",
+            "TAUPE"
+          ],
+          "generado": false,
           "id": "id_1791497232398_o8b4qtj0p",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
+          "impreso": false,
+          "marcadas_por_talla": {
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1,
+            "T6": 1,
+            "T8": 1
+          },
+          "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
           "tallas": [
             "T6",
             "T8",
@@ -2104,28 +2121,12 @@
             "T14",
             "T16"
           ],
-          "marcadas_por_talla": {
-            "T6": 1,
-            "T8": 1,
-            "T10": 1,
-            "T12": 1,
-            "T14": 1,
-            "T16": 1
-          },
-          "cantidad_trazos": 2,
-          "ancho_util": 151,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "",
-          "colores": [
-            "BEIGE",
-            "TAUPE"
-          ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
         }
-      ]
+      ],
+      "op_id": "OP-2026-209",
+      "op_nombre": "BLUSA COSMO"
     }
   ]
 }
