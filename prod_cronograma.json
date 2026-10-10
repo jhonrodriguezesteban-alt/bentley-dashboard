@@ -543,13 +543,14 @@
     },
     {
       "color": "BEIGE",
-      "entregado": false,
+      "entregado": true,
       "fecha_entrada": "2026-07-02",
       "id": "id_1783030889716_0u3jr2lfi",
       "op_id": "OP-0011",
       "op_nombre": "CAMISETA BASICA BK",
       "satelite_id": "sat_15",
-      "uds": 2
+      "uds": 2,
+      "fecha_entrega_real": "2026-05-29"
     },
     {
       "color": "NEGRO",
@@ -714,7 +715,8 @@
       "id": "id_1783030889777_yqi3k8nd5",
       "op_id": "OP-0051",
       "op_nombre": "CAZADORA ANIMALITOS",
-      "uds": 160
+      "uds": 160,
+      "satelite_id": null
     },
     {
       "color": "MARFIL",
@@ -1330,7 +1332,8 @@
       "id": "id_1787069214330_c22mlokm3",
       "op_id": "OP-2026-104",
       "op_nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS",
-      "uds": 7
+      "uds": 7,
+      "satelite_id": null
     },
     {
       "color": "CAMEL",
@@ -3196,32 +3199,24 @@
       "uds": 42
     },
     {
+      "color": "BEIGE",
+      "entregado": false,
+      "fecha_entrada": "2026-10-08",
       "id": "id_1791486149202_mybu21x9v",
       "op_id": "OP-2026-238",
       "op_nombre": "PANTALON DRILL ANCHO",
-      "color": "BEIGE",
       "satelite_id": "sat_15",
-      "uds": 78,
-      "fecha_entrada": "2026-10-08",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 78
     },
     {
+      "color": "MORA LECHE",
+      "entregado": false,
+      "fecha_entrada": "2026-10-08",
       "id": "id_1791499053243_utrcdmtp2",
       "op_id": "OP-2026-111",
       "op_nombre": "OVERSIZED CAPOTA",
-      "color": "MORA LECHE",
       "satelite_id": "id_1791043164772_6f7d86le8",
-      "uds": 84,
-      "fecha_entrada": "2026-10-08",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 84
     }
   ]
 }
