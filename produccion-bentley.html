@@ -1133,7 +1133,7 @@ async function _fbMigrarSiVacio(){
 // abiertas con una versión anterior se recargan solas (esperando a que terminen de guardar).
 // Sin esto, una pestaña vieja olvidada en un computador seguía guardando con la lógica
 // anterior y deshaciendo cambios de todos los demás.
-var APP_VERSION = 20261008.5;
+var APP_VERSION = 20261013.1;
 function _vigilarVersionApp(){
   if(!_fbDb) return;
   _fbDb.ref(FB_ROOT+'/app_version').on('value', function(snap){
@@ -2145,7 +2145,12 @@ async function _guardarArchivoCore(key, data){
         var hayBase3 = _MERGE3_KEYS[key] && _syncBase[key];
         // Si el SHA remoto es el mismo que ya conocemos, nadie más guardó: el remoto ES la base
         // y fusionar no cambiaría nada — se evita descargar de nuevo el archivo (OTs = 3 MB).
-        if((shaCambio || needsMerge || (hayBase3 && sha !== _fileShas[key])) && (_MERGE3_KEYS[key]||key==='planeacion')){
+        // OPs/OTs/planeación/etc.: si este equipo NO tiene base de merge (arrancó sin conexión
+        // desde la copia local) o no sabe qué versión tiene el servidor, SIEMPRE se lee y se
+        // fusiona — antes en ese caso se escribía la copia local completa encima y se borraba
+        // lo que otros habían creado (pasó con OP-2026-242 el 9-oct).
+        var sinReferencia = _MERGE3_KEYS[key] && (!_syncBase[key] || !_fileShas[key]);
+        if((shaCambio || needsMerge || sinReferencia || (hayBase3 && sha !== _fileShas[key])) && (_MERGE3_KEYS[key]||key==='planeacion')){
           try{
             var remoteRaw = await _ghLeerJSON(cur, key, tk);
             // Fusionar contra lo que hay en memoria AHORA (no contra la foto tomada al llamar
@@ -2161,7 +2166,16 @@ async function _guardarArchivoCore(key, data){
           }catch(e){
             // Sin poder leer el remoto no se puede fusionar con seguridad: reintentar en vez de
             // escribir la copia local completa encima de los cambios de los demás.
-            if(hayBase3 && attempt < 2) throw e;
+            // Nunca escribir la copia local sin fusionar para datos compartidos: se reintenta y,
+            // si sigue sin poder leer el servidor, NO se guarda (el cambio queda local y se
+            // vuelve a intentar en el siguiente guardado) en vez de pisar el trabajo de otros.
+            if(_MERGE3_KEYS[key] || key==='planeacion'){
+              if(attempt < 2) throw e;
+              _saving[key] = false;
+              toast('No se pudo leer el servidor para guardar '+key+' — tu cambio quedó en este equipo y se reintentará','warning');
+              setTimeout(function(){ if(!_saving[key]) guardarArchivo(key, _MERGE3_KEYS[key] ? _dbWrap(key) : data); }, 15000);
+              return false;
+            }
             dataToSave = data;
           }
         }
