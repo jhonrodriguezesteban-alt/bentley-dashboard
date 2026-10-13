@@ -9190,7 +9190,11 @@
         "T12",
         "T14",
         "T16"
-      ]
+      ],
+      "trazos_color_solicitado": {
+        "AZUL OSCURO": true,
+        "ROSA": true
+      }
     },
     {
       "cantidades": {
@@ -15581,6 +15585,9 @@
         "NEGRO- NASHVILLE (LETRA ROJA)",
         "LOVELY - MARFIL"
       ],
+      "consumibles_desagregado": {
+        "rec_rangland_soft_1105__c100_21": true
+      },
       "cortador": "Corte Carbajal",
       "created_at": "2026-10-09",
       "created_by": "John Rodriguez",
@@ -15662,10 +15669,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "consumibles_desagregado": {
-        "rec_rangland_soft_1105__c100_21": true
-      }
+      ]
     }
   ]
 }
