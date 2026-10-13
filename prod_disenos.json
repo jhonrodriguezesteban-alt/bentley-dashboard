@@ -2245,11 +2245,11 @@
           "url": "https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/disenos-imgs/id_1782163808017_0hqy66lgy_1782177228766_0.jpeg"
         },
         {
-          "id": "img_1791903368915_0",
-          "url": "https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/disenos-imgs/id_1782163808017_0hqy66lgy_1791903368915_0.jpg",
-          "tipo": "muestra",
           "fecha": "2026-10-13",
-          "nombre": "93248.jpg"
+          "id": "img_1791903368915_0",
+          "nombre": "93248.jpg",
+          "tipo": "muestra",
+          "url": "https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/disenos-imgs/id_1782163808017_0hqy66lgy_1791903368915_0.jpg"
         }
       ],
       "kanban_estado": "EN_CONFECCION_MUESTRA",
@@ -2259,7 +2259,19 @@
       "prioridad": 1,
       "responsable": "Isa",
       "tela_estado": "pte_llegar",
-      "tela_nota": "1. TELA CUERINA TEXTIL, IGUAL A LAS DE PRIME"
+      "tela_nota": "1. TELA CUERINA TEXTIL, IGUAL A LAS DE PRIME",
+      "comentarios": [
+        {
+          "id": "c_1791906855158",
+          "texto": "Revisar la dirección de los moldes, están al travez??\nLa punta de pretina viene más larga que la pretina, deberían ser iguales. De 12cm de alto.\nEn la descripción del modelo dice que la pretina con elástico, no con Rib. Por lo que puños y pretina deberían ir en el mismo material principal y con la medida igual al contorno, no reducirle la medida.\nPara puño+6 y para pretina +10 en la muestra talla 8 \nEn la foto el delantero tiene corte y la muestra no lo trae.\nVienen 4 ribetes, solo se necesitan dos \nIntercambiar nombres a las piezas de vista y ribete. Así como viene el ribete es muy angosto para hacer ribete de 2cm.\nSe requiere que el modelo sea más Baggy. Así como está se ve muy clásica.\nEl cuello tiene una forma que no corresponde. Debería ser más como un cuello camisero.",
+          "autor": "Isabel",
+          "autor_id": "isabel",
+          "fecha": "2026-10-13",
+          "hora": "10:54",
+          "imagenes": [],
+          "leido_por": []
+        }
+      ]
     },
     {
       "_ts": "2026-06-22T21:36:54.014Z",
@@ -4769,14 +4781,12 @@
           "texto": "Trazo para nueva muestras en talla 14; tela principal en super nylon acolchado rayas y guata oversize y ovejero para cuello nuevo."
         },
         {
-          "id": "c_1791902087472",
-          "texto": "Chaleco confeccionado en super nylon y ovejero. En talla 14. Listo para revisar",
           "autor": "Isabel",
           "autor_id": "isabel",
           "fecha": "2026-10-13",
           "hora": "09:34",
-          "imagenes": [],
-          "leido_por": []
+          "id": "c_1791902087472",
+          "texto": "Chaleco confeccionado en super nylon y ovejero. En talla 14. Listo para revisar"
         }
       ],
       "fecha_creacion": "2026-06-23",
@@ -7845,11 +7855,11 @@
           "url": "https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/disenos-imgs/id_1785256691878_4i6dcfyfh_1786465634229_3.jpg"
         },
         {
-          "id": "img_1791902361349_0",
-          "url": "https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/disenos-imgs/id_1785256691878_4i6dcfyfh_1791902361349_0.jpg",
-          "tipo": "muestra",
           "fecha": "2026-10-13",
-          "nombre": "93246.jpg"
+          "id": "img_1791902361349_0",
+          "nombre": "93246.jpg",
+          "tipo": "muestra",
+          "url": "https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/disenos-imgs/id_1785256691878_4i6dcfyfh_1791902361349_0.jpg"
         }
       ],
       "kanban_estado": "EN_ESCALADO",
