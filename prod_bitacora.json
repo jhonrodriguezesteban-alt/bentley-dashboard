@@ -30285,20 +30285,52 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1791980909287_7nkq6",
-      "ts": 1791980909287,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-121",
       "op_nombre": "ABRIGO FROZEN",
       "referencia": "ABRIGO FROZEN",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1791980909287,
       "uds": 100,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1791990470304_30rif",
+      "ts": 1791990470304,
+      "user": "Carolina Telles",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-110",
+      "op_nombre": "PANTALON RAVE",
+      "referencia": "PANTALON RAVE",
+      "color": "AZUL OSCURO",
+      "talla": "T4",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": false,
+      "uds": 12,
+      "motivo": "ENTREGADO"
+    },
+    {
+      "id": "evt_1791990471999_699dm",
+      "ts": 1791990471999,
+      "user": "Carolina Telles",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-110",
+      "op_nombre": "PANTALON RAVE",
+      "referencia": "PANTALON RAVE",
+      "color": "AZUL OSCURO",
+      "talla": "T4",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": false,
+      "uds": 12,
+      "motivo": "ENTREGADO"
     }
   ]
 }
