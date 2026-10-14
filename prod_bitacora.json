@@ -30269,20 +30269,36 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "BEIGE",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1791980871030_g76rx",
+      "motivo": "en insumos",
+      "op_id": "OP-2026-121",
+      "op_nombre": "ABRIGO FROZEN",
+      "referencia": "ABRIGO FROZEN",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1791980871030,
+      "uds": 96,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1791980909287_7nkq6",
+      "ts": 1791980909287,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-121",
       "op_nombre": "ABRIGO FROZEN",
       "referencia": "ABRIGO FROZEN",
-      "color": "BEIGE",
+      "color": "NEGRO",
       "talla": "todas las tallas",
       "estado_anterior": "CORTE_POR_ALISTAR",
       "estado_nuevo": "CORTE_POR_ALISTAR",
       "bulk": true,
-      "uds": 96,
-      "motivo": "en insumos"
+      "uds": 100,
+      "motivo": "EN TALLER"
     }
   ]
 }
