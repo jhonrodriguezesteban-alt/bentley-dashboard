@@ -30381,20 +30381,31 @@
       "user": "Carolina Telles"
     },
     {
+      "bulk": true,
+      "color": "AZUL OSCURO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1791990592327_x1st0",
-      "ts": 1791990592327,
-      "user": "Carolina Telles",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-110",
       "op_nombre": "PANTALON RAVE",
       "referencia": "PANTALON RAVE",
-      "color": "AZUL OSCURO",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1791990592327,
       "uds": 139,
-      "motivo": "ENTREGADO"
+      "user": "Carolina Telles"
+    },
+    {
+      "id": "evt_1791997955184_nj4sa",
+      "ts": 1791997955184,
+      "user": "John Rodriguez",
+      "tipo": "diseno_prioridad",
+      "diseno_id": "id_1782405188769_n2fv5274u",
+      "nombre": "BUZO FLUFY ( ANTES BLUSA FLUFY)",
+      "categoria": "Buzos",
+      "prio_anterior": 1,
+      "prio_nueva": 2
     }
   ]
 }
