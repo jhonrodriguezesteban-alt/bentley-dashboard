@@ -7386,7 +7386,10 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-08-27"
+      "updated_at": "2026-08-27",
+      "trazos_color_solicitado": {
+        "GRIS OSCURO": true
+      }
     },
     {
       "cantidades": {
@@ -9193,15 +9196,15 @@
       ],
       "trazos_color_solicitado": {
         "AZUL OSCURO": true,
-        "ROSA": true,
         "NEGRO": true,
+        "ROSA": true,
         "VERDE MILITAR": true
       },
       "trazos_solicitudes": [
         {
-          "solicitud_id": "id_1791931339854_u2t4603op",
           "fecha": "2026-10-13",
-          "lineas": 2
+          "lineas": 2,
+          "solicitud_id": "id_1791931339854_u2t4603op"
         }
       ]
     },
