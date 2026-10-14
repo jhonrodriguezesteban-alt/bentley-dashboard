@@ -9228,24 +9228,24 @@
     },
     {
       "cantidades": {
-        "NEGRO_T6": 10,
-        "NEGRO_T8": 10,
-        "NEGRO_T10": 20,
-        "NEGRO_T12": 20,
-        "NEGRO_T14": 20,
-        "NEGRO_T16": 20,
-        "BEIGE_T6": 12,
-        "BEIGE_T8": 12,
         "BEIGE_T10": 18,
         "BEIGE_T12": 18,
         "BEIGE_T14": 18,
         "BEIGE_T16": 18,
-        "ROSA_T6": 12,
-        "ROSA_T8": 12,
+        "BEIGE_T6": 12,
+        "BEIGE_T8": 12,
+        "NEGRO_T10": 20,
+        "NEGRO_T12": 20,
+        "NEGRO_T14": 20,
+        "NEGRO_T16": 20,
+        "NEGRO_T6": 10,
+        "NEGRO_T8": 10,
         "ROSA_T10": 15,
         "ROSA_T12": 21,
         "ROSA_T14": 15,
-        "ROSA_T16": 15
+        "ROSA_T16": 15,
+        "ROSA_T6": 12,
+        "ROSA_T8": 12
       },
       "categoria": "ABRIGOS",
       "colores": [
@@ -9289,15 +9289,35 @@
       "receta_nombre": "ABRIGO FROZEN - REF: 1136",
       "referencias": [
         {
-          "nombre": "ABRIGO FROZEN",
-          "ref": "1136",
+          "cantidades": {
+            "BEIGE_T10": 18,
+            "BEIGE_T12": 18,
+            "BEIGE_T14": 18,
+            "BEIGE_T16": 18,
+            "BEIGE_T6": 12,
+            "BEIGE_T8": 12,
+            "NEGRO_T10": 20,
+            "NEGRO_T12": 20,
+            "NEGRO_T14": 20,
+            "NEGRO_T16": 20,
+            "NEGRO_T6": 10,
+            "NEGRO_T8": 10,
+            "ROSA_T10": 15,
+            "ROSA_T12": 21,
+            "ROSA_T14": 15,
+            "ROSA_T16": 15,
+            "ROSA_T6": 12,
+            "ROSA_T8": 12
+          },
           "cat": "ABRIGOS",
-          "vmo": 13663,
           "colores": [
             "NEGRO",
             "BEIGE",
             "ROSA"
           ],
+          "maquilador_id": "",
+          "nombre": "ABRIGO FROZEN",
+          "ref": "1136",
           "tallas": [
             "T6",
             "T8",
@@ -9306,27 +9326,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 10,
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "BEIGE_T6": 12,
-            "BEIGE_T8": 12,
-            "BEIGE_T10": 18,
-            "BEIGE_T12": 18,
-            "BEIGE_T14": 18,
-            "BEIGE_T16": 18,
-            "ROSA_T6": 12,
-            "ROSA_T8": 12,
-            "ROSA_T10": 15,
-            "ROSA_T12": 21,
-            "ROSA_T14": 15,
-            "ROSA_T16": 15
-          },
-          "maquilador_id": ""
+          "vmo": 13663
         }
       ],
       "subg_estados": {
@@ -9354,9 +9354,7 @@
           "solicitud_id": "id_1790787840879_fohm3ruvm"
         }
       ],
-      "updated_at": "2026-10-14",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-10-14"
     },
     {
       "cantidades": {
