@@ -2201,12 +2201,12 @@
       "color": "AZUL OSCURO",
       "entregado": true,
       "fecha_entrada": "2026-09-15",
+      "fecha_entrega_real": "2026-10-14",
       "id": "id_1789500089297_aobyeaui1",
       "op_id": "OP-2026-110",
       "op_nombre": "PANTALON RAVE",
       "satelite_id": "sat_01",
-      "uds": 139,
-      "fecha_entrega_real": "2026-10-14"
+      "uds": 139
     },
     {
       "color": "VERDE MILITAR",
@@ -2360,7 +2360,7 @@
     },
     {
       "color": "FUCSIA",
-      "entregado": false,
+      "entregado": true,
       "fecha_compromiso": "2026-09-30",
       "fecha_entrada": "2026-09-16",
       "fecha_inicial": "2026-09-30",
@@ -2376,7 +2376,8 @@
       "op_id": "OP-2026-098",
       "op_nombre": "CHAQUETA CAZADORA",
       "satelite_id": "sat_13",
-      "uds": 36
+      "uds": 36,
+      "fecha_entrega_real": "2026-10-15"
     },
     {
       "color": "LILA",
@@ -3218,18 +3219,14 @@
       "uds": 84
     },
     {
+      "color": "ROSA",
+      "entregado": false,
+      "fecha_entrada": "2026-10-14",
       "id": "id_1791980940565_fflabh70m",
       "op_id": "OP-2026-121",
       "op_nombre": "ABRIGO FROZEN",
-      "color": "ROSA",
       "satelite_id": "sat_05",
-      "uds": 90,
-      "fecha_entrada": "2026-10-14",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 90
     }
   ]
 }
