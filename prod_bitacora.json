@@ -31408,19 +31408,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": false,
+      "color": "MORA LECHE",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1792108676605_ehxt5",
+      "motivo": "en insumos",
+      "op_id": "OP-2026-112",
+      "op_nombre": "PILOTO PANCAKE",
+      "referencia": "PILOTO PANCAKE",
+      "talla": "T8",
+      "tipo": "estado_ot",
       "ts": 1792108676605,
+      "uds": 15,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792108714751_euwkl",
+      "ts": 1792108714751,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-112",
       "op_nombre": "PILOTO PANCAKE",
       "referencia": "PILOTO PANCAKE",
       "color": "MORA LECHE",
-      "talla": "T8",
+      "talla": "todas las tallas",
       "estado_anterior": "CORTE_POR_ALISTAR",
       "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": false,
-      "uds": 15,
+      "bulk": true,
+      "uds": 76,
       "motivo": "en insumos"
     }
   ]
