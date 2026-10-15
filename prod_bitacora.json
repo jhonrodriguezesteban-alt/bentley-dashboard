@@ -31397,15 +31397,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1792108648425_94s1n",
-      "ts": 1792108648425,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-112",
-      "nombre": "PILOTO PANCAKE",
       "categoria": "CHAQUETAS",
       "colores": 5,
-      "refs": 1
+      "id": "evt_1792108648425_94s1n",
+      "nombre": "PILOTO PANCAKE",
+      "op_id": "OP-2026-112",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1792108648425,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792108676605_ehxt5",
+      "ts": 1792108676605,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-112",
+      "op_nombre": "PILOTO PANCAKE",
+      "referencia": "PILOTO PANCAKE",
+      "color": "MORA LECHE",
+      "talla": "T8",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
+      "bulk": false,
+      "uds": 15,
+      "motivo": "en insumos"
     }
   ]
 }
