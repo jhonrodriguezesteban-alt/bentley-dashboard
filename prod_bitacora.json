@@ -30894,20 +30894,31 @@
       "user": "Carolina Telles"
     },
     {
+      "bulk": true,
+      "color": "LILA",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1792078233917_5l4ob",
-      "ts": 1792078233917,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-098",
       "op_nombre": "CHAQUETA CAZADORA",
       "referencia": "CHAQUETA CAZADORA",
-      "color": "LILA",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1792078233917,
       "uds": 49,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792085353503_zv3j1",
+      "ts": 1792085353503,
+      "user": "Isabel",
+      "tipo": "diseno_comentario",
+      "diseno_id": "id_1785250179914_46vws1tz3",
+      "nombre": "CHAQUETA MINI PARIS",
+      "categoria": "Chaquetas",
+      "tiene_imagen": false,
+      "extracto": "Muestras confeccionadas . Sigue levantándose la punta del ruedo en centro frente"
     }
   ]
 }
