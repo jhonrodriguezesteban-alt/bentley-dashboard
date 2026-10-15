@@ -9236,24 +9236,24 @@
     },
     {
       "cantidades": {
-        "BEIGE_T10": 18,
-        "BEIGE_T12": 18,
-        "BEIGE_T14": 18,
-        "BEIGE_T16": 18,
-        "BEIGE_T6": 12,
-        "BEIGE_T8": 12,
+        "NEGRO_T6": 10,
+        "NEGRO_T8": 10,
         "NEGRO_T10": 20,
         "NEGRO_T12": 20,
         "NEGRO_T14": 20,
         "NEGRO_T16": 20,
-        "NEGRO_T6": 10,
-        "NEGRO_T8": 10,
-        "ROSA_T10": 15,
-        "ROSA_T12": 21,
-        "ROSA_T14": 15,
-        "ROSA_T16": 15,
+        "BEIGE_T6": 12,
+        "BEIGE_T8": 12,
+        "BEIGE_T10": 18,
+        "BEIGE_T12": 18,
+        "BEIGE_T14": 18,
+        "BEIGE_T16": 18,
         "ROSA_T6": 12,
-        "ROSA_T8": 12
+        "ROSA_T8": 12,
+        "ROSA_T10": 15,
+        "ROSA_T12": 15,
+        "ROSA_T14": 15,
+        "ROSA_T16": 15
       },
       "categoria": "ABRIGOS",
       "colores": [
@@ -9297,35 +9297,15 @@
       "receta_nombre": "ABRIGO FROZEN - REF: 1136",
       "referencias": [
         {
-          "cantidades": {
-            "BEIGE_T10": 18,
-            "BEIGE_T12": 18,
-            "BEIGE_T14": 18,
-            "BEIGE_T16": 18,
-            "BEIGE_T6": 12,
-            "BEIGE_T8": 12,
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 10,
-            "ROSA_T10": 15,
-            "ROSA_T12": 21,
-            "ROSA_T14": 15,
-            "ROSA_T16": 15,
-            "ROSA_T6": 12,
-            "ROSA_T8": 12
-          },
+          "nombre": "ABRIGO FROZEN",
+          "ref": "1136",
           "cat": "ABRIGOS",
+          "vmo": 13663,
           "colores": [
             "NEGRO",
             "BEIGE",
             "ROSA"
           ],
-          "maquilador_id": "",
-          "nombre": "ABRIGO FROZEN",
-          "ref": "1136",
           "tallas": [
             "T6",
             "T8",
@@ -9334,7 +9314,27 @@
             "T14",
             "T16"
           ],
-          "vmo": 13663
+          "cantidades": {
+            "NEGRO_T6": 10,
+            "NEGRO_T8": 10,
+            "NEGRO_T10": 20,
+            "NEGRO_T12": 20,
+            "NEGRO_T14": 20,
+            "NEGRO_T16": 20,
+            "BEIGE_T6": 12,
+            "BEIGE_T8": 12,
+            "BEIGE_T10": 18,
+            "BEIGE_T12": 18,
+            "BEIGE_T14": 18,
+            "BEIGE_T16": 18,
+            "ROSA_T6": 12,
+            "ROSA_T8": 12,
+            "ROSA_T10": 15,
+            "ROSA_T12": 15,
+            "ROSA_T14": 15,
+            "ROSA_T16": 15
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -9362,7 +9362,9 @@
           "solicitud_id": "id_1790787840879_fohm3ruvm"
         }
       ],
-      "updated_at": "2026-10-14"
+      "updated_at": "2026-10-15",
+      "diseno_origen_id": null,
+      "diseno_origen_nombre": null
     },
     {
       "cantidades": {
@@ -13665,30 +13667,30 @@
     },
     {
       "cantidades": {
-        "NEGRO_T6": 12,
-        "NEGRO_T8": 12,
+        "MARFIL_T10": 16,
+        "MARFIL_T12": 16,
+        "MARFIL_T14": 16,
+        "MARFIL_T16": 16,
+        "MARFIL_T6": 10,
+        "MARFIL_T8": 10,
         "NEGRO_T10": 19,
         "NEGRO_T12": 19,
         "NEGRO_T14": 19,
         "NEGRO_T16": 19,
-        "VINOTINTO_T6": 12,
-        "VINOTINTO_T8": 12,
-        "VINOTINTO_T10": 18,
-        "VINOTINTO_T12": 18,
-        "VINOTINTO_T14": 18,
-        "VINOTINTO_T16": 18,
-        "ROJO_T6": 12,
-        "ROJO_T8": 12,
+        "NEGRO_T6": 12,
+        "NEGRO_T8": 12,
         "ROJO_T10": 19,
         "ROJO_T12": 19,
         "ROJO_T14": 19,
         "ROJO_T16": 19,
-        "MARFIL_T6": 10,
-        "MARFIL_T8": 10,
-        "MARFIL_T10": 16,
-        "MARFIL_T12": 16,
-        "MARFIL_T14": 16,
-        "MARFIL_T16": 16
+        "ROJO_T6": 12,
+        "ROJO_T8": 12,
+        "VINOTINTO_T10": 18,
+        "VINOTINTO_T12": 18,
+        "VINOTINTO_T14": 18,
+        "VINOTINTO_T16": 18,
+        "VINOTINTO_T6": 12,
+        "VINOTINTO_T8": 12
       },
       "categoria": "CONJUNTOS",
       "colores": [
@@ -13698,14 +13700,14 @@
         "MARFIL"
       ],
       "consumibles_check": {
+        "cid_1789100940765_2191__cid_1789100582648_1677": true,
         "cid_1789100940765_2191__cid_1789100582648_2753": true,
+        "cid_1789100940765_2191__cid_1789100582648_5959": true,
         "cid_1789100940765_2191__cid_1789100582648_8806": true,
         "cid_1789100940765_2191__cid_1789100582648_8898": true,
+        "cid_1789100940765_2191__cid_1789177823186_2054": true,
         "cid_1789100940765_2191__cid_1789177932244_6965": true,
         "cid_1789100940765_2191__cid_1789177987932_7091": true,
-        "cid_1789100940765_2191__cid_1789100582648_5959": true,
-        "cid_1789100940765_2191__cid_1789100582648_1677": true,
-        "cid_1789100940765_2191__cid_1789177823186_2054": true,
         "cid_1789100940765_2191__cid_1789178018911_8729": true
       },
       "cortador": "Corte Carbajal",
@@ -13738,16 +13740,42 @@
       "numero": 222,
       "referencias": [
         {
-          "nombre": "SET SOLOMUN",
-          "ref": "1228",
+          "cantidades": {
+            "MARFIL_T10": 16,
+            "MARFIL_T12": 16,
+            "MARFIL_T14": 16,
+            "MARFIL_T16": 16,
+            "MARFIL_T6": 10,
+            "MARFIL_T8": 10,
+            "NEGRO_T10": 19,
+            "NEGRO_T12": 19,
+            "NEGRO_T14": 19,
+            "NEGRO_T16": 19,
+            "NEGRO_T6": 12,
+            "NEGRO_T8": 12,
+            "ROJO_T10": 19,
+            "ROJO_T12": 19,
+            "ROJO_T14": 19,
+            "ROJO_T16": 19,
+            "ROJO_T6": 12,
+            "ROJO_T8": 12,
+            "VINOTINTO_T10": 18,
+            "VINOTINTO_T12": 18,
+            "VINOTINTO_T14": 18,
+            "VINOTINTO_T16": 18,
+            "VINOTINTO_T6": 12,
+            "VINOTINTO_T8": 12
+          },
           "cat": "CONJUNTOS",
-          "vmo": 1151,
           "colores": [
             "NEGRO",
             "VINOTINTO",
             "ROJO",
             "MARFIL"
           ],
+          "maquilador_id": "",
+          "nombre": "SET SOLOMUN",
+          "ref": "1228",
           "tallas": [
             "T6",
             "T8",
@@ -13756,33 +13784,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T6": 12,
-            "NEGRO_T8": 12,
-            "NEGRO_T10": 19,
-            "NEGRO_T12": 19,
-            "NEGRO_T14": 19,
-            "NEGRO_T16": 19,
-            "VINOTINTO_T6": 12,
-            "VINOTINTO_T8": 12,
-            "VINOTINTO_T10": 18,
-            "VINOTINTO_T12": 18,
-            "VINOTINTO_T14": 18,
-            "VINOTINTO_T16": 18,
-            "ROJO_T6": 12,
-            "ROJO_T8": 12,
-            "ROJO_T10": 19,
-            "ROJO_T12": 19,
-            "ROJO_T14": 19,
-            "ROJO_T16": 19,
-            "MARFIL_T6": 10,
-            "MARFIL_T8": 10,
-            "MARFIL_T10": 16,
-            "MARFIL_T12": 16,
-            "MARFIL_T14": 16,
-            "MARFIL_T16": 16
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
