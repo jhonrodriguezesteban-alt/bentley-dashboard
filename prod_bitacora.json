@@ -31186,20 +31186,30 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "BEIGE",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1792097719776_mk501",
-      "ts": 1792097719776,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-121",
       "op_nombre": "ABRIGO FROZEN",
       "referencia": "ABRIGO FROZEN",
-      "color": "BEIGE",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1792097719776,
       "uds": 96,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792103501835_cuqi5",
+      "ts": 1792103501835,
+      "user": "Elías - Conductor",
+      "tipo": "taller",
+      "descripcion": "Llevar bordado",
+      "destino": "Alqueria fredy",
+      "fecha": "2026-10-15",
+      "hora": ""
     }
   ]
 }
