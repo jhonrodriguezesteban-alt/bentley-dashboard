@@ -30878,19 +30878,35 @@
       "user": "Carolina Telles"
     },
     {
+      "bulk": false,
+      "color": "VERDE MILITAR",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1792075191413_nlt8i",
-      "ts": 1792075191413,
-      "user": "Carolina Telles",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-0038",
       "op_nombre": "CHAQUETA CAZADORA",
       "referencia": "CHAQUETA CAZADORA",
-      "color": "VERDE MILITAR",
       "talla": "T8",
+      "tipo": "estado_ot",
+      "ts": 1792075191413,
+      "uds": 19,
+      "user": "Carolina Telles"
+    },
+    {
+      "id": "evt_1792078233917_5l4ob",
+      "ts": 1792078233917,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-098",
+      "op_nombre": "CHAQUETA CAZADORA",
+      "referencia": "CHAQUETA CAZADORA",
+      "color": "LILA",
+      "talla": "todas las tallas",
       "estado_anterior": "ENTREGADO",
       "estado_nuevo": "ENTREGADO",
-      "bulk": false,
-      "uds": 19,
+      "bulk": true,
+      "uds": 49,
       "motivo": "ENTREGADO"
     }
   ]
