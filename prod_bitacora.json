@@ -31100,20 +31100,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MARFIL",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1792093353343_snpcu",
-      "ts": 1792093353343,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-222",
       "op_nombre": "SET SOLOMUN",
       "referencia": "SET SOLOMUN",
-      "color": "MARFIL",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1792093353343,
       "uds": 84,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792095906642_e0rx7",
+      "ts": 1792095906642,
+      "user": "Isabel",
+      "tipo": "diseno_comentario",
+      "diseno_id": "id_1785256691878_4i6dcfyfh",
+      "nombre": "CAMIBUZO NEVADO",
+      "categoria": "Buzos",
+      "tiene_imagen": false,
+      "extracto": "Comparado manga y puño con oso con oso.  Nevado está 0.5cm más grande en el puño"
     }
   ]
 }
