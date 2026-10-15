@@ -30814,19 +30814,35 @@
       "user": "Carolina Telles"
     },
     {
+      "bulk": false,
+      "color": "VERDE MILITAR",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1792073734871_rpoyn",
-      "ts": 1792073734871,
-      "user": "Carolina Telles",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-0038",
       "op_nombre": "CHAQUETA CAZADORA",
       "referencia": "CHAQUETA CAZADORA",
-      "color": "VERDE MILITAR",
       "talla": "T16",
+      "tipo": "estado_ot",
+      "ts": 1792073734871,
+      "uds": 19,
+      "user": "Carolina Telles"
+    },
+    {
+      "id": "evt_1792074446446_51g3h",
+      "ts": 1792074446446,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0037",
+      "op_nombre": "CHALECO ACOLCHADO MANY",
+      "referencia": "CHALECO ACOLCHADO MANY",
+      "color": "BEIGE",
+      "talla": "todas las tallas",
       "estado_anterior": "ENTREGADO",
       "estado_nuevo": "ENTREGADO",
-      "bulk": false,
-      "uds": 19,
+      "bulk": true,
+      "uds": 63,
       "motivo": "ENTREGADO"
     }
   ]
