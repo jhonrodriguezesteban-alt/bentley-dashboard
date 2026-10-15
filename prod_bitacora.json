@@ -31138,16 +31138,27 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1792096004114_x2crd",
-      "ts": 1792096004114,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1785256691878_4i6dcfyfh",
-      "nombre": "CAMIBUZO NEVADO",
       "categoria": "Buzos",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1785256691878_4i6dcfyfh",
       "estado_anterior": "EN_ESCALADO",
-      "estado_nuevo": "LISTA_PRODUCCION"
+      "estado_nuevo": "LISTA_PRODUCCION",
+      "id": "evt_1792096004114_x2crd",
+      "marca": "Bentley Kids",
+      "nombre": "CAMIBUZO NEVADO",
+      "tipo": "estado_diseno",
+      "ts": 1792096004114,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1792097572244_8vihi",
+      "ts": 1792097572244,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-121",
+      "nombre": "ABRIGO FROZEN",
+      "categoria": "ABRIGOS",
+      "colores": 3,
+      "refs": 1
     }
   ]
 }
