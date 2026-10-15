@@ -31254,19 +31254,28 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1792107311770_p6xmc",
-      "ts": 1792107311770,
-      "user": "Jefa de Producción",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-243",
-      "op_nombre": "OVERSIZED CAPOTA",
       "categoria": "CHAQUETAS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-10-15",
-      "total_uds": 104,
+      "id": "evt_1792107311770_p6xmc",
+      "op_id": "OP-2026-243",
+      "op_nombre": "OVERSIZED CAPOTA",
       "referencias": [
         "OVERSIZED CAPOTA"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 104,
+      "ts": 1792107311770,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792108110093_neo94",
+      "ts": 1792108110093,
+      "user": "Jefa de Producción",
+      "tipo": "satelite_crear",
+      "nombre": "ELIZABETH RUIZ MARTINEZ",
+      "personas": 1,
+      "capacidad": 0
     }
   ]
 }
