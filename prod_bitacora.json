@@ -31278,21 +31278,37 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1792108208781_rj83w",
-      "ts": 1792108208781,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-243",
-      "op_nombre": "OVERSIZED CAPOTA",
       "categoria": "CHAQUETAS",
-      "total_ots": 6,
-      "total_uds": 104,
       "colores": [
         "MARFIL"
       ],
+      "id": "evt_1792108208781_rj83w",
+      "op_id": "OP-2026-243",
+      "op_nombre": "OVERSIZED CAPOTA",
       "referencias": [
         "OVERSIZED CAPOTA"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 6,
+      "total_uds": 104,
+      "ts": 1792108208781,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792108222439_qnof4",
+      "ts": 1792108222439,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-243",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "referencia": "OVERSIZED CAPOTA",
+      "color": "MARFIL",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 104,
+      "motivo": "EN TALLER"
     }
   ]
 }
