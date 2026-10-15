@@ -31177,13 +31177,29 @@
       "user": "Jefa de Producción"
     },
     {
+      "capacidad": 0,
       "id": "evt_1792097677463_y39na",
-      "ts": 1792097677463,
-      "user": "Jefa de Producción",
-      "tipo": "satelite_crear",
       "nombre": "ROSA VALDERRAMA",
       "personas": 3,
-      "capacidad": 0
+      "tipo": "satelite_crear",
+      "ts": 1792097677463,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792097719776_mk501",
+      "ts": 1792097719776,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-121",
+      "op_nombre": "ABRIGO FROZEN",
+      "referencia": "ABRIGO FROZEN",
+      "color": "BEIGE",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 96,
+      "motivo": "EN TALLER"
     }
   ]
 }
