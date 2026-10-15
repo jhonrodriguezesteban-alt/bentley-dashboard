@@ -6989,24 +6989,24 @@
     },
     {
       "cantidades": {
-        "CAFE_T10": 16,
-        "CAFE_T12": 16,
-        "CAFE_T14": 16,
-        "CAFE_T16": 16,
-        "CAFE_T6": 8,
-        "CAFE_T8": 8,
+        "GRIS OSCURO_T6": 8,
+        "GRIS OSCURO_T8": 8,
         "GRIS OSCURO_T10": 16,
         "GRIS OSCURO_T12": 16,
         "GRIS OSCURO_T14": 16,
         "GRIS OSCURO_T16": 16,
-        "GRIS OSCURO_T6": 8,
-        "GRIS OSCURO_T8": 8,
-        "VINOTINTO_T10": 16,
-        "VINOTINTO_T12": 16,
-        "VINOTINTO_T14": 16,
-        "VINOTINTO_T16": 16,
         "VINOTINTO_T6": 8,
-        "VINOTINTO_T8": 8
+        "VINOTINTO_T8": 8,
+        "VINOTINTO_T10": 17,
+        "VINOTINTO_T12": 17,
+        "VINOTINTO_T14": 17,
+        "VINOTINTO_T16": 17,
+        "CAFE_T6": 8,
+        "CAFE_T8": 8,
+        "CAFE_T10": 16,
+        "CAFE_T12": 16,
+        "CAFE_T14": 16,
+        "CAFE_T16": 16
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -7043,34 +7043,15 @@
       "receta_nombre": "BEISBOLERA CUERO  2.0",
       "referencias": [
         {
-          "cantidades": {
-            "CAFE_T10": 16,
-            "CAFE_T12": 16,
-            "CAFE_T14": 16,
-            "CAFE_T16": 16,
-            "CAFE_T6": 8,
-            "CAFE_T8": 8,
-            "GRIS OSCURO_T10": 16,
-            "GRIS OSCURO_T12": 16,
-            "GRIS OSCURO_T14": 16,
-            "GRIS OSCURO_T16": 16,
-            "GRIS OSCURO_T6": 8,
-            "GRIS OSCURO_T8": 8,
-            "VINOTINTO_T10": 16,
-            "VINOTINTO_T12": 16,
-            "VINOTINTO_T14": 16,
-            "VINOTINTO_T16": 16,
-            "VINOTINTO_T6": 8,
-            "VINOTINTO_T8": 8
-          },
+          "nombre": "BEISBOLERA 2.0",
+          "ref": "1171",
           "cat": "CHAQUETAS",
+          "vmo": 10000,
           "colores": [
             "GRIS OSCURO",
             "VINOTINTO",
             "CAFE"
           ],
-          "nombre": "BEISBOLERA 2.0",
-          "ref": "1171",
           "tallas": [
             "T6",
             "T8",
@@ -7079,8 +7060,27 @@
             "T14",
             "T16"
           ],
-          "totalUds": 240,
-          "vmo": 10000
+          "cantidades": {
+            "GRIS OSCURO_T6": 8,
+            "GRIS OSCURO_T8": 8,
+            "GRIS OSCURO_T10": 16,
+            "GRIS OSCURO_T12": 16,
+            "GRIS OSCURO_T14": 16,
+            "GRIS OSCURO_T16": 16,
+            "VINOTINTO_T6": 8,
+            "VINOTINTO_T8": 8,
+            "VINOTINTO_T10": 17,
+            "VINOTINTO_T12": 17,
+            "VINOTINTO_T14": 17,
+            "VINOTINTO_T16": 17,
+            "CAFE_T6": 8,
+            "CAFE_T8": 8,
+            "CAFE_T10": 16,
+            "CAFE_T12": 16,
+            "CAFE_T14": 16,
+            "CAFE_T16": 16
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -7105,7 +7105,10 @@
           "lineas": 6,
           "solicitud_id": "id_1791380778074_g61jv4ycu"
         }
-      ]
+      ],
+      "updated_at": "2026-10-15",
+      "diseno_origen_id": null,
+      "diseno_origen_nombre": null
     },
     {
       "cantidades": {
