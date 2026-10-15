@@ -4909,6 +4909,13 @@
       "precio_web": 40000,
       "precios_pvp": true,
       "producto": "CAMISETA MISO"
+    },
+    {
+      "producto": "CONJUNTO DAKOTA",
+      "precio_mayorista": 60000,
+      "precio_detal": 90000,
+      "precio_web": 75000,
+      "precios_pvp": true
     }
   ],
   "puestos": [
@@ -46232,9 +46239,6 @@
       "referencia": "1227"
     },
     {
-      "id": "cid_1791507853356_8544",
-      "producto": "CONJUNTO SUECIA",
-      "referencia": "1236",
       "componentes": [
         {
           "actividad": "ALCANZAR ROLLOS, TENDER, REVISAR BLOQUES, AMARRAR PAQUETES, DILIGENCIAR FORMATOS",
@@ -46472,7 +46476,10 @@
           "mp_id": "mp_31515_1061020",
           "tipo": "MATERIAL"
         }
-      ]
+      ],
+      "id": "cid_1791507853356_8544",
+      "producto": "CONJUNTO SUECIA",
+      "referencia": "1236"
     }
   ],
   "referencia_siguiente_propio": 1237,
@@ -46518,6 +46525,7 @@
     "CONJUNTO PALOMINO": "1220",
     "CONJUNTO RAYA TIZA": "1221",
     "CONJUNTO SOLOMUN": "1193",
+    "CONJUNTO SUECIA": "1236",
     "HOODIE CAROLINA": "1187",
     "PANTALON HOUSER": "1223",
     "PANTALON NEVADO": "1224",
@@ -46534,8 +46542,7 @@
     "VESTIDO KIKI": "1189",
     "VESTIDO MINI DRESS": "1185",
     "VESTIDO SOUL - REF: 1104": "1186",
-    "WASHMAN": "1198",
-    "CONJUNTO SUECIA": "1236"
+    "WASHMAN": "1198"
   },
   "servicios": [
     {
