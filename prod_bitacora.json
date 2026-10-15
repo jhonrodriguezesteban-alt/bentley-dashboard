@@ -31150,15 +31150,31 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1792097572244_8vihi",
-      "ts": 1792097572244,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-121",
-      "nombre": "ABRIGO FROZEN",
       "categoria": "ABRIGOS",
       "colores": 3,
-      "refs": 1
+      "id": "evt_1792097572244_8vihi",
+      "nombre": "ABRIGO FROZEN",
+      "op_id": "OP-2026-121",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1792097572244,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792097600224_y6jg8",
+      "ts": 1792097600224,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-121",
+      "op_nombre": "ABRIGO FROZEN",
+      "referencia": "ABRIGO FROZEN",
+      "color": "ROSA",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 84,
+      "motivo": "EN TALLER"
     }
   ]
 }
