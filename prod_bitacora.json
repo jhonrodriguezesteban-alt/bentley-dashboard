@@ -31041,15 +31041,31 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1792093004281_zs912",
-      "ts": 1792093004281,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-222",
-      "nombre": "SET SOLOMUN",
       "categoria": "CONJUNTOS",
       "colores": 4,
-      "refs": 1
+      "id": "evt_1792093004281_zs912",
+      "nombre": "SET SOLOMUN",
+      "op_id": "OP-2026-222",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1792093004281,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792093093041_t768o",
+      "ts": 1792093093041,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-222",
+      "op_nombre": "SET SOLOMUN",
+      "referencia": "SET SOLOMUN",
+      "color": "NEGRO",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 100,
+      "motivo": "EN TALLER"
     }
   ]
 }
