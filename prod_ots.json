@@ -72514,7 +72514,7 @@
       "color": "BEIGE",
       "created_at": "2026-07-31",
       "created_by": "John Rodriguez",
-      "estado": "EN_CONFECCION",
+      "estado": "ENTREGADO",
       "fecha_ot": "2026-06-28",
       "historial": [
         {
@@ -72526,6 +72526,11 @@
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
           "fecha": "2026-08-27T18:00:47.551Z",
           "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-10-16T15:09:35.393Z",
+          "accion": "Estado cambiado: EN_CONFECCION → ENTREGADO. Motivo: ENTREGADO",
+          "user": "Carolina Telles"
         }
       ],
       "id": "id_1785543379686_mlma0s2rc",
@@ -75864,8 +75869,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:54:07.505Z",
           "accion": "Taller asignado: MARTHA FLORES",
+          "fecha": "2026-10-15T23:54:07.505Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -75876,11 +75881,11 @@
       "numero_ot": 13097,
       "op_id": "OP-2026-079",
       "referencia": "1132T6",
+      "satelite_id": "sat_04",
       "talla": "T6",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 9144,
-      "satelite_id": "sat_04"
+      "valor_mo": 9144
     },
     {
       "cantidad": 24,
@@ -75898,8 +75903,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:54:07.505Z",
           "accion": "Taller asignado: MARTHA FLORES",
+          "fecha": "2026-10-15T23:54:07.505Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -75910,11 +75915,11 @@
       "numero_ot": 13098,
       "op_id": "OP-2026-079",
       "referencia": "1132T8",
+      "satelite_id": "sat_04",
       "talla": "T8",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 9144,
-      "satelite_id": "sat_04"
+      "valor_mo": 9144
     },
     {
       "cantidad": 24,
@@ -75932,8 +75937,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:54:07.505Z",
           "accion": "Taller asignado: MARTHA FLORES",
+          "fecha": "2026-10-15T23:54:07.505Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -75944,11 +75949,11 @@
       "numero_ot": 13099,
       "op_id": "OP-2026-079",
       "referencia": "1132T10",
+      "satelite_id": "sat_04",
       "talla": "T10",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 9144,
-      "satelite_id": "sat_04"
+      "valor_mo": 9144
     },
     {
       "cantidad": 24,
@@ -75966,8 +75971,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:54:07.505Z",
           "accion": "Taller asignado: MARTHA FLORES",
+          "fecha": "2026-10-15T23:54:07.505Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -75978,11 +75983,11 @@
       "numero_ot": 13100,
       "op_id": "OP-2026-079",
       "referencia": "1132T12",
+      "satelite_id": "sat_04",
       "talla": "T12",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 9144,
-      "satelite_id": "sat_04"
+      "valor_mo": 9144
     },
     {
       "cantidad": 24,
@@ -76000,8 +76005,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:54:07.505Z",
           "accion": "Taller asignado: MARTHA FLORES",
+          "fecha": "2026-10-15T23:54:07.505Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -76012,11 +76017,11 @@
       "numero_ot": 13101,
       "op_id": "OP-2026-079",
       "referencia": "1132T14",
+      "satelite_id": "sat_04",
       "talla": "T14",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 9144,
-      "satelite_id": "sat_04"
+      "valor_mo": 9144
     },
     {
       "cantidad": 24,
@@ -76034,8 +76039,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:54:07.505Z",
           "accion": "Taller asignado: MARTHA FLORES",
+          "fecha": "2026-10-15T23:54:07.505Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -76046,11 +76051,11 @@
       "numero_ot": 13102,
       "op_id": "OP-2026-079",
       "referencia": "1132T16",
+      "satelite_id": "sat_04",
       "talla": "T16",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 9144,
-      "satelite_id": "sat_04"
+      "valor_mo": 9144
     },
     {
       "cantidad": 12,
@@ -76331,6 +76336,7 @@
       "created_at": "2026-08-17",
       "created_by": "John Rodriguez",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-15",
       "fecha_ot": "2026-08-10",
       "historial": [
         {
@@ -76339,18 +76345,18 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:30:20.994Z",
           "accion": "Taller asignado: MARBI YANILI SALCEDO",
+          "fecha": "2026-10-15T23:30:20.994Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:30:27.619Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:30:27.619Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:31:25.491Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:31:25.491Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -76361,12 +76367,11 @@
       "numero_ot": 13111,
       "op_id": "OP-2026-111",
       "referencia": "1058T4",
+      "satelite_id": "sat_08",
       "talla": "T4",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 10510,
-      "satelite_id": "sat_08",
-      "fecha_corte": "2026-10-15"
+      "valor_mo": 10510
     },
     {
       "cantidad": 12,
@@ -76375,6 +76380,7 @@
       "created_at": "2026-08-17",
       "created_by": "John Rodriguez",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-15",
       "fecha_ot": "2026-08-10",
       "historial": [
         {
@@ -76383,18 +76389,18 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:30:20.994Z",
           "accion": "Taller asignado: MARBI YANILI SALCEDO",
+          "fecha": "2026-10-15T23:30:20.994Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:30:27.619Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:30:27.619Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:31:25.491Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:31:25.491Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -76405,12 +76411,11 @@
       "numero_ot": 13112,
       "op_id": "OP-2026-111",
       "referencia": "1058T6",
+      "satelite_id": "sat_08",
       "talla": "T6",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 10510,
-      "satelite_id": "sat_08",
-      "fecha_corte": "2026-10-15"
+      "valor_mo": 10510
     },
     {
       "cantidad": 12,
@@ -76419,6 +76424,7 @@
       "created_at": "2026-08-17",
       "created_by": "John Rodriguez",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-15",
       "fecha_ot": "2026-08-10",
       "historial": [
         {
@@ -76427,18 +76433,18 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:30:20.994Z",
           "accion": "Taller asignado: MARBI YANILI SALCEDO",
+          "fecha": "2026-10-15T23:30:20.994Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:30:27.619Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:30:27.619Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:31:25.491Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:31:25.491Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -76449,12 +76455,11 @@
       "numero_ot": 13113,
       "op_id": "OP-2026-111",
       "referencia": "1058T8",
+      "satelite_id": "sat_08",
       "talla": "T8",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 10510,
-      "satelite_id": "sat_08",
-      "fecha_corte": "2026-10-15"
+      "valor_mo": 10510
     },
     {
       "cantidad": 12,
@@ -76463,6 +76468,7 @@
       "created_at": "2026-08-17",
       "created_by": "John Rodriguez",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-15",
       "fecha_ot": "2026-08-10",
       "historial": [
         {
@@ -76471,18 +76477,18 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:30:20.994Z",
           "accion": "Taller asignado: MARBI YANILI SALCEDO",
+          "fecha": "2026-10-15T23:30:20.994Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:30:27.619Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:30:27.619Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:31:25.491Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:31:25.491Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -76493,12 +76499,11 @@
       "numero_ot": 13114,
       "op_id": "OP-2026-111",
       "referencia": "1058T10",
+      "satelite_id": "sat_08",
       "talla": "T10",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 10510,
-      "satelite_id": "sat_08",
-      "fecha_corte": "2026-10-15"
+      "valor_mo": 10510
     },
     {
       "cantidad": 16,
@@ -76507,6 +76512,7 @@
       "created_at": "2026-08-17",
       "created_by": "John Rodriguez",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-15",
       "fecha_ot": "2026-08-10",
       "historial": [
         {
@@ -76515,18 +76521,18 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:30:20.994Z",
           "accion": "Taller asignado: MARBI YANILI SALCEDO",
+          "fecha": "2026-10-15T23:30:20.994Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:30:27.619Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:30:27.619Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:31:25.491Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:31:25.491Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -76537,12 +76543,11 @@
       "numero_ot": 13115,
       "op_id": "OP-2026-111",
       "referencia": "1058T12",
+      "satelite_id": "sat_08",
       "talla": "T12",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 10510,
-      "satelite_id": "sat_08",
-      "fecha_corte": "2026-10-15"
+      "valor_mo": 10510
     },
     {
       "cantidad": 16,
@@ -76551,6 +76556,7 @@
       "created_at": "2026-08-17",
       "created_by": "John Rodriguez",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-15",
       "fecha_ot": "2026-08-10",
       "historial": [
         {
@@ -76559,18 +76565,18 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:30:20.994Z",
           "accion": "Taller asignado: MARBI YANILI SALCEDO",
+          "fecha": "2026-10-15T23:30:20.994Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:30:27.619Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:30:27.619Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:31:25.491Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:31:25.491Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -76581,12 +76587,11 @@
       "numero_ot": 13116,
       "op_id": "OP-2026-111",
       "referencia": "1058T14",
+      "satelite_id": "sat_08",
       "talla": "T14",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 10510,
-      "satelite_id": "sat_08",
-      "fecha_corte": "2026-10-15"
+      "valor_mo": 10510
     },
     {
       "cantidad": 16,
@@ -76595,6 +76600,7 @@
       "created_at": "2026-08-17",
       "created_by": "John Rodriguez",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-15",
       "fecha_ot": "2026-08-10",
       "historial": [
         {
@@ -76603,18 +76609,18 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:30:20.994Z",
           "accion": "Taller asignado: MARBI YANILI SALCEDO",
+          "fecha": "2026-10-15T23:30:20.994Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:30:27.619Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:30:27.619Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:31:25.491Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:31:25.491Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -76625,12 +76631,11 @@
       "numero_ot": 13117,
       "op_id": "OP-2026-111",
       "referencia": "1058T16",
+      "satelite_id": "sat_08",
       "talla": "T16",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 10510,
-      "satelite_id": "sat_08",
-      "fecha_corte": "2026-10-15"
+      "valor_mo": 10510
     },
     {
       "cantidad": 12,
@@ -83857,8 +83862,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:54:07.505Z",
           "accion": "Taller asignado: MARTHA FLORES",
+          "fecha": "2026-10-15T23:54:07.505Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -83869,11 +83874,11 @@
       "numero_ot": 13302,
       "op_id": "OP-2026-079",
       "referencia": "1132T4",
+      "satelite_id": "sat_04",
       "talla": "T4",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 9144,
-      "satelite_id": "sat_04"
+      "valor_mo": 9144
     },
     {
       "cantidad": 12,
@@ -93752,6 +93757,7 @@
       "created_at": "2026-09-15",
       "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
+      "fecha_corte": "2026-10-15",
       "fecha_ot": "2026-07-31",
       "historial": [
         {
@@ -93760,18 +93766,18 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:52:50.604Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-10-15T23:52:50.604Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:52:56.731Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-10-15T23:52:56.731Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:53:31.746Z",
           "accion": "Taller asignado: MARTHA FLORES",
+          "fecha": "2026-10-15T23:53:31.746Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -93782,12 +93788,11 @@
       "numero_ot": 13622,
       "op_id": "OP-2026-099",
       "referencia": "1171T6",
+      "satelite_id": "sat_04",
       "talla": "T6",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 10000,
-      "fecha_corte": "2026-10-15",
-      "satelite_id": "sat_04"
+      "valor_mo": 10000
     },
     {
       "cantidad": 8,
@@ -93796,6 +93801,7 @@
       "created_at": "2026-09-15",
       "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
+      "fecha_corte": "2026-10-15",
       "fecha_ot": "2026-07-31",
       "historial": [
         {
@@ -93804,18 +93810,18 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:52:50.604Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-10-15T23:52:50.604Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:52:56.731Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-10-15T23:52:56.731Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:53:31.746Z",
           "accion": "Taller asignado: MARTHA FLORES",
+          "fecha": "2026-10-15T23:53:31.746Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -93826,12 +93832,11 @@
       "numero_ot": 13623,
       "op_id": "OP-2026-099",
       "referencia": "1171T8",
+      "satelite_id": "sat_04",
       "talla": "T8",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 10000,
-      "fecha_corte": "2026-10-15",
-      "satelite_id": "sat_04"
+      "valor_mo": 10000
     },
     {
       "cantidad": 17,
@@ -93840,6 +93845,7 @@
       "created_at": "2026-09-15",
       "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
+      "fecha_corte": "2026-10-15",
       "fecha_ot": "2026-07-31",
       "historial": [
         {
@@ -93848,18 +93854,18 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:52:50.604Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-10-15T23:52:50.604Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:52:56.731Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-10-15T23:52:56.731Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:53:31.746Z",
           "accion": "Taller asignado: MARTHA FLORES",
+          "fecha": "2026-10-15T23:53:31.746Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -93870,12 +93876,11 @@
       "numero_ot": 13624,
       "op_id": "OP-2026-099",
       "referencia": "1171T10",
+      "satelite_id": "sat_04",
       "talla": "T10",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 10000,
-      "fecha_corte": "2026-10-15",
-      "satelite_id": "sat_04"
+      "valor_mo": 10000
     },
     {
       "cantidad": 17,
@@ -93884,6 +93889,7 @@
       "created_at": "2026-09-15",
       "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
+      "fecha_corte": "2026-10-15",
       "fecha_ot": "2026-07-31",
       "historial": [
         {
@@ -93892,18 +93898,18 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:52:50.604Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-10-15T23:52:50.604Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:52:56.731Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-10-15T23:52:56.731Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:53:31.746Z",
           "accion": "Taller asignado: MARTHA FLORES",
+          "fecha": "2026-10-15T23:53:31.746Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -93914,12 +93920,11 @@
       "numero_ot": 13625,
       "op_id": "OP-2026-099",
       "referencia": "1171T12",
+      "satelite_id": "sat_04",
       "talla": "T12",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 10000,
-      "fecha_corte": "2026-10-15",
-      "satelite_id": "sat_04"
+      "valor_mo": 10000
     },
     {
       "cantidad": 17,
@@ -93928,6 +93933,7 @@
       "created_at": "2026-09-15",
       "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
+      "fecha_corte": "2026-10-15",
       "fecha_ot": "2026-07-31",
       "historial": [
         {
@@ -93936,18 +93942,18 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:52:50.604Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-10-15T23:52:50.604Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:52:56.731Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-10-15T23:52:56.731Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:53:31.746Z",
           "accion": "Taller asignado: MARTHA FLORES",
+          "fecha": "2026-10-15T23:53:31.746Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -93958,12 +93964,11 @@
       "numero_ot": 13626,
       "op_id": "OP-2026-099",
       "referencia": "1171T14",
+      "satelite_id": "sat_04",
       "talla": "T14",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 10000,
-      "fecha_corte": "2026-10-15",
-      "satelite_id": "sat_04"
+      "valor_mo": 10000
     },
     {
       "cantidad": 17,
@@ -93972,6 +93977,7 @@
       "created_at": "2026-09-15",
       "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
+      "fecha_corte": "2026-10-15",
       "fecha_ot": "2026-07-31",
       "historial": [
         {
@@ -93980,18 +93986,18 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:52:50.604Z",
           "accion": "Estado cambiado (todas las tallas): PENDIENTE_CORTAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-10-15T23:52:50.604Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:52:56.731Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-10-15T23:52:56.731Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:53:31.746Z",
           "accion": "Taller asignado: MARTHA FLORES",
+          "fecha": "2026-10-15T23:53:31.746Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -94002,12 +94008,11 @@
       "numero_ot": 13627,
       "op_id": "OP-2026-099",
       "referencia": "1171T16",
+      "satelite_id": "sat_04",
       "talla": "T16",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 10000,
-      "fecha_corte": "2026-10-15",
-      "satelite_id": "sat_04"
+      "valor_mo": 10000
     },
     {
       "cantidad": 10,
@@ -104253,1181 +104258,915 @@
       "valor_mo": 13663
     },
     {
+      "cantidad": 10,
+      "categoria": "CHAQUETAS",
+      "color": "MARFIL",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
+      "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-15",
+      "fecha_ot": "2026-10-15",
+      "historial": [
+        {
+          "accion": "Taller asignado: ELIZABETH RUIZ MARTINEZ",
+          "fecha": "2026-10-15T23:50:16.524Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:50:22.283Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:50:42.909Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792108208781_9utw6mpuj",
+      "motivo_incumplimiento": "",
+      "nombre": "OVERSIZED CAPOTA",
+      "notas": "",
       "numero_ot": 13958,
       "op_id": "OP-2026-243",
-      "categoria": "CHAQUETAS",
-      "nombre": "OVERSIZED CAPOTA",
       "referencia": "1058T4",
-      "color": "MARFIL",
-      "talla": "T4",
-      "cantidad": 10,
-      "valor_mo": 10510,
-      "fecha_ot": "2026-10-15",
       "satelite_id": "id_1792108110093_vputgj87y",
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
+      "talla": "T4",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 10510
+    },
+    {
+      "cantidad": 10,
+      "categoria": "CHAQUETAS",
+      "color": "MARFIL",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_corte": "2026-10-15",
+      "fecha_ot": "2026-10-15",
       "historial": [
         {
-          "fecha": "2026-10-15T23:50:16.524Z",
           "accion": "Taller asignado: ELIZABETH RUIZ MARTINEZ",
+          "fecha": "2026-10-15T23:50:16.524Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:50:22.283Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:50:22.283Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:50:42.909Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:50:42.909Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-10-15"
-    },
-    {
       "id": "id_1792108208781_39h7e71ae",
+      "motivo_incumplimiento": "",
+      "nombre": "OVERSIZED CAPOTA",
+      "notas": "",
       "numero_ot": 13959,
       "op_id": "OP-2026-243",
-      "categoria": "CHAQUETAS",
-      "nombre": "OVERSIZED CAPOTA",
       "referencia": "1058T8",
-      "color": "MARFIL",
-      "talla": "T8",
-      "cantidad": 10,
-      "valor_mo": 10510,
-      "fecha_ot": "2026-10-15",
       "satelite_id": "id_1792108110093_vputgj87y",
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
+      "talla": "T8",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 10510
+    },
+    {
+      "cantidad": 21,
+      "categoria": "CHAQUETAS",
+      "color": "MARFIL",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_corte": "2026-10-15",
+      "fecha_ot": "2026-10-15",
       "historial": [
         {
-          "fecha": "2026-10-15T23:50:16.524Z",
           "accion": "Taller asignado: ELIZABETH RUIZ MARTINEZ",
+          "fecha": "2026-10-15T23:50:16.524Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:50:22.283Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:50:22.283Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:50:42.909Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:50:42.909Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-10-15"
-    },
-    {
       "id": "id_1792108208781_wqrxmyk7r",
+      "motivo_incumplimiento": "",
+      "nombre": "OVERSIZED CAPOTA",
+      "notas": "",
       "numero_ot": 13960,
       "op_id": "OP-2026-243",
-      "categoria": "CHAQUETAS",
-      "nombre": "OVERSIZED CAPOTA",
       "referencia": "1058T10",
-      "color": "MARFIL",
-      "talla": "T10",
-      "cantidad": 21,
-      "valor_mo": 10510,
-      "fecha_ot": "2026-10-15",
       "satelite_id": "id_1792108110093_vputgj87y",
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
+      "talla": "T10",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 10510
+    },
+    {
+      "cantidad": 21,
+      "categoria": "CHAQUETAS",
+      "color": "MARFIL",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_corte": "2026-10-15",
+      "fecha_ot": "2026-10-15",
       "historial": [
         {
-          "fecha": "2026-10-15T23:50:16.524Z",
           "accion": "Taller asignado: ELIZABETH RUIZ MARTINEZ",
+          "fecha": "2026-10-15T23:50:16.524Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:50:22.283Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:50:22.283Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:50:42.909Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:50:42.909Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-10-15"
-    },
-    {
       "id": "id_1792108208781_fulpnr0ko",
+      "motivo_incumplimiento": "",
+      "nombre": "OVERSIZED CAPOTA",
+      "notas": "",
       "numero_ot": 13961,
       "op_id": "OP-2026-243",
-      "categoria": "CHAQUETAS",
-      "nombre": "OVERSIZED CAPOTA",
       "referencia": "1058T12",
-      "color": "MARFIL",
-      "talla": "T12",
-      "cantidad": 21,
-      "valor_mo": 10510,
-      "fecha_ot": "2026-10-15",
       "satelite_id": "id_1792108110093_vputgj87y",
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
+      "talla": "T12",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 10510
+    },
+    {
+      "cantidad": 21,
+      "categoria": "CHAQUETAS",
+      "color": "MARFIL",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_corte": "2026-10-15",
+      "fecha_ot": "2026-10-15",
       "historial": [
         {
-          "fecha": "2026-10-15T23:50:16.524Z",
           "accion": "Taller asignado: ELIZABETH RUIZ MARTINEZ",
+          "fecha": "2026-10-15T23:50:16.524Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:50:22.283Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:50:22.283Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:50:42.909Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:50:42.909Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-10-15"
-    },
-    {
       "id": "id_1792108208781_gusc3zu91",
+      "motivo_incumplimiento": "",
+      "nombre": "OVERSIZED CAPOTA",
+      "notas": "",
       "numero_ot": 13962,
       "op_id": "OP-2026-243",
-      "categoria": "CHAQUETAS",
-      "nombre": "OVERSIZED CAPOTA",
       "referencia": "1058T14",
-      "color": "MARFIL",
-      "talla": "T14",
-      "cantidad": 21,
-      "valor_mo": 10510,
-      "fecha_ot": "2026-10-15",
       "satelite_id": "id_1792108110093_vputgj87y",
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
+      "talla": "T14",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 10510
+    },
+    {
+      "cantidad": 21,
+      "categoria": "CHAQUETAS",
+      "color": "MARFIL",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_corte": "2026-10-15",
+      "fecha_ot": "2026-10-15",
       "historial": [
         {
-          "fecha": "2026-10-15T23:50:16.524Z",
           "accion": "Taller asignado: ELIZABETH RUIZ MARTINEZ",
+          "fecha": "2026-10-15T23:50:16.524Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:50:22.283Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:50:22.283Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:50:42.909Z",
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-15T23:50:42.909Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-10-15"
-    },
-    {
       "id": "id_1792108208781_02kmwebl8",
+      "motivo_incumplimiento": "",
+      "nombre": "OVERSIZED CAPOTA",
+      "notas": "",
       "numero_ot": 13963,
       "op_id": "OP-2026-243",
-      "categoria": "CHAQUETAS",
-      "nombre": "OVERSIZED CAPOTA",
       "referencia": "1058T16",
-      "color": "MARFIL",
-      "talla": "T16",
-      "cantidad": 21,
-      "valor_mo": 10510,
-      "fecha_ot": "2026-10-15",
       "satelite_id": "id_1792108110093_vputgj87y",
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
+      "talla": "T16",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "EN_CONFECCION",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "valor_mo": 10510
+    },
+    {
+      "cantidad": 15,
+      "categoria": "CHAQUETAS",
+      "color": "MORA LECHE",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
+      "estado": "CORTE_POR_ALISTAR",
+      "fecha_corte": "2026-10-15",
+      "fecha_ot": "2026-08-10",
       "historial": [
         {
-          "fecha": "2026-10-15T23:50:16.524Z",
-          "accion": "Taller asignado: ELIZABETH RUIZ MARTINEZ",
+          "accion": "Estado cambiado: POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-10-15T23:57:56.602Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-15T23:50:22.283Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-15T23:50:42.909Z",
-          "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-10-15T23:58:34.750Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-10-15"
-    },
-    {
       "id": "id_1792108556414_imh8dws9p",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13964,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T8",
-      "color": "MORA LECHE",
       "talla": "T8",
-      "cantidad": 15,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 9459
+    },
+    {
+      "cantidad": 15,
+      "categoria": "CHAQUETAS",
+      "color": "MORA LECHE",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_corte": "2026-10-15",
+      "fecha_ot": "2026-08-10",
       "historial": [
         {
-          "fecha": "2026-10-15T23:57:56.602Z",
-          "accion": "Estado cambiado: POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
-          "user": "Jefa de Producción"
-        },
-        {
+          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
           "fecha": "2026-10-15T23:58:34.750Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → CORTE_POR_ALISTAR. Motivo: en insumos",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-10-15"
-    },
-    {
       "id": "id_1792108556414_bzc0y41o3",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13965,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T10",
-      "color": "MORA LECHE",
       "talla": "T10",
-      "cantidad": 15,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 9459
+    },
+    {
+      "cantidad": 15,
+      "categoria": "CHAQUETAS",
+      "color": "MORA LECHE",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_corte": "2026-10-15",
+      "fecha_ot": "2026-08-10",
       "historial": [
         {
-          "fecha": "2026-10-15T23:58:34.750Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-10-15T23:58:34.750Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-10-15"
-    },
-    {
       "id": "id_1792108556414_c0lh2p8ns",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13966,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T12",
-      "color": "MORA LECHE",
       "talla": "T12",
-      "cantidad": 15,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 9459
+    },
+    {
+      "cantidad": 16,
+      "categoria": "CHAQUETAS",
+      "color": "MORA LECHE",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_corte": "2026-10-15",
+      "fecha_ot": "2026-08-10",
       "historial": [
         {
-          "fecha": "2026-10-15T23:58:34.750Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-10-15T23:58:34.750Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-10-15"
-    },
-    {
       "id": "id_1792108556414_5b2snesee",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13967,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T14",
-      "color": "MORA LECHE",
       "talla": "T14",
-      "cantidad": 16,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 9459
+    },
+    {
+      "cantidad": 15,
+      "categoria": "CHAQUETAS",
+      "color": "MORA LECHE",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_corte": "2026-10-15",
+      "fecha_ot": "2026-08-10",
       "historial": [
         {
-          "fecha": "2026-10-15T23:58:34.750Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-10-15T23:58:34.750Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-10-15"
-    },
-    {
       "id": "id_1792108556414_qo8dglg96",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13968,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T16",
-      "color": "MORA LECHE",
       "talla": "T16",
-      "cantidad": 15,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [
-        {
-          "fecha": "2026-10-15T23:58:34.750Z",
-          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-10-15"
+      "valor_mo": 9459
     },
     {
+      "cantidad": 16,
+      "categoria": "CHAQUETAS",
+      "color": "MARFIL",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
+      "estado": "POR_REVISAR",
+      "fecha_ot": "2026-08-10",
       "id": "id_1792108556414_cvzfygeeb",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13969,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T8",
-      "color": "MARFIL",
       "talla": "T8",
-      "cantidad": 16,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "POR_REVISAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 9459,
+      "historial": []
     },
     {
+      "cantidad": 16,
+      "categoria": "CHAQUETAS",
+      "color": "MARFIL",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
+      "estado": "POR_REVISAR",
+      "fecha_ot": "2026-08-10",
       "id": "id_1792108556414_oiau01g8u",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13970,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T10",
-      "color": "MARFIL",
       "talla": "T10",
-      "cantidad": 16,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "POR_REVISAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 9459,
+      "historial": []
     },
     {
+      "cantidad": 16,
+      "categoria": "CHAQUETAS",
+      "color": "MARFIL",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
+      "estado": "POR_REVISAR",
+      "fecha_ot": "2026-08-10",
       "id": "id_1792108556414_4wzf62qsp",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13971,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T12",
-      "color": "MARFIL",
       "talla": "T12",
-      "cantidad": 16,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "POR_REVISAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 9459,
+      "historial": []
     },
     {
+      "cantidad": 16,
+      "categoria": "CHAQUETAS",
+      "color": "MARFIL",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
+      "estado": "POR_REVISAR",
+      "fecha_ot": "2026-08-10",
       "id": "id_1792108556415_4noyp0f5u",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13972,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T14",
-      "color": "MARFIL",
       "talla": "T14",
-      "cantidad": 16,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "POR_REVISAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 9459,
+      "historial": []
     },
     {
+      "cantidad": 16,
+      "categoria": "CHAQUETAS",
+      "color": "MARFIL",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
+      "estado": "POR_REVISAR",
+      "fecha_ot": "2026-08-10",
       "id": "id_1792108556415_f1lb0d9b2",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13973,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T16",
-      "color": "MARFIL",
       "talla": "T16",
-      "cantidad": 16,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "POR_REVISAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 9459,
+      "historial": []
     },
     {
+      "cantidad": 8,
+      "categoria": "CHAQUETAS",
+      "color": "NEGRO",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
+      "estado": "POR_REVISAR",
+      "fecha_ot": "2026-08-10",
       "id": "id_1792108556415_5hn2gn1ok",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13974,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T6",
-      "color": "NEGRO",
       "talla": "T6",
-      "cantidad": 8,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "POR_REVISAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 9459,
+      "historial": []
     },
     {
+      "cantidad": 16,
+      "categoria": "CHAQUETAS",
+      "color": "NEGRO",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
+      "estado": "POR_REVISAR",
+      "fecha_ot": "2026-08-10",
       "id": "id_1792108556415_hg8ert7eb",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13975,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T8",
-      "color": "NEGRO",
       "talla": "T8",
-      "cantidad": 16,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "POR_REVISAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 9459,
+      "historial": []
     },
     {
+      "cantidad": 16,
+      "categoria": "CHAQUETAS",
+      "color": "NEGRO",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
+      "estado": "POR_REVISAR",
+      "fecha_ot": "2026-08-10",
       "id": "id_1792108556415_jdpyfjp0p",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13976,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T10",
-      "color": "NEGRO",
       "talla": "T10",
-      "cantidad": 16,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "POR_REVISAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 9459,
+      "historial": []
     },
     {
+      "cantidad": 16,
+      "categoria": "CHAQUETAS",
+      "color": "NEGRO",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
+      "estado": "POR_REVISAR",
+      "fecha_ot": "2026-08-10",
       "id": "id_1792108556415_llo9lvq8s",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13977,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T12",
-      "color": "NEGRO",
       "talla": "T12",
-      "cantidad": 16,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "POR_REVISAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 9459,
+      "historial": []
     },
     {
+      "cantidad": 16,
+      "categoria": "CHAQUETAS",
+      "color": "NEGRO",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
+      "estado": "POR_REVISAR",
+      "fecha_ot": "2026-08-10",
       "id": "id_1792108556415_so60k3gfv",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13978,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T14",
-      "color": "NEGRO",
       "talla": "T14",
-      "cantidad": 16,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "POR_REVISAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 9459,
+      "historial": []
     },
     {
+      "cantidad": 16,
+      "categoria": "CHAQUETAS",
+      "color": "NEGRO",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
+      "estado": "POR_REVISAR",
+      "fecha_ot": "2026-08-10",
       "id": "id_1792108556415_xhzj2lk2d",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13979,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T16",
-      "color": "NEGRO",
       "talla": "T16",
-      "cantidad": 16,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "POR_REVISAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 9459,
+      "historial": []
     },
     {
+      "cantidad": 16,
+      "categoria": "CHAQUETAS",
+      "color": "CAMEL",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
+      "estado": "POR_REVISAR",
+      "fecha_ot": "2026-08-10",
       "id": "id_1792108556415_2z5dsctr4",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13980,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T8",
-      "color": "CAMEL",
       "talla": "T8",
-      "cantidad": 16,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "POR_REVISAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 9459,
+      "historial": []
     },
     {
+      "cantidad": 16,
+      "categoria": "CHAQUETAS",
+      "color": "CAMEL",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
+      "estado": "POR_REVISAR",
+      "fecha_ot": "2026-08-10",
       "id": "id_1792108556415_q9udnn1ht",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13981,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T10",
-      "color": "CAMEL",
       "talla": "T10",
-      "cantidad": 16,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "POR_REVISAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 9459,
+      "historial": []
     },
     {
+      "cantidad": 16,
+      "categoria": "CHAQUETAS",
+      "color": "CAMEL",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
+      "estado": "POR_REVISAR",
+      "fecha_ot": "2026-08-10",
       "id": "id_1792108556415_ck24xzd8j",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13982,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T12",
-      "color": "CAMEL",
       "talla": "T12",
-      "cantidad": 16,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "POR_REVISAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 9459,
+      "historial": []
     },
     {
+      "cantidad": 16,
+      "categoria": "CHAQUETAS",
+      "color": "CAMEL",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
+      "estado": "POR_REVISAR",
+      "fecha_ot": "2026-08-10",
       "id": "id_1792108556415_jbuizjlym",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13983,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T14",
-      "color": "CAMEL",
       "talla": "T14",
-      "cantidad": 16,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "POR_REVISAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 9459,
+      "historial": []
     },
     {
+      "cantidad": 16,
+      "categoria": "CHAQUETAS",
+      "color": "CAMEL",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
+      "estado": "POR_REVISAR",
+      "fecha_ot": "2026-08-10",
       "id": "id_1792108556415_gt30xjl07",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13984,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T16",
-      "color": "CAMEL",
       "talla": "T16",
-      "cantidad": 16,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "POR_REVISAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción"
+      "valor_mo": 9459,
+      "historial": []
     },
     {
+      "cantidad": 8,
+      "categoria": "CHAQUETAS",
+      "color": "AZUL OSCURO",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
+      "estado": "CORTE_POR_ALISTAR",
+      "fecha_corte": "2026-10-15",
+      "fecha_ot": "2026-08-10",
+      "historial": [
+        {
+          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-10-15T23:56:43.460Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792108556415_6ye08i3jq",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13985,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T4",
-      "color": "AZUL OSCURO",
       "talla": "T4",
-      "cantidad": 8,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 9459
+    },
+    {
+      "cantidad": 18,
+      "categoria": "CHAQUETAS",
+      "color": "AZUL OSCURO",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_corte": "2026-10-15",
+      "fecha_ot": "2026-08-10",
       "historial": [
         {
-          "fecha": "2026-10-15T23:56:43.460Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-10-15T23:56:43.460Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-10-15"
-    },
-    {
       "id": "id_1792108556415_jj2pgqc1f",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13986,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T6",
-      "color": "AZUL OSCURO",
       "talla": "T6",
-      "cantidad": 18,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 9459
+    },
+    {
+      "cantidad": 18,
+      "categoria": "CHAQUETAS",
+      "color": "AZUL OSCURO",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_corte": "2026-10-15",
+      "fecha_ot": "2026-08-10",
       "historial": [
         {
-          "fecha": "2026-10-15T23:56:43.460Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-10-15T23:56:43.460Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-10-15"
-    },
-    {
       "id": "id_1792108556416_9jodjyjsb",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13987,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T8",
-      "color": "AZUL OSCURO",
       "talla": "T8",
-      "cantidad": 18,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 9459
+    },
+    {
+      "cantidad": 18,
+      "categoria": "CHAQUETAS",
+      "color": "AZUL OSCURO",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_corte": "2026-10-15",
+      "fecha_ot": "2026-08-10",
       "historial": [
         {
-          "fecha": "2026-10-15T23:56:43.460Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-10-15T23:56:43.460Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-10-15"
-    },
-    {
       "id": "id_1792108556416_gcb2g20i0",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13988,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T10",
-      "color": "AZUL OSCURO",
       "talla": "T10",
-      "cantidad": 18,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 9459
+    },
+    {
+      "cantidad": 18,
+      "categoria": "CHAQUETAS",
+      "color": "AZUL OSCURO",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_corte": "2026-10-15",
+      "fecha_ot": "2026-08-10",
       "historial": [
         {
-          "fecha": "2026-10-15T23:56:43.460Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-10-15T23:56:43.460Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-10-15"
-    },
-    {
       "id": "id_1792108556416_cmw0tdmnh",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13989,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T12",
-      "color": "AZUL OSCURO",
       "talla": "T12",
-      "cantidad": 18,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
+      "valor_mo": 9459
+    },
+    {
+      "cantidad": 18,
+      "categoria": "CHAQUETAS",
+      "color": "AZUL OSCURO",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_corte": "2026-10-15",
+      "fecha_ot": "2026-08-10",
       "historial": [
         {
-          "fecha": "2026-10-15T23:56:43.460Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-10-15T23:56:43.460Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-10-15"
-    },
-    {
       "id": "id_1792108556416_fw9dvezsp",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
       "numero_ot": 13990,
       "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
       "referencia": "1099T14",
-      "color": "AZUL OSCURO",
       "talla": "T14",
-      "cantidad": 18,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
-      "historial": [
-        {
-          "fecha": "2026-10-15T23:56:43.460Z",
-          "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-10-15"
+      "valor_mo": 9459
     },
     {
-      "id": "id_1792108556416_hz26b0un6",
-      "numero_ot": 13991,
-      "op_id": "OP-2026-112",
-      "categoria": "CHAQUETAS",
-      "nombre": "PILOTO PANCAKE",
-      "referencia": "1099T16",
-      "color": "AZUL OSCURO",
-      "talla": "T16",
       "cantidad": 11,
-      "valor_mo": 9459,
-      "fecha_ot": "2026-08-10",
-      "satelite_id": null,
-      "fecha_entrega_corte_satelite": null,
-      "fecha_estimada_entrega": null,
-      "fecha_entrega_real": null,
-      "unidades_entregadas": 0,
-      "unidades_novedad": 0,
+      "categoria": "CHAQUETAS",
+      "color": "AZUL OSCURO",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
       "estado": "CORTE_POR_ALISTAR",
-      "nt_corte_satelite": null,
-      "nt_ingreso_planta": null,
-      "op_effi": null,
-      "cumplió_fecha": null,
-      "motivo_incumplimiento": "",
-      "notas": "",
+      "fecha_corte": "2026-10-15",
+      "fecha_ot": "2026-08-10",
       "historial": [
         {
-          "fecha": "2026-10-15T23:56:43.461Z",
           "accion": "Estado cambiado (todas las tallas): POR_REVISAR → CORTE_POR_ALISTAR. Motivo: en insumos",
+          "fecha": "2026-10-15T23:56:43.461Z",
           "user": "Jefa de Producción"
         }
       ],
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción",
-      "fecha_corte": "2026-10-15"
+      "id": "id_1792108556416_hz26b0un6",
+      "motivo_incumplimiento": "",
+      "nombre": "PILOTO PANCAKE",
+      "notas": "",
+      "numero_ot": 13991,
+      "op_id": "OP-2026-112",
+      "referencia": "1099T16",
+      "talla": "T16",
+      "unidades_entregadas": 0,
+      "unidades_novedad": 0,
+      "valor_mo": 9459
     }
   ]
 }
