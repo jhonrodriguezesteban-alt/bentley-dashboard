@@ -6990,24 +6990,24 @@
     },
     {
       "cantidades": {
-        "GRIS OSCURO_T6": 8,
-        "GRIS OSCURO_T8": 8,
+        "CAFE_T10": 16,
+        "CAFE_T12": 16,
+        "CAFE_T14": 16,
+        "CAFE_T16": 16,
+        "CAFE_T6": 8,
+        "CAFE_T8": 8,
         "GRIS OSCURO_T10": 16,
         "GRIS OSCURO_T12": 16,
         "GRIS OSCURO_T14": 16,
         "GRIS OSCURO_T16": 16,
-        "VINOTINTO_T6": 8,
-        "VINOTINTO_T8": 8,
+        "GRIS OSCURO_T6": 8,
+        "GRIS OSCURO_T8": 8,
         "VINOTINTO_T10": 17,
         "VINOTINTO_T12": 17,
         "VINOTINTO_T14": 17,
         "VINOTINTO_T16": 17,
-        "CAFE_T6": 8,
-        "CAFE_T8": 8,
-        "CAFE_T10": 16,
-        "CAFE_T12": 16,
-        "CAFE_T14": 16,
-        "CAFE_T16": 16
+        "VINOTINTO_T6": 8,
+        "VINOTINTO_T8": 8
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -7044,15 +7044,35 @@
       "receta_nombre": "BEISBOLERA CUERO  2.0",
       "referencias": [
         {
-          "nombre": "BEISBOLERA 2.0",
-          "ref": "1171",
+          "cantidades": {
+            "CAFE_T10": 16,
+            "CAFE_T12": 16,
+            "CAFE_T14": 16,
+            "CAFE_T16": 16,
+            "CAFE_T6": 8,
+            "CAFE_T8": 8,
+            "GRIS OSCURO_T10": 16,
+            "GRIS OSCURO_T12": 16,
+            "GRIS OSCURO_T14": 16,
+            "GRIS OSCURO_T16": 16,
+            "GRIS OSCURO_T6": 8,
+            "GRIS OSCURO_T8": 8,
+            "VINOTINTO_T10": 17,
+            "VINOTINTO_T12": 17,
+            "VINOTINTO_T14": 17,
+            "VINOTINTO_T16": 17,
+            "VINOTINTO_T6": 8,
+            "VINOTINTO_T8": 8
+          },
           "cat": "CHAQUETAS",
-          "vmo": 10000,
           "colores": [
             "GRIS OSCURO",
             "VINOTINTO",
             "CAFE"
           ],
+          "maquilador_id": "",
+          "nombre": "BEISBOLERA 2.0",
+          "ref": "1171",
           "tallas": [
             "T6",
             "T8",
@@ -7061,27 +7081,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "GRIS OSCURO_T6": 8,
-            "GRIS OSCURO_T8": 8,
-            "GRIS OSCURO_T10": 16,
-            "GRIS OSCURO_T12": 16,
-            "GRIS OSCURO_T14": 16,
-            "GRIS OSCURO_T16": 16,
-            "VINOTINTO_T6": 8,
-            "VINOTINTO_T8": 8,
-            "VINOTINTO_T10": 17,
-            "VINOTINTO_T12": 17,
-            "VINOTINTO_T14": 17,
-            "VINOTINTO_T16": 17,
-            "CAFE_T6": 8,
-            "CAFE_T8": 8,
-            "CAFE_T10": 16,
-            "CAFE_T12": 16,
-            "CAFE_T14": 16,
-            "CAFE_T16": 16
-          },
-          "maquilador_id": ""
+          "vmo": 10000
         }
       ],
       "subg_estados": {
@@ -7107,9 +7107,7 @@
           "solicitud_id": "id_1791380778074_g61jv4ycu"
         }
       ],
-      "updated_at": "2026-10-15",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-10-15"
     },
     {
       "cantidades": {
@@ -8233,34 +8231,34 @@
     },
     {
       "cantidades": {
-        "MORA LECHE_T8": 15,
-        "MORA LECHE_T10": 15,
-        "MORA LECHE_T12": 15,
-        "MORA LECHE_T14": 16,
-        "MORA LECHE_T16": 15,
-        "MARFIL_T8": 16,
-        "MARFIL_T10": 16,
-        "MARFIL_T12": 16,
-        "MARFIL_T14": 16,
-        "MARFIL_T16": 16,
-        "NEGRO_T6": 8,
-        "NEGRO_T8": 16,
-        "NEGRO_T10": 16,
-        "NEGRO_T12": 16,
-        "NEGRO_T14": 16,
-        "NEGRO_T16": 16,
-        "CAMEL_T8": 16,
+        "AZUL OSCURO_T10": 18,
+        "AZUL OSCURO_T12": 18,
+        "AZUL OSCURO_T14": 18,
+        "AZUL OSCURO_T16": 11,
+        "AZUL OSCURO_T4": 8,
+        "AZUL OSCURO_T6": 18,
+        "AZUL OSCURO_T8": 18,
         "CAMEL_T10": 16,
         "CAMEL_T12": 16,
         "CAMEL_T14": 16,
         "CAMEL_T16": 16,
-        "AZUL OSCURO_T4": 8,
-        "AZUL OSCURO_T6": 18,
-        "AZUL OSCURO_T8": 18,
-        "AZUL OSCURO_T10": 18,
-        "AZUL OSCURO_T12": 18,
-        "AZUL OSCURO_T14": 18,
-        "AZUL OSCURO_T16": 11
+        "CAMEL_T8": 16,
+        "MARFIL_T10": 16,
+        "MARFIL_T12": 16,
+        "MARFIL_T14": 16,
+        "MARFIL_T16": 16,
+        "MARFIL_T8": 16,
+        "MORA LECHE_T10": 15,
+        "MORA LECHE_T12": 15,
+        "MORA LECHE_T14": 16,
+        "MORA LECHE_T16": 15,
+        "MORA LECHE_T8": 15,
+        "NEGRO_T10": 16,
+        "NEGRO_T12": 16,
+        "NEGRO_T14": 16,
+        "NEGRO_T16": 16,
+        "NEGRO_T6": 8,
+        "NEGRO_T8": 16
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -8271,6 +8269,7 @@
         "AZUL OSCURO"
       ],
       "consumibles_check": {
+        "rec_piloto_pancake_1099__c98_21||AZUL OSCURO": true,
         "rec_piloto_pancake_1099__c98_21||CAMEL": true,
         "rec_piloto_pancake_1099__c98_21||MARFIL": true,
         "rec_piloto_pancake_1099__c98_21||MORA LECHE": true,
@@ -8283,8 +8282,7 @@
         "rec_piloto_pancake_1099__c98_29": true,
         "rec_piloto_pancake_1099__c98_31": true,
         "rec_piloto_pancake_1099__c98_32": true,
-        "rec_piloto_pancake_1099__c98_40": true,
-        "rec_piloto_pancake_1099__c98_21||AZUL OSCURO": true
+        "rec_piloto_pancake_1099__c98_40": true
       },
       "consumibles_desagregado": {
         "rec_piloto_pancake_1099__c98_21": true
@@ -8301,10 +8299,37 @@
       "receta_nombre": "PILOTO PANCAKE - REF: 1099",
       "referencias": [
         {
-          "nombre": "PILOTO PANCAKE",
-          "ref": "1099",
+          "cantidades": {
+            "AZUL OSCURO_T10": 18,
+            "AZUL OSCURO_T12": 18,
+            "AZUL OSCURO_T14": 18,
+            "AZUL OSCURO_T16": 11,
+            "AZUL OSCURO_T4": 8,
+            "AZUL OSCURO_T6": 18,
+            "AZUL OSCURO_T8": 18,
+            "CAMEL_T10": 16,
+            "CAMEL_T12": 16,
+            "CAMEL_T14": 16,
+            "CAMEL_T16": 16,
+            "CAMEL_T8": 16,
+            "MARFIL_T10": 16,
+            "MARFIL_T12": 16,
+            "MARFIL_T14": 16,
+            "MARFIL_T16": 16,
+            "MARFIL_T8": 16,
+            "MORA LECHE_T10": 15,
+            "MORA LECHE_T12": 15,
+            "MORA LECHE_T14": 16,
+            "MORA LECHE_T16": 15,
+            "MORA LECHE_T8": 15,
+            "NEGRO_T10": 16,
+            "NEGRO_T12": 16,
+            "NEGRO_T14": 16,
+            "NEGRO_T16": 16,
+            "NEGRO_T6": 8,
+            "NEGRO_T8": 16
+          },
           "cat": "CHAQUETAS",
-          "vmo": 9459,
           "colores": [
             "MORA LECHE",
             "MARFIL",
@@ -8312,6 +8337,9 @@
             "CAMEL",
             "AZUL OSCURO"
           ],
+          "maquilador_id": "",
+          "nombre": "PILOTO PANCAKE",
+          "ref": "1099",
           "tallas": [
             "T4",
             "T6",
@@ -8321,37 +8349,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "MORA LECHE_T8": 15,
-            "MORA LECHE_T10": 15,
-            "MORA LECHE_T12": 15,
-            "MORA LECHE_T14": 16,
-            "MORA LECHE_T16": 15,
-            "MARFIL_T8": 16,
-            "MARFIL_T10": 16,
-            "MARFIL_T12": 16,
-            "MARFIL_T14": 16,
-            "MARFIL_T16": 16,
-            "NEGRO_T6": 8,
-            "NEGRO_T8": 16,
-            "NEGRO_T10": 16,
-            "NEGRO_T12": 16,
-            "NEGRO_T14": 16,
-            "NEGRO_T16": 16,
-            "CAMEL_T8": 16,
-            "CAMEL_T10": 16,
-            "CAMEL_T12": 16,
-            "CAMEL_T14": 16,
-            "CAMEL_T16": 16,
-            "AZUL OSCURO_T4": 8,
-            "AZUL OSCURO_T6": 18,
-            "AZUL OSCURO_T8": 18,
-            "AZUL OSCURO_T10": 18,
-            "AZUL OSCURO_T12": 18,
-            "AZUL OSCURO_T14": 18,
-            "AZUL OSCURO_T16": 11
-          },
-          "maquilador_id": ""
+          "vmo": 9459
         }
       ],
       "subg_estados": {
@@ -8383,9 +8381,7 @@
           "solicitud_id": "id_1792006780593_rfoszu8i2"
         }
       ],
-      "updated_at": "2026-10-15",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-10-15"
     },
     {
       "cantidades": {
@@ -9243,24 +9239,24 @@
     },
     {
       "cantidades": {
-        "BEIGE_T10": 18,
-        "BEIGE_T12": 18,
-        "BEIGE_T14": 18,
-        "BEIGE_T16": 18,
-        "BEIGE_T6": 12,
-        "BEIGE_T8": 12,
+        "NEGRO_T6": 10,
+        "NEGRO_T8": 10,
         "NEGRO_T10": 20,
         "NEGRO_T12": 20,
         "NEGRO_T14": 20,
         "NEGRO_T16": 20,
-        "NEGRO_T6": 10,
-        "NEGRO_T8": 10,
+        "BEIGE_T6": 12,
+        "BEIGE_T8": 12,
+        "BEIGE_T10": 18,
+        "BEIGE_T12": 18,
+        "BEIGE_T14": 18,
+        "BEIGE_T16": 18,
+        "ROSA_T6": 12,
+        "ROSA_T8": 12,
         "ROSA_T10": 15,
         "ROSA_T12": 15,
         "ROSA_T14": 15,
-        "ROSA_T16": 15,
-        "ROSA_T6": 12,
-        "ROSA_T8": 12
+        "ROSA_T16": 15
       },
       "categoria": "ABRIGOS",
       "colores": [
@@ -9304,35 +9300,15 @@
       "receta_nombre": "ABRIGO FROZEN - REF: 1136",
       "referencias": [
         {
-          "cantidades": {
-            "BEIGE_T10": 18,
-            "BEIGE_T12": 18,
-            "BEIGE_T14": 18,
-            "BEIGE_T16": 18,
-            "BEIGE_T6": 12,
-            "BEIGE_T8": 12,
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 10,
-            "ROSA_T10": 15,
-            "ROSA_T12": 15,
-            "ROSA_T14": 15,
-            "ROSA_T16": 15,
-            "ROSA_T6": 12,
-            "ROSA_T8": 12
-          },
+          "nombre": "ABRIGO FROZEN",
+          "ref": "1136",
           "cat": "ABRIGOS",
+          "vmo": 13663,
           "colores": [
             "NEGRO",
             "BEIGE",
             "ROSA"
           ],
-          "maquilador_id": "",
-          "nombre": "ABRIGO FROZEN",
-          "ref": "1136",
           "tallas": [
             "T6",
             "T8",
@@ -9341,11 +9317,31 @@
             "T14",
             "T16"
           ],
-          "vmo": 13663
+          "cantidades": {
+            "NEGRO_T6": 10,
+            "NEGRO_T8": 10,
+            "NEGRO_T10": 20,
+            "NEGRO_T12": 20,
+            "NEGRO_T14": 20,
+            "NEGRO_T16": 20,
+            "BEIGE_T6": 12,
+            "BEIGE_T8": 12,
+            "BEIGE_T10": 18,
+            "BEIGE_T12": 18,
+            "BEIGE_T14": 18,
+            "BEIGE_T16": 18,
+            "ROSA_T6": 12,
+            "ROSA_T8": 12,
+            "ROSA_T10": 15,
+            "ROSA_T12": 15,
+            "ROSA_T14": 15,
+            "ROSA_T16": 15
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
-        "OP-2026-121||BEIGE": "CORTE_POR_ALISTAR",
+        "OP-2026-121||BEIGE": "EN_CONFECCION",
         "OP-2026-121||NEGRO": "CORTE_POR_ALISTAR",
         "OP-2026-121||ROSA": "EN_CONFECCION"
       },
@@ -9369,7 +9365,9 @@
           "solicitud_id": "id_1790787840879_fohm3ruvm"
         }
       ],
-      "updated_at": "2026-10-15"
+      "updated_at": "2026-10-15",
+      "diseno_origen_id": null,
+      "diseno_origen_nombre": null
     },
     {
       "cantidades": {
@@ -15725,66 +15723,18 @@
       ]
     },
     {
-      "id": "OP-2026-243",
-      "numero": 243,
-      "fecha_op": "2026-10-15",
-      "cortador": "Corte Carbajal",
-      "categoria": "CHAQUETAS",
-      "nombre_producto": "OVERSIZED CAPOTA",
-      "colores": [
-        "MARFIL"
-      ],
-      "tallas": [
-        "T4",
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
       "cantidades": {
-        "MARFIL_T4": 10,
-        "MARFIL_T8": 10,
         "MARFIL_T10": 21,
         "MARFIL_T12": 21,
         "MARFIL_T14": 21,
-        "MARFIL_T16": 21
+        "MARFIL_T16": 21,
+        "MARFIL_T4": 10,
+        "MARFIL_T8": 10
       },
-      "referencias": [
-        {
-          "nombre": "OVERSIZED CAPOTA",
-          "ref": "1058",
-          "cat": "CHAQUETAS",
-          "vmo": 10510,
-          "colores": [
-            "MARFIL"
-          ],
-          "tallas": [
-            "T4",
-            "T8",
-            "T10",
-            "T12",
-            "T14",
-            "T16"
-          ],
-          "cantidades": {
-            "MARFIL_T4": 10,
-            "MARFIL_T8": 10,
-            "MARFIL_T10": 21,
-            "MARFIL_T12": 21,
-            "MARFIL_T14": 21,
-            "MARFIL_T16": 21
-          },
-          "totalUds": 104,
-          "maquilador_id": ""
-        }
+      "categoria": "CHAQUETAS",
+      "colores": [
+        "MARFIL"
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-10-15",
-      "created_by": "Jefa de Producción",
-      "receta_id": "rec_oversized_capota_1058",
-      "receta_nombre": "OVERSIZED CAPOTA - REF: 1058",
       "consumibles_check": {
         "rec_oversized_capota_1058__c82_20": true,
         "rec_oversized_capota_1058__c82_21": true,
@@ -15796,9 +15746,56 @@
         "rec_oversized_capota_1058__c82_30": true,
         "rec_oversized_capota_1058__c82_31": true
       },
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-10-15",
+      "created_by": "Jefa de Producción",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-10-15",
+      "id": "OP-2026-243",
+      "nombre_producto": "OVERSIZED CAPOTA",
+      "numero": 243,
+      "receta_id": "rec_oversized_capota_1058",
+      "receta_nombre": "OVERSIZED CAPOTA - REF: 1058",
+      "referencias": [
+        {
+          "cantidades": {
+            "MARFIL_T10": 21,
+            "MARFIL_T12": 21,
+            "MARFIL_T14": 21,
+            "MARFIL_T16": 21,
+            "MARFIL_T4": 10,
+            "MARFIL_T8": 10
+          },
+          "cat": "CHAQUETAS",
+          "colores": [
+            "MARFIL"
+          ],
+          "maquilador_id": "",
+          "nombre": "OVERSIZED CAPOTA",
+          "ref": "1058",
+          "tallas": [
+            "T4",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "totalUds": 104,
+          "vmo": 10510
+        }
+      ],
       "subg_estados": {
         "OP-2026-243||MARFIL": "EN_CONFECCION"
-      }
+      },
+      "tallas": [
+        "T4",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ]
     }
   ]
 }
