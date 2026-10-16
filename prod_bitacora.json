@@ -31646,15 +31646,30 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1792187742919_q5u8h",
-      "ts": 1792187742919,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-203",
-      "nombre": "CONJUNTO CHELSY",
       "categoria": "CONJUNTOS",
       "colores": 3,
-      "refs": 1
+      "id": "evt_1792187742919_q5u8h",
+      "nombre": "CONJUNTO CHELSY",
+      "op_id": "OP-2026-203",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1792187742919,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792190236224_kkmro",
+      "ts": 1792190236224,
+      "user": "Jefa de Producción",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-244",
+      "op_nombre": "PANTALON VENOM",
+      "categoria": "PANTALONES",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-10-16",
+      "total_uds": 30,
+      "referencias": [
+        "PANTALON VENOM"
+      ]
     }
   ]
 }
