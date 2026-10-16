@@ -31424,20 +31424,32 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MORA LECHE",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1792108714751_euwkl",
-      "ts": 1792108714751,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-112",
       "op_nombre": "PILOTO PANCAKE",
       "referencia": "PILOTO PANCAKE",
-      "color": "MORA LECHE",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1792108714751,
       "uds": 76,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792113570425_s33c8",
+      "ts": 1792113570425,
+      "user": "Caro",
+      "tipo": "estado_diseno",
+      "diseno_id": "id_1782157783319_d3q1pv63a",
+      "nombre": "CONJUNTO RAYA TIZA",
+      "categoria": "Conjuntos",
+      "marca": "Bentley Kids",
+      "estado_anterior": "EN_DISENO_DIGITAL",
+      "estado_nuevo": "EN_CORTE_MUESTRA"
     }
   ]
 }
