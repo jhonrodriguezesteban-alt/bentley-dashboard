@@ -31689,16 +31689,33 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1792190485449_l7c0k",
-      "ts": 1792190485449,
-      "user": "Jefa de Producción",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-245",
-      "op_nombre": "COUNTRY 2.0",
       "categoria": "BUZOS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-10-16",
+      "id": "evt_1792190485449_l7c0k",
+      "op_id": "OP-2026-245",
+      "op_nombre": "COUNTRY 2.0",
+      "referencias": [
+        "COUNTRY 2.0"
+      ],
+      "tipo": "crear_op",
       "total_uds": 48,
+      "ts": 1792190485449,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792191301102_zccph",
+      "ts": 1792191301102,
+      "user": "Jefa de Producción",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-245",
+      "op_nombre": "COUNTRY 2.0",
+      "categoria": "BUZOS",
+      "total_ots": 6,
+      "total_uds": 48,
+      "colores": [
+        "GRIS CLARO"
+      ],
       "referencias": [
         "COUNTRY 2.0"
       ]
