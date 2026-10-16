@@ -6970,7 +6970,7 @@
       "subg_estados": {
         "OP-2026-098||AZUL OSCURO": "ALISTAMIENTO",
         "OP-2026-098||FUCSIA": "PAGO_PENDIENTE",
-        "OP-2026-098||LILA": "ALISTAMIENTO",
+        "OP-2026-098||LILA": "PAGO_PENDIENTE",
         "OP-2026-098||NEGRO": "EN_CONFECCION",
         "OP-2026-098||ROJO": "EN_CONFECCION",
         "OP-2026-098||ROSA": "EN_CONFECCION",
@@ -9239,24 +9239,24 @@
     },
     {
       "cantidades": {
-        "NEGRO_T6": 10,
-        "NEGRO_T8": 10,
-        "NEGRO_T10": 20,
-        "NEGRO_T12": 20,
-        "NEGRO_T14": 20,
-        "NEGRO_T16": 20,
-        "BEIGE_T6": 12,
-        "BEIGE_T8": 12,
         "BEIGE_T10": 18,
         "BEIGE_T12": 18,
         "BEIGE_T14": 18,
         "BEIGE_T16": 18,
-        "ROSA_T6": 12,
-        "ROSA_T8": 12,
+        "BEIGE_T6": 12,
+        "BEIGE_T8": 12,
+        "NEGRO_T10": 20,
+        "NEGRO_T12": 20,
+        "NEGRO_T14": 20,
+        "NEGRO_T16": 20,
+        "NEGRO_T6": 10,
+        "NEGRO_T8": 10,
         "ROSA_T10": 15,
         "ROSA_T12": 15,
         "ROSA_T14": 15,
-        "ROSA_T16": 15
+        "ROSA_T16": 15,
+        "ROSA_T6": 12,
+        "ROSA_T8": 12
       },
       "categoria": "ABRIGOS",
       "colores": [
@@ -9300,15 +9300,35 @@
       "receta_nombre": "ABRIGO FROZEN - REF: 1136",
       "referencias": [
         {
-          "nombre": "ABRIGO FROZEN",
-          "ref": "1136",
+          "cantidades": {
+            "BEIGE_T10": 18,
+            "BEIGE_T12": 18,
+            "BEIGE_T14": 18,
+            "BEIGE_T16": 18,
+            "BEIGE_T6": 12,
+            "BEIGE_T8": 12,
+            "NEGRO_T10": 20,
+            "NEGRO_T12": 20,
+            "NEGRO_T14": 20,
+            "NEGRO_T16": 20,
+            "NEGRO_T6": 10,
+            "NEGRO_T8": 10,
+            "ROSA_T10": 15,
+            "ROSA_T12": 15,
+            "ROSA_T14": 15,
+            "ROSA_T16": 15,
+            "ROSA_T6": 12,
+            "ROSA_T8": 12
+          },
           "cat": "ABRIGOS",
-          "vmo": 13663,
           "colores": [
             "NEGRO",
             "BEIGE",
             "ROSA"
           ],
+          "maquilador_id": "",
+          "nombre": "ABRIGO FROZEN",
+          "ref": "1136",
           "tallas": [
             "T6",
             "T8",
@@ -9317,27 +9337,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 10,
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "BEIGE_T6": 12,
-            "BEIGE_T8": 12,
-            "BEIGE_T10": 18,
-            "BEIGE_T12": 18,
-            "BEIGE_T14": 18,
-            "BEIGE_T16": 18,
-            "ROSA_T6": 12,
-            "ROSA_T8": 12,
-            "ROSA_T10": 15,
-            "ROSA_T12": 15,
-            "ROSA_T14": 15,
-            "ROSA_T16": 15
-          },
-          "maquilador_id": ""
+          "vmo": 13663
         }
       ],
       "subg_estados": {
@@ -9365,9 +9365,7 @@
           "solicitud_id": "id_1790787840879_fohm3ruvm"
         }
       ],
-      "updated_at": "2026-10-15",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-10-15"
     },
     {
       "cantidades": {
@@ -11598,27 +11596,27 @@
     },
     {
       "cantidades": {
+        "NEGRO_T4": 14,
+        "NEGRO_T6": 14,
+        "NEGRO_T8": 14,
+        "NEGRO_T10": 27,
+        "NEGRO_T12": 27,
+        "NEGRO_T14": 27,
+        "NEGRO_T16": 27,
+        "CAMEL_T4": 12,
+        "CAMEL_T6": 12,
+        "CAMEL_T8": 12,
         "CAMEL_T10": 24,
         "CAMEL_T12": 24,
         "CAMEL_T14": 24,
         "CAMEL_T16": 24,
-        "CAMEL_T4": 12,
-        "CAMEL_T6": 12,
-        "CAMEL_T8": 12,
-        "GRIS_T10": 24,
-        "GRIS_T12": 24,
-        "GRIS_T14": 24,
-        "GRIS_T16": 24,
         "GRIS_T4": 12,
         "GRIS_T6": 12,
         "GRIS_T8": 12,
-        "NEGRO_T10": 24,
-        "NEGRO_T12": 24,
-        "NEGRO_T14": 24,
-        "NEGRO_T16": 24,
-        "NEGRO_T4": 12,
-        "NEGRO_T6": 12,
-        "NEGRO_T8": 12
+        "GRIS_T10": 24,
+        "GRIS_T12": 24,
+        "GRIS_T14": 24,
+        "GRIS_T16": 24
       },
       "categoria": "CONJUNTOS",
       "colores": [
@@ -11645,38 +11643,15 @@
       "numero": 203,
       "referencias": [
         {
-          "cantidades": {
-            "CAMEL_T10": 24,
-            "CAMEL_T12": 24,
-            "CAMEL_T14": 24,
-            "CAMEL_T16": 24,
-            "CAMEL_T4": 12,
-            "CAMEL_T6": 12,
-            "CAMEL_T8": 12,
-            "GRIS_T10": 24,
-            "GRIS_T12": 24,
-            "GRIS_T14": 24,
-            "GRIS_T16": 24,
-            "GRIS_T4": 12,
-            "GRIS_T6": 12,
-            "GRIS_T8": 12,
-            "NEGRO_T10": 24,
-            "NEGRO_T12": 24,
-            "NEGRO_T14": 24,
-            "NEGRO_T16": 24,
-            "NEGRO_T4": 12,
-            "NEGRO_T6": 12,
-            "NEGRO_T8": 12
-          },
+          "nombre": "CONJUNTO CHELSY",
+          "ref": "",
           "cat": "CONJUNTOS",
+          "vmo": 1151,
           "colores": [
             "NEGRO",
             "CAMEL",
             "GRIS"
           ],
-          "maquilador_id": "",
-          "nombre": "CONJUNTO CHELSY",
-          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -11686,8 +11661,30 @@
             "T14",
             "T16"
           ],
-          "totalUds": 396,
-          "vmo": 1151
+          "cantidades": {
+            "NEGRO_T4": 14,
+            "NEGRO_T6": 14,
+            "NEGRO_T8": 14,
+            "NEGRO_T10": 27,
+            "NEGRO_T12": 27,
+            "NEGRO_T14": 27,
+            "NEGRO_T16": 27,
+            "CAMEL_T4": 12,
+            "CAMEL_T6": 12,
+            "CAMEL_T8": 12,
+            "CAMEL_T10": 24,
+            "CAMEL_T12": 24,
+            "CAMEL_T14": 24,
+            "CAMEL_T16": 24,
+            "GRIS_T4": 12,
+            "GRIS_T6": 12,
+            "GRIS_T8": 12,
+            "GRIS_T10": 24,
+            "GRIS_T12": 24,
+            "GRIS_T14": 24,
+            "GRIS_T16": 24
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -11708,7 +11705,8 @@
         "CAMEL": true,
         "GRIS": true,
         "NEGRO": true
-      }
+      },
+      "updated_at": "2026-10-16"
     },
     {
       "cantidades": {
