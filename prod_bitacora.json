@@ -31672,20 +31672,35 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1792190246925_nbtsg",
-      "ts": 1792190246925,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-244",
-      "op_nombre": "PANTALON VENOM",
       "categoria": "PANTALONES",
-      "total_ots": 5,
-      "total_uds": 30,
       "colores": [
         "GRIS CLARO"
       ],
+      "id": "evt_1792190246925_nbtsg",
+      "op_id": "OP-2026-244",
+      "op_nombre": "PANTALON VENOM",
       "referencias": [
         "PANTALON VENOM"
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 5,
+      "total_uds": 30,
+      "ts": 1792190246925,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792190485449_l7c0k",
+      "ts": 1792190485449,
+      "user": "Jefa de Producción",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-245",
+      "op_nombre": "COUNTRY 2.0",
+      "categoria": "BUZOS",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-10-16",
+      "total_uds": 48,
+      "referencias": [
+        "COUNTRY 2.0"
       ]
     }
   ]
