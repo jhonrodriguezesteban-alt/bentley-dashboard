@@ -5131,24 +5131,24 @@
     },
     {
       "cantidades": {
-        "AVENA_T6": 10,
-        "AVENA_T8": 10,
         "AVENA_T10": 16,
         "AVENA_T12": 16,
         "AVENA_T14": 16,
         "AVENA_T16": 16,
-        "MARFIL_T6": 10,
-        "MARFIL_T8": 16,
+        "AVENA_T6": 10,
+        "AVENA_T8": 10,
         "MARFIL_T10": 16,
         "MARFIL_T12": 16,
         "MARFIL_T14": 16,
         "MARFIL_T16": 16,
-        "NEGRO_T6": 12,
-        "NEGRO_T8": 24,
+        "MARFIL_T6": 10,
+        "MARFIL_T8": 16,
         "NEGRO_T10": 24,
         "NEGRO_T12": 24,
         "NEGRO_T14": 24,
-        "NEGRO_T16": 24
+        "NEGRO_T16": 24,
+        "NEGRO_T6": 12,
+        "NEGRO_T8": 24
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -5177,15 +5177,35 @@
       "numero": 79,
       "referencias": [
         {
-          "nombre": "BEISBOLERA ARMIN",
-          "ref": "1132",
+          "cantidades": {
+            "AVENA_T10": 16,
+            "AVENA_T12": 16,
+            "AVENA_T14": 16,
+            "AVENA_T16": 16,
+            "AVENA_T6": 10,
+            "AVENA_T8": 10,
+            "MARFIL_T10": 16,
+            "MARFIL_T12": 16,
+            "MARFIL_T14": 16,
+            "MARFIL_T16": 16,
+            "MARFIL_T6": 10,
+            "MARFIL_T8": 16,
+            "NEGRO_T10": 24,
+            "NEGRO_T12": 24,
+            "NEGRO_T14": 24,
+            "NEGRO_T16": 24,
+            "NEGRO_T6": 12,
+            "NEGRO_T8": 24
+          },
           "cat": "CHAQUETAS",
-          "vmo": 9144,
           "colores": [
             "AVENA",
             "MARFIL",
             "NEGRO"
           ],
+          "maquilador_id": "",
+          "nombre": "BEISBOLERA ARMIN",
+          "ref": "1132",
           "tallas": [
             "T6",
             "T8",
@@ -5194,27 +5214,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "AVENA_T6": 10,
-            "AVENA_T8": 10,
-            "AVENA_T10": 16,
-            "AVENA_T12": 16,
-            "AVENA_T14": 16,
-            "AVENA_T16": 16,
-            "MARFIL_T6": 10,
-            "MARFIL_T8": 16,
-            "MARFIL_T10": 16,
-            "MARFIL_T12": 16,
-            "MARFIL_T14": 16,
-            "MARFIL_T16": 16,
-            "NEGRO_T6": 12,
-            "NEGRO_T8": 24,
-            "NEGRO_T10": 24,
-            "NEGRO_T12": 24,
-            "NEGRO_T14": 24,
-            "NEGRO_T16": 24
-          },
-          "maquilador_id": ""
+          "vmo": 9144
         }
       ],
       "subg_estados": {
@@ -5230,9 +5230,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-10-17",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-10-17"
     },
     {
       "cantidades": {
@@ -9204,7 +9202,6 @@
       ],
       "subg_estados": {
         "OP-2026-120||AZUL OSCURO": "POR_REVISAR",
-        "OP-2026-120||NEGRO": "POR_REVISAR",
         "OP-2026-120||ROSA": "POR_REVISAR",
         "OP-2026-120||VERDE MILITAR": "POR_REVISAR"
       },
