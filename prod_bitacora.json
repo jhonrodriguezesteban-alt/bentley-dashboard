@@ -31929,19 +31929,35 @@
       "user": "Carolina Telles"
     },
     {
+      "bulk": true,
+      "color": "AZUL OSCURO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1792265509845_favfw",
-      "ts": 1792265509845,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-112",
       "op_nombre": "PILOTO PANCAKE",
       "referencia": "PILOTO PANCAKE",
-      "color": "AZUL OSCURO",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1792265509845,
+      "uds": 109,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792265557539_7zvqh",
+      "ts": 1792265557539,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-244",
+      "op_nombre": "PANTALON VENOM",
+      "referencia": "PANTALON VENOM",
+      "color": "GRIS CLARO",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 109,
+      "uds": 30,
       "motivo": "EN TALLER"
     }
   ]
