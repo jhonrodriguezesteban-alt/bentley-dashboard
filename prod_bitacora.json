@@ -31704,21 +31704,37 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1792191301102_zccph",
-      "ts": 1792191301102,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-245",
-      "op_nombre": "COUNTRY 2.0",
       "categoria": "BUZOS",
-      "total_ots": 6,
-      "total_uds": 48,
       "colores": [
         "GRIS CLARO"
       ],
+      "id": "evt_1792191301102_zccph",
+      "op_id": "OP-2026-245",
+      "op_nombre": "COUNTRY 2.0",
       "referencias": [
         "COUNTRY 2.0"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 6,
+      "total_uds": 48,
+      "ts": 1792191301102,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792247937266_yubee",
+      "ts": 1792247937266,
+      "user": "Carolina Telles",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-113",
+      "op_nombre": "CHAQUETA RALPH",
+      "referencia": "CHAQUETA RALPH",
+      "color": "NEGRO",
+      "talla": "T6",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": false,
+      "uds": 19,
+      "motivo": "ENTREGADO"
     }
   ]
 }
