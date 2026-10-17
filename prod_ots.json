@@ -68657,13 +68657,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-17T19:55:28.324Z",
           "accion": "Taller asignado: ISABEL PARRA",
+          "fecha": "2026-10-17T19:55:28.324Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-17T19:55:35.781Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-17T19:55:35.781Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -68696,13 +68696,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-17T19:55:28.324Z",
           "accion": "Taller asignado: ISABEL PARRA",
+          "fecha": "2026-10-17T19:55:28.324Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-17T19:55:35.782Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-17T19:55:35.782Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -68735,13 +68735,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-17T19:55:28.324Z",
           "accion": "Taller asignado: ISABEL PARRA",
+          "fecha": "2026-10-17T19:55:28.324Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-17T19:55:35.782Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-17T19:55:35.782Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -68774,13 +68774,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-17T19:55:28.324Z",
           "accion": "Taller asignado: ISABEL PARRA",
+          "fecha": "2026-10-17T19:55:28.324Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-17T19:55:35.782Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-17T19:55:35.782Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -68813,13 +68813,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-17T19:55:28.324Z",
           "accion": "Taller asignado: ISABEL PARRA",
+          "fecha": "2026-10-17T19:55:28.324Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-17T19:55:35.782Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-17T19:55:35.782Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -68852,13 +68852,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-17T19:55:28.324Z",
           "accion": "Taller asignado: ISABEL PARRA",
+          "fecha": "2026-10-17T19:55:28.324Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-17T19:55:35.782Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-17T19:55:35.782Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -68891,13 +68891,13 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-17T19:55:28.324Z",
           "accion": "Taller asignado: ISABEL PARRA",
+          "fecha": "2026-10-17T19:55:28.324Z",
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-17T19:55:35.782Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-17T19:55:35.782Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -70165,7 +70165,7 @@
       "color": "AVENA",
       "created_at": "2026-07-31",
       "created_by": "John Rodriguez",
-      "estado": "EN_CONFECCION",
+      "estado": "ENTREGADO",
       "fecha_corte": "2026-09-24",
       "fecha_ot": "2026-06-25",
       "historial": [
@@ -70188,6 +70188,11 @@
           "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
           "fecha": "2026-09-24T17:05:30.174Z",
           "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-10-17T20:09:16.402Z",
+          "accion": "Entrega completa: 10 uds → ENTREGADO",
+          "user": "Jefa de Producción"
         }
       ],
       "id": "id_1785536677091_kwe7u3gfb",
@@ -70199,9 +70204,11 @@
       "referencia": "1132T6",
       "satelite_id": "sat_04",
       "talla": "T6",
-      "unidades_entregadas": 0,
+      "unidades_entregadas": 10,
       "unidades_novedad": 0,
-      "valor_mo": 9144
+      "valor_mo": 9144,
+      "fecha_entrega_real": "2026-10-17",
+      "total_costo_mo": 91440
     },
     {
       "cantidad": 16,
