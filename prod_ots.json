@@ -98976,7 +98976,7 @@
       "color": "GRIS OSCURO",
       "created_at": "2026-09-22",
       "created_by": "John Rodriguez",
-      "estado": "EN_CONFECCION",
+      "estado": "NOVEDAD",
       "fecha_corte": "2026-09-29",
       "fecha_ot": "2026-07-31",
       "historial": [
@@ -99009,6 +99009,11 @@
           "accion": "Estado cambiado (todas las tallas): ENTREGADO → EN_CONFECCION. Motivo: corrección — se marcó Entregado por error, está en confección (Martha Flores)",
           "fecha": "2026-10-07T00:24:37.000Z",
           "user": "John Rodriguez"
+        },
+        {
+          "fecha": "2026-10-17T20:13:36.678Z",
+          "accion": "Entrega parcial: 7 uds, 1 pendientes → NOVEDAD",
+          "user": "Jefa de Producción"
         }
       ],
       "id": "id_1790115727973_llwb3b5lc",
@@ -99020,9 +99025,11 @@
       "referencia": "1171T6",
       "satelite_id": "sat_04",
       "talla": "T6",
-      "unidades_entregadas": 0,
-      "unidades_novedad": 0,
-      "valor_mo": 10000
+      "unidades_entregadas": 7,
+      "unidades_novedad": 1,
+      "valor_mo": 10000,
+      "fecha_entrega_real": "2026-10-17",
+      "total_costo_mo": 70000
     },
     {
       "cantidad": 8,
@@ -99030,7 +99037,7 @@
       "color": "GRIS OSCURO",
       "created_at": "2026-09-22",
       "created_by": "John Rodriguez",
-      "estado": "EN_CONFECCION",
+      "estado": "ENTREGADO",
       "fecha_corte": "2026-09-29",
       "fecha_ot": "2026-07-31",
       "historial": [
@@ -99058,6 +99065,11 @@
           "accion": "Estado cambiado (todas las tallas): ENTREGADO → EN_CONFECCION. Motivo: corrección — se marcó Entregado por error, está en confección (Martha Flores)",
           "fecha": "2026-10-07T00:24:37.000Z",
           "user": "John Rodriguez"
+        },
+        {
+          "fecha": "2026-10-17T20:13:31.998Z",
+          "accion": "Entrega completa: 8 uds → ENTREGADO",
+          "user": "Jefa de Producción"
         }
       ],
       "id": "id_1790115727973_zg4r1mxwy",
@@ -99069,9 +99081,11 @@
       "referencia": "1171T8",
       "satelite_id": "sat_04",
       "talla": "T8",
-      "unidades_entregadas": 0,
+      "unidades_entregadas": 8,
       "unidades_novedad": 0,
-      "valor_mo": 10000
+      "valor_mo": 10000,
+      "fecha_entrega_real": "2026-10-17",
+      "total_costo_mo": 80000
     },
     {
       "cantidad": 16,
