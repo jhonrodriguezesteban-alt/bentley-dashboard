@@ -32018,20 +32018,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "VINOTINTO",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1792266476487_uw8ow",
-      "ts": 1792266476487,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-081",
       "op_nombre": "CONJUNTO MANCHESTER",
       "referencia": "CONJUNTO MANCHESTER",
-      "color": "VINOTINTO",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1792266476487,
       "uds": 84,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792266618620_g9ixr",
+      "ts": 1792266618620,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-081",
+      "nombre": "CONJUNTO MANCHESTER",
+      "categoria": "CONJUNTOS",
+      "colores": 5,
+      "refs": 1
     }
   ]
 }
