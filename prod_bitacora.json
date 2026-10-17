@@ -32061,18 +32061,29 @@
       "user": "Jefa de Producción"
     },
     {
+      "estado": "ENTREGADO",
       "id": "evt_1792267760689_2bsqe",
-      "ts": 1792267760689,
-      "user": "Jefa de Producción",
-      "tipo": "entrega_inline",
-      "ot_id": "id_1785536677091_kwe7u3gfb",
       "numero_ot": 12926,
       "op_id": "OP-2026-079",
-      "uds_entregadas": 10,
+      "ot_id": "id_1785536677091_kwe7u3gfb",
       "pendientes": 0,
-      "estado": "ENTREGADO",
+      "satelite": "MARTHA FLORES",
       "talla": "T6",
-      "satelite": "MARTHA FLORES"
+      "tipo": "entrega_inline",
+      "ts": 1792267760689,
+      "uds_entregadas": 10,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792267797698_6wnbj",
+      "ts": 1792267797698,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-079",
+      "nombre": "BEISBOLERA ARMIN",
+      "categoria": "CHAQUETAS",
+      "colores": 3,
+      "refs": 1
     }
   ]
 }
