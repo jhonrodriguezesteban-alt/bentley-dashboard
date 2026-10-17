@@ -5486,7 +5486,7 @@
       "subg_estados": {
         "OP-2026-081||AZUL BEBE": "EN_CONFECCION",
         "OP-2026-081||CAFE": "EN_CONFECCION",
-        "OP-2026-081||GRIS CLARO": "POR_REVISAR",
+        "OP-2026-081||GRIS CLARO": "CORTE_POR_ALISTAR",
         "OP-2026-081||NEGRO": "EN_CONFECCION",
         "OP-2026-081||VINOTINTO": "POR_REVISAR"
       },
@@ -15856,16 +15856,16 @@
           "vmo": 1151
         }
       ],
+      "subg_estados": {
+        "OP-2026-244||GRIS CLARO": "EN_CONFECCION"
+      },
       "tallas": [
         "T8",
         "T10",
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {
-        "OP-2026-244||GRIS CLARO": "EN_CONFECCION"
-      }
+      ]
     },
     {
       "cantidades": {
@@ -15925,6 +15925,9 @@
           "vmo": 1151
         }
       ],
+      "subg_estados": {
+        "OP-2026-245||GRIS CLARO": "EN_CONFECCION"
+      },
       "tallas": [
         "T6",
         "T8",
@@ -15932,10 +15935,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {
-        "OP-2026-245||GRIS CLARO": "EN_CONFECCION"
-      }
+      ]
     }
   ]
 }
