@@ -31970,19 +31970,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1792265721434_k1foq",
-      "ts": 1792265721434,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-121",
       "op_nombre": "ABRIGO FROZEN",
       "referencia": "ABRIGO FROZEN",
-      "color": "NEGRO",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1792265721434,
+      "uds": 100,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792265950783_87in3",
+      "ts": 1792265950783,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-214",
+      "op_nombre": "BLAZER DONATELLA",
+      "referencia": "BLAZER DONATELLA",
+      "color": "CAMEL",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 100,
+      "uds": 84,
       "motivo": "EN TALLER"
     }
   ]
