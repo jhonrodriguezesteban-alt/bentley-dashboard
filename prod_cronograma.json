@@ -715,8 +715,7 @@
       "id": "id_1783030889777_yqi3k8nd5",
       "op_id": "OP-0051",
       "op_nombre": "CAZADORA ANIMALITOS",
-      "uds": 160,
-      "satelite_id": null
+      "uds": 160
     },
     {
       "color": "MARFIL",
@@ -1333,8 +1332,7 @@
       "id": "id_1787069214330_c22mlokm3",
       "op_id": "OP-2026-104",
       "op_nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS",
-      "uds": 7,
-      "satelite_id": null
+      "uds": 7
     },
     {
       "color": "CAMEL",
@@ -3250,23 +3248,22 @@
     {
       "color": "ROJO",
       "entregado": false,
+      "fecha_compromiso": "2027-10-28",
       "fecha_entrada": "2026-10-15",
+      "fecha_inicial": "2027-10-28",
+      "historial": [
+        {
+          "at": "2026-10-17",
+          "by": "Jefa de Producción",
+          "fecha_nueva": "2027-10-28",
+          "motivo": "Fecha inicial asignada"
+        }
+      ],
       "id": "id_1792093206252_pes47toue",
       "op_id": "OP-2026-222",
       "op_nombre": "SET SOLOMUN",
       "satelite_id": "id_1789494651691_89i1so5n9",
-      "uds": 100,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2027-10-28",
-          "motivo": "Fecha inicial asignada",
-          "by": "Jefa de Producción",
-          "at": "2026-10-17"
-        }
-      ],
-      "fecha_inicial": "2027-10-28",
-      "fecha_compromiso": "2027-10-28"
+      "uds": 100
     },
     {
       "color": "MARFIL",
@@ -3321,23 +3318,22 @@
     {
       "color": "GRIS CLARO",
       "entregado": false,
+      "fecha_compromiso": "2026-10-26",
       "fecha_entrada": "2026-10-17",
+      "fecha_inicial": "2026-10-26",
+      "historial": [
+        {
+          "at": "2026-10-17",
+          "by": "Jefa de Producción",
+          "fecha_nueva": "2026-10-26",
+          "motivo": "Fecha inicial asignada"
+        }
+      ],
       "id": "id_1792265557422_xl4vw7n04",
       "op_id": "OP-2026-244",
       "op_nombre": "PANTALON VENOM",
       "satelite_id": "id_1785259712827_cwczmsu5r",
-      "uds": 30,
-      "historial": [
-        {
-          "fecha_anterior": null,
-          "fecha_nueva": "2026-10-26",
-          "motivo": "Fecha inicial asignada",
-          "by": "Jefa de Producción",
-          "at": "2026-10-17"
-        }
-      ],
-      "fecha_inicial": "2026-10-26",
-      "fecha_compromiso": "2026-10-26"
+      "uds": 30
     },
     {
       "color": "NEGRO",
@@ -3360,12 +3356,22 @@
       "uds": 84
     },
     {
+      "color": "GRIS CLARO",
+      "entregado": false,
+      "fecha_entrada": "2026-10-17",
       "id": "id_1792266840976_vzl9r301z",
       "op_id": "OP-2026-245",
       "op_nombre": "COUNTRY 2.0",
-      "color": "GRIS CLARO",
       "satelite_id": "sat_04",
-      "uds": 48,
+      "uds": 48
+    },
+    {
+      "id": "id_1792266935785_k48nartbn",
+      "op_id": "OP-0059",
+      "op_nombre": "SET FRANKY",
+      "color": "CAFE",
+      "satelite_id": "sat_06",
+      "uds": 42,
       "fecha_entrada": "2026-10-17",
       "fecha_compromiso": null,
       "fecha_inicial": null,
