@@ -32045,20 +32045,53 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1792266935889_me76t",
-      "ts": 1792266935889,
+      "id": "evt_1792266868329_79j6k",
+      "ts": 1792266868329,
       "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1792265557422_xl4vw7n04",
+      "op_id": "OP-2026-244",
+      "color": "GRIS CLARO",
+      "fecha_nueva": "2026-10-26",
+      "motivo": "Asignación inicial"
+    },
+    {
+      "id": "evt_1792266887881_5elxk",
+      "ts": 1792266887881,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1792093206252_pes47toue",
+      "op_id": "OP-2026-222",
+      "color": "ROJO",
+      "fecha_nueva": "2027-10-28",
+      "motivo": "Asignación inicial"
+    },
+    {
+      "bulk": true,
+      "color": "CAFE",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "id": "evt_1792266935889_me76t",
+      "motivo": "EN TALLER",
       "op_id": "OP-0059",
       "op_nombre": "SET FRANKY",
       "referencia": "SET FRANKY",
-      "color": "CAFE",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1792266935889,
       "uds": 42,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792267035000_gchyh",
+      "ts": 1792267035000,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1790980703902_lelcn9wvh",
+      "op_id": "OP-2026-220",
+      "color": "NEGRO",
+      "fecha_nueva": "2026-10-21",
+      "motivo": "enfermo"
     }
   ]
 }
