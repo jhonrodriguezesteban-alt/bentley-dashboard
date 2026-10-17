@@ -31961,13 +31961,29 @@
       "user": "Jefa de Producción"
     },
     {
+      "capacidad": 0,
       "id": "evt_1792265698470_r814h",
-      "ts": 1792265698470,
-      "user": "Jefa de Producción",
-      "tipo": "satelite_crear",
       "nombre": "WILSON REALPE MARTINEZ",
       "personas": 3,
-      "capacidad": 0
+      "tipo": "satelite_crear",
+      "ts": 1792265698470,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792265721434_k1foq",
+      "ts": 1792265721434,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-121",
+      "op_nombre": "ABRIGO FROZEN",
+      "referencia": "ABRIGO FROZEN",
+      "color": "NEGRO",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 100,
+      "motivo": "EN TALLER"
     }
   ]
 }
