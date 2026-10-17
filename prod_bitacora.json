@@ -32167,17 +32167,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "estado": "ENTREGADO",
       "id": "evt_1792268023817_43sx5",
-      "ts": 1792268023817,
-      "user": "Jefa de Producción",
-      "tipo": "entrega_inline",
-      "ot_id": "id_1790115727973_zg4r1mxwy",
       "numero_ot": 13745,
       "op_id": "OP-2026-099",
+      "ot_id": "id_1790115727973_zg4r1mxwy",
+      "pendientes": 0,
+      "satelite": "MARTHA FLORES",
+      "talla": "T8",
+      "tipo": "entrega_inline",
+      "ts": 1792268023817,
       "uds_entregadas": 8,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792271871000_3o3h7",
+      "ts": 1792271871000,
+      "user": "Jefa de Producción",
+      "tipo": "entrega_inline",
+      "ot_id": "id_1790115727973_7jqymxt47",
+      "numero_ot": 13746,
+      "op_id": "OP-2026-099",
+      "uds_entregadas": 16,
       "pendientes": 0,
       "estado": "ENTREGADO",
-      "talla": "T8",
+      "talla": "T10",
       "satelite": "MARTHA FLORES"
     }
   ]
