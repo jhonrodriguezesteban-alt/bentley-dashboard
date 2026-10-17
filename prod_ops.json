@@ -9397,6 +9397,12 @@
         "AZUL OSCURO",
         "GRIS CLARO"
       ],
+      "consumibles_check": {
+        "cid_1783378762151_5821__cid_1783378762152_4140": true,
+        "cid_1783378762151_5821__cid_1783378762152_7100": true,
+        "cid_1783378762151_5821__cid_1783379095542_6507": true,
+        "cid_1783378762151_5821__cid_1788625706505_2526": true
+      },
       "cortador": "Corte Carbajal",
       "created_at": "2026-08-24",
       "created_by": "John Rodriguez",
@@ -9462,13 +9468,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "consumibles_check": {
-        "cid_1783378762151_5821__cid_1783378762152_7100": true,
-        "cid_1783378762151_5821__cid_1783378762152_4140": true,
-        "cid_1783378762151_5821__cid_1783379095542_6507": true,
-        "cid_1783378762151_5821__cid_1788625706505_2526": true
-      }
+      ]
     },
     {
       "cantidades": {
@@ -15802,38 +15802,49 @@
       ]
     },
     {
-      "id": "OP-2026-244",
-      "numero": 244,
-      "fecha_op": "2026-10-16",
-      "cortador": "Corte Carbajal",
-      "categoria": "PANTALONES",
-      "nombre_producto": "PANTALON VENOM",
-      "colores": [
-        "GRIS CLARO"
-      ],
-      "tallas": [
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
       "cantidades": {
-        "GRIS CLARO_T8": 6,
         "GRIS CLARO_T10": 6,
         "GRIS CLARO_T12": 6,
         "GRIS CLARO_T14": 6,
-        "GRIS CLARO_T16": 6
+        "GRIS CLARO_T16": 6,
+        "GRIS CLARO_T8": 6
       },
+      "categoria": "PANTALONES",
+      "colores": [
+        "GRIS CLARO"
+      ],
+      "consumibles_check": {
+        "cid_1789098310256_6823__cid_1789098048424_6055": true,
+        "cid_1789098310256_6823__cid_1789098048424_6135": true,
+        "cid_1789098310256_6823__cid_1789098048424_7261": true,
+        "cid_1789098310256_6823__cid_1789098048424_7759": true
+      },
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-10-16",
+      "created_by": "Jefa de Producción",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-10-16",
+      "id": "OP-2026-244",
+      "nombre_producto": "PANTALON VENOM",
+      "numero": 244,
+      "receta_id": "cid_1789098310256_6823",
+      "receta_nombre": "PANTALON VENOM",
       "referencias": [
         {
-          "nombre": "PANTALON VENOM",
-          "ref": "1188",
+          "cantidades": {
+            "GRIS CLARO_T10": 6,
+            "GRIS CLARO_T12": 6,
+            "GRIS CLARO_T14": 6,
+            "GRIS CLARO_T16": 6,
+            "GRIS CLARO_T8": 6
+          },
           "cat": "PANTALONES",
-          "vmo": 1151,
           "colores": [
             "GRIS CLARO"
           ],
+          "maquilador_id": "",
+          "nombre": "PANTALON VENOM",
+          "ref": "1188",
           "tallas": [
             "T8",
             "T10",
@@ -15841,65 +15852,64 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "GRIS CLARO_T8": 6,
-            "GRIS CLARO_T10": 6,
-            "GRIS CLARO_T12": 6,
-            "GRIS CLARO_T14": 6,
-            "GRIS CLARO_T16": 6
-          },
           "totalUds": 30,
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-10-16",
-      "created_by": "Jefa de Producción",
-      "receta_id": "cid_1789098310256_6823",
-      "receta_nombre": "PANTALON VENOM",
-      "consumibles_check": {
-        "cid_1789098310256_6823__cid_1789098048424_6055": true,
-        "cid_1789098310256_6823__cid_1789098048424_7261": true,
-        "cid_1789098310256_6823__cid_1789098048424_6135": true,
-        "cid_1789098310256_6823__cid_1789098048424_7759": true
-      }
-    },
-    {
-      "id": "OP-2026-245",
-      "numero": 245,
-      "fecha_op": "2026-10-16",
-      "cortador": "Corte Carbajal",
-      "categoria": "BUZOS",
-      "nombre_producto": "COUNTRY 2.0",
-      "colores": [
-        "GRIS CLARO"
-      ],
       "tallas": [
-        "T6",
         "T8",
         "T10",
         "T12",
         "T14",
         "T16"
-      ],
+      ]
+    },
+    {
       "cantidades": {
-        "GRIS CLARO_T6": 8,
-        "GRIS CLARO_T8": 8,
         "GRIS CLARO_T10": 8,
         "GRIS CLARO_T12": 8,
         "GRIS CLARO_T14": 8,
-        "GRIS CLARO_T16": 8
+        "GRIS CLARO_T16": 8,
+        "GRIS CLARO_T6": 8,
+        "GRIS CLARO_T8": 8
       },
+      "categoria": "BUZOS",
+      "colores": [
+        "GRIS CLARO"
+      ],
+      "consumibles_check": {
+        "cid_1783378762151_5821__cid_1783378762152_4140": true,
+        "cid_1783378762151_5821__cid_1783378762152_7100": true,
+        "cid_1783378762151_5821__cid_1783379095542_6507": true,
+        "cid_1783378762151_5821__cid_1788625706505_2526": true
+      },
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-10-16",
+      "created_by": "Jefa de Producción",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-10-16",
+      "id": "OP-2026-245",
+      "nombre_producto": "COUNTRY 2.0",
+      "numero": 245,
+      "receta_id": "cid_1783378762151_5821",
+      "receta_nombre": "BUZO COUNTRY 2.0",
       "referencias": [
         {
-          "nombre": "COUNTRY 2.0",
-          "ref": "1173",
+          "cantidades": {
+            "GRIS CLARO_T10": 8,
+            "GRIS CLARO_T12": 8,
+            "GRIS CLARO_T14": 8,
+            "GRIS CLARO_T16": 8,
+            "GRIS CLARO_T6": 8,
+            "GRIS CLARO_T8": 8
+          },
           "cat": "BUZOS",
-          "vmo": 1151,
           "colores": [
             "GRIS CLARO"
           ],
+          "maquilador_id": "",
+          "nombre": "COUNTRY 2.0",
+          "ref": "1173",
           "tallas": [
             "T6",
             "T8",
@@ -15908,30 +15918,18 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "GRIS CLARO_T6": 8,
-            "GRIS CLARO_T8": 8,
-            "GRIS CLARO_T10": 8,
-            "GRIS CLARO_T12": 8,
-            "GRIS CLARO_T14": 8,
-            "GRIS CLARO_T16": 8
-          },
           "totalUds": 48,
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-10-16",
-      "created_by": "Jefa de Producción",
-      "receta_id": "cid_1783378762151_5821",
-      "receta_nombre": "BUZO COUNTRY 2.0",
-      "consumibles_check": {
-        "cid_1783378762151_5821__cid_1783378762152_7100": true,
-        "cid_1783378762151_5821__cid_1783379095542_6507": true,
-        "cid_1783378762151_5821__cid_1783378762152_4140": true,
-        "cid_1783378762151_5821__cid_1788625706505_2526": true
-      }
+      "tallas": [
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ]
     }
   ]
 }
