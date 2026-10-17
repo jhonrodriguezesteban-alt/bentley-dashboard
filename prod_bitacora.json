@@ -32002,19 +32002,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "GRIS CLARO",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1792266450322_twm8j",
+      "motivo": "en insumos",
+      "op_id": "OP-2026-081",
+      "op_nombre": "CONJUNTO MANCHESTER",
+      "referencia": "CONJUNTO MANCHESTER",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1792266450322,
+      "uds": 104,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792266476487_uw8ow",
+      "ts": 1792266476487,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-081",
       "op_nombre": "CONJUNTO MANCHESTER",
       "referencia": "CONJUNTO MANCHESTER",
-      "color": "GRIS CLARO",
+      "color": "VINOTINTO",
       "talla": "todas las tallas",
       "estado_anterior": "CORTE_POR_ALISTAR",
       "estado_nuevo": "CORTE_POR_ALISTAR",
       "bulk": true,
-      "uds": 104,
+      "uds": 84,
       "motivo": "en insumos"
     }
   ]
