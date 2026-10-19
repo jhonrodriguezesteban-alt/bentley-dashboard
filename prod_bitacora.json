@@ -32237,18 +32237,34 @@
       "user": "Jefa de Producción"
     },
     {
+      "estado": "ENTREGADO",
       "id": "evt_1792428371367_4iqwc",
-      "ts": 1792428371367,
-      "user": "Carolina Telles",
-      "tipo": "entrega_inline",
-      "ot_id": "id_1785598190835_btih99fq2",
       "numero_ot": 13055,
       "op_id": "OP-2026-107",
-      "uds_entregadas": 30,
+      "ot_id": "id_1785598190835_btih99fq2",
       "pendientes": 0,
-      "estado": "ENTREGADO",
+      "satelite": "ISABEL PARRA",
       "talla": "M",
-      "satelite": "ISABEL PARRA"
+      "tipo": "entrega_inline",
+      "ts": 1792428371367,
+      "uds_entregadas": 30,
+      "user": "Carolina Telles"
+    },
+    {
+      "id": "evt_1792428389797_s17m3",
+      "ts": 1792428389797,
+      "user": "Carolina Telles",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-107",
+      "op_nombre": "CONJUNTO FRANKY PR",
+      "referencia": "CONJUNTO FRANKY PRIME",
+      "color": "CAFE",
+      "talla": "M",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": false,
+      "uds": 24,
+      "motivo": "ENTREGADO"
     }
   ]
 }
