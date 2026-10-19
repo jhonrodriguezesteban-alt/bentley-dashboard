@@ -75767,7 +75767,7 @@
       "color": "CAFE",
       "created_at": "2026-08-01",
       "created_by": "Jefa de Producción",
-      "estado": "PAGO_PENDIENTE",
+      "estado": "ENTREGADO",
       "fecha_entrega_real": "2026-10-08",
       "fecha_ot": "2026-08-01",
       "historial": [
@@ -75820,6 +75820,11 @@
           "accion": "Pasado a Pago desde Alistamiento",
           "fecha": "2026-10-08T15:29:29.886Z",
           "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-10-19T16:46:29.794Z",
+          "accion": "Estado cambiado: PAGO_PENDIENTE → ENTREGADO. Motivo: ENTREGADO",
+          "user": "Carolina Telles"
         }
       ],
       "id": "id_1785598190835_y88i00aif",
