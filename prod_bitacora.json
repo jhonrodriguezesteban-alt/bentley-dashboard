@@ -32251,19 +32251,35 @@
       "user": "Carolina Telles"
     },
     {
+      "bulk": false,
+      "color": "CAFE",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1792428389797_s17m3",
-      "ts": 1792428389797,
-      "user": "Carolina Telles",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-107",
       "op_nombre": "CONJUNTO FRANKY PR",
       "referencia": "CONJUNTO FRANKY PRIME",
-      "color": "CAFE",
       "talla": "M",
+      "tipo": "estado_ot",
+      "ts": 1792428389797,
+      "uds": 24,
+      "user": "Carolina Telles"
+    },
+    {
+      "id": "evt_1792432264437_jrbsl",
+      "ts": 1792432264437,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-098",
+      "op_nombre": "CHAQUETA CAZADORA",
+      "referencia": "CHAQUETA CAZADORA",
+      "color": "ROJO",
+      "talla": "todas las tallas",
       "estado_anterior": "ENTREGADO",
       "estado_nuevo": "ENTREGADO",
-      "bulk": false,
-      "uds": 24,
+      "bulk": true,
+      "uds": 80,
       "motivo": "ENTREGADO"
     }
   ]
