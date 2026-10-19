@@ -3252,44 +3252,60 @@
       "op_nombre": "PILOTO PANCAKE"
     },
     {
-      "id": "id_1792416690289_laputc3tw",
-      "op_id": "OP-2026-242",
-      "op_nombre": "RANGLAND SOFT",
       "categoria": "BUZOS",
-      "creado_por": "Isabel",
       "creado_en": "2026-10-19",
-      "estado": "ENVIADA",
+      "creado_por": "Isabel",
       "enviada_en": "2026-10-19",
+      "estado": "ENVIADA",
+      "id": "id_1792416690289_laputc3tw",
       "lineas": [
         {
+          "ancho_util": 150,
+          "cantidad_trazos": 2,
+          "colores": [
+            "CANADA - MARFIL",
+            "LOVELY - MARFIL"
+          ],
+          "generado": true,
           "id": "id_1792416221200_8xo2p2ty3",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T4",
-            "T6"
-          ],
+          "impreso": false,
           "marcadas_por_talla": {
             "T4": 1,
             "T6": 1
           },
-          "cantidad_trazos": 2,
-          "ancho_util": 150,
-          "sentido": "UNA_DIRECCION",
-          "orientacion": "AL_HILO",
           "notas": "Trazos para el Carvajal",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "UNA_DIRECCION",
+          "tallas": [
+            "T4",
+            "T6"
+          ],
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": "",
+          "generado_en": "2026-10-19"
+        },
+        {
+          "ancho_util": 150,
+          "cantidad_trazos": 2,
           "colores": [
             "CANADA - MARFIL",
             "LOVELY - MARFIL"
           ],
           "generado": false,
-          "impreso": false,
-          "recogido": false
-        },
-        {
           "id": "id_1792416256289_6ycmxkenj",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
+          "impreso": false,
+          "marcadas_por_talla": {
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1,
+            "T8": 1
+          },
+          "notas": "Trazos para el Carvajal",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "UNA_DIRECCION",
           "tallas": [
             "T8",
             "T10",
@@ -3297,56 +3313,57 @@
             "T14",
             "T16"
           ],
-          "marcadas_por_talla": {
-            "T8": 1,
-            "T10": 1,
-            "T12": 1,
-            "T14": 1,
-            "T16": 1
-          },
-          "cantidad_trazos": 2,
-          "ancho_util": 150,
-          "sentido": "UNA_DIRECCION",
-          "orientacion": "AL_HILO",
-          "notas": "Trazos para el Carvajal",
-          "colores": [
-            "CANADA - MARFIL",
-            "LOVELY - MARFIL"
-          ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
         },
         {
-          "id": "id_1792416313344_gtqgsvens",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T4",
-            "T6"
+          "ancho_util": 153,
+          "cantidad_trazos": 3,
+          "colores": [
+            "ALASKA - GRIS OSCURP",
+            "SILLY GOOSE - AZUL OSCURO",
+            "NEGRO- NASHVILLE (LETRA ROJA)"
           ],
+          "generado": false,
+          "id": "id_1792416313344_gtqgsvens",
+          "impreso": false,
           "marcadas_por_talla": {
             "T4": 1,
             "T6": 1
           },
-          "cantidad_trazos": 3,
-          "ancho_util": 153,
-          "sentido": "UNA_DIRECCION",
-          "orientacion": "AL_HILO",
           "notas": "Trazos para el Carvajal",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "UNA_DIRECCION",
+          "tallas": [
+            "T4",
+            "T6"
+          ],
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
+        },
+        {
+          "ancho_util": 153,
+          "cantidad_trazos": 3,
           "colores": [
             "ALASKA - GRIS OSCURP",
             "SILLY GOOSE - AZUL OSCURO",
             "NEGRO- NASHVILLE (LETRA ROJA)"
           ],
           "generado": false,
-          "impreso": false,
-          "recogido": false
-        },
-        {
           "id": "id_1792416657952_vppejamja",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
+          "impreso": false,
+          "marcadas_por_talla": {
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1,
+            "T8": 1
+          },
+          "notas": "Trazos para el Carvajal",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "UNA_DIRECCION",
           "tallas": [
             "T8",
             "T10",
@@ -3354,96 +3371,80 @@
             "T14",
             "T16"
           ],
-          "marcadas_por_talla": {
-            "T8": 1,
-            "T10": 1,
-            "T12": 1,
-            "T14": 1,
-            "T16": 1
-          },
-          "cantidad_trazos": 3,
-          "ancho_util": 153,
-          "sentido": "UNA_DIRECCION",
-          "orientacion": "AL_HILO",
-          "notas": "Trazos para el Carvajal",
-          "colores": [
-            "ALASKA - GRIS OSCURP",
-            "SILLY GOOSE - AZUL OSCURO",
-            "NEGRO- NASHVILLE (LETRA ROJA)"
-          ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
         }
-      ]
+      ],
+      "op_id": "OP-2026-242",
+      "op_nombre": "RANGLAND SOFT"
     },
     {
-      "id": "id_1792417445792_3tox6oacp",
-      "op_id": "OP-2026-205",
-      "op_nombre": "CAMIBUZO NEVADO",
       "categoria": "BUZOS",
-      "creado_por": "Isabel",
       "creado_en": "2026-10-19",
-      "estado": "ENVIADA",
+      "creado_por": "Isabel",
       "enviada_en": "2026-10-19",
+      "estado": "ENVIADA",
+      "id": "id_1792417445792_3tox6oacp",
       "lineas": [
         {
-          "id": "id_1792417366531_7v6zwksbu",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T6",
-            "T8"
+          "ancho_util": 156,
+          "cantidad_trazos": 3,
+          "colores": [
+            "ROSA",
+            "MARFIL",
+            "BEIGE"
           ],
+          "generado": false,
+          "id": "id_1792417366531_7v6zwksbu",
+          "impreso": false,
           "marcadas_por_talla": {
             "T6": 1,
             "T8": 1
           },
-          "cantidad_trazos": 3,
-          "ancho_util": 156,
-          "sentido": "UNA_DIRECCION",
-          "orientacion": "AL_HILO",
           "notas": "Trazos para el Carvajal",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "UNA_DIRECCION",
+          "tallas": [
+            "T6",
+            "T8"
+          ],
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
+        },
+        {
+          "ancho_util": 156,
+          "cantidad_trazos": 3,
           "colores": [
             "ROSA",
             "MARFIL",
             "BEIGE"
           ],
           "generado": false,
-          "impreso": false,
-          "recogido": false
-        },
-        {
           "id": "id_1792417420268_2zqkd66rh",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T10",
-            "T12",
-            "T14",
-            "T16"
-          ],
+          "impreso": false,
           "marcadas_por_talla": {
             "T10": 1,
             "T12": 1,
             "T14": 1,
             "T16": 1
           },
-          "cantidad_trazos": 3,
-          "ancho_util": 156,
-          "sentido": "UNA_DIRECCION",
-          "orientacion": "AL_HILO",
           "notas": "Trazos para el Carvajal",
-          "colores": [
-            "ROSA",
-            "MARFIL",
-            "BEIGE"
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "UNA_DIRECCION",
+          "tallas": [
+            "T10",
+            "T12",
+            "T14",
+            "T16"
           ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
         }
-      ]
+      ],
+      "op_id": "OP-2026-205",
+      "op_nombre": "CAMIBUZO NEVADO"
     }
   ]
 }
