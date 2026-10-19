@@ -6965,7 +6965,7 @@
         "OP-2026-098||FUCSIA": "PAGO_PENDIENTE",
         "OP-2026-098||LILA": "PAGO_PENDIENTE",
         "OP-2026-098||NEGRO": "EN_CONFECCION",
-        "OP-2026-098||ROJO": "EN_CONFECCION",
+        "OP-2026-098||ROJO": "ALISTAMIENTO",
         "OP-2026-098||ROSA": "EN_CONFECCION",
         "OP-2026-098||SALMON": "EN_CONFECCION",
         "OP-2026-098||VERDE MILITAR": "EN_CONFECCION"
@@ -11449,17 +11449,17 @@
         "T16"
       ],
       "trazos_color_solicitado": {
+        "CAFE": true,
         "GRIS CLARO": true,
         "MARFIL": true,
-        "CAFE": true,
-        "VINOTINTO": true,
-        "ROSA": true
+        "ROSA": true,
+        "VINOTINTO": true
       },
       "trazos_solicitudes": [
         {
-          "solicitud_id": "id_1792432010223_9enwvovoq",
           "fecha": "2026-10-19",
-          "lineas": 2
+          "lineas": 2,
+          "solicitud_id": "id_1792432010223_9enwvovoq"
         }
       ]
     },
