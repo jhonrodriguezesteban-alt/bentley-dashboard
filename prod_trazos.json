@@ -3476,32 +3476,16 @@
       "op_nombre": "CAMIBUZO NEVADO"
     },
     {
-      "id": "id_1792432010223_9enwvovoq",
-      "op_id": "OP-2026-201",
-      "op_nombre": "SET BOMBER CORTA",
       "categoria": "CONJUNTOS",
-      "creado_por": "Isabel",
       "creado_en": "2026-10-19",
-      "estado": "ENVIADA",
+      "creado_por": "Isabel",
       "enviada_en": "2026-10-19",
+      "estado": "ENVIADA",
+      "id": "id_1792432010223_9enwvovoq",
       "lineas": [
         {
-          "id": "id_1792431865435_14tdd9j4q",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T6",
-            "T8"
-          ],
-          "marcadas_por_talla": {
-            "T6": 1,
-            "T8": 1
-          },
-          "cantidad_trazos": 5,
           "ancho_util": 172,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "Trazos para el Carvajal",
+          "cantidad_trazos": 5,
           "colores": [
             "GRIS CLARO",
             "MARFIL",
@@ -3510,42 +3494,60 @@
             "ROSA"
           ],
           "generado": false,
+          "id": "id_1792431865435_14tdd9j4q",
           "impreso": false,
-          "recogido": false
-        },
-        {
-          "id": "id_1792432002557_ys9nkoywi",
+          "marcadas_por_talla": {
+            "T6": 1,
+            "T8": 1
+          },
+          "notas": "Trazos para el Carvajal",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T6",
+            "T8"
+          ],
           "tipo": "TELA_PRINCIPAL",
           "tipo_custom": "",
-          "tallas": [
-            "T10",
-            "T12",
-            "T14",
-            "T16"
+          "imagen_url": "https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/tecpatron-imgs/trazo_id_1792431865435_14tdd9j4q_1792444825467.jpg",
+          "imagen_url_blob": "tp_1792444826519"
+        },
+        {
+          "ancho_util": 172,
+          "cantidad_trazos": 5,
+          "colores": [
+            "GRIS CLARO",
+            "MARFIL",
+            "CAFE",
+            "VINOTINTO",
+            "ROSA"
           ],
+          "generado": false,
+          "id": "id_1792432002557_ys9nkoywi",
+          "impreso": false,
           "marcadas_por_talla": {
             "T10": 1,
             "T12": 1,
             "T14": 1,
             "T16": 1
           },
-          "cantidad_trazos": 5,
-          "ancho_util": 172,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
           "notas": "Trazos para el Carvajal",
-          "colores": [
-            "GRIS CLARO",
-            "MARFIL",
-            "CAFE",
-            "VINOTINTO",
-            "ROSA"
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T10",
+            "T12",
+            "T14",
+            "T16"
           ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
         }
-      ]
+      ],
+      "op_id": "OP-2026-201",
+      "op_nombre": "SET BOMBER CORTA"
     }
   ]
 }
