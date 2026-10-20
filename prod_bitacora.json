@@ -32450,15 +32450,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1792525644451_42wdj",
-      "ts": 1792525644451,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-202",
-      "nombre": "PANTALON CHICAGO",
       "categoria": "PANTALONES",
       "colores": 5,
-      "refs": 1
+      "id": "evt_1792525644451_42wdj",
+      "nombre": "PANTALON CHICAGO",
+      "op_id": "OP-2026-202",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1792525644451,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792525669101_mxnkv",
+      "ts": 1792525669101,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-202",
+      "op_nombre": "PANTALON CHICAGO",
+      "referencia": "PANTALON CHICAGO",
+      "color": "AVENA",
+      "talla": "todas las tallas",
+      "estado_anterior": "PENDIENTE_CORTAR",
+      "estado_nuevo": "PENDIENTE_CORTAR",
+      "bulk": true,
+      "uds": 68,
+      "motivo": "por corte"
     }
   ]
 }
