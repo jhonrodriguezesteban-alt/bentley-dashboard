@@ -32339,17 +32339,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "estado": "ENTREGADO",
       "id": "evt_1792524078960_5vnxd",
-      "ts": 1792524078960,
-      "user": "Jefa de Producción",
-      "tipo": "entrega_inline",
-      "ot_id": "id_1788534249998_428s3dz49",
       "numero_ot": 13459,
       "op_id": "OP-2026-095",
+      "ot_id": "id_1788534249998_428s3dz49",
+      "pendientes": 0,
+      "satelite": "NIEVES CRISTANCHO",
+      "talla": "T12",
+      "tipo": "entrega_inline",
+      "ts": 1792524078960,
       "uds_entregadas": 16,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792524090450_6lg2n",
+      "ts": 1792524090450,
+      "user": "Jefa de Producción",
+      "tipo": "entrega_inline",
+      "ot_id": "id_1788534249998_6voe7j1ak",
+      "numero_ot": 13460,
+      "op_id": "OP-2026-095",
+      "uds_entregadas": 20,
       "pendientes": 0,
       "estado": "ENTREGADO",
-      "talla": "T12",
+      "talla": "T14",
       "satelite": "NIEVES CRISTANCHO"
     }
   ]
