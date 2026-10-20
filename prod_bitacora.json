@@ -32297,17 +32297,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "estado": "ENTREGADO",
       "id": "evt_1792524044048_1wn6v",
-      "ts": 1792524044048,
-      "user": "Jefa de Producción",
-      "tipo": "entrega_inline",
-      "ot_id": "id_1788534249998_ntu5vrf0x",
       "numero_ot": 13456,
       "op_id": "OP-2026-095",
-      "uds_entregadas": 8,
+      "ot_id": "id_1788534249998_ntu5vrf0x",
       "pendientes": 0,
-      "estado": "ENTREGADO",
+      "satelite": "NIEVES CRISTANCHO",
       "talla": "T6",
+      "tipo": "entrega_inline",
+      "ts": 1792524044048,
+      "uds_entregadas": 8,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792524055719_o1uub",
+      "ts": 1792524055719,
+      "user": "Jefa de Producción",
+      "tipo": "entrega_inline",
+      "ot_id": "id_1788534249998_k5tmhwybp",
+      "numero_ot": 13457,
+      "op_id": "OP-2026-095",
+      "uds_entregadas": 11,
+      "pendientes": 1,
+      "estado": "NOVEDAD",
+      "talla": "T8",
       "satelite": "NIEVES CRISTANCHO"
     }
   ]
