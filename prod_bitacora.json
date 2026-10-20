@@ -32413,20 +32413,41 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1792525218334_czs6k",
-      "ts": 1792525218334,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-239",
       "op_nombre": "PANTALON RAVE",
       "referencia": "PANTALON RAVE",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1792525218334,
       "uds": 77,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792525519820_zum3q",
+      "ts": 1792525519820,
+      "user": "Jefa de Producción",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-202",
+      "op_nombre": "PANTALON CHICAGO",
+      "categoria": "PANTALONES",
+      "total_ots": 25,
+      "total_uds": 322,
+      "colores": [
+        "GRIS OSCURO",
+        "CAFE",
+        "NEGRO",
+        "AVENA",
+        "MARFIL"
+      ],
+      "referencias": [
+        "PANTALON CHICAGO"
+      ]
     }
   ]
 }
