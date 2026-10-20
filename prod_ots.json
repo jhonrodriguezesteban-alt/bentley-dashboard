@@ -88387,7 +88387,7 @@
       "color": "CAMEL",
       "created_at": "2026-09-04",
       "created_by": "Jefa de Producción",
-      "estado": "EN_CONFECCION",
+      "estado": "NOVEDAD",
       "fecha_corte": "2026-09-19",
       "fecha_ot": "2026-07-28",
       "historial": [
@@ -88400,6 +88400,11 @@
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
           "fecha": "2026-09-19T13:24:31.653Z",
           "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-10-20T19:20:52.341Z",
+          "accion": "Entrega parcial: 11 uds, 1 pendientes → NOVEDAD",
+          "user": "Jefa de Producción"
         }
       ],
       "id": "id_1788534249998_k5tmhwybp",
@@ -88411,9 +88416,11 @@
       "referencia": "1119T8",
       "satelite_id": "sat_17",
       "talla": "T8",
-      "unidades_entregadas": 0,
-      "unidades_novedad": 0,
-      "valor_mo": 8934
+      "unidades_entregadas": 11,
+      "unidades_novedad": 1,
+      "valor_mo": 8934,
+      "fecha_entrega_real": "2026-10-20",
+      "total_costo_mo": 98274
     },
     {
       "cantidad": 12,
