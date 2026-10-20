@@ -32267,20 +32267,34 @@
       "user": "Carolina Telles"
     },
     {
+      "bulk": true,
+      "color": "ROJO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1792432264437_jrbsl",
-      "ts": 1792432264437,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-098",
       "op_nombre": "CHAQUETA CAZADORA",
       "referencia": "CHAQUETA CAZADORA",
-      "color": "ROJO",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1792432264437,
       "uds": 80,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792524032181_tfkj3",
+      "ts": 1792524032181,
+      "user": "Jefa de Producción",
+      "tipo": "entrega_inline",
+      "ot_id": "id_1788534249998_dfzewnkqq",
+      "numero_ot": 13455,
+      "op_id": "OP-2026-095",
+      "uds_entregadas": 7,
+      "pendientes": 1,
+      "estado": "NOVEDAD",
+      "talla": "T4",
+      "satelite": "NIEVES CRISTANCHO"
     }
   ]
 }
