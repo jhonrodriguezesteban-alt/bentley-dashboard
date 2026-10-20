@@ -32397,20 +32397,36 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "LILA",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1792524519789_iv45b",
-      "ts": 1792524519789,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-0038",
       "op_nombre": "CHAQUETA CAZADORA",
       "referencia": "CHAQUETA CAZADORA",
-      "color": "LILA",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1792524519789,
       "uds": 104,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792525218334_czs6k",
+      "ts": 1792525218334,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-239",
+      "op_nombre": "PANTALON RAVE",
+      "referencia": "PANTALON RAVE",
+      "color": "NEGRO",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 77,
+      "motivo": "EN TALLER"
     }
   ]
 }
