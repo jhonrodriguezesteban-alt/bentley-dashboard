@@ -88346,7 +88346,7 @@
       "color": "CAMEL",
       "created_at": "2026-09-04",
       "created_by": "Jefa de Producción",
-      "estado": "EN_CONFECCION",
+      "estado": "ENTREGADO",
       "fecha_corte": "2026-09-19",
       "fecha_ot": "2026-07-28",
       "historial": [
@@ -88359,6 +88359,11 @@
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
           "fecha": "2026-09-19T13:24:31.653Z",
           "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-10-20T19:20:40.268Z",
+          "accion": "Entrega completa: 8 uds → ENTREGADO",
+          "user": "Jefa de Producción"
         }
       ],
       "id": "id_1788534249998_ntu5vrf0x",
@@ -88370,9 +88375,11 @@
       "referencia": "1119T6",
       "satelite_id": "sat_17",
       "talla": "T6",
-      "unidades_entregadas": 0,
+      "unidades_entregadas": 8,
       "unidades_novedad": 0,
-      "valor_mo": 8934
+      "valor_mo": 8934,
+      "fecha_entrega_real": "2026-10-20",
+      "total_costo_mo": 71472
     },
     {
       "cantidad": 12,
