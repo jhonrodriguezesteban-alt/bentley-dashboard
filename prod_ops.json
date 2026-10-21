@@ -5507,20 +5507,20 @@
     },
     {
       "cantidades": {
-        "GRIS MEDIO_T4": 8,
-        "GRIS MEDIO_T6": 13,
-        "GRIS MEDIO_T8": 13,
+        "AVENA_T10": 13,
+        "AVENA_T12": 13,
+        "AVENA_T14": 13,
+        "AVENA_T16": 13,
+        "AVENA_T4": 8,
+        "AVENA_T6": 13,
+        "AVENA_T8": 13,
         "GRIS MEDIO_T10": 13,
         "GRIS MEDIO_T12": 13,
         "GRIS MEDIO_T14": 13,
         "GRIS MEDIO_T16": 13,
-        "AVENA_T4": 8,
-        "AVENA_T6": 13,
-        "AVENA_T8": 13,
-        "AVENA_T10": 13,
-        "AVENA_T12": 13,
-        "AVENA_T14": 13,
-        "AVENA_T16": 13
+        "GRIS MEDIO_T4": 8,
+        "GRIS MEDIO_T6": 13,
+        "GRIS MEDIO_T8": 13
       },
       "categoria": "CONJUNTOS",
       "colores": [
@@ -5552,14 +5552,30 @@
       "numero": 83,
       "referencias": [
         {
-          "nombre": "CONJUNTO CHICAGO",
-          "ref": "1143",
+          "cantidades": {
+            "AVENA_T10": 13,
+            "AVENA_T12": 13,
+            "AVENA_T14": 13,
+            "AVENA_T16": 13,
+            "AVENA_T4": 8,
+            "AVENA_T6": 13,
+            "AVENA_T8": 13,
+            "GRIS MEDIO_T10": 13,
+            "GRIS MEDIO_T12": 13,
+            "GRIS MEDIO_T14": 13,
+            "GRIS MEDIO_T16": 13,
+            "GRIS MEDIO_T4": 8,
+            "GRIS MEDIO_T6": 13,
+            "GRIS MEDIO_T8": 13
+          },
           "cat": "CONJUNTOS",
-          "vmo": 10510,
           "colores": [
             "GRIS MEDIO",
             "AVENA"
           ],
+          "maquilador_id": "",
+          "nombre": "CONJUNTO CHICAGO",
+          "ref": "1143",
           "tallas": [
             "T4",
             "T6",
@@ -5569,27 +5585,11 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "GRIS MEDIO_T4": 8,
-            "GRIS MEDIO_T6": 13,
-            "GRIS MEDIO_T8": 13,
-            "GRIS MEDIO_T10": 13,
-            "GRIS MEDIO_T12": 13,
-            "GRIS MEDIO_T14": 13,
-            "GRIS MEDIO_T16": 13,
-            "AVENA_T4": 8,
-            "AVENA_T6": 13,
-            "AVENA_T8": 13,
-            "AVENA_T10": 13,
-            "AVENA_T12": 13,
-            "AVENA_T14": 13,
-            "AVENA_T16": 13
-          },
-          "maquilador_id": ""
+          "vmo": 10510
         }
       ],
       "subg_estados": {
-        "OP-2026-083||AVENA": "CORTE_POR_ALISTAR",
+        "OP-2026-083||AVENA": "EN_CONFECCION",
         "OP-2026-083||GRIS MEDIO": "CORTE_POR_ALISTAR"
       },
       "tallas": [
@@ -5605,9 +5605,7 @@
         "AVENA": true,
         "GRIS MEDIO": true
       },
-      "updated_at": "2026-10-21",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-10-21"
     },
     {
       "cantidades": {
