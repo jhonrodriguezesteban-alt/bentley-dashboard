@@ -32477,15 +32477,48 @@
       "user": "Jefa de Producción"
     },
     {
+      "categoria": "Conjuntos",
+      "diseno_id": "id_1785250834970_6ggfjfs6x",
       "id": "evt_1792594375039_c9sci",
-      "ts": 1792594375039,
-      "user": "Isabel",
+      "nombre": "CONJUNTO PALOMINO",
+      "resp_anterior": "Isa",
+      "resp_nuevo": "John",
       "tipo": "diseno_responsable",
+      "ts": 1792594375039,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1792594575615_70a5j",
+      "ts": 1792594575615,
+      "user": "Isabel",
+      "tipo": "diseno_comentario",
       "diseno_id": "id_1785250834970_6ggfjfs6x",
       "nombre": "CONJUNTO PALOMINO",
       "categoria": "Conjuntos",
-      "resp_anterior": "Isa",
-      "resp_nuevo": "John"
+      "tiene_imagen": false,
+      "extracto": "Prueba de tallas realizada. La talla 16 es muy pequeña. Pasa a ser talla 14.\nTra"
+    },
+    {
+      "id": "evt_1792594598259_ghg6w",
+      "ts": 1792594598259,
+      "user": "Isabel",
+      "tipo": "tela_nota",
+      "diseno_id": "id_1785250834970_6ggfjfs6x",
+      "nombre": "CONJUNTO PALOMINO",
+      "tiene_nota": true,
+      "precio": 0
+    },
+    {
+      "id": "evt_1792594611974_h0e3o",
+      "ts": 1792594611974,
+      "user": "Isabel",
+      "tipo": "estado_diseno",
+      "diseno_id": "id_1785250834970_6ggfjfs6x",
+      "nombre": "CONJUNTO PALOMINO",
+      "categoria": "Conjuntos",
+      "marca": "Bentley Kids",
+      "estado_anterior": "EN_CORTE_MUESTRA",
+      "estado_nuevo": "LISTA_PRODUCCION"
     }
   ]
 }
