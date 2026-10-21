@@ -3494,8 +3494,12 @@
             "ROSA"
           ],
           "generado": true,
+          "generado_en": "2026-10-19",
           "id": "id_1792431865435_14tdd9j4q",
+          "imagen_url": "https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/tecpatron-imgs/trazo_id_1792431865435_14tdd9j4q_1792444825467.jpg",
+          "imagen_url_blob": "tp_1792444826519",
           "impreso": true,
+          "impreso_en": "2026-10-19",
           "marcadas_por_talla": {
             "T6": 1,
             "T8": 1
@@ -3503,18 +3507,14 @@
           "notas": "Trazos para el Carvajal",
           "orientacion": "AL_HILO",
           "recogido": true,
+          "recogido_en": "2026-10-19",
           "sentido": "DOS_DIRECCIONES",
           "tallas": [
             "T6",
             "T8"
           ],
           "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "imagen_url": "https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/tecpatron-imgs/trazo_id_1792431865435_14tdd9j4q_1792444825467.jpg",
-          "imagen_url_blob": "tp_1792444826519",
-          "generado_en": "2026-10-19",
-          "impreso_en": "2026-10-19",
-          "recogido_en": "2026-10-19"
+          "tipo_custom": ""
         },
         {
           "ancho_util": 172,
@@ -3527,8 +3527,12 @@
             "ROSA"
           ],
           "generado": true,
+          "generado_en": "2026-10-19",
           "id": "id_1792432002557_ys9nkoywi",
+          "imagen_url": "https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/tecpatron-imgs/trazo_id_1792432002557_ys9nkoywi_1792445309695.jpg",
+          "imagen_url_blob": "tp_1792445310800",
           "impreso": true,
+          "impreso_en": "2026-10-19",
           "marcadas_por_talla": {
             "T10": 1,
             "T12": 1,
@@ -3538,6 +3542,7 @@
           "notas": "Trazos para el Carvajal",
           "orientacion": "AL_HILO",
           "recogido": true,
+          "recogido_en": "2026-10-19",
           "sentido": "DOS_DIRECCIONES",
           "tallas": [
             "T10",
@@ -3546,16 +3551,77 @@
             "T16"
           ],
           "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "generado_en": "2026-10-19",
-          "imagen_url": "https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/tecpatron-imgs/trazo_id_1792432002557_ys9nkoywi_1792445309695.jpg",
-          "imagen_url_blob": "tp_1792445310800",
-          "impreso_en": "2026-10-19",
-          "recogido_en": "2026-10-19"
+          "tipo_custom": ""
         }
       ],
       "op_id": "OP-2026-201",
       "op_nombre": "SET BOMBER CORTA"
+    },
+    {
+      "id": "id_1792595138058_w9i06yqlg",
+      "op_id": "OP-2026-224",
+      "op_nombre": "SET PALOMINO",
+      "categoria": "CONJUNTOS",
+      "creado_por": "Isabel",
+      "creado_en": "2026-10-21",
+      "estado": "ENVIADA",
+      "enviada_en": "2026-10-21",
+      "lineas": [
+        {
+          "id": "id_1792595074268_tfltwfjum",
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": "",
+          "tallas": [
+            "T4",
+            "T6"
+          ],
+          "marcadas_por_talla": {
+            "T4": 1,
+            "T6": 1
+          },
+          "cantidad_trazos": 1,
+          "ancho_util": 145,
+          "sentido": "DOS_DIRECCIONES",
+          "orientacion": "AL_TRAVES",
+          "notas": "Trazo para el Carvajal \nDejar tela para sesgo",
+          "colores": [
+            "NEGRO"
+          ],
+          "generado": false,
+          "impreso": false,
+          "recogido": false
+        },
+        {
+          "id": "id_1792595132245_zlvkh6u0i",
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": "",
+          "tallas": [
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "marcadas_por_talla": {
+            "T8": 1,
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1
+          },
+          "cantidad_trazos": 1,
+          "ancho_util": 145,
+          "sentido": "DOS_DIRECCIONES",
+          "orientacion": "AL_TRAVES",
+          "notas": "Trazos para el Carvajal \nDejar tela para sesgo",
+          "colores": [
+            "NEGRO"
+          ],
+          "generado": false,
+          "impreso": false,
+          "recogido": false
+        }
+      ]
     }
   ]
 }
