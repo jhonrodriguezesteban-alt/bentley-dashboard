@@ -32640,13 +32640,29 @@
       "user": "Jefa de Producción"
     },
     {
+      "capacidad": 0,
       "id": "evt_1792611757019_qdx3t",
-      "ts": 1792611757019,
-      "user": "Jefa de Producción",
-      "tipo": "satelite_crear",
       "nombre": "DIANA VANEGAS GUEVARA",
       "personas": 1,
-      "capacidad": 0
+      "tipo": "satelite_crear",
+      "ts": 1792611757019,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792611800680_uf2i3",
+      "ts": 1792611800680,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-083",
+      "op_nombre": "CONJUNTO CHICAGO",
+      "referencia": "CONJUNTO CHICAGO",
+      "color": "AVENA",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 86,
+      "motivo": "EN TALLER"
     }
   ]
 }
