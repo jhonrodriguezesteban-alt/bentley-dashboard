@@ -32521,22 +32521,33 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1792602230146_fpurv",
-      "ts": 1792602230146,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-223",
-      "op_nombre": "CONJUNTO JACOBO",
       "categoria": "CONJUNTOS",
-      "total_ots": 14,
-      "total_uds": 288,
       "colores": [
         "MARFIL",
         "GRIS JASPED"
       ],
+      "id": "evt_1792602230146_fpurv",
+      "op_id": "OP-2026-223",
+      "op_nombre": "CONJUNTO JACOBO",
       "referencias": [
         "CONJUNTO JACOBO"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 14,
+      "total_uds": 288,
+      "ts": 1792602230146,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792602628701_f87st",
+      "ts": 1792602628701,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-203",
+      "nombre": "CONJUNTO CHELSY",
+      "categoria": "CONJUNTOS",
+      "colores": 3,
+      "refs": 1
     }
   ]
 }
