@@ -11465,31 +11465,31 @@
     },
     {
       "cantidades": {
-        "GRIS OSCURO_T8": 10,
-        "GRIS OSCURO_T10": 10,
-        "GRIS OSCURO_T12": 10,
-        "GRIS OSCURO_T14": 10,
-        "GRIS OSCURO_T16": 10,
-        "CAFE_T8": 12,
-        "CAFE_T10": 12,
-        "CAFE_T12": 12,
-        "CAFE_T14": 15,
-        "CAFE_T16": 15,
-        "NEGRO_T8": 12,
-        "NEGRO_T10": 12,
-        "NEGRO_T12": 12,
-        "NEGRO_T14": 16,
-        "NEGRO_T16": 16,
-        "AVENA_T8": 12,
         "AVENA_T10": 12,
         "AVENA_T12": 12,
         "AVENA_T14": 16,
         "AVENA_T16": 16,
-        "MARFIL_T8": 12,
+        "AVENA_T8": 12,
+        "CAFE_T10": 12,
+        "CAFE_T12": 12,
+        "CAFE_T14": 15,
+        "CAFE_T16": 15,
+        "CAFE_T8": 12,
+        "GRIS OSCURO_T10": 10,
+        "GRIS OSCURO_T12": 10,
+        "GRIS OSCURO_T14": 10,
+        "GRIS OSCURO_T16": 10,
+        "GRIS OSCURO_T8": 10,
         "MARFIL_T10": 12,
         "MARFIL_T12": 12,
         "MARFIL_T14": 16,
-        "MARFIL_T16": 16
+        "MARFIL_T16": 16,
+        "MARFIL_T8": 12,
+        "NEGRO_T10": 12,
+        "NEGRO_T12": 12,
+        "NEGRO_T14": 16,
+        "NEGRO_T16": 16,
+        "NEGRO_T8": 12
       },
       "categoria": "PANTALONES",
       "colores": [
@@ -11502,15 +11502,15 @@
       "consumibles_check": {
         "rec_pantalon_chicago_1179__c88_21||AVENA": true,
         "rec_pantalon_chicago_1179__c88_21||CAFE": true,
+        "rec_pantalon_chicago_1179__c88_21||GRIS OSCURO": true,
         "rec_pantalon_chicago_1179__c88_21||MARFIL": true,
         "rec_pantalon_chicago_1179__c88_21||NEGRO": true,
         "rec_pantalon_chicago_1179__c88_22": true,
+        "rec_pantalon_chicago_1179__c88_23": true,
+        "rec_pantalon_chicago_1179__c88_24": true,
         "rec_pantalon_chicago_1179__c88_27": true,
         "rec_pantalon_chicago_1179__c88_28": true,
-        "rec_pantalon_chicago_1179__c88_29": true,
-        "rec_pantalon_chicago_1179__c88_21||GRIS OSCURO": true,
-        "rec_pantalon_chicago_1179__c88_23": true,
-        "rec_pantalon_chicago_1179__c88_24": true
+        "rec_pantalon_chicago_1179__c88_29": true
       },
       "consumibles_desagregado": {
         "rec_pantalon_chicago_1179__c88_21": true
@@ -11540,10 +11540,34 @@
       "receta_id": "rec_pantalon_chicago_1179",
       "referencias": [
         {
-          "nombre": "PANTALON CHICAGO",
-          "ref": "1179",
+          "cantidades": {
+            "AVENA_T10": 12,
+            "AVENA_T12": 12,
+            "AVENA_T14": 16,
+            "AVENA_T16": 16,
+            "AVENA_T8": 12,
+            "CAFE_T10": 12,
+            "CAFE_T12": 12,
+            "CAFE_T14": 15,
+            "CAFE_T16": 15,
+            "CAFE_T8": 12,
+            "GRIS OSCURO_T10": 10,
+            "GRIS OSCURO_T12": 10,
+            "GRIS OSCURO_T14": 10,
+            "GRIS OSCURO_T16": 10,
+            "GRIS OSCURO_T8": 10,
+            "MARFIL_T10": 12,
+            "MARFIL_T12": 12,
+            "MARFIL_T14": 16,
+            "MARFIL_T16": 16,
+            "MARFIL_T8": 12,
+            "NEGRO_T10": 12,
+            "NEGRO_T12": 12,
+            "NEGRO_T14": 16,
+            "NEGRO_T16": 16,
+            "NEGRO_T8": 12
+          },
           "cat": "PANTALONES",
-          "vmo": 5000,
           "colores": [
             "GRIS OSCURO",
             "CAFE",
@@ -11551,6 +11575,9 @@
             "AVENA",
             "MARFIL"
           ],
+          "maquilador_id": "",
+          "nombre": "PANTALON CHICAGO",
+          "ref": "1179",
           "tallas": [
             "T8",
             "T10",
@@ -11558,34 +11585,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "GRIS OSCURO_T8": 10,
-            "GRIS OSCURO_T10": 10,
-            "GRIS OSCURO_T12": 10,
-            "GRIS OSCURO_T14": 10,
-            "GRIS OSCURO_T16": 10,
-            "CAFE_T8": 12,
-            "CAFE_T10": 12,
-            "CAFE_T12": 12,
-            "CAFE_T14": 15,
-            "CAFE_T16": 15,
-            "NEGRO_T8": 12,
-            "NEGRO_T10": 12,
-            "NEGRO_T12": 12,
-            "NEGRO_T14": 16,
-            "NEGRO_T16": 16,
-            "AVENA_T8": 12,
-            "AVENA_T10": 12,
-            "AVENA_T12": 12,
-            "AVENA_T14": 16,
-            "AVENA_T16": 16,
-            "MARFIL_T8": 12,
-            "MARFIL_T10": 12,
-            "MARFIL_T12": 12,
-            "MARFIL_T14": 16,
-            "MARFIL_T16": 16
-          },
-          "maquilador_id": ""
+          "vmo": 5000
         }
       ],
       "subg_estados": {
@@ -11615,33 +11615,31 @@
           "solicitud_id": "id_1791381734418_5ba6fkct8"
         }
       ],
-      "updated_at": "2026-10-20",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-10-20"
     },
     {
       "cantidades": {
-        "CAMEL_T10": 24,
-        "CAMEL_T12": 24,
-        "CAMEL_T14": 24,
-        "CAMEL_T16": 24,
-        "CAMEL_T4": 12,
-        "CAMEL_T6": 12,
-        "CAMEL_T8": 12,
-        "GRIS_T10": 24,
-        "GRIS_T12": 24,
-        "GRIS_T14": 24,
-        "GRIS_T16": 24,
-        "GRIS_T4": 12,
-        "GRIS_T6": 12,
-        "GRIS_T8": 12,
+        "NEGRO_T4": 14,
+        "NEGRO_T6": 14,
+        "NEGRO_T8": 14,
         "NEGRO_T10": 27,
         "NEGRO_T12": 27,
         "NEGRO_T14": 27,
         "NEGRO_T16": 27,
-        "NEGRO_T4": 14,
-        "NEGRO_T6": 14,
-        "NEGRO_T8": 14
+        "CAMEL_T4": 12,
+        "CAMEL_T6": 12,
+        "CAMEL_T8": 12,
+        "CAMEL_T10": 24,
+        "CAMEL_T12": 24,
+        "CAMEL_T14": 24,
+        "CAMEL_T16": 24,
+        "GRIS_T4": 15,
+        "GRIS_T6": 15,
+        "GRIS_T8": 15,
+        "GRIS_T10": 28,
+        "GRIS_T12": 28,
+        "GRIS_T14": 28,
+        "GRIS_T16": 28
       },
       "categoria": "CONJUNTOS",
       "colores": [
@@ -11668,38 +11666,15 @@
       "numero": 203,
       "referencias": [
         {
-          "cantidades": {
-            "CAMEL_T10": 24,
-            "CAMEL_T12": 24,
-            "CAMEL_T14": 24,
-            "CAMEL_T16": 24,
-            "CAMEL_T4": 12,
-            "CAMEL_T6": 12,
-            "CAMEL_T8": 12,
-            "GRIS_T10": 24,
-            "GRIS_T12": 24,
-            "GRIS_T14": 24,
-            "GRIS_T16": 24,
-            "GRIS_T4": 12,
-            "GRIS_T6": 12,
-            "GRIS_T8": 12,
-            "NEGRO_T10": 27,
-            "NEGRO_T12": 27,
-            "NEGRO_T14": 27,
-            "NEGRO_T16": 27,
-            "NEGRO_T4": 14,
-            "NEGRO_T6": 14,
-            "NEGRO_T8": 14
-          },
+          "nombre": "CONJUNTO CHELSY",
+          "ref": "",
           "cat": "CONJUNTOS",
+          "vmo": 1151,
           "colores": [
             "NEGRO",
             "CAMEL",
             "GRIS"
           ],
-          "maquilador_id": "",
-          "nombre": "CONJUNTO CHELSY",
-          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -11709,7 +11684,30 @@
             "T14",
             "T16"
           ],
-          "vmo": 1151
+          "cantidades": {
+            "NEGRO_T4": 14,
+            "NEGRO_T6": 14,
+            "NEGRO_T8": 14,
+            "NEGRO_T10": 27,
+            "NEGRO_T12": 27,
+            "NEGRO_T14": 27,
+            "NEGRO_T16": 27,
+            "CAMEL_T4": 12,
+            "CAMEL_T6": 12,
+            "CAMEL_T8": 12,
+            "CAMEL_T10": 24,
+            "CAMEL_T12": 24,
+            "CAMEL_T14": 24,
+            "CAMEL_T16": 24,
+            "GRIS_T4": 15,
+            "GRIS_T6": 15,
+            "GRIS_T8": 15,
+            "GRIS_T10": 28,
+            "GRIS_T12": 28,
+            "GRIS_T14": 28,
+            "GRIS_T16": 28
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -11731,7 +11729,7 @@
         "GRIS": true,
         "NEGRO": true
       },
-      "updated_at": "2026-10-16"
+      "updated_at": "2026-10-21"
     },
     {
       "cantidades": {
@@ -14042,9 +14040,9 @@
       },
       "trazos_solicitudes": [
         {
-          "solicitud_id": "id_1792595138058_w9i06yqlg",
           "fecha": "2026-10-21",
-          "lineas": 2
+          "lineas": 2,
+          "solicitud_id": "id_1792595138058_w9i06yqlg"
         }
       ]
     },
