@@ -5507,20 +5507,20 @@
     },
     {
       "cantidades": {
-        "AVENA_T10": 12,
-        "AVENA_T12": 12,
-        "AVENA_T14": 12,
-        "AVENA_T16": 12,
-        "AVENA_T4": 8,
-        "AVENA_T6": 12,
-        "AVENA_T8": 12,
-        "GRIS MEDIO_T10": 12,
-        "GRIS MEDIO_T12": 12,
-        "GRIS MEDIO_T14": 12,
-        "GRIS MEDIO_T16": 12,
         "GRIS MEDIO_T4": 8,
-        "GRIS MEDIO_T6": 12,
-        "GRIS MEDIO_T8": 12
+        "GRIS MEDIO_T6": 13,
+        "GRIS MEDIO_T8": 13,
+        "GRIS MEDIO_T10": 13,
+        "GRIS MEDIO_T12": 13,
+        "GRIS MEDIO_T14": 13,
+        "GRIS MEDIO_T16": 13,
+        "AVENA_T4": 8,
+        "AVENA_T6": 13,
+        "AVENA_T8": 13,
+        "AVENA_T10": 13,
+        "AVENA_T12": 13,
+        "AVENA_T14": 13,
+        "AVENA_T16": 13
       },
       "categoria": "CONJUNTOS",
       "colores": [
@@ -5552,29 +5552,14 @@
       "numero": 83,
       "referencias": [
         {
-          "cantidades": {
-            "AVENA_T10": 12,
-            "AVENA_T12": 12,
-            "AVENA_T14": 12,
-            "AVENA_T16": 12,
-            "AVENA_T4": 8,
-            "AVENA_T6": 12,
-            "AVENA_T8": 12,
-            "GRIS MEDIO_T10": 12,
-            "GRIS MEDIO_T12": 12,
-            "GRIS MEDIO_T14": 12,
-            "GRIS MEDIO_T16": 12,
-            "GRIS MEDIO_T4": 8,
-            "GRIS MEDIO_T6": 12,
-            "GRIS MEDIO_T8": 12
-          },
+          "nombre": "CONJUNTO CHICAGO",
+          "ref": "1143",
           "cat": "CONJUNTOS",
+          "vmo": 10510,
           "colores": [
             "GRIS MEDIO",
             "AVENA"
           ],
-          "nombre": "CONJUNTO CHICAGO",
-          "ref": "1143",
           "tallas": [
             "T4",
             "T6",
@@ -5584,8 +5569,23 @@
             "T14",
             "T16"
           ],
-          "totalUds": 160,
-          "vmo": 10510
+          "cantidades": {
+            "GRIS MEDIO_T4": 8,
+            "GRIS MEDIO_T6": 13,
+            "GRIS MEDIO_T8": 13,
+            "GRIS MEDIO_T10": 13,
+            "GRIS MEDIO_T12": 13,
+            "GRIS MEDIO_T14": 13,
+            "GRIS MEDIO_T16": 13,
+            "AVENA_T4": 8,
+            "AVENA_T6": 13,
+            "AVENA_T8": 13,
+            "AVENA_T10": 13,
+            "AVENA_T12": 13,
+            "AVENA_T14": 13,
+            "AVENA_T16": 13
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -5604,7 +5604,10 @@
       "trazos_color_solicitado": {
         "AVENA": true,
         "GRIS MEDIO": true
-      }
+      },
+      "updated_at": "2026-10-21",
+      "diseno_origen_id": null,
+      "diseno_origen_nombre": null
     },
     {
       "cantidades": {
@@ -11619,27 +11622,27 @@
     },
     {
       "cantidades": {
-        "NEGRO_T4": 14,
-        "NEGRO_T6": 14,
-        "NEGRO_T8": 14,
-        "NEGRO_T10": 27,
-        "NEGRO_T12": 27,
-        "NEGRO_T14": 27,
-        "NEGRO_T16": 27,
-        "CAMEL_T4": 12,
-        "CAMEL_T6": 12,
-        "CAMEL_T8": 12,
         "CAMEL_T10": 24,
         "CAMEL_T12": 24,
         "CAMEL_T14": 24,
         "CAMEL_T16": 24,
-        "GRIS_T4": 15,
-        "GRIS_T6": 15,
-        "GRIS_T8": 15,
+        "CAMEL_T4": 12,
+        "CAMEL_T6": 12,
+        "CAMEL_T8": 12,
         "GRIS_T10": 28,
         "GRIS_T12": 28,
         "GRIS_T14": 28,
-        "GRIS_T16": 28
+        "GRIS_T16": 28,
+        "GRIS_T4": 15,
+        "GRIS_T6": 15,
+        "GRIS_T8": 15,
+        "NEGRO_T10": 27,
+        "NEGRO_T12": 27,
+        "NEGRO_T14": 27,
+        "NEGRO_T16": 27,
+        "NEGRO_T4": 14,
+        "NEGRO_T6": 14,
+        "NEGRO_T8": 14
       },
       "categoria": "CONJUNTOS",
       "colores": [
@@ -11666,15 +11669,38 @@
       "numero": 203,
       "referencias": [
         {
-          "nombre": "CONJUNTO CHELSY",
-          "ref": "",
+          "cantidades": {
+            "CAMEL_T10": 24,
+            "CAMEL_T12": 24,
+            "CAMEL_T14": 24,
+            "CAMEL_T16": 24,
+            "CAMEL_T4": 12,
+            "CAMEL_T6": 12,
+            "CAMEL_T8": 12,
+            "GRIS_T10": 28,
+            "GRIS_T12": 28,
+            "GRIS_T14": 28,
+            "GRIS_T16": 28,
+            "GRIS_T4": 15,
+            "GRIS_T6": 15,
+            "GRIS_T8": 15,
+            "NEGRO_T10": 27,
+            "NEGRO_T12": 27,
+            "NEGRO_T14": 27,
+            "NEGRO_T16": 27,
+            "NEGRO_T4": 14,
+            "NEGRO_T6": 14,
+            "NEGRO_T8": 14
+          },
           "cat": "CONJUNTOS",
-          "vmo": 1151,
           "colores": [
             "NEGRO",
             "CAMEL",
             "GRIS"
           ],
+          "maquilador_id": "",
+          "nombre": "CONJUNTO CHELSY",
+          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -11684,30 +11710,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T4": 14,
-            "NEGRO_T6": 14,
-            "NEGRO_T8": 14,
-            "NEGRO_T10": 27,
-            "NEGRO_T12": 27,
-            "NEGRO_T14": 27,
-            "NEGRO_T16": 27,
-            "CAMEL_T4": 12,
-            "CAMEL_T6": 12,
-            "CAMEL_T8": 12,
-            "CAMEL_T10": 24,
-            "CAMEL_T12": 24,
-            "CAMEL_T14": 24,
-            "CAMEL_T16": 24,
-            "GRIS_T4": 15,
-            "GRIS_T6": 15,
-            "GRIS_T8": 15,
-            "GRIS_T10": 28,
-            "GRIS_T12": 28,
-            "GRIS_T14": 28,
-            "GRIS_T16": 28
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
