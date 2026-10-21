@@ -32665,19 +32665,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "GRIS MEDIO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1792611862604_34g4a",
-      "ts": 1792611862604,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-083",
       "op_nombre": "CONJUNTO CHICAGO",
       "referencia": "CONJUNTO CHICAGO",
-      "color": "GRIS MEDIO",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1792611862604,
+      "uds": 86,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792611944772_e0wlo",
+      "ts": 1792611944772,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-223",
+      "op_nombre": "CONJUNTO JACOBO",
+      "referencia": "CONJUNTO JACOBO",
+      "color": "GRIS JASPED",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 86,
+      "uds": 144,
       "motivo": "EN TALLER"
     }
   ]
