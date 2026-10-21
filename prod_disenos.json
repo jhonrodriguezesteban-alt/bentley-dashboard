@@ -5130,7 +5130,7 @@
       "marca": "Bentley Kids",
       "nombre": "SET TESLA",
       "nota": "REALIZAR SEGUN IMAGEN DE REFERENCIA EN PAÑO ALGODON PARA REEMPLAZAR",
-      "prioridad": 2,
+      "prioridad": 1,
       "responsable": "Carolina"
     },
     {
@@ -7551,7 +7551,8 @@
             "carolina",
             "isabel"
           ],
-          "texto": "Conjunto confeccionado a partir del pantalón conjunto París y top tiras. Para este modelo debe salir el trazo al travez ya que la tela tiene la elongación hacia el largo de la tela.\nLa tela tiende a ser transparente. Verificar y medir modelo."
+          "texto": "Conjunto confeccionado a partir del pantalón conjunto París y top tiras. Para este modelo debe salir el trazo al travez ya que la tela tiene la elongación hacia el largo de la tela.\nLa tela tiende a ser transparente. Verificar y medir modelo.",
+          "resuelto": true
         },
         {
           "autor": "Isabel",
@@ -7562,8 +7563,19 @@
             "carolina",
             "isabel"
           ],
-          "resuelto": false,
+          "resuelto": true,
           "texto": "Molde creado. Al travez por que hacía ese lado estira la tela.  Listo para prueba de tallas."
+        },
+        {
+          "id": "c_1792594575612",
+          "texto": "Prueba de tallas realizada. La talla 16 es muy pequeña. Pasa a ser talla 14.\nTrazo al travez de la tela por la elongación hacia ese lado.\nTiras de sesgo de 3.7cm * 160 de largo. Cortadas hacia el largo de la tela. Una tira por conjunto.",
+          "autor": "Isabel",
+          "autor_id": "isabel",
+          "fecha": "2026-10-21",
+          "hora": "09:56",
+          "imagenes": [],
+          "leido_por": [],
+          "resuelto": true
         }
       ],
       "fecha_creacion": "2026-07-28",
@@ -7599,7 +7611,7 @@
           "url": "https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/disenos-imgs/id_1785250834970_6ggfjfs6x_1786715187735_2.jpg"
         }
       ],
-      "kanban_estado": "EN_CORTE_MUESTRA",
+      "kanban_estado": "LISTA_PRODUCCION",
       "marca": "Bentley Kids",
       "nombre": "CONJUNTO PALOMINO",
       "nota": "TOMAR TOP TIRAS Y PANTALON DEL CONJUNTO OSLO Y HACER CONJUNTO PLAYERO",
@@ -7607,7 +7619,9 @@
       "responsable": "John",
       "tela_estado": "asignada",
       "tela_nota": "TELA RADIANTE VITRAL EN PROMO",
-      "tela_stock": false
+      "tela_stock": false,
+      "tela_precio": null,
+      "tela_mp_id": null
     },
     {
       "_ts": "2026-07-28T15:17:38.390Z",
