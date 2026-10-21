@@ -32488,37 +32488,55 @@
       "user": "Isabel"
     },
     {
+      "categoria": "Conjuntos",
+      "diseno_id": "id_1785250834970_6ggfjfs6x",
+      "extracto": "Prueba de tallas realizada. La talla 16 es muy pequeña. Pasa a ser talla 14.\nTra",
       "id": "evt_1792594575615_70a5j",
-      "ts": 1792594575615,
-      "user": "Isabel",
-      "tipo": "diseno_comentario",
-      "diseno_id": "id_1785250834970_6ggfjfs6x",
       "nombre": "CONJUNTO PALOMINO",
-      "categoria": "Conjuntos",
       "tiene_imagen": false,
-      "extracto": "Prueba de tallas realizada. La talla 16 es muy pequeña. Pasa a ser talla 14.\nTra"
+      "tipo": "diseno_comentario",
+      "ts": 1792594575615,
+      "user": "Isabel"
     },
     {
+      "diseno_id": "id_1785250834970_6ggfjfs6x",
       "id": "evt_1792594598259_ghg6w",
-      "ts": 1792594598259,
-      "user": "Isabel",
-      "tipo": "tela_nota",
-      "diseno_id": "id_1785250834970_6ggfjfs6x",
       "nombre": "CONJUNTO PALOMINO",
+      "precio": 0,
       "tiene_nota": true,
-      "precio": 0
+      "tipo": "tela_nota",
+      "ts": 1792594598259,
+      "user": "Isabel"
     },
     {
-      "id": "evt_1792594611974_h0e3o",
-      "ts": 1792594611974,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1785250834970_6ggfjfs6x",
-      "nombre": "CONJUNTO PALOMINO",
       "categoria": "Conjuntos",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1785250834970_6ggfjfs6x",
       "estado_anterior": "EN_CORTE_MUESTRA",
-      "estado_nuevo": "LISTA_PRODUCCION"
+      "estado_nuevo": "LISTA_PRODUCCION",
+      "id": "evt_1792594611974_h0e3o",
+      "marca": "Bentley Kids",
+      "nombre": "CONJUNTO PALOMINO",
+      "tipo": "estado_diseno",
+      "ts": 1792594611974,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1792602230146_fpurv",
+      "ts": 1792602230146,
+      "user": "Jefa de Producción",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-223",
+      "op_nombre": "CONJUNTO JACOBO",
+      "categoria": "CONJUNTOS",
+      "total_ots": 14,
+      "total_uds": 288,
+      "colores": [
+        "MARFIL",
+        "GRIS JASPED"
+      ],
+      "referencias": [
+        "CONJUNTO JACOBO"
+      ]
     }
   ]
 }
