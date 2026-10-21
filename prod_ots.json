@@ -100470,7 +100470,7 @@
       "color": "GRIS",
       "created_at": "2026-09-23",
       "created_by": "Jefa de Producción",
-      "estado": "EN_CONFECCION",
+      "estado": "ENTREGADO",
       "fecha_corte": "2026-09-23",
       "fecha_ot": "2026-09-02",
       "historial": [
@@ -100488,6 +100488,11 @@
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
           "fecha": "2026-09-23T20:18:13.789Z",
           "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-10-21T20:36:50.725Z",
+          "accion": "Estado cambiado: EN_CONFECCION → ENTREGADO. Motivo: ENTREGADO",
+          "user": "Carolina Telles"
         }
       ],
       "id": "id_1790194614409_n0dd17v0p",
@@ -105395,8 +105400,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-21T19:53:04.439Z",
           "accion": "Taller asignado: SHIRLEY ACOSTA",
+          "fecha": "2026-10-21T19:53:04.439Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -105439,8 +105444,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-21T19:53:04.439Z",
           "accion": "Taller asignado: SHIRLEY ACOSTA",
+          "fecha": "2026-10-21T19:53:04.439Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -105483,8 +105488,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-21T19:53:04.439Z",
           "accion": "Taller asignado: SHIRLEY ACOSTA",
+          "fecha": "2026-10-21T19:53:04.439Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -105527,8 +105532,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-21T19:53:04.439Z",
           "accion": "Taller asignado: SHIRLEY ACOSTA",
+          "fecha": "2026-10-21T19:53:04.439Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -105571,8 +105576,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-21T19:53:04.439Z",
           "accion": "Taller asignado: SHIRLEY ACOSTA",
+          "fecha": "2026-10-21T19:53:04.439Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -105615,8 +105620,8 @@
           "user": "Jefa de Producción"
         },
         {
-          "fecha": "2026-10-21T19:53:04.439Z",
           "accion": "Taller asignado: SHIRLEY ACOSTA",
+          "fecha": "2026-10-21T19:53:04.439Z",
           "user": "Jefa de Producción"
         }
       ],
@@ -107577,7 +107582,20 @@
       "created_at": "2026-10-20",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-08-25",
+      "historial": [
+        {
+          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
+          "fecha": "2026-10-21T19:58:09.363Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:58:16.437Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792525519818_gaicuq9c0",
       "motivo_incumplimiento": "",
       "nombre": "PANTALON CHICAGO",
@@ -107585,24 +107603,11 @@
       "numero_ot": 14031,
       "op_id": "OP-2026-202",
       "referencia": "1179T8",
+      "satelite_id": "id_1792611757019_b4279koto",
       "talla": "T8",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 5000,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:58:09.363Z",
-          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:58:16.437Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1792611757019_b4279koto",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 5000
     },
     {
       "cantidad": 10,
@@ -107611,7 +107616,20 @@
       "created_at": "2026-10-20",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-08-25",
+      "historial": [
+        {
+          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
+          "fecha": "2026-10-21T19:58:09.363Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:58:16.437Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792525519819_o0tj9mzvp",
       "motivo_incumplimiento": "",
       "nombre": "PANTALON CHICAGO",
@@ -107619,24 +107637,11 @@
       "numero_ot": 14032,
       "op_id": "OP-2026-202",
       "referencia": "1179T10",
+      "satelite_id": "id_1792611757019_b4279koto",
       "talla": "T10",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 5000,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:58:09.363Z",
-          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:58:16.437Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1792611757019_b4279koto",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 5000
     },
     {
       "cantidad": 10,
@@ -107645,7 +107650,20 @@
       "created_at": "2026-10-20",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-08-25",
+      "historial": [
+        {
+          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
+          "fecha": "2026-10-21T19:58:09.363Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:58:16.437Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792525519819_5bc4v2qzv",
       "motivo_incumplimiento": "",
       "nombre": "PANTALON CHICAGO",
@@ -107653,24 +107671,11 @@
       "numero_ot": 14033,
       "op_id": "OP-2026-202",
       "referencia": "1179T12",
+      "satelite_id": "id_1792611757019_b4279koto",
       "talla": "T12",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 5000,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:58:09.363Z",
-          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:58:16.437Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1792611757019_b4279koto",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 5000
     },
     {
       "cantidad": 10,
@@ -107679,7 +107684,20 @@
       "created_at": "2026-10-20",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-08-25",
+      "historial": [
+        {
+          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
+          "fecha": "2026-10-21T19:58:09.363Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:58:16.438Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792525519819_j3wsk5jgb",
       "motivo_incumplimiento": "",
       "nombre": "PANTALON CHICAGO",
@@ -107687,24 +107705,11 @@
       "numero_ot": 14034,
       "op_id": "OP-2026-202",
       "referencia": "1179T14",
+      "satelite_id": "id_1792611757019_b4279koto",
       "talla": "T14",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 5000,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:58:09.363Z",
-          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:58:16.438Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1792611757019_b4279koto",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 5000
     },
     {
       "cantidad": 10,
@@ -107713,7 +107718,20 @@
       "created_at": "2026-10-20",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-08-25",
+      "historial": [
+        {
+          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
+          "fecha": "2026-10-21T19:58:09.363Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:58:16.438Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792525519819_fvt71jiwz",
       "motivo_incumplimiento": "",
       "nombre": "PANTALON CHICAGO",
@@ -107721,24 +107739,11 @@
       "numero_ot": 14035,
       "op_id": "OP-2026-202",
       "referencia": "1179T16",
+      "satelite_id": "id_1792611757019_b4279koto",
       "talla": "T16",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 5000,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:58:09.363Z",
-          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:58:16.438Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1792611757019_b4279koto",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 5000
     },
     {
       "cantidad": 12,
@@ -107747,7 +107752,25 @@
       "created_at": "2026-10-20",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-08-25",
+      "historial": [
+        {
+          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
+          "fecha": "2026-10-21T19:57:34.803Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:57:39.746Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:58:01.237Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792525519819_takmlurcq",
       "motivo_incumplimiento": "",
       "nombre": "PANTALON CHICAGO",
@@ -107755,29 +107778,11 @@
       "numero_ot": 14036,
       "op_id": "OP-2026-202",
       "referencia": "1179T8",
+      "satelite_id": "id_1792611757019_b4279koto",
       "talla": "T8",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 5000,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:57:34.803Z",
-          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:57:39.746Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:58:01.237Z",
-          "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1792611757019_b4279koto",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 5000
     },
     {
       "cantidad": 12,
@@ -107786,7 +107791,25 @@
       "created_at": "2026-10-20",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-08-25",
+      "historial": [
+        {
+          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
+          "fecha": "2026-10-21T19:57:34.803Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:57:39.747Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:58:01.237Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792525519819_ghadf21ih",
       "motivo_incumplimiento": "",
       "nombre": "PANTALON CHICAGO",
@@ -107794,29 +107817,11 @@
       "numero_ot": 14037,
       "op_id": "OP-2026-202",
       "referencia": "1179T10",
+      "satelite_id": "id_1792611757019_b4279koto",
       "talla": "T10",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 5000,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:57:34.803Z",
-          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:57:39.747Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:58:01.237Z",
-          "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1792611757019_b4279koto",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 5000
     },
     {
       "cantidad": 12,
@@ -107825,7 +107830,25 @@
       "created_at": "2026-10-20",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-08-25",
+      "historial": [
+        {
+          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
+          "fecha": "2026-10-21T19:57:34.803Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:57:39.747Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:58:01.237Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792525519819_y3f3hz0su",
       "motivo_incumplimiento": "",
       "nombre": "PANTALON CHICAGO",
@@ -107833,29 +107856,11 @@
       "numero_ot": 14038,
       "op_id": "OP-2026-202",
       "referencia": "1179T12",
+      "satelite_id": "id_1792611757019_b4279koto",
       "talla": "T12",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 5000,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:57:34.803Z",
-          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:57:39.747Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:58:01.237Z",
-          "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1792611757019_b4279koto",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 5000
     },
     {
       "cantidad": 15,
@@ -107864,7 +107869,25 @@
       "created_at": "2026-10-20",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-08-25",
+      "historial": [
+        {
+          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
+          "fecha": "2026-10-21T19:57:34.803Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:57:39.747Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:58:01.237Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792525519819_igotl7ghb",
       "motivo_incumplimiento": "",
       "nombre": "PANTALON CHICAGO",
@@ -107872,29 +107895,11 @@
       "numero_ot": 14039,
       "op_id": "OP-2026-202",
       "referencia": "1179T14",
+      "satelite_id": "id_1792611757019_b4279koto",
       "talla": "T14",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 5000,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:57:34.803Z",
-          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:57:39.747Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:58:01.237Z",
-          "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1792611757019_b4279koto",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 5000
     },
     {
       "cantidad": 15,
@@ -107903,7 +107908,25 @@
       "created_at": "2026-10-20",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-08-25",
+      "historial": [
+        {
+          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
+          "fecha": "2026-10-21T19:57:34.803Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:57:39.747Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:58:01.237Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792525519819_t6yl1ff77",
       "motivo_incumplimiento": "",
       "nombre": "PANTALON CHICAGO",
@@ -107911,29 +107934,11 @@
       "numero_ot": 14040,
       "op_id": "OP-2026-202",
       "referencia": "1179T16",
+      "satelite_id": "id_1792611757019_b4279koto",
       "talla": "T16",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 5000,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:57:34.803Z",
-          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:57:39.747Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:58:01.237Z",
-          "accion": "Estado cambiado (todas las tallas): EN_CONFECCION → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1792611757019_b4279koto",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 5000
     },
     {
       "cantidad": 12,
@@ -107942,7 +107947,20 @@
       "created_at": "2026-10-20",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-08-25",
+      "historial": [
+        {
+          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
+          "fecha": "2026-10-21T19:58:57.986Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:59:12.926Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792525519819_7bn4q4q20",
       "motivo_incumplimiento": "",
       "nombre": "PANTALON CHICAGO",
@@ -107950,24 +107968,11 @@
       "numero_ot": 14041,
       "op_id": "OP-2026-202",
       "referencia": "1179T8",
+      "satelite_id": "id_1792611757019_b4279koto",
       "talla": "T8",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 5000,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:58:57.986Z",
-          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:59:12.926Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1792611757019_b4279koto",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 5000
     },
     {
       "cantidad": 12,
@@ -107976,7 +107981,20 @@
       "created_at": "2026-10-20",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-08-25",
+      "historial": [
+        {
+          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
+          "fecha": "2026-10-21T19:58:57.986Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:59:12.926Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792525519819_cmug8ixaq",
       "motivo_incumplimiento": "",
       "nombre": "PANTALON CHICAGO",
@@ -107984,24 +108002,11 @@
       "numero_ot": 14042,
       "op_id": "OP-2026-202",
       "referencia": "1179T10",
+      "satelite_id": "id_1792611757019_b4279koto",
       "talla": "T10",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 5000,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:58:57.986Z",
-          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:59:12.926Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1792611757019_b4279koto",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 5000
     },
     {
       "cantidad": 12,
@@ -108010,7 +108015,20 @@
       "created_at": "2026-10-20",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-08-25",
+      "historial": [
+        {
+          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
+          "fecha": "2026-10-21T19:58:57.986Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:59:12.926Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792525519819_eh5bwgydt",
       "motivo_incumplimiento": "",
       "nombre": "PANTALON CHICAGO",
@@ -108018,24 +108036,11 @@
       "numero_ot": 14043,
       "op_id": "OP-2026-202",
       "referencia": "1179T12",
+      "satelite_id": "id_1792611757019_b4279koto",
       "talla": "T12",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 5000,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:58:57.986Z",
-          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:59:12.926Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1792611757019_b4279koto",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 5000
     },
     {
       "cantidad": 16,
@@ -108044,7 +108049,20 @@
       "created_at": "2026-10-20",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-08-25",
+      "historial": [
+        {
+          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
+          "fecha": "2026-10-21T19:58:57.986Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:59:12.926Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792525519819_xglpuj3eg",
       "motivo_incumplimiento": "",
       "nombre": "PANTALON CHICAGO",
@@ -108052,24 +108070,11 @@
       "numero_ot": 14044,
       "op_id": "OP-2026-202",
       "referencia": "1179T14",
+      "satelite_id": "id_1792611757019_b4279koto",
       "talla": "T14",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 5000,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:58:57.986Z",
-          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:59:12.926Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1792611757019_b4279koto",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 5000
     },
     {
       "cantidad": 16,
@@ -108078,7 +108083,20 @@
       "created_at": "2026-10-20",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-08-25",
+      "historial": [
+        {
+          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
+          "fecha": "2026-10-21T19:58:57.986Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:59:12.926Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792525519819_nhdmskir2",
       "motivo_incumplimiento": "",
       "nombre": "PANTALON CHICAGO",
@@ -108086,24 +108104,11 @@
       "numero_ot": 14045,
       "op_id": "OP-2026-202",
       "referencia": "1179T16",
+      "satelite_id": "id_1792611757019_b4279koto",
       "talla": "T16",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 5000,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:58:57.986Z",
-          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:59:12.926Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1792611757019_b4279koto",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 5000
     },
     {
       "cantidad": 12,
@@ -108247,7 +108252,20 @@
       "created_at": "2026-10-20",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-08-25",
+      "historial": [
+        {
+          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
+          "fecha": "2026-10-21T19:58:40.851Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:58:47.076Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792525519819_sdvmpzyif",
       "motivo_incumplimiento": "",
       "nombre": "PANTALON CHICAGO",
@@ -108255,24 +108273,11 @@
       "numero_ot": 14051,
       "op_id": "OP-2026-202",
       "referencia": "1179T8",
+      "satelite_id": "id_1792611757019_b4279koto",
       "talla": "T8",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 5000,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:58:40.851Z",
-          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:58:47.076Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1792611757019_b4279koto",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 5000
     },
     {
       "cantidad": 12,
@@ -108281,7 +108286,20 @@
       "created_at": "2026-10-20",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-08-25",
+      "historial": [
+        {
+          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
+          "fecha": "2026-10-21T19:58:40.851Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:58:47.076Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792525519819_brggf54le",
       "motivo_incumplimiento": "",
       "nombre": "PANTALON CHICAGO",
@@ -108289,24 +108307,11 @@
       "numero_ot": 14052,
       "op_id": "OP-2026-202",
       "referencia": "1179T10",
+      "satelite_id": "id_1792611757019_b4279koto",
       "talla": "T10",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 5000,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:58:40.851Z",
-          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:58:47.076Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1792611757019_b4279koto",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 5000
     },
     {
       "cantidad": 12,
@@ -108315,7 +108320,20 @@
       "created_at": "2026-10-20",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-08-25",
+      "historial": [
+        {
+          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
+          "fecha": "2026-10-21T19:58:40.851Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:58:47.076Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792525519819_kc9723vgn",
       "motivo_incumplimiento": "",
       "nombre": "PANTALON CHICAGO",
@@ -108323,24 +108341,11 @@
       "numero_ot": 14053,
       "op_id": "OP-2026-202",
       "referencia": "1179T12",
+      "satelite_id": "id_1792611757019_b4279koto",
       "talla": "T12",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 5000,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:58:40.851Z",
-          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:58:47.076Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1792611757019_b4279koto",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 5000
     },
     {
       "cantidad": 16,
@@ -108349,7 +108354,20 @@
       "created_at": "2026-10-20",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-08-25",
+      "historial": [
+        {
+          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
+          "fecha": "2026-10-21T19:58:40.851Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:58:47.076Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792525519819_wbv2otaqj",
       "motivo_incumplimiento": "",
       "nombre": "PANTALON CHICAGO",
@@ -108357,24 +108375,11 @@
       "numero_ot": 14054,
       "op_id": "OP-2026-202",
       "referencia": "1179T14",
+      "satelite_id": "id_1792611757019_b4279koto",
       "talla": "T14",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 5000,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:58:40.851Z",
-          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:58:47.076Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1792611757019_b4279koto",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 5000
     },
     {
       "cantidad": 16,
@@ -108383,7 +108388,20 @@
       "created_at": "2026-10-20",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-08-25",
+      "historial": [
+        {
+          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
+          "fecha": "2026-10-21T19:58:40.851Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:58:47.076Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792525519819_tzcp3ifjd",
       "motivo_incumplimiento": "",
       "nombre": "PANTALON CHICAGO",
@@ -108391,24 +108409,11 @@
       "numero_ot": 14055,
       "op_id": "OP-2026-202",
       "referencia": "1179T16",
+      "satelite_id": "id_1792611757019_b4279koto",
       "talla": "T16",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 5000,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:58:40.851Z",
-          "accion": "Taller asignado: DIANA VANEGAS GUEVARA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:58:47.076Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1792611757019_b4279koto",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 5000
     },
     {
       "cantidad": 12,
@@ -108417,7 +108422,20 @@
       "created_at": "2026-10-21",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-09-12",
+      "historial": [
+        {
+          "accion": "Taller asignado: FRANCY CAROLINA BARRIOS",
+          "fecha": "2026-10-21T19:46:40.160Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:46:46.101Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792602230146_k65d55v9u",
       "motivo_incumplimiento": "",
       "nombre": "CONJUNTO JACOBO",
@@ -108425,24 +108443,11 @@
       "numero_ot": 14056,
       "op_id": "OP-2026-223",
       "referencia": "1218T4",
+      "satelite_id": "id_1791041828921_s5369mflr",
       "talla": "T4",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:46:40.160Z",
-          "accion": "Taller asignado: FRANCY CAROLINA BARRIOS",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:46:46.101Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1791041828921_s5369mflr",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 1151
     },
     {
       "cantidad": 12,
@@ -108451,7 +108456,20 @@
       "created_at": "2026-10-21",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-09-12",
+      "historial": [
+        {
+          "accion": "Taller asignado: FRANCY CAROLINA BARRIOS",
+          "fecha": "2026-10-21T19:46:40.161Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:46:46.101Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792602230146_6axfjbsre",
       "motivo_incumplimiento": "",
       "nombre": "CONJUNTO JACOBO",
@@ -108459,24 +108477,11 @@
       "numero_ot": 14057,
       "op_id": "OP-2026-223",
       "referencia": "1218T6",
+      "satelite_id": "id_1791041828921_s5369mflr",
       "talla": "T6",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:46:40.161Z",
-          "accion": "Taller asignado: FRANCY CAROLINA BARRIOS",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:46:46.101Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1791041828921_s5369mflr",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 1151
     },
     {
       "cantidad": 24,
@@ -108485,7 +108490,20 @@
       "created_at": "2026-10-21",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-09-12",
+      "historial": [
+        {
+          "accion": "Taller asignado: FRANCY CAROLINA BARRIOS",
+          "fecha": "2026-10-21T19:46:40.161Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:46:46.101Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792602230146_3dx9ax5yt",
       "motivo_incumplimiento": "",
       "nombre": "CONJUNTO JACOBO",
@@ -108493,24 +108511,11 @@
       "numero_ot": 14058,
       "op_id": "OP-2026-223",
       "referencia": "1218T8",
+      "satelite_id": "id_1791041828921_s5369mflr",
       "talla": "T8",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:46:40.161Z",
-          "accion": "Taller asignado: FRANCY CAROLINA BARRIOS",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:46:46.101Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1791041828921_s5369mflr",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 1151
     },
     {
       "cantidad": 24,
@@ -108519,7 +108524,20 @@
       "created_at": "2026-10-21",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-09-12",
+      "historial": [
+        {
+          "accion": "Taller asignado: FRANCY CAROLINA BARRIOS",
+          "fecha": "2026-10-21T19:46:40.161Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:46:46.101Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792602230146_0vaz8ntof",
       "motivo_incumplimiento": "",
       "nombre": "CONJUNTO JACOBO",
@@ -108527,24 +108545,11 @@
       "numero_ot": 14059,
       "op_id": "OP-2026-223",
       "referencia": "1218T10",
+      "satelite_id": "id_1791041828921_s5369mflr",
       "talla": "T10",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:46:40.161Z",
-          "accion": "Taller asignado: FRANCY CAROLINA BARRIOS",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:46:46.101Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1791041828921_s5369mflr",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 1151
     },
     {
       "cantidad": 24,
@@ -108553,7 +108558,20 @@
       "created_at": "2026-10-21",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-09-12",
+      "historial": [
+        {
+          "accion": "Taller asignado: FRANCY CAROLINA BARRIOS",
+          "fecha": "2026-10-21T19:46:40.161Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:46:46.101Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792602230146_bl9r2ecb4",
       "motivo_incumplimiento": "",
       "nombre": "CONJUNTO JACOBO",
@@ -108561,24 +108579,11 @@
       "numero_ot": 14060,
       "op_id": "OP-2026-223",
       "referencia": "1218T12",
+      "satelite_id": "id_1791041828921_s5369mflr",
       "talla": "T12",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:46:40.161Z",
-          "accion": "Taller asignado: FRANCY CAROLINA BARRIOS",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:46:46.101Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1791041828921_s5369mflr",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 1151
     },
     {
       "cantidad": 24,
@@ -108587,7 +108592,20 @@
       "created_at": "2026-10-21",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-09-12",
+      "historial": [
+        {
+          "accion": "Taller asignado: FRANCY CAROLINA BARRIOS",
+          "fecha": "2026-10-21T19:46:40.161Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:46:46.101Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792602230146_tuevu3na7",
       "motivo_incumplimiento": "",
       "nombre": "CONJUNTO JACOBO",
@@ -108595,24 +108613,11 @@
       "numero_ot": 14061,
       "op_id": "OP-2026-223",
       "referencia": "1218T14",
+      "satelite_id": "id_1791041828921_s5369mflr",
       "talla": "T14",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:46:40.161Z",
-          "accion": "Taller asignado: FRANCY CAROLINA BARRIOS",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:46:46.101Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1791041828921_s5369mflr",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 1151
     },
     {
       "cantidad": 24,
@@ -108621,7 +108626,20 @@
       "created_at": "2026-10-21",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-09-12",
+      "historial": [
+        {
+          "accion": "Taller asignado: FRANCY CAROLINA BARRIOS",
+          "fecha": "2026-10-21T19:46:40.161Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:46:46.101Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792602230146_9kr7pfemx",
       "motivo_incumplimiento": "",
       "nombre": "CONJUNTO JACOBO",
@@ -108629,24 +108647,11 @@
       "numero_ot": 14062,
       "op_id": "OP-2026-223",
       "referencia": "1218T16",
+      "satelite_id": "id_1791041828921_s5369mflr",
       "talla": "T16",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:46:40.161Z",
-          "accion": "Taller asignado: FRANCY CAROLINA BARRIOS",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:46:46.101Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1791041828921_s5369mflr",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 1151
     },
     {
       "cantidad": 12,
@@ -108655,7 +108660,20 @@
       "created_at": "2026-10-21",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-09-12",
+      "historial": [
+        {
+          "accion": "Taller asignado: DALILA RENFIGO QUINTANA",
+          "fecha": "2026-10-21T19:45:39.225Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:45:44.602Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792602230146_3qeco4cpb",
       "motivo_incumplimiento": "",
       "nombre": "CONJUNTO JACOBO",
@@ -108663,24 +108681,11 @@
       "numero_ot": 14063,
       "op_id": "OP-2026-223",
       "referencia": "1218T4",
+      "satelite_id": "id_1791041609443_zfe1fd7cz",
       "talla": "T4",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:45:39.225Z",
-          "accion": "Taller asignado: DALILA RENFIGO QUINTANA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:45:44.602Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1791041609443_zfe1fd7cz",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 1151
     },
     {
       "cantidad": 12,
@@ -108689,7 +108694,20 @@
       "created_at": "2026-10-21",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-09-12",
+      "historial": [
+        {
+          "accion": "Taller asignado: DALILA RENFIGO QUINTANA",
+          "fecha": "2026-10-21T19:45:39.225Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:45:44.602Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792602230146_qfwruj0dp",
       "motivo_incumplimiento": "",
       "nombre": "CONJUNTO JACOBO",
@@ -108697,24 +108715,11 @@
       "numero_ot": 14064,
       "op_id": "OP-2026-223",
       "referencia": "1218T6",
+      "satelite_id": "id_1791041609443_zfe1fd7cz",
       "talla": "T6",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:45:39.225Z",
-          "accion": "Taller asignado: DALILA RENFIGO QUINTANA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:45:44.602Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1791041609443_zfe1fd7cz",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 1151
     },
     {
       "cantidad": 24,
@@ -108723,7 +108728,20 @@
       "created_at": "2026-10-21",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-09-12",
+      "historial": [
+        {
+          "accion": "Taller asignado: DALILA RENFIGO QUINTANA",
+          "fecha": "2026-10-21T19:45:39.225Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:45:44.603Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792602230146_ire9pih91",
       "motivo_incumplimiento": "",
       "nombre": "CONJUNTO JACOBO",
@@ -108731,24 +108749,11 @@
       "numero_ot": 14065,
       "op_id": "OP-2026-223",
       "referencia": "1218T8",
+      "satelite_id": "id_1791041609443_zfe1fd7cz",
       "talla": "T8",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:45:39.225Z",
-          "accion": "Taller asignado: DALILA RENFIGO QUINTANA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:45:44.603Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1791041609443_zfe1fd7cz",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 1151
     },
     {
       "cantidad": 24,
@@ -108757,7 +108762,20 @@
       "created_at": "2026-10-21",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-09-12",
+      "historial": [
+        {
+          "accion": "Taller asignado: DALILA RENFIGO QUINTANA",
+          "fecha": "2026-10-21T19:45:39.225Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:45:44.603Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792602230146_lwhxw8734",
       "motivo_incumplimiento": "",
       "nombre": "CONJUNTO JACOBO",
@@ -108765,24 +108783,11 @@
       "numero_ot": 14066,
       "op_id": "OP-2026-223",
       "referencia": "1218T10",
+      "satelite_id": "id_1791041609443_zfe1fd7cz",
       "talla": "T10",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:45:39.225Z",
-          "accion": "Taller asignado: DALILA RENFIGO QUINTANA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:45:44.603Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1791041609443_zfe1fd7cz",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 1151
     },
     {
       "cantidad": 24,
@@ -108791,7 +108796,20 @@
       "created_at": "2026-10-21",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-09-12",
+      "historial": [
+        {
+          "accion": "Taller asignado: DALILA RENFIGO QUINTANA",
+          "fecha": "2026-10-21T19:45:39.226Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:45:44.603Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792602230146_iy8uhtumw",
       "motivo_incumplimiento": "",
       "nombre": "CONJUNTO JACOBO",
@@ -108799,24 +108817,11 @@
       "numero_ot": 14067,
       "op_id": "OP-2026-223",
       "referencia": "1218T12",
+      "satelite_id": "id_1791041609443_zfe1fd7cz",
       "talla": "T12",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:45:39.226Z",
-          "accion": "Taller asignado: DALILA RENFIGO QUINTANA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:45:44.603Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1791041609443_zfe1fd7cz",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 1151
     },
     {
       "cantidad": 24,
@@ -108825,7 +108830,20 @@
       "created_at": "2026-10-21",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-09-12",
+      "historial": [
+        {
+          "accion": "Taller asignado: DALILA RENFIGO QUINTANA",
+          "fecha": "2026-10-21T19:45:39.226Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:45:44.603Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792602230146_94po48rwy",
       "motivo_incumplimiento": "",
       "nombre": "CONJUNTO JACOBO",
@@ -108833,24 +108851,11 @@
       "numero_ot": 14068,
       "op_id": "OP-2026-223",
       "referencia": "1218T14",
+      "satelite_id": "id_1791041609443_zfe1fd7cz",
       "talla": "T14",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:45:39.226Z",
-          "accion": "Taller asignado: DALILA RENFIGO QUINTANA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:45:44.603Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1791041609443_zfe1fd7cz",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 1151
     },
     {
       "cantidad": 24,
@@ -108859,7 +108864,20 @@
       "created_at": "2026-10-21",
       "created_by": "Jefa de Producción",
       "estado": "EN_CONFECCION",
+      "fecha_corte": "2026-10-21",
       "fecha_ot": "2026-09-12",
+      "historial": [
+        {
+          "accion": "Taller asignado: DALILA RENFIGO QUINTANA",
+          "fecha": "2026-10-21T19:45:39.226Z",
+          "user": "Jefa de Producción"
+        },
+        {
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "fecha": "2026-10-21T19:45:44.603Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1792602230146_jnrcwdfwk",
       "motivo_incumplimiento": "",
       "nombre": "CONJUNTO JACOBO",
@@ -108867,24 +108885,11 @@
       "numero_ot": 14069,
       "op_id": "OP-2026-223",
       "referencia": "1218T16",
+      "satelite_id": "id_1791041609443_zfe1fd7cz",
       "talla": "T16",
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "valor_mo": 1151,
-      "historial": [
-        {
-          "fecha": "2026-10-21T19:45:39.226Z",
-          "accion": "Taller asignado: DALILA RENFIGO QUINTANA",
-          "user": "Jefa de Producción"
-        },
-        {
-          "fecha": "2026-10-21T19:45:44.603Z",
-          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
-          "user": "Jefa de Producción"
-        }
-      ],
-      "satelite_id": "id_1791041609443_zfe1fd7cz",
-      "fecha_corte": "2026-10-21"
+      "valor_mo": 1151
     }
   ]
 }
