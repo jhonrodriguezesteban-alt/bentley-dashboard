@@ -1,24 +1,9 @@
 {
   "satelites": [
     {
-      "id": "sat_00",
-      "nombre": "SOFIA SANCHEZ",
       "activo": true,
-      "maquinas": [
-        {
-          "cantidad": 1,
-          "tipo": "PLANA"
-        },
-        {
-          "cantidad": 1,
-          "tipo": "FILETE"
-        },
-        {
-          "cantidad": 1,
-          "tipo": "COLLARIN"
-        }
-      ],
-      "personas": 1,
+      "capacidad_semanal": 80,
+      "created_at": "2025-01-01",
       "especialidades": [
         "CAMISAS",
         "CHAQUETAS",
@@ -34,15 +19,7 @@
         "VESTIDOS",
         "CAMISONES"
       ],
-      "capacidad_semanal": 80,
-      "telefono": "",
-      "notas": "",
-      "created_at": "2025-01-01"
-    },
-    {
-      "id": "sat_01",
-      "nombre": "JULIETH VERA",
-      "activo": true,
+      "id": "sat_00",
       "maquinas": [
         {
           "cantidad": 1,
@@ -57,7 +34,15 @@
           "tipo": "COLLARIN"
         }
       ],
+      "nombre": "SOFIA SANCHEZ",
+      "notas": "",
       "personas": 1,
+      "telefono": ""
+    },
+    {
+      "activo": true,
+      "capacidad_semanal": 100,
+      "created_at": "2025-01-01",
       "especialidades": [
         "CAMISAS",
         "CAMISETAS",
@@ -69,64 +54,7 @@
         "BLUSAS",
         "VESTIDOS"
       ],
-      "capacidad_semanal": 100,
-      "telefono": "",
-      "notas": "",
-      "created_at": "2025-01-01"
-    },
-    {
-      "id": "sat_02",
-      "nombre": "MELISSA MARTINEZ",
-      "activo": true,
-      "maquinas": [],
-      "personas": 0,
-      "especialidades": [],
-      "capacidad_semanal": 0,
-      "telefono": "",
-      "notas": "",
-      "created_at": "2025-01-01",
-      "tipo": "interno"
-    },
-    {
-      "id": "sat_03",
-      "nombre": "ALEXANDRA FONSECA",
-      "activo": true,
-      "maquinas": [],
-      "personas": 0,
-      "especialidades": [],
-      "capacidad_semanal": 0,
-      "telefono": "",
-      "notas": "",
-      "created_at": "2025-01-01"
-    },
-    {
-      "id": "sat_04",
-      "nombre": "MARTHA FLORES",
-      "activo": true,
-      "maquinas": [],
-      "personas": 0,
-      "especialidades": [],
-      "capacidad_semanal": 0,
-      "telefono": "",
-      "notas": "",
-      "created_at": "2025-01-01"
-    },
-    {
-      "id": "sat_05",
-      "nombre": "SONIA VARGAS",
-      "activo": true,
-      "maquinas": [],
-      "personas": 0,
-      "especialidades": [],
-      "capacidad_semanal": 0,
-      "telefono": "",
-      "notas": "",
-      "created_at": "2025-01-01"
-    },
-    {
-      "id": "sat_06",
-      "nombre": "ISABEL PARRA",
-      "activo": true,
+      "id": "sat_01",
       "maquinas": [
         {
           "cantidad": 1,
@@ -141,7 +69,56 @@
           "tipo": "COLLARIN"
         }
       ],
+      "nombre": "JULIETH VERA",
+      "notas": "",
       "personas": 1,
+      "telefono": ""
+    },
+    {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2025-01-01",
+      "id": "sat_02",
+      "nombre": "MELISSA MARTINEZ",
+      "notas": "",
+      "personas": 0,
+      "telefono": "",
+      "tipo": "interno"
+    },
+    {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2025-01-01",
+      "id": "sat_03",
+      "nombre": "ALEXANDRA FONSECA",
+      "notas": "",
+      "personas": 0,
+      "telefono": ""
+    },
+    {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2025-01-01",
+      "id": "sat_04",
+      "nombre": "MARTHA FLORES",
+      "notas": "",
+      "personas": 0,
+      "telefono": ""
+    },
+    {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2025-01-01",
+      "id": "sat_05",
+      "nombre": "SONIA VARGAS",
+      "notas": "",
+      "personas": 0,
+      "telefono": ""
+    },
+    {
+      "activo": true,
+      "capacidad_semanal": 80,
+      "created_at": "2025-01-01",
       "especialidades": [
         "BUZOS",
         "GABAN",
@@ -149,214 +126,194 @@
         "PANTALONES",
         "CAMISONES"
       ],
-      "capacidad_semanal": 80,
-      "telefono": "",
+      "id": "sat_06",
+      "maquinas": [
+        {
+          "cantidad": 1,
+          "tipo": "PLANA"
+        },
+        {
+          "cantidad": 1,
+          "tipo": "FILETE"
+        },
+        {
+          "cantidad": 1,
+          "tipo": "COLLARIN"
+        }
+      ],
+      "nombre": "ISABEL PARRA",
       "notas": "",
-      "created_at": "2025-01-01"
+      "personas": 1,
+      "telefono": ""
     },
     {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2025-01-01",
       "id": "sat_07",
       "nombre": "MARCELA PEÑA",
-      "activo": true,
-      "maquinas": [],
-      "personas": 0,
-      "especialidades": [],
-      "capacidad_semanal": 0,
-      "telefono": "",
       "notas": "",
-      "created_at": "2025-01-01",
-      "tipo": "interno",
-      "producto_terminado": false
+      "personas": 0,
+      "producto_terminado": false,
+      "telefono": "",
+      "tipo": "interno"
     },
     {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2025-01-01",
       "id": "sat_08",
       "nombre": "MARBI YANILI SALCEDO",
-      "activo": true,
-      "maquinas": [],
-      "personas": 0,
-      "especialidades": [],
-      "capacidad_semanal": 0,
-      "telefono": "",
       "notas": "",
-      "created_at": "2025-01-01"
+      "personas": 0,
+      "telefono": ""
     },
     {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2025-01-01",
       "id": "sat_09",
       "nombre": "MARIA ALIX MENDEZ",
-      "activo": true,
-      "maquinas": [],
-      "personas": 0,
-      "especialidades": [],
-      "capacidad_semanal": 0,
-      "telefono": "",
       "notas": "",
-      "created_at": "2025-01-01"
+      "personas": 0,
+      "telefono": ""
     },
     {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2025-01-01",
       "id": "sat_10",
       "nombre": "YURI VIVIANA PINILLA",
-      "activo": true,
-      "maquinas": [],
-      "personas": 0,
-      "especialidades": [],
-      "capacidad_semanal": 0,
-      "telefono": "",
       "notas": "",
-      "created_at": "2025-01-01"
+      "personas": 0,
+      "telefono": ""
     },
     {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2025-01-01",
       "id": "sat_11",
       "nombre": "MILENA OSORIO",
-      "activo": true,
-      "maquinas": [],
-      "personas": 0,
-      "especialidades": [],
-      "capacidad_semanal": 0,
-      "telefono": "",
       "notas": "",
-      "created_at": "2025-01-01"
+      "personas": 0,
+      "telefono": ""
     },
     {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2025-01-01",
       "id": "sat_12",
       "nombre": "MIRIAM PINTO",
-      "activo": true,
-      "maquinas": [],
-      "personas": 0,
-      "especialidades": [],
-      "capacidad_semanal": 0,
-      "telefono": "",
       "notas": "",
-      "created_at": "2025-01-01"
+      "personas": 0,
+      "telefono": ""
     },
     {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2025-01-01",
       "id": "sat_13",
       "nombre": "MARTHA QUIROGA",
-      "activo": true,
-      "maquinas": [],
-      "personas": 0,
-      "especialidades": [],
-      "capacidad_semanal": 0,
-      "telefono": "",
       "notas": "",
-      "created_at": "2025-01-01"
+      "personas": 0,
+      "telefono": ""
     },
     {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2025-01-01",
       "id": "sat_14",
       "nombre": "NATHALY BOSA",
-      "activo": true,
-      "maquinas": [],
-      "personas": 0,
-      "especialidades": [],
-      "capacidad_semanal": 0,
-      "telefono": "",
       "notas": "",
-      "created_at": "2025-01-01"
+      "personas": 0,
+      "telefono": ""
     },
     {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2025-01-01",
       "id": "sat_15",
       "nombre": "STELLA BUSTOS",
-      "activo": true,
-      "maquinas": [],
-      "personas": 0,
-      "especialidades": [],
-      "capacidad_semanal": 0,
-      "telefono": "",
       "notas": "",
-      "created_at": "2025-01-01"
+      "personas": 0,
+      "telefono": ""
     },
     {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2025-01-01",
       "id": "sat_16",
       "nombre": "VIVIANA AGUIRRE",
-      "activo": true,
-      "maquinas": [],
-      "personas": 0,
-      "especialidades": [],
-      "capacidad_semanal": 0,
-      "telefono": "",
       "notas": "",
-      "created_at": "2025-01-01",
+      "personas": 0,
+      "telefono": "",
       "tipo": "interno"
     },
     {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2025-01-01",
       "id": "sat_17",
       "nombre": "NIEVES CRISTANCHO",
-      "activo": true,
-      "maquinas": [],
-      "personas": 0,
-      "especialidades": [],
-      "capacidad_semanal": 0,
-      "telefono": "",
       "notas": "",
-      "created_at": "2025-01-01",
+      "personas": 0,
+      "telefono": "",
       "tipo": "interno"
     },
     {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2025-01-01",
       "id": "sat_18",
       "nombre": "YUDY CAROLINA CELIS QUINTERO",
-      "activo": true,
-      "maquinas": [],
-      "personas": 0,
-      "especialidades": [],
-      "capacidad_semanal": 0,
-      "telefono": "",
       "notas": "",
-      "created_at": "2025-01-01"
+      "personas": 0,
+      "telefono": ""
     },
     {
+      "activo": false,
+      "capacidad_semanal": 0,
+      "created_at": "2025-01-01",
       "id": "sat_19",
       "nombre": "ROSALBA ROMERO TORRES",
-      "activo": false,
-      "maquinas": [],
-      "personas": 0,
-      "especialidades": [],
-      "capacidad_semanal": 0,
-      "telefono": "",
       "notas": "",
-      "created_at": "2025-01-01"
+      "personas": 0,
+      "telefono": ""
     },
     {
+      "activo": false,
+      "capacidad_semanal": 0,
+      "created_at": "2025-01-01",
       "id": "sat_20",
       "nombre": "JEIMY CORTEZ",
-      "activo": false,
-      "maquinas": [],
-      "personas": 0,
-      "especialidades": [],
-      "capacidad_semanal": 0,
-      "telefono": "",
       "notas": "",
-      "created_at": "2025-01-01"
+      "personas": 0,
+      "telefono": ""
     },
     {
+      "activo": false,
+      "capacidad_semanal": 0,
+      "created_at": "2025-01-01",
       "id": "sat_21",
       "nombre": "CAROLINA TELLEZ",
-      "activo": false,
-      "maquinas": [],
-      "personas": 0,
-      "especialidades": [],
-      "capacidad_semanal": 0,
-      "telefono": "",
       "notas": "",
-      "created_at": "2025-01-01"
+      "personas": 0,
+      "telefono": ""
     },
     {
+      "activo": false,
+      "capacidad_semanal": 0,
+      "created_at": "2025-01-01",
       "id": "sat_22",
       "nombre": "SHIRLEY ACOSTA",
-      "activo": false,
-      "maquinas": [],
-      "personas": 0,
-      "especialidades": [],
-      "capacidad_semanal": 0,
-      "telefono": "",
       "notas": "",
-      "created_at": "2025-01-01"
+      "personas": 0,
+      "telefono": ""
     },
     {
-      "id": "id_1782597405790_ec1t6571y",
-      "nombre": "MARLEN SANCHEZ",
       "activo": true,
-      "personas": 1,
       "capacidad_semanal": 0,
-      "telefono": "311 2096260",
+      "created_at": "2026-06-27",
       "especialidades": [
         "CHAQUETAS",
         "BUZOS",
@@ -366,18 +323,17 @@
         "PANTALONES",
         "ABRIGOS"
       ],
-      "maquinas": [],
+      "id": "id_1782597405790_ec1t6571y",
+      "nombre": "MARLEN SANCHEZ",
       "notas": "",
-      "created_at": "2026-06-27",
+      "personas": 1,
+      "telefono": "311 2096260",
       "tipo": "interno"
     },
     {
-      "id": "id_1785259712827_cwczmsu5r",
-      "nombre": "CAMILO HERNANDEZ",
       "activo": true,
-      "personas": 1,
       "capacidad_semanal": 110,
-      "telefono": "3004778643",
+      "created_at": "2026-07-28",
       "especialidades": [
         "CAMISAS",
         "CHAQUETAS",
@@ -393,241 +349,227 @@
         "VESTIDOS",
         "CAMISONES"
       ],
-      "maquinas": [],
+      "id": "id_1785259712827_cwczmsu5r",
+      "nombre": "CAMILO HERNANDEZ",
       "notas": "",
-      "created_at": "2026-07-28"
+      "personas": 1,
+      "telefono": "3004778643"
     },
     {
+      "activo": true,
+      "capacidad_semanal": 112,
+      "created_at": "2026-07-31",
       "id": "id_1785519081675_amd8sy8h3",
       "nombre": "CLAUDIA GARCIA SANTANA",
-      "activo": true,
-      "personas": 2,
-      "capacidad_semanal": 112,
-      "telefono": "",
-      "especialidades": [],
-      "maquinas": [],
       "notas": "",
-      "created_at": "2026-07-31"
+      "personas": 2,
+      "telefono": ""
     },
     {
-      "id": "id_1785542242802_eoszw4ttr",
-      "nombre": "FENIO",
       "activo": true,
-      "tipo": "maquila",
-      "personas": 1,
       "capacidad_semanal": 10,
-      "telefono": "",
+      "created_at": "2026-07-31",
       "especialidades": [
         "CAMISETAS",
         "CONJUNTOS",
         "BLUSAS"
       ],
-      "maquinas": [],
+      "id": "id_1785542242802_eoszw4ttr",
+      "nombre": "FENIO",
       "notas": "",
-      "created_at": "2026-07-31"
+      "personas": 1,
+      "telefono": "",
+      "tipo": "maquila"
     },
     {
-      "id": "id_1785542281755_ofbp4w9w9",
-      "nombre": "MARILUZ TEJIDOS",
       "activo": true,
-      "tipo": "maquila",
-      "personas": 1,
       "capacidad_semanal": 500,
-      "telefono": "",
+      "created_at": "2026-07-31",
       "especialidades": [
         "CAMISETAS",
         "BUZOS"
       ],
-      "maquinas": [],
+      "id": "id_1785542281755_ofbp4w9w9",
+      "nombre": "MARILUZ TEJIDOS",
       "notas": "",
-      "created_at": "2026-07-31"
+      "personas": 1,
+      "telefono": "",
+      "tipo": "maquila"
     },
     {
-      "id": "id_1785542347630_541ck1p35",
-      "nombre": "FLOYD JEANS",
       "activo": true,
-      "tipo": "maquila",
-      "personas": 1,
       "capacidad_semanal": 1,
-      "telefono": "",
+      "created_at": "2026-07-31",
       "especialidades": [
         "CAMISETAS",
         "PANTALONES",
         "FALDA"
       ],
-      "maquinas": [],
+      "id": "id_1785542347630_541ck1p35",
+      "nombre": "FLOYD JEANS",
       "notas": "",
-      "created_at": "2026-07-31"
+      "personas": 1,
+      "telefono": "",
+      "tipo": "maquila"
     },
     {
-      "id": "id_1785542370671_d6vaaxzfw",
-      "nombre": "TAIPAN JEANS",
       "activo": true,
-      "tipo": "maquila",
-      "personas": 1,
       "capacidad_semanal": 1,
-      "telefono": "",
+      "created_at": "2026-07-31",
       "especialidades": [
         "PANTALONES"
       ],
-      "maquinas": [],
+      "id": "id_1785542370671_d6vaaxzfw",
+      "nombre": "TAIPAN JEANS",
       "notas": "",
-      "created_at": "2026-07-31"
+      "personas": 1,
+      "telefono": "",
+      "tipo": "maquila"
     },
     {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2026-08-13",
+      "especialidades": [
+        "CHAQUETAS",
+        "BUZOS",
+        "GABAN",
+        "CHALECOS"
+      ],
       "id": "id_1786635928136_jgb934912",
       "nombre": "MARIA JOHANNA AYA TORRES",
-      "activo": true,
-      "tipo": "interno",
+      "notas": "",
       "personas": 2,
-      "capacidad_semanal": 0,
       "telefono": "3208146346",
+      "tipo": "interno"
+    },
+    {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2026-08-13",
       "especialidades": [
         "CHAQUETAS",
         "BUZOS",
         "GABAN",
-        "CHALECOS"
+        "CHALECOS",
+        "ABRIGOS"
       ],
-      "maquinas": [],
-      "notas": "",
-      "created_at": "2026-08-13"
-    },
-    {
       "id": "id_1786636077061_o9ixkldbe",
       "nombre": "SALCEDO VIVAS PEÑA BELTRAN",
-      "activo": true,
-      "tipo": "interno",
+      "notas": "",
       "personas": 3,
-      "capacidad_semanal": 0,
       "telefono": "3337041358",
+      "tipo": "interno"
+    },
+    {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2026-08-13",
       "especialidades": [
+        "CAMISAS",
         "CHAQUETAS",
         "BUZOS",
         "GABAN",
+        "CONJUNTOS",
         "CHALECOS",
-        "ABRIGOS"
+        "PANTALONES",
+        "ABRIGOS",
+        "FALDA",
+        "BLUSAS",
+        "CAMISONES"
       ],
-      "maquinas": [],
-      "notas": "",
-      "created_at": "2026-08-13"
-    },
-    {
       "id": "id_1786636151819_l1ebf9vx9",
       "nombre": "yurfraidid del rio valencia",
-      "activo": true,
-      "tipo": "interno",
-      "personas": 2,
-      "capacidad_semanal": 0,
-      "telefono": "3208130778",
-      "especialidades": [
-        "CAMISAS",
-        "CHAQUETAS",
-        "BUZOS",
-        "GABAN",
-        "CONJUNTOS",
-        "CHALECOS",
-        "PANTALONES",
-        "ABRIGOS",
-        "FALDA",
-        "BLUSAS",
-        "CAMISONES"
-      ],
-      "maquinas": [],
       "notas": "",
-      "created_at": "2026-08-13"
+      "personas": 2,
+      "telefono": "3208130778",
+      "tipo": "interno"
     },
     {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2026-08-13",
+      "especialidades": [
+        "CHAQUETAS",
+        "BUZOS",
+        "CONJUNTOS",
+        "CHALECOS"
+      ],
       "id": "id_1786636234858_ymxshf44o",
       "nombre": "ronald sebastian gonzalez",
-      "activo": true,
-      "tipo": "interno",
-      "personas": 3,
-      "capacidad_semanal": 0,
-      "telefono": "3176046153",
-      "especialidades": [
-        "CHAQUETAS",
-        "BUZOS",
-        "CONJUNTOS",
-        "CHALECOS"
-      ],
-      "maquinas": [],
       "notas": "",
-      "created_at": "2026-08-13"
+      "personas": 3,
+      "telefono": "3176046153",
+      "tipo": "interno"
     },
     {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2026-08-13",
+      "especialidades": [
+        "CAMISAS",
+        "CHAQUETAS",
+        "CAMISETAS",
+        "BUZOS",
+        "GABAN",
+        "CONJUNTOS",
+        "CHALECOS",
+        "PANTALONES",
+        "ABRIGOS",
+        "FALDA",
+        "BLUSAS",
+        "VESTIDOS",
+        "CAMISONES"
+      ],
       "id": "id_1786649501329_3ghknzahs",
       "nombre": "Michelle Carolina Pérez Fernández",
-      "activo": true,
-      "tipo": "interno",
-      "personas": 3,
-      "capacidad_semanal": 0,
-      "telefono": "3168213591",
-      "especialidades": [
-        "CAMISAS",
-        "CHAQUETAS",
-        "CAMISETAS",
-        "BUZOS",
-        "GABAN",
-        "CONJUNTOS",
-        "CHALECOS",
-        "PANTALONES",
-        "ABRIGOS",
-        "FALDA",
-        "BLUSAS",
-        "VESTIDOS",
-        "CAMISONES"
-      ],
-      "maquinas": [],
       "notas": "",
-      "created_at": "2026-08-13",
-      "producto_terminado": false
+      "personas": 3,
+      "producto_terminado": false,
+      "telefono": "3168213591",
+      "tipo": "interno"
     },
     {
-      "id": "id_1787947670302_jbputq1ae",
-      "nombre": "MERY OFIR GARCIA",
       "activo": true,
-      "tipo": "interno",
-      "personas": 1,
       "capacidad_semanal": 0,
-      "telefono": "3045916434",
+      "created_at": "2026-08-28",
       "especialidades": [
         "CHAQUETAS",
         "BUZOS",
         "GABAN",
         "CHALECOS"
       ],
+      "id": "id_1787947670302_jbputq1ae",
       "maquinas": [
         {
-          "tipo": "PLANA",
-          "cantidad": 1
+          "cantidad": 1,
+          "tipo": "PLANA"
         }
       ],
+      "nombre": "MERY OFIR GARCIA",
       "notas": "",
-      "created_at": "2026-08-28"
+      "personas": 1,
+      "telefono": "3045916434",
+      "tipo": "interno"
     },
     {
-      "id": "id_1788532493854_7o242sqb6",
-      "nombre": "LUZ MARINA VERGEL",
       "activo": true,
-      "tipo": "interno",
-      "personas": 1,
       "capacidad_semanal": 0,
-      "telefono": "3169619758",
+      "created_at": "2026-09-04",
       "especialidades": [
         "CHAQUETAS"
       ],
-      "maquinas": [],
+      "id": "id_1788532493854_7o242sqb6",
+      "nombre": "LUZ MARINA VERGEL",
       "notas": "",
-      "created_at": "2026-09-04"
+      "personas": 1,
+      "telefono": "3169619758",
+      "tipo": "interno"
     },
     {
-      "id": "id_1788540583996_ejrvewwdv",
-      "nombre": "NOHELIA ESTHER CHARRIS",
       "activo": true,
-      "tipo": "interno",
-      "personas": 1,
       "capacidad_semanal": 0,
-      "telefono": "314 2960522",
+      "created_at": "2026-09-04",
       "especialidades": [
         "CAMISAS",
         "CHAQUETAS",
@@ -642,34 +584,32 @@
         "VESTIDOS",
         "CAMISONES"
       ],
-      "maquinas": [],
+      "id": "id_1788540583996_ejrvewwdv",
+      "nombre": "NOHELIA ESTHER CHARRIS",
       "notas": "",
-      "created_at": "2026-09-04"
+      "personas": 1,
+      "telefono": "314 2960522",
+      "tipo": "interno"
     },
     {
-      "id": "id_1789247121946_bk6io1hch",
-      "nombre": "LUZ MIRIAM PULIDO",
       "activo": false,
-      "tipo": "interno",
-      "personas": 2,
       "capacidad_semanal": 0,
-      "telefono": "3138300552",
+      "created_at": "2026-09-12",
       "especialidades": [
         "CHAQUETAS"
       ],
-      "maquinas": [],
+      "id": "id_1789247121946_bk6io1hch",
+      "nombre": "LUZ MIRIAM PULIDO",
       "notas": "",
-      "created_at": "2026-09-12",
-      "producto_terminado": false
+      "personas": 2,
+      "producto_terminado": false,
+      "telefono": "3138300552",
+      "tipo": "interno"
     },
     {
-      "id": "id_1789247165698_rn2aftord",
-      "nombre": "NORMA PATRICIA RODRIGUEZ",
       "activo": true,
-      "tipo": "interno",
-      "personas": 1,
       "capacidad_semanal": 0,
-      "telefono": "3219241299",
+      "created_at": "2026-09-12",
       "especialidades": [
         "CHAQUETAS",
         "BUZOS",
@@ -677,18 +617,17 @@
         "CHALECOS",
         "ABRIGOS"
       ],
-      "maquinas": [],
+      "id": "id_1789247165698_rn2aftord",
+      "nombre": "NORMA PATRICIA RODRIGUEZ",
       "notas": "",
-      "created_at": "2026-09-12"
+      "personas": 1,
+      "telefono": "3219241299",
+      "tipo": "interno"
     },
     {
-      "id": "id_1789247219465_b5srzxu83",
-      "nombre": "MARIA CECILIA MARTINEZ",
       "activo": true,
-      "tipo": "interno",
-      "personas": 4,
       "capacidad_semanal": 0,
-      "telefono": "314315075",
+      "created_at": "2026-09-12",
       "especialidades": [
         "CAMISAS",
         "CHAQUETAS",
@@ -703,36 +642,34 @@
         "VESTIDOS",
         "CAMISONES"
       ],
-      "maquinas": [],
+      "id": "id_1789247219465_b5srzxu83",
+      "nombre": "MARIA CECILIA MARTINEZ",
       "notas": "",
-      "created_at": "2026-09-12"
+      "personas": 4,
+      "telefono": "314315075",
+      "tipo": "interno"
     },
     {
-      "id": "id_1789247249824_l2i6ww211",
-      "nombre": "ANA BRIGITT PEREZ",
       "activo": true,
-      "tipo": "interno",
-      "personas": 1,
       "capacidad_semanal": 0,
-      "telefono": "",
+      "created_at": "2026-09-12",
       "especialidades": [
         "CHAQUETAS",
         "BUZOS",
         "GABAN",
         "CHALECOS"
       ],
-      "maquinas": [],
+      "id": "id_1789247249824_l2i6ww211",
+      "nombre": "ANA BRIGITT PEREZ",
       "notas": "",
-      "created_at": "2026-09-12"
+      "personas": 1,
+      "telefono": "",
+      "tipo": "interno"
     },
     {
-      "id": "id_1789247306328_smd3rq88s",
-      "nombre": "GRACIELA GUERRERO MOLINA",
       "activo": true,
-      "tipo": "interno",
-      "personas": 2,
       "capacidad_semanal": 0,
-      "telefono": "3208022048",
+      "created_at": "2026-09-12",
       "especialidades": [
         "CAMISAS",
         "CHAQUETAS",
@@ -748,33 +685,31 @@
         "VESTIDOS",
         "CAMISONES"
       ],
-      "maquinas": [],
+      "id": "id_1789247306328_smd3rq88s",
+      "nombre": "GRACIELA GUERRERO MOLINA",
       "notas": "",
-      "created_at": "2026-09-12"
+      "personas": 2,
+      "telefono": "3208022048",
+      "tipo": "interno"
     },
     {
-      "id": "id_1789247352855_idq6jtrgw",
-      "nombre": "ADRIANA CONSUELO RODRIGUEZ",
       "activo": true,
-      "tipo": "interno",
-      "personas": 1,
       "capacidad_semanal": 0,
-      "telefono": "3007776706",
+      "created_at": "2026-09-12",
       "especialidades": [
         "CHAQUETAS"
       ],
-      "maquinas": [],
+      "id": "id_1789247352855_idq6jtrgw",
+      "nombre": "ADRIANA CONSUELO RODRIGUEZ",
       "notas": "",
-      "created_at": "2026-09-12"
+      "personas": 1,
+      "telefono": "3007776706",
+      "tipo": "interno"
     },
     {
-      "id": "id_1789247395271_gvumxue57",
-      "nombre": "XIOMARA ALEJANDRA PLAZAS",
       "activo": true,
-      "tipo": "interno",
-      "personas": 2,
       "capacidad_semanal": 0,
-      "telefono": "",
+      "created_at": "2026-09-12",
       "especialidades": [
         "CAMISAS",
         "CHAQUETAS",
@@ -788,36 +723,60 @@
         "VESTIDOS",
         "CAMISONES"
       ],
-      "maquinas": [],
+      "id": "id_1789247395271_gvumxue57",
+      "nombre": "XIOMARA ALEJANDRA PLAZAS",
       "notas": "",
-      "created_at": "2026-09-12"
+      "personas": 2,
+      "telefono": "",
+      "tipo": "interno"
     },
     {
-      "id": "id_1789247444989_0c9cci5mp",
-      "nombre": "MAGDALENA FORIGUA",
       "activo": true,
-      "tipo": "interno",
-      "personas": 1,
       "capacidad_semanal": 0,
-      "telefono": "3224378700",
+      "created_at": "2026-09-12",
       "especialidades": [
         "CHAQUETAS",
         "GABAN",
         "CHALECOS",
         "ABRIGOS"
       ],
-      "maquinas": [],
+      "id": "id_1789247444989_0c9cci5mp",
+      "nombre": "MAGDALENA FORIGUA",
       "notas": "",
-      "created_at": "2026-09-12"
+      "personas": 1,
+      "telefono": "3224378700",
+      "tipo": "interno"
     },
     {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2026-09-12",
+      "especialidades": [
+        "CAMISAS",
+        "CHAQUETAS",
+        "CAMISETAS",
+        "BUZOS",
+        "GABAN",
+        "CONJUNTOS",
+        "CHALECOS",
+        "PANTALONES",
+        "ABRIGOS",
+        "FALDA",
+        "BLUSAS",
+        "VESTIDOS",
+        "CAMISONES"
+      ],
       "id": "id_1789247533373_gilb89jyc",
       "nombre": "YOLANDA CAMACHO",
-      "activo": true,
-      "tipo": "interno",
+      "notas": "",
       "personas": 2,
-      "capacidad_semanal": 0,
       "telefono": "3138490672",
+      "tipo": "interno"
+    },
+    {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2026-09-15",
       "especialidades": [
         "CAMISAS",
         "CHAQUETAS",
@@ -833,60 +792,57 @@
         "VESTIDOS",
         "CAMISONES"
       ],
-      "maquinas": [],
-      "notas": "",
-      "created_at": "2026-09-12"
-    },
-    {
       "id": "id_1789494651691_89i1so5n9",
       "nombre": "BLANCA NELLY GOMEZ",
-      "activo": true,
-      "tipo": "interno",
-      "personas": 2,
-      "capacidad_semanal": 0,
-      "telefono": "3223313257",
-      "especialidades": [
-        "CAMISAS",
-        "CHAQUETAS",
-        "CAMISETAS",
-        "BUZOS",
-        "GABAN",
-        "CONJUNTOS",
-        "CHALECOS",
-        "PANTALONES",
-        "ABRIGOS",
-        "FALDA",
-        "BLUSAS",
-        "VESTIDOS",
-        "CAMISONES"
-      ],
-      "maquinas": [],
       "notas": "",
-      "created_at": "2026-09-15"
+      "personas": 2,
+      "telefono": "3223313257",
+      "tipo": "interno"
     },
     {
-      "id": "id_1789587911711_aexkkxr7d",
-      "nombre": "LETICIA VILLAMIZAR",
       "activo": true,
-      "tipo": "interno",
-      "personas": 3,
       "capacidad_semanal": 0,
-      "telefono": "3228796824",
+      "created_at": "2026-09-16",
       "especialidades": [
         "CHAQUETAS"
       ],
-      "maquinas": [],
+      "id": "id_1789587911711_aexkkxr7d",
+      "nombre": "LETICIA VILLAMIZAR",
       "notas": "",
-      "created_at": "2026-09-16"
+      "personas": 3,
+      "telefono": "3228796824",
+      "tipo": "interno"
     },
     {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2026-09-19",
+      "especialidades": [
+        "CAMISAS",
+        "CHAQUETAS",
+        "CAMISETAS",
+        "BUZOS",
+        "GABAN",
+        "CONJUNTOS",
+        "CHALECOS",
+        "PANTALONES",
+        "ABRIGOS",
+        "FALDA",
+        "BLUSAS",
+        "VESTIDOS",
+        "CAMISONES"
+      ],
       "id": "id_1789824418634_ojryqap9f",
       "nombre": "ELIZABETH HERNANDEZ FORERO",
-      "activo": true,
-      "tipo": "interno",
+      "notas": "",
       "personas": 1,
-      "capacidad_semanal": 0,
       "telefono": "3172538939",
+      "tipo": "interno"
+    },
+    {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2026-09-25",
       "especialidades": [
         "CAMISAS",
         "CHAQUETAS",
@@ -902,66 +858,37 @@
         "VESTIDOS",
         "CAMISONES"
       ],
-      "maquinas": [],
-      "notas": "",
-      "created_at": "2026-09-19"
-    },
-    {
       "id": "id_1790343464316_t9qsof62u",
       "nombre": "NANCY MILENA CANO",
-      "activo": true,
-      "tipo": "interno",
+      "notas": "",
       "personas": 1,
-      "capacidad_semanal": 0,
       "telefono": "3007280644",
+      "tipo": "interno"
+    },
+    {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2026-10-02",
       "especialidades": [
-        "CAMISAS",
         "CHAQUETAS",
-        "CAMISETAS",
         "BUZOS",
         "GABAN",
-        "CONJUNTOS",
         "CHALECOS",
-        "PANTALONES",
         "ABRIGOS",
-        "FALDA",
-        "BLUSAS",
         "VESTIDOS",
         "CAMISONES"
       ],
-      "maquinas": [],
-      "notas": "",
-      "created_at": "2026-09-25"
-    },
-    {
       "id": "id_1790962829340_pi9hqnt0f",
       "nombre": "LISBETH RODRIGUEZ",
-      "activo": true,
-      "tipo": "interno",
-      "personas": 3,
-      "capacidad_semanal": 0,
-      "telefono": "3012097442",
-      "especialidades": [
-        "CHAQUETAS",
-        "BUZOS",
-        "GABAN",
-        "CHALECOS",
-        "ABRIGOS",
-        "VESTIDOS",
-        "CAMISONES"
-      ],
-      "maquinas": [],
       "notas": "",
-      "created_at": "2026-10-02"
+      "personas": 3,
+      "telefono": "3012097442",
+      "tipo": "interno"
     },
     {
-      "id": "id_1790980642904_y1dcsc1z4",
-      "nombre": "MAGNOLIA VANEGAS",
       "activo": true,
-      "tipo": "interno",
-      "personas": 2,
       "capacidad_semanal": 0,
-      "telefono": "3223924610",
+      "created_at": "2026-10-02",
       "especialidades": [
         "CAMISAS",
         "CHAQUETAS",
@@ -975,18 +902,17 @@
         "FALDA",
         "BLUSAS"
       ],
-      "maquinas": [],
+      "id": "id_1790980642904_y1dcsc1z4",
+      "nombre": "MAGNOLIA VANEGAS",
       "notas": "",
-      "created_at": "2026-10-02"
+      "personas": 2,
+      "telefono": "3223924610",
+      "tipo": "interno"
     },
     {
-      "id": "id_1790980800635_i3muyddob",
-      "nombre": "JONATAN ROJAS CASTRO",
       "activo": true,
-      "tipo": "interno",
-      "personas": 1,
       "capacidad_semanal": 0,
-      "telefono": "3126584000",
+      "created_at": "2026-10-02",
       "especialidades": [
         "CHAQUETAS",
         "BUZOS",
@@ -994,18 +920,17 @@
         "CONJUNTOS",
         "CHALECOS"
       ],
-      "maquinas": [],
+      "id": "id_1790980800635_i3muyddob",
+      "nombre": "JONATAN ROJAS CASTRO",
       "notas": "",
-      "created_at": "2026-10-02"
+      "personas": 1,
+      "telefono": "3126584000",
+      "tipo": "interno"
     },
     {
-      "id": "id_1790980909062_0rec7s347",
-      "nombre": "NATALIA ORTIZ MONROY",
       "activo": true,
-      "tipo": "interno",
-      "personas": 1,
       "capacidad_semanal": 0,
-      "telefono": "3153744563",
+      "created_at": "2026-10-02",
       "especialidades": [
         "CHAQUETAS",
         "BUZOS",
@@ -1013,18 +938,17 @@
         "CHALECOS",
         "ABRIGOS"
       ],
-      "maquinas": [],
+      "id": "id_1790980909062_0rec7s347",
+      "nombre": "NATALIA ORTIZ MONROY",
       "notas": "",
-      "created_at": "2026-10-02"
+      "personas": 1,
+      "telefono": "3153744563",
+      "tipo": "interno"
     },
     {
-      "id": "id_1791034396080_jplfjc1os",
-      "nombre": "DAYANA JOYA ROJAS",
       "activo": true,
-      "tipo": "interno",
-      "personas": 1,
       "capacidad_semanal": 0,
-      "telefono": "3024426018",
+      "created_at": "2026-10-03",
       "especialidades": [
         "CAMISAS",
         "CHAQUETAS",
@@ -1040,98 +964,118 @@
         "VESTIDOS",
         "CAMISONES"
       ],
-      "maquinas": [],
+      "id": "id_1791034396080_jplfjc1os",
+      "nombre": "DAYANA JOYA ROJAS",
       "notas": "",
-      "created_at": "2026-10-03"
+      "personas": 1,
+      "telefono": "3024426018",
+      "tipo": "interno"
     },
     {
-      "id": "id_1791041566389_cp7sarlbz",
-      "nombre": "CRISTINA AGUILAR",
       "activo": true,
-      "tipo": "interno",
-      "personas": 1,
       "capacidad_semanal": 0,
-      "telefono": "3241020948",
+      "created_at": "2026-10-03",
       "especialidades": [
         "CHAQUETAS",
         "BUZOS",
         "GABAN",
         "CONJUNTOS"
       ],
-      "maquinas": [],
+      "id": "id_1791041566389_cp7sarlbz",
+      "nombre": "CRISTINA AGUILAR",
       "notas": "",
-      "created_at": "2026-10-03"
+      "personas": 1,
+      "telefono": "3241020948",
+      "tipo": "interno"
     },
     {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2026-10-03",
+      "especialidades": [
+        "CAMISAS",
+        "CHAQUETAS",
+        "CAMISETAS",
+        "BUZOS",
+        "GABAN",
+        "CONJUNTOS",
+        "CHALECOS",
+        "PANTALONES",
+        "ABRIGOS",
+        "FALDA",
+        "BLUSAS",
+        "VESTIDOS",
+        "CAMISONES"
+      ],
       "id": "id_1791041609443_zfe1fd7cz",
       "nombre": "DALILA RENFIGO QUINTANA",
-      "activo": true,
-      "tipo": "interno",
-      "personas": 2,
-      "capacidad_semanal": 0,
-      "telefono": "3054707109",
-      "especialidades": [
-        "CAMISAS",
-        "CHAQUETAS",
-        "CAMISETAS",
-        "BUZOS",
-        "GABAN",
-        "CONJUNTOS",
-        "CHALECOS",
-        "PANTALONES",
-        "ABRIGOS",
-        "FALDA",
-        "BLUSAS",
-        "VESTIDOS",
-        "CAMISONES"
-      ],
-      "maquinas": [],
       "notas": "",
-      "created_at": "2026-10-03"
+      "personas": 2,
+      "telefono": "3054707109",
+      "tipo": "interno"
     },
     {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2026-10-03",
+      "especialidades": [
+        "CHAQUETAS",
+        "BUZOS",
+        "GABAN",
+        "ABRIGOS"
+      ],
       "id": "id_1791041715874_7gqlg506i",
       "nombre": "YOESLY JAIMAR PERNIA",
-      "activo": true,
-      "tipo": "interno",
+      "notas": "",
       "personas": 1,
-      "capacidad_semanal": 0,
       "telefono": "3102449703",
+      "tipo": "interno"
+    },
+    {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2026-10-03",
       "especialidades": [
         "CHAQUETAS",
         "BUZOS",
-        "GABAN",
-        "ABRIGOS"
+        "GABAN"
       ],
-      "maquinas": [],
-      "notas": "",
-      "created_at": "2026-10-03"
-    },
-    {
       "id": "id_1791041781458_5lpele44f",
       "nombre": "MAYERLIN PULIDO MARTINEZ",
-      "activo": true,
-      "tipo": "interno",
-      "personas": 5,
-      "capacidad_semanal": 0,
-      "telefono": "3227819639",
-      "especialidades": [
-        "CHAQUETAS",
-        "BUZOS",
-        "GABAN"
-      ],
-      "maquinas": [],
       "notas": "",
-      "created_at": "2026-10-03"
+      "personas": 5,
+      "telefono": "3227819639",
+      "tipo": "interno"
     },
     {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2026-10-03",
+      "especialidades": [
+        "CAMISAS",
+        "CHAQUETAS",
+        "CAMISETAS",
+        "BUZOS",
+        "GABAN",
+        "CONJUNTOS",
+        "CHALECOS",
+        "ABRIGOS",
+        "FALDA",
+        "BLUSAS",
+        "VESTIDOS",
+        "CAMISONES"
+      ],
       "id": "id_1791041828921_s5369mflr",
       "nombre": "FRANCY CAROLINA BARRIOS",
-      "activo": true,
-      "tipo": "interno",
+      "notas": "",
       "personas": 4,
-      "capacidad_semanal": 0,
       "telefono": "3002137112",
+      "tipo": "interno"
+    },
+    {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2026-10-03",
       "especialidades": [
         "CAMISAS",
         "CHAQUETAS",
@@ -1140,113 +1084,83 @@
         "GABAN",
         "CONJUNTOS",
         "CHALECOS",
+        "PANTALONES",
         "ABRIGOS",
         "FALDA",
         "BLUSAS",
         "VESTIDOS",
         "CAMISONES"
       ],
-      "maquinas": [],
-      "notas": "",
-      "created_at": "2026-10-03"
-    },
-    {
       "id": "id_1791041869265_ydmh32xp5",
       "nombre": "DIANA MARIA SOACHE",
-      "activo": true,
-      "tipo": "interno",
-      "personas": 3,
-      "capacidad_semanal": 0,
-      "telefono": "3194395045",
-      "especialidades": [
-        "CAMISAS",
-        "CHAQUETAS",
-        "CAMISETAS",
-        "BUZOS",
-        "GABAN",
-        "CONJUNTOS",
-        "CHALECOS",
-        "PANTALONES",
-        "ABRIGOS",
-        "FALDA",
-        "BLUSAS",
-        "VESTIDOS",
-        "CAMISONES"
-      ],
-      "maquinas": [],
       "notas": "",
-      "created_at": "2026-10-03"
+      "personas": 3,
+      "telefono": "3194395045",
+      "tipo": "interno"
     },
     {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2026-10-03",
+      "especialidades": [
+        "CHAQUETAS",
+        "BUZOS",
+        "GABAN",
+        "ABRIGOS"
+      ],
       "id": "id_1791041916920_32uiboggn",
       "nombre": "NADIA CAROLINA SIERRA TORRES",
-      "activo": true,
-      "tipo": "interno",
-      "personas": 1,
-      "capacidad_semanal": 0,
-      "telefono": "3193344757",
-      "especialidades": [
-        "CHAQUETAS",
-        "BUZOS",
-        "GABAN",
-        "ABRIGOS"
-      ],
-      "maquinas": [],
       "notas": "",
-      "created_at": "2026-10-03"
+      "personas": 1,
+      "telefono": "3193344757",
+      "tipo": "interno"
     },
     {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2026-10-03",
+      "especialidades": [
+        "CAMISAS",
+        "CHAQUETAS",
+        "CAMISETAS",
+        "BUZOS",
+        "GABAN",
+        "CONJUNTOS",
+        "CHALECOS",
+        "PANTALONES",
+        "ABRIGOS",
+        "FALDA",
+        "BLUSAS",
+        "VESTIDOS",
+        "CAMISONES"
+      ],
       "id": "id_1791041993096_c9ehokm42",
       "nombre": "MARGOT BARRERA PERILLA",
-      "activo": true,
-      "tipo": "interno",
-      "personas": 1,
-      "capacidad_semanal": 0,
-      "telefono": "3124907978",
-      "especialidades": [
-        "CAMISAS",
-        "CHAQUETAS",
-        "CAMISETAS",
-        "BUZOS",
-        "GABAN",
-        "CONJUNTOS",
-        "CHALECOS",
-        "PANTALONES",
-        "ABRIGOS",
-        "FALDA",
-        "BLUSAS",
-        "VESTIDOS",
-        "CAMISONES"
-      ],
-      "maquinas": [],
       "notas": "",
-      "created_at": "2026-10-03"
+      "personas": 1,
+      "telefono": "3124907978",
+      "tipo": "interno"
     },
     {
+      "activo": true,
+      "capacidad_semanal": 0,
+      "created_at": "2026-10-03",
+      "especialidades": [
+        "CHAQUETAS",
+        "BUZOS",
+        "GABAN"
+      ],
       "id": "id_1791042050391_8e3qxw6j2",
       "nombre": "EDILMA MENDOZA MENDOZA",
-      "activo": true,
-      "tipo": "interno",
-      "personas": 3,
-      "capacidad_semanal": 0,
-      "telefono": "3213594876",
-      "especialidades": [
-        "CHAQUETAS",
-        "BUZOS",
-        "GABAN"
-      ],
-      "maquinas": [],
       "notas": "",
-      "created_at": "2026-10-03"
+      "personas": 3,
+      "telefono": "3213594876",
+      "tipo": "interno"
     },
     {
-      "id": "id_1791042119847_0ii3h159q",
-      "nombre": "LISETH DEL CARMEN  BAENA BANDERA",
       "activo": true,
-      "tipo": "interno",
-      "personas": 1,
       "capacidad_semanal": 0,
-      "telefono": "3138824845",
+      "created_at": "2026-10-03",
       "especialidades": [
         "CAMISAS",
         "CHAQUETAS",
@@ -1262,68 +1176,64 @@
         "VESTIDOS",
         "CAMISONES"
       ],
-      "maquinas": [],
+      "id": "id_1791042119847_0ii3h159q",
+      "nombre": "LISETH DEL CARMEN  BAENA BANDERA",
       "notas": "",
-      "created_at": "2026-10-03"
+      "personas": 1,
+      "telefono": "3138824845",
+      "tipo": "interno"
     },
     {
-      "id": "id_1791043164772_6f7d86le8",
-      "nombre": "LUZ ADRIANA HOLGUIN PARDO",
       "activo": true,
-      "tipo": "interno",
-      "personas": 3,
       "capacidad_semanal": 0,
-      "telefono": "3015349402",
+      "created_at": "2026-10-03",
       "especialidades": [
         "CHAQUETAS",
         "BUZOS",
         "GABAN"
       ],
-      "maquinas": [],
+      "id": "id_1791043164772_6f7d86le8",
+      "nombre": "LUZ ADRIANA HOLGUIN PARDO",
       "notas": "",
-      "created_at": "2026-10-03"
+      "personas": 3,
+      "telefono": "3015349402",
+      "tipo": "interno"
     },
     {
-      "id": "id_1791043199156_va8ofn999",
-      "nombre": "CARMENZA GUTIERREZ",
       "activo": true,
-      "tipo": "interno",
-      "personas": 1,
       "capacidad_semanal": 0,
-      "telefono": "3124578908",
+      "created_at": "2026-10-03",
       "especialidades": [
         "CHAQUETAS",
         "BUZOS",
         "GABAN",
         "ABRIGOS"
       ],
-      "maquinas": [],
+      "id": "id_1791043199156_va8ofn999",
+      "nombre": "CARMENZA GUTIERREZ",
       "notas": "",
-      "created_at": "2026-10-03"
+      "personas": 1,
+      "telefono": "3124578908",
+      "tipo": "interno"
     },
     {
-      "id": "id_1792097677463_ih068ex2h",
-      "nombre": "ROSA VALDERRAMA",
       "activo": true,
-      "tipo": "interno",
-      "personas": 3,
       "capacidad_semanal": 0,
-      "telefono": "3124063309",
+      "created_at": "2026-10-15",
       "especialidades": [
         "CHAQUETAS"
       ],
-      "maquinas": [],
+      "id": "id_1792097677463_ih068ex2h",
+      "nombre": "ROSA VALDERRAMA",
       "notas": "",
-      "created_at": "2026-10-15"
+      "personas": 3,
+      "telefono": "3124063309",
+      "tipo": "interno"
     },
     {
-      "id": "id_1792108110093_vputgj87y",
-      "nombre": "ELIZABETH RUIZ MARTINEZ",
       "activo": true,
-      "tipo": "interno",
-      "personas": 1,
       "capacidad_semanal": 0,
-      "telefono": "3114495638",
+      "created_at": "2026-10-15",
       "especialidades": [
         "CAMISAS",
         "CHAQUETAS",
@@ -1338,18 +1248,17 @@
         "VESTIDOS",
         "CAMISONES"
       ],
-      "maquinas": [],
+      "id": "id_1792108110093_vputgj87y",
+      "nombre": "ELIZABETH RUIZ MARTINEZ",
       "notas": "",
-      "created_at": "2026-10-15"
+      "personas": 1,
+      "telefono": "3114495638",
+      "tipo": "interno"
     },
     {
-      "id": "id_1792265698470_wrade47pt",
-      "nombre": "WILSON REALPE MARTINEZ",
       "activo": true,
-      "tipo": "interno",
-      "personas": 3,
       "capacidad_semanal": 0,
-      "telefono": "3173614636-3102504464",
+      "created_at": "2026-10-17",
       "especialidades": [
         "CHAQUETAS",
         "BUZOS",
@@ -1357,9 +1266,39 @@
         "ABRIGOS",
         "CAMISONES"
       ],
+      "id": "id_1792265698470_wrade47pt",
+      "nombre": "WILSON REALPE MARTINEZ",
+      "notas": "",
+      "personas": 3,
+      "telefono": "3173614636-3102504464",
+      "tipo": "interno"
+    },
+    {
+      "id": "id_1792611658337_gpoia1fga",
+      "nombre": "LUZ DARY VANEGAS GUEVARA",
+      "activo": true,
+      "tipo": "interno",
+      "personas": 1,
+      "capacidad_semanal": 0,
+      "telefono": "320382201",
+      "especialidades": [
+        "CAMISAS",
+        "CHAQUETAS",
+        "CAMISETAS",
+        "BUZOS",
+        "GABAN",
+        "CONJUNTOS",
+        "CHALECOS",
+        "PANTALONES",
+        "ABRIGOS",
+        "FALDA",
+        "BLUSAS",
+        "VESTIDOS",
+        "CAMISONES"
+      ],
       "maquinas": [],
       "notas": "",
-      "created_at": "2026-10-17"
+      "created_at": "2026-10-21"
     }
   ]
 }
