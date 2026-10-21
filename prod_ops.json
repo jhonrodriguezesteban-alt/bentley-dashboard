@@ -11590,10 +11590,10 @@
       ],
       "subg_estados": {
         "OP-2026-202||AVENA": "PENDIENTE_CORTAR",
-        "OP-2026-202||CAFE": "POR_REVISAR",
-        "OP-2026-202||GRIS OSCURO": "POR_REVISAR",
-        "OP-2026-202||MARFIL": "POR_REVISAR",
-        "OP-2026-202||NEGRO": "POR_REVISAR"
+        "OP-2026-202||CAFE": "CORTE_POR_ALISTAR",
+        "OP-2026-202||GRIS OSCURO": "CORTE_POR_ALISTAR",
+        "OP-2026-202||MARFIL": "CORTE_POR_ALISTAR",
+        "OP-2026-202||NEGRO": "CORTE_POR_ALISTAR"
       },
       "tallas": [
         "T8",
@@ -14036,7 +14036,10 @@
         "T12",
         "T14",
         "T16"
-      ]
+      ],
+      "trazos_color_solicitado": {
+        "NEGRO": true
+      }
     },
     {
       "cantidades": {
