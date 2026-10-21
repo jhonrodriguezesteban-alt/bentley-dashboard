@@ -32697,20 +32697,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MARFIL",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1792612006251_4js7j",
-      "ts": 1792612006251,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-223",
       "op_nombre": "CONJUNTO JACOBO",
       "referencia": "CONJUNTO JACOBO",
-      "color": "MARFIL",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1792612006251,
       "uds": 144,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792612339050_nyixq",
+      "ts": 1792612339050,
+      "user": "Jefa de Producción",
+      "tipo": "satelite_editar",
+      "satelite_id": "sat_22",
+      "nombre": "SHIRLEY ACOSTA",
+      "activo": true,
+      "personas": 0,
+      "capacidad": 0
     }
   ]
 }
