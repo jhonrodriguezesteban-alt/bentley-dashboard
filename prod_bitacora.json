@@ -33439,20 +33439,29 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "VERDE MILITAR",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1792708303014_ijd9a",
-      "ts": 1792708303014,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-129",
       "op_nombre": "CHAQUETA ONION",
       "referencia": "CHAQUETA ONION",
-      "color": "VERDE MILITAR",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1792708303014,
       "uds": 104,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792708381586_u2ffa",
+      "ts": 1792708381586,
+      "user": "Jefa de Producción",
+      "tipo": "satelite_crear",
+      "nombre": "JOHANA HERNANDEZ",
+      "personas": 3,
+      "capacidad": 0
     }
   ]
 }
