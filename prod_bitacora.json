@@ -33405,22 +33405,38 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1792708258956_29wod",
-      "ts": 1792708258956,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-129",
-      "op_nombre": "CHAQUETA ONION",
       "categoria": "CHAQUETAS",
-      "total_ots": 12,
-      "total_uds": 208,
       "colores": [
         "CAFE",
         "VERDE MILITAR"
       ],
+      "id": "evt_1792708258956_29wod",
+      "op_id": "OP-2026-129",
+      "op_nombre": "CHAQUETA ONION",
       "referencias": [
         "CHAQUETA ONION"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 12,
+      "total_uds": 208,
+      "ts": 1792708258956,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792708274975_sxki6",
+      "ts": 1792708274975,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-129",
+      "op_nombre": "CHAQUETA ONION",
+      "referencia": "CHAQUETA ONION",
+      "color": "CAFE",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 104,
+      "motivo": "EN TALLER"
     }
   ]
 }
