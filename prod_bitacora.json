@@ -33298,16 +33298,27 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1792686642798_7fxtn",
-      "ts": 1792686642798,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_9f96fe6d51ca4f0c",
-      "nombre": "VESTIDO MINI DRESS",
       "categoria": "Vestidos",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_9f96fe6d51ca4f0c",
       "estado_anterior": "EN_ESCALADO",
-      "estado_nuevo": "EN_REVISION_GERENCIA"
+      "estado_nuevo": "EN_REVISION_GERENCIA",
+      "id": "evt_1792686642798_7fxtn",
+      "marca": "Bentley Kids",
+      "nombre": "VESTIDO MINI DRESS",
+      "tipo": "estado_diseno",
+      "ts": 1792686642798,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1792686826025_dfuly",
+      "ts": 1792686826025,
+      "user": "Isabel",
+      "tipo": "diseno_responsable",
+      "diseno_id": "id_1785250179914_46vws1tz3",
+      "nombre": "CHAQUETA MINI PARIS",
+      "categoria": "Chaquetas",
+      "resp_anterior": "Carolina",
+      "resp_nuevo": "John"
     }
   ]
 }
