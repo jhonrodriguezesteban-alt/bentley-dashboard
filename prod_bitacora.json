@@ -33344,20 +33344,38 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "GRIS OSCURO",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1792708073670_y67pn",
-      "ts": 1792708073670,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-102",
       "op_nombre": "CHAQUETA ONION",
       "referencia": "CHAQUETA ONION",
-      "color": "GRIS OSCURO",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1792708073670,
       "uds": 102,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792708102863_e6ciq",
+      "ts": 1792708102863,
+      "user": "Jefa de Producción",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-090",
+      "op_nombre": "CHAQUETA ONION",
+      "categoria": "CHAQUETAS",
+      "total_ots": 6,
+      "total_uds": 84,
+      "colores": [
+        "VINOTINTO"
+      ],
+      "estado_inicial": "PENDIENTE_CORTAR",
+      "referencias": [
+        "CHAQUETA ONION"
+      ]
     }
   ]
 }
