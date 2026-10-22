@@ -6215,18 +6215,18 @@
     },
     {
       "cantidades": {
-        "VINOTINTO_T6": 12,
-        "VINOTINTO_T8": 12,
+        "GRIS OSCURO_T10": 12,
+        "GRIS OSCURO_T12": 16,
+        "GRIS OSCURO_T14": 16,
+        "GRIS OSCURO_T16": 16,
+        "GRIS OSCURO_T6": 12,
+        "GRIS OSCURO_T8": 12,
         "VINOTINTO_T10": 12,
         "VINOTINTO_T12": 21,
         "VINOTINTO_T14": 19,
         "VINOTINTO_T16": 16,
-        "GRIS OSCURO_T6": 12,
-        "GRIS OSCURO_T8": 12,
-        "GRIS OSCURO_T10": 12,
-        "GRIS OSCURO_T12": 16,
-        "GRIS OSCURO_T14": 16,
-        "GRIS OSCURO_T16": 16
+        "VINOTINTO_T6": 12,
+        "VINOTINTO_T8": 12
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -6258,14 +6258,28 @@
       "receta_nombre": "CHAQUETA ONION - REF: 1165",
       "referencias": [
         {
-          "nombre": "CHAQUETA ONION",
-          "ref": "1166",
+          "cantidades": {
+            "GRIS OSCURO_T10": 12,
+            "GRIS OSCURO_T12": 16,
+            "GRIS OSCURO_T14": 16,
+            "GRIS OSCURO_T16": 16,
+            "GRIS OSCURO_T6": 12,
+            "GRIS OSCURO_T8": 12,
+            "VINOTINTO_T10": 12,
+            "VINOTINTO_T12": 21,
+            "VINOTINTO_T14": 19,
+            "VINOTINTO_T16": 16,
+            "VINOTINTO_T6": 12,
+            "VINOTINTO_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 9000,
           "colores": [
             "VINOTINTO",
             "GRIS OSCURO"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA ONION",
+          "ref": "1166",
           "tallas": [
             "T6",
             "T8",
@@ -6274,23 +6288,12 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "VINOTINTO_T6": 12,
-            "VINOTINTO_T8": 12,
-            "VINOTINTO_T10": 12,
-            "VINOTINTO_T12": 21,
-            "VINOTINTO_T14": 19,
-            "VINOTINTO_T16": 16,
-            "GRIS OSCURO_T6": 12,
-            "GRIS OSCURO_T8": 12,
-            "GRIS OSCURO_T10": 12,
-            "GRIS OSCURO_T12": 16,
-            "GRIS OSCURO_T14": 16,
-            "GRIS OSCURO_T16": 16
-          },
-          "maquilador_id": ""
+          "vmo": 9000
         }
       ],
+      "subg_estados": {
+        "OP-2026-090||VINOTINTO": "CORTE_POR_ALISTAR"
+      },
       "tallas": [
         "T6",
         "T8",
@@ -6310,12 +6313,7 @@
           "solicitud_id": "id_1791980085840_4oxjycskb"
         }
       ],
-      "updated_at": "2026-10-22",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null,
-      "subg_estados": {
-        "OP-2026-090||VINOTINTO": "CORTE_POR_ALISTAR"
-      }
+      "updated_at": "2026-10-22"
     },
     {
       "cantidades": {
@@ -7310,18 +7308,18 @@
     },
     {
       "cantidades": {
-        "VINOTINTO_T6": 12,
-        "VINOTINTO_T8": 12,
+        "GRIS OSCURO_T10": 12,
+        "GRIS OSCURO_T12": 22,
+        "GRIS OSCURO_T14": 22,
+        "GRIS OSCURO_T16": 22,
+        "GRIS OSCURO_T6": 12,
+        "GRIS OSCURO_T8": 12,
         "VINOTINTO_T10": 12,
         "VINOTINTO_T12": 18,
         "VINOTINTO_T14": 18,
         "VINOTINTO_T16": 18,
-        "GRIS OSCURO_T6": 12,
-        "GRIS OSCURO_T8": 12,
-        "GRIS OSCURO_T10": 12,
-        "GRIS OSCURO_T12": 22,
-        "GRIS OSCURO_T14": 22,
-        "GRIS OSCURO_T16": 22
+        "VINOTINTO_T6": 12,
+        "VINOTINTO_T8": 12
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -7357,14 +7355,28 @@
       "receta_id": "rec_chaqueta_onion_1165",
       "referencias": [
         {
-          "nombre": "CHAQUETA ONION",
-          "ref": "1166",
+          "cantidades": {
+            "GRIS OSCURO_T10": 12,
+            "GRIS OSCURO_T12": 22,
+            "GRIS OSCURO_T14": 22,
+            "GRIS OSCURO_T16": 22,
+            "GRIS OSCURO_T6": 12,
+            "GRIS OSCURO_T8": 12,
+            "VINOTINTO_T10": 12,
+            "VINOTINTO_T12": 18,
+            "VINOTINTO_T14": 18,
+            "VINOTINTO_T16": 18,
+            "VINOTINTO_T6": 12,
+            "VINOTINTO_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 9000,
           "colores": [
             "VINOTINTO",
             "GRIS OSCURO"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA ONION",
+          "ref": "1166",
           "tallas": [
             "T6",
             "T8",
@@ -7373,25 +7385,11 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "VINOTINTO_T6": 12,
-            "VINOTINTO_T8": 12,
-            "VINOTINTO_T10": 12,
-            "VINOTINTO_T12": 18,
-            "VINOTINTO_T14": 18,
-            "VINOTINTO_T16": 18,
-            "GRIS OSCURO_T6": 12,
-            "GRIS OSCURO_T8": 12,
-            "GRIS OSCURO_T10": 12,
-            "GRIS OSCURO_T12": 22,
-            "GRIS OSCURO_T14": 22,
-            "GRIS OSCURO_T16": 22
-          },
-          "maquilador_id": ""
+          "vmo": 9000
         }
       ],
       "subg_estados": {
-        "OP-2026-102||GRIS OSCURO": "CORTE_POR_ALISTAR",
+        "OP-2026-102||GRIS OSCURO": "EN_CONFECCION",
         "OP-2026-102||VINOTINTO": "PAGO_PENDIENTE"
       },
       "tallas": [
@@ -7412,9 +7410,7 @@
           "solicitud_id": "id_1791979789087_lwq9fges1"
         }
       ],
-      "updated_at": "2026-10-22",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-10-22"
     },
     {
       "cantidades": {
@@ -10162,13 +10158,13 @@
       ],
       "consumibles_check": {
         "rec_chaqueta_onion_1165__c43_19||CAFE": true,
+        "rec_chaqueta_onion_1165__c43_19||VERDE MILITAR": true,
         "rec_chaqueta_onion_1165__c43_20": true,
+        "rec_chaqueta_onion_1165__c43_21": true,
         "rec_chaqueta_onion_1165__c43_22": true,
         "rec_chaqueta_onion_1165__c43_23": true,
         "rec_chaqueta_onion_1165__c43_27": true,
-        "rec_chaqueta_onion_1165__c43_28": true,
-        "rec_chaqueta_onion_1165__c43_19||VERDE MILITAR": true,
-        "rec_chaqueta_onion_1165__c43_21": true
+        "rec_chaqueta_onion_1165__c43_28": true
       },
       "consumibles_desagregado": {
         "rec_chaqueta_onion_1165__c43_19": true
@@ -10219,6 +10215,10 @@
           "vmo": 9000
         }
       ],
+      "subg_estados": {
+        "OP-2026-129||CAFE": "EN_CONFECCION",
+        "OP-2026-129||VERDE MILITAR": "EN_CONFECCION"
+      },
       "tallas": [
         "T6",
         "T8",
@@ -10230,10 +10230,6 @@
       "trazos_color_solicitado": {
         "CAFE": true,
         "VERDE MILITAR": true
-      },
-      "subg_estados": {
-        "OP-2026-129||CAFE": "EN_CONFECCION",
-        "OP-2026-129||VERDE MILITAR": "EN_CONFECCION"
       }
     },
     {
