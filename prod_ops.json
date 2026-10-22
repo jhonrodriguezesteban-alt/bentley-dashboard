@@ -7304,18 +7304,18 @@
     },
     {
       "cantidades": {
-        "GRIS OSCURO_T10": 12,
-        "GRIS OSCURO_T12": 18,
-        "GRIS OSCURO_T14": 18,
-        "GRIS OSCURO_T16": 18,
-        "GRIS OSCURO_T6": 12,
-        "GRIS OSCURO_T8": 12,
+        "VINOTINTO_T6": 12,
+        "VINOTINTO_T8": 12,
         "VINOTINTO_T10": 12,
         "VINOTINTO_T12": 18,
         "VINOTINTO_T14": 18,
         "VINOTINTO_T16": 18,
-        "VINOTINTO_T6": 12,
-        "VINOTINTO_T8": 12
+        "GRIS OSCURO_T6": 12,
+        "GRIS OSCURO_T8": 12,
+        "GRIS OSCURO_T10": 12,
+        "GRIS OSCURO_T12": 22,
+        "GRIS OSCURO_T14": 22,
+        "GRIS OSCURO_T16": 22
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -7351,28 +7351,14 @@
       "receta_id": "rec_chaqueta_onion_1165",
       "referencias": [
         {
-          "cantidades": {
-            "GRIS OSCURO_T10": 12,
-            "GRIS OSCURO_T12": 18,
-            "GRIS OSCURO_T14": 18,
-            "GRIS OSCURO_T16": 18,
-            "GRIS OSCURO_T6": 12,
-            "GRIS OSCURO_T8": 12,
-            "VINOTINTO_T10": 12,
-            "VINOTINTO_T12": 18,
-            "VINOTINTO_T14": 18,
-            "VINOTINTO_T16": 18,
-            "VINOTINTO_T6": 12,
-            "VINOTINTO_T8": 12
-          },
+          "nombre": "CHAQUETA ONION",
+          "ref": "1166",
           "cat": "CHAQUETAS",
+          "vmo": 9000,
           "colores": [
             "VINOTINTO",
             "GRIS OSCURO"
           ],
-          "maquilador_id": "",
-          "nombre": "CHAQUETA ONION",
-          "ref": "1166",
           "tallas": [
             "T6",
             "T8",
@@ -7381,7 +7367,21 @@
             "T14",
             "T16"
           ],
-          "vmo": 9000
+          "cantidades": {
+            "VINOTINTO_T6": 12,
+            "VINOTINTO_T8": 12,
+            "VINOTINTO_T10": 12,
+            "VINOTINTO_T12": 18,
+            "VINOTINTO_T14": 18,
+            "VINOTINTO_T16": 18,
+            "GRIS OSCURO_T6": 12,
+            "GRIS OSCURO_T8": 12,
+            "GRIS OSCURO_T10": 12,
+            "GRIS OSCURO_T12": 22,
+            "GRIS OSCURO_T14": 22,
+            "GRIS OSCURO_T16": 22
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -7406,7 +7406,9 @@
           "solicitud_id": "id_1791979789087_lwq9fges1"
         }
       ],
-      "updated_at": "2026-08-27"
+      "updated_at": "2026-10-22",
+      "diseno_origen_id": null,
+      "diseno_origen_nombre": null
     },
     {
       "cantidades": {
@@ -9575,9 +9577,9 @@
       ],
       "consumibles_check": {
         "rec_rangland_soft_1105__c100_21": true,
+        "rec_rangland_soft_1105__c100_22": true,
         "rec_rangland_soft_1105__c100_23": true,
-        "rec_rangland_soft_1105__c100_26": true,
-        "rec_rangland_soft_1105__c100_22": true
+        "rec_rangland_soft_1105__c100_26": true
       },
       "cortador": "Corte Carbajal",
       "created_at": "2026-08-24",
