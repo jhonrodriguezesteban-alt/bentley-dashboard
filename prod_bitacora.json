@@ -33321,16 +33321,27 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1792686841007_vptz6",
-      "ts": 1792686841007,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_1785250179914_46vws1tz3",
-      "nombre": "CHAQUETA MINI PARIS",
       "categoria": "Chaquetas",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_1785250179914_46vws1tz3",
       "estado_anterior": "EN_ESCALADO",
-      "estado_nuevo": "EN_REVISION_GERENCIA"
+      "estado_nuevo": "EN_REVISION_GERENCIA",
+      "id": "evt_1792686841007_vptz6",
+      "marca": "Bentley Kids",
+      "nombre": "CHAQUETA MINI PARIS",
+      "tipo": "estado_diseno",
+      "ts": 1792686841007,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1792708051352_2s9vw",
+      "ts": 1792708051352,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-102",
+      "nombre": "CHAQUETA ONION",
+      "categoria": "CHAQUETAS",
+      "colores": 2,
+      "refs": 1
     }
   ]
 }
