@@ -33496,20 +33496,38 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "VINOTINTO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1792708451739_br0ro",
-      "ts": 1792708451739,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-090",
       "op_nombre": "CHAQUETA ONION",
       "referencia": "CHAQUETA ONION",
-      "color": "VINOTINTO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1792708451739,
       "uds": 92,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792715339987_vs6ms",
+      "ts": 1792715339987,
+      "user": "Jefa de Producción",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-201",
+      "op_nombre": "SET BOMBER CORTA",
+      "categoria": "CONJUNTOS",
+      "total_ots": 6,
+      "total_uds": 80,
+      "colores": [
+        "VINOTINTO"
+      ],
+      "estado_inicial": "PENDIENTE_CORTAR",
+      "referencias": [
+        "SET BOMBER CORTA"
+      ]
     }
   ]
 }
