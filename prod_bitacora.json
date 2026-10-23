@@ -33512,17 +33512,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "categoria": "CONJUNTOS",
+      "colores": [
+        "VINOTINTO"
+      ],
+      "estado_inicial": "PENDIENTE_CORTAR",
       "id": "evt_1792715339987_vs6ms",
+      "op_id": "OP-2026-201",
+      "op_nombre": "SET BOMBER CORTA",
+      "referencias": [
+        "SET BOMBER CORTA"
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 6,
+      "total_uds": 80,
       "ts": 1792715339987,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792715354243_ytsco",
+      "ts": 1792715354243,
       "user": "Jefa de Producción",
       "tipo": "generar_ots",
       "op_id": "OP-2026-201",
       "op_nombre": "SET BOMBER CORTA",
       "categoria": "CONJUNTOS",
       "total_ots": 6,
-      "total_uds": 80,
+      "total_uds": 150,
       "colores": [
-        "VINOTINTO"
+        "GRIS CLARO"
       ],
       "estado_inicial": "PENDIENTE_CORTAR",
       "referencias": [
