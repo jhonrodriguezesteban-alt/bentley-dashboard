@@ -33777,13 +33777,29 @@
       "user": "Jefa de Producción"
     },
     {
+      "capacidad": 0,
       "id": "evt_1792764323504_0hnpv",
-      "ts": 1792764323504,
-      "user": "Jefa de Producción",
-      "tipo": "satelite_crear",
       "nombre": "AQUILINA LOPEZ BELTRAN",
       "personas": 3,
-      "capacidad": 0
+      "tipo": "satelite_crear",
+      "ts": 1792764323504,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792764345698_gi9b1",
+      "ts": 1792764345698,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-214",
+      "op_nombre": "BLAZER DONATELLA",
+      "referencia": "BLAZER DONATELLA",
+      "color": "NEGRO",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 84,
+      "motivo": "EN TALLER"
     }
   ]
 }
