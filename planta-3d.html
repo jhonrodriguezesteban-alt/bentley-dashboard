@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Planta Bentley 3D</title>
+<style>
+:root{
+  --bg:#0b0d17; --panel:rgba(16,19,34,.92); --line:rgba(255,255,255,.10);
+  --tx:#e9ecf5; --mut:#8a90a8; --amber:#ffc53d; --red:#ff4d5e; --green:#30d158; --cyan:#3ad6ff;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;overflow:hidden;}
+#escena{position:fixed;inset:0;}
+#etiquetas{position:fixed;inset:0;pointer-events:none;}
+.tag{position:absolute;transform:translate(-50%,-100%);background:rgba(10,12,24,.88);border:1px solid var(--line);
+  border-radius:8px;padding:4px 8px;font-size:11px;line-height:1.3;white-space:nowrap;pointer-events:auto;cursor:pointer;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
+.tag b{font-size:12px;}
+.tag:empty{display:none;}
+.tag .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:middle;}
+.tag .sub{color:var(--mut);}
+.tag.alerta{border-color:var(--red);}
+.tag.alerta .sub{color:#ff8a95;}
+.tag.mini{font-size:10px;padding:3px 6px;}
+#barra{position:fixed;top:0;pointer-events:none;left:0;right:0;display:flex;align-items:center;gap:10px;padding:10px 16px;
+  background:linear-gradient(180deg,rgba(11,13,23,.95),rgba(11,13,23,0));z-index:5;flex-wrap:wrap;}
+#barra > *{pointer-events:auto;}
+#barra h1{margin:0;font-size:15px;font-weight:700;letter-spacing:.3px;}
+#barra h1 span{color:var(--amber);}
+.chip{font-size:11px;padding:4px 9px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--mut);}
+.chip.vivo{color:var(--green);border-color:rgba(48,209,88,.4);}
+.chip.vivo::before{content:"● ";}
+.chip.demo{color:var(--amber);border-color:rgba(255,197,61,.4);}
+#barra .esp{flex:1;}
+#barra button,#panel button{font:inherit;font-size:12px;color:var(--tx);background:rgba(255,255,255,.06);border:1px solid var(--line);
+  border-radius:8px;padding:6px 10px;cursor:pointer;}
+#barra button:hover,#panel button:hover{background:rgba(255,255,255,.12);}
+#kpis{position:fixed;left:16px;bottom:16px;display:flex;gap:8px;z-index:4;flex-wrap:wrap;max-width:calc(100% - 32px);}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 12px;min-width:110px;}
+.kpi .v{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums;}
+.kpi .l{font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;}
+#feed{position:fixed;right:16px;bottom:16px;width:300px;max-height:34vh;overflow:auto;background:var(--panel);
+  border:1px solid var(--line);border-radius:10px;padding:8px 10px;z-index:4;font-size:11px;}
+#feed h3{margin:0 0 6px;font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;}
+#feed .ev{padding:5px 0;border-top:1px solid var(--line);}
+#feed .ev:first-of-type{border-top:0;}
+#feed .ev .t{color:var(--mut);}
+#panel{position:fixed;top:0;right:0;bottom:0;width:420px;max-width:100%;background:var(--panel);border-left:1px solid var(--line);
+  z-index:10;transform:translateX(100%);transition:transform .25s ease;display:flex;flex-direction:column;backdrop-filter:blur(8px);}
+#panel.abierto{transform:none;}
+#panel header{padding:16px;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:flex-start;}
+#panel header h2{margin:0;font-size:16px;}
+#panel header p{margin:4px 0 0;font-size:12px;color:var(--mut);}
+#panel header .esp{flex:1;}
+#panel .lista{overflow:auto;flex:1;padding:6px 16px 16px;}
+.ot{padding:9px 0;border-bottom:1px solid var(--line);font-size:12px;}
+.ot .r1{display:flex;justify-content:space-between;gap:8px;}
+.ot .r1 b{font-size:12.5px;}
+.ot .r2{color:var(--mut);margin-top:2px;}
+.ot .atr{color:var(--red);font-weight:600;}
+.grupo{margin-top:12px;font-size:11px;color:var(--amber);text-transform:uppercase;letter-spacing:.5px;}
+#aviso{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:20;background:var(--bg);text-align:center;padding:24px;}
+#aviso.on{display:flex;}
+#aviso a{color:var(--cyan);}
+#cargando{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:13px;z-index:3;}
+@media (max-width:700px){
+  #feed{display:none;}
+  .kpi{min-width:0;padding:6px 9px;}
+  .kpi .v{font-size:15px;}
+  #barra h1{font-size:13px;}
+  .tag{font-size:9.5px;padding:3px 6px;}
+  .tag.mini{display:none !important;}
+}
+</style>
+</head>
+<body>
+<div id="escena"></div>
+<div id="etiquetas"></div>
+<div id="cargando">Cargando planta…</div>
+
+<div id="barra">
+  <h1>PLANTA <span>BENTLEY</span> · producción en vivo</h1>
+  <span id="estadoConexion" class="chip">conectando…</span>
+  <span id="horaSync" class="chip"></span>
+  <span class="esp"></span>
+  <button id="btnTV" title="Pantalla completa y cámara girando">Modo TV</button>
+  <button id="btnApp" title="Abrir la app de producción">Abrir app</button>
+</div>
+
+<div id="kpis"></div>
+<div id="feed"><h3>Movimientos recientes</h3><div id="feedLista"></div></div>
+
+<aside id="panel">
+  <header>
+    <div><h2 id="pTitulo"></h2><p id="pSub"></p></div>
+    <span class="esp"></span>
+    <button id="pCerrar">Cerrar</button>
+  </header>
+  <div class="lista" id="pLista"></div>
+</aside>
+
+<div id="aviso"><div>
+  <p>Para ver la planta primero inicia sesión en la app de producción.</p>
+  <p><a href="produccion-bentley.html">Ir a la app de producción</a></p>
+</div></div>
+
+<!-- ─── Lógica pura (sin DOM ni Three.js): se prueba también en Node ─────────── -->
+<script id="logica">
+'use strict';
+// Salas de la planta = etapas del flujo de una OT. ENTREGADO_PARCIAL sigue en el satélite.
+var SALAS = [
+  {id:'programacion', nombre:'Programación', estados:['POR_REVISAR'],                 color:0x7c5cff},
+  {id:'corte',        nombre:'Corte',        estados:['PENDIENTE_CORTAR'],            color:0xff7a2f},
+  {id:'alistamiento', nombre:'Alistamiento', estados:['CORTE_POR_ALISTAR','ASIGNADO'], color:0x2fb7ff},
+  {id:'satelites',    nombre:'Satélites',    estados:['EN_CONFECCION','ENTREGADO_PARCIAL'], color:0xffc53d},
+  {id:'novedades',    nombre:'Novedades',    estados:['NOVEDAD'],                     color:0xff4d5e},
+  {id:'bodega',       nombre:'Bodega',       estados:['ENTREGADO'],                   color:0x30d158}
+];
+var SALA_DE_ESTADO = {};
+SALAS.forEach(function(s){ s.estados.forEach(function(e){ SALA_DE_ESTADO[e] = s.id; }); });
+
+function _uds(o){ return Number(o && o.cantidad) || 0; }
+function _udsPend(o){
+  // En satélite lo que importa es lo que falta por llegar, no lo ya entregado.
+  if(o.unidades_por_llegar != null && o.estado === 'ENTREGADO_PARCIAL') return Number(o.unidades_por_llegar) || 0;
+  return _uds(o);
+}
+function diasAtraso(o, hoyISO){
+  var f = o && o.fecha_estimada_entrega;
+  if(!f || !hoyISO) return 0;
+  var d = Math.round((Date.parse(hoyISO) - Date.parse(String(f).slice(0,10))) / 86400000);
+  return d > 0 ? d : 0;
+}
+
+// Resume las OTs por sala y por satélite. Bodega solo cuenta lo entregado en el mes en curso
+// (si no, acumularía todo el histórico).
+function estadoPlanta(ots, hoyISO){
+  var mes = (hoyISO || '').slice(0,7);
+  var salas = {};
+  SALAS.forEach(function(s){ salas[s.id] = {id:s.id, nombre:s.nombre, ots:[], nOTs:0, uds:0, vencidas:0}; });
+  var sats = {};
+  (ots || []).forEach(function(o){
+    if(!o || !o.estado) return;
+    var sid = SALA_DE_ESTADO[o.estado];
+    if(!sid) return;
+    if(sid === 'bodega'){
+      var fr = String(o.fecha_entrega_real || '').slice(0,7);
+      if(fr !== mes) return;
+    }
+    var s = salas[sid];
+    var u = sid === 'satelites' ? _udsPend(o) : (sid === 'bodega' ? (Number(o.unidades_entregadas) || _uds(o)) : _uds(o));
+    var atr = sid === 'satelites' ? diasAtraso(o, hoyISO) : 0;
+    s.ots.push(o); s.nOTs++; s.uds += u; if(atr > 0) s.vencidas++;
+    if(sid === 'satelites'){
+      var nom = o.satelite_nombre || 'SIN SATÉLITE';
+      var t = sats[nom] || (sats[nom] = {nombre:nom, ots:[], nOTs:0, uds:0, vencidas:0, maxAtraso:0});
+      t.ots.push(o); t.nOTs++; t.uds += u;
+      if(atr > 0){ t.vencidas++; if(atr > t.maxAtraso) t.maxAtraso = atr; }
+    }
+  });
+  var satelites = Object.keys(sats).map(function(k){ return sats[k]; })
+    .sort(function(a,b){ return b.uds - a.uds || a.nombre.localeCompare(b.nombre); });
+  var enProceso = 0;
+  ['programacion','corte','alistamiento','satelites','novedades'].forEach(function(k){ enProceso += salas[k].uds; });
+  return {salas:salas, satelites:satelites, enProceso:enProceso, hoy:hoyISO};
+}
+
+// Compara dos fotos de OTs y devuelve qué OTs cambiaron de sala (para animar el traslado).
+function diffOTs(prev, next){
+  var antes = {};
+  (prev || []).forEach(function(o){ if(o && o.id) antes[o.id] = o; });
+  var movs = [];
+  (next || []).forEach(function(o){
+    if(!o || !o.id) return;
+    var a = antes[o.id];
+    var de = a ? SALA_DE_ESTADO[a.estado] : null;
+    var a2 = SALA_DE_ESTADO[o.estado];
+    if(!a2) return;
+    var satA = a && a.satelite_nombre, satB = o.satelite_nombre;
+    if(!a){ movs.push({id:o.id, de:null, a:a2, satelite:satB, uds:_uds(o)}); return; }
+    if(de !== a2 || (a2 === 'satelites' && satA !== satB)) movs.push({id:o.id, de:de, a:a2, satelite:satB, uds:_uds(o)});
+  });
+  return movs;
+}
+
+// Firebase guarda las llaves con . # $ / [ ] % codificadas (igual que _fbDecKeys de la app).
+function _fbDecKey(k){ return k.indexOf('%')<0 ? k : k.replace(/%(25|2E|23|24|2F|5B|5D)/g, function(m,h){ return String.fromCharCode(parseInt(h,16)); }); }
+function _fbDecKeys(v){
+  if(Array.isArray(v)) return v.map(_fbDecKeys);
+  if(v && typeof v==='object'){ var o={}; Object.keys(v).forEach(function(k){ o[_fbDecKey(k)] = _fbDecKeys(v[k]); }); return o; }
+  return v;
+}
+// Firebase convierte arreglos con huecos en objetos {0:..,5:..}.
+function _comoLista(v){
+  if(Array.isArray(v)) return v.filter(Boolean);
+  if(v && typeof v==='object') return Object.keys(v).map(function(k){ return v[k]; }).filter(Boolean);
+  return [];
+}
+
+if(typeof module !== 'undefined') module.exports = {SALAS:SALAS, estadoPlanta:estadoPlanta, diffOTs:diffOTs, diasAtraso:diasAtraso, _fbDecKeys:_fbDecKeys, _comoLista:_comoLista};
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<script>
+'use strict';
+// Vista SOLO LECTURA: esta página nunca escribe en Firebase ni en GitHub.
+var PARAMS = new URLSearchParams(location.search);
+var DEMO = PARAMS.has('demo');
+var fmt = function(n){ return Math.round(n || 0).toLocaleString('es-CO'); };
+function hoyBogota(){
+  return new Date().toLocaleDateString('en-CA', {timeZone:'America/Bogota'});
+}
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+// ─── Guard de sesión (misma sesión de produccion-bentley.html) ───────────────
+function sesion(){
+  try{
+    var s = localStorage.getItem('bentley_prod_auth') || sessionStorage.getItem('bentley_prod_auth');
+    return s ? JSON.parse(s) : null;
+  }catch(e){ return null; }
+}
+if(!sesion()){
+  document.getElementById('aviso').classList.add('on');
+  document.getElementById('cargando').style.display = 'none';
+  throw new Error('sin sesión');
+}
+
+// ─── Escena ──────────────────────────────────────────────────────────────────
+var cont = document.getElementById('escena');
+var renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+cont.appendChild(renderer.domElement);
+
+var scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0b0d17);
+scene.fog = new THREE.Fog(0x0b0d17, 90, 180);
+
+var FRUSTUM = 60;
+var camera = new THREE.OrthographicCamera(-1, 1, 1, -1, -200, 400);
+function ajustarCamara(){
+  var a = innerWidth / innerHeight;
+  // En celular vertical manda el ancho: que quepa toda la planta de lado a lado.
+  var f = a < 1 ? 58 / a : FRUSTUM;
+  camera.left = -f * a / 2; camera.right = f * a / 2; camera.top = f / 2; camera.bottom = -f / 2;
+  camera.updateProjectionMatrix();
+}
+camera.position.set(60, 60, 60);
+camera.lookAt(0, 0, 0);
+ajustarCamara();
+
+var controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+controls.minZoom = 0.6; controls.maxZoom = 3.5;
+controls.maxPolarAngle = Math.PI * 0.42;
+controls.minPolarAngle = Math.PI * 0.12;
+controls.target.set(9, 0, -1);
+controls.autoRotateSpeed = 0.6;
+
+scene.add(new THREE.HemisphereLight(0xb9c4ff, 0x1a1030, 0.75));
+var sol = new THREE.DirectionalLight(0xffffff, 0.85);
+sol.position.set(40, 70, 25);
+sol.castShadow = true;
+sol.shadow.mapSize.set(2048, 2048);
+var sc = sol.shadow.camera; sc.left = -70; sc.right = 70; sc.top = 70; sc.bottom = -70; sc.near = 1; sc.far = 200;
+scene.add(sol);
+
+// Estrellas de fondo, como en el reel
+(function(){
+  var g = new THREE.BufferGeometry(), p = [];
+  for(var i = 0; i < 600; i++) p.push((Math.random() - .5) * 300, -8 - Math.random() * 30, (Math.random() - .5) * 300);
+  g.setAttribute('position', new THREE.Float32BufferAttribute(p, 3));
+  scene.add(new THREE.Points(g, new THREE.PointsMaterial({color:0x6670a0, size:0.35})));
+})();
+
+var MAT = {};
+function mat(color, extra){
+  var k = color + (extra ? JSON.stringify(extra) : '');
+  if(!MAT[k]) MAT[k] = new THREE.MeshStandardMaterial(Object.assign({color:color, roughness:0.75, metalness:0.05}, extra || {}));
+  return MAT[k];
+}
+function caja(w, h, d, color, x, y, z, extra){
+  var m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat(color, extra));
+  m.position.set(x, y + h / 2, z);
+  m.castShadow = true; m.receiveShadow = true;
+  return m;
+}
+
+// Persona low-poly (cuerpo + cabeza). Se anima cuando la sala tiene trabajo.
+var PIEL = [0xf1c27d, 0xe0ac69, 0xc68642, 0x8d5524];
+var ROPA = [0x2b2d42, 0x3a86ff, 0xef476f, 0x06d6a0, 0x8338ec, 0xffbe0b, 0xfb5607];
+function persona(x, z, seed){
+  var g = new THREE.Group();
+  var cuerpo = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.4, 1.0, 8), mat(ROPA[seed % ROPA.length]));
+  cuerpo.position.y = 0.5; cuerpo.castShadow = true;
+  var cabeza = new THREE.Mesh(new THREE.SphereGeometry(0.3, 10, 8), mat(PIEL[seed % PIEL.length]));
+  cabeza.position.y = 1.25; cabeza.castShadow = true;
+  g.add(cuerpo); g.add(cabeza);
+  g.position.set(x, 0, z);
+  g.userData.fase = seed * 1.7;
+  return g;
+}
+
+// Disposición de la planta (coordenadas del piso)
+var POS = {
+  hub:          {x:0,   z:0,   w:9,  d:9},
+  programacion: {x:-22, z:-16, w:13, d:10},
+  corte:        {x:0,   z:-20, w:14, d:11},
+  alistamiento: {x:22,  z:-16, w:13, d:10},
+  novedades:    {x:-22, z:14,  w:11, d:9},
+  bodega:       {x:0,   z:20,  w:14, d:10},
+  satelites:    {x:34,  z:12,  w:30, d:26}   // distrito con una casita por satélite
+};
+
+var raycaster = new THREE.Raycaster(), mouse = new THREE.Vector2();
+var clicables = [];            // meshes con userData.abrir
+var personas = [];             // {g, activo}
+var etiquetas = [];            // {el, pos:Vector3}
+var capaDinamica = new THREE.Group(); scene.add(capaDinamica);
+var labelsDiv = document.getElementById('etiquetas');
+
+// Suelo con grilla tenue
+(function(){
+  var piso = new THREE.Mesh(new THREE.PlaneGeometry(260, 260), mat(0x10132a));
+  piso.rotation.x = -Math.PI / 2; piso.position.y = -0.3; piso.receiveShadow = true;
+  scene.add(piso);
+  var grid = new THREE.GridHelper(260, 65, 0x1d2244, 0x161a36);
+  grid.position.y = -0.28; scene.add(grid);
+})();
+
+// Carreteras con luces entre el hub y cada sala
+var CAMINOS = {};
+function camino(desde, hasta, id){
+  var a = new THREE.Vector3(desde.x, 0, desde.z), b = new THREE.Vector3(hasta.x, 0, hasta.z);
+  var dir = b.clone().sub(a), len = dir.length();
+  var via = new THREE.Mesh(new THREE.BoxGeometry(len, 0.08, 1.6), mat(0x1c2040));
+  via.position.copy(a.clone().add(b).multiplyScalar(0.5)); via.position.y = -0.2;
+  via.rotation.y = -Math.atan2(dir.z, dir.x);
+  via.receiveShadow = true;
+  scene.add(via);
+  var n = Math.floor(len / 2.2);
+  for(var i = 1; i < n; i++){
+    var p = a.clone().lerp(b, i / n);
+    var luz = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.06, 0.12), mat(0xff3d6e, {emissive:0xff3d6e, emissiveIntensity:0.9}));
+    luz.position.set(p.x, -0.1, p.z); luz.rotation.y = via.rotation.y;
+    scene.add(luz);
+  }
+  CAMINOS[id] = {a:a, b:b};
+}
+['programacion','corte','alistamiento','novedades','bodega','satelites'].forEach(function(k){ camino(POS.hub, POS[k], k); });
+
+function etiqueta(html, pos, clase, onClick){
+  var el = document.createElement('div');
+  el.className = 'tag' + (clase ? ' ' + clase : '');
+  el.innerHTML = html;
+  if(onClick) el.addEventListener('click', onClick);
+  labelsDiv.appendChild(el);
+  var e = {el:el, pos:pos.clone()};
+  etiquetas.push(e);
+  return e;
+}
+
+// Sala isométrica: piso de color, dos muros bajos y muebles según el tipo
+function sala(id, color){
+  var p = POS[id], g = new THREE.Group();
+  var base = caja(p.w, 0.5, p.d, color, 0, -0.3, 0, {roughness:0.6});
+  g.add(base);
+  var piso = caja(p.w - 0.8, 0.12, p.d - 0.8, 0xe9e2d0, 0, 0.2, 0);
+  g.add(piso);
+  g.add(caja(p.w, 2.6, 0.35, color, 0, 0.2, -p.d / 2 + 0.17));
+  g.add(caja(0.35, 2.6, p.d, color, -p.w / 2 + 0.17, 0.2, 0));
+  g.position.set(p.x, 0, p.z);
+  [base, piso].forEach(function(m){ m.userData.abrir = id; clicables.push(m); });
+  scene.add(g);
+  return g;
+}
+function mueblesProgramacion(g){
+  for(var i = 0; i < 3; i++){
+    g.add(caja(2.4, 0.9, 1.2, 0xffffff, -3.5 + i * 3.5, 0.3, -1));
+    g.add(caja(1.0, 0.7, 0.08, 0x20243f, -3.5 + i * 3.5, 1.2, -1.3, {emissive:0x5a4dff, emissiveIntensity:0.6}));
+  }
+}
+function mueblesCorte(g){
+  g.add(caja(9, 1.0, 2.6, 0xd9d4c5, 0, 0.3, -1.5));
+  g.add(caja(8.4, 0.12, 2.2, 0xff9f5a, 0, 1.3, -1.5));
+  g.add(caja(4, 1.0, 2.0, 0xd9d4c5, -2.5, 0.3, 2.5));
+}
+function mueblesAlistamiento(g){
+  for(var i = 0; i < 3; i++) g.add(caja(1.2, 3.2, 3.4, 0x6b7394, -4.5 + i * 2.2, 0.3, -2.2));
+  g.add(caja(3.5, 1.0, 1.8, 0xffffff, 3, 0.3, 1.5));
+}
+function mueblesNovedades(g){
+  g.add(caja(3, 1.0, 1.6, 0xffffff, 0, 0.3, 0));
+}
+function mueblesBodega(g){
+  for(var i = 0; i < 4; i++) g.add(caja(1.1, 3.6, 4.5, 0x8a6a4a, -5 + i * 2.6, 0.3, -1.5));
+}
+
+// Hub central: "Mesa de control"
+(function(){
+  var p = POS.hub;
+  var disco = new THREE.Mesh(new THREE.CylinderGeometry(5, 5.4, 0.6, 40), mat(0x1a1f3f));
+  disco.position.set(p.x, -0.1, p.z); disco.receiveShadow = true; scene.add(disco);
+  var aro = new THREE.Mesh(new THREE.TorusGeometry(5.1, 0.12, 8, 60), mat(0x3ad6ff, {emissive:0x3ad6ff, emissiveIntensity:1}));
+  aro.rotation.x = Math.PI / 2; aro.position.set(p.x, 0.25, p.z); scene.add(aro);
+  var nucleo = new THREE.Mesh(new THREE.IcosahedronGeometry(1.6, 1), mat(0x3ad6ff, {emissive:0x1aa7ff, emissiveIntensity:0.8, flatShading:true}));
+  nucleo.position.set(p.x, 3.2, p.z); nucleo.userData.gira = true; scene.add(nucleo);
+  window._nucleo = nucleo;
+})();
+
+var GRUPOS = {
+  programacion: sala('programacion', 0x7c5cff),
+  corte:        sala('corte',        0xff7a2f),
+  alistamiento: sala('alistamiento', 0x2fb7ff),
+  novedades:    sala('novedades',    0xff4d5e),
+  bodega:       sala('bodega',       0x30d158)
+};
+mueblesProgramacion(GRUPOS.programacion);
+mueblesCorte(GRUPOS.corte);
+mueblesAlistamiento(GRUPOS.alistamiento);
+mueblesNovedades(GRUPOS.novedades);
+mueblesBodega(GRUPOS.bodega);
+
+// Distrito de satélites: base amarilla grande
+(function(){
+  var p = POS.satelites;
+  var b = caja(p.w, 0.4, p.d, 0x2a2410, p.x, -0.3, p.z);
+  scene.add(b);
+  b.userData.abrir = 'satelites'; clicables.push(b);
+})();
+
+// ─── Partes dinámicas (se reconstruyen con cada foto de datos) ───────────────
+var ETQ_SALAS = {};
+SALAS.forEach(function(s){
+  if(s.id === 'satelites') return;
+  var p = POS[s.id];
+  ETQ_SALAS[s.id] = etiqueta('', new THREE.Vector3(p.x, 4.6, p.z), '', function(){ abrirPanel(s.id); });
+});
+ETQ_SALAS.satelites = etiqueta('', new THREE.Vector3(POS.satelites.x, 7.5, POS.satelites.z - POS.satelites.d / 2), '', function(){ abrirPanel('satelites'); });
+var etqHub = etiqueta('', new THREE.Vector3(POS.hub.x, 6.4, POS.hub.z), '', null);
+
+var etqDinamicas = [];
+var CASAS = {};   // nombre satélite → posición, para animaciones
+var alertaNov = null;
+
+function limpiarDinamico(){
+  while(capaDinamica.children.length) capaDinamica.remove(capaDinamica.children[0]);
+  personas.length = 0;
+  etqDinamicas.forEach(function(e){ e.el.remove(); etiquetas.splice(etiquetas.indexOf(e), 1); });
+  etqDinamicas = [];
+  CASAS = {};
+}
+
+// Personas en una sala: 1 persona por cada ~3 OTs, mínimo 1 si hay trabajo, máximo 8.
+function poblarSala(id, nOTs){
+  var p = POS[id];
+  var n = nOTs ? Math.min(8, Math.max(1, Math.ceil(nOTs / 3))) : 0;
+  for(var i = 0; i < n; i++){
+    var x = p.x - p.w / 2 + 2 + (i % 4) * ((p.w - 4) / 3);
+    var z = p.z + 0.5 + Math.floor(i / 4) * 2.2;
+    var g = persona(x, z, i + id.length);
+    capaDinamica.add(g); personas.push({g:g, activo:true});
+  }
+  // Pila de "cortes"/cajas proporcional a las unidades
+  return n;
+}
+function pilaCajas(id, uds, color){
+  var p = POS[id];
+  var niveles = Math.min(12, Math.ceil(uds / 150));
+  for(var i = 0; i < niveles; i++){
+    var c = caja(1.1, 0.55, 1.1, color, p.x + p.w / 2 - 1.6 - (i % 2) * 1.2, 0.35 + Math.floor(i / 2) * 0.58, p.z + p.d / 2 - 1.6);
+    capaDinamica.add(c);
+  }
+}
+
+function casaSatelite(t, i, total){
+  var p = POS.satelites;
+  var cols = total > 12 ? 5 : 4;
+  var cw = (p.w - 2) / cols, cd = 6.2;
+  var x = p.x - p.w / 2 + 1 + cw * (i % cols) + cw / 2;
+  var z = p.z - p.d / 2 + 2 + cd * Math.floor(i / cols) + cd / 2 - 1;
+  var col = t.vencidas ? 0xff4d5e : 0xffc53d;
+  var g = new THREE.Group();
+  var base = caja(cw - 1.2, 0.3, 4.4, col, 0, -0.1, 0);
+  var piso = caja(cw - 1.8, 0.1, 3.8, 0xefe8d6, 0, 0.2, 0);
+  g.add(base); g.add(piso);
+  g.add(caja(cw - 1.2, 1.6, 0.25, col, 0, 0.2, -2.1));
+  // Máquinas de coser: 1 por cada 2 OTs, máx 4
+  var maq = Math.min(4, Math.max(1, Math.ceil(t.nOTs / 2)));
+  for(var m = 0; m < maq; m++){
+    var mx = -((cw - 2.6) / 2) + m * ((cw - 2.6) / Math.max(1, maq - 1 || 1));
+    if(maq === 1) mx = 0;
+    g.add(caja(0.9, 0.6, 0.6, 0xffffff, mx, 0.3, -0.9));
+    var per = persona(mx, 0.1, i + m);
+    per.scale.setScalar(0.8);
+    g.add(per); personas.push({g:per, activo:true});
+  }
+  g.position.set(x, 0, z);
+  [base, piso].forEach(function(mm){ mm.userData.abrir = 'sat:' + t.nombre; clicables.push(mm); });
+  capaDinamica.add(g);
+  CASAS[t.nombre] = new THREE.Vector3(x, 0, z);
+  var nom = t.nombre.split(' ').slice(0, 2).join(' ');
+  var sub = fmt(t.uds) + ' uds' + (t.vencidas ? ' · ' + t.vencidas + ' vencida' + (t.vencidas > 1 ? 's' : '') : '');
+  var e = etiqueta('<b>' + esc(nom) + '</b><br><span class="sub">' + sub + '</span>',
+    new THREE.Vector3(x, 2.6, z - 1.5), 'mini' + (t.vencidas ? ' alerta' : ''), function(){ abrirPanel('sat:' + t.nombre); });
+  etqDinamicas.push(e);
+}
+
+var COLOR_SALA = {};
+SALAS.forEach(function(s){ COLOR_SALA[s.id] = '#' + s.color.toString(16).padStart(6, '0'); });
+
+function htmlSala(s, extra){
+  return '<span class="dot" style="background:' + COLOR_SALA[s.id] + '"></span><b>' + esc(s.nombre) + '</b> · ' +
+    fmt(s.nOTs) + ' OTs<br><span class="sub">' + fmt(s.uds) + ' uds' + (extra || '') + '</span>';
+}
+
+var ESTADO = null;
+function actualizarEscena(est){
+  ESTADO = est;
+  limpiarDinamico();
+  var S = est.salas;
+  ['programacion','corte','alistamiento','novedades','bodega'].forEach(function(id){
+    var n = poblarSala(id, S[id].nOTs);
+    var extra = id === 'bodega' ? ' entregadas este mes' : '';
+    ETQ_SALAS[id].el.innerHTML = htmlSala(S[id], extra) + '<br><span class="sub">' + (n ? n + ' trabajando' : 'libre') + '</span>';
+    ETQ_SALAS[id].el.classList.toggle('alerta', id === 'novedades' && S[id].nOTs > 0);
+  });
+  pilaCajas('corte', S.corte.uds, 0xff9f5a);
+  pilaCajas('alistamiento', S.alistamiento.uds, 0xc9a16b);
+  pilaCajas('bodega', S.bodega.uds, 0x9be7a6);
+  var sat = S.satelites;
+  ETQ_SALAS.satelites.el.innerHTML = htmlSala(sat, sat.vencidas ? ' · <span style="color:#ff8a95">' + sat.vencidas + ' vencidas</span>' : '') +
+    '<br><span class="sub">' + est.satelites.length + ' talleres activos</span>';
+  est.satelites.forEach(function(t, i){ casaSatelite(t, i, est.satelites.length); });
+
+  alertaNov = null;
+  if(S.novedades.nOTs){
+    var p = POS.novedades;
+    alertaNov = new THREE.Mesh(new THREE.ConeGeometry(0.7, 1.4, 4), mat(0xff4d5e, {emissive:0xff2040, emissiveIntensity:1}));
+    alertaNov.position.set(p.x + 3, 3.2, p.z - 2); alertaNov.rotation.x = Math.PI;
+    capaDinamica.add(alertaNov);
+  }
+
+  etqHub.el.innerHTML = '<span class="dot" style="background:#3ad6ff"></span><b>Mesa de control</b><br><span class="sub">' +
+    fmt(est.enProceso) + ' uds en proceso</span>';
+  pintarKPIs(est);
+}
+
+function pintarKPIs(est){
+  var S = est.salas;
+  var k = [
+    ['En proceso', fmt(est.enProceso) + ' uds'],
+    ['En satélites', fmt(S.satelites.uds) + ' uds'],
+    ['OTs vencidas', fmt(S.satelites.vencidas)],
+    ['Novedades', fmt(S.novedades.nOTs)],
+    ['Entregado mes', fmt(S.bodega.uds) + ' uds']
+  ];
+  document.getElementById('kpis').innerHTML = k.map(function(x){
+    return '<div class="kpi"><div class="v">' + x[1] + '</div><div class="l">' + x[0] + '</div></div>';
+  }).join('');
+}
+
+// ─── Animación de traslados (cajita que viaja por la carretera) ──────────────
+var viajes = [];
+function puntoSala(id, satelite){
+  if(id === 'satelites' && satelite && CASAS[satelite]) return CASAS[satelite].clone();
+  var p = POS[id] || POS.hub;
+  return new THREE.Vector3(p.x, 0, p.z);
+}
+function animarMovimientos(movs){
+  movs.slice(0, 25).forEach(function(m, i){
+    var desde = m.de ? puntoSala(m.de) : new THREE.Vector3(POS.hub.x, 0, POS.hub.z);
+    var hasta = puntoSala(m.a, m.satelite);
+    var c = caja(0.9, 0.7, 0.9, 0xffe08a, 0, 0, 0, {emissive:0xffb020, emissiveIntensity:0.6});
+    scene.add(c);
+    viajes.push({m:c, ruta:[desde, new THREE.Vector3(POS.hub.x, 0, POS.hub.z), hasta], t:-i * 0.25});
+  });
+}
+function avanzarViajes(dt){
+  for(var i = viajes.length - 1; i >= 0; i--){
+    var v = viajes[i];
+    v.t += dt * 0.35;
+    if(v.t < 0) { v.m.visible = false; continue; }
+    v.m.visible = true;
+    var tt = Math.min(v.t, 1), seg = tt < 0.5 ? 0 : 1, f = seg === 0 ? tt * 2 : (tt - 0.5) * 2;
+    var p = v.ruta[seg].clone().lerp(v.ruta[seg + 1], f);
+    v.m.position.set(p.x, 0.4 + Math.sin(tt * Math.PI) * 1.5, p.z);
+    if(v.t >= 1){ scene.remove(v.m); viajes.splice(i, 1); }
+  }
+}
+
+// ─── Panel lateral ───────────────────────────────────────────────────────────
+var ETIQ_ESTADO = {POR_REVISAR:'Nueva programación', PENDIENTE_CORTAR:'Pendiente cortar', CORTE_POR_ALISTAR:'Corte por alistar',
+  ASIGNADO:'Asignado', EN_CONFECCION:'En confección', ENTREGADO_PARCIAL:'Entregado parcial', ENTREGADO:'Entregado', NOVEDAD:'Novedad'};
+function filaOT(o){
+  var atr = diasAtraso(o, ESTADO.hoy);
+  var esConf = o.estado === 'EN_CONFECCION' || o.estado === 'ENTREGADO_PARCIAL';
+  return '<div class="ot"><div class="r1"><b>' + esc(o.id) + ' · ' + esc(o.nombre || o.referencia || '') + '</b><span>' + fmt(o.cantidad) + ' uds</span></div>' +
+    '<div class="r2">' + esc(o.color || '') + ' ' + esc(o.talla || '') + ' · ' + esc(ETIQ_ESTADO[o.estado] || o.estado) +
+    (o.satelite_nombre && esConf ? ' · ' + esc(o.satelite_nombre) : '') +
+    (o.fecha_estimada_entrega && esConf ? ' · entrega ' + esc(String(o.fecha_estimada_entrega).slice(0,10)) : '') +
+    (esConf && atr ? ' · <span class="atr">' + atr + ' días de atraso</span>' : '') + '</div></div>';
+}
+function abrirPanel(clave){
+  if(!ESTADO) return;
+  var titulo, sub, ots;
+  if(clave.indexOf('sat:') === 0){
+    var nom = clave.slice(4);
+    var t = ESTADO.satelites.filter(function(x){ return x.nombre === nom; })[0];
+    if(!t) return;
+    titulo = 'Satélite ' + nom;
+    sub = fmt(t.nOTs) + ' OTs · ' + fmt(t.uds) + ' uds por llegar' + (t.vencidas ? ' · ' + t.vencidas + ' vencidas (máx. ' + t.maxAtraso + ' días)' : '');
+    ots = t.ots;
+  } else {
+    var s = ESTADO.salas[clave];
+    titulo = s.nombre;
+    sub = fmt(s.nOTs) + ' OTs · ' + fmt(s.uds) + ' uds' + (clave === 'bodega' ? ' entregadas este mes' : '') + (s.vencidas ? ' · ' + s.vencidas + ' vencidas' : '');
+    ots = s.ots;
+  }
+  ots = ots.slice().sort(function(a, b){ return diasAtraso(b, ESTADO.hoy) - diasAtraso(a, ESTADO.hoy) || String(a.id).localeCompare(String(b.id)); });
+  var html = '';
+  if(clave === 'satelites'){
+    ESTADO.satelites.forEach(function(t){
+      html += '<div class="grupo">' + esc(t.nombre) + ' · ' + fmt(t.uds) + ' uds' + (t.vencidas ? ' · ' + t.vencidas + ' vencidas' : '') + '</div>';
+      html += t.ots.slice().sort(function(a, b){ return diasAtraso(b, ESTADO.hoy) - diasAtraso(a, ESTADO.hoy); }).map(filaOT).join('');
+    });
+  } else {
+    html = ots.slice(0, 400).map(filaOT).join('') || '<p style="color:var(--mut)">Sin OTs en esta etapa.</p>';
+  }
+  document.getElementById('pTitulo').textContent = titulo;
+  document.getElementById('pSub').textContent = sub;
+  document.getElementById('pLista').innerHTML = html;
+  document.getElementById('panel').classList.add('abierto');
+}
+document.getElementById('pCerrar').onclick = function(){ document.getElementById('panel').classList.remove('abierto'); };
+
+// Clic en el piso de una sala
+var downXY = null;
+renderer.domElement.addEventListener('pointerdown', function(e){ downXY = [e.clientX, e.clientY]; });
+renderer.domElement.addEventListener('pointerup', function(e){
+  if(!downXY || Math.abs(e.clientX - downXY[0]) + Math.abs(e.clientY - downXY[1]) > 6) return; // fue arrastre
+  mouse.x = (e.clientX / innerWidth) * 2 - 1; mouse.y = -(e.clientY / innerHeight) * 2 + 1;
+  raycaster.setFromCamera(mouse, camera);
+  var hit = raycaster.intersectObjects(clicables, false)[0];
+  if(hit) abrirPanel(hit.object.userData.abrir);
+});
+
+// ─── Feed de bitácora ────────────────────────────────────────────────────────
+function pintarFeed(eventos){
+  var ult = eventos.slice().sort(function(a, b){ return (b.ts || 0) - (a.ts || 0); }).slice(0, 15);
+  document.getElementById('feedLista').innerHTML = ult.map(function(e){
+    var hora = e.ts ? new Date(e.ts).toLocaleString('es-CO', {timeZone:'America/Bogota', day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'}) : '';
+    var det = e.ot_id || e.op_id || e.id_ot || e.referencia || '';
+    return '<div class="ev"><span class="t">' + esc(hora) + ' · ' + esc(e.user || '') + '</span><br>' +
+      esc(String(e.tipo || '').replace(/_/g, ' ').toLowerCase()) + (det ? ' · ' + esc(det) : '') + '</div>';
+  }).join('') || '<div class="ev t">Sin eventos.</div>';
+}
+
+// ─── Bucle de render ─────────────────────────────────────────────────────────
+var reloj = new THREE.Clock(), vProj = new THREE.Vector3();
+function frame(){
+  requestAnimationFrame(frame);
+  var dt = Math.min(reloj.getDelta(), 0.1), t = reloj.elapsedTime;
+  controls.update();
+  if(window._nucleo){ window._nucleo.rotation.y += dt * 0.6; window._nucleo.position.y = 3.2 + Math.sin(t * 1.5) * 0.25; }
+  personas.forEach(function(p){
+    if(!p.activo) return;
+    var f = p.g.userData.fase;
+    p.g.children[0].scale.y = 1 + Math.sin(t * 6 + f) * 0.05;
+    p.g.rotation.y = Math.sin(t * 1.3 + f) * 0.5;
+  });
+  if(alertaNov) alertaNov.position.y = 3.2 + Math.abs(Math.sin(t * 3)) * 0.6;
+  avanzarViajes(dt);
+  renderer.render(scene, camera);
+  // Proyectar etiquetas HTML. Las de cada satélite solo con zoom (si no, se tapan entre sí).
+  var w2 = innerWidth / 2, h2 = innerHeight / 2;
+  var verMini = camera.zoom >= 1.5;
+  etiquetas.forEach(function(e){
+    if(e.el.classList.contains('mini')){ e.el.style.display = verMini ? '' : 'none'; if(!verMini) return; }
+    vProj.copy(e.pos).project(camera);
+    e.el.style.left = (vProj.x * w2 + w2) + 'px';
+    e.el.style.top = (-vProj.y * h2 + h2) + 'px';
+  });
+}
+frame();
+
+addEventListener('resize', function(){
+  renderer.setSize(innerWidth, innerHeight);
+  ajustarCamara();
+});
+
+document.getElementById('btnApp').onclick = function(){ location.href = 'produccion-bentley.html'; };
+document.getElementById('btnTV').onclick = function(){
+  controls.autoRotate = !controls.autoRotate;
+  this.textContent = controls.autoRotate ? 'Salir modo TV' : 'Modo TV';
+  if(controls.autoRotate && document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(function(){});
+  else if(!controls.autoRotate && document.fullscreenElement) document.exitFullscreen();
+};
+if(PARAMS.has('tv')) document.getElementById('btnTV').click();
+
+// ─── Datos ───────────────────────────────────────────────────────────────────
+var otsPrev = null;
+function recibirOTs(ots){
+  document.getElementById('cargando').style.display = 'none';
+  var est = estadoPlanta(ots, hoyBogota());
+  actualizarEscena(est);
+  if(otsPrev) animarMovimientos(diffOTs(otsPrev, ots));
+  otsPrev = ots;
+  document.getElementById('horaSync').textContent = 'actualizado ' + new Date().toLocaleTimeString('es-CO', {timeZone:'America/Bogota', hour:'2-digit', minute:'2-digit'});
+}
+function marcarConexion(txt, clase){
+  var el = document.getElementById('estadoConexion');
+  el.textContent = txt; el.className = 'chip ' + (clase || '');
+}
+
+if(DEMO){
+  // Modo demo: lee el respaldo local, no se conecta a Firebase.
+  marcarConexion('demo · respaldo local', 'demo');
+  fetch('prod_ots_backup.json').then(function(r){ return r.json(); }).then(function(d){
+    recibirOTs(_comoLista(d.ots));
+    pintarFeed([]);
+  }).catch(function(e){ marcarConexion('sin datos demo', ''); console.error(e); });
+} else {
+  var app = firebase.initializeApp({
+    apiKey: "AIzaSyC8jbUj3zvN23iPXmKz8EkEYr63dpeuaYA",
+    authDomain: "bentley-produccion.firebaseapp.com",
+    databaseURL: "https://bentley-produccion-default-rtdb.firebaseio.com",
+    projectId: "bentley-produccion",
+    appId: "1:1013098760950:web:27c093d7e16a3c1085bad7"
+  });
+  var db = firebase.database();
+  // Igual que la app: si la auth anónima falla (no está habilitada en el proyecto), se lee igual.
+  firebase.auth().signInAnonymously().catch(function(e){ console.warn('Firebase auth anónima:', e && e.code); }).then(function(){
+    // Solo listeners de lectura sobre los mismos nodos que usa la app.
+    db.ref('bentley-prod/ots').on('value', function(snap){
+      var d = snap.val();
+      if(!d) return;
+      d = _fbDecKeys(d);
+      recibirOTs(_comoLista(d.ots));
+    }, function(err){ marcarConexion('sin acceso', ''); console.error(err); });
+    db.ref('bentley-prod/bitacora').on('value', function(snap){
+      var d = snap.val();
+      pintarFeed(_comoLista(d && d.eventos));
+    });
+    db.ref('.info/connected').on('value', function(s){
+      marcarConexion(s.val() ? 'en vivo' : 'reconectando…', s.val() ? 'vivo' : '');
+    });
+  });
+}
+</script>
+</body>
+</html>
