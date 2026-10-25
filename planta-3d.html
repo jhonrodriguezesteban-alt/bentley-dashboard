@@ -15,15 +15,21 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--tx);font-family:
 #etiquetas{position:fixed;inset:0;pointer-events:none;}
 .tag{position:absolute;transform:translate(-50%,-100%);background:rgba(10,12,24,.88);border:1px solid var(--line);
   border-radius:8px;padding:4px 8px;font-size:11px;line-height:1.3;white-space:nowrap;pointer-events:auto;cursor:pointer;
-  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
-.tag b{font-size:12px;}
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;user-select:none;-webkit-user-select:none;}
 .tag:empty{display:none;}
-.tag .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:middle;}
+.tag b{font-size:12px;}
+.tag .paso{display:inline-block;min-width:16px;height:16px;line-height:16px;text-align:center;border-radius:4px;margin-right:5px;
+  font-size:10px;font-weight:700;color:#0b0d17;}
 .tag .sub{color:var(--mut);}
 .tag.alerta{border-color:var(--red);}
 .tag.alerta .sub{color:#ff8a95;}
-.tag.mini{font-size:10px;padding:3px 6px;}
-#barra{position:fixed;top:0;pointer-events:none;left:0;right:0;display:flex;align-items:center;gap:10px;padding:10px 16px;
+.tag.mini{font-size:9.5px;padding:2px 5px;border-radius:5px;}
+.tag.nombre{font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:10px;font-weight:600;padding:1px 6px;border-radius:999px;
+  background:rgba(255,255,255,.92);color:#11142a;border:0;pointer-events:none;}
+#tip{position:fixed;z-index:6;pointer-events:none;display:none;background:rgba(10,12,24,.95);border:1px solid var(--line);
+  border-radius:8px;padding:6px 9px;font-size:11.5px;line-height:1.35;max-width:260px;}
+#tip .sub{color:var(--mut);}
+#barra{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;gap:10px;padding:10px 16px;pointer-events:none;
   background:linear-gradient(180deg,rgba(11,13,23,.95),rgba(11,13,23,0));z-index:5;flex-wrap:wrap;}
 #barra > *{pointer-events:auto;}
 #barra h1{margin:0;font-size:15px;font-weight:700;letter-spacing:.3px;}
@@ -36,17 +42,17 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--tx);font-family:
 #barra button,#panel button{font:inherit;font-size:12px;color:var(--tx);background:rgba(255,255,255,.06);border:1px solid var(--line);
   border-radius:8px;padding:6px 10px;cursor:pointer;}
 #barra button:hover,#panel button:hover{background:rgba(255,255,255,.12);}
-#kpis{position:fixed;left:16px;bottom:16px;display:flex;gap:8px;z-index:4;flex-wrap:wrap;max-width:calc(100% - 32px);}
+#kpis{position:fixed;left:16px;bottom:16px;display:flex;gap:8px;z-index:4;flex-wrap:wrap;max-width:calc(100% - 350px);}
 .kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 12px;min-width:110px;}
 .kpi .v{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums;}
 .kpi .l{font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;}
-#feed{position:fixed;right:16px;bottom:16px;width:300px;max-height:34vh;overflow:auto;background:var(--panel);
+#feed{position:fixed;right:16px;bottom:16px;width:300px;max-height:30vh;overflow:auto;background:var(--panel);
   border:1px solid var(--line);border-radius:10px;padding:8px 10px;z-index:4;font-size:11px;}
 #feed h3{margin:0 0 6px;font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;}
 #feed .ev{padding:5px 0;border-top:1px solid var(--line);}
 #feed .ev:first-of-type{border-top:0;}
 #feed .ev .t{color:var(--mut);}
-#panel{position:fixed;top:0;right:0;bottom:0;width:420px;max-width:100%;background:var(--panel);border-left:1px solid var(--line);
+#panel{position:fixed;top:0;right:0;bottom:0;width:440px;max-width:100%;background:var(--panel);border-left:1px solid var(--line);
   z-index:10;transform:translateX(100%);transition:transform .25s ease;display:flex;flex-direction:column;backdrop-filter:blur(8px);}
 #panel.abierto{transform:none;}
 #panel header{padding:16px;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:flex-start;}
@@ -59,24 +65,28 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--tx);font-family:
 .ot .r1 b{font-size:12.5px;}
 .ot .r2{color:var(--mut);margin-top:2px;}
 .ot .atr{color:var(--red);font-weight:600;}
+.ot.taller{cursor:pointer;}
+.ot.taller:hover{background:rgba(255,255,255,.04);}
 .grupo{margin-top:12px;font-size:11px;color:var(--amber);text-transform:uppercase;letter-spacing:.5px;}
+.nota{font-size:11.5px;color:var(--mut);background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-top:10px;}
 #aviso{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:20;background:var(--bg);text-align:center;padding:24px;}
 #aviso.on{display:flex;}
 #aviso a{color:var(--cyan);}
-#cargando{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:13px;z-index:3;}
+#cargando{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:13px;z-index:3;pointer-events:none;}
 @media (max-width:700px){
   #feed{display:none;}
+  #kpis{max-width:calc(100% - 32px);}
   .kpi{min-width:0;padding:6px 9px;}
   .kpi .v{font-size:15px;}
   #barra h1{font-size:13px;}
   .tag{font-size:9.5px;padding:3px 6px;}
-  .tag.mini{display:none !important;}
 }
 </style>
 </head>
 <body>
 <div id="escena"></div>
 <div id="etiquetas"></div>
+<div id="tip"></div>
 <div id="cargando">Cargando planta…</div>
 
 <div id="barra">
@@ -108,78 +118,148 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--tx);font-family:
 <!-- ─── Lógica pura (sin DOM ni Three.js): se prueba también en Node ─────────── -->
 <script id="logica">
 'use strict';
-// Salas de la planta = etapas del flujo de una OT. ENTREGADO_PARCIAL sigue en el satélite.
+// Recorrido de la planta, en orden. Calidad y salida no tienen estado propio en la app:
+// se derivan de la fecha en que el taller entregó (últimos 7 días = en calidad/empaque).
 var SALAS = [
-  {id:'programacion', nombre:'Programación', estados:['POR_REVISAR'],                 color:0x7c5cff},
-  {id:'corte',        nombre:'Corte',        estados:['PENDIENTE_CORTAR'],            color:0xff7a2f},
-  {id:'alistamiento', nombre:'Alistamiento', estados:['CORTE_POR_ALISTAR','ASIGNADO'], color:0x2fb7ff},
-  {id:'satelites',    nombre:'Satélites',    estados:['EN_CONFECCION','ENTREGADO_PARCIAL'], color:0xffc53d},
-  {id:'novedades',    nombre:'Novedades',    estados:['NOVEDAD'],                     color:0xff4d5e},
-  {id:'bodega',       nombre:'Bodega',       estados:['ENTREGADO'],                   color:0x30d158}
+  {id:'diseno',       paso:1, nombre:'Diseño',             color:0xb06cff},
+  {id:'programacion', paso:2, nombre:'Programación',       color:0x7c5cff, estados:['POR_REVISAR']},
+  {id:'corte',        paso:3, nombre:'Corte',              color:0xff7a2f, estados:['PENDIENTE_CORTAR']},
+  {id:'alistamiento', paso:4, nombre:'Alistamiento',       color:0x2fb7ff, estados:['CORTE_POR_ALISTAR','ASIGNADO']},
+  {id:'talleres',     paso:5, nombre:'Talleres',           color:0xffc53d, estados:['EN_CONFECCION','ENTREGADO_PARCIAL']},
+  {id:'novedades',    paso:'!', nombre:'Novedades',        color:0xff4d5e, estados:['NOVEDAD']},
+  {id:'calidad',      paso:6, nombre:'Calidad y empaque',  color:0x2ee6b6},
+  {id:'salida',       paso:7, nombre:'Salida',             color:0x30d158}
 ];
 var SALA_DE_ESTADO = {};
-SALAS.forEach(function(s){ s.estados.forEach(function(e){ SALA_DE_ESTADO[e] = s.id; }); });
+SALAS.forEach(function(s){ (s.estados || []).forEach(function(e){ SALA_DE_ESTADO[e] = s.id; }); });
+var ESTADOS_ENTREGADOS = {ENTREGADO:1, PAGO_PENDIENTE:1, PAGADO:1};
+var DIAS_CALIDAD = 7;
 
 function _uds(o){ return Number(o && o.cantidad) || 0; }
 function _udsPend(o){
-  // En satélite lo que importa es lo que falta por llegar, no lo ya entregado.
-  if(o.unidades_por_llegar != null && o.estado === 'ENTREGADO_PARCIAL') return Number(o.unidades_por_llegar) || 0;
+  // En el taller importa lo que falta por llegar, no lo ya entregado.
+  if(o.estado === 'ENTREGADO_PARCIAL' && o.unidades_por_llegar != null) return Number(o.unidades_por_llegar) || 0;
   return _uds(o);
 }
+function _udsEntregadas(o){ return Number(o.unidades_entregadas) || _uds(o); }
+function _dias(desdeISO, hastaISO){ return Math.round((Date.parse(hastaISO) - Date.parse(desdeISO)) / 86400000); }
 function diasAtraso(o, hoyISO){
   var f = o && o.fecha_estimada_entrega;
   if(!f || !hoyISO) return 0;
-  var d = Math.round((Date.parse(hoyISO) - Date.parse(String(f).slice(0,10))) / 86400000);
+  var d = _dias(String(f).slice(0,10), hoyISO);
   return d > 0 ? d : 0;
 }
+// Fecha en que el taller entregó: fecha_entrega_real o, si no está, la última anotación de
+// entrega/paso a pago en el historial.
+function fechaEntrega(o){
+  if(o.fecha_entrega_real) return String(o.fecha_entrega_real).slice(0,10);
+  var h = Array.isArray(o.historial) ? o.historial : [];
+  for(var i = h.length - 1; i >= 0; i--){
+    var e = h[i];
+    if(!e) continue;
+    var txt = String(e.accion || e.evento || e.nota || '');
+    if(/ENTREG|Pago/i.test(txt) && e.fecha) return String(e.fecha).slice(0,10);
+  }
+  return '';
+}
+function salaDeOT(o, hoyISO){
+  if(!o || !o.estado) return null;
+  if(SALA_DE_ESTADO[o.estado]) return SALA_DE_ESTADO[o.estado];
+  if(ESTADOS_ENTREGADOS[o.estado]){
+    var f = fechaEntrega(o);
+    if(!f) return null;
+    var d = _dias(f, hoyISO);
+    if(d >= 0 && d < DIAS_CALIDAD) return 'calidad';
+    if(f.slice(0,7) === hoyISO.slice(0,7)) return 'salida';
+  }
+  return null;
+}
 
-// Resume las OTs por sala y por satélite. Bodega solo cuenta lo entregado en el mes en curso
-// (si no, acumularía todo el histórico).
-function estadoPlanta(ots, hoyISO){
-  var mes = (hoyISO || '').slice(0,7);
+function satNombre(o, porId){
+  if(o.satelite_id && porId[o.satelite_id]) return porId[o.satelite_id].nombre;
+  return o.satelite_nombre || (o.satelite_id ? 'Taller ' + o.satelite_id : 'SIN TALLER');
+}
+
+// datos = {ots, satelites, disenos, trazos, logistica}; todo opcional salvo ots.
+function estadoPlanta(datos, hoyISO){
+  var ots = datos.ots || [];
+  var porId = {};
+  (datos.satelites || []).forEach(function(s){ if(s && s.id) porId[s.id] = s; });
+
   var salas = {};
   SALAS.forEach(function(s){ salas[s.id] = {id:s.id, nombre:s.nombre, ots:[], nOTs:0, uds:0, vencidas:0}; });
-  var sats = {};
-  (ots || []).forEach(function(o){
-    if(!o || !o.estado) return;
-    var sid = SALA_DE_ESTADO[o.estado];
-    if(!sid) return;
-    if(sid === 'bodega'){
-      var fr = String(o.fecha_entrega_real || '').slice(0,7);
-      if(fr !== mes) return;
+
+  // Un registro por taller activo, aunque hoy no tenga OTs (se ven todos en la sala).
+  var talleres = {};
+  function taller(nombre, sat){
+    return talleres[nombre] || (talleres[nombre] = {nombre:nombre, personas:Number(sat && sat.personas) || 0,
+      ots:[], nOTs:0, uds:0, vencidas:0, maxAtraso:0, novOTs:[], novUds:0, udsMes:0});
+  }
+  (datos.satelites || []).forEach(function(s){ if(s && s.nombre && s.activo !== false) taller(s.nombre, s); });
+
+  var mes = hoyISO.slice(0,7);
+  ots.forEach(function(o){
+    var sid = salaDeOT(o, hoyISO);
+    if(ESTADOS_ENTREGADOS[o.estado] && fechaEntrega(o).slice(0,7) === mes && (o.satelite_id || o.satelite_nombre)){
+      taller(satNombre(o, porId), porId[o.satelite_id]).udsMes += _udsEntregadas(o);
     }
+    if(!sid) return;
     var s = salas[sid];
-    var u = sid === 'satelites' ? _udsPend(o) : (sid === 'bodega' ? (Number(o.unidades_entregadas) || _uds(o)) : _uds(o));
-    var atr = sid === 'satelites' ? diasAtraso(o, hoyISO) : 0;
+    var u = sid === 'talleres' ? _udsPend(o) : (sid === 'calidad' || sid === 'salida') ? _udsEntregadas(o)
+          : sid === 'novedades' ? (Number(o.unidades_novedad) || (_uds(o) - (Number(o.unidades_entregadas) || 0))) : _uds(o);
+    var atr = sid === 'talleres' ? diasAtraso(o, hoyISO) : 0;
     s.ots.push(o); s.nOTs++; s.uds += u; if(atr > 0) s.vencidas++;
-    if(sid === 'satelites'){
-      var nom = o.satelite_nombre || 'SIN SATÉLITE';
-      var t = sats[nom] || (sats[nom] = {nombre:nom, ots:[], nOTs:0, uds:0, vencidas:0, maxAtraso:0});
+    if(sid === 'talleres'){
+      var t = taller(satNombre(o, porId), porId[o.satelite_id]);
       t.ots.push(o); t.nOTs++; t.uds += u;
       if(atr > 0){ t.vencidas++; if(atr > t.maxAtraso) t.maxAtraso = atr; }
     }
+    if(sid === 'novedades'){
+      var tn = taller(satNombre(o, porId), porId[o.satelite_id]);
+      tn.novOTs.push(o); tn.novUds += u;
+    }
   });
-  var satelites = Object.keys(sats).map(function(k){ return sats[k]; })
-    .sort(function(a,b){ return b.uds - a.uds || a.nombre.localeCompare(b.nombre); });
+  var lista = Object.keys(talleres).map(function(k){ return talleres[k]; })
+    .sort(function(a,b){ return b.uds - a.uds || b.udsMes - a.udsMes || a.nombre.localeCompare(b.nombre); });
+
+  // Diseño: todo lo que aún no está "listo para producción".
+  var dis = (datos.disenos || []).filter(Boolean);
+  var porKanban = {};
+  dis.forEach(function(d){ var k = d.kanban_estado || 'SIN_ESTADO'; porKanban[k] = (porKanban[k] || 0) + 1; });
+  var enDiseno = dis.filter(function(d){ return d.kanban_estado !== 'LISTA_PRODUCCION'; });
+  salas.diseno.ots = enDiseno; salas.diseno.nOTs = enDiseno.length;
+
+  var trazos = (datos.trazos || []).filter(Boolean);
+  var logHoy = (datos.logistica || []).filter(function(t){ return t && String(t.fecha || '').slice(0,10) === hoyISO; })
+    .sort(function(a,b){ return (Number(a.orden) || 0) - (Number(b.orden) || 0); });
+
   var enProceso = 0;
-  ['programacion','corte','alistamiento','satelites','novedades'].forEach(function(k){ enProceso += salas[k].uds; });
-  return {salas:salas, satelites:satelites, enProceso:enProceso, hoy:hoyISO};
+  ['programacion','corte','alistamiento','talleres','novedades'].forEach(function(k){ enProceso += salas[k].uds; });
+  return {
+    salas:salas, talleres:lista, enProceso:enProceso, hoy:hoyISO,
+    diseno:{total:dis.length, enDiseno:enDiseno.length, porKanban:porKanban},
+    trazos:{total:trazos.length, lista:trazos},
+    logistica:{hoy:logHoy, pendientes:logHoy.filter(function(t){ return t.estado !== 'completado'; }).length},
+    talleresActivos:lista.filter(function(t){ return t.nOTs > 0; }).length,
+    talleresNovedad:lista.filter(function(t){ return t.novOTs.length > 0; })
+  };
 }
 
-// Compara dos fotos de OTs y devuelve qué OTs cambiaron de sala (para animar el traslado).
-function diffOTs(prev, next){
+// Compara dos fotos de OTs y devuelve las que cambiaron de sala (para animar el traslado).
+function diffOTs(prev, next, hoyISO, satelites){
+  var porId = {};
+  (satelites || []).forEach(function(s){ if(s && s.id) porId[s.id] = s; });
   var antes = {};
   (prev || []).forEach(function(o){ if(o && o.id) antes[o.id] = o; });
   var movs = [];
   (next || []).forEach(function(o){
     if(!o || !o.id) return;
     var a = antes[o.id];
-    var de = a ? SALA_DE_ESTADO[a.estado] : null;
-    var a2 = SALA_DE_ESTADO[o.estado];
-    if(!a2) return;
-    var satA = a && a.satelite_nombre, satB = o.satelite_nombre;
-    if(!a){ movs.push({id:o.id, de:null, a:a2, satelite:satB, uds:_uds(o)}); return; }
-    if(de !== a2 || (a2 === 'satelites' && satA !== satB)) movs.push({id:o.id, de:de, a:a2, satelite:satB, uds:_uds(o)});
+    var hasta = salaDeOT(o, hoyISO);
+    if(!hasta) return;
+    var desde = a ? salaDeOT(a, hoyISO) : null;
+    var tA = a ? satNombre(a, porId) : null, tB = satNombre(o, porId);
+    if(!a || desde !== hasta || (hasta === 'talleres' && tA !== tB)) movs.push({id:o.id, de:desde, a:hasta, taller:tB, uds:_uds(o)});
   });
   return movs;
 }
@@ -198,7 +278,7 @@ function _comoLista(v){
   return [];
 }
 
-if(typeof module !== 'undefined') module.exports = {SALAS:SALAS, estadoPlanta:estadoPlanta, diffOTs:diffOTs, diasAtraso:diasAtraso, _fbDecKeys:_fbDecKeys, _comoLista:_comoLista};
+if(typeof module !== 'undefined') module.exports = {SALAS:SALAS, estadoPlanta:estadoPlanta, diffOTs:diffOTs, diasAtraso:diasAtraso, fechaEntrega:fechaEntrega, salaDeOT:salaDeOT, _fbDecKeys:_fbDecKeys, _comoLista:_comoLista};
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -213,10 +293,9 @@ if(typeof module !== 'undefined') module.exports = {SALAS:SALAS, estadoPlanta:es
 var PARAMS = new URLSearchParams(location.search);
 var DEMO = PARAMS.has('demo');
 var fmt = function(n){ return Math.round(n || 0).toLocaleString('es-CO'); };
-function hoyBogota(){
-  return new Date().toLocaleDateString('en-CA', {timeZone:'America/Bogota'});
-}
+function hoyBogota(){ return new Date().toLocaleDateString('en-CA', {timeZone:'America/Bogota'}); }
 function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function corto(n){ return String(n || '').split(' ').slice(0, 2).join(' '); }
 
 // ─── Guard de sesión (misma sesión de produccion-bentley.html) ───────────────
 function sesion(){
@@ -231,7 +310,7 @@ if(!sesion()){
   throw new Error('sin sesión');
 }
 
-// ─── Escena ──────────────────────────────────────────────────────────────────
+// ─── Escena base ─────────────────────────────────────────────────────────────
 var cont = document.getElementById('escena');
 var renderer = new THREE.WebGLRenderer({antialias:true});
 renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -242,44 +321,47 @@ cont.appendChild(renderer.domElement);
 
 var scene = new THREE.Scene();
 scene.background = new THREE.Color(0x0b0d17);
-scene.fog = new THREE.Fog(0x0b0d17, 90, 180);
 
-var FRUSTUM = 60;
-var camera = new THREE.OrthographicCamera(-1, 1, 1, -1, -200, 400);
+var FRUSTUM = 90;
+var camera = new THREE.OrthographicCamera(-1, 1, 1, -1, -300, 500);
 function ajustarCamara(){
   var a = innerWidth / innerHeight;
-  // En celular vertical manda el ancho: que quepa toda la planta de lado a lado.
-  var f = a < 1 ? 58 / a : FRUSTUM;
+  // En celular vertical manda el ancho: que quepa la planta de lado a lado.
+  var f = a < 1 ? 70 / a : FRUSTUM;
   camera.left = -f * a / 2; camera.right = f * a / 2; camera.top = f / 2; camera.bottom = -f / 2;
   camera.updateProjectionMatrix();
 }
-camera.position.set(60, 60, 60);
+camera.position.set(70, 75, 70);
 camera.lookAt(0, 0, 0);
 ajustarCamara();
 
 var controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.08;
-controls.minZoom = 0.6; controls.maxZoom = 3.5;
+controls.minZoom = 0.6; controls.maxZoom = 5;
 controls.maxPolarAngle = Math.PI * 0.42;
-controls.minPolarAngle = Math.PI * 0.12;
-controls.target.set(9, 0, -1);
-controls.autoRotateSpeed = 0.6;
+controls.minPolarAngle = Math.PI * 0.10;
+controls.target.set(-4, 0, -4);
+controls.autoRotateSpeed = 0.5;
 
-scene.add(new THREE.HemisphereLight(0xb9c4ff, 0x1a1030, 0.75));
-var sol = new THREE.DirectionalLight(0xffffff, 0.85);
-sol.position.set(40, 70, 25);
+scene.add(new THREE.HemisphereLight(0xb9c4ff, 0x1a1030, 0.8));
+var sol = new THREE.DirectionalLight(0xffffff, 0.8);
+sol.position.set(40, 80, 25);
 sol.castShadow = true;
 sol.shadow.mapSize.set(2048, 2048);
-var sc = sol.shadow.camera; sc.left = -70; sc.right = 70; sc.top = 70; sc.bottom = -70; sc.near = 1; sc.far = 200;
+var sc = sol.shadow.camera; sc.left = -80; sc.right = 80; sc.top = 80; sc.bottom = -80; sc.near = 1; sc.far = 250;
 scene.add(sol);
 
-// Estrellas de fondo, como en el reel
 (function(){
   var g = new THREE.BufferGeometry(), p = [];
-  for(var i = 0; i < 600; i++) p.push((Math.random() - .5) * 300, -8 - Math.random() * 30, (Math.random() - .5) * 300);
+  for(var i = 0; i < 700; i++) p.push((Math.random() - .5) * 360, -10 - Math.random() * 30, (Math.random() - .5) * 360);
   g.setAttribute('position', new THREE.Float32BufferAttribute(p, 3));
   scene.add(new THREE.Points(g, new THREE.PointsMaterial({color:0x6670a0, size:0.35})));
+  var piso = new THREE.Mesh(new THREE.PlaneGeometry(320, 320), new THREE.MeshStandardMaterial({color:0x10132a, roughness:1}));
+  piso.rotation.x = -Math.PI / 2; piso.position.y = -0.3; piso.receiveShadow = true;
+  scene.add(piso);
+  var grid = new THREE.GridHelper(320, 80, 0x1d2244, 0x161a36);
+  grid.position.y = -0.28; scene.add(grid);
 })();
 
 var MAT = {};
@@ -288,239 +370,338 @@ function mat(color, extra){
   if(!MAT[k]) MAT[k] = new THREE.MeshStandardMaterial(Object.assign({color:color, roughness:0.75, metalness:0.05}, extra || {}));
   return MAT[k];
 }
+var GEO = {};
+function geoCaja(w, h, d){ var k = w + 'x' + h + 'x' + d; return GEO[k] || (GEO[k] = new THREE.BoxGeometry(w, h, d)); }
 function caja(w, h, d, color, x, y, z, extra){
-  var m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat(color, extra));
+  var m = new THREE.Mesh(geoCaja(w, h, d), mat(color, extra));
   m.position.set(x, y + h / 2, z);
   m.castShadow = true; m.receiveShadow = true;
   return m;
 }
+var COLOR_SALA = {}, SALA = {};
+SALAS.forEach(function(s){ COLOR_SALA[s.id] = '#' + s.color.toString(16).padStart(6, '0'); SALA[s.id] = s; });
 
-// Persona low-poly (cuerpo + cabeza). Se anima cuando la sala tiene trabajo.
+// ─── Personas animadas ───────────────────────────────────────────────────────
+// Cada persona tiene torso, cabeza y dos brazos con pivote en el hombro; "accion" define
+// cómo se mueve: cortar, coser, teclear, cargar (camina entre dos puntos), inspeccionar, dirigir.
 var PIEL = [0xf1c27d, 0xe0ac69, 0xc68642, 0x8d5524];
-var ROPA = [0x2b2d42, 0x3a86ff, 0xef476f, 0x06d6a0, 0x8338ec, 0xffbe0b, 0xfb5607];
-function persona(x, z, seed){
+var ROPA = [0x2b2d42, 0x3a86ff, 0xef476f, 0x06d6a0, 0x8338ec, 0xffbe0b, 0xfb5607, 0x118ab2];
+var G_TORSO = new THREE.CylinderGeometry(0.3, 0.38, 0.95, 8);
+var G_CABEZA = new THREE.SphereGeometry(0.28, 10, 8);
+var G_BRAZO = new THREE.BoxGeometry(0.16, 0.6, 0.16);
+var G_PIERNA = new THREE.BoxGeometry(0.18, 0.5, 0.18);
+var personas = [];
+function persona(x, z, seed, accion, opts){
+  opts = opts || {};
   var g = new THREE.Group();
-  var cuerpo = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.4, 1.0, 8), mat(ROPA[seed % ROPA.length]));
-  cuerpo.position.y = 0.5; cuerpo.castShadow = true;
-  var cabeza = new THREE.Mesh(new THREE.SphereGeometry(0.3, 10, 8), mat(PIEL[seed % PIEL.length]));
-  cabeza.position.y = 1.25; cabeza.castShadow = true;
-  g.add(cuerpo); g.add(cabeza);
-  g.position.set(x, 0, z);
-  g.userData.fase = seed * 1.7;
+  var ropa = opts.ropa != null ? opts.ropa : ROPA[seed % ROPA.length];
+  var pierL = new THREE.Mesh(G_PIERNA, mat(0x22253d)); pierL.position.set(-0.13, 0.25, 0);
+  var pierR = new THREE.Mesh(G_PIERNA, mat(0x22253d)); pierR.position.set(0.13, 0.25, 0);
+  var torso = new THREE.Mesh(G_TORSO, mat(ropa)); torso.position.y = 0.95; torso.castShadow = true;
+  var cabeza = new THREE.Mesh(G_CABEZA, mat(PIEL[seed % PIEL.length])); cabeza.position.y = 1.65; cabeza.castShadow = true;
+  function brazo(lado){
+    var piv = new THREE.Group(); piv.position.set(0.42 * lado, 1.32, 0);
+    var b = new THREE.Mesh(G_BRAZO, mat(ropa)); b.position.y = -0.28; piv.add(b);
+    return piv;
+  }
+  var bL = brazo(-1), bR = brazo(1);
+  g.add(pierL); g.add(pierR); g.add(torso); g.add(cabeza); g.add(bL); g.add(bR);
+  g.position.set(x, opts.y || 0.3, z);
+  if(opts.rotY != null) g.rotation.y = opts.rotY;
+  if(opts.escala) g.scale.setScalar(opts.escala);
+  g.userData = {accion:accion || 'idle', fase:seed * 1.37, bL:bL, bR:bR, cabeza:cabeza, torso:torso, pierL:pierL, pierR:pierR,
+    base:new THREE.Vector3(x, opts.y || 0.3, z), destino:opts.destino || null, rotY:g.rotation.y};
+  personas.push(g);
   return g;
 }
-
-// Disposición de la planta (coordenadas del piso)
-var POS = {
-  hub:          {x:0,   z:0,   w:9,  d:9},
-  programacion: {x:-22, z:-16, w:13, d:10},
-  corte:        {x:0,   z:-20, w:14, d:11},
-  alistamiento: {x:22,  z:-16, w:13, d:10},
-  novedades:    {x:-22, z:14,  w:11, d:9},
-  bodega:       {x:0,   z:20,  w:14, d:10},
-  satelites:    {x:34,  z:12,  w:30, d:26}   // distrito con una casita por satélite
-};
-
-var raycaster = new THREE.Raycaster(), mouse = new THREE.Vector2();
-var clicables = [];            // meshes con userData.abrir
-var personas = [];             // {g, activo}
-var etiquetas = [];            // {el, pos:Vector3}
-var capaDinamica = new THREE.Group(); scene.add(capaDinamica);
-var labelsDiv = document.getElementById('etiquetas');
-
-// Suelo con grilla tenue
-(function(){
-  var piso = new THREE.Mesh(new THREE.PlaneGeometry(260, 260), mat(0x10132a));
-  piso.rotation.x = -Math.PI / 2; piso.position.y = -0.3; piso.receiveShadow = true;
-  scene.add(piso);
-  var grid = new THREE.GridHelper(260, 65, 0x1d2244, 0x161a36);
-  grid.position.y = -0.28; scene.add(grid);
-})();
-
-// Carreteras con luces entre el hub y cada sala
-var CAMINOS = {};
-function camino(desde, hasta, id){
-  var a = new THREE.Vector3(desde.x, 0, desde.z), b = new THREE.Vector3(hasta.x, 0, hasta.z);
-  var dir = b.clone().sub(a), len = dir.length();
-  var via = new THREE.Mesh(new THREE.BoxGeometry(len, 0.08, 1.6), mat(0x1c2040));
-  via.position.copy(a.clone().add(b).multiplyScalar(0.5)); via.position.y = -0.2;
-  via.rotation.y = -Math.atan2(dir.z, dir.x);
-  via.receiveShadow = true;
-  scene.add(via);
-  var n = Math.floor(len / 2.2);
-  for(var i = 1; i < n; i++){
-    var p = a.clone().lerp(b, i / n);
-    var luz = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.06, 0.12), mat(0xff3d6e, {emissive:0xff3d6e, emissiveIntensity:0.9}));
-    luz.position.set(p.x, -0.1, p.z); luz.rotation.y = via.rotation.y;
-    scene.add(luz);
+function animarPersona(p, t){
+  var u = p.userData, f = u.fase;
+  switch(u.accion){
+    case 'cortar':   // los dos brazos al frente, deslizando la tijera/cuchilla
+      u.bL.rotation.x = -1.1 + Math.sin(t * 5 + f) * 0.35;
+      u.bR.rotation.x = -1.1 + Math.sin(t * 5 + f) * 0.35;
+      u.torso.rotation.y = Math.sin(t * 2.5 + f) * 0.15;
+      break;
+    case 'coser':    // brazos cortos y rápidos, cabeza mirando la máquina
+      u.bL.rotation.x = -0.9 + Math.sin(t * 14 + f) * 0.12;
+      u.bR.rotation.x = -0.9 + Math.cos(t * 14 + f) * 0.12;
+      u.cabeza.rotation.x = 0.25 + Math.sin(t * 7 + f) * 0.05;
+      break;
+    case 'teclear':
+      u.bL.rotation.x = -0.8 + Math.sin(t * 11 + f) * 0.1;
+      u.bR.rotation.x = -0.8 + Math.sin(t * 11 + f + 1.6) * 0.1;
+      u.cabeza.rotation.y = Math.sin(t * 0.8 + f) * 0.3;
+      break;
+    case 'inspeccionar': // levanta la prenda, la gira, la baja
+      u.bR.rotation.x = -1.6 + Math.sin(t * 1.6 + f) * 0.5;
+      u.bL.rotation.x = -0.9 + Math.sin(t * 1.6 + f + 1) * 0.3;
+      u.torso.rotation.y = Math.sin(t * 0.9 + f) * 0.4;
+      break;
+    case 'dirigir':  // Mesa de control: gira mirando la planta y señala
+      p.rotation.y = u.rotY + Math.sin(t * 0.5 + f) * 1.2;
+      u.bR.rotation.x = -1.3 + Math.sin(t * 1.2 + f) * 0.3;
+      u.bR.rotation.z = 0.3;
+      break;
+    case 'cargar':   // camina ida y vuelta entre base y destino con los brazos al frente
+      if(u.destino){
+        var k = (Math.sin(t * 0.7 + f) + 1) / 2;
+        p.position.lerpVectors(u.base, u.destino, k);
+        var vel = Math.cos(t * 0.7 + f);
+        p.rotation.y = Math.atan2(u.destino.x - u.base.x, u.destino.z - u.base.z) + (vel < 0 ? Math.PI : 0);
+        u.pierL.rotation.x = Math.sin(t * 9 + f) * 0.5;
+        u.pierR.rotation.x = -Math.sin(t * 9 + f) * 0.5;
+      }
+      u.bL.rotation.x = u.bR.rotation.x = -1.2;
+      break;
+    case 'idle':     // taller sin OTs: casi quieto
+      u.cabeza.rotation.y = Math.sin(t * 0.4 + f) * 0.4;
+      break;
   }
-  CAMINOS[id] = {a:a, b:b};
 }
-['programacion','corte','alistamiento','novedades','bodega','satelites'].forEach(function(k){ camino(POS.hub, POS[k], k); });
 
-function etiqueta(html, pos, clase, onClick){
+// ─── Etiquetas HTML proyectadas ──────────────────────────────────────────────
+var labelsDiv = document.getElementById('etiquetas');
+var etiquetas = [];
+function etiqueta(html, pos, clase, onClick, seguir){
   var el = document.createElement('div');
   el.className = 'tag' + (clase ? ' ' + clase : '');
   el.innerHTML = html;
   if(onClick) el.addEventListener('click', onClick);
   labelsDiv.appendChild(el);
-  var e = {el:el, pos:pos.clone()};
+  var e = {el:el, pos:pos.clone(), seguir:seguir || null};
   etiquetas.push(e);
   return e;
 }
+function nombreSobre(p, nombre){
+  return etiqueta(esc(nombre), new THREE.Vector3(), 'nombre', null, p);
+}
 
-// Sala isométrica: piso de color, dos muros bajos y muebles según el tipo
-function sala(id, color){
-  var p = POS[id], g = new THREE.Group();
+// ─── Disposición: recorrido en U, de Diseño (arriba izq.) a Salida (abajo izq.) ─
+var POS = {
+  diseno:       {x:-46, z:-26, w:18, d:13},
+  programacion: {x:-24, z:-26, w:14, d:13},
+  corte:        {x:-5,  z:-26, w:16, d:13},
+  alistamiento: {x:15,  z:-26, w:14, d:13},
+  logistica:    {x:34,  z:-26, w:12, d:11},
+  talleres:     {x:4,   z:14,  w:64, d:30},
+  novedades:    {x:48,  z:12,  w:12, d:12},
+  calidad:      {x:-44, z:8,   w:14, d:11},
+  salida:       {x:-44, z:28,  w:14, d:10},
+  hub:          {x:-22, z:-10}
+};
+var clicables = [];
+function piezaSala(id, color, p){
+  var g = new THREE.Group();
   var base = caja(p.w, 0.5, p.d, color, 0, -0.3, 0, {roughness:0.6});
-  g.add(base);
   var piso = caja(p.w - 0.8, 0.12, p.d - 0.8, 0xe9e2d0, 0, 0.2, 0);
-  g.add(piso);
-  g.add(caja(p.w, 2.6, 0.35, color, 0, 0.2, -p.d / 2 + 0.17));
-  g.add(caja(0.35, 2.6, p.d, color, -p.w / 2 + 0.17, 0.2, 0));
+  g.add(base); g.add(piso);
+  g.add(caja(p.w, 2.4, 0.35, color, 0, 0.2, -p.d / 2 + 0.17));
+  g.add(caja(0.35, 2.4, p.d, color, -p.w / 2 + 0.17, 0.2, 0));
   g.position.set(p.x, 0, p.z);
   [base, piso].forEach(function(m){ m.userData.abrir = id; clicables.push(m); });
   scene.add(g);
   return g;
 }
-function mueblesProgramacion(g){
-  for(var i = 0; i < 3; i++){
-    g.add(caja(2.4, 0.9, 1.2, 0xffffff, -3.5 + i * 3.5, 0.3, -1));
-    g.add(caja(1.0, 0.7, 0.08, 0x20243f, -3.5 + i * 3.5, 1.2, -1.3, {emissive:0x5a4dff, emissiveIntensity:0.6}));
+
+// Caminos del flujo (secuencia) con partículas que avanzan en el sentido del proceso
+var FLUJO = [['diseno','programacion'],['programacion','corte'],['corte','alistamiento'],['alistamiento','talleres'],
+             ['talleres','calidad'],['calidad','salida'],['talleres','novedades'],['novedades','talleres']];
+var particulas = [];
+function centro(id){ var p = POS[id]; return new THREE.Vector3(p.x, 0, p.z); }
+function ruta(de, a){
+  // Alistamiento baja a talleres por el costado; talleres sale a calidad por su borde izquierdo.
+  var A = centro(de), B = centro(a);
+  if(de === 'alistamiento' && a === 'talleres') return [A, new THREE.Vector3(A.x, 0, POS.talleres.z - POS.talleres.d / 2 + 1)];
+  if(de === 'talleres' && a === 'calidad') return [new THREE.Vector3(POS.talleres.x - POS.talleres.w / 2 + 1, 0, POS.calidad.z), B];
+  if(de === 'talleres' && a === 'novedades') return [new THREE.Vector3(POS.talleres.x + POS.talleres.w / 2 - 1, 0, POS.novedades.z - 2), new THREE.Vector3(B.x, 0, B.z - 2)];
+  if(de === 'novedades' && a === 'talleres') return [new THREE.Vector3(A.x, 0, A.z + 2), new THREE.Vector3(POS.talleres.x + POS.talleres.w / 2 - 1, 0, A.z + 2)];
+  return [A, B];
+}
+function via(a, b, color){
+  var dir = b.clone().sub(a), len = dir.length();
+  var m = new THREE.Mesh(new THREE.BoxGeometry(len, 0.08, 1.8), mat(0x1c2040));
+  m.position.copy(a.clone().add(b).multiplyScalar(0.5)); m.position.y = -0.2;
+  m.rotation.y = -Math.atan2(dir.z, dir.x);
+  m.receiveShadow = true;
+  scene.add(m);
+  for(var i = 0; i < Math.max(2, Math.floor(len / 5)); i++){
+    var pt = new THREE.Mesh(new THREE.SphereGeometry(0.22, 8, 6), mat(color, {emissive:color, emissiveIntensity:1.2}));
+    scene.add(pt);
+    particulas.push({m:pt, a:a, b:b, t:i / Math.max(2, Math.floor(len / 5)), vel:2.2 / len});
   }
 }
-function mueblesCorte(g){
-  g.add(caja(9, 1.0, 2.6, 0xd9d4c5, 0, 0.3, -1.5));
-  g.add(caja(8.4, 0.12, 2.2, 0xff9f5a, 0, 1.3, -1.5));
-  g.add(caja(4, 1.0, 2.0, 0xd9d4c5, -2.5, 0.3, 2.5));
-}
-function mueblesAlistamiento(g){
-  for(var i = 0; i < 3; i++) g.add(caja(1.2, 3.2, 3.4, 0x6b7394, -4.5 + i * 2.2, 0.3, -2.2));
-  g.add(caja(3.5, 1.0, 1.8, 0xffffff, 3, 0.3, 1.5));
-}
-function mueblesNovedades(g){
-  g.add(caja(3, 1.0, 1.6, 0xffffff, 0, 0.3, 0));
-}
-function mueblesBodega(g){
-  for(var i = 0; i < 4; i++) g.add(caja(1.1, 3.6, 4.5, 0x8a6a4a, -5 + i * 2.6, 0.3, -1.5));
+FLUJO.forEach(function(f){ var r = ruta(f[0], f[1]); via(r[0], r[1], SALA[f[1]].color); });
+// Mesa de control conectada con Programación y Calidad (orquesta el principio y el final)
+via(centro('hub'), centro('programacion'), 0x3ad6ff);
+via(centro('hub'), centro('calidad'), 0x3ad6ff);
+via(centro('alistamiento'), centro('logistica'), 0x9aa3c7);
+
+// ─── Salas fijas con su gente ────────────────────────────────────────────────
+var GRUPOS = {};
+['diseno','programacion','corte','alistamiento','calidad','salida'].forEach(function(id){ GRUPOS[id] = piezaSala(id, SALA[id].color, POS[id]); });
+GRUPOS.novedades = piezaSala('novedades', SALA.novedades.color, POS.novedades);
+GRUPOS.logistica = piezaSala('logistica', 0x6b7394, POS.logistica);
+
+// Base grande de Talleres
+(function(){
+  var p = POS.talleres;
+  var b = caja(p.w, 0.45, p.d, 0x3a3115, p.x, -0.3, p.z, {roughness:0.6});
+  scene.add(b); b.userData.abrir = 'talleres'; clicables.push(b);
+  scene.add(caja(p.w, 1.6, 0.35, SALA.talleres.color, p.x, 0.1, p.z - p.d / 2 + 0.17));
+  scene.add(caja(0.35, 1.6, p.d, SALA.talleres.color, p.x - p.w / 2 + 0.17, 0.1, p.z));
+})();
+
+function enSala(id, x, z){ var p = POS[id]; return [p.x + x, p.z + z]; }
+function mesaPC(id, x, z){
+  var g = GRUPOS[id], p = POS[id];
+  g.add(caja(2.4, 0.9, 1.2, 0xffffff, x, 0.3, z));
+  g.add(caja(1.0, 0.7, 0.08, 0x20243f, x, 1.2, z - 0.35, {emissive:0x5a4dff, emissiveIntensity:0.7}));
 }
 
-// Hub central: "Mesa de control"
+// 1. Diseño: mesas de diseño + rincón de Trazos (plotter con papel)
+mesaPC('diseno', -5.5, -3); mesaPC('diseno', -2.2, -3); mesaPC('diseno', 1.1, -3);
+GRUPOS.diseno.add(caja(5.2, 0.9, 2.2, 0xfafafa, 5, 0.3, 2.6));                    // mesa de trazos
+GRUPOS.diseno.add(caja(4.6, 0.04, 1.8, 0xfff4c2, 5, 1.2, 2.6));                   // papel de trazo
+GRUPOS.diseno.add(caja(0.5, 2.4, 0.5, 0xd0d0d0, 0.3, 0.3, 5.2));                   // maniquí
+var DIS_PERS = [];
+[-5.5, -2.2, 1.1].forEach(function(x, i){ var q = enSala('diseno', x, -1.8); var pp = persona(q[0], q[1], i + 3, 'teclear', {rotY:Math.PI}); scene.add(pp); DIS_PERS.push(pp); });
+(function(){ var q = enSala('diseno', 5, 4.3); scene.add(persona(q[0], q[1], 9, 'cortar', {rotY:Math.PI})); })();
+var etqTrazos = etiqueta('', new THREE.Vector3(POS.diseno.x + 5, 3, POS.diseno.z + 2.6), 'mini', function(){ abrirPanel('trazos'); });
+
+// 2. Programación: Pao programa
+mesaPC('programacion', -3, -3); mesaPC('programacion', 1.5, -3);
+GRUPOS.programacion.add(caja(3, 2.2, 0.15, 0xffffff, 3.5, 0.6, 3.5));                // tablero de programación
+var pao = (function(){ var q = enSala('programacion', -3, -1.8); var pp = persona(q[0], q[1], 4, 'teclear', {rotY:Math.PI, ropa:0xef476f}); scene.add(pp); return pp; })();
+nombreSobre(pao, 'Pao');
+
+// 3. Corte: Miguel y Jaime en la mesa larga
+GRUPOS.corte.add(caja(11, 1.0, 2.8, 0xd9d4c5, 0, 0.3, -1.8));
+GRUPOS.corte.add(caja(10.4, 0.1, 2.4, 0xff9f5a, 0, 1.3, -1.8));
+var miguel = (function(){ var q = enSala('corte', -2.5, 0.3); var pp = persona(q[0], q[1], 1, 'cortar', {rotY:Math.PI, ropa:0x118ab2}); scene.add(pp); return pp; })();
+var jaime = (function(){ var q = enSala('corte', 2.5, 0.3); var pp = persona(q[0], q[1], 6, 'cortar', {rotY:Math.PI, ropa:0x06d6a0}); scene.add(pp); return pp; })();
+nombreSobre(miguel, 'Miguel'); nombreSobre(jaime, 'Jaime');
+
+// 4. Alistamiento: estanterías; la gente camina cargando cortes hacia la salida a talleres
+for(var ai = 0; ai < 3; ai++) GRUPOS.alistamiento.add(caja(1.2, 3.0, 3.4, 0x6b7394, -4.6 + ai * 2.3, 0.3, -3.2));
+GRUPOS.alistamiento.add(caja(3.5, 1.0, 1.8, 0xffffff, 3.6, 0.3, 2.5));
+
+// Logística: furgoneta de Elías que va y viene entre alistamiento y talleres
+var van = new THREE.Group();
+(function(){
+  van.add(caja(3.2, 1.6, 1.7, 0xffffff, 0, 0.35, 0));
+  van.add(caja(1.1, 1.1, 1.65, 0x3a86ff, 2.1, 0.35, 0));
+  van.add(caja(0.05, 0.6, 1.4, 0x9fd3ff, 2.66, 0.9, 0, {emissive:0x6fb8ff, emissiveIntensity:0.4}));
+  [[-1, 0.9], [-1, -0.9], [1.9, 0.9], [1.9, -0.9]].forEach(function(r){
+    var w = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.38, 0.3, 12), mat(0x111111));
+    w.rotation.x = Math.PI / 2; w.position.set(r[0], 0.4, r[1]); van.add(w);
+  });
+  scene.add(van);
+})();
+var etqElias = etiqueta('', new THREE.Vector3(), 'nombre', null, van);
+var RUTA_VAN = [centro('logistica'), centro('alistamiento'), new THREE.Vector3(POS.alistamiento.x, 0, POS.talleres.z - POS.talleres.d / 2 - 1.5),
+  new THREE.Vector3(POS.talleres.x + POS.talleres.w / 2 + 1.5, 0, POS.talleres.z - POS.talleres.d / 2 - 1.5), centro('logistica')];
+var etqLogistica = etiqueta('', new THREE.Vector3(POS.logistica.x, 4, POS.logistica.z), '', function(){ abrirPanel('logistica'); });
+GRUPOS.logistica.add(caja(3, 1.2, 2, 0xc9a16b, -3, 0.3, -3));
+
+// 6. Calidad y empaque: Carolina revisa en la mesa, cajas de empaque al lado
+GRUPOS.calidad.add(caja(5, 1.0, 2.0, 0xffffff, -1, 0.3, -1.5));
+GRUPOS.calidad.add(caja(1.6, 0.05, 1.2, 0x2ee6b6, -1, 1.3, -1.5));
+var carolina = (function(){ var q = enSala('calidad', -1, 0.3); var pp = persona(q[0], q[1], 2, 'inspeccionar', {rotY:Math.PI, ropa:0x2ee6b6}); scene.add(pp); return pp; })();
+nombreSobre(carolina, 'Carolina');
+
+// 7. Salida: muelle con camión
+(function(){
+  var g = GRUPOS.salida;
+  g.add(caja(6, 2.6, 3, 0xeeeeee, 1.5, 0.3, 0.5));
+  g.add(caja(2, 2, 2.9, 0x30d158, 5.4, 0.3, 0.5));
+})();
+
+// Mesa de control: Jhon orquesta desde el centro
+var nucleo;
 (function(){
   var p = POS.hub;
   var disco = new THREE.Mesh(new THREE.CylinderGeometry(5, 5.4, 0.6, 40), mat(0x1a1f3f));
   disco.position.set(p.x, -0.1, p.z); disco.receiveShadow = true; scene.add(disco);
   var aro = new THREE.Mesh(new THREE.TorusGeometry(5.1, 0.12, 8, 60), mat(0x3ad6ff, {emissive:0x3ad6ff, emissiveIntensity:1}));
   aro.rotation.x = Math.PI / 2; aro.position.set(p.x, 0.25, p.z); scene.add(aro);
-  var nucleo = new THREE.Mesh(new THREE.IcosahedronGeometry(1.6, 1), mat(0x3ad6ff, {emissive:0x1aa7ff, emissiveIntensity:0.8, flatShading:true}));
-  nucleo.position.set(p.x, 3.2, p.z); nucleo.userData.gira = true; scene.add(nucleo);
-  window._nucleo = nucleo;
+  nucleo = new THREE.Mesh(new THREE.IcosahedronGeometry(1.3, 1), mat(0x3ad6ff, {emissive:0x1aa7ff, emissiveIntensity:0.8, flatShading:true}));
+  nucleo.position.set(p.x, 3.6, p.z); scene.add(nucleo);
+  var mesa = new THREE.Mesh(new THREE.CylinderGeometry(2, 2, 0.9, 24), mat(0x2a3060));
+  mesa.position.set(p.x, 0.65, p.z); mesa.castShadow = true; scene.add(mesa);
+  var jhon = persona(p.x, p.z + 2.8, 5, 'dirigir', {rotY:Math.PI, ropa:0x2b2d42, y:0.2});
+  scene.add(jhon); nombreSobre(jhon, 'Jhon');
 })();
 
-var GRUPOS = {
-  programacion: sala('programacion', 0x7c5cff),
-  corte:        sala('corte',        0xff7a2f),
-  alistamiento: sala('alistamiento', 0x2fb7ff),
-  novedades:    sala('novedades',    0xff4d5e),
-  bodega:       sala('bodega',       0x30d158)
-};
-mueblesProgramacion(GRUPOS.programacion);
-mueblesCorte(GRUPOS.corte);
-mueblesAlistamiento(GRUPOS.alistamiento);
-mueblesNovedades(GRUPOS.novedades);
-mueblesBodega(GRUPOS.bodega);
-
-// Distrito de satélites: base amarilla grande
-(function(){
-  var p = POS.satelites;
-  var b = caja(p.w, 0.4, p.d, 0x2a2410, p.x, -0.3, p.z);
-  scene.add(b);
-  b.userData.abrir = 'satelites'; clicables.push(b);
-})();
-
-// ─── Partes dinámicas (se reconstruyen con cada foto de datos) ───────────────
-var ETQ_SALAS = {};
+// ─── Partes dinámicas (dependen de los datos) ────────────────────────────────
+var ETQ = {};
 SALAS.forEach(function(s){
-  if(s.id === 'satelites') return;
   var p = POS[s.id];
-  ETQ_SALAS[s.id] = etiqueta('', new THREE.Vector3(p.x, 4.6, p.z), '', function(){ abrirPanel(s.id); });
+  // Talleres lleva su título en la esquina delantera izquierda: arriba están los nombres del top 12.
+  var pos = s.id === 'talleres' ? new THREE.Vector3(p.x - p.w / 2 + 6, 1.5, p.z + p.d / 2 + 2) : new THREE.Vector3(p.x, 4.4, p.z - p.d / 2 + 1);
+  ETQ[s.id] = etiqueta('', pos, '', function(){ abrirPanel(s.id); });
 });
-ETQ_SALAS.satelites = etiqueta('', new THREE.Vector3(POS.satelites.x, 7.5, POS.satelites.z - POS.satelites.d / 2), '', function(){ abrirPanel('satelites'); });
-var etqHub = etiqueta('', new THREE.Vector3(POS.hub.x, 6.4, POS.hub.z), '', null);
+var etqHub = etiqueta('', new THREE.Vector3(POS.hub.x, 6.2, POS.hub.z), '', null);
 
+var capa = new THREE.Group(); scene.add(capa);
+var personasDinamicas = [];
 var etqDinamicas = [];
-var CASAS = {};   // nombre satélite → posición, para animaciones
+var CASAS = {};
 var alertaNov = null;
-
 function limpiarDinamico(){
-  while(capaDinamica.children.length) capaDinamica.remove(capaDinamica.children[0]);
-  personas.length = 0;
+  while(capa.children.length) capa.remove(capa.children[0]);
+  personasDinamicas.forEach(function(p){ var i = personas.indexOf(p); if(i >= 0) personas.splice(i, 1); });
+  personasDinamicas = [];
   etqDinamicas.forEach(function(e){ e.el.remove(); etiquetas.splice(etiquetas.indexOf(e), 1); });
   etqDinamicas = [];
+  for(var i = clicables.length - 1; i >= 0; i--) if(clicables[i].userData.dinamico) clicables.splice(i, 1);
   CASAS = {};
 }
-
-// Personas en una sala: 1 persona por cada ~3 OTs, mínimo 1 si hay trabajo, máximo 8.
-function poblarSala(id, nOTs){
-  var p = POS[id];
-  var n = nOTs ? Math.min(8, Math.max(1, Math.ceil(nOTs / 3))) : 0;
-  for(var i = 0; i < n; i++){
-    var x = p.x - p.w / 2 + 2 + (i % 4) * ((p.w - 4) / 3);
-    var z = p.z + 0.5 + Math.floor(i / 4) * 2.2;
-    var g = persona(x, z, i + id.length);
-    capaDinamica.add(g); personas.push({g:g, activo:true});
-  }
-  // Pila de "cortes"/cajas proporcional a las unidades
-  return n;
+function personaDin(x, z, seed, accion, opts){
+  var p = persona(x, z, seed, accion, opts);
+  capa.add(p); personasDinamicas.push(p);
+  return p;
 }
-function pilaCajas(id, uds, color){
+function pilaCajas(id, uds, color, dx, dz){
   var p = POS[id];
-  var niveles = Math.min(12, Math.ceil(uds / 150));
-  for(var i = 0; i < niveles; i++){
-    var c = caja(1.1, 0.55, 1.1, color, p.x + p.w / 2 - 1.6 - (i % 2) * 1.2, 0.35 + Math.floor(i / 2) * 0.58, p.z + p.d / 2 - 1.6);
-    capaDinamica.add(c);
-  }
+  var niveles = Math.min(14, Math.ceil(uds / 150));
+  for(var i = 0; i < niveles; i++)
+    capa.add(caja(1.1, 0.55, 1.1, color, p.x + dx - (i % 2) * 1.2, 0.35 + Math.floor(i / 2) * 0.58, p.z + dz));
 }
 
-function casaSatelite(t, i, total){
-  var p = POS.satelites;
-  var cols = total > 12 ? 5 : 4;
-  var cw = (p.w - 2) / cols, cd = 6.2;
-  var x = p.x - p.w / 2 + 1 + cw * (i % cols) + cw / 2;
-  var z = p.z - p.d / 2 + 2 + cd * Math.floor(i / cols) + cd / 2 - 1;
-  var col = t.vencidas ? 0xff4d5e : 0xffc53d;
+// Talleres: TODOS los activos, en orden de mayor a menor producción en curso.
+var COLS_TALLER = 12;
+function casaTaller(t, i, cont, origen, celda, conNovedad){
+  var cols = origen.cols;
+  var x = origen.x + celda.w * (i % cols) + celda.w / 2;
+  var z = origen.z + celda.d * Math.floor(i / cols) + celda.d / 2;
+  var activo = conNovedad ? true : t.nOTs > 0;
+  var col = conNovedad ? 0xff4d5e : (t.vencidas ? 0xff4d5e : (activo ? 0xffc53d : 0x5a5f78));
   var g = new THREE.Group();
-  var base = caja(cw - 1.2, 0.3, 4.4, col, 0, -0.1, 0);
-  var piso = caja(cw - 1.8, 0.1, 3.8, 0xefe8d6, 0, 0.2, 0);
+  var base = caja(celda.w - 0.5, 0.25, celda.d - 0.6, col, 0, -0.05, 0);
+  var piso = caja(celda.w - 0.9, 0.08, celda.d - 1.0, activo ? 0xefe8d6 : 0x8d90a3, 0, 0.2, 0);
   g.add(base); g.add(piso);
-  g.add(caja(cw - 1.2, 1.6, 0.25, col, 0, 0.2, -2.1));
-  // Máquinas de coser: 1 por cada 2 OTs, máx 4
-  var maq = Math.min(4, Math.max(1, Math.ceil(t.nOTs / 2)));
-  for(var m = 0; m < maq; m++){
-    var mx = -((cw - 2.6) / 2) + m * ((cw - 2.6) / Math.max(1, maq - 1 || 1));
-    if(maq === 1) mx = 0;
-    g.add(caja(0.9, 0.6, 0.6, 0xffffff, mx, 0.3, -0.9));
-    var per = persona(mx, 0.1, i + m);
-    per.scale.setScalar(0.8);
-    g.add(per); personas.push({g:per, activo:true});
+  g.add(caja(celda.w - 0.5, 1.0, 0.18, col, 0, 0.2, -(celda.d - 0.6) / 2 + 0.09));
+  // Gente: según personas registradas del taller (máx 3 visibles); trabajando si tiene OTs
+  var n = activo ? Math.min(3, Math.max(1, t.personas || Math.ceil(t.nOTs / 3))) : 1;
+  var paso = (celda.w - 1.6) / Math.max(1, n);
+  for(var m = 0; m < n; m++){
+    var mx = -(celda.w - 1.6) / 2 + paso * (m + 0.5);
+    g.add(caja(0.7, 0.5, 0.5, activo ? 0xffffff : 0xb5b8c8, mx, 0.28, -0.6));
+    var per = persona(mx, 0.2, i * 3 + m, activo ? 'coser' : 'idle', {rotY:Math.PI, escala:0.62, y:0.28});
+    g.add(per); personasDinamicas.push(per);
   }
   g.position.set(x, 0, z);
-  [base, piso].forEach(function(mm){ mm.userData.abrir = 'sat:' + t.nombre; clicables.push(mm); });
-  capaDinamica.add(g);
-  CASAS[t.nombre] = new THREE.Vector3(x, 0, z);
-  var nom = t.nombre.split(' ').slice(0, 2).join(' ');
-  var sub = fmt(t.uds) + ' uds' + (t.vencidas ? ' · ' + t.vencidas + ' vencida' + (t.vencidas > 1 ? 's' : '') : '');
-  var e = etiqueta('<b>' + esc(nom) + '</b><br><span class="sub">' + sub + '</span>',
-    new THREE.Vector3(x, 2.6, z - 1.5), 'mini' + (t.vencidas ? ' alerta' : ''), function(){ abrirPanel('sat:' + t.nombre); });
-  etqDinamicas.push(e);
+  var clave = (conNovedad ? 'nov:' : 'sat:') + t.nombre;
+  [base, piso].forEach(function(mm){ mm.userData.abrir = clave; mm.userData.dinamico = true; mm.userData.tip = t; mm.userData.nov = !!conNovedad; clicables.push(mm); });
+  cont.add(g);
+  if(!conNovedad) CASAS[t.nombre] = new THREE.Vector3(x, 0, z);
+  return new THREE.Vector3(x, 1.4, z - celda.d / 2 + 0.6);
 }
 
-var COLOR_SALA = {};
-SALAS.forEach(function(s){ COLOR_SALA[s.id] = '#' + s.color.toString(16).padStart(6, '0'); });
-
-function htmlSala(s, extra){
-  return '<span class="dot" style="background:' + COLOR_SALA[s.id] + '"></span><b>' + esc(s.nombre) + '</b> · ' +
-    fmt(s.nOTs) + ' OTs<br><span class="sub">' + fmt(s.uds) + ' uds' + (extra || '') + '</span>';
+function htmlSala(s, sub){
+  var meta = SALA[s.id];
+  return '<span class="paso" style="background:' + COLOR_SALA[s.id] + '">' + meta.paso + '</span><b>' + esc(meta.nombre) + '</b>' +
+    (sub ? '<br><span class="sub">' + sub + '</span>' : '');
 }
 
 var ESTADO = null;
@@ -528,130 +709,218 @@ function actualizarEscena(est){
   ESTADO = est;
   limpiarDinamico();
   var S = est.salas;
-  ['programacion','corte','alistamiento','novedades','bodega'].forEach(function(id){
-    var n = poblarSala(id, S[id].nOTs);
-    var extra = id === 'bodega' ? ' entregadas este mes' : '';
-    ETQ_SALAS[id].el.innerHTML = htmlSala(S[id], extra) + '<br><span class="sub">' + (n ? n + ' trabajando' : 'libre') + '</span>';
-    ETQ_SALAS[id].el.classList.toggle('alerta', id === 'novedades' && S[id].nOTs > 0);
-  });
-  pilaCajas('corte', S.corte.uds, 0xff9f5a);
-  pilaCajas('alistamiento', S.alistamiento.uds, 0xc9a16b);
-  pilaCajas('bodega', S.bodega.uds, 0x9be7a6);
-  var sat = S.satelites;
-  ETQ_SALAS.satelites.el.innerHTML = htmlSala(sat, sat.vencidas ? ' · <span style="color:#ff8a95">' + sat.vencidas + ' vencidas</span>' : '') +
-    '<br><span class="sub">' + est.satelites.length + ' talleres activos</span>';
-  est.satelites.forEach(function(t, i){ casaSatelite(t, i, est.satelites.length); });
 
-  alertaNov = null;
-  if(S.novedades.nOTs){
-    var p = POS.novedades;
-    alertaNov = new THREE.Mesh(new THREE.ConeGeometry(0.7, 1.4, 4), mat(0xff4d5e, {emissive:0xff2040, emissiveIntensity:1}));
-    alertaNov.position.set(p.x + 3, 3.2, p.z - 2); alertaNov.rotation.x = Math.PI;
-    capaDinamica.add(alertaNov);
+  // Diseño
+  ETQ.diseno.el.innerHTML = htmlSala(S.diseno, fmt(est.diseno.enDiseno) + ' diseños en proceso · ' + fmt(est.diseno.porKanban.LISTA_PRODUCCION || 0) + ' listos');
+  etqTrazos.el.innerHTML = '<b>Trazos</b> · ' + fmt(est.trazos.total) + ' solicitudes';
+
+  // Programación / Corte / Alistamiento
+  ETQ.programacion.el.innerHTML = htmlSala(S.programacion, fmt(S.programacion.nOTs) + ' OTs · ' + fmt(S.programacion.uds) + ' uds por programar');
+  ETQ.corte.el.innerHTML = htmlSala(S.corte, fmt(S.corte.nOTs) + ' OTs · ' + fmt(S.corte.uds) + ' uds por cortar');
+  ETQ.alistamiento.el.innerHTML = htmlSala(S.alistamiento, fmt(S.alistamiento.nOTs) + ' OTs · ' + fmt(S.alistamiento.uds) + ' uds por despachar');
+  pilaCajas('corte', S.corte.uds, 0xff9f5a, 6.3, 4.2);
+  pilaCajas('alistamiento', S.alistamiento.uds, 0xc9a16b, 5.5, -4);
+  // Gente de alistamiento: 1 por cada 40 OTs (mín 1, máx 4), cargando cortes
+  var nAl = S.alistamiento.nOTs ? Math.min(4, Math.max(1, Math.ceil(S.alistamiento.nOTs / 40))) : 0;
+  for(var a = 0; a < nAl; a++){
+    var p0 = enSala('alistamiento', -4.6 + a * 2.3, -0.8), p1 = enSala('alistamiento', 3.6, 1.2);
+    personaDin(p0[0], p0[1], a + 11, 'cargar', {destino:new THREE.Vector3(p1[0], 0.3, p1[1])});
   }
 
-  etqHub.el.innerHTML = '<span class="dot" style="background:#3ad6ff"></span><b>Mesa de control</b><br><span class="sub">' +
-    fmt(est.enProceso) + ' uds en proceso</span>';
+  // Talleres
+  var pt = POS.talleres;
+  var origen = {x:pt.x - pt.w / 2 + 1, z:pt.z - pt.d / 2 + 1.2, cols:COLS_TALLER};
+  var filas = Math.max(1, Math.ceil(est.talleres.length / COLS_TALLER));
+  var celda = {w:(pt.w - 2) / COLS_TALLER, d:Math.min(5.5, (pt.d - 2) / filas)};
+  est.talleres.forEach(function(t, i){
+    var top = casaTaller(t, i, capa, origen, celda, false);
+    // Nombre + uds de los 12 que más producen siempre a la vista; el resto con zoom o al pasar el mouse
+    var e = etiqueta('<b>' + (i + 1) + '. ' + esc(corto(t.nombre)) + '</b>' + (t.nOTs ? ' · ' + fmt(t.uds) : ''),
+      top, 'mini' + (t.vencidas ? ' alerta' : '') + (i < 12 ? ' top' : ' zoom'), function(){ abrirPanel('sat:' + t.nombre); });
+    etqDinamicas.push(e);
+  });
+  ETQ.talleres.el.innerHTML = htmlSala(S.talleres, fmt(est.talleres.length) + ' talleres · ' + fmt(est.talleresActivos) + ' con OTs · ' + fmt(S.talleres.uds) + ' uds por llegar' +
+    (S.talleres.vencidas ? ' · <span style="color:#ff8a95">' + S.talleres.vencidas + ' OTs vencidas</span>' : ''));
+
+  // Novedades: copia de cada taller que tiene novedad
+  var pn = POS.novedades, tn = est.talleresNovedad;
+  var colsN = tn.length > 4 ? 3 : 2;
+  var celdaN = {w:(pn.w - 1.5) / colsN, d:Math.min(4.2, (pn.d - 2) / Math.max(1, Math.ceil(tn.length / colsN)))};
+  tn.forEach(function(t, i){
+    var top = casaTaller({nombre:t.nombre, personas:1, nOTs:t.novOTs.length}, i, capa, {x:pn.x - pn.w / 2 + 0.75, z:pn.z - pn.d / 2 + 1.5, cols:colsN}, celdaN, true);
+    etqDinamicas.push(etiqueta(esc(corto(t.nombre)) + ' · ' + fmt(t.novUds), top, 'mini alerta zoom', function(){ abrirPanel('nov:' + t.nombre); }));
+  });
+  ETQ.novedades.el.innerHTML = htmlSala(S.novedades, fmt(S.novedades.nOTs) + ' OTs · ' + fmt(tn.length) + ' talleres · ' + fmt(S.novedades.uds) + ' uds');
+  ETQ.novedades.el.classList.toggle('alerta', S.novedades.nOTs > 0);
+  alertaNov = null;
+  if(S.novedades.nOTs){
+    alertaNov = new THREE.Mesh(new THREE.ConeGeometry(0.7, 1.4, 4), mat(0xff4d5e, {emissive:0xff2040, emissiveIntensity:1}));
+    alertaNov.position.set(pn.x + pn.w / 2 - 1.2, 3.4, pn.z - pn.d / 2 + 1.2); alertaNov.rotation.x = Math.PI;
+    capa.add(alertaNov);
+  }
+
+  // Calidad y salida
+  ETQ.calidad.el.innerHTML = htmlSala(S.calidad, fmt(S.calidad.uds) + ' uds recibidas (últimos 7 días)');
+  ETQ.salida.el.innerHTML = htmlSala(S.salida, fmt(S.salida.uds + S.calidad.uds) + ' uds entregadas este mes');
+  pilaCajas('calidad', S.calidad.uds, 0x9be7d6, 4.8, -3.2);
+
+  // Logística
+  var lh = est.logistica.hoy;
+  ETQ_LOG(lh.length, est.logistica.pendientes);
+
+  etqHub.el.innerHTML = '<span class="paso" style="background:#3ad6ff">◎</span><b>Mesa de control</b><br><span class="sub">' + fmt(est.enProceso) + ' uds en proceso</span>';
   pintarKPIs(est);
+}
+function ETQ_LOG(total, pend){
+  etqLogistica.el.innerHTML = '<span class="paso" style="background:#9aa3c7">⛟</span><b>Logística</b><br><span class="sub">' +
+    (total ? fmt(total) + ' tareas hoy · ' + fmt(pend) + ' pendientes' : 'sin tareas hoy') + '</span>';
+  etqElias.el.textContent = 'Elías' + (pend ? ' · ' + pend + ' pend.' : '');
 }
 
 function pintarKPIs(est){
   var S = est.salas;
   var k = [
     ['En proceso', fmt(est.enProceso) + ' uds'],
-    ['En satélites', fmt(S.satelites.uds) + ' uds'],
-    ['OTs vencidas', fmt(S.satelites.vencidas)],
-    ['Novedades', fmt(S.novedades.nOTs)],
-    ['Entregado mes', fmt(S.bodega.uds) + ' uds']
+    ['En talleres', fmt(S.talleres.uds) + ' uds'],
+    ['OTs vencidas', fmt(S.talleres.vencidas)],
+    ['Novedades', fmt(S.novedades.nOTs) + ' OTs'],
+    ['Entregado mes', fmt(S.salida.uds + S.calidad.uds) + ' uds']
   ];
   document.getElementById('kpis').innerHTML = k.map(function(x){
     return '<div class="kpi"><div class="v">' + x[1] + '</div><div class="l">' + x[0] + '</div></div>';
   }).join('');
 }
 
-// ─── Animación de traslados (cajita que viaja por la carretera) ──────────────
+// ─── Traslados animados (cajita que viaja de una sala a la siguiente) ────────
 var viajes = [];
-function puntoSala(id, satelite){
-  if(id === 'satelites' && satelite && CASAS[satelite]) return CASAS[satelite].clone();
-  var p = POS[id] || POS.hub;
-  return new THREE.Vector3(p.x, 0, p.z);
+function puntoSala(id, taller){
+  if(id === 'talleres' && taller && CASAS[taller]) return CASAS[taller].clone();
+  return centro(POS[id] ? id : 'hub');
 }
 function animarMovimientos(movs){
-  movs.slice(0, 25).forEach(function(m, i){
-    var desde = m.de ? puntoSala(m.de) : new THREE.Vector3(POS.hub.x, 0, POS.hub.z);
-    var hasta = puntoSala(m.a, m.satelite);
-    var c = caja(0.9, 0.7, 0.9, 0xffe08a, 0, 0, 0, {emissive:0xffb020, emissiveIntensity:0.6});
+  movs.slice(0, 30).forEach(function(m, i){
+    var desde = m.de ? puntoSala(m.de) : centro('hub');
+    var hasta = puntoSala(m.a, m.taller);
+    var c = caja(0.9, 0.7, 0.9, 0xffe08a, 0, 0, 0, {emissive:0xffb020, emissiveIntensity:0.7});
     scene.add(c);
-    viajes.push({m:c, ruta:[desde, new THREE.Vector3(POS.hub.x, 0, POS.hub.z), hasta], t:-i * 0.25});
+    viajes.push({m:c, a:desde, b:hasta, t:-i * 0.2});
   });
-}
-function avanzarViajes(dt){
-  for(var i = viajes.length - 1; i >= 0; i--){
-    var v = viajes[i];
-    v.t += dt * 0.35;
-    if(v.t < 0) { v.m.visible = false; continue; }
-    v.m.visible = true;
-    var tt = Math.min(v.t, 1), seg = tt < 0.5 ? 0 : 1, f = seg === 0 ? tt * 2 : (tt - 0.5) * 2;
-    var p = v.ruta[seg].clone().lerp(v.ruta[seg + 1], f);
-    v.m.position.set(p.x, 0.4 + Math.sin(tt * Math.PI) * 1.5, p.z);
-    if(v.t >= 1){ scene.remove(v.m); viajes.splice(i, 1); }
-  }
 }
 
 // ─── Panel lateral ───────────────────────────────────────────────────────────
 var ETIQ_ESTADO = {POR_REVISAR:'Nueva programación', PENDIENTE_CORTAR:'Pendiente cortar', CORTE_POR_ALISTAR:'Corte por alistar',
-  ASIGNADO:'Asignado', EN_CONFECCION:'En confección', ENTREGADO_PARCIAL:'Entregado parcial', ENTREGADO:'Entregado', NOVEDAD:'Novedad'};
+  ASIGNADO:'Asignado', EN_CONFECCION:'En confección', ENTREGADO_PARCIAL:'Entregado parcial', ENTREGADO:'Entregado',
+  PAGO_PENDIENTE:'Entregado · pago pendiente', PAGADO:'Pagado', NOVEDAD:'Novedad'};
+var ETIQ_KANBAN = {EN_DISENO_DIGITAL:'En diseño digital', EN_REVISION_GERENCIA:'En revisión de gerencia', CON_PROVEEDOR:'Con proveedor',
+  EN_CORTE_MUESTRA:'En corte de muestra', EN_CONFECCION_MUESTRA:'En confección de muestra', EN_ESCALADO:'En escalado', LISTA_PRODUCCION:'Lista para producción'};
+var _porIdSat = {};
+function nomTaller(o){ return (o.satelite_id && _porIdSat[o.satelite_id]) ? _porIdSat[o.satelite_id].nombre : (o.satelite_nombre || ''); }
 function filaOT(o){
   var atr = diasAtraso(o, ESTADO.hoy);
-  var esConf = o.estado === 'EN_CONFECCION' || o.estado === 'ENTREGADO_PARCIAL';
+  var enTaller = o.estado === 'EN_CONFECCION' || o.estado === 'ENTREGADO_PARCIAL';
+  var tn = nomTaller(o);
   return '<div class="ot"><div class="r1"><b>' + esc(o.id) + ' · ' + esc(o.nombre || o.referencia || '') + '</b><span>' + fmt(o.cantidad) + ' uds</span></div>' +
     '<div class="r2">' + esc(o.color || '') + ' ' + esc(o.talla || '') + ' · ' + esc(ETIQ_ESTADO[o.estado] || o.estado) +
-    (o.satelite_nombre && esConf ? ' · ' + esc(o.satelite_nombre) : '') +
-    (o.fecha_estimada_entrega && esConf ? ' · entrega ' + esc(String(o.fecha_estimada_entrega).slice(0,10)) : '') +
-    (esConf && atr ? ' · <span class="atr">' + atr + ' días de atraso</span>' : '') + '</div></div>';
+    (tn && (enTaller || o.estado === 'NOVEDAD' || ESTADOS_ENTREGADOS[o.estado]) ? ' · ' + esc(tn) : '') +
+    (o.fecha_estimada_entrega && enTaller ? ' · entrega ' + esc(String(o.fecha_estimada_entrega).slice(0,10)) : '') +
+    (ESTADOS_ENTREGADOS[o.estado] ? ' · recibido ' + esc(fechaEntrega(o)) : '') +
+    (enTaller && atr ? ' · <span class="atr">' + atr + ' días de atraso</span>' : '') + '</div></div>';
 }
-function abrirPanel(clave){
-  if(!ESTADO) return;
-  var titulo, sub, ots;
-  if(clave.indexOf('sat:') === 0){
-    var nom = clave.slice(4);
-    var t = ESTADO.satelites.filter(function(x){ return x.nombre === nom; })[0];
-    if(!t) return;
-    titulo = 'Satélite ' + nom;
-    sub = fmt(t.nOTs) + ' OTs · ' + fmt(t.uds) + ' uds por llegar' + (t.vencidas ? ' · ' + t.vencidas + ' vencidas (máx. ' + t.maxAtraso + ' días)' : '');
-    ots = t.ots;
-  } else {
-    var s = ESTADO.salas[clave];
-    titulo = s.nombre;
-    sub = fmt(s.nOTs) + ' OTs · ' + fmt(s.uds) + ' uds' + (clave === 'bodega' ? ' entregadas este mes' : '') + (s.vencidas ? ' · ' + s.vencidas + ' vencidas' : '');
-    ots = s.ots;
-  }
-  ots = ots.slice().sort(function(a, b){ return diasAtraso(b, ESTADO.hoy) - diasAtraso(a, ESTADO.hoy) || String(a.id).localeCompare(String(b.id)); });
-  var html = '';
-  if(clave === 'satelites'){
-    ESTADO.satelites.forEach(function(t){
-      html += '<div class="grupo">' + esc(t.nombre) + ' · ' + fmt(t.uds) + ' uds' + (t.vencidas ? ' · ' + t.vencidas + ' vencidas' : '') + '</div>';
-      html += t.ots.slice().sort(function(a, b){ return diasAtraso(b, ESTADO.hoy) - diasAtraso(a, ESTADO.hoy); }).map(filaOT).join('');
-    });
-  } else {
-    html = ots.slice(0, 400).map(filaOT).join('') || '<p style="color:var(--mut)">Sin OTs en esta etapa.</p>';
-  }
+function ordenAtraso(lista){ return lista.slice().sort(function(a, b){ return diasAtraso(b, ESTADO.hoy) - diasAtraso(a, ESTADO.hoy) || String(a.id).localeCompare(String(b.id)); }); }
+function mostrarPanel(titulo, sub, html){
   document.getElementById('pTitulo').textContent = titulo;
   document.getElementById('pSub').textContent = sub;
   document.getElementById('pLista').innerHTML = html;
   document.getElementById('panel').classList.add('abierto');
 }
+function abrirPanel(clave){
+  if(!ESTADO) return;
+  var E = ESTADO, S = E.salas, html = '';
+  if(clave.indexOf('sat:') === 0 || clave.indexOf('nov:') === 0){
+    var nom = clave.slice(4), t = E.talleres.filter(function(x){ return x.nombre === nom; })[0];
+    if(!t) return;
+    var pos = E.talleres.indexOf(t) + 1;
+    if(clave.indexOf('nov:') === 0){
+      return mostrarPanel('Novedad · ' + nom, fmt(t.novOTs.length) + ' OTs · ' + fmt(t.novUds) + ' uds con novedad', t.novOTs.map(filaOT).join(''));
+    }
+    html = ordenAtraso(t.ots).map(filaOT).join('') || '<p class="nota">Este taller no tiene OTs en confección ahora.</p>';
+    if(t.novOTs.length) html += '<div class="grupo">Novedades</div>' + t.novOTs.map(filaOT).join('');
+    return mostrarPanel('Taller ' + nom, 'Puesto ' + pos + ' de ' + E.talleres.length + ' · ' + fmt(t.nOTs) + ' OTs · ' + fmt(t.uds) + ' uds por llegar' +
+      (t.vencidas ? ' · ' + t.vencidas + ' vencidas (máx. ' + t.maxAtraso + ' días)' : '') + ' · ' + fmt(t.udsMes) + ' uds entregadas este mes', html);
+  }
+  if(clave === 'talleres'){
+    html = E.talleres.map(function(t, i){
+      return '<div class="ot taller" data-sat="' + esc(t.nombre) + '"><div class="r1"><b>' + (i + 1) + '. ' + esc(t.nombre) + '</b><span>' + fmt(t.uds) + ' uds</span></div>' +
+        '<div class="r2">' + fmt(t.nOTs) + ' OTs en confección' + (t.vencidas ? ' · <span class="atr">' + t.vencidas + ' vencidas</span>' : '') +
+        ' · ' + fmt(t.udsMes) + ' entregadas este mes' + (t.novOTs.length ? ' · <span class="atr">novedad</span>' : '') + '</div></div>';
+    }).join('');
+    mostrarPanel('Talleres', fmt(E.talleres.length) + ' talleres activos, de mayor a menor producción en curso', html);
+    Array.prototype.forEach.call(document.querySelectorAll('#pLista .taller'), function(el){ el.onclick = function(){ abrirPanel('sat:' + el.dataset.sat); }; });
+    return;
+  }
+  if(clave === 'diseno'){
+    var orden = ['EN_DISENO_DIGITAL','EN_REVISION_GERENCIA','CON_PROVEEDOR','EN_CORTE_MUESTRA','EN_CONFECCION_MUESTRA','EN_ESCALADO','LISTA_PRODUCCION'];
+    Object.keys(E.diseno.porKanban).forEach(function(k){ if(orden.indexOf(k) < 0) orden.push(k); });
+    html = orden.filter(function(k){ return E.diseno.porKanban[k]; }).map(function(k){
+      return '<div class="ot"><div class="r1"><b>' + esc(ETIQ_KANBAN[k] || k) + '</b><span>' + fmt(E.diseno.porKanban[k]) + '</span></div></div>';
+    }).join('');
+    html += '<div class="grupo">En proceso</div>' + S.diseno.ots.slice(0, 200).map(function(d){
+      return '<div class="ot"><div class="r1"><b>' + esc(d.nombre || d.id) + '</b><span>' + esc(d.categoria || '') + '</span></div><div class="r2">' +
+        esc(ETIQ_KANBAN[d.kanban_estado] || d.kanban_estado || '') + (d.responsable ? ' · ' + esc(d.responsable) : '') + (d.prioridad ? ' · prioridad ' + esc(d.prioridad) : '') + '</div></div>';
+    }).join('');
+    return mostrarPanel('1 · Diseño', fmt(E.diseno.enDiseno) + ' diseños en proceso de ' + fmt(E.diseno.total), html);
+  }
+  if(clave === 'trazos'){
+    html = E.trazos.lista.slice().reverse().map(function(t){
+      return '<div class="ot"><div class="r1"><b>' + esc(t.op_nombre || t.op_id || t.id) + '</b><span>' + esc(t.estado || '') + '</span></div><div class="r2">' +
+        esc(t.categoria || '') + (t.creado_por ? ' · ' + esc(t.creado_por) : '') + (t.creado_en ? ' · ' + esc(String(t.creado_en).slice(0,10)) : '') + '</div></div>';
+    }).join('') || '<p class="nota">Sin solicitudes de trazo.</p>';
+    return mostrarPanel('Trazos', fmt(E.trazos.total) + ' solicitudes', html);
+  }
+  if(clave === 'logistica'){
+    html = E.logistica.hoy.map(function(t){
+      var ok = t.estado === 'completado';
+      return '<div class="ot"><div class="r1"><b>' + (ok ? '✓ ' : '○ ') + esc(t.descripcion || '') + '</b><span>' + esc(t.hora || '') + '</span></div><div class="r2">' +
+        esc(t.tipo || '') + (t.destino ? ' · ' + esc(t.destino) : '') + (t.nota ? ' · ' + esc(t.nota) : '') + ' · ' + (ok ? 'completada' : 'pendiente') + '</div></div>';
+    }).join('') || '<p class="nota">Elías no tiene tareas registradas para hoy.</p>';
+    return mostrarPanel('Logística · Elías', fmt(E.logistica.hoy.length) + ' tareas hoy · ' + fmt(E.logistica.pendientes) + ' pendientes', html);
+  }
+  var s = S[clave], meta = SALA[clave];
+  var sub = fmt(s.nOTs) + ' OTs · ' + fmt(s.uds) + ' uds';
+  var nota = '';
+  if(clave === 'calidad') nota = '<p class="nota">La app no tiene un estado propio de calidad: aquí se muestran las OTs que los talleres entregaron en los últimos 7 días.</p>';
+  if(clave === 'salida') nota = '<p class="nota">OTs entregadas este mes que ya pasaron por calidad (más de 7 días desde la entrega).</p>';
+  html = nota + (ordenAtraso(s.ots).slice(0, 400).map(filaOT).join('') || '<p class="nota">Sin OTs en esta etapa.</p>');
+  mostrarPanel(meta.paso + ' · ' + meta.nombre, sub, html);
+}
 document.getElementById('pCerrar').onclick = function(){ document.getElementById('panel').classList.remove('abierto'); };
 
-// Clic en el piso de una sala
-var downXY = null;
+// Clic y tooltip sobre la escena
+var raycaster = new THREE.Raycaster(), mouse = new THREE.Vector2(), downXY = null;
+var tip = document.getElementById('tip');
+function pick(e){
+  mouse.x = (e.clientX / innerWidth) * 2 - 1; mouse.y = -(e.clientY / innerHeight) * 2 + 1;
+  raycaster.setFromCamera(mouse, camera);
+  return raycaster.intersectObjects(clicables, false)[0];
+}
 renderer.domElement.addEventListener('pointerdown', function(e){ downXY = [e.clientX, e.clientY]; });
 renderer.domElement.addEventListener('pointerup', function(e){
   if(!downXY || Math.abs(e.clientX - downXY[0]) + Math.abs(e.clientY - downXY[1]) > 6) return; // fue arrastre
-  mouse.x = (e.clientX / innerWidth) * 2 - 1; mouse.y = -(e.clientY / innerHeight) * 2 + 1;
-  raycaster.setFromCamera(mouse, camera);
-  var hit = raycaster.intersectObjects(clicables, false)[0];
+  var hit = pick(e);
   if(hit) abrirPanel(hit.object.userData.abrir);
+});
+renderer.domElement.addEventListener('pointermove', function(e){
+  if(e.buttons || e.pointerType === 'touch'){ tip.style.display = 'none'; return; }
+  var hit = pick(e), t = hit && hit.object.userData.tip;
+  renderer.domElement.style.cursor = hit ? 'pointer' : '';
+  if(!t){ tip.style.display = 'none'; return; }
+  var pos = ESTADO ? ESTADO.talleres.indexOf(t) + 1 : 0;
+  tip.innerHTML = hit.object.userData.nov
+    ? '<b>' + esc(t.nombre) + '</b><br><span class="sub">' + fmt(t.nOTs) + ' OTs en novedad</span>'
+    : '<b>' + pos + '. ' + esc(t.nombre) + '</b><br><span class="sub">' + fmt(t.nOTs) + ' OTs · ' + fmt(t.uds) + ' uds por llegar' +
+      (t.vencidas ? ' · ' + t.vencidas + ' vencidas' : '') + '<br>' + fmt(t.udsMes) + ' uds entregadas este mes</span>';
+  tip.style.display = 'block';
+  tip.style.left = (e.clientX + 14) + 'px'; tip.style.top = (e.clientY + 14) + 'px';
 });
 
 // ─── Feed de bitácora ────────────────────────────────────────────────────────
@@ -666,38 +935,54 @@ function pintarFeed(eventos){
 }
 
 // ─── Bucle de render ─────────────────────────────────────────────────────────
-var reloj = new THREE.Clock(), vProj = new THREE.Vector3();
+var reloj = new THREE.Clock(), vProj = new THREE.Vector3(), vTmp = new THREE.Vector3();
+function puntoRuta(r, k){
+  var tramos = r.length - 1, x = k * tramos, i = Math.min(tramos - 1, Math.floor(x));
+  return r[i].clone().lerp(r[i + 1], x - i);
+}
 function frame(){
   requestAnimationFrame(frame);
   var dt = Math.min(reloj.getDelta(), 0.1), t = reloj.elapsedTime;
   controls.update();
-  if(window._nucleo){ window._nucleo.rotation.y += dt * 0.6; window._nucleo.position.y = 3.2 + Math.sin(t * 1.5) * 0.25; }
-  personas.forEach(function(p){
-    if(!p.activo) return;
-    var f = p.g.userData.fase;
-    p.g.children[0].scale.y = 1 + Math.sin(t * 6 + f) * 0.05;
-    p.g.rotation.y = Math.sin(t * 1.3 + f) * 0.5;
+  nucleo.rotation.y += dt * 0.6; nucleo.position.y = 3.6 + Math.sin(t * 1.5) * 0.25;
+  for(var i = 0; i < personas.length; i++) animarPersona(personas[i], t);
+  particulas.forEach(function(p){
+    p.t = (p.t + dt * p.vel) % 1;
+    p.m.position.copy(p.a).lerp(p.b, p.t); p.m.position.y = 0.05;
   });
-  if(alertaNov) alertaNov.position.y = 3.2 + Math.abs(Math.sin(t * 3)) * 0.6;
-  avanzarViajes(dt);
+  // Furgoneta de Elías recorriendo su ruta
+  var kv = (t * 0.025) % 1, pv = puntoRuta(RUTA_VAN, kv), pn = puntoRuta(RUTA_VAN, (kv + 0.003) % 1);
+  van.position.set(pv.x, 0, pv.z);
+  van.rotation.y = -Math.atan2(pn.z - pv.z, pn.x - pv.x);
+  if(alertaNov) alertaNov.position.y = 3.4 + Math.abs(Math.sin(t * 3)) * 0.6;
+  for(var j = viajes.length - 1; j >= 0; j--){
+    var v = viajes[j];
+    v.t += dt * 0.4;
+    if(v.t < 0){ v.m.visible = false; continue; }
+    v.m.visible = true;
+    var tt = Math.min(v.t, 1);
+    v.m.position.copy(v.a).lerp(v.b, tt); v.m.position.y = 0.4 + Math.sin(tt * Math.PI) * 3;
+    if(v.t >= 1){ scene.remove(v.m); viajes.splice(j, 1); }
+  }
   renderer.render(scene, camera);
-  // Proyectar etiquetas HTML. Las de cada satélite solo con zoom (si no, se tapan entre sí).
-  var w2 = innerWidth / 2, h2 = innerHeight / 2;
-  var verMini = camera.zoom >= 1.5;
+  // Etiquetas: las de talleres fuera del top 12 solo con zoom
+  var w2 = innerWidth / 2, h2 = innerHeight / 2, verZoom = camera.zoom >= 1.8, verTop = camera.zoom >= 0.95;
   etiquetas.forEach(function(e){
-    if(e.el.classList.contains('mini')){ e.el.style.display = verMini ? '' : 'none'; if(!verMini) return; }
-    vProj.copy(e.pos).project(camera);
+    var cl = e.el.classList;
+    if(cl.contains('zoom') && !verZoom){ e.el.style.display = 'none'; return; }
+    if(cl.contains('top') && !verTop){ e.el.style.display = 'none'; return; }
+    if(cl.contains('nombre') && camera.zoom < 0.9){ e.el.style.display = 'none'; return; }
+    e.el.style.display = '';
+    if(e.seguir){ e.seguir.getWorldPosition(vTmp); vTmp.y += 2.5; vProj.copy(vTmp); }
+    else vProj.copy(e.pos);
+    vProj.project(camera);
     e.el.style.left = (vProj.x * w2 + w2) + 'px';
     e.el.style.top = (-vProj.y * h2 + h2) + 'px';
   });
 }
 frame();
 
-addEventListener('resize', function(){
-  renderer.setSize(innerWidth, innerHeight);
-  ajustarCamara();
-});
-
+addEventListener('resize', function(){ renderer.setSize(innerWidth, innerHeight); ajustarCamara(); });
 document.getElementById('btnApp').onclick = function(){ location.href = 'produccion-bentley.html'; };
 document.getElementById('btnTV').onclick = function(){
   controls.autoRotate = !controls.autoRotate;
@@ -708,14 +993,22 @@ document.getElementById('btnTV').onclick = function(){
 if(PARAMS.has('tv')) document.getElementById('btnTV').click();
 
 // ─── Datos ───────────────────────────────────────────────────────────────────
-var otsPrev = null;
-function recibirOTs(ots){
-  document.getElementById('cargando').style.display = 'none';
-  var est = estadoPlanta(ots, hoyBogota());
-  actualizarEscena(est);
-  if(otsPrev) animarMovimientos(diffOTs(otsPrev, ots));
-  otsPrev = ots;
-  document.getElementById('horaSync').textContent = 'actualizado ' + new Date().toLocaleTimeString('es-CO', {timeZone:'America/Bogota', hour:'2-digit', minute:'2-digit'});
+var DATOS = {ots:null, satelites:[], disenos:[], trazos:[], logistica:[]};
+var otsPrev = null, pendiente = null;
+function recalcular(){
+  // Agrupa varias llegadas seguidas de Firebase en un solo redibujo.
+  clearTimeout(pendiente);
+  pendiente = setTimeout(function(){
+    if(!DATOS.ots) return;
+    document.getElementById('cargando').style.display = 'none';
+    _porIdSat = {};
+    DATOS.satelites.forEach(function(s){ if(s && s.id) _porIdSat[s.id] = s; });
+    var hoy = hoyBogota();
+    actualizarEscena(estadoPlanta(DATOS, hoy));
+    if(otsPrev && otsPrev !== DATOS.ots) animarMovimientos(diffOTs(otsPrev, DATOS.ots, hoy, DATOS.satelites));
+    otsPrev = DATOS.ots;
+    document.getElementById('horaSync').textContent = 'actualizado ' + new Date().toLocaleTimeString('es-CO', {timeZone:'America/Bogota', hour:'2-digit', minute:'2-digit'});
+  }, 250);
 }
 function marcarConexion(txt, clase){
   var el = document.getElementById('estadoConexion');
@@ -726,11 +1019,10 @@ if(DEMO){
   // Modo demo: lee el respaldo local, no se conecta a Firebase.
   marcarConexion('demo · respaldo local', 'demo');
   fetch('prod_ots_backup.json').then(function(r){ return r.json(); }).then(function(d){
-    recibirOTs(_comoLista(d.ots));
-    pintarFeed([]);
+    DATOS.ots = _comoLista(d.ots); pintarFeed([]); recalcular();
   }).catch(function(e){ marcarConexion('sin datos demo', ''); console.error(e); });
 } else {
-  var app = firebase.initializeApp({
+  firebase.initializeApp({
     apiKey: "AIzaSyC8jbUj3zvN23iPXmKz8EkEYr63dpeuaYA",
     authDomain: "bentley-produccion.firebaseapp.com",
     databaseURL: "https://bentley-produccion-default-rtdb.firebaseio.com",
@@ -741,12 +1033,16 @@ if(DEMO){
   // Igual que la app: si la auth anónima falla (no está habilitada en el proyecto), se lee igual.
   firebase.auth().signInAnonymously().catch(function(e){ console.warn('Firebase auth anónima:', e && e.code); }).then(function(){
     // Solo listeners de lectura sobre los mismos nodos que usa la app.
-    db.ref('bentley-prod/ots').on('value', function(snap){
-      var d = snap.val();
-      if(!d) return;
-      d = _fbDecKeys(d);
-      recibirOTs(_comoLista(d.ots));
-    }, function(err){ marcarConexion('sin acceso', ''); console.error(err); });
+    var NODOS = {ots:'ots', satelites:'satelites', disenos:'disenos', trazos:'solicitudes', logistica:'tareas'};
+    Object.keys(NODOS).forEach(function(k){
+      db.ref('bentley-prod/' + k).on('value', function(snap){
+        var d = snap.val();
+        if(!d) return;
+        d = _fbDecKeys(d);
+        DATOS[k] = _comoLista(d[NODOS[k]]);
+        recalcular();
+      }, function(err){ marcarConexion('sin acceso', ''); console.error(err); });
+    });
     db.ref('bentley-prod/bitacora').on('value', function(snap){
       var d = snap.val();
       pintarFeed(_comoLista(d && d.eventos));
