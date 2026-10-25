@@ -33933,20 +33933,36 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MARFIL",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1792858211712_bhtav",
-      "ts": 1792858211712,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-204",
       "op_nombre": "HOODIE CAROLINA",
       "referencia": "HOODIE CAROLINA",
-      "color": "MARFIL",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1792858211712,
       "uds": 72,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1792955395987_3q7hi",
+      "ts": 1792955395987,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-074",
+      "op_nombre": "HOODIE RANGLAND PAÑO ALGODON CERRADO",
+      "referencia": "HOODIE RANGLAND PAÑO ALGODON CERRADO",
+      "color": "AVENA",
+      "talla": "todas las tallas",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
+      "bulk": true,
+      "uds": 104,
+      "motivo": "en insumos"
     }
   ]
 }
