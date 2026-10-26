@@ -3664,44 +3664,67 @@
       "op_nombre": "SET PALOMINO"
     },
     {
-      "id": "id_1793020481054_hzh8203mg",
-      "op_id": "OP-0167",
-      "op_nombre": "CONJUNTO TRENZAS",
       "categoria": "CONJUNTOS",
-      "creado_por": "Isabel",
       "creado_en": "2026-10-26",
-      "estado": "ENVIADA",
+      "creado_por": "Isabel",
       "enviada_en": "2026-10-26",
+      "estado": "ENVIADA",
+      "historial_ediciones": [
+        {
+          "fecha": "2026-10-26",
+          "hora": "08:17",
+          "usuario": "Isabel"
+        }
+      ],
+      "id": "id_1793020481054_hzh8203mg",
       "lineas": [
         {
-          "id": "id_1793020426049_qfrusvjy7",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T4",
-            "T6"
+          "ancho_util": 164,
+          "cantidad_trazos": 2,
+          "colores": [
+            "MARFIL",
+            "AVENA"
           ],
+          "generado": true,
+          "id": "id_1793020426049_qfrusvjy7",
+          "impreso": false,
           "marcadas_por_talla": {
             "T4": 1,
             "T6": 1
           },
-          "cantidad_trazos": 2,
-          "ancho_util": 164,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
           "notas": "Trazos para el Carvajal",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T4",
+            "T6"
+          ],
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": "",
+          "generado_en": "2026-10-26"
+        },
+        {
+          "ancho_util": 164,
+          "cantidad_trazos": 2,
           "colores": [
             "MARFIL",
             "AVENA"
           ],
           "generado": false,
-          "impreso": false,
-          "recogido": false
-        },
-        {
           "id": "id_1793020484751_xf2wd5k9m",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
+          "impreso": false,
+          "marcadas_por_talla": {
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1,
+            "T8": 1
+          },
+          "notas": "Trazos para el Carvajal",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
           "tallas": [
             "T8",
             "T10",
@@ -3709,30 +3732,32 @@
             "T14",
             "T16"
           ],
-          "marcadas_por_talla": {
-            "T8": 1,
-            "T10": 1,
-            "T12": 1,
-            "T14": 1,
-            "T16": 1
-          },
-          "cantidad_trazos": 2,
-          "ancho_util": 164,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "Trazos para el Carvajal",
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
+        },
+        {
+          "ancho_util": 178,
+          "cantidad_trazos": 1,
           "colores": [
             "MARFIL",
             "AVENA"
           ],
           "generado": false,
-          "impreso": false,
-          "recogido": false
-        },
-        {
           "id": "id_1793020618168_lo2yrmp82",
-          "tipo": "ADICIONAL",
-          "tipo_custom": "Tiras de costado para chaqueta y pantalón",
+          "impreso": false,
+          "marcadas_por_talla": {
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1,
+            "T4": 1,
+            "T6": 1,
+            "T8": 1
+          },
+          "notas": "Trazos para el Carvajal",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
           "tallas": [
             "T4",
             "T6",
@@ -3742,131 +3767,91 @@
             "T14",
             "T16"
           ],
-          "marcadas_por_talla": {
-            "T4": 1,
-            "T6": 1,
-            "T8": 1,
-            "T10": 1,
-            "T12": 1,
-            "T14": 1,
-            "T16": 1
-          },
-          "cantidad_trazos": 1,
-          "ancho_util": 178,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "Trazos para el Carvajal",
-          "colores": [
-            "MARFIL",
-            "AVENA"
-          ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
+          "tipo": "ADICIONAL",
+          "tipo_custom": "Tiras de costado para chaqueta y pantalón"
         }
       ],
-      "historial_ediciones": [
-        {
-          "fecha": "2026-10-26",
-          "hora": "08:17",
-          "usuario": "Isabel"
-        }
-      ]
+      "op_id": "OP-0167",
+      "op_nombre": "CONJUNTO TRENZAS"
     },
     {
+      "categoria": "CONJUNTOS",
+      "creado_en": "2026-10-26",
+      "creado_por": "Isabel",
+      "enviada_en": "2026-10-26",
+      "estado": "ENVIADA",
       "id": "id_1793021725395_ik4mjas6w",
-      "op_id": "OP-2026-240",
-      "op_nombre": "CONJUNTO CHILLY",
-      "categoria": "CONJUNTOS",
-      "creado_por": "Isabel",
-      "creado_en": "2026-10-26",
-      "estado": "ENVIADA",
-      "enviada_en": "2026-10-26",
       "lineas": [
         {
+          "ancho_util": 150,
+          "cantidad_trazos": 1,
+          "colores": [
+            "MARFIL"
+          ],
+          "generado": false,
           "id": "id_1793021392316_woxnv6xwz",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T4",
-            "T6"
-          ],
+          "impreso": false,
           "marcadas_por_talla": {
             "T4": 1,
             "T6": 1
           },
-          "cantidad_trazos": 1,
-          "ancho_util": 150,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
           "notas": "Trazos para el Carvajal",
-          "colores": [
-            "MARFIL"
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T4",
+            "T6"
           ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
         },
         {
+          "ancho_util": 153,
+          "cantidad_trazos": 3,
+          "colores": [
+            "NEGRO",
+            "GRIS OSCURO",
+            "AZUL OSCURO"
+          ],
+          "generado": false,
           "id": "id_1793021477474_8lkpk66nt",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T4",
-            "T6"
-          ],
+          "impreso": false,
           "marcadas_por_talla": {
             "T4": 1,
             "T6": 1
           },
-          "cantidad_trazos": 3,
-          "ancho_util": 153,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
           "notas": "Trazos para el Carvajal",
-          "colores": [
-            "NEGRO",
-            "GRIS OSCURO",
-            "AZUL OSCURO"
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T4",
+            "T6"
           ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
         },
         {
-          "id": "id_1793021506583_ldpaplthh",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T8",
-            "T10",
-            "T12",
-            "T14",
-            "T16"
-          ],
-          "marcadas_por_talla": {
-            "T8": 1,
-            "T10": 1,
-            "T12": 1,
-            "T14": 1,
-            "T16": 1
-          },
-          "cantidad_trazos": 1,
           "ancho_util": 150,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "",
+          "cantidad_trazos": 1,
           "colores": [
             "MARFIL"
           ],
           "generado": false,
+          "id": "id_1793021506583_ldpaplthh",
           "impreso": false,
-          "recogido": false
-        },
-        {
-          "id": "id_1793021714219_2d4o7qk53",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
+          "marcadas_por_talla": {
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1,
+            "T8": 1
+          },
+          "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
           "tallas": [
             "T8",
             "T10",
@@ -3874,67 +3859,97 @@
             "T14",
             "T16"
           ],
-          "marcadas_por_talla": {
-            "T8": 1,
-            "T10": 1,
-            "T12": 1,
-            "T14": 1,
-            "T16": 1
-          },
-          "cantidad_trazos": 3,
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
+        },
+        {
           "ancho_util": 153,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "",
+          "cantidad_trazos": 3,
           "colores": [
             "NEGRO",
             "GRIS OSCURO",
             "AZUL OSCURO"
           ],
           "generado": false,
+          "id": "id_1793021714219_2d4o7qk53",
           "impreso": false,
-          "recogido": false
+          "marcadas_por_talla": {
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1,
+            "T8": 1
+          },
+          "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
         }
-      ]
+      ],
+      "op_id": "OP-2026-240",
+      "op_nombre": "CONJUNTO CHILLY"
     },
     {
-      "id": "id_1793021962546_9nitmaixr",
-      "op_id": "OP-2026-241",
-      "op_nombre": "CONJUNTO SUECIA",
       "categoria": "CONJUNTOS",
-      "creado_por": "Isabel",
       "creado_en": "2026-10-26",
-      "estado": "ENVIADA",
+      "creado_por": "Isabel",
       "enviada_en": "2026-10-26",
+      "estado": "ENVIADA",
+      "id": "id_1793021962546_9nitmaixr",
       "lineas": [
         {
-          "id": "id_1793021874938_92k4h2hsp",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T4",
-            "T6"
-          ],
-          "marcadas_por_talla": {
-            "T4": 1,
-            "T6": 1
-          },
-          "cantidad_trazos": 1,
           "ancho_util": 164,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "Trazo para don Javier",
+          "cantidad_trazos": 1,
           "colores": [
             "GRIS CLARO"
           ],
           "generado": false,
+          "id": "id_1793021874938_92k4h2hsp",
           "impreso": false,
-          "recogido": false
+          "marcadas_por_talla": {
+            "T4": 1,
+            "T6": 1
+          },
+          "notas": "Trazo para don Javier",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T4",
+            "T6"
+          ],
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
         },
         {
+          "ancho_util": 164,
+          "cantidad_trazos": 1,
+          "colores": [
+            "GRIS CLARO"
+          ],
+          "generado": false,
           "id": "id_1793021906121_uo7mdba5r",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
+          "impreso": false,
+          "marcadas_por_talla": {
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1,
+            "T8": 1
+          },
+          "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
           "tallas": [
             "T8",
             "T10",
@@ -3942,26 +3957,12 @@
             "T14",
             "T16"
           ],
-          "marcadas_por_talla": {
-            "T8": 1,
-            "T10": 1,
-            "T12": 1,
-            "T14": 1,
-            "T16": 1
-          },
-          "cantidad_trazos": 1,
-          "ancho_util": 164,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "",
-          "colores": [
-            "GRIS CLARO"
-          ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
         }
-      ]
+      ],
+      "op_id": "OP-2026-241",
+      "op_nombre": "CONJUNTO SUECIA"
     }
   ]
 }
