@@ -33949,20 +33949,29 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "AVENA",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1792955395987_3q7hi",
-      "ts": 1792955395987,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-074",
       "op_nombre": "HOODIE RANGLAND PAÑO ALGODON CERRADO",
       "referencia": "HOODIE RANGLAND PAÑO ALGODON CERRADO",
-      "color": "AVENA",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1792955395987,
       "uds": 104,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793018627377_em38f",
+      "ts": 1793018627377,
+      "user": "John Rodriguez",
+      "tipo": "eliminar_diseno",
+      "diseno_id": "id_1787602844206_a4wg3bqtn",
+      "nombre": "PANTALON NEVADO",
+      "categoria": "Pantalones"
     }
   ]
 }
