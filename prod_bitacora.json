@@ -33965,13 +33965,24 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1793018627377_em38f",
-      "ts": 1793018627377,
-      "user": "John Rodriguez",
-      "tipo": "eliminar_diseno",
+      "categoria": "Pantalones",
       "diseno_id": "id_1787602844206_a4wg3bqtn",
+      "id": "evt_1793018627377_em38f",
       "nombre": "PANTALON NEVADO",
-      "categoria": "Pantalones"
+      "tipo": "eliminar_diseno",
+      "ts": 1793018627377,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1793018637471_cuk68",
+      "ts": 1793018637471,
+      "user": "John Rodriguez",
+      "tipo": "diseno_prioridad",
+      "diseno_id": "id_1782185585278_gc2pupykh",
+      "nombre": "SET TESLA",
+      "categoria": "Conjuntos",
+      "prio_anterior": 1,
+      "prio_nueva": 2
     }
   ]
 }
