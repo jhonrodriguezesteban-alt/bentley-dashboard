@@ -715,8 +715,7 @@
       "id": "id_1783030889777_yqi3k8nd5",
       "op_id": "OP-0051",
       "op_nombre": "CAZADORA ANIMALITOS",
-      "uds": 160,
-      "satelite_id": null
+      "uds": 160
     },
     {
       "color": "MARFIL",
@@ -1341,8 +1340,7 @@
       "id": "id_1787069214330_c22mlokm3",
       "op_id": "OP-2026-104",
       "op_nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS",
-      "uds": 7,
-      "satelite_id": null
+      "uds": 7
     },
     {
       "color": "CAMEL",
@@ -2909,7 +2907,7 @@
     },
     {
       "color": "NEGRO",
-      "entregado": false,
+      "entregado": true,
       "fecha_compromiso": "2026-10-21",
       "fecha_entrada": "2026-10-02",
       "fecha_inicial": "2026-10-16",
@@ -2932,7 +2930,8 @@
       "op_id": "OP-2026-220",
       "op_nombre": "CONJUNTO DAKOTA",
       "satelite_id": "id_1785259712827_cwczmsu5r",
-      "uds": 101
+      "uds": 101,
+      "fecha_entrega_real": "2026-10-26"
     },
     {
       "color": "CAMEL",
@@ -3567,18 +3566,14 @@
       "uds": 84
     },
     {
+      "color": "MARFIL",
+      "entregado": false,
+      "fecha_entrada": "2026-10-24",
       "id": "id_1792858211586_95b9wkaqe",
       "op_id": "OP-2026-204",
       "op_nombre": "HOODIE CAROLINA",
-      "color": "MARFIL",
       "satelite_id": "id_1785259712827_cwczmsu5r",
-      "uds": 72,
-      "fecha_entrada": "2026-10-24",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 72
     }
   ]
 }
