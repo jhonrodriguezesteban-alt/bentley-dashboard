@@ -4115,7 +4115,11 @@
         "T16"
       ],
       "total_uds": 112,
-      "updated_at": "2026-08-04"
+      "updated_at": "2026-08-04",
+      "trazos_color_solicitado": {
+        "MARFIL": true,
+        "AVENA": true
+      }
     },
     {
       "categoria": "BUZOS",
@@ -6292,8 +6296,8 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-090||VINOTINTO": "EN_CONFECCION",
-        "OP-2026-090||GRIS OSCURO": "POR_REVISAR"
+        "OP-2026-090||GRIS OSCURO": "POR_REVISAR",
+        "OP-2026-090||VINOTINTO": "EN_CONFECCION"
       },
       "tallas": [
         "T6",
@@ -11747,20 +11751,20 @@
     },
     {
       "cantidades": {
-        "AZUL BEBE_T4": 8,
-        "AZUL BEBE_T6": 8,
-        "AZUL BEBE_T8": 16,
         "AZUL BEBE_T10": 16,
         "AZUL BEBE_T12": 16,
         "AZUL BEBE_T14": 16,
         "AZUL BEBE_T16": 16,
-        "MARFIL_T4": 11,
-        "MARFIL_T6": 11,
-        "MARFIL_T8": 10,
+        "AZUL BEBE_T4": 8,
+        "AZUL BEBE_T6": 8,
+        "AZUL BEBE_T8": 16,
         "MARFIL_T10": 10,
         "MARFIL_T12": 10,
         "MARFIL_T14": 10,
-        "MARFIL_T16": 10
+        "MARFIL_T16": 10,
+        "MARFIL_T4": 11,
+        "MARFIL_T6": 11,
+        "MARFIL_T8": 10
       },
       "categoria": "BUZOS",
       "colores": [
@@ -11771,8 +11775,8 @@
         "cid_1789097974344_840__cid_1789097790625_1735": true,
         "cid_1789097974344_840__cid_1789097790625_2827": true,
         "cid_1789097974344_840__cid_1789097790625_4877": true,
-        "cid_1789097974344_840__cid_1789097790625_8971||AZUL BEBE": true,
-        "cid_1789097974344_840__cid_1789097790625_7294": true
+        "cid_1789097974344_840__cid_1789097790625_7294": true,
+        "cid_1789097974344_840__cid_1789097790625_8971||AZUL BEBE": true
       },
       "consumibles_desagregado": {
         "cid_1789097974344_840__cid_1789097790625_8971": true
@@ -11795,14 +11799,30 @@
       "numero": 204,
       "referencias": [
         {
-          "nombre": "HOODIE CAROLINA",
-          "ref": "",
+          "cantidades": {
+            "AZUL BEBE_T10": 16,
+            "AZUL BEBE_T12": 16,
+            "AZUL BEBE_T14": 16,
+            "AZUL BEBE_T16": 16,
+            "AZUL BEBE_T4": 8,
+            "AZUL BEBE_T6": 8,
+            "AZUL BEBE_T8": 16,
+            "MARFIL_T10": 10,
+            "MARFIL_T12": 10,
+            "MARFIL_T14": 10,
+            "MARFIL_T16": 10,
+            "MARFIL_T4": 11,
+            "MARFIL_T6": 11,
+            "MARFIL_T8": 10
+          },
           "cat": "BUZOS",
-          "vmo": 1151,
           "colores": [
             "AZUL BEBE",
             "MARFIL"
           ],
+          "maquilador_id": "",
+          "nombre": "HOODIE CAROLINA",
+          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -11812,25 +11832,13 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "AZUL BEBE_T4": 8,
-            "AZUL BEBE_T6": 8,
-            "AZUL BEBE_T8": 16,
-            "AZUL BEBE_T10": 16,
-            "AZUL BEBE_T12": 16,
-            "AZUL BEBE_T14": 16,
-            "AZUL BEBE_T16": 16,
-            "MARFIL_T4": 11,
-            "MARFIL_T6": 11,
-            "MARFIL_T8": 10,
-            "MARFIL_T10": 10,
-            "MARFIL_T12": 10,
-            "MARFIL_T14": 10,
-            "MARFIL_T16": 10
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
+      "subg_estados": {
+        "OP-2026-204||AZUL BEBE": "POR_REVISAR",
+        "OP-2026-204||MARFIL": "EN_CONFECCION"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -11851,11 +11859,7 @@
           "solicitud_id": "id_1791585802032_imh9mhqfa"
         }
       ],
-      "updated_at": "2026-10-24",
-      "subg_estados": {
-        "OP-2026-204||MARFIL": "EN_CONFECCION",
-        "OP-2026-204||AZUL BEBE": "POR_REVISAR"
-      }
+      "updated_at": "2026-10-24"
     },
     {
       "cantidades": {
@@ -11887,6 +11891,8 @@
       "cortador": "Corte Carbajal",
       "created_at": "2026-09-02",
       "created_by": "John Rodriguez",
+      "diseno_origen_id": "id_1785256691878_4i6dcfyfh",
+      "diseno_origen_nombre": "CAMIBUZO NEVADO",
       "estado_op": "EN_PROCESO",
       "fecha_op": "2026-09-02",
       "id": "OP-2026-205",
@@ -11954,9 +11960,7 @@
           "lineas": 2,
           "solicitud_id": "id_1792417445792_3tox6oacp"
         }
-      ],
-      "diseno_origen_id": "id_1785256691878_4i6dcfyfh",
-      "diseno_origen_nombre": "CAMIBUZO NEVADO"
+      ]
     },
     {
       "cantidades": {
@@ -14008,6 +14012,8 @@
       "cortador": "Corte Carbajal",
       "created_at": "2026-09-12",
       "created_by": "John Rodriguez",
+      "diseno_origen_id": "id_1785250834970_6ggfjfs6x",
+      "diseno_origen_nombre": "CONJUNTO PALOMINO",
       "estado_op": "EN_PROCESO",
       "fecha_op": "2026-09-12",
       "id": "OP-2026-224",
@@ -14065,9 +14071,7 @@
           "lineas": 2,
           "solicitud_id": "id_1792595138058_w9i06yqlg"
         }
-      ],
-      "diseno_origen_id": "id_1785250834970_6ggfjfs6x",
-      "diseno_origen_nombre": "CONJUNTO PALOMINO"
+      ]
     },
     {
       "cantidades": {
