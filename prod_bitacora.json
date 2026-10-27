@@ -37285,20 +37285,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "VINOTINTO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1793130812082_hubez",
-      "ts": 1793130812082,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-099",
       "op_nombre": "BEISBOLERA 2.0",
       "referencia": "BEISBOLERA 2.0",
-      "color": "VINOTINTO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1793130812082,
       "uds": 84,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793131436028_ktiqj",
+      "ts": 1793131436028,
+      "user": "Jefa de Producción",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-246",
+      "op_nombre": "COUNTRY 2.0",
+      "categoria": "BUZOS",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-10-27",
+      "total_uds": 48,
+      "referencias": [
+        "COUNTRY 2.0"
+      ]
     }
   ]
 }
