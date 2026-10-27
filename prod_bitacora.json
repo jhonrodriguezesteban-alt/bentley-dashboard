@@ -37343,20 +37343,36 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "GRIS CLARO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1793131604623_60uvs",
-      "ts": 1793131604623,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-246",
       "op_nombre": "COUNTRY 2.0",
       "referencia": "COUNTRY 2.0",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1793131604623,
+      "uds": 48,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793135598278_9x675",
+      "ts": 1793135598278,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-244",
+      "op_nombre": "PANTALON VENOM",
+      "referencia": "PANTALON VENOM",
       "color": "GRIS CLARO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "bulk": true,
-      "uds": 48,
-      "motivo": "EN TALLER"
+      "uds": 30,
+      "motivo": "ENTREGADO"
     }
   ]
 }
