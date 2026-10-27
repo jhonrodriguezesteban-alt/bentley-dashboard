@@ -4711,6 +4711,12 @@
         "rec_hoodie_pa_o_algodon_cerrado_1172__c78_28": true
       },
       "cortador": "Corte Carbajal",
+      "corte_ok_color": {
+        "GRIS OSCURO": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:50:55.922Z"
+        }
+      },
       "created_at": "2026-06-23",
       "created_by": "John Rodriguez",
       "estado_op": "EN_PROCESO",
@@ -4768,13 +4774,7 @@
         "AVENA": false,
         "GRIS OSCURO": false
       },
-      "updated_at": "2026-07-30",
-      "corte_ok_color": {
-        "GRIS OSCURO": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:50:55.922Z"
-        }
-      }
+      "updated_at": "2026-07-30"
     },
     {
       "cantidades": {
@@ -4931,6 +4931,12 @@
         "rec_chaleco_puffy_1150__c35_29": true
       },
       "cortador": "Corte Carbajal",
+      "corte_ok_color": {
+        "BEIGE": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:51:04.675Z"
+        }
+      },
       "created_at": "2026-06-23",
       "created_by": "John Rodriguez",
       "estado_op": "EN_PROCESO",
@@ -4979,13 +4985,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-06-24",
-      "corte_ok_color": {
-        "BEIGE": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:51:04.675Z"
-        }
-      }
+      "updated_at": "2026-06-24"
     },
     {
       "cantidades": {
@@ -6242,12 +6242,12 @@
     },
     {
       "cantidades": {
-        "VINOTINTO_T6": 12,
-        "VINOTINTO_T8": 12,
         "VINOTINTO_T10": 12,
         "VINOTINTO_T12": 21,
         "VINOTINTO_T14": 19,
-        "VINOTINTO_T16": 16
+        "VINOTINTO_T16": 16,
+        "VINOTINTO_T6": 12,
+        "VINOTINTO_T8": 12
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -6278,13 +6278,21 @@
       "receta_nombre": "CHAQUETA ONION - REF: 1165",
       "referencias": [
         {
-          "nombre": "CHAQUETA ONION",
-          "ref": "1166",
+          "cantidades": {
+            "VINOTINTO_T10": 12,
+            "VINOTINTO_T12": 21,
+            "VINOTINTO_T14": 19,
+            "VINOTINTO_T16": 16,
+            "VINOTINTO_T6": 12,
+            "VINOTINTO_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 9000,
           "colores": [
             "VINOTINTO"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA ONION",
+          "ref": "1166",
           "tallas": [
             "T6",
             "T8",
@@ -6293,15 +6301,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "VINOTINTO_T6": 12,
-            "VINOTINTO_T8": 12,
-            "VINOTINTO_T10": 12,
-            "VINOTINTO_T12": 21,
-            "VINOTINTO_T14": 19,
-            "VINOTINTO_T16": 16
-          },
-          "maquilador_id": ""
+          "vmo": 9000
         }
       ],
       "subg_estados": {
@@ -6327,9 +6327,7 @@
           "solicitud_id": "id_1791980085840_4oxjycskb"
         }
       ],
-      "updated_at": "2026-10-27",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-10-27"
     },
     {
       "cantidades": {
@@ -8136,6 +8134,12 @@
         "rec_oversized_capota_1058__c82_32": true
       },
       "cortador": "Corte Carbajal",
+      "corte_ok_color": {
+        "CAFE": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:45:54.290Z"
+        }
+      },
       "created_at": "2026-08-10",
       "created_by": "John Rodriguez",
       "estado_op": "EN_PROCESO",
@@ -8245,13 +8249,7 @@
           "solicitud_id": "id_1790093305895_pmfxzwogd"
         }
       ],
-      "updated_at": "2026-09-03",
-      "corte_ok_color": {
-        "CAFE": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:45:54.290Z"
-        }
-      }
+      "updated_at": "2026-09-03"
     },
     {
       "cantidades": {
@@ -8312,6 +8310,20 @@
         "rec_piloto_pancake_1099__c98_21": true
       },
       "cortador": "Corte Carbajal",
+      "corte_ok_color": {
+        "CAMEL": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:48:39.303Z"
+        },
+        "MARFIL": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:48:39.891Z"
+        },
+        "NEGRO": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:48:37.449Z"
+        }
+      },
       "created_at": "2026-08-10",
       "created_by": "John Rodriguez",
       "estado_op": "EN_PROCESO",
@@ -8405,21 +8417,7 @@
           "solicitud_id": "id_1792006780593_rfoszu8i2"
         }
       ],
-      "updated_at": "2026-10-15",
-      "corte_ok_color": {
-        "NEGRO": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:48:37.449Z"
-        },
-        "CAMEL": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:48:39.303Z"
-        },
-        "MARFIL": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:48:39.891Z"
-        }
-      }
+      "updated_at": "2026-10-15"
     },
     {
       "cantidades": {
@@ -8464,7 +8462,6 @@
         "rec_chaqueta_ralph_1155__c46_19": true
       },
       "cortador": "Corte Carbajal",
-      "corte_ok_color": {},
       "created_at": "2026-08-16",
       "created_by": "John Rodriguez",
       "estado_op": "EN_PROCESO",
@@ -9529,6 +9526,12 @@
         "MARFIL"
       ],
       "cortador": "Corte Carbajal",
+      "corte_ok_color": {
+        "MARFIL": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:51:09.011Z"
+        }
+      },
       "created_at": "2026-08-24",
       "created_by": "John Rodriguez",
       "estado_op": "EN_PROCESO",
@@ -9587,13 +9590,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-08-24",
-      "corte_ok_color": {
-        "MARFIL": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:51:09.011Z"
-        }
-      }
+      "updated_at": "2026-08-24"
     },
     {
       "cantidades": {
@@ -10112,6 +10109,20 @@
         "rec_piloto_pancake_1099__c98_40": true
       },
       "cortador": "Corte Carbajal",
+      "corte_ok_color": {
+        "BEIGE": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:48:35.485Z"
+        },
+        "CAMEL": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:48:40.443Z"
+        },
+        "NEGRO": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:48:35.990Z"
+        }
+      },
       "created_at": "2026-08-25",
       "created_by": "John Rodriguez",
       "estado_op": "EN_PROCESO",
@@ -10176,21 +10187,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "corte_ok_color": {
-        "BEIGE": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:48:35.485Z"
-        },
-        "NEGRO": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:48:35.990Z"
-        },
-        "CAMEL": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:48:40.443Z"
-        }
-      }
+      ]
     },
     {
       "cantidades": {
@@ -10644,6 +10641,24 @@
         "rec_chaleco_puffy_1150__c35_21": true
       },
       "cortador": "Corte Carbajal",
+      "corte_ok_color": {
+        "AZUL OSCURO": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:51:04.257Z"
+        },
+        "BLANCO": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:51:02.726Z"
+        },
+        "NEGRO": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:51:03.826Z"
+        },
+        "VERDE MILITAR": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:51:03.159Z"
+        }
+      },
       "created_at": "2026-08-25",
       "created_by": "John Rodriguez",
       "estado_op": "EN_PROCESO",
@@ -10714,25 +10729,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "corte_ok_color": {
-        "BLANCO": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:51:02.726Z"
-        },
-        "VERDE MILITAR": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:51:03.159Z"
-        },
-        "NEGRO": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:51:03.826Z"
-        },
-        "AZUL OSCURO": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:51:04.257Z"
-        }
-      }
+      ]
     },
     {
       "cantidades": {
@@ -10893,6 +10890,12 @@
         "rec_hoodie_pa_o_algodon_cerrado_1172__c78_21": true
       },
       "cortador": "Corte Carbajal",
+      "corte_ok_color": {
+        "AVENA": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:50:57.938Z"
+        }
+      },
       "created_at": "2026-08-25",
       "created_by": "John Rodriguez",
       "estado_op": "EN_PROCESO",
@@ -10945,12 +10948,6 @@
       "trazos_color_solicitado": {
         "AVENA": true,
         "GRIS OSCURO": true
-      },
-      "corte_ok_color": {
-        "AVENA": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:50:57.938Z"
-        }
       }
     },
     {
@@ -10989,16 +10986,7 @@
         "rec_chaqueta_ralph_1155__c46_28": true
       },
       "cortador": "Corte Carbajal",
-      "corte_ok_color": {
-        "CAMEL": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-08T23:59:42.113Z"
-        },
-        "NEGRO": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-08T23:59:37.431Z"
-        }
-      },
+      "corte_ok_color": {},
       "created_at": "2026-08-25",
       "created_by": "John Rodriguez",
       "estado_op": "EN_PROCESO",
@@ -11111,6 +11099,24 @@
         "cid_1789264125616_3759__cid_1789263938874_4812": true
       },
       "cortador": "Corte Carbajal",
+      "corte_ok_color": {
+        "AVENA": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:47:04.033Z"
+        },
+        "CAFE": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:47:03.506Z"
+        },
+        "MARFIL": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:47:29.272Z"
+        },
+        "NEGRO": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:47:02.863Z"
+        }
+      },
       "created_at": "2026-08-25",
       "created_by": "John Rodriguez",
       "diseno_origen_id": "id_1784480344159_33uewgfjm",
@@ -11190,25 +11196,7 @@
           "lineas": 6,
           "solicitud_id": "id_1791586261809_h1q69ktmk"
         }
-      ],
-      "corte_ok_color": {
-        "NEGRO": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:47:02.863Z"
-        },
-        "CAFE": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:47:03.506Z"
-        },
-        "AVENA": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:47:04.033Z"
-        },
-        "MARFIL": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:47:29.272Z"
-        }
-      }
+      ]
     },
     {
       "cantidades": {
@@ -11338,6 +11326,16 @@
         "rec_conjunto_hoodie_capota_p_a_1178__c58_19": true
       },
       "cortador": "Corte Carbajal",
+      "corte_ok_color": {
+        "GRIS CLARO": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:50:25.607Z"
+        },
+        "VINOTINTO": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:50:26.684Z"
+        }
+      },
       "created_at": "2026-08-25",
       "created_by": "John Rodriguez",
       "estado_op": "EN_PROCESO",
@@ -11411,17 +11409,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "corte_ok_color": {
-        "GRIS CLARO": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:50:25.607Z"
-        },
-        "VINOTINTO": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:50:26.684Z"
-        }
-      }
+      ]
     },
     {
       "cantidades": {
@@ -15585,6 +15573,24 @@
         "rec_conjunto_chilly_1153__c51_21": true
       },
       "cortador": "Corte Carbajal",
+      "corte_ok_color": {
+        "AZUL OSCURO": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:50:12.711Z"
+        },
+        "GRIS OSCURO": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:50:13.344Z"
+        },
+        "MARFIL": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:50:13.953Z"
+        },
+        "NEGRO": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:50:14.491Z"
+        }
+      },
       "created_at": "2026-10-08",
       "created_by": "John Rodriguez",
       "estado_op": "EN_PROCESO",
@@ -15670,25 +15676,7 @@
           "lineas": 4,
           "solicitud_id": "id_1793021725395_ik4mjas6w"
         }
-      ],
-      "corte_ok_color": {
-        "AZUL OSCURO": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:50:12.711Z"
-        },
-        "GRIS OSCURO": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:50:13.344Z"
-        },
-        "MARFIL": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:50:13.953Z"
-        },
-        "NEGRO": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:50:14.491Z"
-        }
-      }
+      ]
     },
     {
       "cantidades": {
@@ -15729,6 +15717,12 @@
         "GRIS OSCURO"
       ],
       "cortador": "Corte Carbajal",
+      "corte_ok_color": {
+        "GRIS CLARO": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-27T19:50:00.774Z"
+        }
+      },
       "created_at": "2026-10-08",
       "created_by": "John Rodriguez",
       "estado_op": "EN_PROCESO",
@@ -15809,13 +15803,7 @@
           "lineas": 2,
           "solicitud_id": "id_1793021962546_9nitmaixr"
         }
-      ],
-      "corte_ok_color": {
-        "GRIS CLARO": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:50:00.774Z"
-        }
-      }
+      ]
     },
     {
       "cantidades": {
