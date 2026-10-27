@@ -37218,14 +37218,25 @@
       "user": "John Rodriguez"
     },
     {
+      "color": "NEGRO",
       "id": "evt_1793130128318_nrd53",
-      "ts": 1793130128318,
-      "user": "John Rodriguez",
-      "tipo": "planeacion_asignar",
+      "mes": "2026-11",
       "op_id": "OP-2026-221",
       "op_nombre": "SET CHALECO VIENA",
-      "color": "NEGRO",
-      "mes": "2026-11"
+      "tipo": "planeacion_asignar",
+      "ts": 1793130128318,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1793130190015_2okk6",
+      "ts": 1793130190015,
+      "user": "John Rodriguez",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-090",
+      "nombre": "CHAQUETA ONION",
+      "categoria": "CHAQUETAS",
+      "colores": 1,
+      "refs": 1
     }
   ]
 }
