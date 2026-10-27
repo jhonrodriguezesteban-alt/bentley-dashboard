@@ -6226,23 +6226,16 @@
     },
     {
       "cantidades": {
-        "GRIS OSCURO_T10": 12,
-        "GRIS OSCURO_T12": 16,
-        "GRIS OSCURO_T14": 16,
-        "GRIS OSCURO_T16": 16,
-        "GRIS OSCURO_T6": 12,
-        "GRIS OSCURO_T8": 12,
+        "VINOTINTO_T6": 12,
+        "VINOTINTO_T8": 12,
         "VINOTINTO_T10": 12,
         "VINOTINTO_T12": 21,
         "VINOTINTO_T14": 19,
-        "VINOTINTO_T16": 16,
-        "VINOTINTO_T6": 12,
-        "VINOTINTO_T8": 12
+        "VINOTINTO_T16": 16
       },
       "categoria": "CHAQUETAS",
       "colores": [
-        "VINOTINTO",
-        "GRIS OSCURO"
+        "VINOTINTO"
       ],
       "consumibles_check": {
         "rec_chaqueta_onion_1165__c43_19||GRIS OSCURO": true,
@@ -6269,28 +6262,13 @@
       "receta_nombre": "CHAQUETA ONION - REF: 1165",
       "referencias": [
         {
-          "cantidades": {
-            "GRIS OSCURO_T10": 12,
-            "GRIS OSCURO_T12": 16,
-            "GRIS OSCURO_T14": 16,
-            "GRIS OSCURO_T16": 16,
-            "GRIS OSCURO_T6": 12,
-            "GRIS OSCURO_T8": 12,
-            "VINOTINTO_T10": 12,
-            "VINOTINTO_T12": 21,
-            "VINOTINTO_T14": 19,
-            "VINOTINTO_T16": 16,
-            "VINOTINTO_T6": 12,
-            "VINOTINTO_T8": 12
-          },
-          "cat": "CHAQUETAS",
-          "colores": [
-            "VINOTINTO",
-            "GRIS OSCURO"
-          ],
-          "maquilador_id": "",
           "nombre": "CHAQUETA ONION",
           "ref": "1166",
+          "cat": "CHAQUETAS",
+          "vmo": 9000,
+          "colores": [
+            "VINOTINTO"
+          ],
           "tallas": [
             "T6",
             "T8",
@@ -6299,7 +6277,15 @@
             "T14",
             "T16"
           ],
-          "vmo": 9000
+          "cantidades": {
+            "VINOTINTO_T6": 12,
+            "VINOTINTO_T8": 12,
+            "VINOTINTO_T10": 12,
+            "VINOTINTO_T12": 21,
+            "VINOTINTO_T14": 19,
+            "VINOTINTO_T16": 16
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -6325,7 +6311,9 @@
           "solicitud_id": "id_1791980085840_4oxjycskb"
         }
       ],
-      "updated_at": "2026-10-22"
+      "updated_at": "2026-10-27",
+      "diseno_origen_id": null,
+      "diseno_origen_nombre": null
     },
     {
       "cantidades": {
