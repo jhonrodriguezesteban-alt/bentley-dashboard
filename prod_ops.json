@@ -14013,13 +14013,13 @@
     },
     {
       "cantidades": {
-        "NEGRO_T4": 11,
-        "NEGRO_T6": 11,
-        "NEGRO_T8": 19,
         "NEGRO_T10": 19,
         "NEGRO_T12": 19,
         "NEGRO_T14": 19,
-        "NEGRO_T16": 19
+        "NEGRO_T16": 19,
+        "NEGRO_T4": 11,
+        "NEGRO_T6": 11,
+        "NEGRO_T8": 19
       },
       "categoria": "CONJUNTOS",
       "colores": [
@@ -14040,13 +14040,22 @@
       "numero": 224,
       "referencias": [
         {
-          "nombre": "SET PALOMINO",
-          "ref": "1229",
+          "cantidades": {
+            "NEGRO_T10": 19,
+            "NEGRO_T12": 19,
+            "NEGRO_T14": 19,
+            "NEGRO_T16": 19,
+            "NEGRO_T4": 11,
+            "NEGRO_T6": 11,
+            "NEGRO_T8": 19
+          },
           "cat": "CONJUNTOS",
-          "vmo": 1151,
           "colores": [
             "NEGRO"
           ],
+          "maquilador_id": "",
+          "nombre": "SET PALOMINO",
+          "ref": "1229",
           "tallas": [
             "T4",
             "T6",
@@ -14056,16 +14065,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T4": 11,
-            "NEGRO_T6": 11,
-            "NEGRO_T8": 19,
-            "NEGRO_T10": 19,
-            "NEGRO_T12": 19,
-            "NEGRO_T14": 19,
-            "NEGRO_T16": 19
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
