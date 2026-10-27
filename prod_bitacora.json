@@ -37259,14 +37259,30 @@
       "user": "John Rodriguez"
     },
     {
+      "color": "BEIGE",
       "id": "evt_1793130538929_l5tvg",
-      "ts": 1793130538929,
-      "user": "John Rodriguez",
-      "tipo": "planeacion_asignar",
+      "mes": "2026-11",
       "op_id": "OP-2026-198",
       "op_nombre": "CHAQUETA FIRE",
-      "color": "BEIGE",
-      "mes": "2026-11"
+      "tipo": "planeacion_asignar",
+      "ts": 1793130538929,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1793130700424_ae5be",
+      "ts": 1793130700424,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-079",
+      "op_nombre": "BEISBOLERA ARMIN",
+      "referencia": "BEISBOLERA ARMIN",
+      "color": "NEGRO",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 144,
+      "motivo": "EN TALLER"
     }
   ]
 }
