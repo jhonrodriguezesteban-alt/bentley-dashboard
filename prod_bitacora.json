@@ -35730,20 +35730,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1793106409036_40i1p",
-      "ts": 1793106409036,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-224",
       "op_nombre": "SET PALOMINO",
       "referencia": "CONJUNTO PALOMINO",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1793106409036,
       "uds": 117,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793112006063_gk2cn",
+      "ts": 1793112006063,
+      "user": "Isabel",
+      "tipo": "diseno_comentario",
+      "diseno_id": "id_1782163808017_0hqy66lgy",
+      "nombre": "CHAQUETA FIRE",
+      "categoria": "Chaquetas",
+      "tiene_imagen": false,
+      "extracto": "Cambios realizados en el molde. Se modificó cuello, se cerró escote, desahogo en"
     }
   ]
 }
