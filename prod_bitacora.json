@@ -37269,19 +37269,35 @@
       "user": "John Rodriguez"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1793130700424_ae5be",
-      "ts": 1793130700424,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-079",
       "op_nombre": "BEISBOLERA ARMIN",
       "referencia": "BEISBOLERA ARMIN",
-      "color": "NEGRO",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1793130700424,
+      "uds": 144,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793130812082_hubez",
+      "ts": 1793130812082,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-099",
+      "op_nombre": "BEISBOLERA 2.0",
+      "referencia": "BEISBOLERA 2.0",
+      "color": "VINOTINTO",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 144,
+      "uds": 84,
       "motivo": "EN TALLER"
     }
   ]
