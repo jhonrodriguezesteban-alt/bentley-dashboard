@@ -967,10 +967,10 @@
       "prioridad": 1,
       "responsable": "Carolina",
       "tela_estado": "asignada",
-      "tela_nota": "Cuerina",
-      "tela_precio": 14605,
       "tela_mp_id": "mp_31010_1061011",
-      "tela_nombre_mp": "TELA CUERINA SINTETICA NEGRO"
+      "tela_nombre_mp": "TELA CUERINA SINTETICA NEGRO",
+      "tela_nota": "Cuerina",
+      "tela_precio": 14605
     },
     {
       "categoria": "Chaquetas",
@@ -983,15 +983,16 @@
       "prioridad": 1,
       "responsable": "Carolina",
       "tela_estado": "asignada",
-      "tela_stock": true,
+      "tela_mp_id": "mp_31010_13710216",
+      "tela_nombre_mp": "TELA TRENCH BEIGE",
       "tela_nota": "TELA TRENCH BEIGE",
       "tela_precio": 12500,
-      "tela_mp_id": "mp_31010_13710216",
-      "tela_nombre_mp": "TELA TRENCH BEIGE"
+      "tela_stock": true
     },
     {
       "categoria": "Conjuntos",
       "fecha_creacion": "2026-06-21",
+      "genero": "Mujer",
       "id": "id_4bc75a3530cf42d4",
       "kanban_estado": "EN_DISENO_DIGITAL",
       "marca": "Prime",
@@ -1000,13 +1001,11 @@
       "prioridad": 1,
       "responsable": "Carolina",
       "tela_estado": "asignada",
-      "tela_stock": false,
-      "tela_nota": "tela trench",
-      "tela_precio": 13800,
       "tela_mp_id": "mp_31010_1411016",
       "tela_nombre_mp": "TELA ARMANI CAMEL",
-      "genero": "Mujer",
-      "proveedor": null
+      "tela_nota": "tela trench",
+      "tela_precio": 13800,
+      "tela_stock": false
     },
     {
       "categoria": "Abrigos",
@@ -1064,10 +1063,10 @@
       "prioridad": 2,
       "responsable": "Isa",
       "tela_estado": "asignada",
-      "tela_nota": "pancake",
-      "tela_precio": 9244,
       "tela_mp_id": "mp_31010_1031016",
-      "tela_nombre_mp": "TELA PANCAKE CAMEL"
+      "tela_nombre_mp": "TELA PANCAKE CAMEL",
+      "tela_nota": "pancake",
+      "tela_precio": 9244
     },
     {
       "categoria": "Conjuntos",
@@ -1091,14 +1090,15 @@
       "prioridad": 2,
       "responsable": "Isa",
       "tela_estado": "asignada",
-      "tela_nota": "PAÑO ALGODON",
-      "tela_precio": 9500,
       "tela_mp_id": "mp_31010_1051014",
-      "tela_nombre_mp": "TELA PAÑO ALGODÓN GRIS CLARO"
+      "tela_nombre_mp": "TELA PAÑO ALGODÓN GRIS CLARO",
+      "tela_nota": "PAÑO ALGODON",
+      "tela_precio": 9500
     },
     {
       "categoria": "Chaquetas",
       "fecha_creacion": "2026-06-21",
+      "genero": "Mujer",
       "id": "id_69719f051bc74746",
       "kanban_estado": "EN_DISENO_DIGITAL",
       "marca": "Prime",
@@ -1106,14 +1106,13 @@
       "nota": "EN CONFECCION",
       "prioridad": 2,
       "responsable": "Isa",
-      "genero": "Mujer",
-      "proveedor": null,
       "tela_estado": "sin_tela",
       "tela_nota": ""
     },
     {
       "categoria": "Conjuntos",
       "fecha_creacion": "2026-06-21",
+      "genero": "Mujer",
       "id": "id_3c4d0e3b8cf440f7",
       "kanban_estado": "EN_DISENO_DIGITAL",
       "marca": "Prime",
@@ -1121,8 +1120,6 @@
       "nota": "EN CORTE",
       "prioridad": 1,
       "responsable": "Isa",
-      "genero": "Mujer",
-      "proveedor": null,
       "tela_estado": "asignada",
       "tela_nota": "SIROPE"
     },
@@ -1225,8 +1222,7 @@
       "prioridad": 1,
       "responsable": "John",
       "tela_estado": "asignada",
-      "tela_nota": "HONG KONG RAYATIZA",
-      "proveedor": null
+      "tela_nota": "HONG KONG RAYATIZA"
     },
     {
       "categoria": "Conjuntos",
@@ -2354,6 +2350,16 @@
           "hora": "11:24",
           "id": "c_1792686249840",
           "texto": "Prueba 2 confeccionada. El cuello es muuuy grande. En especial la punta del cuello es demasiado larga para la talla y el escote se ve muy abajo.\nLa pretina no tiene la medida que se requiere. Está muy grande en contorno. Revisar.\nA Jhon no le gusta el resultado final de esta prueba."
+        },
+        {
+          "id": "c_1793112006062",
+          "texto": "Cambios realizados en el molde. Se modificó cuello, se cerró escote, desahogo en sisa +2cm, se eliminó punta de pretina para trabajarla completa.\nTrazo de prueba para talla 8",
+          "autor": "Isabel",
+          "autor_id": "isabel",
+          "fecha": "2026-10-27",
+          "hora": "09:40",
+          "imagenes": [],
+          "leido_por": []
         }
       ],
       "fecha_creacion": "2026-06-22",
@@ -3475,11 +3481,11 @@
       "prioridad": 1,
       "responsable": "Isa",
       "tela_estado": "asignada",
-      "tela_stock": true,
+      "tela_mp_id": "mp_31010_1051011",
+      "tela_nombre_mp": "TELA PAÑO ALGODÓN NEGRO",
       "tela_nota": "PAÑO ALGODON",
       "tela_precio": 9500,
-      "tela_mp_id": "mp_31010_1051011",
-      "tela_nombre_mp": "TELA PAÑO ALGODÓN NEGRO"
+      "tela_stock": true
     },
     {
       "_ts": "2026-06-23T00:29:12.810Z",
@@ -5548,6 +5554,7 @@
       "tela_nota": "cuerina stilotex"
     },
     {
+      "_op_origen": "OP-2026-228",
       "_op_planeacion": "OP-2026-228",
       "_ts": "2026-06-23T18:56:24.110Z",
       "categoria": "Buzos",
@@ -5659,6 +5666,7 @@
           "texto": "Listo para producción"
         }
       ],
+      "eliminado": true,
       "fecha_creacion": "2026-06-23",
       "genero": "Unisex",
       "id": "id_1782240897563_3lix3vy1y",
@@ -5734,9 +5742,7 @@
       "prioridad": 1,
       "responsable": "John",
       "tela_estado": "asignada",
-      "tela_nota": "1. TELA SNOWY VITRAL\n2. TELA MISO DE VITRAL",
-      "eliminado": true,
-      "_op_origen": "OP-2026-228"
+      "tela_nota": "1. TELA SNOWY VITRAL\n2. TELA MISO DE VITRAL"
     },
     {
       "_op_origen": "OP-2026-216",
@@ -7503,6 +7509,7 @@
       "tela_nota": "TELA PROMOCION VITRAL MALALA"
     },
     {
+      "_op_origen": "OP-2026-224",
       "_op_planeacion": "OP-2026-224",
       "_ts": "2026-07-28T15:04:17.064Z",
       "categoria": "Conjuntos",
@@ -7553,6 +7560,7 @@
           "texto": "Prueba de tallas realizada. La talla 16 es muy pequeña. Pasa a ser talla 14.\nTrazo al travez de la tela por la elongación hacia ese lado.\nTiras de sesgo de 3.7cm * 160 de largo. Cortadas hacia el largo de la tela. Una tira por conjunto."
         }
       ],
+      "eliminado": true,
       "fecha_creacion": "2026-07-28",
       "genero": "Niña",
       "id": "id_1785250834970_6ggfjfs6x",
@@ -7594,9 +7602,7 @@
       "responsable": "John",
       "tela_estado": "asignada",
       "tela_nota": "TELA RADIANTE VITRAL EN PROMO",
-      "tela_stock": false,
-      "eliminado": true,
-      "_op_origen": "OP-2026-224"
+      "tela_stock": false
     },
     {
       "_ts": "2026-07-28T15:17:38.390Z",
@@ -7845,6 +7851,7 @@
       "tela_nota": "tela trench de vitral"
     },
     {
+      "_op_origen": "OP-2026-205",
       "_ts": "2026-07-28T16:39:05.566Z",
       "categoria": "Buzos",
       "colores_escogidos": [
@@ -7915,6 +7922,7 @@
           "texto": "Comparado manga y puño con oso con oso.  Nevado está 0.5cm más grande en el puño.\nListo para producción."
         }
       ],
+      "eliminado": true,
       "fecha_creacion": "2026-07-28",
       "genero": "Unisex",
       "id": "id_1785256691878_4i6dcfyfh",
@@ -7962,9 +7970,7 @@
       "prioridad": 1,
       "responsable": "John",
       "tela_estado": "pte_llegar",
-      "tela_nota": "TELA SNOWY",
-      "eliminado": true,
-      "_op_origen": "OP-2026-205"
+      "tela_nota": "TELA SNOWY"
     },
     {
       "_ts": "2026-09-14T21:34:12.613Z",
@@ -8472,20 +8478,19 @@
       "tela_nota": "TELA 100% ALGODON"
     },
     {
-      "id": "id_1793023955492_bubrif52x",
-      "nombre": "CHAQUETA BAGGY PINZAS DAMA",
-      "marca": "Prime",
+      "_ts": "2026-10-26T14:13:16.012Z",
       "categoria": "Chaquetas",
-      "responsable": "Isa",
-      "prioridad": 1,
-      "kanban_estado": "EN_DISENO_DIGITAL",
-      "nota": "ESCALAR LA DE NIÑA A DAMA",
-      "genero": "Mujer",
-      "proveedor": null,
-      "tela_estado": "asignada",
-      "tela_nota": "PAÑO ALGODON",
       "fecha_creacion": "2026-10-26",
-      "_ts": "2026-10-26T14:13:16.012Z"
+      "genero": "Mujer",
+      "id": "id_1793023955492_bubrif52x",
+      "kanban_estado": "EN_DISENO_DIGITAL",
+      "marca": "Prime",
+      "nombre": "CHAQUETA BAGGY PINZAS DAMA",
+      "nota": "ESCALAR LA DE NIÑA A DAMA",
+      "prioridad": 1,
+      "responsable": "Isa",
+      "tela_estado": "asignada",
+      "tela_nota": "PAÑO ALGODON"
     }
   ],
   "disenos_cfg": {
