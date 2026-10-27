@@ -37316,15 +37316,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1793131450525_xk1z3",
-      "ts": 1793131450525,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-246",
-      "nombre": "COUNTRY 2.0",
       "categoria": "BUZOS",
       "colores": 1,
-      "refs": 1
+      "id": "evt_1793131450525_xk1z3",
+      "nombre": "COUNTRY 2.0",
+      "op_id": "OP-2026-246",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1793131450525,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793131595860_3pyvq",
+      "ts": 1793131595860,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-246",
+      "op_nombre": "COUNTRY 2.0",
+      "referencia": "COUNTRY 2.0",
+      "color": "GRIS CLARO",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 48,
+      "motivo": "EN TALLER"
     }
   ]
 }
