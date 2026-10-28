@@ -38159,16 +38159,34 @@
       "user": "Carolina Telles"
     },
     {
-      "id": "evt_1793147554154_hsh0n",
-      "ts": 1793147554154,
-      "user": "Jefa de Producción",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-247",
-      "op_nombre": "CAMIBUZO MANGA REDONDA",
       "categoria": "BUZOS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-10-27",
+      "id": "evt_1793147554154_hsh0n",
+      "op_id": "OP-2026-247",
+      "op_nombre": "CAMIBUZO MANGA REDONDA",
+      "referencias": [
+        "CAMIBUZO MANGA REDONDA"
+      ],
+      "tipo": "crear_op",
       "total_uds": 56,
+      "ts": 1793147554154,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793147585392_nk7py",
+      "ts": 1793147585392,
+      "user": "Jefa de Producción",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-247",
+      "op_nombre": "CAMIBUZO MANGA REDONDA",
+      "categoria": "BUZOS",
+      "total_ots": 8,
+      "total_uds": 56,
+      "colores": [
+        "AZUL BEBE",
+        "CAFE"
+      ],
       "referencias": [
         "CAMIBUZO MANGA REDONDA"
       ]
