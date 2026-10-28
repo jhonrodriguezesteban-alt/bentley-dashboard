@@ -113479,7 +113479,7 @@
       "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "CORTE_POR_ALISTAR",
+      "estado": "EN_CONFECCION",
       "nt_corte_satelite": null,
       "nt_ingreso_planta": null,
       "op_effi": null,
@@ -113491,10 +113491,16 @@
           "fecha": "2026-10-28T00:33:12.215Z",
           "accion": "Taller asignado: MARTHA FLORES",
           "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-10-28T00:33:19.362Z",
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "user": "Jefa de Producción"
         }
       ],
       "created_at": "2026-10-27",
-      "created_by": "Jefa de Producción"
+      "created_by": "Jefa de Producción",
+      "fecha_corte": "2026-10-27"
     },
     {
       "id": "id_1793147585392_l23tr71po",
@@ -113514,7 +113520,7 @@
       "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "CORTE_POR_ALISTAR",
+      "estado": "EN_CONFECCION",
       "nt_corte_satelite": null,
       "nt_ingreso_planta": null,
       "op_effi": null,
@@ -113526,10 +113532,16 @@
           "fecha": "2026-10-28T00:33:12.215Z",
           "accion": "Taller asignado: MARTHA FLORES",
           "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-10-28T00:33:19.362Z",
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "user": "Jefa de Producción"
         }
       ],
       "created_at": "2026-10-27",
-      "created_by": "Jefa de Producción"
+      "created_by": "Jefa de Producción",
+      "fecha_corte": "2026-10-27"
     },
     {
       "id": "id_1793147585392_qnjydnmbc",
@@ -113549,7 +113561,7 @@
       "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "CORTE_POR_ALISTAR",
+      "estado": "EN_CONFECCION",
       "nt_corte_satelite": null,
       "nt_ingreso_planta": null,
       "op_effi": null,
@@ -113561,10 +113573,16 @@
           "fecha": "2026-10-28T00:33:12.215Z",
           "accion": "Taller asignado: MARTHA FLORES",
           "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-10-28T00:33:19.362Z",
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "user": "Jefa de Producción"
         }
       ],
       "created_at": "2026-10-27",
-      "created_by": "Jefa de Producción"
+      "created_by": "Jefa de Producción",
+      "fecha_corte": "2026-10-27"
     },
     {
       "id": "id_1793147585392_38hfngklp",
@@ -113584,7 +113602,7 @@
       "fecha_entrega_real": null,
       "unidades_entregadas": 0,
       "unidades_novedad": 0,
-      "estado": "CORTE_POR_ALISTAR",
+      "estado": "EN_CONFECCION",
       "nt_corte_satelite": null,
       "nt_ingreso_planta": null,
       "op_effi": null,
@@ -113596,10 +113614,16 @@
           "fecha": "2026-10-28T00:33:12.215Z",
           "accion": "Taller asignado: MARTHA FLORES",
           "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-10-28T00:33:19.362Z",
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → EN_CONFECCION. Motivo: EN TALLER",
+          "user": "Jefa de Producción"
         }
       ],
       "created_at": "2026-10-27",
-      "created_by": "Jefa de Producción"
+      "created_by": "Jefa de Producción",
+      "fecha_corte": "2026-10-27"
     },
     {
       "id": "id_1793147585392_7amwypm3m",
@@ -113613,7 +113637,7 @@
       "cantidad": 7,
       "valor_mo": 1151,
       "fecha_ot": "2026-10-27",
-      "satelite_id": null,
+      "satelite_id": "sat_04",
       "fecha_entrega_corte_satelite": null,
       "fecha_estimada_entrega": null,
       "fecha_entrega_real": null,
@@ -113626,7 +113650,13 @@
       "cumplió_fecha": null,
       "motivo_incumplimiento": "",
       "notas": "",
-      "historial": [],
+      "historial": [
+        {
+          "fecha": "2026-10-28T00:33:33.700Z",
+          "accion": "Taller asignado: MARTHA FLORES",
+          "user": "Jefa de Producción"
+        }
+      ],
       "created_at": "2026-10-27",
       "created_by": "Jefa de Producción"
     },
@@ -113642,7 +113672,7 @@
       "cantidad": 7,
       "valor_mo": 1151,
       "fecha_ot": "2026-10-27",
-      "satelite_id": null,
+      "satelite_id": "sat_04",
       "fecha_entrega_corte_satelite": null,
       "fecha_estimada_entrega": null,
       "fecha_entrega_real": null,
@@ -113655,7 +113685,13 @@
       "cumplió_fecha": null,
       "motivo_incumplimiento": "",
       "notas": "",
-      "historial": [],
+      "historial": [
+        {
+          "fecha": "2026-10-28T00:33:33.700Z",
+          "accion": "Taller asignado: MARTHA FLORES",
+          "user": "Jefa de Producción"
+        }
+      ],
       "created_at": "2026-10-27",
       "created_by": "Jefa de Producción"
     },
@@ -113671,7 +113707,7 @@
       "cantidad": 7,
       "valor_mo": 1151,
       "fecha_ot": "2026-10-27",
-      "satelite_id": null,
+      "satelite_id": "sat_04",
       "fecha_entrega_corte_satelite": null,
       "fecha_estimada_entrega": null,
       "fecha_entrega_real": null,
@@ -113684,7 +113720,13 @@
       "cumplió_fecha": null,
       "motivo_incumplimiento": "",
       "notas": "",
-      "historial": [],
+      "historial": [
+        {
+          "fecha": "2026-10-28T00:33:33.701Z",
+          "accion": "Taller asignado: MARTHA FLORES",
+          "user": "Jefa de Producción"
+        }
+      ],
       "created_at": "2026-10-27",
       "created_by": "Jefa de Producción"
     },
@@ -113700,7 +113742,7 @@
       "cantidad": 7,
       "valor_mo": 1151,
       "fecha_ot": "2026-10-27",
-      "satelite_id": null,
+      "satelite_id": "sat_04",
       "fecha_entrega_corte_satelite": null,
       "fecha_estimada_entrega": null,
       "fecha_entrega_real": null,
@@ -113713,7 +113755,13 @@
       "cumplió_fecha": null,
       "motivo_incumplimiento": "",
       "notas": "",
-      "historial": [],
+      "historial": [
+        {
+          "fecha": "2026-10-28T00:33:33.701Z",
+          "accion": "Taller asignado: MARTHA FLORES",
+          "user": "Jefa de Producción"
+        }
+      ],
       "created_at": "2026-10-27",
       "created_by": "Jefa de Producción"
     }
