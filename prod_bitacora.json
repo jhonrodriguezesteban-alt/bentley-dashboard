@@ -38208,36 +38208,47 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "CAFE",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1793147627096_zrdu8",
-      "ts": 1793147627096,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-247",
       "op_nombre": "CAMIBUZO MANGA REDONDA",
       "referencia": "CAMIBUZO MANGA REDONDA",
-      "color": "CAFE",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1793147627096,
       "uds": 28,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "CAFE",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1793147627348_v6zqg",
-      "ts": 1793147627348,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-247",
       "op_nombre": "CAMIBUZO MANGA REDONDA",
       "referencia": "CAMIBUZO MANGA REDONDA",
-      "color": "CAFE",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1793147627348,
       "uds": 28,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793203920286_izl3a",
+      "ts": 1793203920286,
+      "user": "Isabel",
+      "tipo": "diseno_responsable",
+      "diseno_id": "id_3c4d0e3b8cf440f7",
+      "nombre": "CONJUNTO SOLOMUN DAMA",
+      "categoria": "Conjuntos",
+      "resp_anterior": "Isa",
+      "resp_nuevo": "Carolina"
     }
   ]
 }
