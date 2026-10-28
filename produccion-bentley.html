@@ -1133,7 +1133,7 @@ async function _fbMigrarSiVacio(){
 // abiertas con una versión anterior se recargan solas (esperando a que terminen de guardar).
 // Sin esto, una pestaña vieja olvidada en un computador seguía guardando con la lógica
 // anterior y deshaciendo cambios de todos los demás.
-var APP_VERSION = 20261027.1;
+var APP_VERSION = 20261027.2;
 function _vigilarVersionApp(){
   if(!_fbDb) return;
   _fbDb.ref(FB_ROOT+'/app_version').on('value', function(snap){
@@ -7254,7 +7254,10 @@ function _subgEstadoDerivado(otsColor){
   if(otsColor.every(function(o){ return o.estado==='ENTREGADO'||o.estado==='PAGO_PENDIENTE'; })) return 'ARCHIVADO';
   // OTs en ALISTAMIENTO individual = proceso de entrega, equivale a completado a nivel de grupo
   if(otsColor.every(function(o){ return o.estado==='ENTREGADO'||o.estado==='ALISTAMIENTO'||o.estado==='PAGO_PENDIENTE'; })) return 'ALISTAMIENTO';
-  if(otsColor.some(function(o){ return o.estado==='EN_CONFECCION'||o.estado==='ALISTAMIENTO'; })) return 'EN_CONFECCION';
+  // ENTREGADO_PARCIAL = el taller ya devolvió una parte y aún tiene el resto: sigue en confección.
+  // Sin esto, un color con OTs ENTREGADO + una ENTREGADO_PARCIAL caía al default PENDIENTE_CORTAR
+  // y reaparecía en Planeación (pasó con OP-2026-238).
+  if(otsColor.some(function(o){ return o.estado==='EN_CONFECCION'||o.estado==='ENTREGADO_PARCIAL'||o.estado==='ALISTAMIENTO'; })) return 'EN_CONFECCION';
   if(otsColor.some(function(o){ return o.estado==='CORTE_POR_ALISTAR'||o.estado==='ASIGNADO'; })) return 'CORTE_POR_ALISTAR';
   return 'PENDIENTE_CORTAR';
 }
