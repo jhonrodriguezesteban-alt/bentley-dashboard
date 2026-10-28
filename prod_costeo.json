@@ -4044,793 +4044,962 @@
       "unidad": "und"
     }
   ],
-  "servicios": [
+  "params": {
+    "costo_empaque_web": 2000,
+    "costo_fijo_web": 5000,
+    "dias_laborables": 24,
+    "horas_dia": 7.666666666666667,
+    "iva": 0.19,
+    "margen_detal": 0.5,
+    "margen_mayorista": 0.3,
+    "margen_web": 0.45,
+    "pct_arl": 0.0435,
+    "pct_parafiscal": 0.09,
+    "pct_prestaciones": 0.2183,
+    "pct_ss_pension": 0.12,
+    "pct_ss_salud": 0.085,
+    "pct_tmnp": 0.05,
+    "pct_tmp": 0.2
+  },
+  "precios_pt": [
     {
-      "costo_unitario": 11500,
-      "id": "svc_51919_1131020",
-      "nombre": "SERVICIO DE CONFECCION CHAQUETA CAZADORA",
-      "sku": "51919-1131020"
+      "precio_detal": 79831.93,
+      "precio_mayorista": 46974.79,
+      "precio_web": 100756.3,
+      "producto": "CHAQUETA CAZADORA - REF: 1002"
     },
     {
-      "costo_unitario": 2500,
-      "id": "svc_52121_1011010",
-      "nombre": "SERVICIO DE ACOLCHADO X METRO",
-      "sku": "52121-1011010"
+      "precio_detal": 81512.6,
+      "precio_mayorista": 55462.18,
+      "precio_web": 108403.36,
+      "producto": "OVERSIZED CAPOTA - REF: 1058"
     },
     {
-      "costo_unitario": 10500,
-      "id": "svc_51919_1011020",
-      "nombre": "SERVICIO DE CONFECCION CHAQUETA OVERSIZED CAPOTA",
-      "sku": "51919-1011020"
+      "precio_detal": 79831.93,
+      "precio_mayorista": 51176.47,
+      "precio_web": 100756.3,
+      "producto": "BEISBOLERA CUERO - REF: 1008"
     },
     {
-      "costo_unitario": 9400,
-      "id": "svc_51919_1141020",
-      "nombre": "SERVICIO DE CONFECCION BEISBOLERA CUERO",
-      "sku": "51919-1141020"
+      "precio_detal": 50336.13,
+      "precio_mayorista": 33529.41,
+      "precio_web": 50336.13,
+      "producto": "BUZO CAPOTA IT´S FUNNY - REF: 1012"
     },
     {
-      "costo_unitario": 1700,
-      "id": "svc_52222_1041020",
-      "nombre": "SERVICIO DE BORDADO BIESBOLERA",
-      "sku": "52222-1041020"
+      "precio_detal": 25210,
+      "precio_mayorista": 18487,
+      "precio_web": 37815,
+      "producto": "CAMISETA BASICA BK - REF: 1061"
     },
     {
-      "costo_unitario": 5000,
-      "id": "svc_51919_1151020",
-      "nombre": "SERVICIO DE CONFECCION BUZO CAPOTA IT´S FUNNY",
-      "sku": "51919-1151020"
+      "precio_detal": 58739.5,
+      "precio_mayorista": 41932.77,
+      "precio_web": 58739.5,
+      "producto": "GABAN BODOQUE - REF: 1021"
     },
     {
-      "costo_unitario": 4200,
-      "id": "svc_52222_1051020",
-      "nombre": "SERVICIO DE BORDADO BUZO CAPOTA IT´S FUNNY",
-      "sku": "52222-1051020"
+      "precio_detal": 66386.55,
+      "precio_mayorista": 49579.83,
+      "precio_web": 66386.55,
+      "producto": "CONJUNTO PARIS - REF: 1070"
     },
     {
-      "costo_unitario": 2300,
-      "id": "svc_51919_1021020",
-      "nombre": "SERVICIO DE CONFECCION CAMISETA BK",
-      "sku": "51919-1021020"
+      "precio_detal": 57983,
+      "precio_mayorista": 45378.15,
+      "precio_web": 57983,
+      "producto": "PANTALON RAVE - REF: 1063"
     },
     {
-      "costo_unitario": 7200,
-      "id": "svc_51919_1161020",
-      "nombre": "SERVICIO DE CONFECCION GABAN BODOQUE",
-      "sku": "51919-1161020"
+      "precio_detal": 74789.92,
+      "precio_mayorista": 49495.8,
+      "precio_web": 74789.92,
+      "producto": "CHALECO ACOLCHADO MANY - REF: 1056"
     },
     {
-      "costo_unitario": 5500,
-      "id": "svc_51919_1051020",
-      "nombre": "SERVICIO DE CONFECCION PANTALON RAVE",
-      "sku": "51919-1051020"
+      "precio_detal": 46218.49,
+      "precio_mayorista": 32773.11,
+      "precio_web": 58739.5,
+      "producto": "CAMIBUSO OSO PELUDO - REF: 1035"
     },
     {
-      "costo_unitario": 8500,
-      "id": "svc_51919_1081020",
-      "nombre": "SERVICIO DE CONFECCION CHALECO MANY",
-      "sku": "51919-1081020"
+      "precio_detal": 54537.82,
+      "precio_mayorista": 41176.47,
+      "precio_web": 54537.82,
+      "producto": "CAMISON BERLIN - REF: 1071"
     },
     {
-      "costo_unitario": 3500,
-      "id": "svc_51919_1061020",
-      "nombre": "SERVICIO DE CONFECCION CAMIBUSO",
-      "sku": "51919-1061020"
+      "precio_detal": 41176,
+      "precio_mayorista": 26890,
+      "precio_web": 49000,
+      "producto": "VESTIDO NIU NIU - REF: 1039"
     },
     {
-      "costo_unitario": 6300,
-      "id": "svc_51919_1101020",
-      "nombre": "SERVICIO DE CONFECCION CAMISION BERLIN",
-      "sku": "51919-1101020"
+      "precio_detal": 35210.08,
+      "precio_mayorista": 29411.76,
+      "precio_web": 35210.08,
+      "producto": "VESTIDO NAPOLES - REF: 1112"
     },
     {
-      "costo_unitario": 3600,
-      "id": "svc_51919_1171020",
-      "nombre": "SERVICIO DE CONFECCION VESTIDO NAPOLES",
-      "sku": "51919-1171020"
+      "precio_detal": 39495.8,
+      "precio_mayorista": 27731,
+      "precio_web": 39495.8,
+      "producto": "FALDA GABY BK - REF: 1079"
     },
     {
-      "costo_unitario": 6000,
-      "id": "svc_51919_1181020",
-      "nombre": "SERVICIO DE CONFECCION ABRIGO OVEJERO",
-      "sku": "51919-1181020"
+      "precio_detal": 74789.92,
+      "precio_mayorista": 54621.85,
+      "precio_web": 100000,
+      "producto": "ABRIGO OVEJERO - REF: 1043"
     },
     {
-      "costo_unitario": 2300,
-      "id": "svc_51919_1191020",
-      "nombre": "SERVICIO DE CONFECCION CAMISETA CROPTOP BK",
-      "sku": "51919-1191020"
+      "precio_detal": 25210.08,
+      "precio_mayorista": 18487.39,
+      "precio_web": 37815,
+      "producto": "CAMISETA CROPTOP BK - REF: 1074"
     },
     {
-      "costo_unitario": 10000,
-      "id": "svc_53030_1091150",
-      "nombre": "SERVICIO DE TEJEDURIA RIB POLIESTER",
-      "sku": "53030-1091150"
+      "precio_detal": 74789.92,
+      "precio_mayorista": 53781.51,
+      "precio_web": 74789.92,
+      "producto": "PILOTO PANCAKE - REF: 1099"
     },
     {
-      "costo_unitario": 9000,
-      "id": "svc_51919_1201020",
-      "nombre": "SERVICIO DE CONFECCION PILOTO PANCAKE",
-      "sku": "51919-1201020"
+      "precio_detal": 83949.58,
+      "precio_mayorista": 73109.24,
+      "precio_web": 83949.58,
+      "producto": "CHAQUETA SUEDE OLD MONEY - REF: 1119"
     },
     {
-      "costo_unitario": 11000,
-      "id": "svc_52929_1011150",
-      "nombre": "SERVICIO DE ELABORACIÓN RIB ALGODÓN",
-      "sku": "52929-1011150"
+      "precio_detal": 75546.22,
+      "precio_mayorista": 58823.53,
+      "precio_web": 75546.22,
+      "producto": "CHAQUETA OVERIZED TIRAMISU - REF: 1123"
     },
     {
-      "costo_unitario": 9000,
-      "id": "svc_51919_1211020",
-      "nombre": "SERVICIO DE CONFECCION CHAQUETA SUEDE OLD MONEY",
-      "sku": "51919-1211020"
+      "precio_detal": 74789.92,
+      "precio_mayorista": 52100.84,
+      "precio_web": 100756.3,
+      "producto": "BOMBON - REF: 1062"
     },
     {
-      "costo_unitario": 7500,
-      "id": "svc_51919_1231020",
-      "nombre": "SERVICIO DE CONFECCION BOMBON",
-      "sku": "51919-1231020"
+      "precio_detal": 67142.86,
+      "precio_mayorista": 49579.83,
+      "precio_web": 67142.86,
+      "producto": "CHAQUETA CHIWI - REF: 1075"
     },
     {
-      "costo_unitario": 8500,
-      "id": "svc_51919_1241020",
-      "nombre": "SERVICIO DE CONFECCION CHAQUETA CHIWI",
-      "sku": "51919-1241020"
+      "precio_detal": 91596.64,
+      "precio_mayorista": 60504,
+      "precio_web": 91596.64,
+      "producto": "CHAQUETA HARLEY - REF: 1107"
     },
     {
-      "costo_unitario": 8900,
-      "id": "svc_51919_1251020",
-      "nombre": "SERVICIO DE CONFECCION CHAQUETA HARLEY",
-      "sku": "51919-1251020"
+      "precio_detal": 57983.19,
+      "precio_mayorista": 40336,
+      "precio_web": 57983.19,
+      "producto": "RANGLAND SOFT - REF: 1105"
     },
     {
-      "costo_unitario": 5700,
-      "id": "svc_51919_1031020",
-      "nombre": "SERVICIO DE CONFECCION RANGLAD SOFT",
-      "sku": "51919-1031020"
+      "precio_detal": 58739.5,
+      "precio_mayorista": 42857.14,
+      "precio_web": 58739.5,
+      "producto": "OSO CON OSO - REF: 1026"
     },
     {
-      "costo_unitario": 5000,
-      "id": "svc_52222_1011020",
-      "nombre": "SERVICIO DE BORDADO RANGLAN SOFT",
-      "sku": "52222-1011020"
+      "precio_detal": 41176.47,
+      "precio_mayorista": 29411.76,
+      "precio_web": 41176.47,
+      "producto": "FALDA ESCOSES - REF: 1130"
     },
     {
-      "costo_unitario": 4500,
-      "id": "svc_51919_1261020",
-      "nombre": "SERVICIO DE CONFECCION FALDA ESCOSES",
-      "sku": "51919-1261020"
+      "precio_detal": 25126.05,
+      "precio_mayorista": 23529,
+      "precio_web": 25126.05,
+      "producto": "BUZO MANGA LARGA LUREX - REF: 1109"
     },
     {
-      "costo_unitario": 2500,
-      "id": "svc_51919_1271020",
-      "nombre": "SERVICIO DE CONFECCION BUZO MANGA LARGA LUREX",
-      "sku": "51919-1271020"
+      "precio_detal": 67142.86,
+      "precio_mayorista": 40336,
+      "precio_web": 71428.57,
+      "producto": "BUSO COUNTRY - REF: 1092"
     },
     {
-      "costo_unitario": 5000,
-      "id": "svc_51919_1281020",
-      "nombre": "SERVICIO DE CONFECCION BUSO COUNTRY",
-      "sku": "51919-1281020"
+      "precio_detal": 16722.69,
+      "precio_mayorista": 15042.02,
+      "precio_web": 16722.69,
+      "producto": "TOP TIRAS - REF: 1108"
     },
     {
-      "costo_unitario": 2200,
-      "id": "svc_51919_1291020",
-      "nombre": "SERVICIO DE CONFECCION TOP TIRAS",
-      "sku": "51919-1291020"
+      "precio_detal": 21764.71,
+      "precio_mayorista": 15042.02,
+      "precio_web": 21764.71,
+      "producto": "CROP TOP MILU - REF: 1126"
     },
     {
-      "costo_unitario": 2200,
-      "id": "svc_51919_1301020",
-      "nombre": "SERVICIO DE CONFECCION CROP TOP MILU",
-      "sku": "51919-1301020"
+      "precio_detal": 67142.86,
+      "precio_mayorista": 54621.85,
+      "precio_web": 67142.86,
+      "producto": "BODOQUE ESCOSES - REF: 1091"
     },
     {
-      "costo_unitario": 7200,
-      "id": "svc_51919_1311020",
-      "nombre": "SERVICIO DE CONFECCION BODOQUE ESCOSES",
-      "sku": "51919-1311020"
+      "precio_detal": 75546.22,
+      "precio_mayorista": 54537.82,
+      "precio_web": 75546.22,
+      "producto": "GABAN PARIS - REF: 1060"
     },
     {
-      "costo_unitario": 6300,
-      "id": "svc_51919_1321020",
-      "nombre": "SERVICIO DE CONFECCION GABAN PARIS",
-      "sku": "51919-1321020"
+      "precio_detal": 74789.92,
+      "precio_mayorista": 55462.18,
+      "precio_web": 74789.92,
+      "producto": "CONJUNTO HOODIE CAPOTA - REF: 1049"
     },
     {
-      "costo_unitario": 10000,
-      "id": "svc_51919_1331020",
-      "nombre": "SERVICIO DE CONFECCION CONJUNTO HOODIE CAPOTA",
-      "sku": "51919-1331020"
+      "precio_detal": 91596.64,
+      "precio_mayorista": 66386.55,
+      "precio_web": 91596.64,
+      "producto": "CONJUNTO KODA - REF: 1106"
     },
     {
-      "costo_unitario": 9000,
-      "id": "svc_51919_1041020",
-      "nombre": "SERVICIO DE CONFECCION CONJUNTO KODA",
-      "sku": "51919-1041020"
+      "precio_detal": 74789,
+      "precio_mayorista": 57983,
+      "precio_web": 109159.66,
+      "producto": "CONJUNTO NIÑO TIMON - REF: 1081"
     },
     {
-      "costo_unitario": 8000,
-      "id": "svc_51919_1341020",
-      "nombre": "SERVICIO DE CONFECCION CONJUNTO NIÑO TIMON",
-      "sku": "51919-1341020"
+      "precio_detal": 83193.28,
+      "precio_mayorista": 63025.21,
+      "precio_web": 83193.28,
+      "producto": "CONJUNTO TRENZAS - REF: 1128"
     },
     {
-      "costo_unitario": 650,
-      "id": "svc_51929_1031010",
-      "nombre": "SERVICIO DE ELABORACIÓN CORDON PLANO TEJIDO",
-      "sku": "51929-1031010"
+      "precio_detal": 74789.92,
+      "precio_mayorista": 57983,
+      "precio_web": 92352.94,
+      "producto": "CONJUNTO ROCKET - REF: 1100"
     },
     {
-      "costo_unitario": 1323,
-      "id": "svc_51929_1021020",
-      "nombre": "SERVICIO DE ELABORACIÓN TRENZA TEJIDA",
-      "sku": "51929-1021020"
+      "precio_detal": 74789.92,
+      "precio_mayorista": 52100.84,
+      "precio_web": 74789.92,
+      "producto": "CONJUNTO PUMBA - REF: 1096"
     },
     {
-      "costo_unitario": 10000,
-      "id": "svc_51919_1351020",
-      "nombre": "SERVICIO DE CONFECCION CONJUNTO TRENZAS",
-      "sku": "51919-1351020"
+      "precio_detal": 46134.45,
+      "precio_mayorista": 32773.11,
+      "precio_web": 46134.45,
+      "producto": "PANTALON MONIQUE - REF: 1116"
     },
     {
-      "costo_unitario": 7500,
-      "id": "svc_51919_1361020",
-      "nombre": "SERVICIO DE CONFECCION CONJUNTO ROCKET",
-      "sku": "51919-1361020"
+      "precio_detal": 57983.19,
+      "precio_mayorista": 35294.12,
+      "precio_web": 74789.92,
+      "producto": "PANTALON CARGO - REF: 1066"
     },
     {
-      "costo_unitario": 250,
-      "id": "svc_31212_10410233",
-      "nombre": "BROCHE SEMICAZUELA UND PLATEADO",
-      "sku": "31212-10410233"
+      "precio_detal": 74789.92,
+      "precio_mayorista": 48739.5,
+      "precio_web": 74789.92,
+      "producto": "BOTA ANCHA KENIA - REF: 1128"
     },
     {
-      "costo_unitario": 9500,
-      "id": "svc_51919_1371020",
-      "nombre": "SERVICIO DE CONFECCION CONJUNTO PUMBA",
-      "sku": "51919-1371020"
+      "precio_detal": 80000,
+      "precio_mayorista": 46000,
+      "precio_web": 79900,
+      "precios_pvp": true,
+      "producto": "PANTALON DONATELLA - REF: 1127"
     },
     {
-      "costo_unitario": 7000,
-      "id": "svc_51919_1381020",
-      "nombre": "SERVICIO DE CONFECCION PANTALON MONIQUE",
-      "sku": "51919-1381020"
+      "precio_detal": 57983.19,
+      "precio_mayorista": 35294.12,
+      "precio_web": 74789.92,
+      "producto": "PANTALON JOGGER CARGO - REF: 1067"
     },
     {
-      "costo_unitario": 8000,
-      "id": "svc_51919_1391020",
-      "nombre": "SERVICIO DE CONFECCION PANTALON CARGO",
-      "sku": "51919-1391020"
+      "precio_detal": 66386.55,
+      "precio_mayorista": 43613.45,
+      "precio_web": 83949.58,
+      "producto": "PANTALON CARGO MANA - REF: 1090"
     },
     {
-      "costo_unitario": 7900,
-      "id": "svc_51919_1401020",
-      "nombre": "SERVICIO DE CONFECCION BOTA ANCHA KENIA",
-      "sku": "51919-1401020"
+      "precio_detal": 58739.5,
+      "precio_mayorista": 40336,
+      "precio_web": 58739.5,
+      "producto": "LEGGIN CAMPANITA - REF: 1087"
     },
     {
-      "costo_unitario": 6500,
-      "id": "svc_51919_1411020",
-      "nombre": "SERVICIO DE CONFECCION PANTALON DONATELLA",
-      "sku": "51919-1411020"
+      "precio_detal": 58739.5,
+      "precio_mayorista": 47058.82,
+      "precio_web": 58739.5,
+      "producto": "CHALECO OVEJERO - REF: 1072"
     },
     {
-      "costo_unitario": 8000,
-      "id": "svc_51919_1421020",
-      "nombre": "SERVICIO DE CONFECCION PANTALON JOGGER CARGO",
-      "sku": "51919-1421020"
+      "precio_detal": 57983,
+      "precio_mayorista": 37815,
+      "precio_web": 57983,
+      "producto": "VESTIDO SOUL - REF: 1104"
     },
     {
-      "costo_unitario": 8000,
-      "id": "svc_51919_1431020",
-      "nombre": "SERVICIO DE CONFECCION PANTALON CARGO MANA",
-      "sku": "51919-1431020"
+      "precio_detal": 35210.08,
+      "precio_mayorista": 29411.76,
+      "precio_web": 35210.08,
+      "producto": "VESTIDO VENECIA - REF: 1113"
     },
     {
-      "costo_unitario": 6000,
-      "id": "svc_51919_1441020",
-      "nombre": "SERVICIO DE CONFECCION LEGGIN CAMPANITA",
-      "sku": "51919-1441020"
+      "precio_detal": 50336.13,
+      "precio_mayorista": 41176.47,
+      "precio_web": 74789.92,
+      "producto": "CAMISA TRENCH - REF: 1098"
     },
     {
-      "costo_unitario": 7000,
-      "id": "svc_51919_1451020",
-      "nombre": "SERVICIO DE CONFECCION CHALECO OVEJERO",
-      "sku": "51919-1451020"
+      "precio_detal": 41176.47,
+      "precio_mayorista": 30252.1,
+      "precio_web": 50336.13,
+      "producto": "PANTALONETA FERXXO - REF: 1093"
     },
     {
-      "costo_unitario": 6500,
-      "id": "svc_51919_1461020",
-      "nombre": "SERVICIO DE CONFECCION VESTIDO SOUL",
-      "sku": "51919-1461020"
+      "precio_detal": 47899.16,
+      "precio_mayorista": 33529.41,
+      "precio_web": 67142.86,
+      "producto": "BERMUDA ARTURITO - REF: 1114"
     },
     {
-      "costo_unitario": 3600,
-      "id": "svc_51919_1091020",
-      "nombre": "SERVICIO DE CONFECCION VESTIDO VENECIA",
-      "sku": "51919-1091020"
+      "precio_detal": 39000,
+      "precio_mayorista": 27500,
+      "precio_web": 39900,
+      "precios_pvp": true,
+      "producto": "BLUSA JEN - REF: 1118"
     },
     {
-      "costo_unitario": 8500,
-      "id": "svc_51919_1111020",
-      "nombre": "SERVICIO DE CONFECCION CAMISA TRENCH",
-      "sku": "51919-1111020"
+      "precio_detal": 23529.41,
+      "precio_mayorista": 16722.69,
+      "precio_web": 29900,
+      "producto": "BLUSA MAWI - REF: 1110"
     },
     {
-      "costo_unitario": 5000,
-      "id": "svc_51919_1481020",
-      "nombre": "SERVICIO DE CONFECCION PANTALONETA FERXXO",
-      "sku": "51919-1481020"
+      "precio_detal": 25210.08,
+      "precio_mayorista": 18487.39,
+      "precio_web": 25210.08,
+      "producto": "BLUSA MANGA LARGA SELENA - REF: 1122"
     },
     {
-      "costo_unitario": 8000,
-      "id": "svc_51919_1071020",
-      "nombre": "SERVICIO DE CONFECCION BERMUDA ARTURITO",
-      "sku": "51919-1071020"
+      "precio_detal": 62941.18,
+      "precio_mayorista": 41932.77,
+      "precio_web": 62941.18,
+      "producto": "SWEATER VAINILLA - REF: 1086"
     },
     {
-      "costo_unitario": 4800,
-      "id": "svc_51919_1521020",
-      "nombre": "SERVICIO DE CONFECCION SWEATER VAINILLA",
-      "sku": "51919-1521020"
+      "precio_detal": 62941.18,
+      "precio_mayorista": 41176,
+      "precio_web": 62941.18,
+      "producto": "BUSO TEJIDO POLO - REF: 1125"
     },
     {
-      "costo_unitario": 12422,
-      "id": "svc_51930_1021020",
-      "nombre": "SERVICIO DE TEJEDURIA SWEATER VAINILLA TALLA 10-12",
-      "sku": "51930-1021020"
+      "precio_detal": 58739.41,
+      "precio_mayorista": 41092.44,
+      "precio_web": 58739.41,
+      "producto": "BUZO YINKY - REF: 1046"
     },
     {
-      "costo_unitario": 4500,
-      "id": "svc_51919_1531020",
-      "nombre": "SERVICIO DE CONFECCION BUSO TEJIDO POLO",
-      "sku": "51919-1531020"
+      "precio_detal": 66386.55,
+      "precio_mayorista": 57983,
+      "precio_web": 66386.55,
+      "producto": "CONJUNTO HIPSTER - REF: 1069"
     },
     {
-      "costo_unitario": 11484,
-      "id": "svc_51930_1061020",
-      "nombre": "SERVICIO DE TEJEDURIA BUSO TEJIDO POLO TALLA 10-12",
-      "sku": "51930-1061020"
+      "precio_detal": 64621.85,
+      "precio_mayorista": 43697.48,
+      "precio_web": 64621.85,
+      "producto": "BEISBOLERA OVERSIZED  NIÑA - REF: 1073"
     },
     {
-      "costo_unitario": 1500,
-      "id": "svc_51922_1071020",
-      "nombre": "SERVICIO DE BORDADO BUSO TEJIDO POLO",
-      "sku": "51922-1071020"
+      "precio_detal": 32773.11,
+      "precio_mayorista": 23445.38,
+      "precio_web": 41176.47,
+      "producto": "LEGGUINS NIÑA BK - REF: 1078"
     },
     {
-      "costo_unitario": 250,
-      "id": "svc_31717_1021096",
-      "nombre": "APLIQUE CUERO PASADOR BK 2CM * 2CM CAMEL",
-      "sku": "31717-1021096"
+      "precio_detal": 57983.19,
+      "precio_mayorista": 44537.82,
+      "precio_web": 57983.19,
+      "producto": "CONJUNTO CORE - REF: 1082"
     },
     {
-      "costo_unitario": 7000,
-      "id": "svc_33333_1011020",
-      "nombre": "PELUCHE OSO CON OSO",
-      "sku": "33333-1011020"
+      "precio_detal": 49579.83,
+      "precio_mayorista": 46218.49,
+      "precio_web": 49579.83,
+      "producto": "PANTALON DRILL ANCHO - REF: 1095"
     },
     {
-      "costo_unitario": 450,
-      "id": "svc_53131_1011020",
-      "nombre": "SERVICIO CORTE LASER BOLSILLOS",
-      "sku": "53131-1011020"
+      "precio_detal": 78991.6,
+      "precio_mayorista": 57983.19,
+      "precio_web": 78991.6,
+      "producto": "CONJUNTO ISABELLA - REF: 1097"
     },
     {
-      "costo_unitario": 5400,
-      "id": "svc_51919_1541020",
-      "nombre": "SERVICIO DE CONFECCION BUSO OSO CON OSO",
-      "sku": "51919-1541020"
+      "precio_detal": 54537.82,
+      "precio_mayorista": 37815.13,
+      "precio_web": 54537.82,
+      "producto": "CHAQUETA TORERO NIÑA - REF: 1101"
     },
     {
-      "costo_unitario": 10000,
-      "id": "svc_51919_1561020",
-      "nombre": "SERVICIO DE CONFECCION CONJUNTO HIPSTER",
-      "sku": "51919-1561020"
+      "precio_detal": 50336.13,
+      "precio_mayorista": 32773.11,
+      "precio_web": 58739.5,
+      "producto": "PANTALON BOSTON - REF: 1102"
     },
     {
-      "costo_unitario": 8500,
-      "id": "svc_51919_1571020",
-      "nombre": "SERVICIO DE CONFECCION BEISBOLERA OVERSIZED NIÑA",
-      "sku": "51919-1571020"
+      "precio_detal": 57983.19,
+      "precio_mayorista": 39495.8,
+      "precio_web": 57983.19,
+      "producto": "POLO RICE - REF: 1139"
     },
     {
-      "costo_unitario": 2300,
-      "id": "svc_51919_1581020",
-      "nombre": "SERVICIO DE CONFECCION LEGGINS BK",
-      "sku": "51919-1581020"
+      "precio_detal": 116806.72,
+      "precio_mayorista": 83193.28,
+      "precio_web": 116806.72,
+      "producto": "SET TRENZAS - REF: 1140"
     },
     {
-      "costo_unitario": 6500,
-      "id": "svc_51919_1591020",
-      "nombre": "SERVICIO DE CONFECCION CONJUNTO CORE",
-      "sku": "51919-1591020"
+      "precio_detal": 49579.83,
+      "precio_mayorista": 35294.12,
+      "precio_web": 49579.83,
+      "producto": "PANTALON ARIEL - REF: 1144"
     },
     {
-      "costo_unitario": 7500,
-      "id": "svc_51919_1601020",
-      "nombre": "SERVICIO DE CONFECCION PANTALON DRILL BOTA ANCHA",
-      "sku": "51919-1601020"
+      "precio_detal": 50336.13,
+      "precio_mayorista": 37815.13,
+      "precio_web": 50336.13,
+      "producto": "CAMISA SYROS - REF: 1142"
     },
     {
-      "costo_unitario": 9500,
-      "id": "svc_51919_1611020",
-      "nombre": "SERVICIO DE CONFECCION CONJUNTO ISABELLA",
-      "sku": "51919-1611020"
+      "precio_detal": 29327.73,
+      "precio_mayorista": 21848.74,
+      "precio_web": 29327.73,
+      "producto": "CAMISETA TRUFA - REF: 1145"
     },
     {
-      "costo_unitario": 180,
-      "id": "svc_53232_1011010",
-      "nombre": "SERVICIO DE SESGO",
-      "sku": "53232-1011010"
+      "precio_detal": 57983.19,
+      "precio_mayorista": 41932.77,
+      "precio_web": 57983.19,
+      "producto": "CONJUNTO TRENDY - REF: 1146"
     },
     {
-      "costo_unitario": 8500,
-      "id": "svc_51919_1621020",
-      "nombre": "SERVICIO DE CONFECCION CHAQUETA TORERO NIÑA",
-      "sku": "51919-1621020"
+      "precio_detal": 33529.41,
+      "precio_mayorista": 21848.74,
+      "precio_web": 41932.77,
+      "producto": "CAMISETA BURDA PREMIUM - REF: 1152"
     },
     {
-      "costo_unitario": 5000,
-      "id": "svc_51919_1631020",
-      "nombre": "SERVICIO DE CONFECCION PANTALON BOSTON",
-      "sku": "51919-1631020"
+      "precio_detal": 71428.57,
+      "precio_mayorista": 52100.84,
+      "precio_web": 71428.57,
+      "producto": "CONJUNTO FRESH - REF: 1147"
     },
     {
-      "costo_unitario": 5500,
-      "id": "svc_43019_1641020",
-      "nombre": "SERVICIO DE CONFECCION POLO RICE",
-      "sku": "43019-1641020"
+      "precio_detal": 79747.9,
+      "precio_mayorista": 62184.87,
+      "precio_web": 79747.9,
+      "producto": "BOMBER SPRING - REF: 1134"
     },
     {
-      "costo_unitario": 6700,
-      "id": "svc_43030_1101020",
-      "nombre": "SERVICIO DE TEJEDURIA POLO RICE",
-      "sku": "43030-1101020"
+      "precio_detal": 66386.55,
+      "precio_mayorista": 52100.84,
+      "precio_web": 67142.86,
+      "producto": "CHALECO ROGGER - REF: 1149"
     },
     {
-      "costo_unitario": 11000,
-      "id": "svc_43019_1651020",
-      "nombre": "SERVICIO DE CONFECCION SET TRENZAS",
-      "sku": "43019-1651020"
+      "precio_detal": 0,
+      "precio_mayorista": 0,
+      "precio_web": 0,
+      "producto": "PANTALON PALATZO TSC - REF: 5001"
     },
     {
-      "costo_unitario": 16081.86,
-      "id": "svc_43030_1111020",
-      "nombre": "SERVICIO DE TEJEDURIA SET TRENZAS",
-      "sku": "43030-1111020"
+      "precio_detal": 0,
+      "precio_mayorista": 0,
+      "precio_web": 0,
+      "producto": "SET JOGGER TSC - REF: 5002"
     },
     {
-      "costo_unitario": 5500,
-      "id": "svc_41919_1661020",
-      "nombre": "SERVICIO DE CONFECCION PANTALON ARIEL",
-      "sku": "41919-1661020"
+      "precio_detal": 0,
+      "precio_mayorista": 0,
+      "precio_web": 0,
+      "producto": "PANTALON PAPAYA TSC - REF: 5003"
     },
     {
-      "costo_unitario": 9500,
-      "id": "svc_41919_1671020",
-      "nombre": "SERVICIO DE CONFECCION CAMISA SYROS",
-      "sku": "41919-1671020"
+      "precio_detal": 0,
+      "precio_mayorista": 0,
+      "precio_web": 0,
+      "producto": "PANTALON BLANCO TSC - REF: 5004"
     },
     {
-      "costo_unitario": 8000,
-      "id": "svc_41919_1681020",
-      "nombre": "SERVICIO DE CONFECCION CONJUNTO FRESH",
-      "sku": "41919-1681020"
+      "precio_detal": 0,
+      "precio_mayorista": 0,
+      "precio_web": 0,
+      "producto": "CHAQUETA PILOTO TSC - REF: 5006"
     },
     {
-      "costo_unitario": 9000,
-      "id": "svc_41919_1691020",
-      "nombre": "SERVICIO DE CONFECCION CHALECO ROGGER",
-      "sku": "41919-1691020"
+      "precio_detal": 0,
+      "precio_mayorista": 0,
+      "precio_web": 0,
+      "producto": "GABAN CEBOLLAS TSC - REF: 5007"
     },
     {
-      "costo_unitario": 10000,
-      "id": "svc_41919_1701020",
-      "nombre": "SERVICIO DE CONFECCION PANTALON PALATZO TSC",
-      "sku": "41919-1701020"
+      "precio_detal": 79831.93,
+      "precio_mayorista": 62184.87,
+      "precio_web": 79831.93,
+      "producto": "CONJUNTO CHILLY - REF: 1153"
     },
     {
-      "costo_unitario": 10000,
-      "id": "svc_41919_1781020",
-      "nombre": "SERVICIO DE CONFECCION TORERO PILI",
-      "sku": "41919-1781020"
+      "precio_detal": 0,
+      "precio_mayorista": 0,
+      "precio_web": 0,
+      "producto": "CHAQUETA CHALECO TSC - REF: 5008"
     },
     {
-      "costo_unitario": 6000,
-      "id": "svc_41919_1791020",
-      "nombre": "SERVICIO DE CONFECCION PANTALON CHINO",
-      "sku": "41919-1791020"
+      "precio_detal": 79831.93,
+      "precio_mayorista": 57983.19,
+      "precio_web": 100000,
+      "producto": "TORERO PILI - REF: 1133"
     },
     {
-      "costo_unitario": 13600,
-      "id": "svc_41919_1801020",
-      "nombre": "SERVICIO DE CONFECCION ABRIGO FROZEN",
-      "sku": "41919-1801020"
+      "precio_detal": 71428.57,
+      "precio_mayorista": 52100.84,
+      "precio_web": 71428.57,
+      "producto": "CONJUNTO CHICAGO - REF: 1143"
     },
     {
-      "costo_unitario": 300,
-      "id": "svc_32727_1021021",
-      "nombre": "MARQUILLA TEJIDA CUADRADA BK NEGRO",
-      "sku": "32727-1021021"
+      "precio_detal": 52100.84,
+      "precio_mayorista": 35294.12,
+      "precio_web": 52100.84,
+      "producto": "PANTALON CHINO - REF: 1148"
     },
     {
-      "costo_unitario": 100,
-      "id": "svc_31616_1011020",
-      "nombre": "INSTRUCCIÓN DE LAVADO",
-      "sku": "31616-1011020"
+      "precio_detal": 83193.28,
+      "precio_mayorista": 66386.55,
+      "precio_web": 83193.28,
+      "producto": "ABRIGO FROZEN - REF: 1136"
     },
     {
-      "costo_unitario": 100,
-      "id": "svc_31515_1071020",
-      "nombre": "TALLA TEJIDA",
-      "sku": "31515-1071020"
+      "precio_detal": 91596.64,
+      "precio_mayorista": 74789.92,
+      "precio_web": 91596.64,
+      "producto": "ABRIGO LUXOR - REF: 1135"
     },
     {
-      "costo_unitario": 8000,
-      "id": "svc_41919_1821020",
-      "nombre": "SERVICIO DE CONFECCION CHALECO PUFFY",
-      "sku": "41919-1821020"
+      "precio_detal": 57983.19,
+      "precio_mayorista": 40336.13,
+      "precio_web": 58739.5,
+      "producto": "CHALECO PUFFY - REF: 1150"
     },
     {
-      "costo_unitario": 5750,
-      "id": "svc_41919_1831020",
-      "nombre": "SERVICIO DE CONFECCION UNDERGROUND",
-      "sku": "41919-1831020"
+      "precio_detal": 50336.13,
+      "precio_mayorista": 37815.13,
+      "precio_web": 50336.13,
+      "producto": "CAMISA UNDERGROUND - REF: 1151"
     },
     {
-      "costo_unitario": 10000,
-      "id": "svc_41919_1851020",
-      "nombre": "SERVICIO DE CONFECCION CONJUNTO CHICAGO",
-      "sku": "41919-1851020"
+      "precio_detal": 66386.55,
+      "precio_mayorista": 42857.14,
+      "precio_web": 79747.9,
+      "producto": "CAMISON ESCOSES - REF: 1084"
     },
     {
-      "costo_unitario": 15700,
-      "id": "svc_41919_1811020",
-      "nombre": "SERVICIO DE CONFECCION ABRIGO LUXOR",
-      "sku": "41919-1811020"
+      "precio_detal": 58739.5,
+      "precio_mayorista": 46218.49,
+      "precio_web": 58739.5,
+      "producto": "CAMISON TIRAMISU - REF: 1154"
     },
     {
-      "costo_unitario": 9000,
-      "id": "svc_41919_1861020",
-      "nombre": "SERVICIO DE CONFECCION ONION",
-      "sku": "41919-1861020"
+      "precio_detal": 71344.54,
+      "precio_mayorista": 49579.83,
+      "precio_web": 71344.54,
+      "producto": "CHAQUETA RALPH - REF: 1155"
     },
     {
-      "costo_unitario": 6800,
-      "id": "svc_41919_1871020",
-      "nombre": "SERVICIO DE CONFECCION CAMISON DRAKE",
-      "sku": "41919-1871020"
+      "precio_detal": 99000,
+      "precio_mayorista": 69000,
+      "precio_web": 99900,
+      "precios_pvp": true,
+      "producto": "BEISBOLERA ARMIN - REF: 1132"
     },
     {
-      "costo_unitario": 11000,
-      "id": "svc_41919_1881020",
-      "nombre": "SERVICIO DE CONFECCION CONJUNTO HOODIE CAPOTA P.A",
-      "sku": "41919-1881020"
+      "precio_detal": 0,
+      "precio_mayorista": 79831.93,
+      "precio_web": 0,
+      "producto": "DOTACION ACOLCHADA HOMBRE DELCO - REF: 3010"
     },
     {
-      "costo_unitario": 5000,
-      "id": "svc_41919_1891020",
-      "nombre": "SERVICIO DE CONFECCION PANTALON CHICAGO",
-      "sku": "41919-1891020"
+      "precio_detal": 0,
+      "precio_mayorista": 69000,
+      "precio_web": 0,
+      "producto": "DOTACION HOMBRE LISO DELCO - REF: 3011"
     },
     {
-      "costo_unitario": 6800,
-      "id": "svc_41919_1901020",
-      "nombre": "SERVICIO DE CONFECCION CONJUNTO HOODIE CAPOTA P.A abi",
-      "sku": "41919-1901020"
+      "precio_detal": 0,
+      "precio_mayorista": 245000,
+      "precio_web": 0,
+      "producto": "CONJUNTO CUARTOS FRIOS TELA CAMPERO - REF: 3012"
     },
     {
-      "costo_unitario": 9000,
-      "id": "cid_1782849210808_9132",
-      "nombre": "SERVICIO DE CONFECCION CHAQUETA BURBUJAS",
-      "precio": 9000
+      "precio_detal": 0,
+      "precio_mayorista": 134453.78,
+      "precio_web": 0,
+      "producto": "CONJUNTO CUARTOS FRIOS TELA 30100 - REF: 3013"
     },
     {
-      "costo_unitario": 10000,
-      "id": "cid_1783368636010_4607",
-      "nombre": "CONFECCION BEISBOLERA 2.0"
+      "precio_detal": 59663.87,
+      "precio_mayorista": 41176.47,
+      "precio_web": 83193.28,
+      "producto": "CHAQUETA ONION - REF: 1165"
     },
     {
-      "costo_unitario": 3000,
-      "id": "cid_1783368681020_1752",
-      "nombre": "BORDADO BEISBOLERA 2.0"
+      "precio_detal": 73949.58,
+      "precio_mayorista": 49579.83,
+      "precio_web": 100000,
+      "producto": "CAMISON DRAKE - REF: 1169"
     },
     {
-      "costo_unitario": 12000,
-      "id": "cid_1783376441665_333",
-      "nombre": "CONFECCION CAZADORA ROCKY"
+      "precio_detal": 75630.25,
+      "precio_mayorista": 57983.19,
+      "precio_web": 75630.25,
+      "producto": "CONJUNTO HOODIE CAPOTA P.A - REF: 1178"
     },
     {
-      "costo_unitario": 6200,
-      "id": "cid_1783379147916_7539",
-      "nombre": "CONFECCION COUNTRY 2.0"
+      "precio_detal": 54621.85,
+      "precio_mayorista": 36974.79,
+      "precio_web": 54621.85,
+      "producto": "HOODIE PAÑO ALGODON CERRADO - REF: 1172"
     },
     {
-      "costo_unitario": 12000,
-      "id": "cid_1785767361188_1430",
-      "nombre": "CONFECCION SET FRANKY PRIME"
+      "precio_detal": 79831.93,
+      "precio_mayorista": 57983.19,
+      "precio_web": 79831.93,
+      "producto": "CONJUNTO OSLO - REF: 1180"
     },
     {
-      "costo_unitario": 23000,
-      "id": "cid_1785767419821_4969",
-      "nombre": "SERVICIO DE TEJEDURIA SET FRANKY PR"
+      "precio_detal": 43697.48,
+      "precio_mayorista": 32773.11,
+      "precio_web": 43697.48,
+      "producto": "PANTALON CHICAGO - REF: 1179"
     },
     {
-      "costo_unitario": 6500,
-      "id": "cid_1788289099212_4343",
-      "nombre": "CONFECCION PANTALON CALIFORNIA"
+      "precio_detal": 57983.19,
+      "precio_mayorista": 40336.13,
+      "precio_web": 58739.5,
+      "producto": "HOODIE PAÑO ALGODON ABIERTO - REF: 1177"
     },
     {
-      "costo_unitario": 2300,
-      "id": "cid_1789095920713_2165",
-      "nombre": "SERVICIO DE CONFECCION BLUSA COSMO"
+      "precio_detal": 70588.24,
+      "precio_mayorista": 48739.5,
+      "precio_web": 84000,
+      "producto": "CHAQUETA BOLSILLOS PARCHE PR - REF: 3009"
     },
     {
-      "costo_unitario": 5500,
-      "id": "cid_1789096130582_8499",
-      "nombre": "SERVICIO DE CONFECCION PANTALON POLLY"
+      "precio_detal": 58739.5,
+      "precio_mayorista": 45378.15,
+      "precio_web": 69900,
+      "producto": "TORERO PR - REF: 3010"
     },
     {
-      "costo_unitario": 2300,
-      "id": "cid_1789096516663_5042",
-      "nombre": "SERVICIO DE CONFECCION BLUSA POLLY"
+      "precio_detal": 0,
+      "precio_mayorista": 0,
+      "precio_web": 0,
+      "producto": "BEISBOLERA OVERSIZED PR - REF: 3011"
     },
     {
-      "costo_unitario": 6500,
-      "id": "cid_1789096990107_6372",
-      "nombre": "SERVICIO DE CONFECCION PANTALON ZAMBA"
+      "precio_detal": 199900,
+      "precio_mayorista": 119000,
+      "precio_web": 199900,
+      "precios_pvp": true,
+      "producto": "SET FRANKY PR - REF: 3012"
     },
     {
-      "costo_unitario": 6500,
-      "id": "cid_1789097500622_412",
-      "nombre": "SERVICIO DE CONFECCION VESTIDO MINI DRESS"
+      "precio_detal": 95798.32,
+      "precio_mayorista": 72268.91,
+      "precio_web": 114000,
+      "producto": "CHAQUETA LUXOR CORTA TRENCH PR - REF: 3013"
     },
     {
-      "costo_unitario": 6800,
-      "id": "cid_1789097898310_7491",
-      "nombre": "SERVICIO DE CONFECCION HOODIE CAROLINA"
+      "precio_detal": 100000,
+      "precio_mayorista": 70588.24,
+      "precio_web": 119000,
+      "producto": "SET JOGGER BOMBER PR - REF: 3014"
     },
     {
-      "costo_unitario": 5000,
-      "id": "cid_1789098137459_714",
-      "nombre": "SERVICIO DE CONFECCION PANTALON VENOM"
+      "precio_detal": 100000,
+      "precio_mayorista": 74789.92,
+      "precio_web": 119900,
+      "producto": "CONJUNTO OSLO PR - REF: 3015"
     },
     {
-      "costo_unitario": 3800,
-      "id": "cid_1789098645300_1124",
-      "nombre": "SERVICIO DE CONFECCION VESTIKO KIKI"
+      "precio_detal": 74789.92,
+      "precio_mayorista": 54621.85,
+      "precio_web": 89900,
+      "producto": "CHALECO MANY P.A PR - REF: 3016"
     },
     {
-      "costo_unitario": 2400,
-      "id": "cid_1789099473252_6379",
-      "nombre": "SERVICIO DE CONFECCION CAMISETA COCOA"
+      "precio_detal": 69900,
+      "precio_mayorista": 45000,
+      "precio_web": 69900,
+      "precios_pvp": true,
+      "producto": "CHAQUETA ROMPEVIENTOS BK - REF: 1180"
     },
     {
-      "costo_unitario": 11000,
-      "id": "cid_1789100847121_7149",
-      "nombre": "SERVICIO DE CONFECCION CONJUNTO SOLOMUN"
+      "precio_detal": 63025,
+      "precio_mayorista": 42017,
+      "precio_web": 63025,
+      "producto": "CHAQUETA BURBUJAS"
     },
     {
-      "costo_unitario": 6200,
-      "id": "cid_1789101275688_8078",
-      "nombre": "SERVICIO DE CONFECCION CAMIBUSO NEVADO"
+      "precio_detal": 63025,
+      "precio_mayorista": 41176,
+      "precio_web": 63025,
+      "producto": "CHAQUETA MARIPOSAS"
     },
     {
-      "costo_unitario": 6000,
-      "id": "cid_1789101794819_6585",
-      "nombre": "SERVICIO DE CONFECCION PANTALON TRENCH"
+      "precio_detal": 88235,
+      "precio_mayorista": 61345,
+      "precio_web": 88235,
+      "producto": "BEISBOLERA CUERO  2.0"
     },
     {
-      "costo_unitario": 8000,
-      "id": "cid_1789167333976_3819",
-      "nombre": "SERVICIO DE CONFECCION CHAQUETA DISCOVERY"
+      "precio_detal": 90000,
+      "precio_mayorista": 60000,
+      "precio_web": 89900,
+      "precios_pvp": true,
+      "producto": "CHAQUETA CAZADORA ROCKY"
     },
     {
-      "costo_unitario": 10500,
-      "id": "cid_1789168389332_6118",
-      "nombre": "servicio de confeccion  washman"
+      "precio_detal": 59900,
+      "precio_mayorista": 39000,
+      "precio_web": 59900,
+      "precios_pvp": true,
+      "producto": "BUZO COUNTRY 2.0"
     },
     {
-      "costo_unitario": 2300,
-      "id": "cid_1789177571022_182",
-      "nombre": "SERVICIO CONFECCION SCARLET"
+      "precio_detal": 70000,
+      "precio_mayorista": 46000,
+      "precio_web": 60000,
+      "precios_pvp": true,
+      "producto": "PANTALON CALIFORNIA"
     },
     {
-      "costo_unitario": 5500,
-      "id": "cid_1789262416633_6084",
-      "nombre": "SERVICIO BORDADO FUTURE"
+      "precio_detal": 59900,
+      "precio_mayorista": 42000,
+      "precio_web": 59900,
+      "precios_pvp": true,
+      "producto": "VESTIDO MINI DRESS"
     },
     {
-      "costo_unitario": 10000,
-      "id": "cid_1789263560548_9826",
-      "nombre": "SERVICIO DE CONFECCION CONJUNTO CHELSY"
+      "precio_detal": 80000,
+      "precio_mayorista": 56000,
+      "precio_web": 79900,
+      "precios_pvp": true,
+      "producto": "PANTALON ZAMBA"
     },
     {
-      "costo_unitario": 9000,
-      "id": "cid_1789263844716_6782",
-      "nombre": "SERVICIO DE CONFECCION CHAQUETA LENTEJUELAS B"
+      "precio_detal": 70000,
+      "precio_mayorista": 50000,
+      "precio_web": 69900,
+      "precios_pvp": true,
+      "producto": "HOODIE CAROLINA"
     },
     {
-      "costo_unitario": 9000,
-      "id": "cid_1789264053994_9307",
-      "nombre": "SERVICIO DE CONFECCION CHAQUETA PINZAS"
+      "precio_detal": 56000,
+      "precio_mayorista": 39000,
+      "precio_web": 56000,
+      "precios_pvp": true,
+      "producto": "PANTALON VENOM"
     },
     {
-      "costo_unitario": 500,
-      "id": "cid_1789264499236_5285",
-      "nombre": "SERVICIO DE CORTE SESGO BODY"
+      "precio_detal": 75000,
+      "precio_mayorista": 54000,
+      "precio_web": 74900,
+      "precios_pvp": true,
+      "producto": "PANTALON TRENCH"
     },
     {
-      "costo_unitario": 2200,
-      "id": "cid_1789264529173_6592",
-      "nombre": "SERVICIO DE CONFECCION BODY BASICO"
+      "precio_detal": 60000,
+      "precio_mayorista": 39000,
+      "precio_web": 59900,
+      "precios_pvp": true,
+      "producto": "PANTALON POLLY"
     },
     {
-      "costo_unitario": 10000,
-      "id": "cid_1789265040378_2747",
-      "nombre": "SERVICIO DE CONFECCION BLAZER DONATELLA"
+      "precio_detal": 42000,
+      "precio_mayorista": 29000,
+      "precio_web": 41900,
+      "precios_pvp": true,
+      "producto": "BLUSA POLLY"
     },
     {
-      "costo_unitario": 10500,
-      "id": "cid_1789266578853_4494",
-      "nombre": "SERVICIO DE CONFECCION SET BOMBER CORTA"
+      "precio_detal": 76000,
+      "precio_mayorista": 51000,
+      "precio_web": 75900,
+      "precios_pvp": true,
+      "producto": "CAMIBUZO NEVADO"
     },
     {
-      "costo_unitario": 10000,
-      "id": "cid_1789267338383_1586",
-      "nombre": "servicio de confeccion chaqueta fire"
+      "precio_detal": 49900,
+      "precio_mayorista": 34500,
+      "precio_web": 49900,
+      "precios_pvp": true,
+      "producto": "CAMISETA COCOA"
     },
     {
-      "costo_unitario": 11000,
-      "id": "cid_1789269650071_2218",
-      "nombre": "servicio de confeccion cojunto jacobo"
+      "precio_detal": 48000,
+      "precio_mayorista": 33000,
+      "precio_web": 47900,
+      "precios_pvp": true,
+      "producto": "VESTIDO KIKI"
     },
     {
-      "costo_unitario": 9500,
-      "id": "cid_1789269930171_8673",
-      "nombre": "servicio confeccion set chaleco viena"
+      "precio_detal": 39000,
+      "precio_mayorista": 29000,
+      "precio_web": 39900,
+      "precios_pvp": true,
+      "producto": "BLUSA COSMO"
     },
     {
-      "costo_unitario": 6500,
-      "id": "cid_1789270294268_6712",
-      "nombre": "servicio de confeccion set palomino"
+      "precio_detal": 82000,
+      "precio_mayorista": 56000,
+      "precio_web": 82900,
+      "precios_pvp": true,
+      "producto": "CHAQUETA DISCOVERY"
     },
     {
-      "costo_unitario": 11000,
-      "id": "cid_1789270517554_9916",
-      "nombre": "SERVICIO DE CONFECCION SET RAYA TIZA"
+      "precio_detal": 85000,
+      "precio_mayorista": 58000,
+      "precio_web": 85900,
+      "precios_pvp": true,
+      "producto": "WASHMAN"
     },
     {
-      "costo_unitario": 5000,
-      "id": "cid_1789270777924_775",
-      "nombre": "servicio de confeccion pantalon house"
+      "precio_detal": 33000,
+      "precio_mayorista": 24000,
+      "precio_web": 33000,
+      "precios_pvp": true,
+      "producto": "BLUSA MANGA BOLERO"
     },
     {
-      "costo_unitario": 2500,
-      "id": "cid_1789271245361_29",
-      "nombre": "servicio de confeccion polo majo"
+      "precio_detal": 43000,
+      "precio_mayorista": 32000,
+      "precio_web": 42900,
+      "precios_pvp": true,
+      "producto": "CAMIBUSO PAÑO ALGODON MANGA OVERSIZED"
     },
     {
-      "costo_unitario": 2300,
-      "id": "cid_1789271449187_8732",
-      "nombre": "SERVICIO DE CONFECCION BLUSA SCARLET"
+      "precio_detal": 129000,
+      "precio_mayorista": 89900,
+      "precio_web": 129900,
+      "precios_pvp": true,
+      "producto": "CONJUNTO SOLOMUN"
     },
     {
-      "costo_unitario": 8000,
-      "id": "cid_1789271669964_4342",
-      "nombre": "servicio de confeccion chaleco kenwort"
+      "precio_detal": 105000,
+      "precio_mayorista": 75000,
+      "precio_web": 100000,
+      "precios_pvp": true,
+      "producto": "CONJUNTO CHELSY"
     },
     {
-      "costo_unitario": 5000,
-      "id": "cid_1789620888476_4095",
-      "nombre": "BORDADO ARMIN"
+      "precio_detal": 45000,
+      "precio_mayorista": 31000,
+      "precio_web": 40000,
+      "precios_pvp": true,
+      "producto": "CAMISETA MISO"
     },
     {
-      "costo_unitario": 5000,
-      "id": "cid_1789620889646_2781",
-      "nombre": "BORDADO ARMIN"
+      "precio_detal": 90000,
+      "precio_mayorista": 60000,
+      "precio_web": 75000,
+      "precios_pvp": true,
+      "producto": "CONJUNTO DAKOTA"
+    },
+    {
+      "precio_detal": 85000,
+      "precio_mayorista": 55000,
+      "precio_web": 75000,
+      "precios_pvp": true,
+      "producto": "BLAZER DONATELLA"
+    },
+    {
+      "precio_detal": 90000,
+      "precio_mayorista": 70000,
+      "precio_web": 90000,
+      "precios_pvp": true,
+      "producto": "SET BOMBER CORTA"
+    },
+    {
+      "precio_detal": 85000,
+      "precio_mayorista": 55000,
+      "precio_web": 75000,
+      "precios_pvp": true,
+      "producto": "CHAQUETA LENTEJUELAS"
+    },
+    {
+      "precio_detal": 120000,
+      "precio_mayorista": 90000,
+      "precio_web": 115000,
+      "precios_pvp": true,
+      "producto": "CONJUNTO JACOBO"
+    },
+    {
+      "precio_detal": 60000,
+      "precio_mayorista": 40000,
+      "precio_web": 55000,
+      "precios_pvp": true,
+      "producto": "BODY BASICO"
+    },
+    {
+      "precio_detal": 85000,
+      "precio_mayorista": 55000,
+      "precio_web": 75000,
+      "precios_pvp": true,
+      "producto": "CAMISA CLASICA BK"
+    },
+    {
+      "precio_detal": 85000,
+      "precio_mayorista": 55000,
+      "precio_web": 75000,
+      "precios_pvp": true,
+      "producto": "CHAQUETA BAGGY PINZAS"
+    },
+    {
+      "precio_detal": 60000,
+      "precio_mayorista": 42000,
+      "precio_web": 55000,
+      "precios_pvp": true,
+      "producto": "PANTALON HOUSER"
+    },
+    {
+      "precio_detal": 49000,
+      "precio_mayorista": 34000,
+      "precio_web": 45000,
+      "precios_pvp": true,
+      "producto": "CAMIBUSO HOUSER"
+    },
+    {
+      "precio_detal": 69000,
+      "precio_mayorista": 45000,
+      "precio_web": 69900,
+      "precios_pvp": true,
+      "producto": "SET PALOMINO"
+    },
+    {
+      "precio_detal": 105000,
+      "precio_mayorista": 75000,
+      "precio_web": 100000,
+      "precios_pvp": true,
+      "producto": "SET CHALECO VIENA"
+    },
+    {
+      "precio_detal": 36000,
+      "precio_mayorista": 25000,
+      "precio_web": 33000,
+      "precios_pvp": true,
+      "producto": "BLUSA BOLERO"
     }
   ],
   "puestos": [
@@ -4939,96 +5108,19 @@
       "zona": "#REF!"
     }
   ],
-  "tarifas_cif": [
-    {
-      "ct": "3cort2",
-      "id": "cif_3cort2",
-      "tarifa_min": 7.792237,
-      "zona": "corte"
-    },
-    {
-      "ct": "3cort1",
-      "id": "cif_3cort1",
-      "tarifa_min": 7.446139,
-      "zona": "corte"
-    },
-    {
-      "ct": "7empa1",
-      "id": "cif_7empa1",
-      "tarifa_min": 437.381262,
-      "zona": "empaque"
-    },
-    {
-      "ct": "1acol1",
-      "id": "cif_1acol1",
-      "tarifa_min": 860.543277,
-      "zona": "acolchado"
-    },
-    {
-      "ct": "2bode1",
-      "id": "cif_2bode1",
-      "tarifa_min": 1280.103563,
-      "zona": "bodega telas"
-    },
-    {
-      "ct": "4insu1",
-      "id": "cif_4insu1",
-      "tarifa_min": 188.8434,
-      "zona": "insumos/alistamiento"
-    },
-    {
-      "ct": "5logi1",
-      "id": "cif_5logi1",
-      "tarifa_min": 262.451957,
-      "zona": "logisitica"
-    },
-    {
-      "ct": "6cali1",
-      "id": "cif_6cali1",
-      "tarifa_min": 313.729734,
-      "zona": "calidad"
-    },
-    {
-      "ct": "8bode1",
-      "id": "cif_8bode1",
-      "tarifa_min": 1238.898068,
-      "zona": "bodega almacenamiento"
-    },
-    {
-      "ct": "9vapo1",
-      "id": "cif_9vapo1",
-      "tarifa_min": 634.183575,
-      "zona": "vapor 116"
-    },
-    {
-      "ct": "11broc1",
-      "id": "cif_11broc1",
-      "tarifa_min": 234.332327,
-      "zona": "broches/ ojales"
-    },
-    {
-      "ct": "24area1",
-      "id": "cif_24area1",
-      "tarifa_min": 470.800569,
-      "zona": "area tejeduria"
-    }
-  ],
-  "params": {
-    "costo_empaque_web": 2000,
-    "costo_fijo_web": 5000,
-    "dias_laborables": 24,
-    "horas_dia": 7.666666666666667,
-    "iva": 0.19,
-    "margen_detal": 0.5,
-    "margen_mayorista": 0.3,
-    "margen_web": 0.45,
-    "pct_arl": 0.0435,
-    "pct_parafiscal": 0.09,
-    "pct_prestaciones": 0.2183,
-    "pct_ss_pension": 0.12,
-    "pct_ss_salud": 0.085,
-    "pct_tmnp": 0.05,
-    "pct_tmp": 0.2
+  "receta_map": {
+    "BEISBOLERA 2_0": "cid_1783368475768_2164",
+    "BLUSA JEN + BLUSA RAYAS JEN": "rec_blusa_jen_1118",
+    "CALIFORNIA": "cid_1788290303656_5753",
+    "CHAQUETA DELCO LISO DAMA": "rec_dotacion_hombre_liso_delco_3011",
+    "CHAQUETA ROCKY": "cid_1783374158054_3659",
+    "CHAQUETAS MIXTAS (MARIPOSAS _ ONION)": "rec_chaqueta_onion_1165",
+    "CONJUNTO FRANKY PR": "rec_set_franky_pr_3012",
+    "COUNTRY 2_0": "cid_1783378762151_5821",
+    "HOODIE RANGLAND PAÑO ALGODON ABIERTO": "rec_hoodie_pa_o_algodon_abierto_1177",
+    "HOODIE RANGLAND PAÑO ALGODON CERRADO": "rec_hoodie_pa_o_algodon_cerrado_1172",
+    "ROMPEVIENTOS": "rec_chaqueta_rompevientos_bk_1180",
+    "SET SOLOMUN": "cid_1789100940765_2191"
   },
   "recetas": [
     {
@@ -46474,959 +46566,867 @@
       "referencia": "1236"
     }
   ],
-  "precios_pt": [
+  "servicios": [
     {
-      "precio_detal": 79831.93,
-      "precio_mayorista": 46974.79,
-      "precio_web": 100756.3,
-      "producto": "CHAQUETA CAZADORA - REF: 1002"
+      "costo_unitario": 11500,
+      "id": "svc_51919_1131020",
+      "nombre": "SERVICIO DE CONFECCION CHAQUETA CAZADORA",
+      "sku": "51919-1131020"
     },
     {
-      "precio_detal": 81512.6,
-      "precio_mayorista": 55462.18,
-      "precio_web": 108403.36,
-      "producto": "OVERSIZED CAPOTA - REF: 1058"
+      "costo_unitario": 2500,
+      "id": "svc_52121_1011010",
+      "nombre": "SERVICIO DE ACOLCHADO X METRO",
+      "sku": "52121-1011010"
     },
     {
-      "precio_detal": 79831.93,
-      "precio_mayorista": 51176.47,
-      "precio_web": 100756.3,
-      "producto": "BEISBOLERA CUERO - REF: 1008"
+      "costo_unitario": 10500,
+      "id": "svc_51919_1011020",
+      "nombre": "SERVICIO DE CONFECCION CHAQUETA OVERSIZED CAPOTA",
+      "sku": "51919-1011020"
     },
     {
-      "precio_detal": 50336.13,
-      "precio_mayorista": 33529.41,
-      "precio_web": 50336.13,
-      "producto": "BUZO CAPOTA IT´S FUNNY - REF: 1012"
+      "costo_unitario": 9400,
+      "id": "svc_51919_1141020",
+      "nombre": "SERVICIO DE CONFECCION BEISBOLERA CUERO",
+      "sku": "51919-1141020"
     },
     {
-      "precio_detal": 25210,
-      "precio_mayorista": 18487,
-      "precio_web": 37815,
-      "producto": "CAMISETA BASICA BK - REF: 1061"
+      "costo_unitario": 1700,
+      "id": "svc_52222_1041020",
+      "nombre": "SERVICIO DE BORDADO BIESBOLERA",
+      "sku": "52222-1041020"
     },
     {
-      "precio_detal": 58739.5,
-      "precio_mayorista": 41932.77,
-      "precio_web": 58739.5,
-      "producto": "GABAN BODOQUE - REF: 1021"
+      "costo_unitario": 5000,
+      "id": "svc_51919_1151020",
+      "nombre": "SERVICIO DE CONFECCION BUZO CAPOTA IT´S FUNNY",
+      "sku": "51919-1151020"
     },
     {
-      "precio_detal": 66386.55,
-      "precio_mayorista": 49579.83,
-      "precio_web": 66386.55,
-      "producto": "CONJUNTO PARIS - REF: 1070"
+      "costo_unitario": 4200,
+      "id": "svc_52222_1051020",
+      "nombre": "SERVICIO DE BORDADO BUZO CAPOTA IT´S FUNNY",
+      "sku": "52222-1051020"
     },
     {
-      "precio_detal": 57983,
-      "precio_mayorista": 45378.15,
-      "precio_web": 57983,
-      "producto": "PANTALON RAVE - REF: 1063"
+      "costo_unitario": 2300,
+      "id": "svc_51919_1021020",
+      "nombre": "SERVICIO DE CONFECCION CAMISETA BK",
+      "sku": "51919-1021020"
     },
     {
-      "precio_detal": 74789.92,
-      "precio_mayorista": 49495.8,
-      "precio_web": 74789.92,
-      "producto": "CHALECO ACOLCHADO MANY - REF: 1056"
+      "costo_unitario": 7200,
+      "id": "svc_51919_1161020",
+      "nombre": "SERVICIO DE CONFECCION GABAN BODOQUE",
+      "sku": "51919-1161020"
     },
     {
-      "precio_detal": 46218.49,
-      "precio_mayorista": 32773.11,
-      "precio_web": 58739.5,
-      "producto": "CAMIBUSO OSO PELUDO - REF: 1035"
+      "costo_unitario": 5500,
+      "id": "svc_51919_1051020",
+      "nombre": "SERVICIO DE CONFECCION PANTALON RAVE",
+      "sku": "51919-1051020"
     },
     {
-      "precio_detal": 54537.82,
-      "precio_mayorista": 41176.47,
-      "precio_web": 54537.82,
-      "producto": "CAMISON BERLIN - REF: 1071"
+      "costo_unitario": 8500,
+      "id": "svc_51919_1081020",
+      "nombre": "SERVICIO DE CONFECCION CHALECO MANY",
+      "sku": "51919-1081020"
     },
     {
-      "precio_detal": 41176,
-      "precio_mayorista": 26890,
-      "precio_web": 49000,
-      "producto": "VESTIDO NIU NIU - REF: 1039"
+      "costo_unitario": 3500,
+      "id": "svc_51919_1061020",
+      "nombre": "SERVICIO DE CONFECCION CAMIBUSO",
+      "sku": "51919-1061020"
     },
     {
-      "precio_detal": 35210.08,
-      "precio_mayorista": 29411.76,
-      "precio_web": 35210.08,
-      "producto": "VESTIDO NAPOLES - REF: 1112"
+      "costo_unitario": 6300,
+      "id": "svc_51919_1101020",
+      "nombre": "SERVICIO DE CONFECCION CAMISION BERLIN",
+      "sku": "51919-1101020"
     },
     {
-      "precio_detal": 39495.8,
-      "precio_mayorista": 27731,
-      "precio_web": 39495.8,
-      "producto": "FALDA GABY BK - REF: 1079"
+      "costo_unitario": 3600,
+      "id": "svc_51919_1171020",
+      "nombre": "SERVICIO DE CONFECCION VESTIDO NAPOLES",
+      "sku": "51919-1171020"
     },
     {
-      "precio_detal": 74789.92,
-      "precio_mayorista": 54621.85,
-      "precio_web": 100000,
-      "producto": "ABRIGO OVEJERO - REF: 1043"
+      "costo_unitario": 6000,
+      "id": "svc_51919_1181020",
+      "nombre": "SERVICIO DE CONFECCION ABRIGO OVEJERO",
+      "sku": "51919-1181020"
     },
     {
-      "precio_detal": 25210.08,
-      "precio_mayorista": 18487.39,
-      "precio_web": 37815,
-      "producto": "CAMISETA CROPTOP BK - REF: 1074"
+      "costo_unitario": 2300,
+      "id": "svc_51919_1191020",
+      "nombre": "SERVICIO DE CONFECCION CAMISETA CROPTOP BK",
+      "sku": "51919-1191020"
     },
     {
-      "precio_detal": 74789.92,
-      "precio_mayorista": 53781.51,
-      "precio_web": 74789.92,
-      "producto": "PILOTO PANCAKE - REF: 1099"
+      "costo_unitario": 10000,
+      "id": "svc_53030_1091150",
+      "nombre": "SERVICIO DE TEJEDURIA RIB POLIESTER",
+      "sku": "53030-1091150"
     },
     {
-      "precio_detal": 83949.58,
-      "precio_mayorista": 73109.24,
-      "precio_web": 83949.58,
-      "producto": "CHAQUETA SUEDE OLD MONEY - REF: 1119"
+      "costo_unitario": 9000,
+      "id": "svc_51919_1201020",
+      "nombre": "SERVICIO DE CONFECCION PILOTO PANCAKE",
+      "sku": "51919-1201020"
     },
     {
-      "precio_detal": 75546.22,
-      "precio_mayorista": 58823.53,
-      "precio_web": 75546.22,
-      "producto": "CHAQUETA OVERIZED TIRAMISU - REF: 1123"
+      "costo_unitario": 11000,
+      "id": "svc_52929_1011150",
+      "nombre": "SERVICIO DE ELABORACIÓN RIB ALGODÓN",
+      "sku": "52929-1011150"
     },
     {
-      "precio_detal": 74789.92,
-      "precio_mayorista": 52100.84,
-      "precio_web": 100756.3,
-      "producto": "BOMBON - REF: 1062"
+      "costo_unitario": 9000,
+      "id": "svc_51919_1211020",
+      "nombre": "SERVICIO DE CONFECCION CHAQUETA SUEDE OLD MONEY",
+      "sku": "51919-1211020"
     },
     {
-      "precio_detal": 67142.86,
-      "precio_mayorista": 49579.83,
-      "precio_web": 67142.86,
-      "producto": "CHAQUETA CHIWI - REF: 1075"
+      "costo_unitario": 7500,
+      "id": "svc_51919_1231020",
+      "nombre": "SERVICIO DE CONFECCION BOMBON",
+      "sku": "51919-1231020"
     },
     {
-      "precio_detal": 91596.64,
-      "precio_mayorista": 60504,
-      "precio_web": 91596.64,
-      "producto": "CHAQUETA HARLEY - REF: 1107"
+      "costo_unitario": 8500,
+      "id": "svc_51919_1241020",
+      "nombre": "SERVICIO DE CONFECCION CHAQUETA CHIWI",
+      "sku": "51919-1241020"
     },
     {
-      "precio_detal": 57983.19,
-      "precio_mayorista": 40336,
-      "precio_web": 57983.19,
-      "producto": "RANGLAND SOFT - REF: 1105"
+      "costo_unitario": 8900,
+      "id": "svc_51919_1251020",
+      "nombre": "SERVICIO DE CONFECCION CHAQUETA HARLEY",
+      "sku": "51919-1251020"
     },
     {
-      "precio_detal": 58739.5,
-      "precio_mayorista": 42857.14,
-      "precio_web": 58739.5,
-      "producto": "OSO CON OSO - REF: 1026"
+      "costo_unitario": 5700,
+      "id": "svc_51919_1031020",
+      "nombre": "SERVICIO DE CONFECCION RANGLAD SOFT",
+      "sku": "51919-1031020"
     },
     {
-      "precio_detal": 41176.47,
-      "precio_mayorista": 29411.76,
-      "precio_web": 41176.47,
-      "producto": "FALDA ESCOSES - REF: 1130"
+      "costo_unitario": 5000,
+      "id": "svc_52222_1011020",
+      "nombre": "SERVICIO DE BORDADO RANGLAN SOFT",
+      "sku": "52222-1011020"
     },
     {
-      "precio_detal": 25126.05,
-      "precio_mayorista": 23529,
-      "precio_web": 25126.05,
-      "producto": "BUZO MANGA LARGA LUREX - REF: 1109"
+      "costo_unitario": 4500,
+      "id": "svc_51919_1261020",
+      "nombre": "SERVICIO DE CONFECCION FALDA ESCOSES",
+      "sku": "51919-1261020"
     },
     {
-      "precio_detal": 67142.86,
-      "precio_mayorista": 40336,
-      "precio_web": 71428.57,
-      "producto": "BUSO COUNTRY - REF: 1092"
+      "costo_unitario": 2500,
+      "id": "svc_51919_1271020",
+      "nombre": "SERVICIO DE CONFECCION BUZO MANGA LARGA LUREX",
+      "sku": "51919-1271020"
     },
     {
-      "precio_detal": 16722.69,
-      "precio_mayorista": 15042.02,
-      "precio_web": 16722.69,
-      "producto": "TOP TIRAS - REF: 1108"
+      "costo_unitario": 5000,
+      "id": "svc_51919_1281020",
+      "nombre": "SERVICIO DE CONFECCION BUSO COUNTRY",
+      "sku": "51919-1281020"
     },
     {
-      "precio_detal": 21764.71,
-      "precio_mayorista": 15042.02,
-      "precio_web": 21764.71,
-      "producto": "CROP TOP MILU - REF: 1126"
+      "costo_unitario": 2200,
+      "id": "svc_51919_1291020",
+      "nombre": "SERVICIO DE CONFECCION TOP TIRAS",
+      "sku": "51919-1291020"
     },
     {
-      "precio_detal": 67142.86,
-      "precio_mayorista": 54621.85,
-      "precio_web": 67142.86,
-      "producto": "BODOQUE ESCOSES - REF: 1091"
+      "costo_unitario": 2200,
+      "id": "svc_51919_1301020",
+      "nombre": "SERVICIO DE CONFECCION CROP TOP MILU",
+      "sku": "51919-1301020"
     },
     {
-      "precio_detal": 75546.22,
-      "precio_mayorista": 54537.82,
-      "precio_web": 75546.22,
-      "producto": "GABAN PARIS - REF: 1060"
+      "costo_unitario": 7200,
+      "id": "svc_51919_1311020",
+      "nombre": "SERVICIO DE CONFECCION BODOQUE ESCOSES",
+      "sku": "51919-1311020"
     },
     {
-      "precio_detal": 74789.92,
-      "precio_mayorista": 55462.18,
-      "precio_web": 74789.92,
-      "producto": "CONJUNTO HOODIE CAPOTA - REF: 1049"
+      "costo_unitario": 6300,
+      "id": "svc_51919_1321020",
+      "nombre": "SERVICIO DE CONFECCION GABAN PARIS",
+      "sku": "51919-1321020"
     },
     {
-      "precio_detal": 91596.64,
-      "precio_mayorista": 66386.55,
-      "precio_web": 91596.64,
-      "producto": "CONJUNTO KODA - REF: 1106"
+      "costo_unitario": 10000,
+      "id": "svc_51919_1331020",
+      "nombre": "SERVICIO DE CONFECCION CONJUNTO HOODIE CAPOTA",
+      "sku": "51919-1331020"
     },
     {
-      "precio_detal": 74789,
-      "precio_mayorista": 57983,
-      "precio_web": 109159.66,
-      "producto": "CONJUNTO NIÑO TIMON - REF: 1081"
+      "costo_unitario": 9000,
+      "id": "svc_51919_1041020",
+      "nombre": "SERVICIO DE CONFECCION CONJUNTO KODA",
+      "sku": "51919-1041020"
     },
     {
-      "precio_detal": 83193.28,
-      "precio_mayorista": 63025.21,
-      "precio_web": 83193.28,
-      "producto": "CONJUNTO TRENZAS - REF: 1128"
+      "costo_unitario": 8000,
+      "id": "svc_51919_1341020",
+      "nombre": "SERVICIO DE CONFECCION CONJUNTO NIÑO TIMON",
+      "sku": "51919-1341020"
     },
     {
-      "precio_detal": 74789.92,
-      "precio_mayorista": 57983,
-      "precio_web": 92352.94,
-      "producto": "CONJUNTO ROCKET - REF: 1100"
+      "costo_unitario": 650,
+      "id": "svc_51929_1031010",
+      "nombre": "SERVICIO DE ELABORACIÓN CORDON PLANO TEJIDO",
+      "sku": "51929-1031010"
     },
     {
-      "precio_detal": 74789.92,
-      "precio_mayorista": 52100.84,
-      "precio_web": 74789.92,
-      "producto": "CONJUNTO PUMBA - REF: 1096"
+      "costo_unitario": 1323,
+      "id": "svc_51929_1021020",
+      "nombre": "SERVICIO DE ELABORACIÓN TRENZA TEJIDA",
+      "sku": "51929-1021020"
     },
     {
-      "precio_detal": 46134.45,
-      "precio_mayorista": 32773.11,
-      "precio_web": 46134.45,
-      "producto": "PANTALON MONIQUE - REF: 1116"
+      "costo_unitario": 10000,
+      "id": "svc_51919_1351020",
+      "nombre": "SERVICIO DE CONFECCION CONJUNTO TRENZAS",
+      "sku": "51919-1351020"
     },
     {
-      "precio_detal": 57983.19,
-      "precio_mayorista": 35294.12,
-      "precio_web": 74789.92,
-      "producto": "PANTALON CARGO - REF: 1066"
+      "costo_unitario": 7500,
+      "id": "svc_51919_1361020",
+      "nombre": "SERVICIO DE CONFECCION CONJUNTO ROCKET",
+      "sku": "51919-1361020"
     },
     {
-      "precio_detal": 74789.92,
-      "precio_mayorista": 48739.5,
-      "precio_web": 74789.92,
-      "producto": "BOTA ANCHA KENIA - REF: 1128"
+      "costo_unitario": 250,
+      "id": "svc_31212_10410233",
+      "nombre": "BROCHE SEMICAZUELA UND PLATEADO",
+      "sku": "31212-10410233"
     },
     {
-      "precio_detal": 80000,
-      "precio_mayorista": 46000,
-      "precio_web": 79900,
-      "precios_pvp": true,
-      "producto": "PANTALON DONATELLA - REF: 1127"
+      "costo_unitario": 9500,
+      "id": "svc_51919_1371020",
+      "nombre": "SERVICIO DE CONFECCION CONJUNTO PUMBA",
+      "sku": "51919-1371020"
     },
     {
-      "precio_detal": 57983.19,
-      "precio_mayorista": 35294.12,
-      "precio_web": 74789.92,
-      "producto": "PANTALON JOGGER CARGO - REF: 1067"
+      "costo_unitario": 7000,
+      "id": "svc_51919_1381020",
+      "nombre": "SERVICIO DE CONFECCION PANTALON MONIQUE",
+      "sku": "51919-1381020"
     },
     {
-      "precio_detal": 66386.55,
-      "precio_mayorista": 43613.45,
-      "precio_web": 83949.58,
-      "producto": "PANTALON CARGO MANA - REF: 1090"
+      "costo_unitario": 8000,
+      "id": "svc_51919_1391020",
+      "nombre": "SERVICIO DE CONFECCION PANTALON CARGO",
+      "sku": "51919-1391020"
     },
     {
-      "precio_detal": 58739.5,
-      "precio_mayorista": 40336,
-      "precio_web": 58739.5,
-      "producto": "LEGGIN CAMPANITA - REF: 1087"
+      "costo_unitario": 7900,
+      "id": "svc_51919_1401020",
+      "nombre": "SERVICIO DE CONFECCION BOTA ANCHA KENIA",
+      "sku": "51919-1401020"
     },
     {
-      "precio_detal": 58739.5,
-      "precio_mayorista": 47058.82,
-      "precio_web": 58739.5,
-      "producto": "CHALECO OVEJERO - REF: 1072"
+      "costo_unitario": 6500,
+      "id": "svc_51919_1411020",
+      "nombre": "SERVICIO DE CONFECCION PANTALON DONATELLA",
+      "sku": "51919-1411020"
     },
     {
-      "precio_detal": 57983,
-      "precio_mayorista": 37815,
-      "precio_web": 57983,
-      "producto": "VESTIDO SOUL - REF: 1104"
+      "costo_unitario": 8000,
+      "id": "svc_51919_1421020",
+      "nombre": "SERVICIO DE CONFECCION PANTALON JOGGER CARGO",
+      "sku": "51919-1421020"
     },
     {
-      "precio_detal": 35210.08,
-      "precio_mayorista": 29411.76,
-      "precio_web": 35210.08,
-      "producto": "VESTIDO VENECIA - REF: 1113"
+      "costo_unitario": 8000,
+      "id": "svc_51919_1431020",
+      "nombre": "SERVICIO DE CONFECCION PANTALON CARGO MANA",
+      "sku": "51919-1431020"
     },
     {
-      "precio_detal": 50336.13,
-      "precio_mayorista": 41176.47,
-      "precio_web": 74789.92,
-      "producto": "CAMISA TRENCH - REF: 1098"
+      "costo_unitario": 6000,
+      "id": "svc_51919_1441020",
+      "nombre": "SERVICIO DE CONFECCION LEGGIN CAMPANITA",
+      "sku": "51919-1441020"
     },
     {
-      "precio_detal": 41176.47,
-      "precio_mayorista": 30252.1,
-      "precio_web": 50336.13,
-      "producto": "PANTALONETA FERXXO - REF: 1093"
+      "costo_unitario": 7000,
+      "id": "svc_51919_1451020",
+      "nombre": "SERVICIO DE CONFECCION CHALECO OVEJERO",
+      "sku": "51919-1451020"
     },
     {
-      "precio_detal": 47899.16,
-      "precio_mayorista": 33529.41,
-      "precio_web": 67142.86,
-      "producto": "BERMUDA ARTURITO - REF: 1114"
+      "costo_unitario": 6500,
+      "id": "svc_51919_1461020",
+      "nombre": "SERVICIO DE CONFECCION VESTIDO SOUL",
+      "sku": "51919-1461020"
     },
     {
-      "precio_detal": 39000,
-      "precio_mayorista": 27500,
-      "precio_web": 39900,
-      "precios_pvp": true,
-      "producto": "BLUSA JEN - REF: 1118"
+      "costo_unitario": 3600,
+      "id": "svc_51919_1091020",
+      "nombre": "SERVICIO DE CONFECCION VESTIDO VENECIA",
+      "sku": "51919-1091020"
     },
     {
-      "precio_detal": 23529.41,
-      "precio_mayorista": 16722.69,
-      "precio_web": 29900,
-      "producto": "BLUSA MAWI - REF: 1110"
+      "costo_unitario": 8500,
+      "id": "svc_51919_1111020",
+      "nombre": "SERVICIO DE CONFECCION CAMISA TRENCH",
+      "sku": "51919-1111020"
     },
     {
-      "precio_detal": 25210.08,
-      "precio_mayorista": 18487.39,
-      "precio_web": 25210.08,
-      "producto": "BLUSA MANGA LARGA SELENA - REF: 1122"
+      "costo_unitario": 5000,
+      "id": "svc_51919_1481020",
+      "nombre": "SERVICIO DE CONFECCION PANTALONETA FERXXO",
+      "sku": "51919-1481020"
     },
     {
-      "precio_detal": 62941.18,
-      "precio_mayorista": 41932.77,
-      "precio_web": 62941.18,
-      "producto": "SWEATER VAINILLA - REF: 1086"
+      "costo_unitario": 8000,
+      "id": "svc_51919_1071020",
+      "nombre": "SERVICIO DE CONFECCION BERMUDA ARTURITO",
+      "sku": "51919-1071020"
     },
     {
-      "precio_detal": 62941.18,
-      "precio_mayorista": 41176,
-      "precio_web": 62941.18,
-      "producto": "BUSO TEJIDO POLO - REF: 1125"
+      "costo_unitario": 4800,
+      "id": "svc_51919_1521020",
+      "nombre": "SERVICIO DE CONFECCION SWEATER VAINILLA",
+      "sku": "51919-1521020"
     },
     {
-      "precio_detal": 58739.41,
-      "precio_mayorista": 41092.44,
-      "precio_web": 58739.41,
-      "producto": "BUZO YINKY - REF: 1046"
+      "costo_unitario": 12422,
+      "id": "svc_51930_1021020",
+      "nombre": "SERVICIO DE TEJEDURIA SWEATER VAINILLA TALLA 10-12",
+      "sku": "51930-1021020"
     },
     {
-      "precio_detal": 66386.55,
-      "precio_mayorista": 57983,
-      "precio_web": 66386.55,
-      "producto": "CONJUNTO HIPSTER - REF: 1069"
+      "costo_unitario": 4500,
+      "id": "svc_51919_1531020",
+      "nombre": "SERVICIO DE CONFECCION BUSO TEJIDO POLO",
+      "sku": "51919-1531020"
     },
     {
-      "precio_detal": 64621.85,
-      "precio_mayorista": 43697.48,
-      "precio_web": 64621.85,
-      "producto": "BEISBOLERA OVERSIZED  NIÑA - REF: 1073"
+      "costo_unitario": 11484,
+      "id": "svc_51930_1061020",
+      "nombre": "SERVICIO DE TEJEDURIA BUSO TEJIDO POLO TALLA 10-12",
+      "sku": "51930-1061020"
     },
     {
-      "precio_detal": 32773.11,
-      "precio_mayorista": 23445.38,
-      "precio_web": 41176.47,
-      "producto": "LEGGUINS NIÑA BK - REF: 1078"
+      "costo_unitario": 1500,
+      "id": "svc_51922_1071020",
+      "nombre": "SERVICIO DE BORDADO BUSO TEJIDO POLO",
+      "sku": "51922-1071020"
     },
     {
-      "precio_detal": 57983.19,
-      "precio_mayorista": 44537.82,
-      "precio_web": 57983.19,
-      "producto": "CONJUNTO CORE - REF: 1082"
+      "costo_unitario": 250,
+      "id": "svc_31717_1021096",
+      "nombre": "APLIQUE CUERO PASADOR BK 2CM * 2CM CAMEL",
+      "sku": "31717-1021096"
     },
     {
-      "precio_detal": 49579.83,
-      "precio_mayorista": 46218.49,
-      "precio_web": 49579.83,
-      "producto": "PANTALON DRILL ANCHO - REF: 1095"
+      "costo_unitario": 7000,
+      "id": "svc_33333_1011020",
+      "nombre": "PELUCHE OSO CON OSO",
+      "sku": "33333-1011020"
     },
     {
-      "precio_detal": 78991.6,
-      "precio_mayorista": 57983.19,
-      "precio_web": 78991.6,
-      "producto": "CONJUNTO ISABELLA - REF: 1097"
+      "costo_unitario": 450,
+      "id": "svc_53131_1011020",
+      "nombre": "SERVICIO CORTE LASER BOLSILLOS",
+      "sku": "53131-1011020"
     },
     {
-      "precio_detal": 54537.82,
-      "precio_mayorista": 37815.13,
-      "precio_web": 54537.82,
-      "producto": "CHAQUETA TORERO NIÑA - REF: 1101"
+      "costo_unitario": 5400,
+      "id": "svc_51919_1541020",
+      "nombre": "SERVICIO DE CONFECCION BUSO OSO CON OSO",
+      "sku": "51919-1541020"
     },
     {
-      "precio_detal": 50336.13,
-      "precio_mayorista": 32773.11,
-      "precio_web": 58739.5,
-      "producto": "PANTALON BOSTON - REF: 1102"
+      "costo_unitario": 10000,
+      "id": "svc_51919_1561020",
+      "nombre": "SERVICIO DE CONFECCION CONJUNTO HIPSTER",
+      "sku": "51919-1561020"
     },
     {
-      "precio_detal": 57983.19,
-      "precio_mayorista": 39495.8,
-      "precio_web": 57983.19,
-      "producto": "POLO RICE - REF: 1139"
+      "costo_unitario": 8500,
+      "id": "svc_51919_1571020",
+      "nombre": "SERVICIO DE CONFECCION BEISBOLERA OVERSIZED NIÑA",
+      "sku": "51919-1571020"
     },
     {
-      "precio_detal": 116806.72,
-      "precio_mayorista": 83193.28,
-      "precio_web": 116806.72,
-      "producto": "SET TRENZAS - REF: 1140"
+      "costo_unitario": 2300,
+      "id": "svc_51919_1581020",
+      "nombre": "SERVICIO DE CONFECCION LEGGINS BK",
+      "sku": "51919-1581020"
     },
     {
-      "precio_detal": 49579.83,
-      "precio_mayorista": 35294.12,
-      "precio_web": 49579.83,
-      "producto": "PANTALON ARIEL - REF: 1144"
+      "costo_unitario": 6500,
+      "id": "svc_51919_1591020",
+      "nombre": "SERVICIO DE CONFECCION CONJUNTO CORE",
+      "sku": "51919-1591020"
     },
     {
-      "precio_detal": 50336.13,
-      "precio_mayorista": 37815.13,
-      "precio_web": 50336.13,
-      "producto": "CAMISA SYROS - REF: 1142"
+      "costo_unitario": 7500,
+      "id": "svc_51919_1601020",
+      "nombre": "SERVICIO DE CONFECCION PANTALON DRILL BOTA ANCHA",
+      "sku": "51919-1601020"
     },
     {
-      "precio_detal": 29327.73,
-      "precio_mayorista": 21848.74,
-      "precio_web": 29327.73,
-      "producto": "CAMISETA TRUFA - REF: 1145"
+      "costo_unitario": 9500,
+      "id": "svc_51919_1611020",
+      "nombre": "SERVICIO DE CONFECCION CONJUNTO ISABELLA",
+      "sku": "51919-1611020"
     },
     {
-      "precio_detal": 57983.19,
-      "precio_mayorista": 41932.77,
-      "precio_web": 57983.19,
-      "producto": "CONJUNTO TRENDY - REF: 1146"
+      "costo_unitario": 180,
+      "id": "svc_53232_1011010",
+      "nombre": "SERVICIO DE SESGO",
+      "sku": "53232-1011010"
     },
     {
-      "precio_detal": 33529.41,
-      "precio_mayorista": 21848.74,
-      "precio_web": 41932.77,
-      "producto": "CAMISETA BURDA PREMIUM - REF: 1152"
+      "costo_unitario": 8500,
+      "id": "svc_51919_1621020",
+      "nombre": "SERVICIO DE CONFECCION CHAQUETA TORERO NIÑA",
+      "sku": "51919-1621020"
     },
     {
-      "precio_detal": 71428.57,
-      "precio_mayorista": 52100.84,
-      "precio_web": 71428.57,
-      "producto": "CONJUNTO FRESH - REF: 1147"
+      "costo_unitario": 5000,
+      "id": "svc_51919_1631020",
+      "nombre": "SERVICIO DE CONFECCION PANTALON BOSTON",
+      "sku": "51919-1631020"
     },
     {
-      "precio_detal": 79747.9,
-      "precio_mayorista": 62184.87,
-      "precio_web": 79747.9,
-      "producto": "BOMBER SPRING - REF: 1134"
+      "costo_unitario": 5500,
+      "id": "svc_43019_1641020",
+      "nombre": "SERVICIO DE CONFECCION POLO RICE",
+      "sku": "43019-1641020"
     },
     {
-      "precio_detal": 66386.55,
-      "precio_mayorista": 52100.84,
-      "precio_web": 67142.86,
-      "producto": "CHALECO ROGGER - REF: 1149"
+      "costo_unitario": 6700,
+      "id": "svc_43030_1101020",
+      "nombre": "SERVICIO DE TEJEDURIA POLO RICE",
+      "sku": "43030-1101020"
     },
     {
-      "precio_detal": 0,
-      "precio_mayorista": 0,
-      "precio_web": 0,
-      "producto": "PANTALON PALATZO TSC - REF: 5001"
+      "costo_unitario": 11000,
+      "id": "svc_43019_1651020",
+      "nombre": "SERVICIO DE CONFECCION SET TRENZAS",
+      "sku": "43019-1651020"
     },
     {
-      "precio_detal": 0,
-      "precio_mayorista": 0,
-      "precio_web": 0,
-      "producto": "SET JOGGER TSC - REF: 5002"
+      "costo_unitario": 16081.86,
+      "id": "svc_43030_1111020",
+      "nombre": "SERVICIO DE TEJEDURIA SET TRENZAS",
+      "sku": "43030-1111020"
     },
     {
-      "precio_detal": 0,
-      "precio_mayorista": 0,
-      "precio_web": 0,
-      "producto": "PANTALON PAPAYA TSC - REF: 5003"
+      "costo_unitario": 5500,
+      "id": "svc_41919_1661020",
+      "nombre": "SERVICIO DE CONFECCION PANTALON ARIEL",
+      "sku": "41919-1661020"
     },
     {
-      "precio_detal": 0,
-      "precio_mayorista": 0,
-      "precio_web": 0,
-      "producto": "PANTALON BLANCO TSC - REF: 5004"
+      "costo_unitario": 9500,
+      "id": "svc_41919_1671020",
+      "nombre": "SERVICIO DE CONFECCION CAMISA SYROS",
+      "sku": "41919-1671020"
     },
     {
-      "precio_detal": 0,
-      "precio_mayorista": 0,
-      "precio_web": 0,
-      "producto": "CHAQUETA PILOTO TSC - REF: 5006"
+      "costo_unitario": 8000,
+      "id": "svc_41919_1681020",
+      "nombre": "SERVICIO DE CONFECCION CONJUNTO FRESH",
+      "sku": "41919-1681020"
     },
     {
-      "precio_detal": 0,
-      "precio_mayorista": 0,
-      "precio_web": 0,
-      "producto": "GABAN CEBOLLAS TSC - REF: 5007"
+      "costo_unitario": 9000,
+      "id": "svc_41919_1691020",
+      "nombre": "SERVICIO DE CONFECCION CHALECO ROGGER",
+      "sku": "41919-1691020"
     },
     {
-      "precio_detal": 79831.93,
-      "precio_mayorista": 62184.87,
-      "precio_web": 79831.93,
-      "producto": "CONJUNTO CHILLY - REF: 1153"
+      "costo_unitario": 10000,
+      "id": "svc_41919_1701020",
+      "nombre": "SERVICIO DE CONFECCION PANTALON PALATZO TSC",
+      "sku": "41919-1701020"
     },
     {
-      "precio_detal": 0,
-      "precio_mayorista": 0,
-      "precio_web": 0,
-      "producto": "CHAQUETA CHALECO TSC - REF: 5008"
+      "costo_unitario": 10000,
+      "id": "svc_41919_1781020",
+      "nombre": "SERVICIO DE CONFECCION TORERO PILI",
+      "sku": "41919-1781020"
     },
     {
-      "precio_detal": 79831.93,
-      "precio_mayorista": 57983.19,
-      "precio_web": 100000,
-      "producto": "TORERO PILI - REF: 1133"
+      "costo_unitario": 6000,
+      "id": "svc_41919_1791020",
+      "nombre": "SERVICIO DE CONFECCION PANTALON CHINO",
+      "sku": "41919-1791020"
     },
     {
-      "precio_detal": 71428.57,
-      "precio_mayorista": 52100.84,
-      "precio_web": 71428.57,
-      "producto": "CONJUNTO CHICAGO - REF: 1143"
+      "costo_unitario": 13600,
+      "id": "svc_41919_1801020",
+      "nombre": "SERVICIO DE CONFECCION ABRIGO FROZEN",
+      "sku": "41919-1801020"
     },
     {
-      "precio_detal": 52100.84,
-      "precio_mayorista": 35294.12,
-      "precio_web": 52100.84,
-      "producto": "PANTALON CHINO - REF: 1148"
+      "costo_unitario": 300,
+      "id": "svc_32727_1021021",
+      "nombre": "MARQUILLA TEJIDA CUADRADA BK NEGRO",
+      "sku": "32727-1021021"
     },
     {
-      "precio_detal": 83193.28,
-      "precio_mayorista": 66386.55,
-      "precio_web": 83193.28,
-      "producto": "ABRIGO FROZEN - REF: 1136"
+      "costo_unitario": 100,
+      "id": "svc_31616_1011020",
+      "nombre": "INSTRUCCIÓN DE LAVADO",
+      "sku": "31616-1011020"
     },
     {
-      "precio_detal": 91596.64,
-      "precio_mayorista": 74789.92,
-      "precio_web": 91596.64,
-      "producto": "ABRIGO LUXOR - REF: 1135"
+      "costo_unitario": 100,
+      "id": "svc_31515_1071020",
+      "nombre": "TALLA TEJIDA",
+      "sku": "31515-1071020"
     },
     {
-      "precio_detal": 57983.19,
-      "precio_mayorista": 40336.13,
-      "precio_web": 58739.5,
-      "producto": "CHALECO PUFFY - REF: 1150"
+      "costo_unitario": 8000,
+      "id": "svc_41919_1821020",
+      "nombre": "SERVICIO DE CONFECCION CHALECO PUFFY",
+      "sku": "41919-1821020"
     },
     {
-      "precio_detal": 50336.13,
-      "precio_mayorista": 37815.13,
-      "precio_web": 50336.13,
-      "producto": "CAMISA UNDERGROUND - REF: 1151"
+      "costo_unitario": 5750,
+      "id": "svc_41919_1831020",
+      "nombre": "SERVICIO DE CONFECCION UNDERGROUND",
+      "sku": "41919-1831020"
     },
     {
-      "precio_detal": 66386.55,
-      "precio_mayorista": 42857.14,
-      "precio_web": 79747.9,
-      "producto": "CAMISON ESCOSES - REF: 1084"
+      "costo_unitario": 10000,
+      "id": "svc_41919_1851020",
+      "nombre": "SERVICIO DE CONFECCION CONJUNTO CHICAGO",
+      "sku": "41919-1851020"
     },
     {
-      "precio_detal": 58739.5,
-      "precio_mayorista": 46218.49,
-      "precio_web": 58739.5,
-      "producto": "CAMISON TIRAMISU - REF: 1154"
+      "costo_unitario": 15700,
+      "id": "svc_41919_1811020",
+      "nombre": "SERVICIO DE CONFECCION ABRIGO LUXOR",
+      "sku": "41919-1811020"
     },
     {
-      "precio_detal": 71344.54,
-      "precio_mayorista": 49579.83,
-      "precio_web": 71344.54,
-      "producto": "CHAQUETA RALPH - REF: 1155"
+      "costo_unitario": 9000,
+      "id": "svc_41919_1861020",
+      "nombre": "SERVICIO DE CONFECCION ONION",
+      "sku": "41919-1861020"
     },
     {
-      "precio_detal": 99000,
-      "precio_mayorista": 69000,
-      "precio_web": 99900,
-      "precios_pvp": true,
-      "producto": "BEISBOLERA ARMIN - REF: 1132"
+      "costo_unitario": 6800,
+      "id": "svc_41919_1871020",
+      "nombre": "SERVICIO DE CONFECCION CAMISON DRAKE",
+      "sku": "41919-1871020"
     },
     {
-      "precio_detal": 0,
-      "precio_mayorista": 79831.93,
-      "precio_web": 0,
-      "producto": "DOTACION ACOLCHADA HOMBRE DELCO - REF: 3010"
+      "costo_unitario": 11000,
+      "id": "svc_41919_1881020",
+      "nombre": "SERVICIO DE CONFECCION CONJUNTO HOODIE CAPOTA P.A",
+      "sku": "41919-1881020"
     },
     {
-      "precio_detal": 0,
-      "precio_mayorista": 69000,
-      "precio_web": 0,
-      "producto": "DOTACION HOMBRE LISO DELCO - REF: 3011"
+      "costo_unitario": 5000,
+      "id": "svc_41919_1891020",
+      "nombre": "SERVICIO DE CONFECCION PANTALON CHICAGO",
+      "sku": "41919-1891020"
     },
     {
-      "precio_detal": 0,
-      "precio_mayorista": 245000,
-      "precio_web": 0,
-      "producto": "CONJUNTO CUARTOS FRIOS TELA CAMPERO - REF: 3012"
+      "costo_unitario": 6800,
+      "id": "svc_41919_1901020",
+      "nombre": "SERVICIO DE CONFECCION CONJUNTO HOODIE CAPOTA P.A abi",
+      "sku": "41919-1901020"
     },
     {
-      "precio_detal": 0,
-      "precio_mayorista": 134453.78,
-      "precio_web": 0,
-      "producto": "CONJUNTO CUARTOS FRIOS TELA 30100 - REF: 3013"
+      "costo_unitario": 9000,
+      "id": "cid_1782849210808_9132",
+      "nombre": "SERVICIO DE CONFECCION CHAQUETA BURBUJAS",
+      "precio": 9000
     },
     {
-      "precio_detal": 59663.87,
-      "precio_mayorista": 41176.47,
-      "precio_web": 83193.28,
-      "producto": "CHAQUETA ONION - REF: 1165"
+      "costo_unitario": 10000,
+      "id": "cid_1783368636010_4607",
+      "nombre": "CONFECCION BEISBOLERA 2.0"
     },
     {
-      "precio_detal": 73949.58,
-      "precio_mayorista": 49579.83,
-      "precio_web": 100000,
-      "producto": "CAMISON DRAKE - REF: 1169"
+      "costo_unitario": 3000,
+      "id": "cid_1783368681020_1752",
+      "nombre": "BORDADO BEISBOLERA 2.0"
     },
     {
-      "precio_detal": 75630.25,
-      "precio_mayorista": 57983.19,
-      "precio_web": 75630.25,
-      "producto": "CONJUNTO HOODIE CAPOTA P.A - REF: 1178"
+      "costo_unitario": 12000,
+      "id": "cid_1783376441665_333",
+      "nombre": "CONFECCION CAZADORA ROCKY"
     },
     {
-      "precio_detal": 54621.85,
-      "precio_mayorista": 36974.79,
-      "precio_web": 54621.85,
-      "producto": "HOODIE PAÑO ALGODON CERRADO - REF: 1172"
+      "costo_unitario": 6200,
+      "id": "cid_1783379147916_7539",
+      "nombre": "CONFECCION COUNTRY 2.0"
     },
     {
-      "precio_detal": 79831.93,
-      "precio_mayorista": 57983.19,
-      "precio_web": 79831.93,
-      "producto": "CONJUNTO OSLO - REF: 1180"
+      "costo_unitario": 12000,
+      "id": "cid_1785767361188_1430",
+      "nombre": "CONFECCION SET FRANKY PRIME"
     },
     {
-      "precio_detal": 43697.48,
-      "precio_mayorista": 32773.11,
-      "precio_web": 43697.48,
-      "producto": "PANTALON CHICAGO - REF: 1179"
+      "costo_unitario": 23000,
+      "id": "cid_1785767419821_4969",
+      "nombre": "SERVICIO DE TEJEDURIA SET FRANKY PR"
     },
     {
-      "precio_detal": 57983.19,
-      "precio_mayorista": 40336.13,
-      "precio_web": 58739.5,
-      "producto": "HOODIE PAÑO ALGODON ABIERTO - REF: 1177"
+      "costo_unitario": 6500,
+      "id": "cid_1788289099212_4343",
+      "nombre": "CONFECCION PANTALON CALIFORNIA"
     },
     {
-      "precio_detal": 70588.24,
-      "precio_mayorista": 48739.5,
-      "precio_web": 84000,
-      "producto": "CHAQUETA BOLSILLOS PARCHE PR - REF: 3009"
+      "costo_unitario": 2300,
+      "id": "cid_1789095920713_2165",
+      "nombre": "SERVICIO DE CONFECCION BLUSA COSMO"
     },
     {
-      "precio_detal": 58739.5,
-      "precio_mayorista": 45378.15,
-      "precio_web": 69900,
-      "producto": "TORERO PR - REF: 3010"
+      "costo_unitario": 5500,
+      "id": "cid_1789096130582_8499",
+      "nombre": "SERVICIO DE CONFECCION PANTALON POLLY"
     },
     {
-      "precio_detal": 0,
-      "precio_mayorista": 0,
-      "precio_web": 0,
-      "producto": "BEISBOLERA OVERSIZED PR - REF: 3011"
+      "costo_unitario": 2300,
+      "id": "cid_1789096516663_5042",
+      "nombre": "SERVICIO DE CONFECCION BLUSA POLLY"
     },
     {
-      "precio_detal": 199900,
-      "precio_mayorista": 119000,
-      "precio_web": 199900,
-      "precios_pvp": true,
-      "producto": "SET FRANKY PR - REF: 3012"
+      "costo_unitario": 6500,
+      "id": "cid_1789096990107_6372",
+      "nombre": "SERVICIO DE CONFECCION PANTALON ZAMBA"
     },
     {
-      "precio_detal": 95798.32,
-      "precio_mayorista": 72268.91,
-      "precio_web": 114000,
-      "producto": "CHAQUETA LUXOR CORTA TRENCH PR - REF: 3013"
+      "costo_unitario": 6500,
+      "id": "cid_1789097500622_412",
+      "nombre": "SERVICIO DE CONFECCION VESTIDO MINI DRESS"
     },
     {
-      "precio_detal": 100000,
-      "precio_mayorista": 70588.24,
-      "precio_web": 119000,
-      "producto": "SET JOGGER BOMBER PR - REF: 3014"
+      "costo_unitario": 6800,
+      "id": "cid_1789097898310_7491",
+      "nombre": "SERVICIO DE CONFECCION HOODIE CAROLINA"
     },
     {
-      "precio_detal": 100000,
-      "precio_mayorista": 74789.92,
-      "precio_web": 119900,
-      "producto": "CONJUNTO OSLO PR - REF: 3015"
+      "costo_unitario": 5000,
+      "id": "cid_1789098137459_714",
+      "nombre": "SERVICIO DE CONFECCION PANTALON VENOM"
     },
     {
-      "precio_detal": 74789.92,
-      "precio_mayorista": 54621.85,
-      "precio_web": 89900,
-      "producto": "CHALECO MANY P.A PR - REF: 3016"
+      "costo_unitario": 3800,
+      "id": "cid_1789098645300_1124",
+      "nombre": "SERVICIO DE CONFECCION VESTIKO KIKI"
     },
     {
-      "precio_detal": 69900,
-      "precio_mayorista": 45000,
-      "precio_web": 69900,
-      "precios_pvp": true,
-      "producto": "CHAQUETA ROMPEVIENTOS BK - REF: 1180"
+      "costo_unitario": 2400,
+      "id": "cid_1789099473252_6379",
+      "nombre": "SERVICIO DE CONFECCION CAMISETA COCOA"
     },
     {
-      "precio_detal": 63025,
-      "precio_mayorista": 42017,
-      "precio_web": 63025,
-      "producto": "CHAQUETA BURBUJAS"
+      "costo_unitario": 11000,
+      "id": "cid_1789100847121_7149",
+      "nombre": "SERVICIO DE CONFECCION CONJUNTO SOLOMUN"
     },
     {
-      "precio_detal": 63025,
-      "precio_mayorista": 41176,
-      "precio_web": 63025,
-      "producto": "CHAQUETA MARIPOSAS"
+      "costo_unitario": 6200,
+      "id": "cid_1789101275688_8078",
+      "nombre": "SERVICIO DE CONFECCION CAMIBUSO NEVADO"
     },
     {
-      "precio_detal": 88235,
-      "precio_mayorista": 61345,
-      "precio_web": 88235,
-      "producto": "BEISBOLERA CUERO  2.0"
+      "costo_unitario": 6000,
+      "id": "cid_1789101794819_6585",
+      "nombre": "SERVICIO DE CONFECCION PANTALON TRENCH"
     },
     {
-      "precio_detal": 90000,
-      "precio_mayorista": 60000,
-      "precio_web": 89900,
-      "precios_pvp": true,
-      "producto": "CHAQUETA CAZADORA ROCKY"
+      "costo_unitario": 8000,
+      "id": "cid_1789167333976_3819",
+      "nombre": "SERVICIO DE CONFECCION CHAQUETA DISCOVERY"
     },
     {
-      "precio_detal": 59900,
-      "precio_mayorista": 39000,
-      "precio_web": 59900,
-      "precios_pvp": true,
-      "producto": "BUZO COUNTRY 2.0"
+      "costo_unitario": 10500,
+      "id": "cid_1789168389332_6118",
+      "nombre": "servicio de confeccion  washman"
     },
     {
-      "precio_detal": 70000,
-      "precio_mayorista": 46000,
-      "precio_web": 60000,
-      "precios_pvp": true,
-      "producto": "PANTALON CALIFORNIA"
+      "costo_unitario": 2300,
+      "id": "cid_1789177571022_182",
+      "nombre": "SERVICIO CONFECCION SCARLET"
     },
     {
-      "precio_detal": 59900,
-      "precio_mayorista": 42000,
-      "precio_web": 59900,
-      "precios_pvp": true,
-      "producto": "VESTIDO MINI DRESS"
+      "costo_unitario": 5500,
+      "id": "cid_1789262416633_6084",
+      "nombre": "SERVICIO BORDADO FUTURE"
     },
     {
-      "precio_detal": 80000,
-      "precio_mayorista": 56000,
-      "precio_web": 79900,
-      "precios_pvp": true,
-      "producto": "PANTALON ZAMBA"
+      "costo_unitario": 10000,
+      "id": "cid_1789263560548_9826",
+      "nombre": "SERVICIO DE CONFECCION CONJUNTO CHELSY"
     },
     {
-      "precio_detal": 70000,
-      "precio_mayorista": 50000,
-      "precio_web": 69900,
-      "precios_pvp": true,
-      "producto": "HOODIE CAROLINA"
+      "costo_unitario": 9000,
+      "id": "cid_1789263844716_6782",
+      "nombre": "SERVICIO DE CONFECCION CHAQUETA LENTEJUELAS B"
     },
     {
-      "precio_detal": 56000,
-      "precio_mayorista": 39000,
-      "precio_web": 56000,
-      "precios_pvp": true,
-      "producto": "PANTALON VENOM"
+      "costo_unitario": 9000,
+      "id": "cid_1789264053994_9307",
+      "nombre": "SERVICIO DE CONFECCION CHAQUETA PINZAS"
     },
     {
-      "precio_detal": 75000,
-      "precio_mayorista": 54000,
-      "precio_web": 74900,
-      "precios_pvp": true,
-      "producto": "PANTALON TRENCH"
+      "costo_unitario": 500,
+      "id": "cid_1789264499236_5285",
+      "nombre": "SERVICIO DE CORTE SESGO BODY"
     },
     {
-      "precio_detal": 60000,
-      "precio_mayorista": 39000,
-      "precio_web": 59900,
-      "precios_pvp": true,
-      "producto": "PANTALON POLLY"
+      "costo_unitario": 2200,
+      "id": "cid_1789264529173_6592",
+      "nombre": "SERVICIO DE CONFECCION BODY BASICO"
     },
     {
-      "precio_detal": 42000,
-      "precio_mayorista": 29000,
-      "precio_web": 41900,
-      "precios_pvp": true,
-      "producto": "BLUSA POLLY"
+      "costo_unitario": 10000,
+      "id": "cid_1789265040378_2747",
+      "nombre": "SERVICIO DE CONFECCION BLAZER DONATELLA"
     },
     {
-      "precio_detal": 76000,
-      "precio_mayorista": 51000,
-      "precio_web": 75900,
-      "precios_pvp": true,
-      "producto": "CAMIBUZO NEVADO"
+      "costo_unitario": 10500,
+      "id": "cid_1789266578853_4494",
+      "nombre": "SERVICIO DE CONFECCION SET BOMBER CORTA"
     },
     {
-      "precio_detal": 49900,
-      "precio_mayorista": 34500,
-      "precio_web": 49900,
-      "precios_pvp": true,
-      "producto": "CAMISETA COCOA"
+      "costo_unitario": 10000,
+      "id": "cid_1789267338383_1586",
+      "nombre": "servicio de confeccion chaqueta fire"
     },
     {
-      "precio_detal": 48000,
-      "precio_mayorista": 33000,
-      "precio_web": 47900,
-      "precios_pvp": true,
-      "producto": "VESTIDO KIKI"
+      "costo_unitario": 11000,
+      "id": "cid_1789269650071_2218",
+      "nombre": "servicio de confeccion cojunto jacobo"
     },
     {
-      "precio_detal": 39000,
-      "precio_mayorista": 29000,
-      "precio_web": 39900,
-      "precios_pvp": true,
-      "producto": "BLUSA COSMO"
+      "costo_unitario": 9500,
+      "id": "cid_1789269930171_8673",
+      "nombre": "servicio confeccion set chaleco viena"
     },
     {
-      "precio_detal": 82000,
-      "precio_mayorista": 56000,
-      "precio_web": 82900,
-      "precios_pvp": true,
-      "producto": "CHAQUETA DISCOVERY"
+      "costo_unitario": 6500,
+      "id": "cid_1789270294268_6712",
+      "nombre": "servicio de confeccion set palomino"
     },
     {
-      "precio_detal": 85000,
-      "precio_mayorista": 58000,
-      "precio_web": 85900,
-      "precios_pvp": true,
-      "producto": "WASHMAN"
+      "costo_unitario": 11000,
+      "id": "cid_1789270517554_9916",
+      "nombre": "SERVICIO DE CONFECCION SET RAYA TIZA"
     },
     {
-      "precio_detal": 33000,
-      "precio_mayorista": 24000,
-      "precio_web": 33000,
-      "precios_pvp": true,
-      "producto": "BLUSA MANGA BOLERO"
+      "costo_unitario": 5000,
+      "id": "cid_1789270777924_775",
+      "nombre": "servicio de confeccion pantalon house"
     },
     {
-      "precio_detal": 43000,
-      "precio_mayorista": 32000,
-      "precio_web": 42900,
-      "precios_pvp": true,
-      "producto": "CAMIBUSO PAÑO ALGODON MANGA OVERSIZED"
+      "costo_unitario": 2500,
+      "id": "cid_1789271245361_29",
+      "nombre": "servicio de confeccion polo majo"
     },
     {
-      "precio_detal": 129000,
-      "precio_mayorista": 89900,
-      "precio_web": 129900,
-      "precios_pvp": true,
-      "producto": "CONJUNTO SOLOMUN"
+      "costo_unitario": 2300,
+      "id": "cid_1789271449187_8732",
+      "nombre": "SERVICIO DE CONFECCION BLUSA SCARLET"
     },
     {
-      "precio_detal": 105000,
-      "precio_mayorista": 75000,
-      "precio_web": 100000,
-      "precios_pvp": true,
-      "producto": "CONJUNTO CHELSY"
+      "costo_unitario": 8000,
+      "id": "cid_1789271669964_4342",
+      "nombre": "servicio de confeccion chaleco kenwort"
     },
     {
-      "precio_detal": 45000,
-      "precio_mayorista": 31000,
-      "precio_web": 40000,
-      "precios_pvp": true,
-      "producto": "CAMISETA MISO"
+      "costo_unitario": 5000,
+      "id": "cid_1789620888476_4095",
+      "nombre": "BORDADO ARMIN"
     },
     {
-      "precio_detal": 90000,
-      "precio_mayorista": 60000,
-      "precio_web": 75000,
-      "precios_pvp": true,
-      "producto": "CONJUNTO DAKOTA"
-    },
-    {
-      "producto": "BLAZER DONATELLA",
-      "precio_mayorista": 55000,
-      "precio_detal": 85000,
-      "precio_web": 75000,
-      "precios_pvp": true
-    },
-    {
-      "producto": "SET BOMBER CORTA",
-      "precio_mayorista": 70000,
-      "precio_detal": 90000,
-      "precio_web": 90000,
-      "precios_pvp": true
-    },
-    {
-      "producto": "CHAQUETA LENTEJUELAS",
-      "precio_mayorista": 55000,
-      "precio_detal": 85000,
-      "precio_web": 75000,
-      "precios_pvp": true
-    },
-    {
-      "producto": "CONJUNTO JACOBO",
-      "precio_mayorista": 90000,
-      "precio_detal": 120000,
-      "precio_web": 115000,
-      "precios_pvp": true
-    },
-    {
-      "producto": "BODY BASICO",
-      "precio_mayorista": 40000,
-      "precio_detal": 60000,
-      "precio_web": 55000,
-      "precios_pvp": true
-    },
-    {
-      "producto": "CAMISA CLASICA BK",
-      "precio_mayorista": 55000,
-      "precio_detal": 85000,
-      "precio_web": 75000,
-      "precios_pvp": true
-    },
-    {
-      "producto": "CHAQUETA BAGGY PINZAS",
-      "precio_mayorista": 55000,
-      "precio_detal": 85000,
-      "precio_web": 75000,
-      "precios_pvp": true
-    },
-    {
-      "producto": "PANTALON HOUSER",
-      "precio_mayorista": 42000,
-      "precio_detal": 60000,
-      "precio_web": 55000,
-      "precios_pvp": true
-    },
-    {
-      "producto": "CAMIBUSO HOUSER",
-      "precio_mayorista": 34000,
-      "precio_detal": 49000,
-      "precio_web": 45000,
-      "precios_pvp": true
-    },
-    {
-      "producto": "SET PALOMINO",
-      "precio_mayorista": 39000,
-      "precio_detal": 55000,
-      "precio_web": 55000,
-      "precios_pvp": true
-    },
-    {
-      "producto": "SET CHALECO VIENA",
-      "precio_mayorista": 75000,
-      "precio_detal": 105000,
-      "precio_web": 100000,
-      "precios_pvp": true
-    },
-    {
-      "producto": "BLUSA BOLERO",
-      "precio_mayorista": 25000,
-      "precio_detal": 36000,
-      "precio_web": 33000,
-      "precios_pvp": true
+      "costo_unitario": 5000,
+      "id": "cid_1789620889646_2781",
+      "nombre": "BORDADO ARMIN"
     }
   ],
-  "receta_map": {
-    "BEISBOLERA 2_0": "cid_1783368475768_2164",
-    "BLUSA JEN + BLUSA RAYAS JEN": "rec_blusa_jen_1118",
-    "CALIFORNIA": "cid_1788290303656_5753",
-    "CHAQUETA DELCO LISO DAMA": "rec_dotacion_hombre_liso_delco_3011",
-    "CHAQUETA ROCKY": "cid_1783374158054_3659",
-    "CHAQUETAS MIXTAS (MARIPOSAS _ ONION)": "rec_chaqueta_onion_1165",
-    "CONJUNTO FRANKY PR": "rec_set_franky_pr_3012",
-    "COUNTRY 2_0": "cid_1783378762151_5821",
-    "HOODIE RANGLAND PAÑO ALGODON ABIERTO": "rec_hoodie_pa_o_algodon_abierto_1177",
-    "HOODIE RANGLAND PAÑO ALGODON CERRADO": "rec_hoodie_pa_o_algodon_cerrado_1172",
-    "ROMPEVIENTOS": "rec_chaqueta_rompevientos_bk_1180",
-    "SET SOLOMUN": "cid_1789100940765_2191"
-  }
+  "tarifas_cif": [
+    {
+      "ct": "3cort2",
+      "id": "cif_3cort2",
+      "tarifa_min": 7.792237,
+      "zona": "corte"
+    },
+    {
+      "ct": "3cort1",
+      "id": "cif_3cort1",
+      "tarifa_min": 7.446139,
+      "zona": "corte"
+    },
+    {
+      "ct": "7empa1",
+      "id": "cif_7empa1",
+      "tarifa_min": 437.381262,
+      "zona": "empaque"
+    },
+    {
+      "ct": "1acol1",
+      "id": "cif_1acol1",
+      "tarifa_min": 860.543277,
+      "zona": "acolchado"
+    },
+    {
+      "ct": "2bode1",
+      "id": "cif_2bode1",
+      "tarifa_min": 1280.103563,
+      "zona": "bodega telas"
+    },
+    {
+      "ct": "4insu1",
+      "id": "cif_4insu1",
+      "tarifa_min": 188.8434,
+      "zona": "insumos/alistamiento"
+    },
+    {
+      "ct": "5logi1",
+      "id": "cif_5logi1",
+      "tarifa_min": 262.451957,
+      "zona": "logisitica"
+    },
+    {
+      "ct": "6cali1",
+      "id": "cif_6cali1",
+      "tarifa_min": 313.729734,
+      "zona": "calidad"
+    },
+    {
+      "ct": "8bode1",
+      "id": "cif_8bode1",
+      "tarifa_min": 1238.898068,
+      "zona": "bodega almacenamiento"
+    },
+    {
+      "ct": "9vapo1",
+      "id": "cif_9vapo1",
+      "tarifa_min": 634.183575,
+      "zona": "vapor 116"
+    },
+    {
+      "ct": "11broc1",
+      "id": "cif_11broc1",
+      "tarifa_min": 234.332327,
+      "zona": "broches/ ojales"
+    },
+    {
+      "ct": "24area1",
+      "id": "cif_24area1",
+      "tarifa_min": 470.800569,
+      "zona": "area tejeduria"
+    }
+  ]
 }
