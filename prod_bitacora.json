@@ -38174,22 +38174,38 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1793147585392_nk7py",
-      "ts": 1793147585392,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-247",
-      "op_nombre": "CAMIBUZO MANGA REDONDA",
       "categoria": "BUZOS",
-      "total_ots": 8,
-      "total_uds": 56,
       "colores": [
         "AZUL BEBE",
         "CAFE"
       ],
+      "id": "evt_1793147585392_nk7py",
+      "op_id": "OP-2026-247",
+      "op_nombre": "CAMIBUZO MANGA REDONDA",
       "referencias": [
         "CAMIBUZO MANGA REDONDA"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 8,
+      "total_uds": 56,
+      "ts": 1793147585392,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793147599557_ua63t",
+      "ts": 1793147599557,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-247",
+      "op_nombre": "CAMIBUZO MANGA REDONDA",
+      "referencia": "CAMIBUZO MANGA REDONDA",
+      "color": "AZUL BEBE",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 28,
+      "motivo": "EN TALLER"
     }
   ]
 }
