@@ -1133,7 +1133,7 @@ async function _fbMigrarSiVacio(){
 // abiertas con una versión anterior se recargan solas (esperando a que terminen de guardar).
 // Sin esto, una pestaña vieja olvidada en un computador seguía guardando con la lógica
 // anterior y deshaciendo cambios de todos los demás.
-var APP_VERSION = 20261013.1;
+var APP_VERSION = 20261027.1;
 function _vigilarVersionApp(){
   if(!_fbDb) return;
   _fbDb.ref(FB_ROOT+'/app_version').on('value', function(snap){
@@ -18295,13 +18295,13 @@ function verReceta(id){
 
   var footer='<div style="display:flex;gap:8px;">';
   var _esAdmin = getCurrentUserId()==='jhon';
-  // Editar/duplicar recetas también lo puede hacer Producción (Paola) — eliminar y ver
-  // precios/márgenes se queda solo para jhon.
+  // Editar/duplicar recetas y asignar precios de venta también lo puede hacer Producción
+  // (Paola) — eliminar se queda solo para jhon.
   var _puedeEditarReceta = _esAdmin || getCurrentUserId()==='produccion';
   if(_puedeEditarReceta) footer+='<button data-rid="'+id+'" onclick="abrirModalReceta(this.dataset.rid)" style="background:rgba(148,163,184,.1);border:1px solid #2c2c2e;color:#94a3b8;border-radius:8px;padding:8px 14px;font-size:12px;cursor:pointer;">✏️ Editar</button>';
   if(_puedeEditarReceta) footer+='<button data-rid="'+id+'" onclick="duplicarReceta(this.dataset.rid)" style="background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.3);color:#818cf8;border-radius:8px;padding:8px 14px;font-size:12px;cursor:pointer;">⧉ Duplicar</button>';
   if(_esAdmin) footer+='<button data-rid="'+id+'" onclick="eliminarReceta(this.dataset.rid)" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#ef4444;border-radius:8px;padding:8px 14px;font-size:12px;cursor:pointer;">🗑 Eliminar</button>';
-  if(_esAdmin) footer+='<button data-rid="'+id+'" onclick="abrirPreciosReceta(this.dataset.rid)" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2);color:#fbbf24;border-radius:8px;padding:8px 14px;font-size:12px;cursor:pointer;">💲 Precios</button>';
+  if(_puedeEditarReceta) footer+='<button data-rid="'+id+'" onclick="abrirPreciosReceta(this.dataset.rid)" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2);color:#fbbf24;border-radius:8px;padding:8px 14px;font-size:12px;cursor:pointer;">💲 Precios</button>';
   footer+='</div>';
   openDrawer('🧪 '+esc(rec.producto), b, footer);
 }
