@@ -38778,20 +38778,36 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "AZUL OSCURO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1793302319067_i640r",
-      "ts": 1793302319067,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-120",
       "op_nombre": "ROMPEVIENTOS",
       "referencia": "ROMPEVIENTOS",
-      "color": "AZUL OSCURO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1793302319067,
       "uds": 84,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793303658397_zqgoz",
+      "ts": 1793303658397,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0059",
+      "op_nombre": "SET FRANKY",
+      "referencia": "SET FRANKY",
+      "color": "AVENA",
+      "talla": "todas las tallas",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": true,
+      "uds": 104,
+      "motivo": "ENTREGADO"
     }
   ]
 }
