@@ -38794,20 +38794,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "AVENA",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1793303658397_zqgoz",
-      "ts": 1793303658397,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-0059",
       "op_nombre": "SET FRANKY",
       "referencia": "SET FRANKY",
-      "color": "AVENA",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1793303658397,
       "uds": 104,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793304046613_kp9gl",
+      "ts": 1793304046613,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1792858211586_95b9wkaqe",
+      "op_id": "OP-2026-204",
+      "color": "MARFIL",
+      "fecha_nueva": "2026-10-28",
+      "motivo": "Reubicado en tablero"
     }
   ]
 }
