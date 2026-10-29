@@ -38591,15 +38591,30 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1793301296219_gw928",
-      "ts": 1793301296219,
-      "user": "Jefa de Producción",
-      "tipo": "cambiar_estado_op_all",
-      "op_id": "OP-2026-240",
-      "estado": "PENDIENTE_CORTAR",
       "colores": 4,
-      "protegidos": [],
-      "nombre": "CONJUNTO CHILLY"
+      "estado": "PENDIENTE_CORTAR",
+      "id": "evt_1793301296219_gw928",
+      "nombre": "CONJUNTO CHILLY",
+      "op_id": "OP-2026-240",
+      "tipo": "cambiar_estado_op_all",
+      "ts": 1793301296219,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793301450551_1js91",
+      "ts": 1793301450551,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-112",
+      "op_nombre": "PILOTO PANCAKE",
+      "referencia": "PILOTO PANCAKE",
+      "color": "MORA LECHE",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 76,
+      "motivo": "EN TALLER"
     }
   ]
 }
