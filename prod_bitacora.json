@@ -38565,20 +38565,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "BEIGE",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1793295229760_jro8f",
-      "ts": 1793295229760,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-205",
       "op_nombre": "CAMIBUZO NEVADO",
       "referencia": "CAMIBUZO NEVADO",
-      "color": "BEIGE",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1793295229760,
       "uds": 100,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793301279638_8zbrr",
+      "ts": 1793301279638,
+      "user": "Jefa de Producción",
+      "tipo": "cambiar_estado_op_all",
+      "op_id": "OP-2026-197",
+      "estado": "PENDIENTE_CORTAR",
+      "colores": 4,
+      "protegidos": [],
+      "nombre": "CHAQUETA BAGGY PINZAS"
     }
   ]
 }
