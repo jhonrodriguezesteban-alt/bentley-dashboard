@@ -38703,20 +38703,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MISO - NEGRO 200",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1793302088329_vdezu",
-      "ts": 1793302088329,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-229",
       "op_nombre": "PANTALON HOUSER",
       "referencia": "PANTALON HOUSER",
-      "color": "MISO - NEGRO 200",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1793302088329,
       "uds": 133,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793302145382_rq6mv",
+      "ts": 1793302145382,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-228",
+      "nombre": "CAMIBUSO HOUSER",
+      "categoria": "BUZOS",
+      "colores": 3,
+      "refs": 1
     }
   ]
 }
