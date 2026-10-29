@@ -3574,7 +3574,7 @@
         }
       ],
       "subg_estados": {
-        "OP-0059||AVENA": "ALISTAMIENTO",
+        "OP-0059||AVENA": "PAGO_PENDIENTE",
         "OP-0059||CAFE": "EN_CONFECCION",
         "OP-0059||GRIS OSCURO": "CORTE_POR_ALISTAR",
         "OP-0059||MARFIL": "EN_CONFECCION",
@@ -16346,14 +16346,61 @@
       ]
     },
     {
-      "id": "OP-2026-248",
-      "numero": 248,
-      "fecha_op": "2026-10-29",
-      "cortador": "Corte Carbajal",
+      "cantidades": {
+        "NEGRO_T10": 20,
+        "NEGRO_T12": 20,
+        "NEGRO_T14": 20,
+        "NEGRO_T16": 20,
+        "NEGRO_T6": 10,
+        "NEGRO_T8": 10
+      },
       "categoria": "BUZOS",
-      "nombre_producto": "CAMIBUZO NEVADO",
       "colores": [
         "NEGRO"
+      ],
+      "consumibles_check": {
+        "cid_1789101474537_6876__cid_1789101149169_5079": true,
+        "cid_1789101474537_6876__cid_1789101149169_5962": true,
+        "cid_1789101474537_6876__cid_1789101149169_8025": true
+      },
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-10-29",
+      "created_by": "Jefa de Producción",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-10-29",
+      "id": "OP-2026-248",
+      "nombre_producto": "CAMIBUZO NEVADO",
+      "numero": 248,
+      "receta_id": "cid_1789101474537_6876",
+      "receta_nombre": "CAMIBUZO NEVADO",
+      "referencias": [
+        {
+          "cantidades": {
+            "NEGRO_T10": 20,
+            "NEGRO_T12": 20,
+            "NEGRO_T14": 20,
+            "NEGRO_T16": 20,
+            "NEGRO_T6": 10,
+            "NEGRO_T8": 10
+          },
+          "cat": "BUZOS",
+          "colores": [
+            "NEGRO"
+          ],
+          "maquilador_id": "",
+          "nombre": "CAMIBUZO NEVADO",
+          "ref": "1194",
+          "tallas": [
+            "T6",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "totalUds": 100,
+          "vmo": 1151
+        }
       ],
       "tallas": [
         "T6",
@@ -16363,53 +16410,8 @@
         "T14",
         "T16"
       ],
-      "cantidades": {
-        "NEGRO_T6": 10,
-        "NEGRO_T8": 10,
-        "NEGRO_T10": 20,
-        "NEGRO_T12": 20,
-        "NEGRO_T14": 20,
-        "NEGRO_T16": 20
-      },
-      "referencias": [
-        {
-          "nombre": "CAMIBUZO NEVADO",
-          "ref": "1194",
-          "cat": "BUZOS",
-          "vmo": 1151,
-          "colores": [
-            "NEGRO"
-          ],
-          "tallas": [
-            "T6",
-            "T8",
-            "T10",
-            "T12",
-            "T14",
-            "T16"
-          ],
-          "cantidades": {
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 10,
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20
-          },
-          "totalUds": 100,
-          "maquilador_id": ""
-        }
-      ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-10-29",
-      "created_by": "Jefa de Producción",
-      "receta_id": "cid_1789101474537_6876",
-      "receta_nombre": "CAMIBUZO NEVADO",
-      "consumibles_check": {
-        "cid_1789101474537_6876__cid_1789101149169_8025": true,
-        "cid_1789101474537_6876__cid_1789101149169_5079": true,
-        "cid_1789101474537_6876__cid_1789101149169_5962": true
+      "subg_estados": {
+        "OP-2026-248||NEGRO": "PENDIENTE_CORTAR"
       }
     }
   ]
