@@ -38847,15 +38847,34 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1793308779709_c1a5a",
-      "ts": 1793308779709,
-      "user": "Jefa de Producción",
-      "tipo": "cambiar_estado_op_all",
-      "op_id": "OP-2026-248",
-      "estado": "PENDIENTE_CORTAR",
       "colores": 1,
-      "protegidos": [],
-      "nombre": "CAMIBUZO NEVADO"
+      "estado": "PENDIENTE_CORTAR",
+      "id": "evt_1793308779709_c1a5a",
+      "nombre": "CAMIBUZO NEVADO",
+      "op_id": "OP-2026-248",
+      "tipo": "cambiar_estado_op_all",
+      "ts": 1793308779709,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793308884485_uz4j3",
+      "ts": 1793308884485,
+      "user": "Jefa de Producción",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-240",
+      "op_nombre": "CONJUNTO CHILLY",
+      "categoria": "CONJUNTOS",
+      "total_ots": 28,
+      "total_uds": 480,
+      "colores": [
+        "MARFIL",
+        "NEGRO",
+        "GRIS OSCURO",
+        "AZUL OSCURO"
+      ],
+      "referencias": [
+        "CONJUNTO CHILLY"
+      ]
     }
   ]
 }
