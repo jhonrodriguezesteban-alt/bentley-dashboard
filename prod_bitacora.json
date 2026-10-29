@@ -38832,19 +38832,30 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1793308251500_w6ake",
-      "ts": 1793308251500,
-      "user": "Jefa de Producción",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-248",
-      "op_nombre": "CAMIBUZO NEVADO",
       "categoria": "BUZOS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-10-29",
-      "total_uds": 100,
+      "id": "evt_1793308251500_w6ake",
+      "op_id": "OP-2026-248",
+      "op_nombre": "CAMIBUZO NEVADO",
       "referencias": [
         "CAMIBUZO NEVADO"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 100,
+      "ts": 1793308251500,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793308779709_c1a5a",
+      "ts": 1793308779709,
+      "user": "Jefa de Producción",
+      "tipo": "cambiar_estado_op_all",
+      "op_id": "OP-2026-248",
+      "estado": "PENDIENTE_CORTAR",
+      "colores": 1,
+      "protegidos": [],
+      "nombre": "CAMIBUZO NEVADO"
     }
   ]
 }
