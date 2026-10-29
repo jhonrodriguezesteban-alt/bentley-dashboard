@@ -8252,34 +8252,34 @@
     },
     {
       "cantidades": {
-        "MORA LECHE_T8": 15,
-        "MORA LECHE_T10": 15,
-        "MORA LECHE_T12": 15,
-        "MORA LECHE_T14": 16,
-        "MORA LECHE_T16": 15,
-        "MARFIL_T8": 16,
-        "MARFIL_T10": 16,
-        "MARFIL_T12": 16,
-        "MARFIL_T14": 16,
-        "MARFIL_T16": 16,
-        "NEGRO_T6": 8,
-        "NEGRO_T8": 14,
-        "NEGRO_T10": 14,
-        "NEGRO_T12": 14,
-        "NEGRO_T14": 14,
-        "NEGRO_T16": 14,
-        "CAMEL_T8": 16,
+        "AZUL OSCURO_T10": 18,
+        "AZUL OSCURO_T12": 18,
+        "AZUL OSCURO_T14": 18,
+        "AZUL OSCURO_T16": 11,
+        "AZUL OSCURO_T4": 8,
+        "AZUL OSCURO_T6": 18,
+        "AZUL OSCURO_T8": 18,
         "CAMEL_T10": 16,
         "CAMEL_T12": 16,
         "CAMEL_T14": 16,
         "CAMEL_T16": 16,
-        "AZUL OSCURO_T4": 8,
-        "AZUL OSCURO_T6": 18,
-        "AZUL OSCURO_T8": 18,
-        "AZUL OSCURO_T10": 18,
-        "AZUL OSCURO_T12": 18,
-        "AZUL OSCURO_T14": 18,
-        "AZUL OSCURO_T16": 11
+        "CAMEL_T8": 16,
+        "MARFIL_T10": 16,
+        "MARFIL_T12": 16,
+        "MARFIL_T14": 16,
+        "MARFIL_T16": 16,
+        "MARFIL_T8": 16,
+        "MORA LECHE_T10": 15,
+        "MORA LECHE_T12": 15,
+        "MORA LECHE_T14": 16,
+        "MORA LECHE_T16": 15,
+        "MORA LECHE_T8": 15,
+        "NEGRO_T10": 14,
+        "NEGRO_T12": 14,
+        "NEGRO_T14": 14,
+        "NEGRO_T16": 14,
+        "NEGRO_T6": 8,
+        "NEGRO_T8": 14
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -8334,10 +8334,37 @@
       "receta_nombre": "PILOTO PANCAKE - REF: 1099",
       "referencias": [
         {
-          "nombre": "PILOTO PANCAKE",
-          "ref": "1099",
+          "cantidades": {
+            "AZUL OSCURO_T10": 18,
+            "AZUL OSCURO_T12": 18,
+            "AZUL OSCURO_T14": 18,
+            "AZUL OSCURO_T16": 11,
+            "AZUL OSCURO_T4": 8,
+            "AZUL OSCURO_T6": 18,
+            "AZUL OSCURO_T8": 18,
+            "CAMEL_T10": 16,
+            "CAMEL_T12": 16,
+            "CAMEL_T14": 16,
+            "CAMEL_T16": 16,
+            "CAMEL_T8": 16,
+            "MARFIL_T10": 16,
+            "MARFIL_T12": 16,
+            "MARFIL_T14": 16,
+            "MARFIL_T16": 16,
+            "MARFIL_T8": 16,
+            "MORA LECHE_T10": 15,
+            "MORA LECHE_T12": 15,
+            "MORA LECHE_T14": 16,
+            "MORA LECHE_T16": 15,
+            "MORA LECHE_T8": 15,
+            "NEGRO_T10": 14,
+            "NEGRO_T12": 14,
+            "NEGRO_T14": 14,
+            "NEGRO_T16": 14,
+            "NEGRO_T6": 8,
+            "NEGRO_T8": 14
+          },
           "cat": "CHAQUETAS",
-          "vmo": 9459,
           "colores": [
             "MORA LECHE",
             "MARFIL",
@@ -8345,6 +8372,9 @@
             "CAMEL",
             "AZUL OSCURO"
           ],
+          "maquilador_id": "",
+          "nombre": "PILOTO PANCAKE",
+          "ref": "1099",
           "tallas": [
             "T4",
             "T6",
@@ -8354,37 +8384,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "MORA LECHE_T8": 15,
-            "MORA LECHE_T10": 15,
-            "MORA LECHE_T12": 15,
-            "MORA LECHE_T14": 16,
-            "MORA LECHE_T16": 15,
-            "MARFIL_T8": 16,
-            "MARFIL_T10": 16,
-            "MARFIL_T12": 16,
-            "MARFIL_T14": 16,
-            "MARFIL_T16": 16,
-            "NEGRO_T6": 8,
-            "NEGRO_T8": 14,
-            "NEGRO_T10": 14,
-            "NEGRO_T12": 14,
-            "NEGRO_T14": 14,
-            "NEGRO_T16": 14,
-            "CAMEL_T8": 16,
-            "CAMEL_T10": 16,
-            "CAMEL_T12": 16,
-            "CAMEL_T14": 16,
-            "CAMEL_T16": 16,
-            "AZUL OSCURO_T4": 8,
-            "AZUL OSCURO_T6": 18,
-            "AZUL OSCURO_T8": 18,
-            "AZUL OSCURO_T10": 18,
-            "AZUL OSCURO_T12": 18,
-            "AZUL OSCURO_T14": 18,
-            "AZUL OSCURO_T16": 11
-          },
-          "maquilador_id": ""
+          "vmo": 9459
         }
       ],
       "subg_estados": {
@@ -8416,9 +8416,7 @@
           "solicitud_id": "id_1792006780593_rfoszu8i2"
         }
       ],
-      "updated_at": "2026-10-29",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-10-29"
     },
     {
       "cantidades": {
@@ -11176,6 +11174,12 @@
           "vmo": 1151
         }
       ],
+      "subg_estados": {
+        "OP-2026-197||AVENA": "PENDIENTE_CORTAR",
+        "OP-2026-197||CAFE": "PENDIENTE_CORTAR",
+        "OP-2026-197||MARFIL": "PENDIENTE_CORTAR",
+        "OP-2026-197||NEGRO": "PENDIENTE_CORTAR"
+      },
       "tallas": [
         "T6",
         "T8",
@@ -11196,13 +11200,7 @@
           "lineas": 6,
           "solicitud_id": "id_1791586261809_h1q69ktmk"
         }
-      ],
-      "subg_estados": {
-        "OP-2026-197||AVENA": "PENDIENTE_CORTAR",
-        "OP-2026-197||CAFE": "PENDIENTE_CORTAR",
-        "OP-2026-197||NEGRO": "PENDIENTE_CORTAR",
-        "OP-2026-197||MARFIL": "PENDIENTE_CORTAR"
-      }
+      ]
     },
     {
       "cantidades": {
@@ -12041,6 +12039,11 @@
           "vmo": 1151
         }
       ],
+      "subg_estados": {
+        "OP-2026-205||BEIGE": "EN_CONFECCION",
+        "OP-2026-205||MARFIL": "CORTE_POR_ALISTAR",
+        "OP-2026-205||ROSA": "CORTE_POR_ALISTAR"
+      },
       "tallas": [
         "T6",
         "T8",
@@ -12065,12 +12068,7 @@
           "lineas": 2,
           "solicitud_id": "id_1793218315784_e91y439ne"
         }
-      ],
-      "subg_estados": {
-        "OP-2026-205||BEIGE": "EN_CONFECCION",
-        "OP-2026-205||ROSA": "CORTE_POR_ALISTAR",
-        "OP-2026-205||MARFIL": "CORTE_POR_ALISTAR"
-      }
+      ]
     },
     {
       "cantidades": {
@@ -14431,27 +14429,27 @@
     },
     {
       "cantidades": {
-        "MISO - NEGRO 200_T4": 11,
-        "MISO - NEGRO 200_T6": 11,
-        "MISO - NEGRO 200_T8": 15,
-        "MISO - NEGRO 200_T10": 15,
-        "MISO - NEGRO 200_T12": 20,
-        "MISO - NEGRO 200_T14": 20,
-        "MISO - NEGRO 200_T16": 20,
-        "MISO - BEIGE 322_T4": 8,
-        "MISO - BEIGE 322_T6": 8,
-        "MISO - BEIGE 322_T8": 12,
+        "MARFIL -120_T10": 12,
+        "MARFIL -120_T12": 16,
+        "MARFIL -120_T14": 16,
+        "MARFIL -120_T16": 16,
+        "MARFIL -120_T4": 8,
+        "MARFIL -120_T6": 8,
+        "MARFIL -120_T8": 12,
         "MISO - BEIGE 322_T10": 12,
         "MISO - BEIGE 322_T12": 16,
         "MISO - BEIGE 322_T14": 16,
         "MISO - BEIGE 322_T16": 16,
-        "MARFIL -120_T4": 8,
-        "MARFIL -120_T6": 8,
-        "MARFIL -120_T8": 12,
-        "MARFIL -120_T10": 12,
-        "MARFIL -120_T12": 16,
-        "MARFIL -120_T14": 16,
-        "MARFIL -120_T16": 16
+        "MISO - BEIGE 322_T4": 8,
+        "MISO - BEIGE 322_T6": 8,
+        "MISO - BEIGE 322_T8": 12,
+        "MISO - NEGRO 200_T10": 15,
+        "MISO - NEGRO 200_T12": 20,
+        "MISO - NEGRO 200_T14": 20,
+        "MISO - NEGRO 200_T16": 20,
+        "MISO - NEGRO 200_T4": 11,
+        "MISO - NEGRO 200_T6": 11,
+        "MISO - NEGRO 200_T8": 15
       },
       "categoria": "BUZOS",
       "colores": [
@@ -14497,15 +14495,38 @@
       "receta_nombre": "CAMIBUSO HOUSER",
       "referencias": [
         {
-          "nombre": "CAMIBUSO HOUSER",
-          "ref": "1222",
+          "cantidades": {
+            "MARFIL -120_T10": 12,
+            "MARFIL -120_T12": 16,
+            "MARFIL -120_T14": 16,
+            "MARFIL -120_T16": 16,
+            "MARFIL -120_T4": 8,
+            "MARFIL -120_T6": 8,
+            "MARFIL -120_T8": 12,
+            "MISO - BEIGE 322_T10": 12,
+            "MISO - BEIGE 322_T12": 16,
+            "MISO - BEIGE 322_T14": 16,
+            "MISO - BEIGE 322_T16": 16,
+            "MISO - BEIGE 322_T4": 8,
+            "MISO - BEIGE 322_T6": 8,
+            "MISO - BEIGE 322_T8": 12,
+            "MISO - NEGRO 200_T10": 15,
+            "MISO - NEGRO 200_T12": 20,
+            "MISO - NEGRO 200_T14": 20,
+            "MISO - NEGRO 200_T16": 20,
+            "MISO - NEGRO 200_T4": 11,
+            "MISO - NEGRO 200_T6": 11,
+            "MISO - NEGRO 200_T8": 15
+          },
           "cat": "BUZOS",
-          "vmo": 1151,
           "colores": [
             "MISO - NEGRO 200",
             "MISO - BEIGE 322",
             "MARFIL -120"
           ],
+          "maquilador_id": "",
+          "nombre": "CAMIBUSO HOUSER",
+          "ref": "1222",
           "tallas": [
             "T4",
             "T6",
@@ -14515,30 +14536,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "MISO - NEGRO 200_T4": 11,
-            "MISO - NEGRO 200_T6": 11,
-            "MISO - NEGRO 200_T8": 15,
-            "MISO - NEGRO 200_T10": 15,
-            "MISO - NEGRO 200_T12": 20,
-            "MISO - NEGRO 200_T14": 20,
-            "MISO - NEGRO 200_T16": 20,
-            "MISO - BEIGE 322_T4": 8,
-            "MISO - BEIGE 322_T6": 8,
-            "MISO - BEIGE 322_T8": 12,
-            "MISO - BEIGE 322_T10": 12,
-            "MISO - BEIGE 322_T12": 16,
-            "MISO - BEIGE 322_T14": 16,
-            "MISO - BEIGE 322_T16": 16,
-            "MARFIL -120_T4": 8,
-            "MARFIL -120_T6": 8,
-            "MARFIL -120_T8": 12,
-            "MARFIL -120_T10": 12,
-            "MARFIL -120_T12": 16,
-            "MARFIL -120_T14": 16,
-            "MARFIL -120_T16": 16
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
@@ -14571,27 +14569,27 @@
     },
     {
       "cantidades": {
-        "MISO - NEGRO 200_T4": 12,
-        "MISO - NEGRO 200_T6": 12,
-        "MISO - NEGRO 200_T8": 20,
-        "MISO - NEGRO 200_T10": 20,
-        "MISO - NEGRO 200_T12": 23,
-        "MISO - NEGRO 200_T14": 23,
-        "MISO - NEGRO 200_T16": 23,
-        "MISO - BEIGE 322_T4": 10,
-        "MISO - BEIGE 322_T6": 10,
-        "MISO - BEIGE 322_T8": 16,
+        "MARFIL -120_T10": 21,
+        "MARFIL -120_T12": 23,
+        "MARFIL -120_T14": 23,
+        "MARFIL -120_T16": 23,
+        "MARFIL -120_T4": 14,
+        "MARFIL -120_T6": 14,
+        "MARFIL -120_T8": 21,
         "MISO - BEIGE 322_T10": 16,
         "MISO - BEIGE 322_T12": 19,
         "MISO - BEIGE 322_T14": 19,
         "MISO - BEIGE 322_T16": 19,
-        "MARFIL -120_T4": 14,
-        "MARFIL -120_T6": 14,
-        "MARFIL -120_T8": 21,
-        "MARFIL -120_T10": 21,
-        "MARFIL -120_T12": 23,
-        "MARFIL -120_T14": 23,
-        "MARFIL -120_T16": 23
+        "MISO - BEIGE 322_T4": 10,
+        "MISO - BEIGE 322_T6": 10,
+        "MISO - BEIGE 322_T8": 16,
+        "MISO - NEGRO 200_T10": 20,
+        "MISO - NEGRO 200_T12": 23,
+        "MISO - NEGRO 200_T14": 23,
+        "MISO - NEGRO 200_T16": 23,
+        "MISO - NEGRO 200_T4": 12,
+        "MISO - NEGRO 200_T6": 12,
+        "MISO - NEGRO 200_T8": 20
       },
       "categoria": "PANTALONES",
       "colores": [
@@ -14602,9 +14600,9 @@
       "consumibles_check": {
         "cid_1789271016425_5553__cid_1789270701969_388": true,
         "cid_1789271016425_5553__cid_1789270701969_3911": true,
+        "cid_1789271016425_5553__cid_1789270701969_625": true,
         "cid_1789271016425_5553__cid_1789270701969_678": true,
-        "cid_1789271016425_5553__cid_1789270701969_8377": true,
-        "cid_1789271016425_5553__cid_1789270701969_625": true
+        "cid_1789271016425_5553__cid_1789270701969_8377": true
       },
       "cortador": "Corte Carbajal",
       "corte_ok_color": {
@@ -14634,15 +14632,38 @@
       "receta_nombre": "PANTALON HOUSER",
       "referencias": [
         {
-          "nombre": "PANTALON HOUSER",
-          "ref": "1223",
+          "cantidades": {
+            "MARFIL -120_T10": 21,
+            "MARFIL -120_T12": 23,
+            "MARFIL -120_T14": 23,
+            "MARFIL -120_T16": 23,
+            "MARFIL -120_T4": 14,
+            "MARFIL -120_T6": 14,
+            "MARFIL -120_T8": 21,
+            "MISO - BEIGE 322_T10": 16,
+            "MISO - BEIGE 322_T12": 19,
+            "MISO - BEIGE 322_T14": 19,
+            "MISO - BEIGE 322_T16": 19,
+            "MISO - BEIGE 322_T4": 10,
+            "MISO - BEIGE 322_T6": 10,
+            "MISO - BEIGE 322_T8": 16,
+            "MISO - NEGRO 200_T10": 20,
+            "MISO - NEGRO 200_T12": 23,
+            "MISO - NEGRO 200_T14": 23,
+            "MISO - NEGRO 200_T16": 23,
+            "MISO - NEGRO 200_T4": 12,
+            "MISO - NEGRO 200_T6": 12,
+            "MISO - NEGRO 200_T8": 20
+          },
           "cat": "PANTALONES",
-          "vmo": 1151,
           "colores": [
             "MISO - NEGRO 200",
             "MISO - BEIGE 322",
             "MARFIL -120"
           ],
+          "maquilador_id": "",
+          "nombre": "PANTALON HOUSER",
+          "ref": "1223",
           "tallas": [
             "T4",
             "T6",
@@ -14652,30 +14673,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "MISO - NEGRO 200_T4": 12,
-            "MISO - NEGRO 200_T6": 12,
-            "MISO - NEGRO 200_T8": 20,
-            "MISO - NEGRO 200_T10": 20,
-            "MISO - NEGRO 200_T12": 23,
-            "MISO - NEGRO 200_T14": 23,
-            "MISO - NEGRO 200_T16": 23,
-            "MISO - BEIGE 322_T4": 10,
-            "MISO - BEIGE 322_T6": 10,
-            "MISO - BEIGE 322_T8": 16,
-            "MISO - BEIGE 322_T10": 16,
-            "MISO - BEIGE 322_T12": 19,
-            "MISO - BEIGE 322_T14": 19,
-            "MISO - BEIGE 322_T16": 19,
-            "MARFIL -120_T4": 14,
-            "MARFIL -120_T6": 14,
-            "MARFIL -120_T8": 21,
-            "MARFIL -120_T10": 21,
-            "MARFIL -120_T12": 23,
-            "MARFIL -120_T14": 23,
-            "MARFIL -120_T16": 23
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
@@ -15682,6 +15680,12 @@
           "vmo": 10510
         }
       ],
+      "subg_estados": {
+        "OP-2026-240||AZUL OSCURO": "PENDIENTE_CORTAR",
+        "OP-2026-240||GRIS OSCURO": "PENDIENTE_CORTAR",
+        "OP-2026-240||MARFIL": "PENDIENTE_CORTAR",
+        "OP-2026-240||NEGRO": "PENDIENTE_CORTAR"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -15703,13 +15707,7 @@
           "lineas": 4,
           "solicitud_id": "id_1793021725395_ik4mjas6w"
         }
-      ],
-      "subg_estados": {
-        "OP-2026-240||MARFIL": "PENDIENTE_CORTAR",
-        "OP-2026-240||NEGRO": "PENDIENTE_CORTAR",
-        "OP-2026-240||GRIS OSCURO": "PENDIENTE_CORTAR",
-        "OP-2026-240||AZUL OSCURO": "PENDIENTE_CORTAR"
-      }
+      ]
     },
     {
       "cantidades": {
@@ -16346,6 +16344,66 @@
         "T8",
         "T10"
       ]
+    },
+    {
+      "id": "OP-2026-248",
+      "numero": 248,
+      "fecha_op": "2026-10-29",
+      "cortador": "Corte Carbajal",
+      "categoria": "BUZOS",
+      "nombre_producto": "CAMIBUZO NEVADO",
+      "colores": [
+        "NEGRO"
+      ],
+      "tallas": [
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ],
+      "cantidades": {
+        "NEGRO_T6": 10,
+        "NEGRO_T8": 10,
+        "NEGRO_T10": 20,
+        "NEGRO_T12": 20,
+        "NEGRO_T14": 20,
+        "NEGRO_T16": 20
+      },
+      "referencias": [
+        {
+          "nombre": "CAMIBUZO NEVADO",
+          "ref": "1194",
+          "cat": "BUZOS",
+          "vmo": 1151,
+          "colores": [
+            "NEGRO"
+          ],
+          "tallas": [
+            "T6",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "cantidades": {
+            "NEGRO_T6": 10,
+            "NEGRO_T8": 10,
+            "NEGRO_T10": 20,
+            "NEGRO_T12": 20,
+            "NEGRO_T14": 20,
+            "NEGRO_T16": 20
+          },
+          "totalUds": 100,
+          "maquilador_id": ""
+        }
+      ],
+      "op_effi": null,
+      "estado_op": "EN_PROCESO",
+      "created_at": "2026-10-29",
+      "created_by": "Jefa de Producción"
     }
   ]
 }
