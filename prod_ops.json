@@ -11194,7 +11194,13 @@
           "lineas": 6,
           "solicitud_id": "id_1791586261809_h1q69ktmk"
         }
-      ]
+      ],
+      "subg_estados": {
+        "OP-2026-197||AVENA": "PENDIENTE_CORTAR",
+        "OP-2026-197||CAFE": "PENDIENTE_CORTAR",
+        "OP-2026-197||NEGRO": "PENDIENTE_CORTAR",
+        "OP-2026-197||MARFIL": "PENDIENTE_CORTAR"
+      }
     },
     {
       "cantidades": {
@@ -12059,7 +12065,9 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-205||BEIGE": "EN_CONFECCION"
+        "OP-2026-205||BEIGE": "EN_CONFECCION",
+        "OP-2026-205||ROSA": "CORTE_POR_ALISTAR",
+        "OP-2026-205||MARFIL": "CORTE_POR_ALISTAR"
       }
     },
     {
