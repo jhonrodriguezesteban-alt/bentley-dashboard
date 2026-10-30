@@ -39064,20 +39064,36 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MARFIL",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1793397421779_mhx4c",
-      "ts": 1793397421779,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-119",
       "op_nombre": "WASHMAN",
       "referencia": "WASHMAN",
-      "color": "MARFIL",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1793397421779,
       "uds": 96,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793397745412_c3prw",
+      "ts": 1793397745412,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-224",
+      "op_nombre": "SET PALOMINO",
+      "referencia": "CONJUNTO PALOMINO",
+      "color": "NEGRO",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 117,
+      "motivo": "EN TALLER"
     }
   ]
 }
