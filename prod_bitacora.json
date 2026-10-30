@@ -38957,19 +38957,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "ROSA",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1793395333247_xnbcw",
-      "ts": 1793395333247,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-205",
       "op_nombre": "CAMIBUZO NEVADO",
       "referencia": "CAMIBUZO NEVADO",
-      "color": "ROSA",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1793395333247,
+      "uds": 100,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793395840901_6t99u",
+      "ts": 1793395840901,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-222",
+      "op_nombre": "SET SOLOMUN",
+      "referencia": "SET SOLOMUN",
+      "color": "VINOTINTO",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 100,
+      "uds": 96,
       "motivo": "EN TALLER"
     }
   ]
