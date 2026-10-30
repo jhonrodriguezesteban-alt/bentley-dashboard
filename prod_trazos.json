@@ -4038,7 +4038,9 @@
             "T8"
           ],
           "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": ""
+          "tipo_custom": "",
+          "imagen_url": "https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/tecpatron-imgs/trazo_id_1793218269275_z30drdnog_1793374821135.jpg",
+          "imagen_url_blob": "tp_1793374822319"
         },
         {
           "ancho_util": 155,
@@ -4073,19 +4075,35 @@
       "op_nombre": "CAMIBUZO NEVADO"
     },
     {
-      "id": "id_1793369833493_56o1p64k6",
-      "op_id": "OP-2026-206",
-      "op_nombre": "PANTALON TRENCH",
       "categoria": "PANTALONES",
-      "creado_por": "Isabel",
       "creado_en": "2026-10-30",
-      "estado": "ENVIADA",
+      "creado_por": "Isabel",
       "enviada_en": "2026-10-30",
+      "estado": "ENVIADA",
+      "id": "id_1793369833493_56o1p64k6",
       "lineas": [
         {
+          "ancho_util": 150,
+          "cantidad_trazos": 1,
+          "colores": [
+            "BEIGE",
+            "NEGRO",
+            "VERDE MILITAR"
+          ],
+          "generado": false,
           "id": "id_1793369733628_f9vlr0neo",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
+          "impreso": false,
+          "marcadas_por_talla": {
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1,
+            "T8": 1
+          },
+          "notas": "Trazo para don Javier",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
           "tallas": [
             "T8",
             "T10",
@@ -4093,28 +4111,12 @@
             "T14",
             "T16"
           ],
-          "marcadas_por_talla": {
-            "T8": 1,
-            "T10": 1,
-            "T12": 1,
-            "T14": 1,
-            "T16": 1
-          },
-          "cantidad_trazos": 1,
-          "ancho_util": 150,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "Trazo para don Javier",
-          "colores": [
-            "BEIGE",
-            "NEGRO",
-            "VERDE MILITAR"
-          ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
         }
-      ]
+      ],
+      "op_id": "OP-2026-206",
+      "op_nombre": "PANTALON TRENCH"
     }
   ]
 }
