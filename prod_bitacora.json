@@ -39107,16 +39107,32 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1793399610997_wtcxm",
-      "ts": 1793399610997,
-      "user": "Isabel",
-      "tipo": "estado_diseno",
-      "diseno_id": "id_9f96fe6d51ca4f0c",
-      "nombre": "VESTIDO MINI DRESS",
       "categoria": "Vestidos",
-      "marca": "Bentley Kids",
+      "diseno_id": "id_9f96fe6d51ca4f0c",
       "estado_anterior": "EN_ESCALADO",
-      "estado_nuevo": "EN_REVISION_GERENCIA"
+      "estado_nuevo": "EN_REVISION_GERENCIA",
+      "id": "evt_1793399610997_wtcxm",
+      "marca": "Bentley Kids",
+      "nombre": "VESTIDO MINI DRESS",
+      "tipo": "estado_diseno",
+      "ts": 1793399610997,
+      "user": "Isabel"
+    },
+    {
+      "id": "evt_1793402557260_dwgor",
+      "ts": 1793402557260,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0149",
+      "op_nombre": "CONJUNTO TRENZAS",
+      "referencia": "CONJUNTO TRENZAS",
+      "color": "ROSA",
+      "talla": "todas las tallas",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
+      "bulk": true,
+      "uds": 104,
+      "motivo": "en insumos"
     }
   ]
 }
