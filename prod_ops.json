@@ -8973,24 +8973,24 @@
     },
     {
       "cantidades": {
+        "AZUL OSCURO_T6": 12,
+        "AZUL OSCURO_T8": 12,
         "AZUL OSCURO_T10": 24,
         "AZUL OSCURO_T12": 24,
         "AZUL OSCURO_T14": 24,
         "AZUL OSCURO_T16": 24,
-        "AZUL OSCURO_T6": 12,
-        "AZUL OSCURO_T8": 12,
-        "MARFIL_T10": 24,
-        "MARFIL_T12": 24,
-        "MARFIL_T14": 24,
-        "MARFIL_T16": 24,
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 12,
+        "VINOTINTO_T6": 12,
+        "VINOTINTO_T8": 12,
         "VINOTINTO_T10": 24,
         "VINOTINTO_T12": 24,
         "VINOTINTO_T14": 24,
         "VINOTINTO_T16": 24,
-        "VINOTINTO_T6": 12,
-        "VINOTINTO_T8": 12
+        "MARFIL_T6": 12,
+        "MARFIL_T8": 12,
+        "MARFIL_T10": 18,
+        "MARFIL_T12": 18,
+        "MARFIL_T14": 18,
+        "MARFIL_T16": 18
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -9036,35 +9036,15 @@
       "numero": 119,
       "referencias": [
         {
-          "cantidades": {
-            "AZUL OSCURO_T10": 24,
-            "AZUL OSCURO_T12": 24,
-            "AZUL OSCURO_T14": 24,
-            "AZUL OSCURO_T16": 24,
-            "AZUL OSCURO_T6": 12,
-            "AZUL OSCURO_T8": 12,
-            "MARFIL_T10": 24,
-            "MARFIL_T12": 24,
-            "MARFIL_T14": 24,
-            "MARFIL_T16": 24,
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 12,
-            "VINOTINTO_T10": 24,
-            "VINOTINTO_T12": 24,
-            "VINOTINTO_T14": 24,
-            "VINOTINTO_T16": 24,
-            "VINOTINTO_T6": 12,
-            "VINOTINTO_T8": 12
-          },
+          "nombre": "WASHMAN",
+          "ref": "",
           "cat": "CHAQUETAS",
+          "vmo": 1151,
           "colores": [
             "AZUL OSCURO",
             "VINOTINTO",
             "MARFIL"
           ],
-          "maquilador_id": "",
-          "nombre": "WASHMAN",
-          "ref": "",
           "tallas": [
             "T6",
             "T8",
@@ -9073,7 +9053,27 @@
             "T14",
             "T16"
           ],
-          "vmo": 1151
+          "cantidades": {
+            "AZUL OSCURO_T6": 12,
+            "AZUL OSCURO_T8": 12,
+            "AZUL OSCURO_T10": 24,
+            "AZUL OSCURO_T12": 24,
+            "AZUL OSCURO_T14": 24,
+            "AZUL OSCURO_T16": 24,
+            "VINOTINTO_T6": 12,
+            "VINOTINTO_T8": 12,
+            "VINOTINTO_T10": 24,
+            "VINOTINTO_T12": 24,
+            "VINOTINTO_T14": 24,
+            "VINOTINTO_T16": 24,
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 12,
+            "MARFIL_T10": 18,
+            "MARFIL_T12": 18,
+            "MARFIL_T14": 18,
+            "MARFIL_T16": 18
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -9101,7 +9101,7 @@
           "solicitud_id": "id_1789491800922_g75o1ktrt"
         }
       ],
-      "updated_at": "2026-08-25"
+      "updated_at": "2026-10-30"
     },
     {
       "cantidades": {
