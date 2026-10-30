@@ -38973,19 +38973,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "VINOTINTO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1793395840901_6t99u",
-      "ts": 1793395840901,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-222",
       "op_nombre": "SET SOLOMUN",
       "referencia": "SET SOLOMUN",
-      "color": "VINOTINTO",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1793395840901,
+      "uds": 96,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793395881529_cmfj1",
+      "ts": 1793395881529,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-120",
+      "op_nombre": "ROMPEVIENTOS",
+      "referencia": "ROMPEVIENTOS",
+      "color": "NEGRO",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 96,
+      "uds": 84,
       "motivo": "EN TALLER"
     }
   ]
