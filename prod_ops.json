@@ -12202,9 +12202,9 @@
           "solicitud_id": "id_1791497078235_1tc6st3o6"
         },
         {
-          "solicitud_id": "id_1793369833493_56o1p64k6",
           "fecha": "2026-10-30",
-          "lineas": 1
+          "lineas": 1,
+          "solicitud_id": "id_1793369833493_56o1p64k6"
         }
       ]
     },
@@ -14545,7 +14545,7 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-228||MARFIL -120": "CORTE_POR_ALISTAR",
+        "OP-2026-228||MARFIL -120": "EN_CONFECCION",
         "OP-2026-228||MISO - BEIGE 322": "CORTE_POR_ALISTAR",
         "OP-2026-228||MISO - NEGRO 200": "CORTE_POR_ALISTAR"
       },
@@ -15563,34 +15563,34 @@
     },
     {
       "cantidades": {
-        "MARFIL_T4": 10,
-        "MARFIL_T6": 10,
-        "MARFIL_T8": 13,
-        "MARFIL_T10": 13,
-        "MARFIL_T12": 13,
-        "MARFIL_T14": 13,
-        "MARFIL_T16": 13,
-        "NEGRO_T4": 10,
-        "NEGRO_T6": 10,
-        "NEGRO_T8": 12,
-        "NEGRO_T10": 12,
-        "NEGRO_T12": 12,
-        "NEGRO_T14": 12,
-        "NEGRO_T16": 12,
-        "GRIS OSCURO_T4": 10,
-        "GRIS OSCURO_T6": 10,
-        "GRIS OSCURO_T8": 11,
+        "AZUL OSCURO_T10": 11,
+        "AZUL OSCURO_T12": 11,
+        "AZUL OSCURO_T14": 11,
+        "AZUL OSCURO_T16": 11,
+        "AZUL OSCURO_T4": 10,
+        "AZUL OSCURO_T6": 10,
+        "AZUL OSCURO_T8": 11,
         "GRIS OSCURO_T10": 11,
         "GRIS OSCURO_T12": 11,
         "GRIS OSCURO_T14": 11,
         "GRIS OSCURO_T16": 11,
-        "AZUL OSCURO_T4": 10,
-        "AZUL OSCURO_T6": 10,
-        "AZUL OSCURO_T8": 11,
-        "AZUL OSCURO_T10": 11,
-        "AZUL OSCURO_T12": 11,
-        "AZUL OSCURO_T14": 11,
-        "AZUL OSCURO_T16": 11
+        "GRIS OSCURO_T4": 10,
+        "GRIS OSCURO_T6": 10,
+        "GRIS OSCURO_T8": 11,
+        "MARFIL_T10": 13,
+        "MARFIL_T12": 13,
+        "MARFIL_T14": 13,
+        "MARFIL_T16": 13,
+        "MARFIL_T4": 10,
+        "MARFIL_T6": 10,
+        "MARFIL_T8": 13,
+        "NEGRO_T10": 12,
+        "NEGRO_T12": 12,
+        "NEGRO_T14": 12,
+        "NEGRO_T16": 12,
+        "NEGRO_T4": 10,
+        "NEGRO_T6": 10,
+        "NEGRO_T8": 12
       },
       "categoria": "CONJUNTOS",
       "colores": [
@@ -15599,6 +15599,21 @@
         "GRIS OSCURO",
         "AZUL OSCURO"
       ],
+      "consumibles_check": {
+        "rec_conjunto_chilly_1153__c51_21||AZUL OSCURO": true,
+        "rec_conjunto_chilly_1153__c51_21||GRIS OSCURO": true,
+        "rec_conjunto_chilly_1153__c51_21||MARFIL": true,
+        "rec_conjunto_chilly_1153__c51_21||NEGRO": true,
+        "rec_conjunto_chilly_1153__c51_22": true,
+        "rec_conjunto_chilly_1153__c51_23": true,
+        "rec_conjunto_chilly_1153__c51_24": true,
+        "rec_conjunto_chilly_1153__c51_25": true,
+        "rec_conjunto_chilly_1153__c51_26": true,
+        "rec_conjunto_chilly_1153__c51_27": true,
+        "rec_conjunto_chilly_1153__c51_28": true,
+        "rec_conjunto_chilly_1153__c51_31": true,
+        "rec_conjunto_chilly_1153__c51_32": true
+      },
       "consumibles_desagregado": {
         "rec_conjunto_chilly_1153__c51_21": true
       },
@@ -15632,16 +15647,46 @@
       "receta_nombre": "CONJUNTO CHILLY - REF: 1153",
       "referencias": [
         {
-          "nombre": "CONJUNTO CHILLY",
-          "ref": "1153",
+          "cantidades": {
+            "AZUL OSCURO_T10": 11,
+            "AZUL OSCURO_T12": 11,
+            "AZUL OSCURO_T14": 11,
+            "AZUL OSCURO_T16": 11,
+            "AZUL OSCURO_T4": 10,
+            "AZUL OSCURO_T6": 10,
+            "AZUL OSCURO_T8": 11,
+            "GRIS OSCURO_T10": 11,
+            "GRIS OSCURO_T12": 11,
+            "GRIS OSCURO_T14": 11,
+            "GRIS OSCURO_T16": 11,
+            "GRIS OSCURO_T4": 10,
+            "GRIS OSCURO_T6": 10,
+            "GRIS OSCURO_T8": 11,
+            "MARFIL_T10": 13,
+            "MARFIL_T12": 13,
+            "MARFIL_T14": 13,
+            "MARFIL_T16": 13,
+            "MARFIL_T4": 10,
+            "MARFIL_T6": 10,
+            "MARFIL_T8": 13,
+            "NEGRO_T10": 12,
+            "NEGRO_T12": 12,
+            "NEGRO_T14": 12,
+            "NEGRO_T16": 12,
+            "NEGRO_T4": 10,
+            "NEGRO_T6": 10,
+            "NEGRO_T8": 12
+          },
           "cat": "CONJUNTOS",
-          "vmo": 10510,
           "colores": [
             "MARFIL",
             "NEGRO",
             "GRIS OSCURO",
             "AZUL OSCURO"
           ],
+          "maquilador_id": "",
+          "nombre": "CONJUNTO CHILLY",
+          "ref": "1153",
           "tallas": [
             "T4",
             "T6",
@@ -15651,37 +15696,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "MARFIL_T4": 10,
-            "MARFIL_T6": 10,
-            "MARFIL_T8": 13,
-            "MARFIL_T10": 13,
-            "MARFIL_T12": 13,
-            "MARFIL_T14": 13,
-            "MARFIL_T16": 13,
-            "NEGRO_T4": 10,
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 12,
-            "NEGRO_T10": 12,
-            "NEGRO_T12": 12,
-            "NEGRO_T14": 12,
-            "NEGRO_T16": 12,
-            "GRIS OSCURO_T4": 10,
-            "GRIS OSCURO_T6": 10,
-            "GRIS OSCURO_T8": 11,
-            "GRIS OSCURO_T10": 11,
-            "GRIS OSCURO_T12": 11,
-            "GRIS OSCURO_T14": 11,
-            "GRIS OSCURO_T16": 11,
-            "AZUL OSCURO_T4": 10,
-            "AZUL OSCURO_T6": 10,
-            "AZUL OSCURO_T8": 11,
-            "AZUL OSCURO_T10": 11,
-            "AZUL OSCURO_T12": 11,
-            "AZUL OSCURO_T14": 11,
-            "AZUL OSCURO_T16": 11
-          },
-          "maquilador_id": ""
+          "vmo": 10510
         }
       ],
       "subg_estados": {
@@ -15712,24 +15727,7 @@
           "solicitud_id": "id_1793021725395_ik4mjas6w"
         }
       ],
-      "consumibles_check": {
-        "rec_conjunto_chilly_1153__c51_21||NEGRO": true,
-        "rec_conjunto_chilly_1153__c51_21||MARFIL": true,
-        "rec_conjunto_chilly_1153__c51_21||GRIS OSCURO": true,
-        "rec_conjunto_chilly_1153__c51_21||AZUL OSCURO": true,
-        "rec_conjunto_chilly_1153__c51_22": true,
-        "rec_conjunto_chilly_1153__c51_23": true,
-        "rec_conjunto_chilly_1153__c51_24": true,
-        "rec_conjunto_chilly_1153__c51_25": true,
-        "rec_conjunto_chilly_1153__c51_26": true,
-        "rec_conjunto_chilly_1153__c51_27": true,
-        "rec_conjunto_chilly_1153__c51_28": true,
-        "rec_conjunto_chilly_1153__c51_31": true,
-        "rec_conjunto_chilly_1153__c51_32": true
-      },
-      "updated_at": "2026-10-29",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-10-29"
     },
     {
       "cantidades": {
@@ -16424,6 +16422,9 @@
           "vmo": 1151
         }
       ],
+      "subg_estados": {
+        "OP-2026-248||NEGRO": "PENDIENTE_CORTAR"
+      },
       "tallas": [
         "T6",
         "T8",
@@ -16431,10 +16432,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {
-        "OP-2026-248||NEGRO": "PENDIENTE_CORTAR"
-      }
+      ]
     }
   ]
 }
