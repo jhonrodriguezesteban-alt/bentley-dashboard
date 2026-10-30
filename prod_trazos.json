@@ -4009,62 +4009,106 @@
       "op_nombre": "CONJUNTO SUECIA"
     },
     {
-      "id": "id_1793218315784_e91y439ne",
-      "op_id": "OP-2026-205",
-      "op_nombre": "CAMIBUZO NEVADO",
       "categoria": "BUZOS",
-      "creado_por": "Isabel",
       "creado_en": "2026-10-28",
-      "estado": "ENVIADA",
+      "creado_por": "Isabel",
       "enviada_en": "2026-10-28",
+      "estado": "ENVIADA",
+      "id": "id_1793218315784_e91y439ne",
       "lineas": [
         {
-          "id": "id_1793218269275_z30drdnog",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T6",
-            "T8"
-          ],
-          "marcadas_por_talla": {
-            "T6": 1,
-            "T8": 1
-          },
-          "cantidad_trazos": 1,
           "ancho_util": 155,
-          "sentido": "UNA_DIRECCION",
-          "orientacion": "AL_HILO",
-          "notas": "Trazos para corte en techpatron \nTono negro \nTodo en una sola dirección por la caída del peluche.",
+          "cantidad_trazos": 1,
           "colores": [
             "BEIGE"
           ],
           "generado": false,
+          "id": "id_1793218269275_z30drdnog",
           "impreso": false,
-          "recogido": false
+          "marcadas_por_talla": {
+            "T6": 1,
+            "T8": 1
+          },
+          "notas": "Trazos para corte en techpatron \nTono negro \nTodo en una sola dirección por la caída del peluche.",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "UNA_DIRECCION",
+          "tallas": [
+            "T6",
+            "T8"
+          ],
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
         },
         {
-          "id": "id_1793218307281_7uhtyfzbg",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T10",
-            "T12",
-            "T14",
-            "T16"
+          "ancho_util": 155,
+          "cantidad_trazos": 1,
+          "colores": [
+            "BEIGE"
           ],
+          "generado": false,
+          "id": "id_1793218307281_7uhtyfzbg",
+          "impreso": false,
           "marcadas_por_talla": {
             "T10": 1,
             "T12": 1,
             "T14": 1,
             "T16": 1
           },
-          "cantidad_trazos": 1,
-          "ancho_util": 155,
-          "sentido": "UNA_DIRECCION",
-          "orientacion": "AL_HILO",
           "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "UNA_DIRECCION",
+          "tallas": [
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
+        }
+      ],
+      "op_id": "OP-2026-205",
+      "op_nombre": "CAMIBUZO NEVADO"
+    },
+    {
+      "id": "id_1793369833493_56o1p64k6",
+      "op_id": "OP-2026-206",
+      "op_nombre": "PANTALON TRENCH",
+      "categoria": "PANTALONES",
+      "creado_por": "Isabel",
+      "creado_en": "2026-10-30",
+      "estado": "ENVIADA",
+      "enviada_en": "2026-10-30",
+      "lineas": [
+        {
+          "id": "id_1793369733628_f9vlr0neo",
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": "",
+          "tallas": [
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "marcadas_por_talla": {
+            "T8": 1,
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1
+          },
+          "cantidad_trazos": 1,
+          "ancho_util": 150,
+          "sentido": "DOS_DIRECCIONES",
+          "orientacion": "AL_HILO",
+          "notas": "Trazo para don Javier",
           "colores": [
-            "BEIGE"
+            "BEIGE",
+            "NEGRO",
+            "VERDE MILITAR"
           ],
           "generado": false,
           "impreso": false,
