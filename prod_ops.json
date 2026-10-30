@@ -3993,7 +3993,7 @@
       "subg_estados": {
         "OP-0149||AVENA": "PAGO_PENDIENTE",
         "OP-0149||NEGRO": "PENDIENTE_CORTAR",
-        "OP-0149||ROSA": "PENDIENTE_CORTAR"
+        "OP-0149||ROSA": "CORTE_POR_ALISTAR"
       },
       "tallas": [
         "T4",
@@ -8973,24 +8973,24 @@
     },
     {
       "cantidades": {
-        "AZUL OSCURO_T6": 12,
-        "AZUL OSCURO_T8": 12,
         "AZUL OSCURO_T10": 24,
         "AZUL OSCURO_T12": 24,
         "AZUL OSCURO_T14": 24,
         "AZUL OSCURO_T16": 24,
-        "VINOTINTO_T6": 12,
-        "VINOTINTO_T8": 12,
+        "AZUL OSCURO_T6": 12,
+        "AZUL OSCURO_T8": 12,
+        "MARFIL_T10": 18,
+        "MARFIL_T12": 18,
+        "MARFIL_T14": 18,
+        "MARFIL_T16": 18,
+        "MARFIL_T6": 12,
+        "MARFIL_T8": 12,
         "VINOTINTO_T10": 24,
         "VINOTINTO_T12": 24,
         "VINOTINTO_T14": 24,
         "VINOTINTO_T16": 24,
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 12,
-        "MARFIL_T10": 18,
-        "MARFIL_T12": 18,
-        "MARFIL_T14": 18,
-        "MARFIL_T16": 18
+        "VINOTINTO_T6": 12,
+        "VINOTINTO_T8": 12
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -9036,15 +9036,35 @@
       "numero": 119,
       "referencias": [
         {
-          "nombre": "WASHMAN",
-          "ref": "",
+          "cantidades": {
+            "AZUL OSCURO_T10": 24,
+            "AZUL OSCURO_T12": 24,
+            "AZUL OSCURO_T14": 24,
+            "AZUL OSCURO_T16": 24,
+            "AZUL OSCURO_T6": 12,
+            "AZUL OSCURO_T8": 12,
+            "MARFIL_T10": 18,
+            "MARFIL_T12": 18,
+            "MARFIL_T14": 18,
+            "MARFIL_T16": 18,
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 12,
+            "VINOTINTO_T10": 24,
+            "VINOTINTO_T12": 24,
+            "VINOTINTO_T14": 24,
+            "VINOTINTO_T16": 24,
+            "VINOTINTO_T6": 12,
+            "VINOTINTO_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 1151,
           "colores": [
             "AZUL OSCURO",
             "VINOTINTO",
             "MARFIL"
           ],
+          "maquilador_id": "",
+          "nombre": "WASHMAN",
+          "ref": "",
           "tallas": [
             "T6",
             "T8",
@@ -9053,27 +9073,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "AZUL OSCURO_T6": 12,
-            "AZUL OSCURO_T8": 12,
-            "AZUL OSCURO_T10": 24,
-            "AZUL OSCURO_T12": 24,
-            "AZUL OSCURO_T14": 24,
-            "AZUL OSCURO_T16": 24,
-            "VINOTINTO_T6": 12,
-            "VINOTINTO_T8": 12,
-            "VINOTINTO_T10": 24,
-            "VINOTINTO_T12": 24,
-            "VINOTINTO_T14": 24,
-            "VINOTINTO_T16": 24,
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 12,
-            "MARFIL_T10": 18,
-            "MARFIL_T12": 18,
-            "MARFIL_T14": 18,
-            "MARFIL_T16": 18
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
