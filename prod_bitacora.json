@@ -38941,19 +38941,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MISO - NEGRO 200",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1793395252204_izzad",
-      "ts": 1793395252204,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-228",
       "op_nombre": "CAMIBUSO HOUSER",
       "referencia": "CAMIBUSO HOUSER",
-      "color": "MISO - NEGRO 200",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1793395252204,
+      "uds": 112,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793395333247_xnbcw",
+      "ts": 1793395333247,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-205",
+      "op_nombre": "CAMIBUZO NEVADO",
+      "referencia": "CAMIBUZO NEVADO",
+      "color": "ROSA",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 112,
+      "uds": 100,
       "motivo": "EN TALLER"
     }
   ]
