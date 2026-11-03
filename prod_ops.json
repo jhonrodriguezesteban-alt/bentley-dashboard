@@ -9005,7 +9005,8 @@
         "cid_1789168564507_3162__cid_1789168005390_3833||VINOTINTO": true,
         "cid_1789168564507_3162__cid_1789168005390_5177": true,
         "cid_1789168564507_3162__cid_1789168501009_9061": true,
-        "cid_1789168564507_3162__cid_1789168528657_3472": true
+        "cid_1789168564507_3162__cid_1789168528657_3472": true,
+        "cid_1789168564507_3162__cid_1789168005390_5703": true
       },
       "consumibles_desagregado": {
         "cid_1789168564507_3162__cid_1789168005390_3833": true
@@ -11053,30 +11054,30 @@
     },
     {
       "cantidades": {
-        "AVENA_T6": 12,
-        "AVENA_T8": 16,
         "AVENA_T10": 21,
         "AVENA_T12": 21,
         "AVENA_T14": 21,
         "AVENA_T16": 21,
-        "CAFE_T6": 12,
-        "CAFE_T8": 16,
+        "AVENA_T6": 12,
+        "AVENA_T8": 16,
         "CAFE_T10": 24,
         "CAFE_T12": 24,
         "CAFE_T14": 24,
         "CAFE_T16": 24,
-        "NEGRO_T6": 12,
-        "NEGRO_T8": 16,
+        "CAFE_T6": 12,
+        "CAFE_T8": 16,
+        "MARFIL_T10": 20,
+        "MARFIL_T12": 20,
+        "MARFIL_T14": 20,
+        "MARFIL_T16": 20,
+        "MARFIL_T6": 12,
+        "MARFIL_T8": 16,
         "NEGRO_T10": 24,
         "NEGRO_T12": 24,
         "NEGRO_T14": 24,
         "NEGRO_T16": 24,
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 16,
-        "MARFIL_T10": 20,
-        "MARFIL_T12": 20,
-        "MARFIL_T14": 20,
-        "MARFIL_T16": 20
+        "NEGRO_T6": 12,
+        "NEGRO_T8": 16
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -11088,12 +11089,12 @@
       "consumibles_check": {
         "cid_1789264125616_3759__cid_1789263938874_4812||AVENA": true,
         "cid_1789264125616_3759__cid_1789263938874_4812||CAFE": true,
+        "cid_1789264125616_3759__cid_1789263938874_4812||MARFIL": true,
         "cid_1789264125616_3759__cid_1789263938874_4812||NEGRO": true,
         "cid_1789264125616_3759__cid_1789263938874_4993": true,
+        "cid_1789264125616_3759__cid_1789263938874_6019": true,
         "cid_1789264125616_3759__cid_1789263938874_8127": true,
         "cid_1789264125616_3759__cid_1789263938874_8973": true,
-        "cid_1789264125616_3759__cid_1789263938874_4812||MARFIL": true,
-        "cid_1789264125616_3759__cid_1789263938874_6019": true,
         "cid_1789264125616_3759__cid_1789264104215_7428": true
       },
       "consumibles_desagregado": {
@@ -11129,16 +11130,42 @@
       "numero": 197,
       "referencias": [
         {
-          "nombre": "CHAQUETA BAGGY PINZAS",
-          "ref": "",
+          "cantidades": {
+            "AVENA_T10": 21,
+            "AVENA_T12": 21,
+            "AVENA_T14": 21,
+            "AVENA_T16": 21,
+            "AVENA_T6": 12,
+            "AVENA_T8": 16,
+            "CAFE_T10": 24,
+            "CAFE_T12": 24,
+            "CAFE_T14": 24,
+            "CAFE_T16": 24,
+            "CAFE_T6": 12,
+            "CAFE_T8": 16,
+            "MARFIL_T10": 20,
+            "MARFIL_T12": 20,
+            "MARFIL_T14": 20,
+            "MARFIL_T16": 20,
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 16,
+            "NEGRO_T10": 24,
+            "NEGRO_T12": 24,
+            "NEGRO_T14": 24,
+            "NEGRO_T16": 24,
+            "NEGRO_T6": 12,
+            "NEGRO_T8": 16
+          },
           "cat": "CHAQUETAS",
-          "vmo": 1151,
           "colores": [
             "AVENA",
             "CAFE",
             "NEGRO",
             "MARFIL"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA BAGGY PINZAS",
+          "ref": "",
           "tallas": [
             "T6",
             "T8",
@@ -11147,33 +11174,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "AVENA_T6": 12,
-            "AVENA_T8": 16,
-            "AVENA_T10": 21,
-            "AVENA_T12": 21,
-            "AVENA_T14": 21,
-            "AVENA_T16": 21,
-            "CAFE_T6": 12,
-            "CAFE_T8": 16,
-            "CAFE_T10": 24,
-            "CAFE_T12": 24,
-            "CAFE_T14": 24,
-            "CAFE_T16": 24,
-            "NEGRO_T6": 12,
-            "NEGRO_T8": 16,
-            "NEGRO_T10": 24,
-            "NEGRO_T12": 24,
-            "NEGRO_T14": 24,
-            "NEGRO_T16": 24,
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 16,
-            "MARFIL_T10": 20,
-            "MARFIL_T12": 20,
-            "MARFIL_T14": 20,
-            "MARFIL_T16": 20
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
@@ -12450,8 +12451,8 @@
       ],
       "consumibles_check": {
         "cid_1789095947053_7698__cid_1789095819549_1153": true,
-        "cid_1789095947053_7698__cid_1789095819549_1951": true,
-        "cid_1789095947053_7698__cid_1789095819549_1349": true
+        "cid_1789095947053_7698__cid_1789095819549_1349": true,
+        "cid_1789095947053_7698__cid_1789095819549_1951": true
       },
       "cortador": "Corte Carbajal",
       "corte_ok_color": {
@@ -13047,24 +13048,24 @@
     },
     {
       "cantidades": {
-        "NEGRO_T6": 12,
-        "NEGRO_T8": 12,
-        "NEGRO_T10": 12,
-        "NEGRO_T12": 20,
-        "NEGRO_T14": 20,
-        "NEGRO_T16": 20,
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 12,
+        "CAMEL_T10": 12,
+        "CAMEL_T12": 16,
+        "CAMEL_T14": 16,
+        "CAMEL_T16": 16,
+        "CAMEL_T6": 12,
+        "CAMEL_T8": 12,
         "MARFIL_T10": 12,
         "MARFIL_T12": 16,
         "MARFIL_T14": 16,
         "MARFIL_T16": 16,
-        "CAMEL_T6": 12,
-        "CAMEL_T8": 12,
-        "CAMEL_T10": 12,
-        "CAMEL_T12": 16,
-        "CAMEL_T14": 16,
-        "CAMEL_T16": 16
+        "MARFIL_T6": 12,
+        "MARFIL_T8": 12,
+        "NEGRO_T10": 12,
+        "NEGRO_T12": 20,
+        "NEGRO_T14": 20,
+        "NEGRO_T16": 20,
+        "NEGRO_T6": 12,
+        "NEGRO_T8": 12
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -13110,15 +13111,35 @@
       "numero": 214,
       "referencias": [
         {
-          "nombre": "BLAZER DONATELLA",
-          "ref": "",
+          "cantidades": {
+            "CAMEL_T10": 12,
+            "CAMEL_T12": 16,
+            "CAMEL_T14": 16,
+            "CAMEL_T16": 16,
+            "CAMEL_T6": 12,
+            "CAMEL_T8": 12,
+            "MARFIL_T10": 12,
+            "MARFIL_T12": 16,
+            "MARFIL_T14": 16,
+            "MARFIL_T16": 16,
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 12,
+            "NEGRO_T10": 12,
+            "NEGRO_T12": 20,
+            "NEGRO_T14": 20,
+            "NEGRO_T16": 20,
+            "NEGRO_T6": 12,
+            "NEGRO_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 1151,
           "colores": [
             "NEGRO",
             "MARFIL",
             "CAMEL"
           ],
+          "maquilador_id": "",
+          "nombre": "BLAZER DONATELLA",
+          "ref": "",
           "tallas": [
             "T6",
             "T8",
@@ -13127,27 +13148,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T6": 12,
-            "NEGRO_T8": 12,
-            "NEGRO_T10": 12,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 12,
-            "MARFIL_T10": 12,
-            "MARFIL_T12": 16,
-            "MARFIL_T14": 16,
-            "MARFIL_T16": 16,
-            "CAMEL_T6": 12,
-            "CAMEL_T8": 12,
-            "CAMEL_T10": 12,
-            "CAMEL_T12": 16,
-            "CAMEL_T14": 16,
-            "CAMEL_T16": 16
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
@@ -13294,27 +13295,27 @@
     },
     {
       "cantidades": {
-        "NEGRO_T4": 13,
-        "NEGRO_T6": 13,
-        "NEGRO_T8": 20,
-        "NEGRO_T10": 20,
-        "NEGRO_T12": 20,
-        "NEGRO_T14": 20,
-        "NEGRO_T16": 20,
-        "AZUL_T4": 12,
-        "AZUL_T6": 12,
-        "AZUL_T8": 19,
         "AZUL_T10": 19,
         "AZUL_T12": 19,
         "AZUL_T14": 19,
         "AZUL_T16": 19,
-        "BLANCO_T4": 8,
-        "BLANCO_T6": 8,
-        "BLANCO_T8": 16,
+        "AZUL_T4": 12,
+        "AZUL_T6": 12,
+        "AZUL_T8": 19,
         "BLANCO_T10": 16,
         "BLANCO_T12": 16,
         "BLANCO_T14": 16,
-        "BLANCO_T16": 16
+        "BLANCO_T16": 16,
+        "BLANCO_T4": 8,
+        "BLANCO_T6": 8,
+        "BLANCO_T8": 16,
+        "NEGRO_T10": 20,
+        "NEGRO_T12": 20,
+        "NEGRO_T14": 20,
+        "NEGRO_T16": 20,
+        "NEGRO_T4": 13,
+        "NEGRO_T6": 13,
+        "NEGRO_T8": 20
       },
       "categoria": "CAMISAS",
       "colores": [
@@ -13343,15 +13344,38 @@
       "numero": 216,
       "referencias": [
         {
-          "nombre": "CAMISA CLASICA BK",
-          "ref": "",
+          "cantidades": {
+            "AZUL_T10": 19,
+            "AZUL_T12": 19,
+            "AZUL_T14": 19,
+            "AZUL_T16": 19,
+            "AZUL_T4": 12,
+            "AZUL_T6": 12,
+            "AZUL_T8": 19,
+            "BLANCO_T10": 16,
+            "BLANCO_T12": 16,
+            "BLANCO_T14": 16,
+            "BLANCO_T16": 16,
+            "BLANCO_T4": 8,
+            "BLANCO_T6": 8,
+            "BLANCO_T8": 16,
+            "NEGRO_T10": 20,
+            "NEGRO_T12": 20,
+            "NEGRO_T14": 20,
+            "NEGRO_T16": 20,
+            "NEGRO_T4": 13,
+            "NEGRO_T6": 13,
+            "NEGRO_T8": 20
+          },
           "cat": "CAMISAS",
-          "vmo": 1151,
           "colores": [
             "NEGRO",
             "AZUL",
             "BLANCO"
           ],
+          "maquilador_id": "",
+          "nombre": "CAMISA CLASICA BK",
+          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -13361,30 +13385,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T4": 13,
-            "NEGRO_T6": 13,
-            "NEGRO_T8": 20,
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "AZUL_T4": 12,
-            "AZUL_T6": 12,
-            "AZUL_T8": 19,
-            "AZUL_T10": 19,
-            "AZUL_T12": 19,
-            "AZUL_T14": 19,
-            "AZUL_T16": 19,
-            "BLANCO_T4": 8,
-            "BLANCO_T6": 8,
-            "BLANCO_T8": 16,
-            "BLANCO_T10": 16,
-            "BLANCO_T12": 16,
-            "BLANCO_T14": 16,
-            "BLANCO_T16": 16
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
