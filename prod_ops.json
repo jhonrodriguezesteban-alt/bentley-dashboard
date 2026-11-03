@@ -12325,7 +12325,10 @@
           "lineas": 2,
           "solicitud_id": "id_1793735462185_c8o2md6eh"
         }
-      ]
+      ],
+      "subg_estados": {
+        "OP-2026-208||AZUL BEBE": "PENDIENTE_CORTAR"
+      }
     },
     {
       "cantidades": {
@@ -14723,7 +14726,7 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-230||FUCSIA 618": "POR_REVISAR",
+        "OP-2026-230||FUCSIA 618": "CORTE_POR_ALISTAR",
         "OP-2026-230||NEGRO -200": "POR_REVISAR"
       },
       "tallas": [
@@ -14858,7 +14861,12 @@
         "T12",
         "T14",
         "T16"
-      ]
+      ],
+      "subg_estados": {
+        "OP-2026-231||AZUL BEBE": "PENDIENTE_CORTAR",
+        "OP-2026-231||GRIS CLARO": "PENDIENTE_CORTAR",
+        "OP-2026-231||ROSA": "PENDIENTE_CORTAR"
+      }
     },
     {
       "cantidades": {
