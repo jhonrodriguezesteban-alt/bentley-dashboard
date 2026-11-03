@@ -39518,23 +39518,43 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1793742195873_wbr7z",
-      "ts": 1793742195873,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-206",
-      "op_nombre": "PANTALON TRENCH",
       "categoria": "PANTALONES",
-      "total_ots": 21,
-      "total_uds": 288,
       "colores": [
         "BEIGE",
         "NEGRO",
         "VERDE MILITAR"
       ],
+      "id": "evt_1793742195873_wbr7z",
+      "op_id": "OP-2026-206",
+      "op_nombre": "PANTALON TRENCH",
       "referencias": [
         "PANTALON TRENCH"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 21,
+      "total_uds": 288,
+      "ts": 1793742195873,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793742700073_tz4l1",
+      "ts": 1793742700073,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-199",
+      "op_nombre": "CONJUNTO MANCHESTER",
+      "color": "NEGRO",
+      "mes": "2026-11"
+    },
+    {
+      "id": "evt_1793742702601_za5cs",
+      "ts": 1793742702601,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-199",
+      "op_nombre": "CONJUNTO MANCHESTER",
+      "color": "AZUL BEBE",
+      "mes": "2026-11"
     }
   ]
 }
