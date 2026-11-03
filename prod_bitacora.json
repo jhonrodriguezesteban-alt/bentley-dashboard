@@ -39391,40 +39391,60 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1793735544135_3fqn1",
-      "ts": 1793735544135,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-231",
-      "op_nombre": "VESTIDO MINI DRESS",
       "categoria": "VESTIDOS",
-      "total_ots": 6,
-      "total_uds": 86,
       "colores": [
         "GRIS CLARO"
       ],
       "estado_inicial": "PENDIENTE_CORTAR",
-      "referencias": [
-        "VESTIDO MINI DRESS"
-      ]
-    },
-    {
-      "id": "evt_1793735546783_gn7am",
-      "ts": 1793735546783,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
+      "id": "evt_1793735544135_3fqn1",
       "op_id": "OP-2026-231",
       "op_nombre": "VESTIDO MINI DRESS",
-      "categoria": "VESTIDOS",
+      "referencias": [
+        "VESTIDO MINI DRESS"
+      ],
+      "tipo": "generar_ots",
       "total_ots": 6,
       "total_uds": 86,
+      "ts": 1793735544135,
+      "user": "Jefa de Producción"
+    },
+    {
+      "categoria": "VESTIDOS",
       "colores": [
         "ROSA"
       ],
       "estado_inicial": "PENDIENTE_CORTAR",
+      "id": "evt_1793735546783_gn7am",
+      "op_id": "OP-2026-231",
+      "op_nombre": "VESTIDO MINI DRESS",
       "referencias": [
         "VESTIDO MINI DRESS"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 6,
+      "total_uds": 86,
+      "ts": 1793735546783,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793741984054_hjip2",
+      "ts": 1793741984054,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-199",
+      "op_nombre": "CONJUNTO MANCHESTER",
+      "color": "NEGRO",
+      "mes": "2026-11"
+    },
+    {
+      "id": "evt_1793741986297_ur191",
+      "ts": 1793741986297,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-199",
+      "op_nombre": "CONJUNTO MANCHESTER",
+      "color": "GRIS CLARO",
+      "mes": "2026-11"
     }
   ]
 }
