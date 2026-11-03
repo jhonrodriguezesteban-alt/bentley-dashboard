@@ -38832,6 +38832,94 @@
       "user": "Jefa de Producción"
     },
     {
+      "id": "evt_1793304076747_c7oaj",
+      "ts": 1793304076747,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1792708302829_thunj88zg",
+      "op_id": "OP-2026-129",
+      "color": "VERDE MILITAR",
+      "fecha_nueva": "2026-11-04",
+      "motivo": "Asignación inicial"
+    },
+    {
+      "id": "evt_1793304088267_fxt06",
+      "ts": 1793304088267,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1791035985572_unp0rsl7v",
+      "op_id": "OP-2026-220",
+      "color": "VERDE MILITAR",
+      "fecha_nueva": "2026-11-02",
+      "motivo": "Reubicado en tablero"
+    },
+    {
+      "id": "evt_1793304122481_ow48a",
+      "ts": 1793304122481,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1791404483933_w335t3ybc",
+      "op_id": "OP-2026-089",
+      "color": "MARFIL",
+      "fecha_nueva": "2026-11-04",
+      "motivo": "maquina en arreglo"
+    },
+    {
+      "id": "evt_1793304166554_jroiw",
+      "ts": 1793304166554,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1792708274832_m0e6fs8ka",
+      "op_id": "OP-2026-129",
+      "color": "CAFE",
+      "fecha_nueva": "2026-11-06",
+      "motivo": "Asignación inicial"
+    },
+    {
+      "id": "evt_1793304647755_7e1z4",
+      "ts": 1793304647755,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1789500051425_sb7s615yv",
+      "op_id": "OP-2026-131",
+      "color": "CAMEL",
+      "fecha_nueva": "2026-11-05",
+      "motivo": "Asignación inicial"
+    },
+    {
+      "id": "evt_1793304953422_32kz6",
+      "ts": 1793304953422,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1789500136792_lx120h3h3",
+      "op_id": "OP-2026-085",
+      "color": "VERDE MILITAR",
+      "fecha_nueva": "2026-11-05",
+      "motivo": "Asignación inicial"
+    },
+    {
+      "id": "evt_1793305122098_02e42",
+      "ts": 1793305122098,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1792611944608_suygghmy2",
+      "op_id": "OP-2026-223",
+      "color": "GRIS JASPED",
+      "fecha_nueva": "2026-10-30",
+      "motivo": "Reubicado en tablero"
+    },
+    {
+      "id": "evt_1793305181976_u3v2s",
+      "ts": 1793305181976,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1792708417324_nt23zq00z",
+      "op_id": "OP-2026-102",
+      "color": "GRIS OSCURO",
+      "fecha_nueva": "2026-11-06",
+      "motivo": "Asignación inicial"
+    },
+    {
       "categoria": "BUZOS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-10-29",
@@ -39135,20 +39223,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1793402588083_h5cdj",
-      "ts": 1793402588083,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-0149",
       "op_nombre": "CONJUNTO TRENZAS",
       "referencia": "CONJUNTO TRENZAS",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1793402588083,
       "uds": 104,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793712984967_px2ka",
+      "ts": 1793712984967,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-214",
+      "nombre": "BLAZER DONATELLA",
+      "categoria": "CHAQUETAS",
+      "colores": 3,
+      "refs": 1
     }
   ]
 }
