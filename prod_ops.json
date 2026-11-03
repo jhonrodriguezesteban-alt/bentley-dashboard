@@ -4818,10 +4818,6 @@
       },
       "cortador": "Corte Carbajal",
       "corte_ok_color": {
-        "MARFIL": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-09T00:03:10.484Z"
-        },
         "NEGRO": {
           "por": "John Rodriguez",
           "ts": "2026-10-27T19:49:53.427Z"
@@ -12307,6 +12303,9 @@
           "vmo": 1151
         }
       ],
+      "subg_estados": {
+        "OP-2026-208||AZUL BEBE": "PENDIENTE_CORTAR"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -12325,10 +12324,7 @@
           "lineas": 2,
           "solicitud_id": "id_1793735462185_c8o2md6eh"
         }
-      ],
-      "subg_estados": {
-        "OP-2026-208||AZUL BEBE": "PENDIENTE_CORTAR"
-      }
+      ]
     },
     {
       "cantidades": {
@@ -14854,6 +14850,11 @@
           "vmo": 1151
         }
       ],
+      "subg_estados": {
+        "OP-2026-231||AZUL BEBE": "PENDIENTE_CORTAR",
+        "OP-2026-231||GRIS CLARO": "PENDIENTE_CORTAR",
+        "OP-2026-231||ROSA": "PENDIENTE_CORTAR"
+      },
       "tallas": [
         "T6",
         "T8",
@@ -14861,12 +14862,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "subg_estados": {
-        "OP-2026-231||AZUL BEBE": "PENDIENTE_CORTAR",
-        "OP-2026-231||GRIS CLARO": "PENDIENTE_CORTAR",
-        "OP-2026-231||ROSA": "PENDIENTE_CORTAR"
-      }
+      ]
     },
     {
       "cantidades": {
