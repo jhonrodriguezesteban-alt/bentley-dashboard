@@ -12082,9 +12082,9 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-206||BEIGE": "PENDIENTE_CORTAR",
-        "OP-2026-206||NEGRO": "PENDIENTE_CORTAR",
-        "OP-2026-206||VERDE MILITAR": "PENDIENTE_CORTAR"
+        "OP-2026-206||BEIGE": "CORTE_POR_ALISTAR",
+        "OP-2026-206||NEGRO": "CORTE_POR_ALISTAR",
+        "OP-2026-206||VERDE MILITAR": "CORTE_POR_ALISTAR"
       },
       "tallas": [
         "T4",
@@ -16370,6 +16370,102 @@
         "T14",
         "T16"
       ]
+    },
+    {
+      "id": "OP-2026-249",
+      "numero": 249,
+      "fecha_op": "2026-11-03",
+      "cortador": "Corte Carbajal",
+      "categoria": "CONJUNTOS",
+      "nombre_producto": "CONJUNTO DAKOTA",
+      "colores": [
+        "BEIGE",
+        "VERDE MILITAR",
+        "NEGRO"
+      ],
+      "tallas": [
+        "T4",
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ],
+      "cantidades": {
+        "BEIGE_T10": 16,
+        "BEIGE_T12": 16,
+        "BEIGE_T14": 16,
+        "BEIGE_T16": 16,
+        "BEIGE_T4": 8,
+        "BEIGE_T6": 8,
+        "BEIGE_T8": 16,
+        "NEGRO_T10": 17,
+        "NEGRO_T12": 17,
+        "NEGRO_T14": 17,
+        "NEGRO_T16": 17,
+        "NEGRO_T4": 8,
+        "NEGRO_T6": 8,
+        "NEGRO_T8": 17,
+        "VERDE MILITAR_T10": 16,
+        "VERDE MILITAR_T12": 16,
+        "VERDE MILITAR_T14": 16,
+        "VERDE MILITAR_T16": 16,
+        "VERDE MILITAR_T4": 8,
+        "VERDE MILITAR_T6": 8,
+        "VERDE MILITAR_T8": 16
+      },
+      "referencias": [
+        {
+          "cantidades": {
+            "BEIGE_T10": 16,
+            "BEIGE_T12": 16,
+            "BEIGE_T14": 16,
+            "BEIGE_T16": 16,
+            "BEIGE_T4": 8,
+            "BEIGE_T6": 8,
+            "BEIGE_T8": 16,
+            "NEGRO_T10": 17,
+            "NEGRO_T12": 17,
+            "NEGRO_T14": 17,
+            "NEGRO_T16": 17,
+            "NEGRO_T4": 8,
+            "NEGRO_T6": 8,
+            "NEGRO_T8": 17,
+            "VERDE MILITAR_T10": 16,
+            "VERDE MILITAR_T12": 16,
+            "VERDE MILITAR_T14": 16,
+            "VERDE MILITAR_T16": 16,
+            "VERDE MILITAR_T4": 8,
+            "VERDE MILITAR_T6": 8,
+            "VERDE MILITAR_T8": 16
+          },
+          "cat": "CONJUNTOS",
+          "colores": [
+            "BEIGE",
+            "VERDE MILITAR",
+            "NEGRO"
+          ],
+          "maquilador_id": "",
+          "nombre": "CONJUNTO DAKOTA",
+          "ref": "1217",
+          "tallas": [
+            "T4",
+            "T6",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "vmo": 1151
+        }
+      ],
+      "op_effi": null,
+      "estado_op": "EN_PROCESO",
+      "created_at": "2026-11-03",
+      "created_by": "John Rodriguez",
+      "receta_id": "cid_1789269430435_6299"
     }
   ]
 }
