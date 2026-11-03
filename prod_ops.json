@@ -11333,16 +11333,7 @@
         "rec_conjunto_hoodie_capota_p_a_1178__c58_19": true
       },
       "cortador": "Corte Carbajal",
-      "corte_ok_color": {
-        "GRIS CLARO": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:50:25.607Z"
-        },
-        "VINOTINTO": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-27T19:50:26.684Z"
-        }
-      },
+      "corte_ok_color": {},
       "created_at": "2026-08-25",
       "created_by": "John Rodriguez",
       "estado_op": "EN_PROCESO",
@@ -12340,9 +12331,12 @@
         "MARFIL"
       ],
       "consumibles_check": {
+        "cid_1789098310256_6823__cid_1789098048424_6055||AZUL BEBE": true,
         "cid_1789098310256_6823__cid_1789098048424_6135": true,
-        "cid_1789098310256_6823__cid_1789098048424_7759": true,
-        "cid_1789098310256_6823__cid_1789098048424_6055||AZUL BEBE": true
+        "cid_1789098310256_6823__cid_1789098048424_7759": true
+      },
+      "consumibles_desagregado": {
+        "cid_1789098310256_6823__cid_1789098048424_6055": true
       },
       "cortador": "Corte Carbajal",
       "created_at": "2026-09-02",
@@ -12411,10 +12405,7 @@
           "lineas": 2,
           "solicitud_id": "id_1793735462185_c8o2md6eh"
         }
-      ],
-      "consumibles_desagregado": {
-        "cid_1789098310256_6823__cid_1789098048424_6055": true
-      }
+      ]
     },
     {
       "cantidades": {
@@ -14870,6 +14861,14 @@
         "AZUL BEBE",
         "GRIS CLARO"
       ],
+      "consumibles_check": {
+        "cid_1789097635561_8953__cid_1789097303912_1236||AZUL BEBE": true,
+        "cid_1789097635561_8953__cid_1789097303912_1236||GRIS CLARO": true,
+        "cid_1789097635561_8953__cid_1789097303912_1236||ROSA": true
+      },
+      "consumibles_desagregado": {
+        "cid_1789097635561_8953__cid_1789097303912_1236": true
+      },
       "cortador": "Corte Carbajal",
       "created_at": "2026-09-13",
       "created_by": "John Rodriguez",
@@ -14939,15 +14938,7 @@
         "T12",
         "T14",
         "T16"
-      ],
-      "consumibles_desagregado": {
-        "cid_1789097635561_8953__cid_1789097303912_1236": true
-      },
-      "consumibles_check": {
-        "cid_1789097635561_8953__cid_1789097303912_1236||ROSA": true,
-        "cid_1789097635561_8953__cid_1789097303912_1236||AZUL BEBE": true,
-        "cid_1789097635561_8953__cid_1789097303912_1236||GRIS CLARO": true
-      }
+      ]
     },
     {
       "cantidades": {
