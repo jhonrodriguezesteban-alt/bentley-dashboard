@@ -11053,30 +11053,30 @@
     },
     {
       "cantidades": {
-        "AVENA_T10": 24,
-        "AVENA_T12": 24,
-        "AVENA_T14": 24,
-        "AVENA_T16": 24,
         "AVENA_T6": 12,
         "AVENA_T8": 16,
+        "AVENA_T10": 21,
+        "AVENA_T12": 21,
+        "AVENA_T14": 21,
+        "AVENA_T16": 21,
+        "CAFE_T6": 12,
+        "CAFE_T8": 16,
         "CAFE_T10": 24,
         "CAFE_T12": 24,
         "CAFE_T14": 24,
         "CAFE_T16": 24,
-        "CAFE_T6": 12,
-        "CAFE_T8": 16,
-        "MARFIL_T10": 24,
-        "MARFIL_T12": 24,
-        "MARFIL_T14": 24,
-        "MARFIL_T16": 24,
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 16,
+        "NEGRO_T6": 12,
+        "NEGRO_T8": 16,
         "NEGRO_T10": 24,
         "NEGRO_T12": 24,
         "NEGRO_T14": 24,
         "NEGRO_T16": 24,
-        "NEGRO_T6": 12,
-        "NEGRO_T8": 16
+        "MARFIL_T6": 12,
+        "MARFIL_T8": 16,
+        "MARFIL_T10": 20,
+        "MARFIL_T12": 20,
+        "MARFIL_T14": 20,
+        "MARFIL_T16": 20
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -11128,42 +11128,16 @@
       "numero": 197,
       "referencias": [
         {
-          "cantidades": {
-            "AVENA_T10": 24,
-            "AVENA_T12": 24,
-            "AVENA_T14": 24,
-            "AVENA_T16": 24,
-            "AVENA_T6": 12,
-            "AVENA_T8": 16,
-            "CAFE_T10": 24,
-            "CAFE_T12": 24,
-            "CAFE_T14": 24,
-            "CAFE_T16": 24,
-            "CAFE_T6": 12,
-            "CAFE_T8": 16,
-            "MARFIL_T10": 24,
-            "MARFIL_T12": 24,
-            "MARFIL_T14": 24,
-            "MARFIL_T16": 24,
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 16,
-            "NEGRO_T10": 24,
-            "NEGRO_T12": 24,
-            "NEGRO_T14": 24,
-            "NEGRO_T16": 24,
-            "NEGRO_T6": 12,
-            "NEGRO_T8": 16
-          },
+          "nombre": "CHAQUETA BAGGY PINZAS",
+          "ref": "",
           "cat": "CHAQUETAS",
+          "vmo": 1151,
           "colores": [
             "AVENA",
             "CAFE",
             "NEGRO",
             "MARFIL"
           ],
-          "maquilador_id": "",
-          "nombre": "CHAQUETA BAGGY PINZAS",
-          "ref": "",
           "tallas": [
             "T6",
             "T8",
@@ -11172,8 +11146,33 @@
             "T14",
             "T16"
           ],
-          "totalUds": 496,
-          "vmo": 1151
+          "cantidades": {
+            "AVENA_T6": 12,
+            "AVENA_T8": 16,
+            "AVENA_T10": 21,
+            "AVENA_T12": 21,
+            "AVENA_T14": 21,
+            "AVENA_T16": 21,
+            "CAFE_T6": 12,
+            "CAFE_T8": 16,
+            "CAFE_T10": 24,
+            "CAFE_T12": 24,
+            "CAFE_T14": 24,
+            "CAFE_T16": 24,
+            "NEGRO_T6": 12,
+            "NEGRO_T8": 16,
+            "NEGRO_T10": 24,
+            "NEGRO_T12": 24,
+            "NEGRO_T14": 24,
+            "NEGRO_T16": 24,
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 16,
+            "MARFIL_T10": 20,
+            "MARFIL_T12": 20,
+            "MARFIL_T14": 20,
+            "MARFIL_T16": 20
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -11202,7 +11201,8 @@
           "lineas": 6,
           "solicitud_id": "id_1791586261809_h1q69ktmk"
         }
-      ]
+      ],
+      "updated_at": "2026-11-03"
     },
     {
       "cantidades": {
