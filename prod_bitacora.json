@@ -39373,8 +39373,26 @@
       "user": "Jefa de Producción"
     },
     {
+      "categoria": "VESTIDOS",
+      "colores": [
+        "AZUL BEBE"
+      ],
+      "estado_inicial": "PENDIENTE_CORTAR",
       "id": "evt_1793735534878_ki581",
+      "op_id": "OP-2026-231",
+      "op_nombre": "VESTIDO MINI DRESS",
+      "referencias": [
+        "VESTIDO MINI DRESS"
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 6,
+      "total_uds": 86,
       "ts": 1793735534878,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793735544135_3fqn1",
+      "ts": 1793735544135,
       "user": "Jefa de Producción",
       "tipo": "generar_ots",
       "op_id": "OP-2026-231",
@@ -39383,7 +39401,25 @@
       "total_ots": 6,
       "total_uds": 86,
       "colores": [
-        "AZUL BEBE"
+        "GRIS CLARO"
+      ],
+      "estado_inicial": "PENDIENTE_CORTAR",
+      "referencias": [
+        "VESTIDO MINI DRESS"
+      ]
+    },
+    {
+      "id": "evt_1793735546783_gn7am",
+      "ts": 1793735546783,
+      "user": "Jefa de Producción",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-231",
+      "op_nombre": "VESTIDO MINI DRESS",
+      "categoria": "VESTIDOS",
+      "total_ots": 6,
+      "total_uds": 86,
+      "colores": [
+        "ROSA"
       ],
       "estado_inicial": "PENDIENTE_CORTAR",
       "referencias": [
