@@ -1133,7 +1133,7 @@ async function _fbMigrarSiVacio(){
 // abiertas con una versión anterior se recargan solas (esperando a que terminen de guardar).
 // Sin esto, una pestaña vieja olvidada en un computador seguía guardando con la lógica
 // anterior y deshaciendo cambios de todos los demás.
-var APP_VERSION = 20261027.2;
+var APP_VERSION = 20261103.1;
 function _vigilarVersionApp(){
   if(!_fbDb) return;
   _fbDb.ref(FB_ROOT+'/app_version').on('value', function(snap){
@@ -2406,8 +2406,8 @@ function globalSearchClose(){
   var r = document.getElementById('global-search-results');
   if(r) r.style.display='none';
 }
-var _PLAN_MES_LABELS = {'2026-06':'Junio','2026-07':'Julio','2026-08':'Agosto','2026-09':'Septiembre','2026-10':'Octubre','2026-11':'Noviembre','2026-12':'Diciembre'};
-var _PLAN_MES_COLORS = {'2026-06':'#6366f1','2026-07':'#3b82f6','2026-08':'#8b5cf6','2026-09':'#f59e0b','2026-10':'#10b981','2026-11':'#ef4444','2026-12':'#f97316'};
+var _PLAN_MES_LABELS = {'2026-06':'Junio','2026-07':'Julio','2026-08':'Agosto','2026-09':'Septiembre','2026-10':'Octubre','2026-11':'Noviembre','2026-12':'Diciembre','2027-01':'Enero 2027'};
+var _PLAN_MES_COLORS = {'2026-06':'#6366f1','2026-07':'#3b82f6','2026-08':'#8b5cf6','2026-09':'#f59e0b','2026-10':'#10b981','2026-11':'#ef4444','2026-12':'#f97316','2027-01':'#94a3b8'};
 var _planScrollMes = null;
 var _planDisOpen = false;
 var _planBusqRef = '';
@@ -3149,16 +3149,21 @@ function _planMigrarConfirmacionesDisenoAOp(){
 // Se calcula en vivo desde las OPs activas, agrupando por categoría+nombre de producto.
 function _planTodasLasRefsOP(){
   var confirmadas = (DB.planeacion && DB.planeacion.confirmadas) || {};
+  var mesesPlan = (DB.planeacion && DB.planeacion.meses) || {};
+  var mesDeKey = {};
+  Object.keys(mesesPlan).forEach(function(mk){ (mesesPlan[mk]||[]).forEach(function(key){ mesDeKey[key]=mk; }); });
   var porRef = {};
   (DB.ops||[]).forEach(function(op){
     if(op.estado_op==='ARCHIVADO') return;
     var cat = (op.categoria||'Sin categoría').trim().toUpperCase();
     var nombreOriginal = op.nombre_producto||op.id;
     var refKey = 'REF||'+cat+'||'+_recSanitizeKey(nombreOriginal.trim().toUpperCase());
-    if(!porRef[refKey]) porRef[refKey] = {refKey:refKey, cat:cat, nombre:nombreOriginal, tipo:'op', uds:0, mat:0, mod:0, cif:0, svc:0, costoTotal:0, tieneReceta:false};
+    if(!porRef[refKey]) porRef[refKey] = {refKey:refKey, cat:cat, nombre:nombreOriginal, tipo:'op', uds:0, mat:0, mod:0, cif:0, svc:0, costoTotal:0, tieneReceta:false, udsFuera:0};
     var r = porRef[refKey];
     var colores = (op.colores&&op.colores.length) ? op.colores : ['—'];
     colores.forEach(function(color){
+      // Color pasado a 2027 → no cuenta en el resumen de inversión de este año.
+      if(_planMesFueraDeResumen(mesDeKey[_planKey(op.id, color)])){ r.udsFuera += _planColorUds(op, color); return; }
       r.uds += _planColorUds(op, color);
       var costo = _planCostoColor(op, color);
       if(costo){ r.mat+=costo.mat; r.mod+=costo.mod; r.cif+=costo.cif; r.svc+=costo.svc; r.costoTotal+=costo.total; r.tieneReceta=true; }
@@ -3173,7 +3178,7 @@ function _planTodasLasRefsOP(){
     var r = porRef[k];
     r.extra = (confirmadas[k] && confirmadas[k].extra) || 0;
     return r;
-  }).filter(function(r){ return (r.uds + r.extra) > 0; });
+  }).filter(function(r){ return (r.uds + r.extra) > 0 && !(r.uds===0 && r.udsFuera>0); });
 }
 function _planRenderConfirmados(){
   _planMigrarConfirmacionesDisenoAOp();
@@ -3185,6 +3190,16 @@ function _planRenderConfirmados(){
   var disEntriesManual = Object.keys(confirmadas)
     .map(function(k){ return Object.assign({refKey:k}, confirmadas[k]); })
     .filter(function(e){ return e.ok && e.tipo==='diseno' && !opRefKeys[e.refKey]; });
+  // Diseño programado para 2027 → fuera del resumen de este año.
+  var disPlanConf = (DB.planeacion && DB.planeacion.disenos_plan) || {};
+  var mesDisPorNombreCat = {};
+  (DB.disenos||[]).forEach(function(d){
+    if(d.eliminado || !disPlanConf[d.id]) return;
+    mesDisPorNombreCat[(d.categoria||'').trim().toUpperCase()+'||'+(d.nombre||'').trim().toUpperCase()] = disPlanConf[d.id].mes;
+  });
+  disEntriesManual = disEntriesManual.filter(function(e){
+    return !_planMesFueraDeResumen(mesDisPorNombreCat[(e.cat||'').trim().toUpperCase()+'||'+(e.nombre||'').trim().toUpperCase()]);
+  });
   var entries = _planConLiveUds(opEntriesAuto.concat(disEntriesManual));
   // Mapa nombre+categoría → diseño real, para saber si un confirmado tipo "diseño" es Fenio
   // (crédito diferido a diciembre — no cuenta como inversión inmediata).
@@ -5641,8 +5656,14 @@ function _planMesesDef(){
     {k:'2026-10',label:'Octubre',   color:'#10b981',bg:'rgba(16,185,129,.07)'},
     {k:'2026-11',label:'Noviembre', color:'#ef4444',bg:'rgba(239,68,68,.07)'},
     {k:'2026-12',label:'Diciembre', color:'#f97316',bg:'rgba(249,115,22,.07)'},
+    // Enero 2027 = lo que NO se corta este año. Se ve como tarjeta normal, pero queda fuera
+    // de los resúmenes de inversión (ver _planMesFueraDeResumen).
+    {k:'2027-01',label:'Enero 2027',color:'#94a3b8',bg:'rgba(148,163,184,.07)'},
   ];
 }
+// Los resúmenes de inversión de Planeación muestran solo 2026: lo asignado a un mes de 2027
+// o posterior se excluye de "Productos confirmados", diseños en planificación y crédito Fenio.
+function _planMesFueraDeResumen(mesKey){ return !!mesKey && String(mesKey) >= '2027-01'; }
 function renderPlaneacion(){
   var MESES = _planMesesDef();
   if(!DB.planeacion) DB.planeacion = {meses:{}};
@@ -5791,6 +5812,7 @@ function renderPlaneacion(){
   var dpTotalInv = 0, dpTotalUds = 0, dpFenioInv = 0;
   disenosActivos.forEach(function(d){
     var q = disPlan[d.id] ? (disPlan[d.id].uds||0) : 0;
+    if(disPlan[d.id] && _planMesFueraDeResumen(disPlan[d.id].mes)) q = 0; // 2027: fuera del total
     var r = _getCosteoRef(d.categoria);
     if(q > 0){
       dpTotalUds += q;
@@ -6031,6 +6053,7 @@ function renderPlaneacion(){
   var disPlanGlobal = (DB.planeacion && DB.planeacion.disenos_plan) || {};
   var catMap = {};
   MESES.forEach(function(mes){
+    if(_planMesFueraDeResumen(mes.k)) return; // 2027 no alimenta el resumen de este año
     var keys3 = (DB.planeacion.meses||{})[mes.k]||[];
     keys3.forEach(function(key){
       var u = planUnitsByKey[key];
@@ -6043,7 +6066,7 @@ function renderPlaneacion(){
   });
   (DB.disenos||[]).filter(function(d){ return !d.eliminado; }).forEach(function(d){
     var p = disPlanGlobal[d.id];
-    if(!p || !p.mes || !(p.uds>0)) return;
+    if(!p || !p.mes || !(p.uds>0) || _planMesFueraDeResumen(p.mes)) return;
     var cat = (d.categoria||'Sin categoría').trim().toUpperCase();
     if(!catMap[cat]) catMap[cat] = {refs:[], uds:0, disUds:0};
     catMap[cat].disUds = (catMap[cat].disUds||0) + p.uds;
@@ -6137,7 +6160,7 @@ function renderPlaneacion(){
     var fenioGlobalInv = 0;
     if(mes.k==='2026-12'){
       disenosActivos2.filter(function(d){ return (d.proveedor||'').toUpperCase()==='FENIO'; }).forEach(function(d){
-        var p = disPlanAll[d.id]; if(!p||!(p.uds>0)) return;
+        var p = disPlanAll[d.id]; if(!p||!(p.uds>0)||_planMesFueraDeResumen(p.mes)) return;
         var r = _getCosteoRef(d.categoria); if(r) fenioGlobalInv+=p.uds*r.total;
       });
     }
@@ -6148,7 +6171,8 @@ function renderPlaneacion(){
     // incluso si la tarjeta se termina ocultando, para que planVerMes(mes) siga funcionando.
     window._planMesMap[mes.k] = {mes:mes, mesUnits:mesUnits, mesDisenos:mesDisenos, disPlanAll:disPlanAll, costoMes:costoMes, totalUds:totalUds, disUds:disUds, disInv:disInv, disFenioInv:disFenioInv, totalUdsCombinado:totalUdsCombinado};
 
-    if(_planOcultarVacios && !mesUnits.length && !mesDisenos.length) return;
+    // Enero 2027 no se oculta aunque esté vacío: es el destino para pasar lo que no se corta este año.
+    if(_planOcultarVacios && !mesUnits.length && !mesDisenos.length && !_planMesFueraDeResumen(mes.k)) return;
 
     var _mesRefs = mesOps.map(function(op){ return (op.nombre_producto||op.id); }).concat(mesDisenos.map(function(d){ return d.nombre||''; })).join('|').toUpperCase();
     h += '<div data-plan-mes="'+mes.k+'" data-refs="'+esc(_mesRefs)+'" style="background:#0a0d14;border:1px solid '+mes.color+'33;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;max-height:680px;">';
