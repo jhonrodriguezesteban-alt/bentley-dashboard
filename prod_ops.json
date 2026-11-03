@@ -9004,9 +9004,9 @@
         "cid_1789168564507_3162__cid_1789168005390_3833||MARFIL": true,
         "cid_1789168564507_3162__cid_1789168005390_3833||VINOTINTO": true,
         "cid_1789168564507_3162__cid_1789168005390_5177": true,
+        "cid_1789168564507_3162__cid_1789168005390_5703": true,
         "cid_1789168564507_3162__cid_1789168501009_9061": true,
-        "cid_1789168564507_3162__cid_1789168528657_3472": true,
-        "cid_1789168564507_3162__cid_1789168005390_5703": true
+        "cid_1789168564507_3162__cid_1789168528657_3472": true
       },
       "consumibles_desagregado": {
         "cid_1789168564507_3162__cid_1789168005390_3833": true
@@ -9079,7 +9079,6 @@
       ],
       "subg_estados": {
         "OP-2026-119||AZUL OSCURO": "CORTE_POR_ALISTAR",
-        "OP-2026-119||CAMEL": "PENDIENTE_CORTAR",
         "OP-2026-119||MARFIL": "CORTE_POR_ALISTAR",
         "OP-2026-119||VINOTINTO": "CORTE_POR_ALISTAR"
       },
@@ -11178,10 +11177,10 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-197||AVENA": "PENDIENTE_CORTAR",
-        "OP-2026-197||CAFE": "PENDIENTE_CORTAR",
-        "OP-2026-197||MARFIL": "PENDIENTE_CORTAR",
-        "OP-2026-197||NEGRO": "PENDIENTE_CORTAR"
+        "OP-2026-197||AVENA": "CORTE_POR_ALISTAR",
+        "OP-2026-197||CAFE": "CORTE_POR_ALISTAR",
+        "OP-2026-197||MARFIL": "CORTE_POR_ALISTAR",
+        "OP-2026-197||NEGRO": "CORTE_POR_ALISTAR"
       },
       "tallas": [
         "T6",
@@ -11421,36 +11420,36 @@
     },
     {
       "cantidades": {
-        "GRIS CLARO_T6": 15,
-        "GRIS CLARO_T8": 15,
-        "GRIS CLARO_T10": 20,
-        "GRIS CLARO_T12": 20,
-        "GRIS CLARO_T14": 20,
-        "GRIS CLARO_T16": 20,
-        "MARFIL_T6": 15,
-        "MARFIL_T8": 15,
-        "MARFIL_T10": 30,
-        "MARFIL_T12": 30,
-        "MARFIL_T14": 30,
-        "MARFIL_T16": 30,
-        "CAFE_T6": 15,
-        "CAFE_T8": 15,
         "CAFE_T10": 30,
         "CAFE_T12": 30,
         "CAFE_T14": 30,
         "CAFE_T16": 30,
-        "VINOTINTO_T6": 8,
-        "VINOTINTO_T8": 8,
+        "CAFE_T6": 15,
+        "CAFE_T8": 15,
+        "GRIS CLARO_T10": 20,
+        "GRIS CLARO_T12": 20,
+        "GRIS CLARO_T14": 20,
+        "GRIS CLARO_T16": 20,
+        "GRIS CLARO_T6": 15,
+        "GRIS CLARO_T8": 15,
+        "MARFIL_T10": 30,
+        "MARFIL_T12": 30,
+        "MARFIL_T14": 30,
+        "MARFIL_T16": 30,
+        "MARFIL_T6": 15,
+        "MARFIL_T8": 15,
+        "ROSA_T10": 16,
+        "ROSA_T12": 16,
+        "ROSA_T14": 16,
+        "ROSA_T16": 16,
+        "ROSA_T6": 8,
+        "ROSA_T8": 8,
         "VINOTINTO_T10": 16,
         "VINOTINTO_T12": 16,
         "VINOTINTO_T14": 16,
         "VINOTINTO_T16": 16,
-        "ROSA_T6": 8,
-        "ROSA_T8": 8,
-        "ROSA_T10": 16,
-        "ROSA_T12": 16,
-        "ROSA_T14": 16,
-        "ROSA_T16": 16
+        "VINOTINTO_T6": 8,
+        "VINOTINTO_T8": 8
       },
       "categoria": "CONJUNTOS",
       "colores": [
@@ -11490,10 +11489,39 @@
       "numero": 201,
       "referencias": [
         {
-          "nombre": "SET BOMBER CORTA",
-          "ref": "",
+          "cantidades": {
+            "CAFE_T10": 30,
+            "CAFE_T12": 30,
+            "CAFE_T14": 30,
+            "CAFE_T16": 30,
+            "CAFE_T6": 15,
+            "CAFE_T8": 15,
+            "GRIS CLARO_T10": 20,
+            "GRIS CLARO_T12": 20,
+            "GRIS CLARO_T14": 20,
+            "GRIS CLARO_T16": 20,
+            "GRIS CLARO_T6": 15,
+            "GRIS CLARO_T8": 15,
+            "MARFIL_T10": 30,
+            "MARFIL_T12": 30,
+            "MARFIL_T14": 30,
+            "MARFIL_T16": 30,
+            "MARFIL_T6": 15,
+            "MARFIL_T8": 15,
+            "ROSA_T10": 16,
+            "ROSA_T12": 16,
+            "ROSA_T14": 16,
+            "ROSA_T16": 16,
+            "ROSA_T6": 8,
+            "ROSA_T8": 8,
+            "VINOTINTO_T10": 16,
+            "VINOTINTO_T12": 16,
+            "VINOTINTO_T14": 16,
+            "VINOTINTO_T16": 16,
+            "VINOTINTO_T6": 8,
+            "VINOTINTO_T8": 8
+          },
           "cat": "CONJUNTOS",
-          "vmo": 1151,
           "colores": [
             "GRIS CLARO",
             "MARFIL",
@@ -11501,6 +11529,9 @@
             "VINOTINTO",
             "ROSA"
           ],
+          "maquilador_id": "",
+          "nombre": "SET BOMBER CORTA",
+          "ref": "",
           "tallas": [
             "T6",
             "T8",
@@ -11509,39 +11540,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "GRIS CLARO_T6": 15,
-            "GRIS CLARO_T8": 15,
-            "GRIS CLARO_T10": 20,
-            "GRIS CLARO_T12": 20,
-            "GRIS CLARO_T14": 20,
-            "GRIS CLARO_T16": 20,
-            "MARFIL_T6": 15,
-            "MARFIL_T8": 15,
-            "MARFIL_T10": 30,
-            "MARFIL_T12": 30,
-            "MARFIL_T14": 30,
-            "MARFIL_T16": 30,
-            "CAFE_T6": 15,
-            "CAFE_T8": 15,
-            "CAFE_T10": 30,
-            "CAFE_T12": 30,
-            "CAFE_T14": 30,
-            "CAFE_T16": 30,
-            "VINOTINTO_T6": 8,
-            "VINOTINTO_T8": 8,
-            "VINOTINTO_T10": 16,
-            "VINOTINTO_T12": 16,
-            "VINOTINTO_T14": 16,
-            "VINOTINTO_T16": 16,
-            "ROSA_T6": 8,
-            "ROSA_T8": 8,
-            "ROSA_T10": 16,
-            "ROSA_T12": 16,
-            "ROSA_T14": 16,
-            "ROSA_T16": 16
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
@@ -12401,7 +12400,10 @@
         "T12",
         "T14",
         "T16"
-      ]
+      ],
+      "trazos_color_solicitado": {
+        "AZUL BEBE": true
+      }
     },
     {
       "cantidades": {
@@ -16429,7 +16431,7 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-248||NEGRO": "PENDIENTE_CORTAR"
+        "OP-2026-248||NEGRO": "CORTE_POR_ALISTAR"
       },
       "tallas": [
         "T6",
