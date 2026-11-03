@@ -9004,9 +9004,9 @@
         "cid_1789168564507_3162__cid_1789168005390_3833||MARFIL": true,
         "cid_1789168564507_3162__cid_1789168005390_3833||VINOTINTO": true,
         "cid_1789168564507_3162__cid_1789168005390_5177": true,
-        "cid_1789168564507_3162__cid_1789168005390_5703": true,
         "cid_1789168564507_3162__cid_1789168501009_9061": true,
-        "cid_1789168564507_3162__cid_1789168528657_3472": true
+        "cid_1789168564507_3162__cid_1789168528657_3472": true,
+        "cid_1789168564507_3162__cid_1789168005390_5703": true
       },
       "consumibles_desagregado": {
         "cid_1789168564507_3162__cid_1789168005390_3833": true
@@ -11053,30 +11053,30 @@
     },
     {
       "cantidades": {
+        "AVENA_T6": 12,
+        "AVENA_T8": 16,
         "AVENA_T10": 21,
         "AVENA_T12": 21,
         "AVENA_T14": 21,
         "AVENA_T16": 21,
-        "AVENA_T6": 12,
-        "AVENA_T8": 16,
+        "CAFE_T6": 12,
+        "CAFE_T8": 16,
         "CAFE_T10": 24,
         "CAFE_T12": 24,
         "CAFE_T14": 24,
         "CAFE_T16": 24,
-        "CAFE_T6": 12,
-        "CAFE_T8": 16,
-        "MARFIL_T10": 20,
-        "MARFIL_T12": 20,
-        "MARFIL_T14": 20,
-        "MARFIL_T16": 20,
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 16,
+        "NEGRO_T6": 12,
+        "NEGRO_T8": 16,
         "NEGRO_T10": 24,
         "NEGRO_T12": 24,
         "NEGRO_T14": 24,
         "NEGRO_T16": 24,
-        "NEGRO_T6": 12,
-        "NEGRO_T8": 16
+        "MARFIL_T6": 12,
+        "MARFIL_T8": 16,
+        "MARFIL_T10": 20,
+        "MARFIL_T12": 20,
+        "MARFIL_T14": 20,
+        "MARFIL_T16": 20
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -11088,12 +11088,12 @@
       "consumibles_check": {
         "cid_1789264125616_3759__cid_1789263938874_4812||AVENA": true,
         "cid_1789264125616_3759__cid_1789263938874_4812||CAFE": true,
-        "cid_1789264125616_3759__cid_1789263938874_4812||MARFIL": true,
         "cid_1789264125616_3759__cid_1789263938874_4812||NEGRO": true,
         "cid_1789264125616_3759__cid_1789263938874_4993": true,
-        "cid_1789264125616_3759__cid_1789263938874_6019": true,
         "cid_1789264125616_3759__cid_1789263938874_8127": true,
         "cid_1789264125616_3759__cid_1789263938874_8973": true,
+        "cid_1789264125616_3759__cid_1789263938874_4812||MARFIL": true,
+        "cid_1789264125616_3759__cid_1789263938874_6019": true,
         "cid_1789264125616_3759__cid_1789264104215_7428": true
       },
       "consumibles_desagregado": {
@@ -11129,42 +11129,16 @@
       "numero": 197,
       "referencias": [
         {
-          "cantidades": {
-            "AVENA_T10": 21,
-            "AVENA_T12": 21,
-            "AVENA_T14": 21,
-            "AVENA_T16": 21,
-            "AVENA_T6": 12,
-            "AVENA_T8": 16,
-            "CAFE_T10": 24,
-            "CAFE_T12": 24,
-            "CAFE_T14": 24,
-            "CAFE_T16": 24,
-            "CAFE_T6": 12,
-            "CAFE_T8": 16,
-            "MARFIL_T10": 20,
-            "MARFIL_T12": 20,
-            "MARFIL_T14": 20,
-            "MARFIL_T16": 20,
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 16,
-            "NEGRO_T10": 24,
-            "NEGRO_T12": 24,
-            "NEGRO_T14": 24,
-            "NEGRO_T16": 24,
-            "NEGRO_T6": 12,
-            "NEGRO_T8": 16
-          },
+          "nombre": "CHAQUETA BAGGY PINZAS",
+          "ref": "",
           "cat": "CHAQUETAS",
+          "vmo": 1151,
           "colores": [
             "AVENA",
             "CAFE",
             "NEGRO",
             "MARFIL"
           ],
-          "maquilador_id": "",
-          "nombre": "CHAQUETA BAGGY PINZAS",
-          "ref": "",
           "tallas": [
             "T6",
             "T8",
@@ -11173,7 +11147,33 @@
             "T14",
             "T16"
           ],
-          "vmo": 1151
+          "cantidades": {
+            "AVENA_T6": 12,
+            "AVENA_T8": 16,
+            "AVENA_T10": 21,
+            "AVENA_T12": 21,
+            "AVENA_T14": 21,
+            "AVENA_T16": 21,
+            "CAFE_T6": 12,
+            "CAFE_T8": 16,
+            "CAFE_T10": 24,
+            "CAFE_T12": 24,
+            "CAFE_T14": 24,
+            "CAFE_T16": 24,
+            "NEGRO_T6": 12,
+            "NEGRO_T8": 16,
+            "NEGRO_T10": 24,
+            "NEGRO_T12": 24,
+            "NEGRO_T14": 24,
+            "NEGRO_T16": 24,
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 16,
+            "MARFIL_T10": 20,
+            "MARFIL_T12": 20,
+            "MARFIL_T14": 20,
+            "MARFIL_T16": 20
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
