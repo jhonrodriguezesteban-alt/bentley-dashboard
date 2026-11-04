@@ -1133,7 +1133,7 @@ async function _fbMigrarSiVacio(){
 // abiertas con una versión anterior se recargan solas (esperando a que terminen de guardar).
 // Sin esto, una pestaña vieja olvidada en un computador seguía guardando con la lógica
 // anterior y deshaciendo cambios de todos los demás.
-var APP_VERSION = 20261104.2;
+var APP_VERSION = 20261104.3;
 function _vigilarVersionApp(){
   if(!_fbDb) return;
   _fbDb.ref(FB_ROOT+'/app_version').on('value', function(snap){
@@ -3907,6 +3907,7 @@ function planVerMes(mesKey){
   // ── OPs / colores del mes — agrupado por categoría, con checklist de telas ──
   h += '<div style="font-size:11px;font-weight:700;color:'+mes.color+';text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">📋 Órdenes de producción · '+mesUnits.length+' color'+(mesUnits.length!==1?'es':'')+' · '+info.totalUds.toLocaleString('es-CO')+' uds</div>';
   if(mesUnits.length) h += '<div id="plan-corte-resumen" style="font-size:11px;margin:-2px 0 10px;"></div>';
+  if(mesUnits.length) h += '<div id="plan-carga-cortador" style="margin:0 0 14px;"></div>';
   if(!mesUnits.length){
     h += '<div style="color:#2c2c2e;font-size:12px;padding:10px 0 18px;">Sin OPs asignadas a este mes.</div>';
   } else {
@@ -4201,6 +4202,7 @@ function planSetCortadorRef(sel){
     var o = document.createElement('option'); o.value = valor; o.textContent = '✂ '+valor;
     sel.insertBefore(o, sel.lastElementChild); sel.value = valor;
   }
+  _planCorteRefrescar(_planVerMesActual);
   toast('✂ '+valor+' corta '+ids.map(fmtOpId).join(', '), 'success');
 }
 function toggleCorteOk(opId, color, checked, el){
@@ -4249,6 +4251,59 @@ function _planCorteRefrescar(mesKey){
     sp.style.color = n===arr.length && n>0 ? '#34d399' : (n>0 ? '#fbbf24' : '#475569');
     sp.style.fontWeight = n>0 ? '700' : '400';
   });
+  var elCarga = document.getElementById('plan-carga-cortador');
+  if(elCarga) elCarga.innerHTML = _planCargaCortadorHtml(info);
+}
+// Carga de corte del mes por cortador: cuánto le toca a cada uno y cuánto de eso ya está
+// marcado "✂ se puede cortar" (tela disponible), con el detalle de lo listo por referencia.
+function _planCargaCortadorHtml(info){
+  var porCort = {};
+  info.mesUnits.forEach(function(u){
+    var op = (DB.ops||[]).find(function(o){ return o.id===u.op.id; }) || u.op;
+    var cort = _cortadorCanon(op.cortador) || 'Sin cortador';
+    var uds = _planColorUds(op, u.color);
+    var c = porCort[cort] || (porCort[cort] = {uds:0, col:0, udsOk:0, colOk:0, refsOk:{}, refsPend:{}});
+    c.uds += uds; c.col++;
+    var ref = (op.nombre_producto||op.id).trim().toUpperCase();
+    var bucket = _corteOk(op, u.color) ? c.refsOk : c.refsPend;
+    if(_corteOk(op, u.color)){ c.udsOk += uds; c.colOk++; }
+    if(!bucket[ref]) bucket[ref] = {uds:0, colores:[]};
+    bucket[ref].uds += uds;
+    bucket[ref].colores.push(u.color==='—' ? 'sin color' : u.color);
+  });
+  var nombres = Object.keys(porCort).sort(function(a,b){ return porCort[b].uds - porCort[a].uds; });
+  if(!nombres.length) return '';
+  function listaRefs(refs, color){
+    var ks = Object.keys(refs).sort(function(a,b){ return refs[b].uds - refs[a].uds; });
+    if(!ks.length) return '<div style="font-size:10px;color:#374151;padding:2px 0;">— nada —</div>';
+    return ks.map(function(k){
+      return '<div style="display:flex;justify-content:space-between;gap:8px;font-size:10px;padding:2px 0;border-bottom:1px solid rgba(255,255,255,.03);">'
+        + '<span style="color:#cbd5e1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+esc(refs[k].colores.join(', '))+'">'+esc(k)+' <span style="color:#475569;">· '+esc(refs[k].colores.join(', '))+'</span></span>'
+        + '<b style="color:'+color+';flex-shrink:0;font-variant-numeric:tabular-nums;">'+refs[k].uds.toLocaleString('es-CO')+'</b></div>';
+    }).join('');
+  }
+  var h = '<div style="font-size:10px;font-weight:800;color:#60a5fa;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">✂ Carga de corte por cortador</div>';
+  h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px;">';
+  nombres.forEach(function(n){
+    var c = porCort[n];
+    var pct = c.uds ? Math.round(c.udsOk/c.uds*100) : 0;
+    h += '<div style="background:rgba(96,165,250,.05);border:1px solid rgba(96,165,250,.22);border-radius:10px;padding:10px 12px;">';
+    h += '<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;">';
+    h += '<span style="font-size:13px;font-weight:800;color:#e2e8f0;">✂ '+esc(n)+'</span>';
+    h += '<span style="font-size:18px;font-weight:900;color:#f1f5f9;font-variant-numeric:tabular-nums;">'+c.uds.toLocaleString('es-CO')+'<span style="font-size:9px;color:#64748b;margin-left:2px;">uds</span></span>';
+    h += '</div>';
+    h += '<div style="font-size:10px;color:#64748b;margin-bottom:6px;">'+c.col+' color'+(c.col!==1?'es':'')+' asignado'+(c.col!==1?'s':'')+'</div>';
+    h += '<div style="height:6px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden;margin-bottom:6px;"><div style="height:100%;width:'+pct+'%;background:#34d399;"></div></div>';
+    h += '<div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:2px;"><span style="color:#34d399;font-weight:700;">✂ Listo para cortar</span><b style="color:#34d399;">'+c.udsOk.toLocaleString('es-CO')+' uds · '+c.colOk+' col. ('+pct+'%)</b></div>';
+    h += '<div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:6px;"><span style="color:#f87171;font-weight:700;">Pendiente sin check</span><b style="color:#f87171;">'+(c.uds-c.udsOk).toLocaleString('es-CO')+' uds · '+(c.col-c.colOk)+' col.</b></div>';
+    h += '<details><summary style="font-size:10px;color:#60a5fa;cursor:pointer;">Ver referencias</summary>';
+    h += '<div style="font-size:9px;font-weight:800;color:#34d399;text-transform:uppercase;margin:6px 0 2px;">Listo para cortar</div>'+listaRefs(c.refsOk,'#34d399');
+    h += '<div style="font-size:9px;font-weight:800;color:#f87171;text-transform:uppercase;margin:8px 0 2px;">Pendiente</div>'+listaRefs(c.refsPend,'#f87171');
+    h += '</details>';
+    h += '</div>';
+  });
+  h += '</div>';
+  return h;
 }
 
 // Talla-por-talla de un color (para la orden de corte impresa) — misma fuente que
