@@ -40236,20 +40236,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MARFIL",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1793822388079_ve9j4",
-      "ts": 1793822388079,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-204",
       "op_nombre": "HOODIE CAROLINA",
       "referencia": "HOODIE CAROLINA",
-      "color": "MARFIL",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1793822388079,
       "uds": 72,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793822595888_51490",
+      "ts": 1793822595888,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-241",
+      "nombre": "CONJUNTO SUECIA",
+      "categoria": "CONJUNTOS",
+      "colores": 4,
+      "refs": 1
     }
   ]
 }
