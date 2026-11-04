@@ -1133,7 +1133,7 @@ async function _fbMigrarSiVacio(){
 // abiertas con una versión anterior se recargan solas (esperando a que terminen de guardar).
 // Sin esto, una pestaña vieja olvidada en un computador seguía guardando con la lógica
 // anterior y deshaciendo cambios de todos los demás.
-var APP_VERSION = 20261103.1;
+var APP_VERSION = 20261104.1;
 function _vigilarVersionApp(){
   if(!_fbDb) return;
   _fbDb.ref(FB_ROOT+'/app_version').on('value', function(snap){
@@ -1228,7 +1228,14 @@ var TALLAS_DEFAULT = ['T4','T6','T8','T10','T12','T14','T16'];
 var TALLAS_ALL = ['T2','T4','T6','T8','T10','T12','T14','T16'];
 var TALLAS_ADULTO = ['XS','S','M','L','XL','XXL','XXXL'];
 var CAT_CODE_MAP = {'0':'CAMISETAS','AB':'ABRIGOS','BG':'GABAN','BL':'BLUSAS','BZ':'BUZOS','CH':'CHAQUETAS','CHL':'CHALECOS','CJ':'CONJUNTOS','CM':'CAMISAS','CMS':'CAMISONES','CMT':'CAMISETAS','CMTS':'CAMISETAS','FL':'FALDA','GB':'GABAN','PT':'PANTALONES','PTT':'PANTALONES','VS':'VESTIDOS'};
-var CORTADORES = ['Corte Carbajal', 'Corte con proveedor'];
+var CORTADORES = ['Corte Carbajal', 'Carolina Salazar', 'Corte con proveedor'];
+// Lista para elegir cortador: la base + cualquier otro nombre que ya se haya usado en una OP
+// (así un "Otro" escrito una vez queda disponible para las siguientes).
+function _cortadoresLista(){
+  var lista = CORTADORES.slice();
+  (DB.ops||[]).forEach(function(o){ var c=(o.cortador||'').trim(); if(c && lista.indexOf(c)<0) lista.push(c); });
+  return lista;
+}
 var ESTADOS = ['POR_REVISAR','PENDIENTE_CORTAR','CORTE_POR_ALISTAR','ASIGNADO','EN_CONFECCION','ENTREGADO_PARCIAL','ENTREGADO','NOVEDAD'];
 var ESTADO_LABELS = {
   POR_REVISAR:'Nuevas programaciones',
@@ -3947,6 +3954,7 @@ function planVerMes(mesKey){
         h += '<div style="font-size:9px;color:#475569;">'+refUnits.length+' color'+(refUnits.length!==1?'es':'')+(multiOP?' · '+Object.keys(opsDistintas).length+' OPs':'')+' — clic para ver todos'
            + ' · <span class="plan-corte-ref" id="'+_refCorteId+'" data-units="'+esc(JSON.stringify(refUnits.map(function(u){ return [u.op.id,u.color]; })))+'"></span></div>';
         h += '</div>';
+        h += _planCortadorSelect(Object.keys(opsDistintas));
         h += '<div style="text-align:right;flex-shrink:0;">';
         h += '<div style="font-size:15px;font-weight:900;color:#f1f5f9;">'+udsRef.toLocaleString('es-CO')+'<span style="font-size:9px;color:#64748b;margin-left:2px;">uds</span></div>';
         if(costoRef>0) h += '<div style="font-size:10px;color:#34d399;font-weight:700;">'+fmtCopFull(costoRef)+'</div>';
@@ -4146,6 +4154,46 @@ function planVerMes(mesKey){
 // así viaja con la sincronización de OPs (merge por OP) y no pisa otros cambios.
 function _corteKey(color){ return String(color||'—').trim().toUpperCase().replace(/[.#$\/\[\]]/g,'_'); }
 function _corteOk(op, color){ return !!(op && op.corte_ok_color && op.corte_ok_color[_corteKey(color)]); }
+// Selector "quién corta" de una referencia en el resumen del mes. Escribe op.cortador en
+// todas las OPs de esa referencia (el mismo campo que se pide al crear la OP y que filtra
+// Monitoreo). "Otro…" pide el nombre y queda en la lista para las siguientes.
+function _planCortadorSelect(opIds){
+  var ops = opIds.map(function(id){ return (DB.ops||[]).find(function(o){ return o.id===id; }); }).filter(Boolean);
+  var vals = {}; ops.forEach(function(o){ vals[(o.cortador||'').trim()] = 1; });
+  var actual = Object.keys(vals).length===1 ? Object.keys(vals)[0] : '__varios__';
+  var lista = _cortadoresLista();
+  var h = '<select data-ops="'+esc(opIds.join(','))+'" data-prev="'+esc(actual)+'" onclick="event.stopPropagation()" onchange="planSetCortadorRef(this)" '+(_canEditPlan()?'':'disabled ')+'title="Quién corta esta referencia" style="flex-shrink:0;max-width:170px;background:#0a0d14;border:1px solid rgba(96,165,250,.35);border-radius:7px;color:#60a5fa;font-size:11px;font-weight:700;padding:5px 6px;cursor:pointer;">';
+  if(actual==='') h += '<option value="" selected>✂ Sin cortador</option>';
+  if(actual==='__varios__') h += '<option value="__varios__" selected>✂ Varios</option>';
+  lista.forEach(function(c){ h += '<option value="'+esc(c)+'"'+(c===actual?' selected':'')+'>✂ '+esc(c)+'</option>'; });
+  h += '<option value="__otro__">➕ Otro…</option>';
+  h += '</select>';
+  return h;
+}
+function planSetCortadorRef(sel){
+  if(!_canEditPlan()){ toast('Solo Jhon o la Jefa de Producción pueden editar la planeación','warning'); return; }
+  var valor = sel.value;
+  if(valor==='__varios__') return;
+  if(valor==='__otro__'){
+    valor = (prompt('Nombre de quien corta esta referencia:')||'').trim();
+    if(!valor){ sel.value = sel.getAttribute('data-prev'); return; }
+  }
+  var ids = (sel.getAttribute('data-ops')||'').split(',').filter(Boolean);
+  ids.forEach(function(id){
+    var op = (DB.ops||[]).find(function(o){ return o.id===id; });
+    if(!op) return;
+    op.cortador = valor;
+    _logEvt('op_cortador', {op_id:op.id, op_nombre:op.nombre_producto, cortador:valor});
+  });
+  saveLocal();
+  guardarArchivo('ops', {ops: DB.ops});
+  sel.setAttribute('data-prev', valor);
+  if(sel.value!==valor){
+    var o = document.createElement('option'); o.value = valor; o.textContent = '✂ '+valor;
+    sel.insertBefore(o, sel.lastElementChild); sel.value = valor;
+  }
+  toast('✂ '+valor+' corta '+ids.map(fmtOpId).join(', '), 'success');
+}
 function toggleCorteOk(opId, color, checked, el){
   var op = (DB.ops||[]).find(function(o){ return o.id===opId; });
   if(!op) return;
@@ -5462,6 +5510,7 @@ function _planMiniCard(op, color){
     h += '<span style="font-size:8px;font-weight:700;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);border-radius:3px;color:#0a84ff;padding:1px 5px;text-transform:uppercase;white-space:nowrap;">'+esc(color)+'</span>';
     h += '</div>';
   }
+  if(op.cortador) h += '<div style="font-size:8px;font-weight:700;color:#60a5fa;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">✂ '+esc(op.cortador)+'</div>';
   // Desglose de costos si hay receta
   if(costo){
     h += '<div style="border-top:1px solid #2c2c2e;margin:5px 0;padding-top:5px;">';
