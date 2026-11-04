@@ -40120,19 +40120,35 @@
       "user": "John Rodriguez"
     },
     {
+      "bulk": false,
+      "color": "VERDE MILITAR",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1793811753313_n2991",
+      "motivo": "ENTREGADO",
+      "op_id": "OP-2026-125",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "referencia": "OVERSIZED CAPOTA",
+      "talla": "T6",
+      "tipo": "estado_ot",
       "ts": 1793811753313,
+      "uds": 7,
+      "user": "Carolina Telles"
+    },
+    {
+      "id": "evt_1793811848968_pdjxj",
+      "ts": 1793811848968,
       "user": "Carolina Telles",
       "tipo": "estado_ot",
       "op_id": "OP-2026-125",
       "op_nombre": "OVERSIZED CAPOTA",
       "referencia": "OVERSIZED CAPOTA",
       "color": "VERDE MILITAR",
-      "talla": "T6",
+      "talla": "todas las tallas",
       "estado_anterior": "ENTREGADO",
       "estado_nuevo": "ENTREGADO",
-      "bulk": false,
-      "uds": 7,
+      "bulk": true,
+      "uds": 74,
       "motivo": "ENTREGADO"
     }
   ]
