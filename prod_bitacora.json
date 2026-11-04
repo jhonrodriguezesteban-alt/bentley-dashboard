@@ -40184,20 +40184,35 @@
       "user": "Carolina Telles"
     },
     {
+      "bulk": true,
+      "color": "VERDE",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1793821313415_i8fb9",
-      "ts": 1793821313415,
-      "user": "Carolina Telles",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-212",
       "op_nombre": "CAMISETA COCOA",
       "referencia": "CAMISETA COCOA",
-      "color": "VERDE",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1793821313415,
       "uds": 58,
-      "motivo": "ENTREGADO"
+      "user": "Carolina Telles"
+    },
+    {
+      "id": "evt_1793822214804_s5s7f",
+      "ts": 1793822214804,
+      "user": "Jefa de Producción",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-250",
+      "op_nombre": "PANTALON RAVE",
+      "categoria": "PANTALONES",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-11-04",
+      "total_uds": 98,
+      "referencias": [
+        "PANTALON RAVE"
+      ]
     }
   ]
 }
