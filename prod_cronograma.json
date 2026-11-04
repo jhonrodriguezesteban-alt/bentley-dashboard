@@ -715,8 +715,7 @@
       "id": "id_1783030889777_yqi3k8nd5",
       "op_id": "OP-0051",
       "op_nombre": "CAZADORA ANIMALITOS",
-      "uds": 160,
-      "satelite_id": null
+      "uds": 160
     },
     {
       "color": "MARFIL",
@@ -1341,8 +1340,7 @@
       "id": "id_1787069214330_c22mlokm3",
       "op_id": "OP-2026-104",
       "op_nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS",
-      "uds": 7,
-      "satelite_id": null
+      "uds": 7
     },
     {
       "color": "CAMEL",
@@ -2900,13 +2898,14 @@
     },
     {
       "color": "VERDE MILITAR",
-      "entregado": false,
+      "entregado": true,
       "fecha_entrada": "2026-10-02",
       "id": "id_1790962863886_3zwv14eca",
       "op_id": "OP-2026-125",
       "op_nombre": "OVERSIZED CAPOTA",
       "satelite_id": "id_1790980909062_0rec7s347",
-      "uds": 74
+      "uds": 74,
+      "fecha_entrega_real": "2026-11-04"
     },
     {
       "color": "BEIGE",
@@ -3836,18 +3835,14 @@
       "uds": 84
     },
     {
+      "color": "NEGRO",
+      "entregado": false,
+      "fecha_entrada": "2026-10-30",
       "id": "id_1793397745245_3342s4zew",
       "op_id": "OP-2026-224",
       "op_nombre": "SET PALOMINO",
-      "color": "NEGRO",
       "satelite_id": "id_1785259712827_cwczmsu5r",
-      "uds": 117,
-      "fecha_entrada": "2026-10-30",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 117
     }
   ]
 }
