@@ -1133,7 +1133,7 @@ async function _fbMigrarSiVacio(){
 // abiertas con una versión anterior se recargan solas (esperando a que terminen de guardar).
 // Sin esto, una pestaña vieja olvidada en un computador seguía guardando con la lógica
 // anterior y deshaciendo cambios de todos los demás.
-var APP_VERSION = 20261104.3;
+var APP_VERSION = 20261104.4;
 function _vigilarVersionApp(){
   if(!_fbDb) return;
   _fbDb.ref(FB_ROOT+'/app_version').on('value', function(snap){
@@ -9857,6 +9857,18 @@ function renderInversion(){
   // obra ya está paga), la OP sale de este listado — es una lista de "qué falta invertir",
   // no un histórico de todas las OPs activas.
   var filas = ops.map(function(op){ return _invResumenOP(op); }).filter(function(r){ return !r.entregadaCompleta && r.pendiente>0; });
+  var excl2027 = {ops:0, monto:0};
+  if(_invOcultar2027){
+    var mesesPlan = (DB.planeacion && DB.planeacion.meses) || {};
+    var mesDeKey = {};
+    Object.keys(mesesPlan).forEach(function(mk){ (mesesPlan[mk]||[]).forEach(function(key){ mesDeKey[key]=mk; }); });
+    filas = filas.map(function(r){
+      var x = _invSin2027(r, mesDeKey);
+      if(!x){ excl2027.ops++; excl2027.monto += r.pendiente; }
+      else if(x!==r) excl2027.monto += r.pendiente - x.pendiente;
+      return x;
+    }).filter(function(r){ return r && r.pendiente>0; });
+  }
   filas.sort(function(a,b){ return (a.op.numero||0) - (b.op.numero||0); });
 
   var granTotal=0, granPagado=0, granPendiente=0, sinReceta=0, granPendConf=0, granPendInsumo=0;
@@ -9880,7 +9892,11 @@ function renderInversion(){
   h += '<div style="position:relative;flex:1;min-width:200px;max-width:320px;">';
   h += '<input id="inv-search-input" type="text" value="'+esc(_invBusqueda)+'" oninput="var _q=this.value,_p=this.selectionStart;_invSetBusqueda(_q);var _el=document.getElementById(\'inv-search-input\');if(_el){_el.focus();try{_el.setSelectionRange(_p,_p);}catch(e){}}" placeholder="🔍 Buscar OP o nombre..." style="width:100%;background:#0d1117;border:1px solid #2c2c2e;border-radius:20px;color:#e2e8f0;font-size:12px;padding:5px 32px 5px 14px;outline:none;box-sizing:border-box;">';
   if(_invBusqueda) h += '<button onclick="_invSetBusqueda(\'\')" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:#475569;cursor:pointer;font-size:14px;padding:0;line-height:1;">×</button>';
-  h += '</div></div>';
+  h += '</div>';
+  h += '<label title="Quita lo que en Planeación está para 2027 (no se corta este año)" style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;font-weight:700;color:'+(_invOcultar2027?'#34d399':'#94a3b8')+';background:'+(_invOcultar2027?'rgba(52,211,153,.1)':'rgba(255,255,255,.04)')+';border:1px solid '+(_invOcultar2027?'rgba(52,211,153,.4)':'#2c2c2e')+';border-radius:20px;padding:5px 12px;">';
+  h += '<input type="checkbox" '+(_invOcultar2027?'checked':'')+' onchange="_invToggleOcultar2027(this.checked)" style="accent-color:#34d399;margin:0;"> Quitar lo planeado para 2027</label>';
+  if(_invOcultar2027 && (excl2027.ops || excl2027.monto>0)) h += '<span style="font-size:11px;color:#64748b;">'+excl2027.ops+' OP'+(excl2027.ops!==1?'s':'')+' fuera completas · '+fmtCopFull(excl2027.monto)+' pendiente excluido</span>';
+  h += '</div>';
 
   h += '<div class="card" style="padding:0;overflow:hidden;margin-bottom:18px;">';
   h += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0;">';
@@ -9950,6 +9966,38 @@ function renderInversion(){
 }
 var _invExpandido = {};
 var _invBusqueda = '';
+// Ocultar del Resumen de Inversión lo que en Planeación quedó para 2027 (por defecto sí).
+var _invOcultar2027 = (function(){ try{ return localStorage.getItem('bentley_inv_ocultar2027')!=='0'; }catch(e){ return true; } })();
+function _invToggleOcultar2027(v){ _invOcultar2027 = !!v; try{ localStorage.setItem('bentley_inv_ocultar2027', v?'1':'0'); }catch(e){} renderPage('inversion'); }
+// Quita de una fila del resumen la parte de los colores que en Planeación están en 2027.
+// Esos colores no se han cortado, así que su costo se descuenta del total y del pendiente
+// (proporcional a sus unidades). Devuelve null si toda la OP quedó para 2027.
+function _invSin2027(r, mesDeKey){
+  var udsColor = _invUdsPorColorOp(r.op);
+  var colores = Object.keys(udsColor);
+  var udsTot = 0, uds27 = 0;
+  colores.forEach(function(c){
+    udsTot += udsColor[c]||0;
+    if(_planMesFueraDeResumen(mesDeKey[_planKey(r.op.id, c)])) uds27 += udsColor[c]||0;
+  });
+  if(!uds27) return r;
+  if(uds27 >= udsTot) return null;
+  var f = uds27/udsTot;
+  var x = Object.assign({}, r);
+  var quitarIns = Math.min(x.insumoPendiente, x.insumoTotal*f);
+  var quitarConf = Math.min(x.confeccionPendiente, x.confeccionTotal*f);
+  var escIns = x.insumoPendiente>0 ? (x.insumoPendiente-quitarIns)/x.insumoPendiente : 1;
+  var escConf = x.confeccionPendiente>0 ? (x.confeccionPendiente-quitarConf)/x.confeccionPendiente : 1;
+  x.insumoItems = (r.insumoItems||[]).map(function(it){ return Object.assign({}, it, {pendiente: it.pendiente*escIns}); });
+  x.confeccionItems = (r.confeccionItems||[]).map(function(it){ return Object.assign({}, it, {pendiente: it.pendiente*escConf}); });
+  x.insumoTotal -= quitarIns; x.insumoPendiente -= quitarIns;
+  x.confeccionTotal -= quitarConf; x.confeccionPendiente -= quitarConf;
+  x.total -= quitarIns + quitarConf;
+  x.pendiente = x.insumoPendiente + x.confeccionPendiente;
+  x.udsTotal = Math.round(r.udsTotal*(1-f));
+  x.parcial2027 = true;
+  return x;
+}
 function _invSetBusqueda(v){ _invBusqueda = v; renderPage('inversion'); }
 function _invToggleExpand(opId){
   _invExpandido[opId] = !_invExpandido[opId];
