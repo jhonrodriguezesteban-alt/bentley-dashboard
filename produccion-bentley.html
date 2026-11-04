@@ -1133,7 +1133,7 @@ async function _fbMigrarSiVacio(){
 // abiertas con una versión anterior se recargan solas (esperando a que terminen de guardar).
 // Sin esto, una pestaña vieja olvidada en un computador seguía guardando con la lógica
 // anterior y deshaciendo cambios de todos los demás.
-var APP_VERSION = 20261104.1;
+var APP_VERSION = 20261104.2;
 function _vigilarVersionApp(){
   if(!_fbDb) return;
   _fbDb.ref(FB_ROOT+'/app_version').on('value', function(snap){
@@ -1233,8 +1233,17 @@ var CORTADORES = ['Corte Carbajal', 'Carolina Salazar', 'Corte con proveedor'];
 // (así un "Otro" escrito una vez queda disponible para las siguientes).
 function _cortadoresLista(){
   var lista = CORTADORES.slice();
-  (DB.ops||[]).forEach(function(o){ var c=(o.cortador||'').trim(); if(c && lista.indexOf(c)<0) lista.push(c); });
+  (DB.ops||[]).forEach(function(o){ var c=_cortadorCanon(o.cortador); if(c && lista.indexOf(c)<0) lista.push(c); });
   return lista;
+}
+// "CARVAJAL" (OPs migradas), "Carbajal", "CORTE CARBAJAL"… son el mismo corte: se muestran
+// siempre como el nombre de la lista base para no duplicarlo en los selectores.
+function _cortadorCanon(c){
+  c = (c||'').trim();
+  if(!c) return '';
+  var norm = function(x){ return x.toUpperCase().replace(/^CORTE\s+/,'').replace(/V/g,'B').replace(/\s+/g,' '); };
+  var base = CORTADORES.find(function(b){ return norm(b)===norm(c); });
+  return base || c;
 }
 var ESTADOS = ['POR_REVISAR','PENDIENTE_CORTAR','CORTE_POR_ALISTAR','ASIGNADO','EN_CONFECCION','ENTREGADO_PARCIAL','ENTREGADO','NOVEDAD'];
 var ESTADO_LABELS = {
@@ -4159,7 +4168,7 @@ function _corteOk(op, color){ return !!(op && op.corte_ok_color && op.corte_ok_c
 // Monitoreo). "Otro…" pide el nombre y queda en la lista para las siguientes.
 function _planCortadorSelect(opIds){
   var ops = opIds.map(function(id){ return (DB.ops||[]).find(function(o){ return o.id===id; }); }).filter(Boolean);
-  var vals = {}; ops.forEach(function(o){ vals[(o.cortador||'').trim()] = 1; });
+  var vals = {}; ops.forEach(function(o){ vals[_cortadorCanon(o.cortador)] = 1; });
   var actual = Object.keys(vals).length===1 ? Object.keys(vals)[0] : '__varios__';
   var lista = _cortadoresLista();
   var h = '<select data-ops="'+esc(opIds.join(','))+'" data-prev="'+esc(actual)+'" onclick="event.stopPropagation()" onchange="planSetCortadorRef(this)" '+(_canEditPlan()?'':'disabled ')+'title="Quién corta esta referencia" style="flex-shrink:0;max-width:170px;background:#0a0d14;border:1px solid rgba(96,165,250,.35);border-radius:7px;color:#60a5fa;font-size:11px;font-weight:700;padding:5px 6px;cursor:pointer;">';
@@ -5510,7 +5519,7 @@ function _planMiniCard(op, color){
     h += '<span style="font-size:8px;font-weight:700;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.3);border-radius:3px;color:#0a84ff;padding:1px 5px;text-transform:uppercase;white-space:nowrap;">'+esc(color)+'</span>';
     h += '</div>';
   }
-  if(op.cortador) h += '<div style="font-size:8px;font-weight:700;color:#60a5fa;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">✂ '+esc(op.cortador)+'</div>';
+  if(op.cortador) h += '<div style="font-size:8px;font-weight:700;color:#60a5fa;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">✂ '+esc(_cortadorCanon(op.cortador))+'</div>';
   // Desglose de costos si hay receta
   if(costo){
     h += '<div style="border-top:1px solid #2c2c2e;margin:5px 0;padding-top:5px;">';
