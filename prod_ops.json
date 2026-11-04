@@ -14635,18 +14635,18 @@
     },
     {
       "cantidades": {
-        "FUCSIA 618_T10": 18,
-        "FUCSIA 618_T12": 18,
-        "FUCSIA 618_T14": 18,
-        "FUCSIA 618_T16": 18,
-        "FUCSIA 618_T6": 10,
-        "FUCSIA 618_T8": 18,
-        "NEGRO -200_T10": 18,
-        "NEGRO -200_T12": 18,
-        "NEGRO -200_T14": 18,
-        "NEGRO -200_T16": 18,
-        "NEGRO -200_T6": 10,
-        "NEGRO -200_T8": 18
+        "NEGRO -200_T6": 42,
+        "NEGRO -200_T8": 33,
+        "NEGRO -200_T10": 33,
+        "NEGRO -200_T12": 33,
+        "NEGRO -200_T14": 33,
+        "NEGRO -200_T16": 33,
+        "FUCSIA 618_T6": 28,
+        "FUCSIA 618_T8": 13,
+        "FUCSIA 618_T10": 13,
+        "FUCSIA 618_T12": 13,
+        "FUCSIA 618_T14": 13,
+        "FUCSIA 618_T16": 13
       },
       "categoria": "BLUSAS",
       "colores": [
@@ -14683,28 +14683,14 @@
       "receta_nombre": "BLUSA MANGA BOLERO",
       "referencias": [
         {
-          "cantidades": {
-            "FUCSIA 618_T10": 18,
-            "FUCSIA 618_T12": 18,
-            "FUCSIA 618_T14": 18,
-            "FUCSIA 618_T16": 18,
-            "FUCSIA 618_T6": 10,
-            "FUCSIA 618_T8": 18,
-            "NEGRO -200_T10": 18,
-            "NEGRO -200_T12": 18,
-            "NEGRO -200_T14": 18,
-            "NEGRO -200_T16": 18,
-            "NEGRO -200_T6": 10,
-            "NEGRO -200_T8": 18
-          },
+          "nombre": "BLUSA MANGA BOLERO",
+          "ref": "1199",
           "cat": "BLUSAS",
+          "vmo": 1151,
           "colores": [
             "NEGRO -200",
             "FUCSIA 618"
           ],
-          "maquilador_id": "",
-          "nombre": "BLUSA MANGA BOLERO",
-          "ref": "1199",
           "tallas": [
             "T6",
             "T8",
@@ -14713,7 +14699,21 @@
             "T14",
             "T16"
           ],
-          "vmo": 1151
+          "cantidades": {
+            "NEGRO -200_T6": 42,
+            "NEGRO -200_T8": 33,
+            "NEGRO -200_T10": 33,
+            "NEGRO -200_T12": 33,
+            "NEGRO -200_T14": 33,
+            "NEGRO -200_T16": 33,
+            "FUCSIA 618_T6": 28,
+            "FUCSIA 618_T8": 13,
+            "FUCSIA 618_T10": 13,
+            "FUCSIA 618_T12": 13,
+            "FUCSIA 618_T14": 13,
+            "FUCSIA 618_T16": 13
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -14739,7 +14739,7 @@
           "solicitud_id": "id_1790787543603_ng1v8m2k"
         }
       ],
-      "updated_at": "2026-10-09"
+      "updated_at": "2026-11-03"
     },
     {
       "cantidades": {
@@ -16503,6 +16503,13 @@
       "diseno_origen_nombre": null,
       "consumibles_desagregado": {
         "cid_1789269430435_6299__cid_1789268387931_7184": true
+      },
+      "subg_estados": {
+        "OP-2026-249||BEIGE": "POR_REVISAR",
+        "OP-2026-249||VERDE MILITAR": "POR_REVISAR",
+        "OP-2026-249||NEGRO": "POR_REVISAR",
+        "OP-2026-249||AZUL OSCURO": "POR_REVISAR",
+        "OP-2026-249||ROJO": "POR_REVISAR"
       }
     }
   ]
