@@ -40274,20 +40274,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "VINOTINTO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1793822949422_98dmv",
-      "ts": 1793822949422,
-      "user": "Carolina Telles",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-099",
       "op_nombre": "BEISBOLERA 2.0",
       "referencia": "BEISBOLERA 2.0",
-      "color": "VINOTINTO",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1793822949422,
       "uds": 84,
-      "motivo": "ENTREGADO"
+      "user": "Carolina Telles"
+    },
+    {
+      "id": "evt_1793823067143_1llq9",
+      "ts": 1793823067143,
+      "user": "Jefa de Producción",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-251",
+      "op_nombre": "CONJUNTO CHILLY",
+      "categoria": "CONJUNTOS",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-11-04",
+      "total_uds": 165,
+      "referencias": [
+        "CONJUNTO CHILLY"
+      ]
     }
   ]
 }
