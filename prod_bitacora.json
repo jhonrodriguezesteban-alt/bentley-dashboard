@@ -40290,19 +40290,29 @@
       "user": "Carolina Telles"
     },
     {
-      "id": "evt_1793823067143_1llq9",
-      "ts": 1793823067143,
-      "user": "Jefa de Producción",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-251",
-      "op_nombre": "CONJUNTO CHILLY",
       "categoria": "CONJUNTOS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-11-04",
-      "total_uds": 165,
+      "id": "evt_1793823067143_1llq9",
+      "op_id": "OP-2026-251",
+      "op_nombre": "CONJUNTO CHILLY",
       "referencias": [
         "CONJUNTO CHILLY"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 165,
+      "ts": 1793823067143,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793830602473_rdp1h",
+      "ts": 1793830602473,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-123",
+      "op_nombre": "BUZO TEJIDO MOÑOS",
+      "color": "NEGRO",
+      "mes": "2026-11"
     }
   ]
 }
