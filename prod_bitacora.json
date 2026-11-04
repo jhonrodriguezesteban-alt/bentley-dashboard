@@ -40215,15 +40215,26 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1793822287331_616cn",
-      "ts": 1793822287331,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-250",
-      "nombre": "PANTALON RAVE",
       "categoria": "PANTALONES",
       "colores": 2,
-      "refs": 1
+      "id": "evt_1793822287331_616cn",
+      "nombre": "PANTALON RAVE",
+      "op_id": "OP-2026-250",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1793822287331,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793822358850_vcd75",
+      "ts": 1793822358850,
+      "user": "Jefa de Producción",
+      "tipo": "cambiar_estado_op_all",
+      "op_id": "OP-2026-250",
+      "estado": "PENDIENTE_CORTAR",
+      "colores": 2,
+      "protegidos": [],
+      "nombre": "PANTALON RAVE"
     }
   ]
 }
