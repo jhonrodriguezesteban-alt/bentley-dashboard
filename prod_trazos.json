@@ -4132,41 +4132,83 @@
       "op_nombre": "PANTALON TRENCH"
     },
     {
-      "id": "id_1793735462185_c8o2md6eh",
-      "op_id": "OP-2026-208",
-      "op_nombre": "PANTALON VENOM",
       "categoria": "PANTALONES",
-      "creado_por": "Isabel",
       "creado_en": "2026-11-03",
-      "estado": "ENVIADA",
+      "creado_por": "Isabel",
       "enviada_en": "2026-11-03",
+      "estado": "ENVIADA",
+      "id": "id_1793735462185_c8o2md6eh",
       "lineas": [
         {
-          "id": "id_1793735386529_9up6xx8tw",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T4",
-            "T6"
-          ],
-          "marcadas_por_talla": {
-            "T4": 1,
-            "T6": 1
-          },
-          "cantidad_trazos": 1,
           "ancho_util": 1.72,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "Trazo para techpatron",
+          "cantidad_trazos": 1,
           "colores": [
             "AZUL BEBE"
           ],
           "generado": false,
+          "id": "id_1793735386529_9up6xx8tw",
           "impreso": false,
-          "recogido": false
+          "marcadas_por_talla": {
+            "T4": 1,
+            "T6": 1
+          },
+          "notas": "Trazo para techpatron",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T4",
+            "T6"
+          ],
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
         },
         {
+          "ancho_util": 1.72,
+          "cantidad_trazos": 1,
+          "colores": [
+            "AZUL BEBE"
+          ],
+          "generado": false,
           "id": "id_1793735448134_0nonzmq3c",
+          "impreso": false,
+          "marcadas_por_talla": {
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1,
+            "T8": 1
+          },
+          "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
+        }
+      ],
+      "op_id": "OP-2026-208",
+      "op_nombre": "PANTALON VENOM"
+    },
+    {
+      "id": "id_1793826524137_5ku9jgrni",
+      "op_id": "OP-2026-251",
+      "op_nombre": "CONJUNTO CHILLY",
+      "categoria": "CONJUNTOS",
+      "creado_por": "Isabel",
+      "creado_en": "2026-11-04",
+      "estado": "ENVIADA",
+      "enviada_en": "2026-11-04",
+      "lineas": [
+        {
+          "id": "id_1793826514323_fsuwee9rf",
           "tipo": "TELA_PRINCIPAL",
           "tipo_custom": "",
           "tallas": [
@@ -4184,12 +4226,15 @@
             "T16": 1
           },
           "cantidad_trazos": 1,
-          "ancho_util": 1.72,
+          "ancho_util": 151,
           "sentido": "DOS_DIRECCIONES",
           "orientacion": "AL_HILO",
           "notas": "",
           "colores": [
-            "AZUL BEBE"
+            "MARFIL",
+            "NEGRO",
+            "GRIS OSCURO",
+            "AZUL OSCURO"
           ],
           "generado": false,
           "impreso": false,
