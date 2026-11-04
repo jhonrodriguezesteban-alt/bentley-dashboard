@@ -40226,15 +40226,30 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1793822358850_vcd75",
-      "ts": 1793822358850,
-      "user": "Jefa de Producción",
-      "tipo": "cambiar_estado_op_all",
-      "op_id": "OP-2026-250",
-      "estado": "PENDIENTE_CORTAR",
       "colores": 2,
-      "protegidos": [],
-      "nombre": "PANTALON RAVE"
+      "estado": "PENDIENTE_CORTAR",
+      "id": "evt_1793822358850_vcd75",
+      "nombre": "PANTALON RAVE",
+      "op_id": "OP-2026-250",
+      "tipo": "cambiar_estado_op_all",
+      "ts": 1793822358850,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793822388079_ve9j4",
+      "ts": 1793822388079,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-204",
+      "op_nombre": "HOODIE CAROLINA",
+      "referencia": "HOODIE CAROLINA",
+      "color": "MARFIL",
+      "talla": "todas las tallas",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": true,
+      "uds": 72,
+      "motivo": "ENTREGADO"
     }
   ]
 }
