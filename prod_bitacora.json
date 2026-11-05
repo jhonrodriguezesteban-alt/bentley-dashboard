@@ -40928,6 +40928,127 @@
       "user": "Jefa de Producción"
     },
     {
+      "id": "evt_1793839234382_8c8sp",
+      "ts": 1793839234382,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1791035985572_unp0rsl7v",
+      "op_id": "OP-2026-220",
+      "color": "VERDE MILITAR",
+      "fecha_nueva": "2026-11-27",
+      "motivo": "enfermo"
+    },
+    {
+      "id": "evt_1793839241930_id38n",
+      "ts": 1793839241930,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1791035985572_unp0rsl7v",
+      "op_id": "OP-2026-220",
+      "color": "VERDE MILITAR",
+      "fecha_nueva": "2026-11-27",
+      "motivo": "enfermo"
+    },
+    {
+      "id": "evt_1793839256318_53e6b",
+      "ts": 1793839256318,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1793397745245_3342s4zew",
+      "op_id": "OP-2026-224",
+      "color": "NEGRO",
+      "fecha_nueva": "2026-11-07",
+      "motivo": "Reubicado en tablero"
+    },
+    {
+      "id": "evt_1793839276947_cbuoh",
+      "ts": 1793839276947,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1793395840746_ei7lijlu8",
+      "op_id": "OP-2026-222",
+      "color": "VINOTINTO",
+      "fecha_nueva": "2026-11-14",
+      "motivo": "Asignación inicial"
+    },
+    {
+      "id": "evt_1793839284268_dqx5t",
+      "ts": 1793839284268,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1792612659750_hmxo5xkby",
+      "op_id": "OP-2026-202",
+      "color": "CAFE",
+      "fecha_nueva": "2026-11-07",
+      "motivo": "Reubicado en tablero"
+    },
+    {
+      "id": "evt_1793839428083_jj3q6",
+      "ts": 1793839428083,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1791035985572_unp0rsl7v",
+      "op_id": "OP-2026-220",
+      "color": "VERDE MILITAR",
+      "fecha_nueva": "2026-11-06",
+      "motivo": "enfermo"
+    },
+    {
+      "id": "evt_1793839855180_3o1jt",
+      "ts": 1793839855180,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1792612727081_quz2fdbzu",
+      "op_id": "OP-2026-202",
+      "color": "MARFIL",
+      "fecha_nueva": "2026-11-07",
+      "motivo": "Reubicado en tablero"
+    },
+    {
+      "id": "evt_1793839861434_6lr3i",
+      "ts": 1793839861434,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1792612727081_quz2fdbzu",
+      "op_id": "OP-2026-202",
+      "color": "MARFIL",
+      "fecha_nueva": "2026-11-07",
+      "motivo": "Reubicado en tablero"
+    },
+    {
+      "id": "evt_1793839867119_2fn0s",
+      "ts": 1793839867119,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1792612696442_2mghn2qdv",
+      "op_id": "OP-2026-202",
+      "color": "GRIS OSCURO",
+      "fecha_nueva": "2026-11-07",
+      "motivo": "Reubicado en tablero"
+    },
+    {
+      "id": "evt_1793839916918_sz192",
+      "ts": 1793839916918,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1792612752929_iicvelwn7",
+      "op_id": "OP-2026-202",
+      "color": "NEGRO",
+      "fecha_nueva": "2026-11-07",
+      "motivo": "Asignación inicial"
+    },
+    {
+      "id": "evt_1793839981437_odwk3",
+      "ts": 1793839981437,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1792612006102_7x5s2sjvv",
+      "op_id": "OP-2026-223",
+      "color": "MARFIL",
+      "fecha_nueva": "2026-11-09",
+      "motivo": "Asignación inicial"
+    },
+    {
       "bulk": true,
       "color": "ROSA",
       "estado_anterior": "ENTREGADO",
@@ -40976,20 +41097,31 @@
       "user": "Carolina Telles"
     },
     {
+      "bulk": true,
+      "color": "CAMEL",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1793899877552_0supt",
-      "ts": 1793899877552,
-      "user": "Carolina Telles",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-0034",
       "op_nombre": "PILOTO PANCAKE",
       "referencia": "PILOTO PANCAKE",
-      "color": "CAMEL",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1793899877552,
       "uds": 132,
-      "motivo": "ENTREGADO"
+      "user": "Carolina Telles"
+    },
+    {
+      "id": "evt_1793906704720_up3nj",
+      "ts": 1793906704720,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1792265721340_v7kqc7nqa",
+      "op_id": "OP-2026-121",
+      "color": "NEGRO",
+      "fecha_nueva": "2026-11-09",
+      "motivo": "Asignación inicial"
     }
   ]
 }
