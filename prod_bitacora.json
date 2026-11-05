@@ -40912,20 +40912,31 @@
       "user": "John Rodriguez"
     },
     {
+      "bulk": true,
+      "color": "AZUL BEBE",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1793837649724_oa3rl",
-      "ts": 1793837649724,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-247",
       "op_nombre": "CAMIBUZO MANGA REDONDA",
       "referencia": "CAMIBUZO MANGA REDONDA",
-      "color": "AZUL BEBE",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1793837649724,
       "uds": 28,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793839234382_8c8sp",
+      "ts": 1793839234382,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1791035985572_unp0rsl7v",
+      "op_id": "OP-2026-220",
+      "color": "VERDE MILITAR",
+      "fecha_nueva": "2026-11-27",
+      "motivo": "enfermo"
     }
   ]
 }
