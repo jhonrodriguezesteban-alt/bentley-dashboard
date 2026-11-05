@@ -716,8 +716,7 @@
       "id": "id_1783030889777_yqi3k8nd5",
       "op_id": "OP-0051",
       "op_nombre": "CAZADORA ANIMALITOS",
-      "uds": 160,
-      "satelite_id": null
+      "uds": 160
     },
     {
       "color": "MARFIL",
@@ -856,7 +855,7 @@
     },
     {
       "color": "CAMEL",
-      "entregado": false,
+      "entregado": true,
       "fecha_compromiso": "2026-10-21",
       "fecha_entrada": "2026-07-28",
       "fecha_inicial": "2026-10-14",
@@ -879,7 +878,8 @@
       "op_id": "OP-0034",
       "op_nombre": "PILOTO PANCAKE",
       "satelite_id": "sat_10",
-      "uds": 84
+      "uds": 84,
+      "fecha_entrega_real": "2026-11-05"
     },
     {
       "color": "NEGRO",
@@ -1342,8 +1342,7 @@
       "id": "id_1787069214330_c22mlokm3",
       "op_id": "OP-2026-104",
       "op_nombre": "BUZO CEREZAS + BUZO TEJIDO MOÑOS",
-      "uds": 7,
-      "satelite_id": null
+      "uds": 7
     },
     {
       "color": "CAMEL",
@@ -3938,18 +3937,14 @@
       "uds": 117
     },
     {
+      "color": "MARFIL",
+      "entregado": false,
+      "fecha_entrada": "2026-11-05",
       "id": "id_1793894256357_j4cvhra04",
       "op_id": "OP-2026-205",
       "op_nombre": "CAMIBUZO NEVADO",
-      "color": "MARFIL",
       "satelite_id": "sat_16",
-      "uds": 100,
-      "fecha_entrada": "2026-11-05",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 100
     }
   ]
 }
