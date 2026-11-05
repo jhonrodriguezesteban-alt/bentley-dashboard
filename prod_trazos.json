@@ -4198,38 +4198,23 @@
       "op_nombre": "PANTALON VENOM"
     },
     {
-      "id": "id_1793826524137_5ku9jgrni",
-      "op_id": "OP-2026-251",
-      "op_nombre": "CONJUNTO CHILLY",
       "categoria": "CONJUNTOS",
-      "creado_por": "Isabel",
       "creado_en": "2026-11-04",
-      "estado": "ENVIADA",
+      "creado_por": "Isabel",
       "enviada_en": "2026-11-04",
+      "estado": "ENVIADA",
+      "historial_ediciones": [
+        {
+          "fecha": "2026-11-04",
+          "hora": "16:15",
+          "usuario": "Isabel"
+        }
+      ],
+      "id": "id_1793826524137_5ku9jgrni",
       "lineas": [
         {
-          "id": "id_1793826876953_y3kyrxfqi",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T8",
-            "T10",
-            "T12",
-            "T14",
-            "T16"
-          ],
-          "marcadas_por_talla": {
-            "T8": 1,
-            "T10": 1,
-            "T12": 1,
-            "T14": 1,
-            "T16": 1
-          },
-          "cantidad_trazos": 1,
           "ancho_util": 151,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "Trazos para el Carvajal",
+          "cantidad_trazos": 1,
           "colores": [
             "MARFIL",
             "NEGRO",
@@ -4237,32 +4222,64 @@
             "AZUL OSCURO"
           ],
           "generado": false,
+          "id": "id_1793826876953_y3kyrxfqi",
           "impreso": false,
-          "recogido": false
+          "marcadas_por_talla": {
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1,
+            "T8": 1
+          },
+          "notas": "Trazos para el Carvajal",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
         }
       ],
-      "historial_ediciones": [
-        {
-          "fecha": "2026-11-04",
-          "hora": "16:15",
-          "usuario": "Isabel"
-        }
-      ]
+      "op_id": "OP-2026-251",
+      "op_nombre": "CONJUNTO CHILLY"
     },
     {
-      "id": "id_1793826788638_tonkmmnm2",
-      "op_id": "OP-2026-250",
-      "op_nombre": "PANTALON RAVE",
       "categoria": "PANTALONES",
-      "creado_por": "Isabel",
       "creado_en": "2026-11-04",
-      "estado": "ENVIADA",
+      "creado_por": "Isabel",
       "enviada_en": "2026-11-04",
+      "estado": "ENVIADA",
+      "id": "id_1793826788638_tonkmmnm2",
       "lineas": [
         {
+          "ancho_util": 152,
+          "cantidad_trazos": 2,
+          "colores": [
+            "GRIS CLARO",
+            "NEGRO"
+          ],
+          "generado": false,
           "id": "id_1793826615447_6hxpghrms",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
+          "impreso": false,
+          "marcadas_por_talla": {
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1,
+            "T4": 1,
+            "T6": 1,
+            "T8": 1
+          },
+          "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
           "tallas": [
             "T4",
             "T6",
@@ -4272,8 +4289,241 @@
             "T14",
             "T16"
           ],
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
+        },
+        {
+          "ancho_util": 139,
+          "cantidad_trazos": 1,
+          "colores": [
+            "GRIS CLARO",
+            "NEGRO"
+          ],
+          "generado": false,
+          "id": "id_1793826757168_lnjh4e52j",
+          "impreso": false,
           "marcadas_por_talla": {
-            "T4": 1,
+            "T10": 2,
+            "T12": 2,
+            "T14": 2,
+            "T16": 2,
+            "T4": 2,
+            "T6": 2,
+            "T8": 2
+          },
+          "notas": "Todas las tapas marcadas dos veces.\nTrazo para el Carvajal",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T4",
+            "T6",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "tipo": "ADICIONAL",
+          "tipo_custom": "Tapas de bolsillo"
+        }
+      ],
+      "op_id": "OP-2026-250",
+      "op_nombre": "PANTALON RAVE"
+    },
+    {
+      "categoria": "CHAQUETAS",
+      "creado_en": "2026-11-04",
+      "creado_por": "Isabel",
+      "enviada_en": "2026-11-04",
+      "estado": "ENVIADA",
+      "id": "id_1793827206787_gk8yhcnsi",
+      "lineas": [
+        {
+          "ancho_util": 146,
+          "cantidad_trazos": 2,
+          "colores": [
+            "BEIGE"
+          ],
+          "generado": false,
+          "id": "id_1793827060226_5svvmti0a",
+          "impreso": false,
+          "marcadas_por_talla": {
+            "T6": 1,
+            "T8": 1
+          },
+          "notas": "*Trazos para tono beige y verde botella en super nylon \n*Trazos para el Carvajal",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T6",
+            "T8"
+          ],
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
+        },
+        {
+          "ancho_util": 146,
+          "cantidad_trazos": 2,
+          "colores": [
+            "BEIGE"
+          ],
+          "generado": false,
+          "id": "id_1793827099051_xrfstervt",
+          "impreso": false,
+          "marcadas_por_talla": {
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1
+          },
+          "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
+        },
+        {
+          "ancho_util": 139,
+          "cantidad_trazos": 2,
+          "colores": [
+            "BEIGE"
+          ],
+          "generado": false,
+          "id": "id_1793827149924_9yeh8f3tg",
+          "impreso": false,
+          "marcadas_por_talla": {
+            "T6": 1,
+            "T8": 1
+          },
+          "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T6",
+            "T8"
+          ],
+          "tipo": "FORRO",
+          "tipo_custom": ""
+        },
+        {
+          "ancho_util": 139,
+          "cantidad_trazos": 2,
+          "colores": [
+            "BEIGE"
+          ],
+          "generado": false,
+          "id": "id_1793827186010_yaqzkrx2j",
+          "impreso": false,
+          "marcadas_por_talla": {
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1
+          },
+          "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "tipo": "FORRO",
+          "tipo_custom": ""
+        }
+      ],
+      "op_id": "OP-2026-196",
+      "op_nombre": "CHAQUETA RALPH"
+    },
+    {
+      "id": "id_1793915143389_5vxogqge2",
+      "op_id": "OP-2026-128",
+      "op_nombre": "PILOTO PANCAKE",
+      "categoria": "CHAQUETAS",
+      "creado_por": "Isabel",
+      "creado_en": "2026-11-05",
+      "estado": "ENVIADA",
+      "enviada_en": "2026-11-05",
+      "lineas": [
+        {
+          "id": "id_1793914775469_n2kjvzob4",
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": "",
+          "tallas": [
+            "T6",
+            "T8"
+          ],
+          "marcadas_por_talla": {
+            "T6": 1,
+            "T8": 1
+          },
+          "cantidad_trazos": 4,
+          "ancho_util": 137,
+          "sentido": "DOS_DIRECCIONES",
+          "orientacion": "AL_HILO",
+          "notas": "",
+          "colores": [
+            "NEGRO",
+            "BEIGE"
+          ],
+          "generado": false,
+          "impreso": false,
+          "recogido": false
+        },
+        {
+          "id": "id_1793914818475_82rvym0xw",
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": "",
+          "tallas": [
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "marcadas_por_talla": {
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1
+          },
+          "cantidad_trazos": 4,
+          "ancho_util": 137,
+          "sentido": "DOS_DIRECCIONES",
+          "orientacion": "AL_HILO",
+          "notas": "",
+          "colores": [
+            "NEGRO",
+            "BEIGE"
+          ],
+          "generado": false,
+          "impreso": false,
+          "recogido": false
+        },
+        {
+          "id": "id_1793914926337_o8ekxh4ub",
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": "",
+          "tallas": [
+            "T6",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "marcadas_por_talla": {
             "T6": 1,
             "T8": 1,
             "T10": 1,
@@ -4281,25 +4531,23 @@
             "T14": 1,
             "T16": 1
           },
-          "cantidad_trazos": 2,
-          "ancho_util": 152,
+          "cantidad_trazos": 1,
+          "ancho_util": 137,
           "sentido": "DOS_DIRECCIONES",
           "orientacion": "AL_HILO",
           "notas": "",
           "colores": [
-            "GRIS CLARO",
-            "NEGRO"
+            "CAMEL"
           ],
           "generado": false,
           "impreso": false,
           "recogido": false
         },
         {
-          "id": "id_1793826757168_lnjh4e52j",
-          "tipo": "ADICIONAL",
-          "tipo_custom": "Tapas de bolsillo",
+          "id": "id_1793914987805_3636u9u75",
+          "tipo": "FORRO",
+          "tipo_custom": "",
           "tallas": [
-            "T4",
             "T6",
             "T8",
             "T10",
@@ -4308,93 +4556,27 @@
             "T16"
           ],
           "marcadas_por_talla": {
-            "T4": 2,
-            "T6": 2,
-            "T8": 2,
-            "T10": 2,
-            "T12": 2,
-            "T14": 2,
-            "T16": 2
+            "T6": 1,
+            "T8": 1,
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1
           },
           "cantidad_trazos": 1,
-          "ancho_util": 139,
+          "ancho_util": 142,
           "sentido": "DOS_DIRECCIONES",
           "orientacion": "AL_HILO",
-          "notas": "Todas las tapas marcadas dos veces.\nTrazo para el Carvajal",
+          "notas": "Trazos para el Carvajal",
           "colores": [
-            "GRIS CLARO",
-            "NEGRO"
-          ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
-        }
-      ]
-    },
-    {
-      "id": "id_1793827206787_gk8yhcnsi",
-      "op_id": "OP-2026-196",
-      "op_nombre": "CHAQUETA RALPH",
-      "categoria": "CHAQUETAS",
-      "creado_por": "Isabel",
-      "creado_en": "2026-11-04",
-      "estado": "ENVIADA",
-      "enviada_en": "2026-11-04",
-      "lineas": [
-        {
-          "id": "id_1793827060226_5svvmti0a",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T6",
-            "T8"
-          ],
-          "marcadas_por_talla": {
-            "T6": 1,
-            "T8": 1
-          },
-          "cantidad_trazos": 2,
-          "ancho_util": 146,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "*Trazos para tono beige y verde botella en super nylon \n*Trazos para el Carvajal",
-          "colores": [
-            "BEIGE"
+            "CAMEL"
           ],
           "generado": false,
           "impreso": false,
           "recogido": false
         },
         {
-          "id": "id_1793827099051_xrfstervt",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T10",
-            "T12",
-            "T14",
-            "T16"
-          ],
-          "marcadas_por_talla": {
-            "T10": 1,
-            "T12": 1,
-            "T14": 1,
-            "T16": 1
-          },
-          "cantidad_trazos": 2,
-          "ancho_util": 146,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "",
-          "colores": [
-            "BEIGE"
-          ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
-        },
-        {
-          "id": "id_1793827149924_9yeh8f3tg",
+          "id": "id_1793915069864_ru5ur49lb",
           "tipo": "FORRO",
           "tipo_custom": "",
           "tallas": [
@@ -4406,11 +4588,12 @@
             "T8": 1
           },
           "cantidad_trazos": 2,
-          "ancho_util": 139,
+          "ancho_util": 142,
           "sentido": "DOS_DIRECCIONES",
           "orientacion": "AL_HILO",
           "notas": "",
           "colores": [
+            "NEGRO",
             "BEIGE"
           ],
           "generado": false,
@@ -4418,7 +4601,7 @@
           "recogido": false
         },
         {
-          "id": "id_1793827186010_yaqzkrx2j",
+          "id": "id_1793915097744_qqzca5te5",
           "tipo": "FORRO",
           "tipo_custom": "",
           "tallas": [
@@ -4434,11 +4617,12 @@
             "T16": 1
           },
           "cantidad_trazos": 2,
-          "ancho_util": 139,
+          "ancho_util": 142,
           "sentido": "DOS_DIRECCIONES",
           "orientacion": "AL_HILO",
           "notas": "",
           "colores": [
+            "NEGRO",
             "BEIGE"
           ],
           "generado": false,
