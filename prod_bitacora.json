@@ -40902,14 +40902,30 @@
       "user": "John Rodriguez"
     },
     {
+      "color": "AZUL BEBE",
       "id": "evt_1793832282124_ka29l",
-      "ts": 1793832282124,
-      "user": "John Rodriguez",
-      "tipo": "planeacion_asignar",
+      "mes": "2026-11",
       "op_id": "OP-2026-208",
       "op_nombre": "PANTALON VENOM",
+      "tipo": "planeacion_asignar",
+      "ts": 1793832282124,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1793837649724_oa3rl",
+      "ts": 1793837649724,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-247",
+      "op_nombre": "CAMIBUZO MANGA REDONDA",
+      "referencia": "CAMIBUZO MANGA REDONDA",
       "color": "AZUL BEBE",
-      "mes": "2026-11"
+      "talla": "todas las tallas",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": true,
+      "uds": 28,
+      "motivo": "ENTREGADO"
     }
   ]
 }
