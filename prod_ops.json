@@ -8402,10 +8402,10 @@
       ],
       "trazos_color_solicitado": {
         "AZUL OSCURO": true,
+        "CAMEL": false,
         "MARFIL": true,
         "MORA LECHE": true,
-        "NEGRO": true,
-        "CAMEL": false
+        "NEGRO": true
       },
       "trazos_solicitudes": [
         {
@@ -8414,9 +8414,9 @@
           "solicitud_id": "id_1792006780593_rfoszu8i2"
         },
         {
-          "solicitud_id": "id_1793915475930_zf1fzug8d",
           "fecha": "2026-11-05",
-          "lineas": 2
+          "lineas": 2,
+          "solicitud_id": "id_1793915475930_zf1fzug8d"
         }
       ],
       "updated_at": "2026-10-29"
@@ -10110,15 +10110,15 @@
         "T16"
       ],
       "trazos_color_solicitado": {
-        "NEGRO": true,
         "BEIGE": true,
-        "CAMEL": true
+        "CAMEL": true,
+        "NEGRO": true
       },
       "trazos_solicitudes": [
         {
-          "solicitud_id": "id_1793915143389_5vxogqge2",
           "fecha": "2026-11-05",
-          "lineas": 6
+          "lineas": 6,
+          "solicitud_id": "id_1793915143389_5vxogqge2"
         }
       ]
     },
@@ -16309,14 +16309,14 @@
     },
     {
       "cantidades": {
-        "AZUL BEBE_T10": 7,
         "AZUL BEBE_T4": 7,
         "AZUL BEBE_T6": 7,
         "AZUL BEBE_T8": 7,
-        "CAFE_T10": 7,
+        "AZUL BEBE_T10": 7,
         "CAFE_T4": 7,
         "CAFE_T6": 7,
-        "CAFE_T8": 7
+        "CAFE_T8": 7,
+        "CAFE_T10": 7
       },
       "categoria": "BUZOS",
       "colores": [
@@ -16329,36 +16329,35 @@
       "estado_op": "EN_PROCESO",
       "fecha_op": "2026-10-27",
       "id": "OP-2026-247",
-      "nombre_producto": "CAMIBUZO MANGA REDONDA",
+      "nombre_producto": "CAMIBUZO MANGA OVER",
       "numero": 247,
       "referencias": [
         {
-          "cantidades": {
-            "AZUL BEBE_T10": 7,
-            "AZUL BEBE_T4": 7,
-            "AZUL BEBE_T6": 7,
-            "AZUL BEBE_T8": 7,
-            "CAFE_T10": 7,
-            "CAFE_T4": 7,
-            "CAFE_T6": 7,
-            "CAFE_T8": 7
-          },
+          "nombre": "CAMIBUZO MANGA OVER",
+          "ref": "1181",
           "cat": "BUZOS",
+          "vmo": 1151,
           "colores": [
             "AZUL BEBE",
             "CAFE"
           ],
-          "maquilador_id": "",
-          "nombre": "CAMIBUZO MANGA REDONDA",
-          "ref": "1181",
           "tallas": [
             "T4",
             "T6",
             "T8",
             "T10"
           ],
-          "totalUds": 56,
-          "vmo": 1151
+          "cantidades": {
+            "AZUL BEBE_T4": 7,
+            "AZUL BEBE_T6": 7,
+            "AZUL BEBE_T8": 7,
+            "AZUL BEBE_T10": 7,
+            "CAFE_T4": 7,
+            "CAFE_T6": 7,
+            "CAFE_T8": 7,
+            "CAFE_T10": 7
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -16370,7 +16369,10 @@
         "T6",
         "T8",
         "T10"
-      ]
+      ],
+      "updated_at": "2026-11-05",
+      "diseno_origen_id": null,
+      "diseno_origen_nombre": null
     },
     {
       "cantidades": {
