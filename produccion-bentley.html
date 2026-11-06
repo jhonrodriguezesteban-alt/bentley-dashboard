@@ -1133,7 +1133,7 @@ async function _fbMigrarSiVacio(){
 // abiertas con una versión anterior se recargan solas (esperando a que terminen de guardar).
 // Sin esto, una pestaña vieja olvidada en un computador seguía guardando con la lógica
 // anterior y deshaciendo cambios de todos los demás.
-var APP_VERSION = 20261106.1;
+var APP_VERSION = 20261106.2;
 function _vigilarVersionApp(){
   if(!_fbDb) return;
   _fbDb.ref(FB_ROOT+'/app_version').on('value', function(snap){
@@ -16265,27 +16265,53 @@ function verDetalleCategoriaActiva(cat){
   });
   var totalUds = items.reduce(function(a,i){ return a+i.uds; }, 0);
   var colByEstado = {}; OP_KANBAN.forEach(function(col){ colByEstado[col.k]=col; });
+  // Una línea por referencia; sus colores se despliegan al hacer clic.
+  var refs = {}, refOrden = [];
+  items.forEach(function(it){
+    var k = (it.op.nombre_producto||it.op.id).trim().toUpperCase();
+    if(!refs[k]){ refs[k] = {nombre:it.op.nombre_producto||it.op.id, items:[], uds:0, udsEnt:0, ops:{}, estados:{}}; refOrden.push(k); }
+    var r = refs[k];
+    r.items.push(it); r.uds += it.uds; r.udsEnt += (it.udsEnt||0); r.ops[it.op.id] = 1;
+    r.estados[it.estado] = (r.estados[it.estado]||0) + 1;
+  });
+  function chipEstado(k, extra){
+    var col = colByEstado[k] || {label:k, color:'#64748b'};
+    return '<span style="font-size:10px;font-weight:700;color:'+col.color+';background:'+col.color+'18;border:1px solid '+col.color+'33;border-radius:4px;padding:2px 7px;white-space:nowrap;">'+esc(col.label)+(extra?' '+extra:'')+'</span>';
+  }
+  function chipOP(opId){
+    return '<span data-opid="'+opId+'" onclick="event.stopPropagation();closeModal();navTo(\'ops\');setTimeout(function(){verDetalleOP(this.dataset.opid);}.bind(this),100)" style="display:inline-block;white-space:nowrap;color:var(--cyan);cursor:pointer;font-size:11px;font-weight:700;background:rgba(10,132,255,.08);border:1px solid rgba(10,132,255,.25);border-radius:5px;padding:2px 8px;">'+esc(fmtOpId(opId))+'</span>';
+  }
 
   var h = '<button onclick="mostrarDetalleProduccionActiva()" style="background:rgba(255,255,255,.04);border:1px solid #2c2c2e;color:#94a3b8;border-radius:7px;padding:6px 12px;cursor:pointer;font-size:11px;font-weight:600;margin-bottom:14px;">← Volver al resumen</button>';
-  h += '<div style="font-size:11px;color:#64748b;margin-bottom:12px;">'+items.length+' referencia'+(items.length!==1?'s':'')+' · '+totalUds.toLocaleString('es-CO')+' uds</div>';
+  h += '<div style="font-size:11px;color:#64748b;margin-bottom:12px;">'+refOrden.length+' referencia'+(refOrden.length!==1?'s':'')+' · '+items.length+' colores · '+totalUds.toLocaleString('es-CO')+' uds — clic en una referencia para ver sus colores</div>';
   h += '<div style="overflow-x:auto;border-radius:10px;border:1px solid #2c2c2e;">';
   h += '<table style="width:100%;border-collapse:collapse;font-size:12px;">';
   h += '<thead><tr style="background:rgba(255,255,255,.04);">';
   h += '<th style="text-align:left;padding:8px 12px;color:#64748b;font-weight:700;text-transform:uppercase;font-size:10px;">Referencia</th>';
-  h += '<th style="text-align:left;padding:8px 12px;color:#64748b;font-weight:700;text-transform:uppercase;font-size:10px;">Color</th>';
   h += '<th style="text-align:left;padding:8px 12px;color:#64748b;font-weight:700;text-transform:uppercase;font-size:10px;">Estado</th>';
   h += '<th style="text-align:center;padding:8px 12px;color:#64748b;font-weight:700;text-transform:uppercase;font-size:10px;">Uds</th>';
-  h += '<th style="text-align:left;padding:8px 12px;color:#64748b;font-weight:700;text-transform:uppercase;font-size:10px;">OP</th>';
+  h += '<th style="text-align:left;padding:8px 12px;color:#64748b;font-weight:700;text-transform:uppercase;font-size:10px;min-width:90px;">OP</th>';
   h += '</tr></thead><tbody>';
-  items.forEach(function(it,i){
-    var col = colByEstado[it.estado] || {label:it.estado, color:'#64748b'};
-    h += '<tr style="border-top:1px solid rgba(255,255,255,.04);background:'+(i%2===0?'transparent':'rgba(255,255,255,.015)')+';">';
-    h += '<td style="padding:7px 12px;color:#e2e8f0;font-weight:600;">'+esc(it.op.nombre_producto||it.op.id)+'</td>';
-    h += '<td style="padding:7px 12px;"><span style="background:rgba(10,132,255,.08);border:1px solid rgba(10,132,255,.2);border-radius:4px;padding:2px 8px;color:#e2e8f0;font-weight:600;font-size:11px;white-space:nowrap;">'+esc(it.color)+'</span></td>';
-    h += '<td style="padding:7px 12px;"><span style="font-size:10px;font-weight:700;color:'+col.color+';background:'+col.color+'18;border:1px solid '+col.color+'33;border-radius:4px;padding:2px 7px;">'+esc(col.label)+'</span></td>';
-    h += '<td style="padding:7px 12px;text-align:center;font-weight:700;color:#fbbf24;">'+it.uds.toLocaleString('es-CO')+(it.udsEnt?'<div style="font-size:9px;font-weight:400;color:#34d399;">'+it.udsEnt.toLocaleString('es-CO')+' entreg.</div>':'')+'</td>';
-    h += '<td style="padding:7px 12px;"><span data-opid="'+it.op.id+'" onclick="closeModal();navTo(\'ops\');setTimeout(function(){verDetalleOP(this.dataset.opid);}.bind(this),100)" style="color:var(--cyan);cursor:pointer;font-size:11px;font-weight:700;">'+esc(fmtOpId(it.op.id))+'</span></td>';
+  refOrden.forEach(function(k, ri){
+    var r = refs[k];
+    var rid = 'dcat-ref-'+ri;
+    h += '<tr data-rid="'+rid+'" onclick="var a=document.querySelectorAll(\'.\'+this.dataset.rid);var ab=a.length&&a[0].style.display===\'none\';a.forEach(function(x){x.style.display=ab?\'\':\'none\';});this.querySelector(\'.dcat-ico\').textContent=ab?\'▾\':\'▸\';" style="cursor:pointer;border-top:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);">';
+    h += '<td style="padding:9px 12px;color:#e2e8f0;font-weight:700;"><span class="dcat-ico" style="color:#64748b;margin-right:6px;">▸</span>'+esc(r.nombre)+' <span style="font-size:10px;font-weight:400;color:#64748b;">· '+r.items.length+' color'+(r.items.length!==1?'es':'')+'</span></td>';
+    h += '<td style="padding:9px 12px;"><div style="display:flex;flex-wrap:wrap;gap:4px;">';
+    OP_KANBAN.forEach(function(col){ if(r.estados[col.k]) h += chipEstado(col.k, r.items.length>1?'· '+r.estados[col.k]:''); });
+    Object.keys(r.estados).forEach(function(e){ if(!colByEstado[e]) h += chipEstado(e, r.items.length>1?'· '+r.estados[e]:''); });
+    h += '</div></td>';
+    h += '<td style="padding:9px 12px;text-align:center;font-weight:800;color:#fbbf24;white-space:nowrap;">'+r.uds.toLocaleString('es-CO')+(r.udsEnt?'<div style="font-size:9px;font-weight:400;color:#34d399;">'+r.udsEnt.toLocaleString('es-CO')+' entreg.</div>':'')+'</td>';
+    h += '<td style="padding:9px 12px;"><div style="display:flex;flex-wrap:wrap;gap:4px;">'+Object.keys(r.ops).map(chipOP).join('')+'</div></td>';
     h += '</tr>';
+    r.items.forEach(function(it){
+      h += '<tr class="'+rid+'" style="display:none;border-top:1px solid rgba(255,255,255,.03);">';
+      h += '<td style="padding:6px 12px 6px 34px;"><span style="background:rgba(10,132,255,.08);border:1px solid rgba(10,132,255,.2);border-radius:4px;padding:2px 8px;color:#e2e8f0;font-weight:600;font-size:11px;white-space:nowrap;">'+esc(it.color)+'</span></td>';
+      h += '<td style="padding:6px 12px;">'+chipEstado(it.estado)+'</td>';
+      h += '<td style="padding:6px 12px;text-align:center;font-weight:700;color:#fbbf24;white-space:nowrap;">'+it.uds.toLocaleString('es-CO')+(it.udsEnt?'<div style="font-size:9px;font-weight:400;color:#34d399;">'+it.udsEnt.toLocaleString('es-CO')+' entreg.</div>':'')+'</td>';
+      h += '<td style="padding:6px 12px;">'+chipOP(it.op.id)+'</td>';
+      h += '</tr>';
+    });
   });
   h += '</tbody></table></div>';
 
