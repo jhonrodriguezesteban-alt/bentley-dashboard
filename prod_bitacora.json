@@ -41281,19 +41281,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "CAMEL",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1793987877399_sgw0t",
-      "ts": 1793987877399,
-      "user": "Carolina Telles",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-131",
       "op_nombre": "PANTALON RAVE",
       "referencia": "PANTALON RAVE",
-      "color": "CAMEL",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1793987877399,
+      "uds": 102,
+      "user": "Carolina Telles"
+    },
+    {
+      "id": "evt_1793987959289_lhzsc",
+      "ts": 1793987959289,
+      "user": "Carolina Telles",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-085",
+      "op_nombre": "PANTALON RAVE",
+      "referencia": "PANTALON RAVE",
+      "color": "VERDE MILITAR",
       "talla": "todas las tallas",
       "estado_anterior": "ENTREGADO",
       "estado_nuevo": "ENTREGADO",
       "bulk": true,
-      "uds": 102,
+      "uds": 78,
       "motivo": "ENTREGADO"
     }
   ]
