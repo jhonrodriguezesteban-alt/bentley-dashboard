@@ -5502,8 +5502,8 @@
       ],
       "subg_estados": {
         "OP-2026-081||AZUL BEBE": "EN_CONFECCION",
-        "OP-2026-081||CAFE": "ALISTAMIENTO",
-        "OP-2026-081||GRIS CLARO": "CORTE_POR_ALISTAR",
+        "OP-2026-081||CAFE": "PAGO_PENDIENTE",
+        "OP-2026-081||GRIS CLARO": "EN_CONFECCION",
         "OP-2026-081||NEGRO": "EN_CONFECCION",
         "OP-2026-081||VINOTINTO": "CORTE_POR_ALISTAR"
       },
@@ -15861,9 +15861,9 @@
           "solicitud_id": "id_1793021962546_9nitmaixr"
         },
         {
-          "solicitud_id": "id_1793971263315_2p6bnd9ky",
           "fecha": "2026-11-06",
-          "lineas": 3
+          "lineas": 3,
+          "solicitud_id": "id_1793971263315_2p6bnd9ky"
         }
       ],
       "updated_at": "2026-11-04"
