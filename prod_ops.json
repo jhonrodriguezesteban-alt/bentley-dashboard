@@ -15859,6 +15859,11 @@
           "fecha": "2026-10-26",
           "lineas": 2,
           "solicitud_id": "id_1793021962546_9nitmaixr"
+        },
+        {
+          "solicitud_id": "id_1793971263315_2p6bnd9ky",
+          "fecha": "2026-11-06",
+          "lineas": 3
         }
       ],
       "updated_at": "2026-11-04"
@@ -16309,14 +16314,14 @@
     },
     {
       "cantidades": {
+        "AZUL BEBE_T10": 7,
         "AZUL BEBE_T4": 7,
         "AZUL BEBE_T6": 7,
         "AZUL BEBE_T8": 7,
-        "AZUL BEBE_T10": 7,
+        "CAFE_T10": 7,
         "CAFE_T4": 7,
         "CAFE_T6": 7,
-        "CAFE_T8": 7,
-        "CAFE_T10": 7
+        "CAFE_T8": 7
       },
       "categoria": "BUZOS",
       "colores": [
@@ -16333,31 +16338,31 @@
       "numero": 247,
       "referencias": [
         {
-          "nombre": "CAMIBUZO MANGA OVER",
-          "ref": "1181",
+          "cantidades": {
+            "AZUL BEBE_T10": 7,
+            "AZUL BEBE_T4": 7,
+            "AZUL BEBE_T6": 7,
+            "AZUL BEBE_T8": 7,
+            "CAFE_T10": 7,
+            "CAFE_T4": 7,
+            "CAFE_T6": 7,
+            "CAFE_T8": 7
+          },
           "cat": "BUZOS",
-          "vmo": 1151,
           "colores": [
             "AZUL BEBE",
             "CAFE"
           ],
+          "maquilador_id": "",
+          "nombre": "CAMIBUZO MANGA OVER",
+          "ref": "1181",
           "tallas": [
             "T4",
             "T6",
             "T8",
             "T10"
           ],
-          "cantidades": {
-            "AZUL BEBE_T4": 7,
-            "AZUL BEBE_T6": 7,
-            "AZUL BEBE_T8": 7,
-            "AZUL BEBE_T10": 7,
-            "CAFE_T4": 7,
-            "CAFE_T6": 7,
-            "CAFE_T8": 7,
-            "CAFE_T10": 7
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
@@ -16370,9 +16375,7 @@
         "T8",
         "T10"
       ],
-      "updated_at": "2026-11-05",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-11-05"
     },
     {
       "cantidades": {
