@@ -41185,20 +41185,36 @@
       "user": "Isabel"
     },
     {
+      "bulk": true,
+      "color": "GRIS CLARO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1793971634643_d5csg",
+      "motivo": "EN TALLER",
+      "op_id": "OP-2026-081",
+      "op_nombre": "CONJUNTO MANCHESTER",
+      "referencia": "CONJUNTO MANCHESTER",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1793971634643,
+      "uds": 112,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793971724823_njj6j",
+      "ts": 1793971724823,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-081",
       "op_nombre": "CONJUNTO MANCHESTER",
       "referencia": "CONJUNTO MANCHESTER",
-      "color": "GRIS CLARO",
+      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "bulk": true,
-      "uds": 112,
-      "motivo": "EN TALLER"
+      "uds": 84,
+      "motivo": "ENTREGADO"
     }
   ]
 }
