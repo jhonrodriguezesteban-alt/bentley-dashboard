@@ -41201,19 +41201,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1793971724823_njj6j",
-      "ts": 1793971724823,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-081",
       "op_nombre": "CONJUNTO MANCHESTER",
       "referencia": "CONJUNTO MANCHESTER",
-      "color": "NEGRO",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1793971724823,
+      "uds": 84,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793971809236_n2t2l",
+      "ts": 1793971809236,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-247",
+      "op_nombre": "CAMIBUZO MANGA OVER",
+      "referencia": "CAMIBUZO MANGA REDONDA",
+      "color": "CAFE",
       "talla": "todas las tallas",
       "estado_anterior": "ENTREGADO",
       "estado_nuevo": "ENTREGADO",
       "bulk": true,
-      "uds": 84,
+      "uds": 28,
       "motivo": "ENTREGADO"
     }
   ]
