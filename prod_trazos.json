@@ -4352,6 +4352,13 @@
       "creado_por": "Isabel",
       "enviada_en": "2026-11-04",
       "estado": "ENVIADA",
+      "historial_ediciones": [
+        {
+          "fecha": "2026-11-06",
+          "hora": "15:02",
+          "usuario": "Isabel"
+        }
+      ],
       "id": "id_1793827206787_gk8yhcnsi",
       "lineas": [
         {
@@ -4407,67 +4414,60 @@
           "tipo_custom": ""
         },
         {
-          "id": "id_1793995237907_pm9q9kovg",
-          "tipo": "FORRO",
-          "tipo_custom": "",
-          "tallas": [
-            "T6",
-            "T8"
-          ],
-          "marcadas_por_talla": {
-            "T6": 1,
-            "T8": 1
-          },
-          "cantidad_trazos": 2,
           "ancho_util": 136,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "",
+          "cantidad_trazos": 2,
           "colores": [
             "BEIGE"
           ],
           "generado": false,
+          "id": "id_1793995237907_pm9q9kovg",
           "impreso": false,
-          "recogido": false
+          "marcadas_por_talla": {
+            "T6": 1,
+            "T8": 1
+          },
+          "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T6",
+            "T8"
+          ],
+          "tipo": "FORRO",
+          "tipo_custom": ""
         },
         {
-          "id": "id_1793995294417_tu3fpimej",
-          "tipo": "FORRO",
-          "tipo_custom": "",
-          "tallas": [
-            "T10",
-            "T12",
-            "T14",
-            "T16"
+          "ancho_util": 136,
+          "cantidad_trazos": 2,
+          "colores": [
+            "BEIGE"
           ],
+          "generado": false,
+          "id": "id_1793995294417_tu3fpimej",
+          "impreso": false,
           "marcadas_por_talla": {
             "T10": 1,
             "T12": 1,
             "T14": 1,
             "T16": 1
           },
-          "cantidad_trazos": 2,
-          "ancho_util": 136,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
           "notas": "",
-          "colores": [
-            "BEIGE"
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T10",
+            "T12",
+            "T14",
+            "T16"
           ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
+          "tipo": "FORRO",
+          "tipo_custom": ""
         }
       ],
       "op_id": "OP-2026-196",
-      "op_nombre": "CHAQUETA RALPH",
-      "historial_ediciones": [
-        {
-          "fecha": "2026-11-06",
-          "hora": "15:02",
-          "usuario": "Isabel"
-        }
-      ]
+      "op_nombre": "CHAQUETA RALPH"
     },
     {
       "categoria": "CHAQUETAS",
@@ -4529,7 +4529,9 @@
             "T16"
           ],
           "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": ""
+          "tipo_custom": "",
+          "imagen_url": "https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/tecpatron-imgs/trazo_id_1793914818475_82rvym0xw_1793998952554.jpg",
+          "imagen_url_blob": "tp_1793998953771"
         },
         {
           "ancho_util": 137,
