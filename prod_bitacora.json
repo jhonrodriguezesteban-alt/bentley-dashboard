@@ -41249,20 +41249,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "AZUL OSCURO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1793972508564_7ipjg",
-      "ts": 1793972508564,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-119",
       "op_nombre": "WASHMAN",
       "referencia": "WASHMAN",
-      "color": "AZUL OSCURO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1793972508564,
       "uds": 120,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793972748741_fsr6n",
+      "ts": 1793972748741,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1792266935785_k48nartbn",
+      "op_id": "OP-0059",
+      "color": "CAFE",
+      "fecha_nueva": "2026-11-09",
+      "motivo": "Asignación inicial"
     }
   ]
 }
