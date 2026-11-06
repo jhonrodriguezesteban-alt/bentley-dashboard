@@ -41217,20 +41217,36 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "CAFE",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1793971809236_n2t2l",
-      "ts": 1793971809236,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-247",
       "op_nombre": "CAMIBUZO MANGA OVER",
       "referencia": "CAMIBUZO MANGA REDONDA",
-      "color": "CAFE",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1793971809236,
       "uds": 28,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793972482456_m6a20",
+      "ts": 1793972482456,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-119",
+      "op_nombre": "WASHMAN",
+      "referencia": "WASHMAN",
+      "color": "MARFIL",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 96,
+      "motivo": "EN TALLER"
     }
   ]
 }
