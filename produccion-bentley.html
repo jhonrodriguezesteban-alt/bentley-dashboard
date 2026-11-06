@@ -1133,7 +1133,7 @@ async function _fbMigrarSiVacio(){
 // abiertas con una versión anterior se recargan solas (esperando a que terminen de guardar).
 // Sin esto, una pestaña vieja olvidada en un computador seguía guardando con la lógica
 // anterior y deshaciendo cambios de todos los demás.
-var APP_VERSION = 20261104.4;
+var APP_VERSION = 20261106.1;
 function _vigilarVersionApp(){
   if(!_fbDb) return;
   _fbDb.ref(FB_ROOT+'/app_version').on('value', function(snap){
@@ -9869,7 +9869,23 @@ function renderInversion(){
       return x;
     }).filter(function(r){ return r && r.pendiente>0; });
   }
+  var mesDeKeyEt = {};
+  var mesesPlanEt = (DB.planeacion && DB.planeacion.meses) || {};
+  Object.keys(mesesPlanEt).forEach(function(mk){ (mesesPlanEt[mk]||[]).forEach(function(key){ mesDeKeyEt[key]=mk; }); });
+  var insEntregadoQuitado = 0;
+  filas = filas.map(function(r){
+    var x = _invConEtapas(r, _invOcultar2027 ? mesDeKeyEt : {});
+    insEntregadoQuitado += x.insEntregadoQuitado;
+    return x;
+  }).filter(function(r){ return r.pendiente>0; });
   filas.sort(function(a,b){ return (a.op.numero||0) - (b.op.numero||0); });
+  var etTot = {sc:{conf:0,ins:0,uds:0,ops:0}, ep:{conf:0,ins:0,uds:0,ops:0}, en:{conf:0,ins:0,uds:0,ops:0}};
+  filas.forEach(function(r){
+    ['sc','ep','en'].forEach(function(k){
+      var e = r.etapas[k];
+      if(e.conf+e.ins>0){ etTot[k].conf+=e.conf; etTot[k].ins+=e.ins; etTot[k].uds+=e.uds; etTot[k].ops++; }
+    });
+  });
 
   var granTotal=0, granPagado=0, granPendiente=0, sinReceta=0, granPendConf=0, granPendInsumo=0;
   filas.forEach(function(r){
@@ -9885,6 +9901,13 @@ function renderInversion(){
         || _normTxt(r.op.id).indexOf(q)>=0
         || _normTxt(r.op.nombre_producto||'').indexOf(q)>=0;
   });
+  // Con una etapa seleccionada, cada fila muestra solo la parte de esa etapa.
+  if(_invEtapa){
+    filasVista = filasVista.filter(function(r){ var e=r.etapas[_invEtapa]; return e.conf+e.ins>0; }).map(function(r){
+      var e = r.etapas[_invEtapa];
+      return Object.assign({}, r, {pendiente:e.conf+e.ins, confeccionPendiente:e.conf, insumoPendiente:e.ins, udsEtapa:e.uds});
+    });
+  }
 
   var h = '<div style="padding:16px 20px;height:100%;overflow-y:auto;box-sizing:border-box;">';
   h += '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;">';
@@ -9914,6 +9937,24 @@ function renderInversion(){
     +'</div>';
   h += granBox('Pendiente por pagar', granPendiente, '#ef4444', true, subPendiente);
   h += '</div></div>';
+  // ── Pendiente por etapa: sin cortar / en proceso / entregado (solo confección) ──
+  var ETAPAS_INV = [
+    {k:'sc', t:'✂ Sin cortar', d:'Planeado 2026 que todavía no se corta (Por revisar / Pendiente por cortar)', c:'#fbbf24'},
+    {k:'ep', t:'🧵 En proceso', d:'Ya cortado: corte por alistar, en confección, novedad, entrega parcial', c:'#60a5fa'},
+    {k:'en', t:'📦 Entregado', d:'Ya entregado — pendiente solo el pago de confección', c:'#34d399'}
+  ];
+  h += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-bottom:10px;">';
+  ETAPAS_INV.forEach(function(et){
+    var t = etTot[et.k], sel = _invEtapa===et.k;
+    h += '<div data-et="'+et.k+'" onclick="_invSetEtapa(this.dataset.et)" title="Clic para ver solo esta etapa en la tabla" style="cursor:pointer;background:'+(sel?et.c+'1f':'rgba(255,255,255,.02)')+';border:'+(sel?'2px':'1px')+' solid '+et.c+(sel?'':'55')+';border-radius:12px;padding:14px 16px;">';
+    h += '<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;"><span style="font-size:13px;font-weight:800;color:'+et.c+';">'+et.t+'</span><span style="font-size:10px;color:#64748b;">'+t.ops+' OP'+(t.ops!==1?'s':'')+' · '+Math.round(t.uds).toLocaleString('es-CO')+' uds</span></div>';
+    h += '<div style="font-size:24px;font-weight:900;color:#f1f5f9;font-variant-numeric:tabular-nums;margin:4px 0 6px;">'+fmtCopFull(t.conf+t.ins)+'</div>';
+    h += '<div style="display:flex;gap:14px;font-size:11px;"><span style="color:#94a3b8;">🧵 Confección <b style="color:#e2e8f0;">'+fmtCopFull(t.conf)+'</b></span>'+(et.k!=='en'?'<span style="color:#94a3b8;">📦 Insumos <b style="color:#e2e8f0;">'+fmtCopFull(t.ins)+'</b></span>':'')+'</div>';
+    h += '<div style="font-size:10px;color:#475569;margin-top:6px;">'+et.d+'</div>';
+    h += '</div>';
+  });
+  h += '</div>';
+  h += '<div style="font-size:10px;color:#475569;margin-bottom:16px;">'+(_invEtapa?'<span data-et="" onclick="_invSetEtapa(this.dataset.et)" style="color:#60a5fa;cursor:pointer;font-weight:700;">✕ Ver todas las etapas</span> · ':'')+'Las OPs con unidades en varias etapas se reparten por unidades.'+(insEntregadoQuitado>0?' No se cuentan '+fmtCopFull(insEntregadoQuitado)+' de insumos sin marcar en unidades ya entregadas (si se entregó, la tela ya se compró).':'')+'</div>';
 
   if(sinReceta) h += '<div style="background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.3);border-radius:9px;padding:10px 14px;font-size:12px;color:#fbbf24;margin-bottom:14px;">⚠ '+sinReceta+' OP(s) sin receta de costeo vinculada todavía — su checklist de insumos aparecerá automáticamente en cuanto se cree/vincule la receta en Costeo.</div>';
 
@@ -9935,7 +9976,7 @@ function renderInversion(){
     h += '<td style="padding:7px 4px;text-align:center;"><button data-opid="'+op.id+'" onclick="_invToggleExpand(this.dataset.opid)" title="Ver/marcar checklist de insumos" style="background:none;border:1px solid var(--card-border);color:var(--dim);border-radius:5px;width:22px;height:22px;cursor:pointer;font-size:11px;line-height:1;">'+(expandido?'▾':'▸')+'</button></td>';
     h += '<td data-opid="'+op.id+'" onclick="_opDetalleId=this.dataset.opid;navTo(\'ops\')" style="padding:7px 10px;font-weight:700;color:var(--accent);white-space:nowrap;cursor:pointer;">'+fmtOpId(op.id)+'</td>';
     h += '<td style="padding:7px 10px;color:#e2e8f0;">'+esc(op.nombre_producto||'—')+(r.entregadaCompleta?' <span title="Ya entregó el 100% de las unidades — se asume que el insumo ya se compró, aunque el checklist no esté marcado" style="font-size:9px;font-weight:700;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.35);color:#34d399;border-radius:5px;padding:1px 6px;margin-left:6px;">✓ ENTREGADA</span>':'')+'</td>';
-    h += '<td style="padding:7px 10px;text-align:right;color:#94a3b8;white-space:nowrap;">'+r.udsTotal.toLocaleString('es-CO')+'</td>';
+    h += '<td style="padding:7px 10px;text-align:right;color:#94a3b8;white-space:nowrap;">'+(r.udsEtapa!=null?Math.round(r.udsEtapa).toLocaleString('es-CO')+'<div style="font-size:9px;color:#475569;">de '+r.udsTotal.toLocaleString('es-CO')+'</div>':r.udsTotal.toLocaleString('es-CO'))+'</td>';
     h += '<td style="padding:7px 10px;text-align:center;">'+(r.tieneReceta?'<span style="color:#34d399;">✓</span>':'<span style="color:#64748b;">—</span>')+'</td>';
     h += '<td style="padding:7px 10px;text-align:right;font-weight:700;color:#e2e8f0;white-space:nowrap;">'+fmtCopFull(r.total)+'</td>';
     h += '<td style="padding:7px 10px;text-align:right;color:#34d399;white-space:nowrap;">'+fmtCopFull(r.pagado)+'</td>';
@@ -9966,6 +10007,59 @@ function renderInversion(){
 }
 var _invExpandido = {};
 var _invBusqueda = '';
+var _invEtapa = ''; // '' = todas · 'sc' sin cortar · 'ep' en proceso · 'en' entregado
+function _invSetEtapa(k){ _invEtapa = (_invEtapa===k ? '' : (k||'')); renderPage('inversion'); }
+// Reparte el pendiente de una OP entre sus etapas según las unidades de cada una:
+// sin cortar (POR_REVISAR/PENDIENTE_CORTAR), en proceso (cortado y aún en el taller) y
+// entregado (ENTREGADO/PAGO_PENDIENTE). Lo sin cortar se lleva primero su costo completo,
+// luego lo en proceso; a lo entregado le queda la confección que siga sin pagar. Los insumos
+// que sigan sin marcar en unidades entregadas no se cuentan (la tela ya se compró).
+// Los colores pasados a 2027 (mesDeKey) no entran: ya se descontaron en _invSin2027.
+function _invConEtapas(r, mesDeKey){
+  var op = r.op;
+  var ots = (DB.ots||[]).filter(function(o){ return o.op_id===op.id; });
+  var udsColor = _invUdsPorColorOp(op);
+  var u = {sc:0, ep:0, en:0};
+  Object.keys(udsColor).forEach(function(c){
+    if(_planMesFueraDeResumen(mesDeKey[_planKey(op.id, c)])) return;
+    var oc = ots.filter(function(o){ return (o.color||'').trim().toUpperCase()===(c||'').trim().toUpperCase(); });
+    if(!oc.length){
+      var est = _planEstadoColor(op, c);
+      var k0 = (est==='POR_REVISAR'||est==='PENDIENTE_CORTAR') ? 'sc' : ((est==='ENTREGADO'||est==='PAGO_PENDIENTE') ? 'en' : 'ep');
+      u[k0] += udsColor[c]||0; return;
+    }
+    oc.forEach(function(o){
+      var q = parseInt(o.cantidad)||0;
+      if(o.estado==='POR_REVISAR'||o.estado==='PENDIENTE_CORTAR') u.sc += q;
+      else if(o.estado==='ENTREGADO'||o.estado==='PAGO_PENDIENTE') u.en += q;
+      else u.ep += q;
+    });
+  });
+  var ut = u.sc+u.ep+u.en;
+  var et = {sc:{conf:0,ins:0,uds:u.sc}, ep:{conf:0,ins:0,uds:u.ep}, en:{conf:0,ins:0,uds:u.en}};
+  if(!ut){ et.ep.conf = r.confeccionPendiente; et.ep.ins = r.insumoPendiente; }
+  else {
+    var confRest = r.confeccionPendiente, insRest = r.insumoPendiente;
+    ['sc','ep'].forEach(function(k){
+      var f = u[k]/ut;
+      var c = Math.min(confRest, r.confeccionTotal*f); et[k].conf = c; confRest -= c;
+      var i = Math.min(insRest, r.insumoTotal*f); et[k].ins = i; insRest -= i;
+    });
+    et.en.conf = confRest;
+    var quitado = insRest;
+  }
+  var x = Object.assign({}, r, {etapas:et, insEntregadoQuitado: quitado||0});
+  if(quitado>0){
+    var nuevoIns = r.insumoPendiente - quitado;
+    var esc2 = r.insumoPendiente>0 ? nuevoIns/r.insumoPendiente : 1;
+    x.insumoItems = (r.insumoItems||[]).map(function(it){ return Object.assign({}, it, {pendiente: it.pendiente*esc2}); });
+    x.insumoPendiente = nuevoIns;
+    x.insumoPagado = r.insumoPagado; // lo quitado no se da por pagado: solo deja de contarse
+    x.pendiente = x.insumoPendiente + x.confeccionPendiente;
+    x.total = r.total - quitado;
+  }
+  return x;
+}
 // Ocultar del Resumen de Inversión lo que en Planeación quedó para 2027 (por defecto sí).
 var _invOcultar2027 = (function(){ try{ return localStorage.getItem('bentley_inv_ocultar2027')!=='0'; }catch(e){ return true; } })();
 function _invToggleOcultar2027(v){ _invOcultar2027 = !!v; try{ localStorage.setItem('bentley_inv_ocultar2027', v?'1':'0'); }catch(e){} renderPage('inversion'); }
