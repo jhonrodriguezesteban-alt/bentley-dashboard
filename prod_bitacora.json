@@ -41135,15 +41135,42 @@
       "user": "Isabel"
     },
     {
-      "id": "evt_1793917096499_247sy",
-      "ts": 1793917096499,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-247",
-      "nombre": "CAMIBUZO MANGA OVER",
       "categoria": "BUZOS",
       "colores": 2,
-      "refs": 1
+      "id": "evt_1793917096499_247sy",
+      "nombre": "CAMIBUZO MANGA OVER",
+      "op_id": "OP-2026-247",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1793917096499,
+      "user": "Jefa de Producción"
+    },
+    {
+      "bulk": true,
+      "color": "CAFE",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "id": "evt_1793922351298_2zlcp",
+      "motivo": "ENTREGADO",
+      "op_id": "OP-2026-081",
+      "op_nombre": "CONJUNTO MANCHESTER",
+      "referencia": "CONJUNTO MANCHESTER",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1793922351298,
+      "uds": 64,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793970139356_n0goy",
+      "ts": 1793970139356,
+      "user": "Isabel",
+      "tipo": "diseno_comentario",
+      "diseno_id": "id_9f96fe6d51ca4f0c",
+      "nombre": "VESTIDO MINI DRESS",
+      "categoria": "Vestidos",
+      "tiene_imagen": false,
+      "extracto": "Modificaciones realizadas. Listo para producción."
     }
   ]
 }
