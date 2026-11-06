@@ -41265,19 +41265,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "SALMON",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1793978179911_w3sif",
-      "ts": 1793978179911,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-098",
       "op_nombre": "CHAQUETA CAZADORA",
       "referencia": "CHAQUETA CAZADORA",
-      "color": "SALMON",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1793978179911,
+      "uds": 48,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1793987877399_sgw0t",
+      "ts": 1793987877399,
+      "user": "Carolina Telles",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-131",
+      "op_nombre": "PANTALON RAVE",
+      "referencia": "PANTALON RAVE",
+      "color": "CAMEL",
       "talla": "todas las tallas",
       "estado_anterior": "ENTREGADO",
       "estado_nuevo": "ENTREGADO",
       "bulk": true,
-      "uds": 48,
+      "uds": 102,
       "motivo": "ENTREGADO"
     }
   ]
