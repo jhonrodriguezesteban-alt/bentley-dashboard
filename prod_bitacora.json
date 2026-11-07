@@ -41297,31 +41297,47 @@
       "user": "Carolina Telles"
     },
     {
+      "bulk": true,
+      "color": "VERDE MILITAR",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1793987959289_lhzsc",
-      "ts": 1793987959289,
-      "user": "Carolina Telles",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-085",
       "op_nombre": "PANTALON RAVE",
       "referencia": "PANTALON RAVE",
-      "color": "VERDE MILITAR",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1793987959289,
       "uds": 78,
-      "motivo": "ENTREGADO"
+      "user": "Carolina Telles"
     },
     {
-      "id": "evt_1794011417627_3zmdl",
-      "ts": 1794011417627,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-125",
-      "nombre": "OVERSIZED CAPOTA",
       "categoria": "CHAQUETAS",
       "colores": 5,
-      "refs": 1
+      "id": "evt_1794011417627_3zmdl",
+      "nombre": "OVERSIZED CAPOTA",
+      "op_id": "OP-2026-125",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1794011417627,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1794011443395_z7k4q",
+      "ts": 1794011443395,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-125",
+      "op_nombre": "OVERSIZED CAPOTA",
+      "referencia": "OVERSIZED CAPOTA",
+      "color": "GRIS OSCURO",
+      "talla": "todas las tallas",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
+      "bulk": true,
+      "uds": 88,
+      "motivo": "en insumos"
     }
   ]
 }
