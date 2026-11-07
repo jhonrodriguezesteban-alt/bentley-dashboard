@@ -7202,7 +7202,7 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-100||BEIGE": "ALISTAMIENTO",
+        "OP-2026-100||BEIGE": "PAGO_PENDIENTE",
         "OP-2026-100||NEGRO": "EN_CONFECCION"
       },
       "tallas": [
@@ -13938,7 +13938,7 @@
       "subg_estados": {
         "OP-2026-222||MARFIL": "EN_CONFECCION",
         "OP-2026-222||NEGRO": "EN_CONFECCION",
-        "OP-2026-222||ROJO": "EN_CONFECCION",
+        "OP-2026-222||ROJO": "ALISTAMIENTO",
         "OP-2026-222||VINOTINTO": "EN_CONFECCION"
       },
       "tallas": [
@@ -16607,20 +16607,20 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-11-03",
       "trazos_color_solicitado": {
-        "VERDE MILITAR": true,
-        "NEGRO": true,
         "BEIGE": true,
-        "ROJO": true
+        "NEGRO": true,
+        "ROJO": true,
+        "VERDE MILITAR": true
       },
       "trazos_solicitudes": [
         {
-          "solicitud_id": "id_1794066067226_5q2s2cskl",
           "fecha": "2026-11-07",
-          "lineas": 2
+          "lineas": 2,
+          "solicitud_id": "id_1794066067226_5q2s2cskl"
         }
-      ]
+      ],
+      "updated_at": "2026-11-03"
     },
     {
       "cantidades": {
