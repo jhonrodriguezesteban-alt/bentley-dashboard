@@ -41324,20 +41324,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "GRIS OSCURO",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1794011443395_z7k4q",
-      "ts": 1794011443395,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-125",
       "op_nombre": "OVERSIZED CAPOTA",
       "referencia": "OVERSIZED CAPOTA",
-      "color": "GRIS OSCURO",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1794011443395,
       "uds": 88,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1794011487733_7jo4e",
+      "ts": 1794011487733,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-111",
+      "nombre": "OVERSIZED CAPOTA",
+      "categoria": "CHAQUETAS",
+      "colores": 7,
+      "refs": 1
     }
   ]
 }
