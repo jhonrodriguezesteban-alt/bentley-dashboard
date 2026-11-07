@@ -16063,12 +16063,20 @@
         "NEGRO_T10": 23,
         "NEGRO_T12": 23,
         "NEGRO_T14": 23,
-        "NEGRO_T16": 11
+        "NEGRO_T16": 11,
+        "CAMEL_T4": 6,
+        "CAMEL_T6": 6,
+        "CAMEL_T8": 6,
+        "CAMEL_T10": 9,
+        "CAMEL_T12": 9,
+        "CAMEL_T14": 12,
+        "CAMEL_T16": 12
       },
       "categoria": "CHAQUETAS",
       "colores": [
         "MARFIL",
-        "NEGRO"
+        "NEGRO",
+        "CAMEL"
       ],
       "consumibles_check": {
         "rec_oversized_capota_1058__c82_20": true,
@@ -16099,10 +16107,12 @@
           "vmo": 10510,
           "colores": [
             "MARFIL",
-            "NEGRO"
+            "NEGRO",
+            "CAMEL"
           ],
           "tallas": [
             "T4",
+            "T6",
             "T8",
             "T10",
             "T12",
@@ -16120,7 +16130,14 @@
             "NEGRO_T10": 23,
             "NEGRO_T12": 23,
             "NEGRO_T14": 23,
-            "NEGRO_T16": 11
+            "NEGRO_T16": 11,
+            "CAMEL_T4": 6,
+            "CAMEL_T6": 6,
+            "CAMEL_T8": 6,
+            "CAMEL_T10": 9,
+            "CAMEL_T12": 9,
+            "CAMEL_T14": 12,
+            "CAMEL_T16": 12
           },
           "maquilador_id": ""
         }
@@ -16131,6 +16148,7 @@
       },
       "tallas": [
         "T4",
+        "T6",
         "T8",
         "T10",
         "T12",
