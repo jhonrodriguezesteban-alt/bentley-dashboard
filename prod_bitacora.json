@@ -41580,20 +41580,31 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "GRIS CLARO",
+      "estado_anterior": "PENDIENTE_CORTAR",
+      "estado_nuevo": "PENDIENTE_CORTAR",
       "id": "evt_1794442541181_usf7x",
-      "ts": 1794442541181,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "por corte",
       "op_id": "OP-2026-241",
       "op_nombre": "CONJUNTO SUECIA",
       "referencia": "CONJUNTO SUECIA",
-      "color": "GRIS CLARO",
       "talla": "todas las tallas",
-      "estado_anterior": "PENDIENTE_CORTAR",
-      "estado_nuevo": "PENDIENTE_CORTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1794442541181,
       "uds": 120,
-      "motivo": "por corte"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1794442687858_nmrmz",
+      "ts": 1794442687858,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-248",
+      "nombre": "CAMIBUZO NEVADO",
+      "categoria": "BUZOS",
+      "colores": 1,
+      "refs": 1
     }
   ]
 }
