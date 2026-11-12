@@ -41596,15 +41596,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1794442687858_nmrmz",
-      "ts": 1794442687858,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-248",
-      "nombre": "CAMIBUZO NEVADO",
       "categoria": "BUZOS",
       "colores": 1,
-      "refs": 1
+      "id": "evt_1794442687858_nmrmz",
+      "nombre": "CAMIBUZO NEVADO",
+      "op_id": "OP-2026-248",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1794442687858,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1794442711651_fjdb0",
+      "ts": 1794442711651,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-248",
+      "op_nombre": "CAMIBUZO NEVADO",
+      "referencia": "CAMIBUZO NEVADO",
+      "color": "NEGRO",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 166,
+      "motivo": "EN TALLER"
     }
   ]
 }
