@@ -12161,9 +12161,9 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-206||BEIGE": "CORTE_POR_ALISTAR",
-        "OP-2026-206||NEGRO": "CORTE_POR_ALISTAR",
-        "OP-2026-206||VERDE MILITAR": "CORTE_POR_ALISTAR"
+        "OP-2026-206||BEIGE": "EN_CONFECCION",
+        "OP-2026-206||NEGRO": "EN_CONFECCION",
+        "OP-2026-206||VERDE MILITAR": "EN_CONFECCION"
       },
       "tallas": [
         "T4",
@@ -16708,7 +16708,21 @@
           "solicitud_id": "id_1794066067226_5q2s2cskl"
         }
       ],
-      "updated_at": "2026-11-03"
+      "updated_at": "2026-11-03",
+      "corte_ok_color": {
+        "BEIGE": {
+          "por": "John Rodriguez",
+          "ts": "2026-11-12T22:22:31.434Z"
+        },
+        "NEGRO": {
+          "por": "John Rodriguez",
+          "ts": "2026-11-12T22:22:32.211Z"
+        },
+        "VERDE MILITAR": {
+          "por": "John Rodriguez",
+          "ts": "2026-11-12T22:22:32.739Z"
+        }
+      }
     },
     {
       "cantidades": {
