@@ -83,7 +83,6 @@
       "OP-2026-251||GRIS OSCURO",
       "OP-2026-251||MARFIL",
       "OP-2026-250||NEGRO",
-      "OP-2026-250||GRIS CLARO",
       "OP-2026-241||AZUL BEBE",
       "OP-2026-208||AZUL BEBE"
     ],
@@ -2320,37 +2319,37 @@
       "uds": 100
     },
     {
+      "key": "OP-2026-206||VERDE MILITAR",
+      "op_id": "OP-2026-206",
+      "op_nombre": "PANTALON TRENCH",
       "categoria": "PANTALONES",
       "color": "VERDE MILITAR",
-      "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-11-03",
-      "key": "OP-2026-206||VERDE MILITAR",
+      "uds": 96,
       "mes_planeado": "2026-10",
-      "op_id": "OP-2026-206",
-      "op_nombre": "PANTALON TRENCH",
-      "uds": 96
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-11-03"
     },
     {
+      "key": "OP-2026-206||BEIGE",
+      "op_id": "OP-2026-206",
+      "op_nombre": "PANTALON TRENCH",
       "categoria": "PANTALONES",
       "color": "BEIGE",
-      "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-11-03",
-      "key": "OP-2026-206||BEIGE",
+      "uds": 96,
       "mes_planeado": "2026-10",
-      "op_id": "OP-2026-206",
-      "op_nombre": "PANTALON TRENCH",
-      "uds": 96
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-11-03"
     },
     {
-      "categoria": "PANTALONES",
-      "color": "NEGRO",
-      "estado_al_salir": "CORTE_POR_ALISTAR",
-      "fecha_deteccion": "2026-11-03",
       "key": "OP-2026-206||NEGRO",
-      "mes_planeado": "2026-10",
       "op_id": "OP-2026-206",
       "op_nombre": "PANTALON TRENCH",
-      "uds": 96
+      "categoria": "PANTALONES",
+      "color": "NEGRO",
+      "uds": 96,
+      "mes_planeado": "2026-10",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-11-03"
     },
     {
       "categoria": "BLUSAS",
@@ -2395,6 +2394,17 @@
       "mes_planeado": "2026-11",
       "estado_al_salir": "CORTE_POR_ALISTAR",
       "fecha_deteccion": "2026-11-06"
+    },
+    {
+      "key": "OP-2026-250||GRIS CLARO",
+      "op_id": "OP-2026-250",
+      "op_nombre": "PANTALON RAVE",
+      "categoria": "PANTALONES",
+      "color": "GRIS CLARO",
+      "uds": 98,
+      "mes_planeado": "2026-11",
+      "estado_al_salir": "CORTE_POR_ALISTAR",
+      "fecha_deteccion": "2026-11-11"
     }
   ],
   "confirmadas": {
