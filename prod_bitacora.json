@@ -41500,20 +41500,36 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "ROSA",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1794442293630_rtrd2",
-      "ts": 1794442293630,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-231",
       "op_nombre": "VESTIDO MINI DRESS",
       "referencia": "VESTIDO MINI DRESS",
-      "color": "ROSA",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1794442293630,
+      "uds": 86,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1794442402607_g9ri4",
+      "ts": 1794442402607,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0167",
+      "op_nombre": "CONJUNTO TRENZAS",
+      "referencia": "CONJUNTO TRENZAS",
+      "color": "AVENA",
       "talla": "todas las tallas",
       "estado_anterior": "CORTE_POR_ALISTAR",
       "estado_nuevo": "CORTE_POR_ALISTAR",
       "bulk": true,
-      "uds": 86,
-      "motivo": "EN TALLER"
+      "uds": 96,
+      "motivo": "en insumos"
     }
   ]
 }
