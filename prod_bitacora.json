@@ -41532,19 +41532,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MARFIL",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1794442428551_6aqrn",
-      "ts": 1794442428551,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-0167",
       "op_nombre": "CONJUNTO TRENZAS",
       "referencia": "CONJUNTO TRENZAS",
-      "color": "MARFIL",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1794442428551,
+      "uds": 96,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1794442464409_8z6fw",
+      "ts": 1794442464409,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0031",
+      "op_nombre": "CONJUNTO TRENZAS",
+      "referencia": "CONJUNTO TRENZAS",
+      "color": "AZUL BEBE",
       "talla": "todas las tallas",
       "estado_anterior": "CORTE_POR_ALISTAR",
       "estado_nuevo": "CORTE_POR_ALISTAR",
       "bulk": true,
-      "uds": 96,
+      "uds": 104,
       "motivo": "en insumos"
     }
   ]
