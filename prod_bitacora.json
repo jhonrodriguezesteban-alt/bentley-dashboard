@@ -41564,19 +41564,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "AZUL BEBE",
+      "estado_anterior": "PENDIENTE_CORTAR",
+      "estado_nuevo": "PENDIENTE_CORTAR",
       "id": "evt_1794442525277_qyiv4",
+      "motivo": "por corte",
+      "op_id": "OP-2026-241",
+      "op_nombre": "CONJUNTO SUECIA",
+      "referencia": "CONJUNTO SUECIA",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
       "ts": 1794442525277,
+      "uds": 70,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1794442541181_usf7x",
+      "ts": 1794442541181,
       "user": "Jefa de Producción",
       "tipo": "estado_ot",
       "op_id": "OP-2026-241",
       "op_nombre": "CONJUNTO SUECIA",
       "referencia": "CONJUNTO SUECIA",
-      "color": "AZUL BEBE",
+      "color": "GRIS CLARO",
       "talla": "todas las tallas",
       "estado_anterior": "PENDIENTE_CORTAR",
       "estado_nuevo": "PENDIENTE_CORTAR",
       "bulk": true,
-      "uds": 70,
+      "uds": 120,
       "motivo": "por corte"
     }
   ]
