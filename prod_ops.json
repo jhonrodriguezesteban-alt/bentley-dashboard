@@ -16490,12 +16490,12 @@
     },
     {
       "cantidades": {
-        "NEGRO_T10": 20,
-        "NEGRO_T12": 20,
-        "NEGRO_T14": 20,
-        "NEGRO_T16": 20,
-        "NEGRO_T6": 10,
-        "NEGRO_T8": 10
+        "NEGRO_T6": 21,
+        "NEGRO_T8": 21,
+        "NEGRO_T10": 31,
+        "NEGRO_T12": 31,
+        "NEGRO_T14": 31,
+        "NEGRO_T16": 31
       },
       "categoria": "BUZOS",
       "colores": [
@@ -16518,21 +16518,13 @@
       "receta_nombre": "CAMIBUZO NEVADO",
       "referencias": [
         {
-          "cantidades": {
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 10
-          },
+          "nombre": "CAMIBUZO NEVADO",
+          "ref": "1194",
           "cat": "BUZOS",
+          "vmo": 1151,
           "colores": [
             "NEGRO"
           ],
-          "maquilador_id": "",
-          "nombre": "CAMIBUZO NEVADO",
-          "ref": "1194",
           "tallas": [
             "T6",
             "T8",
@@ -16541,8 +16533,15 @@
             "T14",
             "T16"
           ],
-          "totalUds": 100,
-          "vmo": 1151
+          "cantidades": {
+            "NEGRO_T6": 21,
+            "NEGRO_T8": 21,
+            "NEGRO_T10": 31,
+            "NEGRO_T12": 31,
+            "NEGRO_T14": 31,
+            "NEGRO_T16": 31
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -16555,7 +16554,10 @@
         "T12",
         "T14",
         "T16"
-      ]
+      ],
+      "updated_at": "2026-11-11",
+      "diseno_origen_id": null,
+      "diseno_origen_nombre": null
     },
     {
       "cantidades": {
