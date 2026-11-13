@@ -42175,20 +42175,36 @@
       "user": "Carolina Telles"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1794494331522_9822l",
-      "ts": 1794494331522,
-      "user": "Carolina Telles",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-224",
       "op_nombre": "SET PALOMINO",
       "referencia": "CONJUNTO PALOMINO",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1794494331522,
       "uds": 117,
-      "motivo": "ENTREGADO"
+      "user": "Carolina Telles"
+    },
+    {
+      "id": "evt_1794576219026_tjmrz",
+      "ts": 1794576219026,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-120",
+      "op_nombre": "ROMPEVIENTOS",
+      "referencia": "ROMPEVIENTOS",
+      "color": "VERDE MILITAR",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 84,
+      "motivo": "EN TALLER"
     }
   ]
 }
