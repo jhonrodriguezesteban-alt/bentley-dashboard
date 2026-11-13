@@ -42312,20 +42312,36 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1794581184919_gx6bs",
-      "ts": 1794581184919,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-0149",
       "op_nombre": "CONJUNTO TRENZAS",
       "referencia": "CONJUNTO TRENZAS",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1794581184919,
       "uds": 104,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1794585437711_dk7pv",
+      "ts": 1794585437711,
+      "user": "Carolina Telles",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-220",
+      "op_nombre": "CONJUNTO DAKOTA",
+      "referencia": "CONJUNTO DAKOTA",
+      "color": "VERDE MILITAR",
+      "talla": "T14",
+      "estado_anterior": "ENTREGADO_PARCIAL",
+      "estado_nuevo": "ENTREGADO_PARCIAL",
+      "bulk": false,
+      "uds": 16,
+      "motivo": "ENTREGADO"
     }
   ]
 }
