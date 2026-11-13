@@ -8494,6 +8494,12 @@
         "rec_chaqueta_ralph_1155__c46_30": true
       },
       "cortador": "Corte Carbajal",
+      "corte_ok_color": {
+        "AZUL OSCURO": {
+          "por": "John Rodriguez",
+          "ts": "2026-11-12T22:24:09.119Z"
+        }
+      },
       "created_at": "2026-08-16",
       "created_by": "John Rodriguez",
       "estado_op": "EN_PROCESO",
@@ -8563,13 +8569,7 @@
         "CAMEL": true,
         "NEGRO": true
       },
-      "updated_at": "2026-09-15",
-      "corte_ok_color": {
-        "AZUL OSCURO": {
-          "por": "John Rodriguez",
-          "ts": "2026-11-12T22:24:09.119Z"
-        }
-      }
+      "updated_at": "2026-09-15"
     },
     {
       "cantidades": {
@@ -9283,7 +9283,7 @@
         "OP-2026-120||AZUL OSCURO": "EN_CONFECCION",
         "OP-2026-120||NEGRO": "EN_CONFECCION",
         "OP-2026-120||ROSA": "EN_CONFECCION",
-        "OP-2026-120||VERDE MILITAR": "CORTE_POR_ALISTAR"
+        "OP-2026-120||VERDE MILITAR": "EN_CONFECCION"
       },
       "tallas": [
         "T4",
@@ -9960,13 +9960,13 @@
       },
       "cortador": "Corte Carbajal",
       "corte_ok_color": {
-        "GRIS OSCURO": {
-          "por": "John Rodriguez",
-          "ts": "2026-10-08T23:59:18.531Z"
-        },
         "CAFE": {
           "por": "John Rodriguez",
           "ts": "2026-11-12T22:23:58.891Z"
+        },
+        "GRIS OSCURO": {
+          "por": "John Rodriguez",
+          "ts": "2026-10-08T23:59:18.531Z"
         },
         "ROSA": {
           "por": "John Rodriguez",
@@ -10977,6 +10977,20 @@
         "rec_chaqueta_ralph_1155__c46_28": true
       },
       "cortador": "Corte Carbajal",
+      "corte_ok_color": {
+        "BEIGE": {
+          "por": "John Rodriguez",
+          "ts": "2026-11-12T22:24:08.385Z"
+        },
+        "CAMEL": {
+          "por": "John Rodriguez",
+          "ts": "2026-11-12T22:24:12.521Z"
+        },
+        "NEGRO": {
+          "por": "John Rodriguez",
+          "ts": "2026-11-12T22:24:10.603Z"
+        }
+      },
       "created_at": "2026-08-25",
       "created_by": "John Rodriguez",
       "estado_op": "EN_PROCESO",
@@ -11051,21 +11065,7 @@
           "lineas": 4,
           "solicitud_id": "id_1793827206787_gk8yhcnsi"
         }
-      ],
-      "corte_ok_color": {
-        "BEIGE": {
-          "por": "John Rodriguez",
-          "ts": "2026-11-12T22:24:08.385Z"
-        },
-        "NEGRO": {
-          "por": "John Rodriguez",
-          "ts": "2026-11-12T22:24:10.603Z"
-        },
-        "CAMEL": {
-          "por": "John Rodriguez",
-          "ts": "2026-11-12T22:24:12.521Z"
-        }
-      }
+      ]
     },
     {
       "cantidades": {
@@ -15848,6 +15848,16 @@
         "GRIS OSCURO",
         "AZUL BEBE"
       ],
+      "consumibles_check": {
+        "cid_1791507853356_8544__cid_1791507821797_1342": true,
+        "cid_1791507853356_8544__cid_1791507821797_1519||AZUL BEBE": true,
+        "cid_1791507853356_8544__cid_1791507821797_1519||GRIS OSCURO": true,
+        "cid_1791507853356_8544__cid_1791507821797_5288": true
+      },
+      "consumibles_desagregado": {
+        "cid_1791507853356_8544__cid_1791507821797_1519": true,
+        "cid_1791507853356_8544__cid_1791507821797_285": true
+      },
       "cortador": "Carolina Salazar",
       "corte_ok_color": {
         "AZUL BEBE": {
@@ -15959,17 +15969,7 @@
           "solicitud_id": "id_1793971263315_2p6bnd9ky"
         }
       ],
-      "updated_at": "2026-11-04",
-      "consumibles_desagregado": {
-        "cid_1791507853356_8544__cid_1791507821797_1519": true,
-        "cid_1791507853356_8544__cid_1791507821797_285": true
-      },
-      "consumibles_check": {
-        "cid_1791507853356_8544__cid_1791507821797_1519||AZUL BEBE": true,
-        "cid_1791507853356_8544__cid_1791507821797_1519||GRIS OSCURO": true,
-        "cid_1791507853356_8544__cid_1791507821797_5288": true,
-        "cid_1791507853356_8544__cid_1791507821797_1342": true
-      }
+      "updated_at": "2026-11-04"
     },
     {
       "cantidades": {
@@ -16518,12 +16518,12 @@
     },
     {
       "cantidades": {
-        "NEGRO_T6": 21,
-        "NEGRO_T8": 21,
         "NEGRO_T10": 31,
         "NEGRO_T12": 31,
         "NEGRO_T14": 31,
-        "NEGRO_T16": 31
+        "NEGRO_T16": 31,
+        "NEGRO_T6": 21,
+        "NEGRO_T8": 21
       },
       "categoria": "BUZOS",
       "colores": [
@@ -16546,13 +16546,21 @@
       "receta_nombre": "CAMIBUZO NEVADO",
       "referencias": [
         {
-          "nombre": "CAMIBUZO NEVADO",
-          "ref": "1194",
+          "cantidades": {
+            "NEGRO_T10": 31,
+            "NEGRO_T12": 31,
+            "NEGRO_T14": 31,
+            "NEGRO_T16": 31,
+            "NEGRO_T6": 21,
+            "NEGRO_T8": 21
+          },
           "cat": "BUZOS",
-          "vmo": 1151,
           "colores": [
             "NEGRO"
           ],
+          "maquilador_id": "",
+          "nombre": "CAMIBUZO NEVADO",
+          "ref": "1194",
           "tallas": [
             "T6",
             "T8",
@@ -16561,15 +16569,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T6": 21,
-            "NEGRO_T8": 21,
-            "NEGRO_T10": 31,
-            "NEGRO_T12": 31,
-            "NEGRO_T14": 31,
-            "NEGRO_T16": 31
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
@@ -16583,9 +16583,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-11-11",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-11-11"
     },
     {
       "cantidades": {
@@ -16637,6 +16635,28 @@
         "cid_1789269430435_6299__cid_1789268387931_7184": true
       },
       "cortador": "Corte Carbajal",
+      "corte_ok_color": {
+        "AZUL OSCURO": {
+          "por": "John Rodriguez",
+          "ts": "2026-11-12T22:22:34.324Z"
+        },
+        "BEIGE": {
+          "por": "John Rodriguez",
+          "ts": "2026-11-12T22:22:31.434Z"
+        },
+        "NEGRO": {
+          "por": "John Rodriguez",
+          "ts": "2026-11-12T22:22:32.211Z"
+        },
+        "ROJO": {
+          "por": "John Rodriguez",
+          "ts": "2026-11-12T22:22:36.213Z"
+        },
+        "VERDE MILITAR": {
+          "por": "John Rodriguez",
+          "ts": "2026-11-12T22:22:32.739Z"
+        }
+      },
       "created_at": "2026-11-03",
       "created_by": "John Rodriguez",
       "estado_op": "EN_PROCESO",
@@ -16736,29 +16756,7 @@
           "solicitud_id": "id_1794066067226_5q2s2cskl"
         }
       ],
-      "updated_at": "2026-11-03",
-      "corte_ok_color": {
-        "BEIGE": {
-          "por": "John Rodriguez",
-          "ts": "2026-11-12T22:22:31.434Z"
-        },
-        "NEGRO": {
-          "por": "John Rodriguez",
-          "ts": "2026-11-12T22:22:32.211Z"
-        },
-        "VERDE MILITAR": {
-          "por": "John Rodriguez",
-          "ts": "2026-11-12T22:22:32.739Z"
-        },
-        "AZUL OSCURO": {
-          "por": "John Rodriguez",
-          "ts": "2026-11-12T22:22:34.324Z"
-        },
-        "ROJO": {
-          "por": "John Rodriguez",
-          "ts": "2026-11-12T22:22:36.213Z"
-        }
-      }
+      "updated_at": "2026-11-03"
     },
     {
       "cantidades": {
