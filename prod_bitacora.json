@@ -42328,19 +42328,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": false,
+      "color": "VERDE MILITAR",
+      "estado_anterior": "ENTREGADO_PARCIAL",
+      "estado_nuevo": "ENTREGADO_PARCIAL",
       "id": "evt_1794585437711_dk7pv",
+      "motivo": "ENTREGADO",
+      "op_id": "OP-2026-220",
+      "op_nombre": "CONJUNTO DAKOTA",
+      "referencia": "CONJUNTO DAKOTA",
+      "talla": "T14",
+      "tipo": "estado_ot",
       "ts": 1794585437711,
+      "uds": 16,
+      "user": "Carolina Telles"
+    },
+    {
+      "id": "evt_1794585457228_hqduw",
+      "ts": 1794585457228,
       "user": "Carolina Telles",
       "tipo": "estado_ot",
       "op_id": "OP-2026-220",
       "op_nombre": "CONJUNTO DAKOTA",
       "referencia": "CONJUNTO DAKOTA",
       "color": "VERDE MILITAR",
-      "talla": "T14",
-      "estado_anterior": "ENTREGADO_PARCIAL",
-      "estado_nuevo": "ENTREGADO_PARCIAL",
-      "bulk": false,
-      "uds": 16,
+      "talla": "todas las tallas",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": true,
+      "uds": 96,
       "motivo": "ENTREGADO"
     }
   ]
