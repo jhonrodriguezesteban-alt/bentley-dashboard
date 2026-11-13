@@ -42296,19 +42296,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "GRIS CLARO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1794580989310_tnzez",
-      "ts": 1794580989310,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-201",
       "op_nombre": "SET BOMBER CORTA",
       "referencia": "SET BOMBER CORTA",
-      "color": "GRIS CLARO",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1794580989310,
+      "uds": 110,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1794581184919_gx6bs",
+      "ts": 1794581184919,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0149",
+      "op_nombre": "CONJUNTO TRENZAS",
+      "referencia": "CONJUNTO TRENZAS",
+      "color": "NEGRO",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 110,
+      "uds": 104,
       "motivo": "EN TALLER"
     }
   ]
