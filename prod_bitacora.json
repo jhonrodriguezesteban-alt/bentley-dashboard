@@ -42191,20 +42191,36 @@
       "user": "Carolina Telles"
     },
     {
+      "bulk": true,
+      "color": "VERDE MILITAR",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1794576219026_tjmrz",
-      "ts": 1794576219026,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-120",
       "op_nombre": "ROMPEVIENTOS",
       "referencia": "ROMPEVIENTOS",
-      "color": "VERDE MILITAR",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1794576219026,
+      "uds": 84,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1794579761493_py5ec",
+      "ts": 1794579761493,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-231",
+      "op_nombre": "VESTIDO MINI DRESS",
+      "referencia": "VESTIDO MINI DRESS",
+      "color": "AZUL BEBE",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 84,
-      "motivo": "EN TALLER"
+      "uds": 86,
+      "motivo": "en insumos"
     }
   ]
 }
