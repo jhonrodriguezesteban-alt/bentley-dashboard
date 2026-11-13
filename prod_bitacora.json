@@ -42239,20 +42239,36 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "ROSA",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1794579818740_fhba5",
-      "ts": 1794579818740,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-231",
       "op_nombre": "VESTIDO MINI DRESS",
       "referencia": "VESTIDO MINI DRESS",
-      "color": "ROSA",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1794579818740,
+      "uds": 86,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1794580137890_jh7an",
+      "ts": 1794580137890,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-242",
+      "op_nombre": "RANGLAND SOFT",
+      "referencia": "RANGLAND SOFT",
+      "color": "LOVELY - MARFIL",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 86,
-      "motivo": "en insumos"
+      "uds": 120,
+      "motivo": "EN TALLER"
     }
   ]
 }
