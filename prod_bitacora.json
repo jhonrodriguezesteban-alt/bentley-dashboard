@@ -42271,20 +42271,29 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "VINOTINTO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1794580809950_stzwq",
-      "ts": 1794580809950,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-119",
       "op_nombre": "WASHMAN",
       "referencia": "WASHMAN",
-      "color": "VINOTINTO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1794580809950,
       "uds": 120,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1794580961504_i5e0z",
+      "ts": 1794580961504,
+      "user": "Jefa de Producción",
+      "tipo": "satelite_crear",
+      "nombre": "ANGIE CRUZ",
+      "personas": 1,
+      "capacidad": 0
     }
   ]
 }
