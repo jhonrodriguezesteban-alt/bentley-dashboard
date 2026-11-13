@@ -3085,7 +3085,7 @@
     },
     {
       "color": "VERDE MILITAR",
-      "entregado": false,
+      "entregado": true,
       "fecha_compromiso": "2026-11-06",
       "fecha_entrada": "2026-10-03",
       "fecha_inicial": "2026-10-16",
@@ -3129,7 +3129,8 @@
       "op_id": "OP-2026-220",
       "op_nombre": "CONJUNTO DAKOTA",
       "satelite_id": "id_1791034396080_jplfjc1os",
-      "uds": 96
+      "uds": 96,
+      "fecha_entrega_real": "2026-11-13"
     },
     {
       "color": "MARFIL",
@@ -4592,32 +4593,24 @@
       "uds": 120
     },
     {
+      "color": "GRIS CLARO",
+      "entregado": false,
+      "fecha_entrada": "2026-11-13",
       "id": "id_1794580989154_mr0nigwy8",
       "op_id": "OP-2026-201",
       "op_nombre": "SET BOMBER CORTA",
-      "color": "GRIS CLARO",
       "satelite_id": "id_1794580961504_xes502fp3",
-      "uds": 110,
-      "fecha_entrada": "2026-11-13",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 110
     },
     {
+      "color": "NEGRO",
+      "entregado": false,
+      "fecha_entrada": "2026-11-13",
       "id": "id_1794581184857_2rywlkfwj",
       "op_id": "OP-0149",
       "op_nombre": "CONJUNTO TRENZAS",
-      "color": "NEGRO",
       "satelite_id": "id_1789824418634_ojryqap9f",
-      "uds": 104,
-      "fecha_entrada": "2026-11-13",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 104
     }
   ]
 }
