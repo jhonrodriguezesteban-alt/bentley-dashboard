@@ -3592,7 +3592,7 @@
       ],
       "subg_estados": {
         "OP-0059||AVENA": "PAGO_PENDIENTE",
-        "OP-0059||CAFE": "EN_CONFECCION",
+        "OP-0059||CAFE": "ALISTAMIENTO",
         "OP-0059||GRIS OSCURO": "CORTE_POR_ALISTAR",
         "OP-0059||MARFIL": "EN_CONFECCION",
         "OP-0059||VINOTINTO": "EN_CONFECCION"
@@ -4792,14 +4792,14 @@
         "AVENA": false,
         "GRIS OSCURO": true
       },
-      "updated_at": "2026-07-30",
       "trazos_solicitudes": [
         {
-          "solicitud_id": "id_1794665680560_b9n0ifzb5",
           "fecha": "2026-11-14",
-          "lineas": 3
+          "lineas": 3,
+          "solicitud_id": "id_1794665680560_b9n0ifzb5"
         }
-      ]
+      ],
+      "updated_at": "2026-07-30"
     },
     {
       "cantidades": {
@@ -9880,9 +9880,9 @@
       },
       "trazos_solicitudes": [
         {
-          "solicitud_id": "id_1794666421733_1eqep6896",
           "fecha": "2026-11-14",
-          "lineas": 6
+          "lineas": 6,
+          "solicitud_id": "id_1794666421733_1eqep6896"
         }
       ]
     },
@@ -10742,9 +10742,9 @@
       },
       "trazos_solicitudes": [
         {
-          "solicitud_id": "id_1794666677881_patvzzdnc",
           "fecha": "2026-11-14",
-          "lineas": 4
+          "lineas": 4,
+          "solicitud_id": "id_1794666677881_patvzzdnc"
         }
       ]
     },
@@ -11614,11 +11614,11 @@
         "T16"
       ],
       "trazos_color_solicitado": {
+        "AVENA": true,
         "CAFE": true,
         "GRIS OSCURO": true,
         "MARFIL": true,
-        "NEGRO": true,
-        "AVENA": true
+        "NEGRO": true
       },
       "trazos_solicitudes": [
         {
@@ -11627,9 +11627,9 @@
           "solicitud_id": "id_1791381734418_5ba6fkct8"
         },
         {
-          "solicitud_id": "id_1794666021289_3vj7uejj0",
           "fecha": "2026-11-14",
-          "lineas": 2
+          "lineas": 2,
+          "solicitud_id": "id_1794666021289_3vj7uejj0"
         }
       ],
       "updated_at": "2026-10-20"
