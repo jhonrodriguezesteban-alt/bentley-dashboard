@@ -9888,29 +9888,29 @@
     },
     {
       "cantidades": {
-        "NEGRO_T6": 14,
-        "NEGRO_T8": 14,
-        "NEGRO_T10": 21,
-        "NEGRO_T12": 21,
-        "NEGRO_T14": 21,
-        "NEGRO_T16": 21,
-        "BEIGE_T6": 12,
-        "BEIGE_T8": 12,
         "BEIGE_T10": 16,
         "BEIGE_T12": 16,
         "BEIGE_T14": 16,
         "BEIGE_T16": 16,
-        "CAMEL_T6": 6,
-        "CAMEL_T8": 6,
+        "BEIGE_T6": 12,
+        "BEIGE_T8": 12,
         "CAMEL_T10": 6,
         "CAMEL_T12": 6,
         "CAMEL_T14": 6,
         "CAMEL_T16": 6,
-        "MARFIL_T8": 18,
+        "CAMEL_T6": 6,
+        "CAMEL_T8": 6,
         "MARFIL_T10": 18,
         "MARFIL_T12": 18,
         "MARFIL_T14": 18,
-        "MARFIL_T16": 18
+        "MARFIL_T16": 18,
+        "MARFIL_T8": 18,
+        "NEGRO_T10": 21,
+        "NEGRO_T12": 21,
+        "NEGRO_T14": 21,
+        "NEGRO_T16": 21,
+        "NEGRO_T6": 14,
+        "NEGRO_T8": 14
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -9957,16 +9957,41 @@
       "receta_nombre": "PILOTO PANCAKE - REF: 1099",
       "referencias": [
         {
-          "nombre": "PILOTO PANCAKE",
-          "ref": "1099",
+          "cantidades": {
+            "BEIGE_T10": 16,
+            "BEIGE_T12": 16,
+            "BEIGE_T14": 16,
+            "BEIGE_T16": 16,
+            "BEIGE_T6": 12,
+            "BEIGE_T8": 12,
+            "CAMEL_T10": 6,
+            "CAMEL_T12": 6,
+            "CAMEL_T14": 6,
+            "CAMEL_T16": 6,
+            "CAMEL_T6": 6,
+            "CAMEL_T8": 6,
+            "MARFIL_T10": 18,
+            "MARFIL_T12": 18,
+            "MARFIL_T14": 18,
+            "MARFIL_T16": 18,
+            "MARFIL_T8": 18,
+            "NEGRO_T10": 21,
+            "NEGRO_T12": 21,
+            "NEGRO_T14": 21,
+            "NEGRO_T16": 21,
+            "NEGRO_T6": 14,
+            "NEGRO_T8": 14
+          },
           "cat": "CHAQUETAS",
-          "vmo": 9459,
           "colores": [
             "NEGRO",
             "BEIGE",
             "CAMEL",
             "MARFIL"
           ],
+          "maquilador_id": "",
+          "nombre": "PILOTO PANCAKE",
+          "ref": "1099",
           "tallas": [
             "T6",
             "T8",
@@ -9975,39 +10000,14 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T6": 14,
-            "NEGRO_T8": 14,
-            "NEGRO_T10": 21,
-            "NEGRO_T12": 21,
-            "NEGRO_T14": 21,
-            "NEGRO_T16": 21,
-            "BEIGE_T6": 12,
-            "BEIGE_T8": 12,
-            "BEIGE_T10": 16,
-            "BEIGE_T12": 16,
-            "BEIGE_T14": 16,
-            "BEIGE_T16": 16,
-            "CAMEL_T6": 6,
-            "CAMEL_T8": 6,
-            "CAMEL_T10": 6,
-            "CAMEL_T12": 6,
-            "CAMEL_T14": 6,
-            "CAMEL_T16": 6,
-            "MARFIL_T8": 18,
-            "MARFIL_T10": 18,
-            "MARFIL_T12": 18,
-            "MARFIL_T14": 18,
-            "MARFIL_T16": 18
-          },
-          "maquilador_id": ""
+          "vmo": 9459
         }
       ],
       "subg_estados": {
         "OP-2026-128||BEIGE": "PENDIENTE_CORTAR",
         "OP-2026-128||CAMEL": "PENDIENTE_CORTAR",
-        "OP-2026-128||NEGRO": "CORTE_POR_ALISTAR",
-        "OP-2026-128||MARFIL": "CORTE_POR_ALISTAR"
+        "OP-2026-128||MARFIL": "CORTE_POR_ALISTAR",
+        "OP-2026-128||NEGRO": "CORTE_POR_ALISTAR"
       },
       "tallas": [
         "T6",
@@ -10029,9 +10029,7 @@
           "solicitud_id": "id_1793915143389_5vxogqge2"
         }
       ],
-      "updated_at": "2026-11-17",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-11-17"
     },
     {
       "cantidades": {
@@ -13721,23 +13719,30 @@
     },
     {
       "cantidades": {
-        "CAMEL_T10": 24,
-        "CAMEL_T12": 24,
-        "CAMEL_T14": 24,
-        "CAMEL_T16": 24,
-        "CAMEL_T6": 12,
-        "CAMEL_T8": 12,
+        "NEGRO_T6": 12,
+        "NEGRO_T8": 12,
         "NEGRO_T10": 24,
         "NEGRO_T12": 24,
         "NEGRO_T14": 24,
         "NEGRO_T16": 24,
-        "NEGRO_T6": 12,
-        "NEGRO_T8": 12
+        "CAMEL_T6": 12,
+        "CAMEL_T8": 12,
+        "CAMEL_T10": 24,
+        "CAMEL_T12": 24,
+        "CAMEL_T14": 24,
+        "CAMEL_T16": 24,
+        "VINOTINTO_T6": 12,
+        "VINOTINTO_T8": 12,
+        "VINOTINTO_T10": 24,
+        "VINOTINTO_T12": 24,
+        "VINOTINTO_T14": 24,
+        "VINOTINTO_T16": 24
       },
       "categoria": "CONJUNTOS",
       "colores": [
         "NEGRO",
-        "CAMEL"
+        "CAMEL",
+        "VINOTINTO"
       ],
       "consumibles_check": {
         "cid_1789270002920_1520__cid_1789269784528_5761": false
@@ -13757,28 +13762,15 @@
       "receta_nombre": "SET CHALECO VIENA",
       "referencias": [
         {
-          "cantidades": {
-            "CAMEL_T10": 24,
-            "CAMEL_T12": 24,
-            "CAMEL_T14": 24,
-            "CAMEL_T16": 24,
-            "CAMEL_T6": 12,
-            "CAMEL_T8": 12,
-            "NEGRO_T10": 24,
-            "NEGRO_T12": 24,
-            "NEGRO_T14": 24,
-            "NEGRO_T16": 24,
-            "NEGRO_T6": 12,
-            "NEGRO_T8": 12
-          },
-          "cat": "CONJUNTOS",
-          "colores": [
-            "NEGRO",
-            "CAMEL"
-          ],
-          "maquilador_id": "",
           "nombre": "SET CHALECO VIENA",
           "ref": "1219",
+          "cat": "CONJUNTOS",
+          "vmo": 1151,
+          "colores": [
+            "NEGRO",
+            "CAMEL",
+            "VINOTINTO"
+          ],
           "tallas": [
             "T6",
             "T8",
@@ -13787,8 +13779,27 @@
             "T14",
             "T16"
           ],
-          "totalUds": 240,
-          "vmo": 1151
+          "cantidades": {
+            "NEGRO_T6": 12,
+            "NEGRO_T8": 12,
+            "NEGRO_T10": 24,
+            "NEGRO_T12": 24,
+            "NEGRO_T14": 24,
+            "NEGRO_T16": 24,
+            "CAMEL_T6": 12,
+            "CAMEL_T8": 12,
+            "CAMEL_T10": 24,
+            "CAMEL_T12": 24,
+            "CAMEL_T14": 24,
+            "CAMEL_T16": 24,
+            "VINOTINTO_T6": 12,
+            "VINOTINTO_T8": 12,
+            "VINOTINTO_T10": 24,
+            "VINOTINTO_T12": 24,
+            "VINOTINTO_T14": 24,
+            "VINOTINTO_T16": 24
+          },
+          "maquilador_id": ""
         }
       ],
       "tallas": [
@@ -13798,7 +13809,10 @@
         "T12",
         "T14",
         "T16"
-      ]
+      ],
+      "updated_at": "2026-11-17",
+      "diseno_origen_id": null,
+      "diseno_origen_nombre": null
     },
     {
       "cantidades": {
