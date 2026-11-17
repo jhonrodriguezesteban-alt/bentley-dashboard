@@ -42578,15 +42578,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1794933129983_eq51g",
-      "ts": 1794933129983,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-128",
-      "nombre": "PILOTO PANCAKE",
       "categoria": "CHAQUETAS",
       "colores": 4,
-      "refs": 1
+      "id": "evt_1794933129983_eq51g",
+      "nombre": "PILOTO PANCAKE",
+      "op_id": "OP-2026-128",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1794933129983,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1794933149083_xsxyz",
+      "ts": 1794933149083,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-128",
+      "op_nombre": "PILOTO PANCAKE",
+      "referencia": "PILOTO PANCAKE",
+      "color": "NEGRO",
+      "talla": "todas las tallas",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
+      "bulk": true,
+      "uds": 112,
+      "motivo": "en insumos"
     }
   ]
 }
