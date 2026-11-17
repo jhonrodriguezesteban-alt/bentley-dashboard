@@ -42851,20 +42851,31 @@
       "user": "Carolina Telles"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1794954093180_bsiis",
-      "ts": 1794954093180,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-249",
       "op_nombre": "CONJUNTO DAKOTA",
       "referencia": "CONJUNTO DAKOTA",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1794954093180,
       "uds": 96,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1794954130017_2nhns",
+      "ts": 1794954130017,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-249",
+      "nombre": "CONJUNTO DAKOTA",
+      "categoria": "CONJUNTOS",
+      "colores": 5,
+      "refs": 1
     }
   ]
 }
