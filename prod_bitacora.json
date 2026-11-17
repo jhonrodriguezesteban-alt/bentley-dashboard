@@ -42605,15 +42605,25 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1794940976434_fejtq",
-      "ts": 1794940976434,
-      "user": "John Rodriguez",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-221",
-      "nombre": "SET CHALECO VIENA",
       "categoria": "CONJUNTOS",
       "colores": 3,
-      "refs": 1
+      "id": "evt_1794940976434_fejtq",
+      "nombre": "SET CHALECO VIENA",
+      "op_id": "OP-2026-221",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1794940976434,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1794941009932_57adk",
+      "ts": 1794941009932,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-221",
+      "op_nombre": "SET CHALECO VIENA",
+      "color": "VINOTINTO",
+      "mes": "2026-11"
     }
   ]
 }
