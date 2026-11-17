@@ -3592,7 +3592,7 @@
       ],
       "subg_estados": {
         "OP-0059||AVENA": "PAGO_PENDIENTE",
-        "OP-0059||CAFE": "ALISTAMIENTO",
+        "OP-0059||CAFE": "PAGO_PENDIENTE",
         "OP-0059||GRIS OSCURO": "CORTE_POR_ALISTAR",
         "OP-0059||MARFIL": "EN_CONFECCION",
         "OP-0059||VINOTINTO": "EN_CONFECCION"
@@ -10443,32 +10443,32 @@
     },
     {
       "cantidades": {
-        "BLANCO_T6": 8,
-        "BLANCO_T8": 12,
-        "BLANCO_T10": 12,
-        "BLANCO_T12": 16,
-        "BLANCO_T14": 16,
-        "BLANCO_T16": 16,
-        "VERDE MILITAR_T6": 8,
-        "VERDE MILITAR_T8": 16,
-        "VERDE MILITAR_T10": 16,
-        "VERDE MILITAR_T12": 20,
-        "VERDE MILITAR_T14": 20,
-        "VERDE MILITAR_T16": 20,
-        "AZUL OSCURO_T4": 8,
-        "AZUL OSCURO_T6": 8,
-        "AZUL OSCURO_T8": 16,
         "AZUL OSCURO_T10": 16,
         "AZUL OSCURO_T12": 20,
         "AZUL OSCURO_T14": 20,
         "AZUL OSCURO_T16": 20,
-        "CAFE_T4": 8,
-        "CAFE_T6": 8,
-        "CAFE_T8": 12,
+        "AZUL OSCURO_T4": 8,
+        "AZUL OSCURO_T6": 8,
+        "AZUL OSCURO_T8": 16,
+        "BLANCO_T10": 12,
+        "BLANCO_T12": 16,
+        "BLANCO_T14": 16,
+        "BLANCO_T16": 16,
+        "BLANCO_T6": 8,
+        "BLANCO_T8": 12,
         "CAFE_T10": 12,
         "CAFE_T12": 12,
         "CAFE_T14": 12,
-        "CAFE_T16": 12
+        "CAFE_T16": 12,
+        "CAFE_T4": 8,
+        "CAFE_T6": 8,
+        "CAFE_T8": 12,
+        "VERDE MILITAR_T10": 16,
+        "VERDE MILITAR_T12": 20,
+        "VERDE MILITAR_T14": 20,
+        "VERDE MILITAR_T16": 20,
+        "VERDE MILITAR_T6": 8,
+        "VERDE MILITAR_T8": 16
       },
       "categoria": "CHALECOS",
       "colores": [
@@ -10519,16 +10519,44 @@
       "receta_nombre": "CHALECO PUFFY - REF: 1150",
       "referencias": [
         {
-          "nombre": "CHALECO PUFFY",
-          "ref": "1150",
+          "cantidades": {
+            "AZUL OSCURO_T10": 16,
+            "AZUL OSCURO_T12": 20,
+            "AZUL OSCURO_T14": 20,
+            "AZUL OSCURO_T16": 20,
+            "AZUL OSCURO_T4": 8,
+            "AZUL OSCURO_T6": 8,
+            "AZUL OSCURO_T8": 16,
+            "BLANCO_T10": 12,
+            "BLANCO_T12": 16,
+            "BLANCO_T14": 16,
+            "BLANCO_T16": 16,
+            "BLANCO_T6": 8,
+            "BLANCO_T8": 12,
+            "CAFE_T10": 12,
+            "CAFE_T12": 12,
+            "CAFE_T14": 12,
+            "CAFE_T16": 12,
+            "CAFE_T4": 8,
+            "CAFE_T6": 8,
+            "CAFE_T8": 12,
+            "VERDE MILITAR_T10": 16,
+            "VERDE MILITAR_T12": 20,
+            "VERDE MILITAR_T14": 20,
+            "VERDE MILITAR_T16": 20,
+            "VERDE MILITAR_T6": 8,
+            "VERDE MILITAR_T8": 16
+          },
           "cat": "CHALECOS",
-          "vmo": 8408,
           "colores": [
             "BLANCO",
             "VERDE MILITAR",
             "AZUL OSCURO",
             "CAFE"
           ],
+          "maquilador_id": "",
+          "nombre": "CHALECO PUFFY",
+          "ref": "1150",
           "tallas": [
             "T4",
             "T6",
@@ -10538,37 +10566,12 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "BLANCO_T6": 8,
-            "BLANCO_T8": 12,
-            "BLANCO_T10": 12,
-            "BLANCO_T12": 16,
-            "BLANCO_T14": 16,
-            "BLANCO_T16": 16,
-            "VERDE MILITAR_T6": 8,
-            "VERDE MILITAR_T8": 16,
-            "VERDE MILITAR_T10": 16,
-            "VERDE MILITAR_T12": 20,
-            "VERDE MILITAR_T14": 20,
-            "VERDE MILITAR_T16": 20,
-            "AZUL OSCURO_T4": 8,
-            "AZUL OSCURO_T6": 8,
-            "AZUL OSCURO_T8": 16,
-            "AZUL OSCURO_T10": 16,
-            "AZUL OSCURO_T12": 20,
-            "AZUL OSCURO_T14": 20,
-            "AZUL OSCURO_T16": 20,
-            "CAFE_T4": 8,
-            "CAFE_T6": 8,
-            "CAFE_T8": 12,
-            "CAFE_T10": 12,
-            "CAFE_T12": 12,
-            "CAFE_T14": 12,
-            "CAFE_T16": 12
-          },
-          "maquilador_id": ""
+          "vmo": 8408
         }
       ],
+      "subg_estados": {
+        "OP-2026-193||CAFE": "CORTE_POR_ALISTAR"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -10594,12 +10597,7 @@
           "solicitud_id": "id_1794591109768_pits8apjj"
         }
       ],
-      "updated_at": "2026-11-17",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null,
-      "subg_estados": {
-        "OP-2026-193||CAFE": "CORTE_POR_ALISTAR"
-      }
+      "updated_at": "2026-11-17"
     },
     {
       "cantidades": {
@@ -12491,6 +12489,13 @@
           "vmo": 1151
         }
       ],
+      "subg_estados": {
+        "OP-2026-209||BEIGE": "CORTE_POR_ALISTAR",
+        "OP-2026-209||NEGRO": "CORTE_POR_ALISTAR",
+        "OP-2026-209||PALO DE ROSA": "CORTE_POR_ALISTAR",
+        "OP-2026-209||TAUPE": "CORTE_POR_ALISTAR",
+        "OP-2026-209||VINOTINTO": "POR_REVISAR"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -12518,14 +12523,7 @@
           "solicitud_id": "id_1791578219686_g63eykuo1"
         }
       ],
-      "updated_at": "2026-11-17",
-      "subg_estados": {
-        "OP-2026-209||NEGRO": "CORTE_POR_ALISTAR",
-        "OP-2026-209||PALO DE ROSA": "CORTE_POR_ALISTAR",
-        "OP-2026-209||BEIGE": "CORTE_POR_ALISTAR",
-        "OP-2026-209||TAUPE": "CORTE_POR_ALISTAR",
-        "OP-2026-209||VINOTINTO": "POR_REVISAR"
-      }
+      "updated_at": "2026-11-17"
     },
     {
       "cantidades": {
@@ -13814,6 +13812,11 @@
           "vmo": 1151
         }
       ],
+      "subg_estados": {
+        "OP-2026-221||CAMEL": "POR_REVISAR",
+        "OP-2026-221||NEGRO": "POR_REVISAR",
+        "OP-2026-221||VINOTINTO": "POR_REVISAR"
+      },
       "tallas": [
         "T6",
         "T8",
@@ -13822,12 +13825,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-11-17",
-      "subg_estados": {
-        "OP-2026-221||NEGRO": "POR_REVISAR",
-        "OP-2026-221||CAMEL": "POR_REVISAR",
-        "OP-2026-221||VINOTINTO": "POR_REVISAR"
-      }
+      "updated_at": "2026-11-17"
     },
     {
       "cantidades": {
@@ -16181,7 +16179,7 @@
       ],
       "subg_estados": {
         "OP-2026-243||CAMEL": "CORTE_POR_ALISTAR",
-        "OP-2026-243||MARFIL": "EN_CONFECCION",
+        "OP-2026-243||MARFIL": "ALISTAMIENTO",
         "OP-2026-243||NEGRO": "CORTE_POR_ALISTAR"
       },
       "tallas": [
