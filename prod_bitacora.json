@@ -42551,15 +42551,31 @@
       "user": "Carolina Telles"
     },
     {
-      "id": "evt_1794933065210_slhvl",
-      "ts": 1794933065210,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-128",
-      "nombre": "PILOTO PANCAKE",
       "categoria": "CHAQUETAS",
       "colores": 4,
-      "refs": 1
+      "id": "evt_1794933065210_slhvl",
+      "nombre": "PILOTO PANCAKE",
+      "op_id": "OP-2026-128",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1794933065210,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1794933092948_z7zpp",
+      "ts": 1794933092948,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-128",
+      "op_nombre": "PILOTO PANCAKE",
+      "referencia": "PILOTO PANCAKE",
+      "color": "MARFIL",
+      "talla": "todas las tallas",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
+      "bulk": true,
+      "uds": 90,
+      "motivo": "en insumos"
     }
   ]
 }
