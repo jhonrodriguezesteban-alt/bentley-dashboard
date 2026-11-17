@@ -42712,31 +42712,47 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "VINOTINTO",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1794944050811_d17b3",
-      "ts": 1794944050811,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-090",
       "op_nombre": "CHAQUETA ONION",
       "referencia": "CHAQUETA ONION",
-      "color": "VINOTINTO",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1794944050811,
       "uds": 96,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1794949288556_7qvbm",
-      "ts": 1794949288556,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-193",
-      "nombre": "CHALECO PUFFY",
       "categoria": "CHALECOS",
       "colores": 4,
-      "refs": 1
+      "id": "evt_1794949288556_7qvbm",
+      "nombre": "CHALECO PUFFY",
+      "op_id": "OP-2026-193",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1794949288556,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1794949312624_aslon",
+      "ts": 1794949312624,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-193",
+      "op_nombre": "CHALECO PUFFY",
+      "referencia": "CHALECO PUFFY",
+      "color": "CAFE",
+      "talla": "todas las tallas",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
+      "bulk": true,
+      "uds": 76,
+      "motivo": "en insumos"
     }
   ]
 }
