@@ -42701,15 +42701,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1794944028387_3pqgo",
-      "ts": 1794944028387,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-090",
-      "nombre": "CHAQUETA ONION",
       "categoria": "CHAQUETAS",
       "colores": 1,
-      "refs": 1
+      "id": "evt_1794944028387_3pqgo",
+      "nombre": "CHAQUETA ONION",
+      "op_id": "OP-2026-090",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1794944028387,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1794944050811_d17b3",
+      "ts": 1794944050811,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-090",
+      "op_nombre": "CHAQUETA ONION",
+      "referencia": "CHAQUETA ONION",
+      "color": "VINOTINTO",
+      "talla": "todas las tallas",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": true,
+      "uds": 96,
+      "motivo": "ENTREGADO"
     }
   ]
 }
