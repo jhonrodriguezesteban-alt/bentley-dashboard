@@ -6280,12 +6280,12 @@
     },
     {
       "cantidades": {
+        "VINOTINTO_T10": 12,
+        "VINOTINTO_T12": 21,
+        "VINOTINTO_T14": 19,
+        "VINOTINTO_T16": 16,
         "VINOTINTO_T6": 12,
-        "VINOTINTO_T8": 12,
-        "VINOTINTO_T10": 11,
-        "VINOTINTO_T12": 20,
-        "VINOTINTO_T14": 20,
-        "VINOTINTO_T16": 21
+        "VINOTINTO_T8": 12
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -6299,8 +6299,7 @@
         "rec_chaqueta_onion_1165__c43_22": true,
         "rec_chaqueta_onion_1165__c43_23": true,
         "rec_chaqueta_onion_1165__c43_27": true,
-        "rec_chaqueta_onion_1165__c43_28": true,
-        "rec_chaqueta_onion_1165__c43_19": true
+        "rec_chaqueta_onion_1165__c43_28": true
       },
       "consumibles_desagregado": {
         "rec_chaqueta_onion_1165__c43_19": true
@@ -6308,7 +6307,7 @@
       "cortador": "Corte Carbajal",
       "created_at": "2026-07-06",
       "created_by": "John Rodriguez",
-      "estado_op": "PAGO_PENDIENTE",
+      "estado_op": "EN_PROCESO",
       "fecha_op": "2026-07-06",
       "id": "OP-2026-090",
       "nombre_producto": "CHAQUETA ONION",
@@ -6317,13 +6316,21 @@
       "receta_nombre": "CHAQUETA ONION - REF: 1165",
       "referencias": [
         {
-          "nombre": "CHAQUETA ONION",
-          "ref": "1166",
+          "cantidades": {
+            "VINOTINTO_T10": 12,
+            "VINOTINTO_T12": 21,
+            "VINOTINTO_T14": 19,
+            "VINOTINTO_T16": 16,
+            "VINOTINTO_T6": 12,
+            "VINOTINTO_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 9000,
           "colores": [
             "VINOTINTO"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA ONION",
+          "ref": "1166",
           "tallas": [
             "T6",
             "T8",
@@ -6332,19 +6339,11 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "VINOTINTO_T6": 12,
-            "VINOTINTO_T8": 12,
-            "VINOTINTO_T10": 11,
-            "VINOTINTO_T12": 20,
-            "VINOTINTO_T14": 20,
-            "VINOTINTO_T16": 21
-          },
-          "maquilador_id": ""
+          "vmo": 9000
         }
       ],
       "subg_estados": {
-        "OP-2026-090||VINOTINTO": "PAGO_PENDIENTE"
+        "OP-2026-090||VINOTINTO": "EN_CONFECCION"
       },
       "tallas": [
         "T6",
@@ -6365,9 +6364,7 @@
           "solicitud_id": "id_1791980085840_4oxjycskb"
         }
       ],
-      "updated_at": "2026-11-17",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-10-27"
     },
     {
       "cantidades": {
@@ -10446,39 +10443,39 @@
     },
     {
       "cantidades": {
-        "AZUL OSCURO_T10": 16,
-        "AZUL OSCURO_T12": 20,
-        "AZUL OSCURO_T14": 20,
-        "AZUL OSCURO_T16": 20,
-        "AZUL OSCURO_T4": 8,
-        "AZUL OSCURO_T6": 8,
-        "AZUL OSCURO_T8": 16,
+        "BLANCO_T6": 8,
+        "BLANCO_T8": 12,
         "BLANCO_T10": 12,
         "BLANCO_T12": 16,
         "BLANCO_T14": 16,
         "BLANCO_T16": 16,
-        "BLANCO_T6": 8,
-        "BLANCO_T8": 12,
-        "NEGRO_T10": 16,
-        "NEGRO_T12": 20,
-        "NEGRO_T14": 20,
-        "NEGRO_T16": 20,
-        "NEGRO_T4": 8,
-        "NEGRO_T6": 8,
-        "NEGRO_T8": 16,
+        "VERDE MILITAR_T6": 8,
+        "VERDE MILITAR_T8": 16,
         "VERDE MILITAR_T10": 16,
         "VERDE MILITAR_T12": 20,
         "VERDE MILITAR_T14": 20,
         "VERDE MILITAR_T16": 20,
-        "VERDE MILITAR_T6": 8,
-        "VERDE MILITAR_T8": 16
+        "AZUL OSCURO_T4": 8,
+        "AZUL OSCURO_T6": 8,
+        "AZUL OSCURO_T8": 16,
+        "AZUL OSCURO_T10": 16,
+        "AZUL OSCURO_T12": 20,
+        "AZUL OSCURO_T14": 20,
+        "AZUL OSCURO_T16": 20,
+        "CAFE_T4": 8,
+        "CAFE_T6": 8,
+        "CAFE_T8": 12,
+        "CAFE_T10": 12,
+        "CAFE_T12": 12,
+        "CAFE_T14": 12,
+        "CAFE_T16": 12
       },
       "categoria": "CHALECOS",
       "colores": [
-        "NEGRO",
         "BLANCO",
         "VERDE MILITAR",
-        "AZUL OSCURO"
+        "AZUL OSCURO",
+        "CAFE"
       ],
       "consumibles_check": {
         "rec_chaleco_puffy_1150__c35_21||VERDE MILITAR": true,
@@ -10522,44 +10519,16 @@
       "receta_nombre": "CHALECO PUFFY - REF: 1150",
       "referencias": [
         {
-          "cantidades": {
-            "AZUL OSCURO_T10": 16,
-            "AZUL OSCURO_T12": 20,
-            "AZUL OSCURO_T14": 20,
-            "AZUL OSCURO_T16": 20,
-            "AZUL OSCURO_T4": 8,
-            "AZUL OSCURO_T6": 8,
-            "AZUL OSCURO_T8": 16,
-            "BLANCO_T10": 12,
-            "BLANCO_T12": 16,
-            "BLANCO_T14": 16,
-            "BLANCO_T16": 16,
-            "BLANCO_T6": 8,
-            "BLANCO_T8": 12,
-            "NEGRO_T10": 16,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "NEGRO_T4": 8,
-            "NEGRO_T6": 8,
-            "NEGRO_T8": 16,
-            "VERDE MILITAR_T10": 16,
-            "VERDE MILITAR_T12": 20,
-            "VERDE MILITAR_T14": 20,
-            "VERDE MILITAR_T16": 20,
-            "VERDE MILITAR_T6": 8,
-            "VERDE MILITAR_T8": 16
-          },
-          "cat": "CHALECOS",
-          "colores": [
-            "NEGRO",
-            "BLANCO",
-            "VERDE MILITAR",
-            "AZUL OSCURO"
-          ],
-          "maquilador_id": "",
           "nombre": "CHALECO PUFFY",
           "ref": "1150",
+          "cat": "CHALECOS",
+          "vmo": 8408,
+          "colores": [
+            "BLANCO",
+            "VERDE MILITAR",
+            "AZUL OSCURO",
+            "CAFE"
+          ],
           "tallas": [
             "T4",
             "T6",
@@ -10569,8 +10538,35 @@
             "T14",
             "T16"
           ],
-          "totalUds": 396,
-          "vmo": 8408
+          "cantidades": {
+            "BLANCO_T6": 8,
+            "BLANCO_T8": 12,
+            "BLANCO_T10": 12,
+            "BLANCO_T12": 16,
+            "BLANCO_T14": 16,
+            "BLANCO_T16": 16,
+            "VERDE MILITAR_T6": 8,
+            "VERDE MILITAR_T8": 16,
+            "VERDE MILITAR_T10": 16,
+            "VERDE MILITAR_T12": 20,
+            "VERDE MILITAR_T14": 20,
+            "VERDE MILITAR_T16": 20,
+            "AZUL OSCURO_T4": 8,
+            "AZUL OSCURO_T6": 8,
+            "AZUL OSCURO_T8": 16,
+            "AZUL OSCURO_T10": 16,
+            "AZUL OSCURO_T12": 20,
+            "AZUL OSCURO_T14": 20,
+            "AZUL OSCURO_T16": 20,
+            "CAFE_T4": 8,
+            "CAFE_T6": 8,
+            "CAFE_T8": 12,
+            "CAFE_T10": 12,
+            "CAFE_T12": 12,
+            "CAFE_T14": 12,
+            "CAFE_T16": 12
+          },
+          "maquilador_id": ""
         }
       ],
       "tallas": [
@@ -10597,7 +10593,10 @@
           "lineas": 9,
           "solicitud_id": "id_1794591109768_pits8apjj"
         }
-      ]
+      ],
+      "updated_at": "2026-11-17",
+      "diseno_origen_id": null,
+      "diseno_origen_nombre": null
     },
     {
       "cantidades": {
@@ -12346,41 +12345,41 @@
     },
     {
       "cantidades": {
-        "NEGRO_T4": 16,
-        "NEGRO_T6": 12,
-        "NEGRO_T8": 12,
-        "NEGRO_T10": 12,
-        "NEGRO_T12": 12,
-        "NEGRO_T14": 12,
-        "NEGRO_T16": 12,
-        "BEIGE_T4": 8,
-        "BEIGE_T6": 12,
-        "BEIGE_T8": 12,
         "BEIGE_T10": 12,
         "BEIGE_T12": 12,
         "BEIGE_T14": 12,
         "BEIGE_T16": 12,
-        "TAUPE_T4": 8,
-        "TAUPE_T6": 12,
-        "TAUPE_T8": 12,
-        "TAUPE_T10": 12,
-        "TAUPE_T12": 12,
-        "TAUPE_T14": 12,
-        "TAUPE_T16": 12,
-        "PALO DE ROSA_T4": 8,
-        "PALO DE ROSA_T6": 12,
-        "PALO DE ROSA_T8": 12,
+        "BEIGE_T4": 8,
+        "BEIGE_T6": 12,
+        "BEIGE_T8": 12,
+        "NEGRO_T10": 12,
+        "NEGRO_T12": 12,
+        "NEGRO_T14": 12,
+        "NEGRO_T16": 12,
+        "NEGRO_T4": 16,
+        "NEGRO_T6": 12,
+        "NEGRO_T8": 12,
         "PALO DE ROSA_T10": 12,
         "PALO DE ROSA_T12": 12,
         "PALO DE ROSA_T14": 12,
         "PALO DE ROSA_T16": 12,
-        "VINOTINTO_T4": 8,
-        "VINOTINTO_T6": 12,
-        "VINOTINTO_T8": 12,
+        "PALO DE ROSA_T4": 8,
+        "PALO DE ROSA_T6": 12,
+        "PALO DE ROSA_T8": 12,
+        "TAUPE_T10": 12,
+        "TAUPE_T12": 12,
+        "TAUPE_T14": 12,
+        "TAUPE_T16": 12,
+        "TAUPE_T4": 8,
+        "TAUPE_T6": 12,
+        "TAUPE_T8": 12,
         "VINOTINTO_T10": 12,
         "VINOTINTO_T12": 12,
         "VINOTINTO_T14": 12,
-        "VINOTINTO_T16": 12
+        "VINOTINTO_T16": 12,
+        "VINOTINTO_T4": 8,
+        "VINOTINTO_T6": 12,
+        "VINOTINTO_T8": 12
       },
       "categoria": "BLUSAS",
       "colores": [
@@ -12429,10 +12428,44 @@
       "numero": 209,
       "referencias": [
         {
-          "nombre": "BLUSA COSMO",
-          "ref": "",
+          "cantidades": {
+            "BEIGE_T10": 12,
+            "BEIGE_T12": 12,
+            "BEIGE_T14": 12,
+            "BEIGE_T16": 12,
+            "BEIGE_T4": 8,
+            "BEIGE_T6": 12,
+            "BEIGE_T8": 12,
+            "NEGRO_T10": 12,
+            "NEGRO_T12": 12,
+            "NEGRO_T14": 12,
+            "NEGRO_T16": 12,
+            "NEGRO_T4": 16,
+            "NEGRO_T6": 12,
+            "NEGRO_T8": 12,
+            "PALO DE ROSA_T10": 12,
+            "PALO DE ROSA_T12": 12,
+            "PALO DE ROSA_T14": 12,
+            "PALO DE ROSA_T16": 12,
+            "PALO DE ROSA_T4": 8,
+            "PALO DE ROSA_T6": 12,
+            "PALO DE ROSA_T8": 12,
+            "TAUPE_T10": 12,
+            "TAUPE_T12": 12,
+            "TAUPE_T14": 12,
+            "TAUPE_T16": 12,
+            "TAUPE_T4": 8,
+            "TAUPE_T6": 12,
+            "TAUPE_T8": 12,
+            "VINOTINTO_T10": 12,
+            "VINOTINTO_T12": 12,
+            "VINOTINTO_T14": 12,
+            "VINOTINTO_T16": 12,
+            "VINOTINTO_T4": 8,
+            "VINOTINTO_T6": 12,
+            "VINOTINTO_T8": 12
+          },
           "cat": "BLUSAS",
-          "vmo": 1151,
           "colores": [
             "NEGRO",
             "BEIGE",
@@ -12440,6 +12473,9 @@
             "PALO DE ROSA",
             "VINOTINTO"
           ],
+          "maquilador_id": "",
+          "nombre": "BLUSA COSMO",
+          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -12449,44 +12485,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T4": 16,
-            "NEGRO_T6": 12,
-            "NEGRO_T8": 12,
-            "NEGRO_T10": 12,
-            "NEGRO_T12": 12,
-            "NEGRO_T14": 12,
-            "NEGRO_T16": 12,
-            "BEIGE_T4": 8,
-            "BEIGE_T6": 12,
-            "BEIGE_T8": 12,
-            "BEIGE_T10": 12,
-            "BEIGE_T12": 12,
-            "BEIGE_T14": 12,
-            "BEIGE_T16": 12,
-            "TAUPE_T4": 8,
-            "TAUPE_T6": 12,
-            "TAUPE_T8": 12,
-            "TAUPE_T10": 12,
-            "TAUPE_T12": 12,
-            "TAUPE_T14": 12,
-            "TAUPE_T16": 12,
-            "PALO DE ROSA_T4": 8,
-            "PALO DE ROSA_T6": 12,
-            "PALO DE ROSA_T8": 12,
-            "PALO DE ROSA_T10": 12,
-            "PALO DE ROSA_T12": 12,
-            "PALO DE ROSA_T14": 12,
-            "PALO DE ROSA_T16": 12,
-            "VINOTINTO_T4": 8,
-            "VINOTINTO_T6": 12,
-            "VINOTINTO_T8": 12,
-            "VINOTINTO_T10": 12,
-            "VINOTINTO_T12": 12,
-            "VINOTINTO_T14": 12,
-            "VINOTINTO_T16": 12
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "tallas": [
@@ -12521,7 +12520,8 @@
         "OP-2026-209||NEGRO": "CORTE_POR_ALISTAR",
         "OP-2026-209||PALO DE ROSA": "CORTE_POR_ALISTAR",
         "OP-2026-209||BEIGE": "CORTE_POR_ALISTAR",
-        "OP-2026-209||TAUPE": "CORTE_POR_ALISTAR"
+        "OP-2026-209||TAUPE": "CORTE_POR_ALISTAR",
+        "OP-2026-209||VINOTINTO": "POR_REVISAR"
       }
     },
     {
@@ -13819,7 +13819,12 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-11-17"
+      "updated_at": "2026-11-17",
+      "subg_estados": {
+        "OP-2026-221||NEGRO": "POR_REVISAR",
+        "OP-2026-221||CAMEL": "POR_REVISAR",
+        "OP-2026-221||VINOTINTO": "POR_REVISAR"
+      }
     },
     {
       "cantidades": {
