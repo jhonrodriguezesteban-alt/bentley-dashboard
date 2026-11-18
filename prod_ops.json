@@ -9852,30 +9852,30 @@
     },
     {
       "cantidades": {
-        "NEGRO_T6": 14,
-        "NEGRO_T8": 14,
-        "NEGRO_T10": 21,
-        "NEGRO_T12": 21,
-        "NEGRO_T14": 21,
-        "NEGRO_T16": 21,
-        "BEIGE_T4": 12,
-        "BEIGE_T6": 24,
-        "BEIGE_T8": 24,
         "BEIGE_T10": 32,
         "BEIGE_T12": 32,
         "BEIGE_T14": 32,
         "BEIGE_T16": 32,
-        "CAMEL_T6": 14,
-        "CAMEL_T8": 14,
+        "BEIGE_T4": 12,
+        "BEIGE_T6": 24,
+        "BEIGE_T8": 24,
         "CAMEL_T10": 22,
         "CAMEL_T12": 22,
         "CAMEL_T14": 22,
         "CAMEL_T16": 22,
-        "MARFIL_T8": 18,
+        "CAMEL_T6": 14,
+        "CAMEL_T8": 14,
         "MARFIL_T10": 18,
         "MARFIL_T12": 18,
         "MARFIL_T14": 18,
-        "MARFIL_T16": 18
+        "MARFIL_T16": 18,
+        "MARFIL_T8": 18,
+        "NEGRO_T10": 21,
+        "NEGRO_T12": 21,
+        "NEGRO_T14": 21,
+        "NEGRO_T16": 21,
+        "NEGRO_T6": 14,
+        "NEGRO_T8": 14
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -9922,16 +9922,42 @@
       "receta_nombre": "PILOTO PANCAKE - REF: 1099",
       "referencias": [
         {
-          "nombre": "PILOTO PANCAKE",
-          "ref": "1099",
+          "cantidades": {
+            "BEIGE_T10": 32,
+            "BEIGE_T12": 32,
+            "BEIGE_T14": 32,
+            "BEIGE_T16": 32,
+            "BEIGE_T4": 12,
+            "BEIGE_T6": 24,
+            "BEIGE_T8": 24,
+            "CAMEL_T10": 22,
+            "CAMEL_T12": 22,
+            "CAMEL_T14": 22,
+            "CAMEL_T16": 22,
+            "CAMEL_T6": 14,
+            "CAMEL_T8": 14,
+            "MARFIL_T10": 18,
+            "MARFIL_T12": 18,
+            "MARFIL_T14": 18,
+            "MARFIL_T16": 18,
+            "MARFIL_T8": 18,
+            "NEGRO_T10": 21,
+            "NEGRO_T12": 21,
+            "NEGRO_T14": 21,
+            "NEGRO_T16": 21,
+            "NEGRO_T6": 14,
+            "NEGRO_T8": 14
+          },
           "cat": "CHAQUETAS",
-          "vmo": 9459,
           "colores": [
             "NEGRO",
             "BEIGE",
             "CAMEL",
             "MARFIL"
           ],
+          "maquilador_id": "",
+          "nombre": "PILOTO PANCAKE",
+          "ref": "1099",
           "tallas": [
             "T4",
             "T6",
@@ -9941,38 +9967,12 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T6": 14,
-            "NEGRO_T8": 14,
-            "NEGRO_T10": 21,
-            "NEGRO_T12": 21,
-            "NEGRO_T14": 21,
-            "NEGRO_T16": 21,
-            "BEIGE_T4": 12,
-            "BEIGE_T6": 24,
-            "BEIGE_T8": 24,
-            "BEIGE_T10": 32,
-            "BEIGE_T12": 32,
-            "BEIGE_T14": 32,
-            "BEIGE_T16": 32,
-            "CAMEL_T6": 14,
-            "CAMEL_T8": 14,
-            "CAMEL_T10": 22,
-            "CAMEL_T12": 22,
-            "CAMEL_T14": 22,
-            "CAMEL_T16": 22,
-            "MARFIL_T8": 18,
-            "MARFIL_T10": 18,
-            "MARFIL_T12": 18,
-            "MARFIL_T14": 18,
-            "MARFIL_T16": 18
-          },
-          "maquilador_id": ""
+          "vmo": 9459
         }
       ],
       "subg_estados": {
         "OP-2026-128||BEIGE": "CORTE_POR_ALISTAR",
-        "OP-2026-128||CAMEL": "PENDIENTE_CORTAR",
+        "OP-2026-128||CAMEL": "CORTE_POR_ALISTAR",
         "OP-2026-128||MARFIL": "CORTE_POR_ALISTAR",
         "OP-2026-128||NEGRO": "CORTE_POR_ALISTAR"
       },
@@ -9997,9 +9997,7 @@
           "solicitud_id": "id_1793915143389_5vxogqge2"
         }
       ],
-      "updated_at": "2026-11-18",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-11-18"
     },
     {
       "cantidades": {
