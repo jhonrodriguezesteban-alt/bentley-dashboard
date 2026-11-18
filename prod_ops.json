@@ -16810,26 +16810,26 @@
     },
     {
       "cantidades": {
-        "AZUL OSCURO_T10": 9,
-        "AZUL OSCURO_T12": 9,
-        "AZUL OSCURO_T14": 9,
-        "AZUL OSCURO_T16": 9,
-        "AZUL OSCURO_T8": 9,
-        "GRIS OSCURO_T10": 9,
-        "GRIS OSCURO_T12": 9,
-        "GRIS OSCURO_T14": 9,
-        "GRIS OSCURO_T16": 9,
-        "GRIS OSCURO_T8": 9,
+        "MARFIL_T8": 7,
         "MARFIL_T10": 7,
         "MARFIL_T12": 7,
         "MARFIL_T14": 7,
         "MARFIL_T16": 7,
-        "MARFIL_T8": 7,
-        "NEGRO_T10": 8,
-        "NEGRO_T12": 8,
-        "NEGRO_T14": 8,
-        "NEGRO_T16": 8,
-        "NEGRO_T8": 8
+        "NEGRO_T8": 9,
+        "NEGRO_T10": 9,
+        "NEGRO_T12": 9,
+        "NEGRO_T14": 9,
+        "NEGRO_T16": 9,
+        "GRIS OSCURO_T8": 9,
+        "GRIS OSCURO_T10": 9,
+        "GRIS OSCURO_T12": 9,
+        "GRIS OSCURO_T14": 9,
+        "GRIS OSCURO_T16": 9,
+        "AZUL OSCURO_T8": 9,
+        "AZUL OSCURO_T10": 9,
+        "AZUL OSCURO_T12": 9,
+        "AZUL OSCURO_T14": 9,
+        "AZUL OSCURO_T16": 9
       },
       "categoria": "CONJUNTOS",
       "colores": [
@@ -16868,38 +16868,16 @@
       "receta_nombre": "CONJUNTO CHILLY - REF: 1153",
       "referencias": [
         {
-          "cantidades": {
-            "AZUL OSCURO_T10": 9,
-            "AZUL OSCURO_T12": 9,
-            "AZUL OSCURO_T14": 9,
-            "AZUL OSCURO_T16": 9,
-            "AZUL OSCURO_T8": 9,
-            "GRIS OSCURO_T10": 9,
-            "GRIS OSCURO_T12": 9,
-            "GRIS OSCURO_T14": 9,
-            "GRIS OSCURO_T16": 9,
-            "GRIS OSCURO_T8": 9,
-            "MARFIL_T10": 7,
-            "MARFIL_T12": 7,
-            "MARFIL_T14": 7,
-            "MARFIL_T16": 7,
-            "MARFIL_T8": 7,
-            "NEGRO_T10": 8,
-            "NEGRO_T12": 8,
-            "NEGRO_T14": 8,
-            "NEGRO_T16": 8,
-            "NEGRO_T8": 8
-          },
+          "nombre": "CONJUNTO CHILLY",
+          "ref": "1153",
           "cat": "CONJUNTOS",
+          "vmo": 10510,
           "colores": [
             "MARFIL",
             "NEGRO",
             "GRIS OSCURO",
             "AZUL OSCURO"
           ],
-          "maquilador_id": "",
-          "nombre": "CONJUNTO CHILLY",
-          "ref": "1153",
           "tallas": [
             "T8",
             "T10",
@@ -16907,8 +16885,29 @@
             "T14",
             "T16"
           ],
-          "totalUds": 165,
-          "vmo": 10510
+          "cantidades": {
+            "MARFIL_T8": 7,
+            "MARFIL_T10": 7,
+            "MARFIL_T12": 7,
+            "MARFIL_T14": 7,
+            "MARFIL_T16": 7,
+            "NEGRO_T8": 9,
+            "NEGRO_T10": 9,
+            "NEGRO_T12": 9,
+            "NEGRO_T14": 9,
+            "NEGRO_T16": 9,
+            "GRIS OSCURO_T8": 9,
+            "GRIS OSCURO_T10": 9,
+            "GRIS OSCURO_T12": 9,
+            "GRIS OSCURO_T14": 9,
+            "GRIS OSCURO_T16": 9,
+            "AZUL OSCURO_T8": 9,
+            "AZUL OSCURO_T10": 9,
+            "AZUL OSCURO_T12": 9,
+            "AZUL OSCURO_T14": 9,
+            "AZUL OSCURO_T16": 9
+          },
+          "maquilador_id": ""
         }
       ],
       "tallas": [
@@ -16930,7 +16929,10 @@
           "lineas": 1,
           "solicitud_id": "id_1793826524137_5ku9jgrni"
         }
-      ]
+      ],
+      "updated_at": "2026-11-17",
+      "diseno_origen_id": null,
+      "diseno_origen_nombre": null
     }
   ]
 }
