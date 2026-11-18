@@ -43267,15 +43267,35 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1795004394880_vy2it",
-      "ts": 1795004394880,
-      "user": "John Rodriguez",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-105",
-      "nombre": "PANTALON ARIEL",
       "categoria": "PANTALONES",
       "colores": 4,
-      "refs": 1
+      "id": "evt_1795004394880_vy2it",
+      "nombre": "PANTALON ARIEL",
+      "op_id": "OP-2026-105",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1795004394880,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1795004446065_x8r4y",
+      "ts": 1795004446065,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-105",
+      "op_nombre": "PANTALON ARIEL",
+      "color": "TAUPE",
+      "mes": "2026-12"
+    },
+    {
+      "id": "evt_1795004447968_xsvad",
+      "ts": 1795004447968,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-105",
+      "op_nombre": "PANTALON ARIEL",
+      "color": "CAFE",
+      "mes": "2026-12"
     }
   ]
 }
