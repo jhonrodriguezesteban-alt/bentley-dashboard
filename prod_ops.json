@@ -922,36 +922,36 @@
     },
     {
       "cantidades": {
-        "BEIGE_T6": 12,
-        "BEIGE_T8": 24,
         "BEIGE_T10": 24,
         "BEIGE_T12": 24,
         "BEIGE_T14": 24,
         "BEIGE_T16": 24,
-        "GRIS_T6": 12,
-        "GRIS_T8": 24,
+        "BEIGE_T6": 12,
+        "BEIGE_T8": 24,
         "GRIS_T10": 24,
         "GRIS_T12": 24,
         "GRIS_T14": 24,
         "GRIS_T16": 24,
-        "NEGRO_T6": 12,
-        "NEGRO_T8": 12,
+        "GRIS_T6": 12,
+        "GRIS_T8": 24,
         "NEGRO_T10": 24,
         "NEGRO_T12": 24,
         "NEGRO_T14": 24,
         "NEGRO_T16": 24,
-        "ROSA_T6": 12,
-        "ROSA_T8": 12,
+        "NEGRO_T6": 12,
+        "NEGRO_T8": 12,
         "ROSA_T10": 24,
         "ROSA_T12": 24,
         "ROSA_T14": 24,
         "ROSA_T16": 24,
-        "TAUPE_T6": 12,
-        "TAUPE_T8": 12,
+        "ROSA_T6": 12,
+        "ROSA_T8": 12,
         "TAUPE_T10": 24,
         "TAUPE_T12": 24,
         "TAUPE_T14": 24,
-        "TAUPE_T16": 24
+        "TAUPE_T16": 24,
+        "TAUPE_T6": 12,
+        "TAUPE_T8": 12
       },
       "categoria": "BLUSAS",
       "colores": [
@@ -978,10 +978,39 @@
       "numero": 21,
       "referencias": [
         {
-          "nombre": "BLUSA MANGA LARGA SELENA",
-          "ref": "",
+          "cantidades": {
+            "BEIGE_T10": 24,
+            "BEIGE_T12": 24,
+            "BEIGE_T14": 24,
+            "BEIGE_T16": 24,
+            "BEIGE_T6": 12,
+            "BEIGE_T8": 24,
+            "GRIS_T10": 24,
+            "GRIS_T12": 24,
+            "GRIS_T14": 24,
+            "GRIS_T16": 24,
+            "GRIS_T6": 12,
+            "GRIS_T8": 24,
+            "NEGRO_T10": 24,
+            "NEGRO_T12": 24,
+            "NEGRO_T14": 24,
+            "NEGRO_T16": 24,
+            "NEGRO_T6": 12,
+            "NEGRO_T8": 12,
+            "ROSA_T10": 24,
+            "ROSA_T12": 24,
+            "ROSA_T14": 24,
+            "ROSA_T16": 24,
+            "ROSA_T6": 12,
+            "ROSA_T8": 12,
+            "TAUPE_T10": 24,
+            "TAUPE_T12": 24,
+            "TAUPE_T14": 24,
+            "TAUPE_T16": 24,
+            "TAUPE_T6": 12,
+            "TAUPE_T8": 12
+          },
           "cat": "BLUSAS",
-          "vmo": 1151,
           "colores": [
             "BEIGE",
             "GRIS",
@@ -989,6 +1018,9 @@
             "ROSA",
             "TAUPE"
           ],
+          "maquilador_id": "",
+          "nombre": "BLUSA MANGA LARGA SELENA",
+          "ref": "",
           "tallas": [
             "T6",
             "T8",
@@ -997,39 +1029,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "BEIGE_T6": 12,
-            "BEIGE_T8": 24,
-            "BEIGE_T10": 24,
-            "BEIGE_T12": 24,
-            "BEIGE_T14": 24,
-            "BEIGE_T16": 24,
-            "GRIS_T6": 12,
-            "GRIS_T8": 24,
-            "GRIS_T10": 24,
-            "GRIS_T12": 24,
-            "GRIS_T14": 24,
-            "GRIS_T16": 24,
-            "NEGRO_T6": 12,
-            "NEGRO_T8": 12,
-            "NEGRO_T10": 24,
-            "NEGRO_T12": 24,
-            "NEGRO_T14": 24,
-            "NEGRO_T16": 24,
-            "ROSA_T6": 12,
-            "ROSA_T8": 12,
-            "ROSA_T10": 24,
-            "ROSA_T12": 24,
-            "ROSA_T14": 24,
-            "ROSA_T16": 24,
-            "TAUPE_T6": 12,
-            "TAUPE_T8": 12,
-            "TAUPE_T10": 24,
-            "TAUPE_T12": 24,
-            "TAUPE_T14": 24,
-            "TAUPE_T16": 24
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
@@ -1052,9 +1052,7 @@
         "BEIGE": false,
         "MARFIL": true
       },
-      "updated_at": "2026-11-18",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-11-18"
     },
     {
       "categoria": "CHALECOS",
@@ -4123,7 +4121,7 @@
         }
       ],
       "subg_estados": {
-        "OP-0167||AVENA": "CORTE_POR_ALISTAR",
+        "OP-0167||AVENA": "EN_CONFECCION",
         "OP-0167||MARFIL": "CORTE_POR_ALISTAR"
       },
       "tallas": [
@@ -4543,28 +4541,28 @@
     },
     {
       "cantidades": {
-        "NEGRO_T8": 11,
-        "NEGRO_T10": 22,
-        "NEGRO_T12": 22,
-        "NEGRO_T14": 22,
-        "NEGRO_T16": 22,
-        "BEIGE_T8": 11,
         "BEIGE_T10": 22,
         "BEIGE_T12": 22,
         "BEIGE_T14": 22,
         "BEIGE_T16": 22,
-        "CAFE_T6": 10,
-        "CAFE_T8": 10,
+        "BEIGE_T8": 11,
         "CAFE_T10": 20,
         "CAFE_T12": 20,
         "CAFE_T14": 20,
         "CAFE_T16": 20,
-        "TAUPE_T6": 10,
-        "TAUPE_T8": 10,
+        "CAFE_T6": 10,
+        "CAFE_T8": 10,
+        "NEGRO_T10": 22,
+        "NEGRO_T12": 22,
+        "NEGRO_T14": 22,
+        "NEGRO_T16": 22,
+        "NEGRO_T8": 11,
         "TAUPE_T10": 20,
         "TAUPE_T12": 20,
         "TAUPE_T14": 20,
-        "TAUPE_T16": 20
+        "TAUPE_T16": 20,
+        "TAUPE_T6": 10,
+        "TAUPE_T8": 10
       },
       "categoria": "BLUSAS",
       "colores": [
@@ -4583,16 +4581,40 @@
       "numero": 73,
       "referencias": [
         {
-          "nombre": "BLUSA JEN",
-          "ref": "1118",
+          "cantidades": {
+            "BEIGE_T10": 22,
+            "BEIGE_T12": 22,
+            "BEIGE_T14": 22,
+            "BEIGE_T16": 22,
+            "BEIGE_T8": 11,
+            "CAFE_T10": 20,
+            "CAFE_T12": 20,
+            "CAFE_T14": 20,
+            "CAFE_T16": 20,
+            "CAFE_T6": 10,
+            "CAFE_T8": 10,
+            "NEGRO_T10": 22,
+            "NEGRO_T12": 22,
+            "NEGRO_T14": 22,
+            "NEGRO_T16": 22,
+            "NEGRO_T8": 11,
+            "TAUPE_T10": 20,
+            "TAUPE_T12": 20,
+            "TAUPE_T14": 20,
+            "TAUPE_T16": 20,
+            "TAUPE_T6": 10,
+            "TAUPE_T8": 10
+          },
           "cat": "BLUSAS",
-          "vmo": 2200,
           "colores": [
             "NEGRO",
             "BEIGE",
             "CAFE",
             "TAUPE"
           ],
+          "maquilador_id": "",
+          "nombre": "BLUSA JEN",
+          "ref": "1118",
           "tallas": [
             "T6",
             "T8",
@@ -4601,31 +4623,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T8": 11,
-            "NEGRO_T10": 22,
-            "NEGRO_T12": 22,
-            "NEGRO_T14": 22,
-            "NEGRO_T16": 22,
-            "BEIGE_T8": 11,
-            "BEIGE_T10": 22,
-            "BEIGE_T12": 22,
-            "BEIGE_T14": 22,
-            "BEIGE_T16": 22,
-            "CAFE_T6": 10,
-            "CAFE_T8": 10,
-            "CAFE_T10": 20,
-            "CAFE_T12": 20,
-            "CAFE_T14": 20,
-            "CAFE_T16": 20,
-            "TAUPE_T6": 10,
-            "TAUPE_T8": 10,
-            "TAUPE_T10": 20,
-            "TAUPE_T12": 20,
-            "TAUPE_T14": 20,
-            "TAUPE_T16": 20
-          },
-          "maquilador_id": ""
+          "vmo": 2200
         }
       ],
       "subg_estados": {
@@ -4644,9 +4642,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-11-18",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-11-18"
     },
     {
       "cantidades": {
@@ -7502,30 +7498,30 @@
     },
     {
       "cantidades": {
-        "BEIGE_T6": 10,
-        "BEIGE_T8": 10,
         "BEIGE_T10": 20,
         "BEIGE_T12": 20,
         "BEIGE_T14": 20,
         "BEIGE_T16": 20,
-        "NEGRO_T6": 10,
-        "NEGRO_T8": 10,
-        "NEGRO_T10": 20,
-        "NEGRO_T12": 20,
-        "NEGRO_T14": 20,
-        "NEGRO_T16": 20,
-        "CAFE_T6": 10,
-        "CAFE_T8": 10,
+        "BEIGE_T6": 10,
+        "BEIGE_T8": 10,
         "CAFE_T10": 20,
         "CAFE_T12": 20,
         "CAFE_T14": 20,
         "CAFE_T16": 20,
-        "TAUPE_T6": 10,
-        "TAUPE_T8": 10,
+        "CAFE_T6": 10,
+        "CAFE_T8": 10,
+        "NEGRO_T10": 20,
+        "NEGRO_T12": 20,
+        "NEGRO_T14": 20,
+        "NEGRO_T16": 20,
+        "NEGRO_T6": 10,
+        "NEGRO_T8": 10,
         "TAUPE_T10": 20,
         "TAUPE_T12": 20,
         "TAUPE_T14": 20,
-        "TAUPE_T16": 20
+        "TAUPE_T16": 20,
+        "TAUPE_T6": 10,
+        "TAUPE_T8": 10
       },
       "categoria": "PANTALONES",
       "colores": [
@@ -7549,16 +7545,42 @@
       "receta_nombre": "PANTALON ARIEL - REF: 1144",
       "referencias": [
         {
-          "nombre": "PANTALON ARIEL",
-          "ref": "1144",
+          "cantidades": {
+            "BEIGE_T10": 20,
+            "BEIGE_T12": 20,
+            "BEIGE_T14": 20,
+            "BEIGE_T16": 20,
+            "BEIGE_T6": 10,
+            "BEIGE_T8": 10,
+            "CAFE_T10": 20,
+            "CAFE_T12": 20,
+            "CAFE_T14": 20,
+            "CAFE_T16": 20,
+            "CAFE_T6": 10,
+            "CAFE_T8": 10,
+            "NEGRO_T10": 20,
+            "NEGRO_T12": 20,
+            "NEGRO_T14": 20,
+            "NEGRO_T16": 20,
+            "NEGRO_T6": 10,
+            "NEGRO_T8": 10,
+            "TAUPE_T10": 20,
+            "TAUPE_T12": 20,
+            "TAUPE_T14": 20,
+            "TAUPE_T16": 20,
+            "TAUPE_T6": 10,
+            "TAUPE_T8": 10
+          },
           "cat": "PANTALONES",
-          "vmo": 5781,
           "colores": [
             "BEIGE",
             "NEGRO",
             "CAFE",
             "TAUPE"
           ],
+          "maquilador_id": "",
+          "nombre": "PANTALON ARIEL",
+          "ref": "1144",
           "tallas": [
             "T6",
             "T8",
@@ -7567,33 +7589,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "BEIGE_T6": 10,
-            "BEIGE_T8": 10,
-            "BEIGE_T10": 20,
-            "BEIGE_T12": 20,
-            "BEIGE_T14": 20,
-            "BEIGE_T16": 20,
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 10,
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "CAFE_T6": 10,
-            "CAFE_T8": 10,
-            "CAFE_T10": 20,
-            "CAFE_T12": 20,
-            "CAFE_T14": 20,
-            "CAFE_T16": 20,
-            "TAUPE_T6": 10,
-            "TAUPE_T8": 10,
-            "TAUPE_T10": 20,
-            "TAUPE_T12": 20,
-            "TAUPE_T14": 20,
-            "TAUPE_T16": 20
-          },
-          "maquilador_id": ""
+          "vmo": 5781
         }
       ],
       "tallas": [
@@ -7604,25 +7600,23 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-11-18",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-11-18"
     },
     {
       "cantidades": {
-        "NEGRO_T6": 10,
-        "NEGRO_T8": 10,
+        "BEIGE_T10": 20,
+        "BEIGE_T12": 20,
+        "BEIGE_T14": 20,
+        "BEIGE_T16": 20,
+        "BEIGE_T4": 10,
+        "BEIGE_T6": 10,
+        "BEIGE_T8": 10,
         "NEGRO_T10": 20,
         "NEGRO_T12": 20,
         "NEGRO_T14": 20,
         "NEGRO_T16": 20,
-        "BEIGE_T4": 10,
-        "BEIGE_T6": 10,
-        "BEIGE_T8": 10,
-        "BEIGE_T10": 20,
-        "BEIGE_T12": 20,
-        "BEIGE_T14": 20,
-        "BEIGE_T16": 20
+        "NEGRO_T6": 10,
+        "NEGRO_T8": 10
       },
       "categoria": "VESTIDOS",
       "colores": [
@@ -7644,14 +7638,29 @@
       "receta_nombre": "VESTIDO NAPOLES - REF: 1112",
       "referencias": [
         {
-          "nombre": "VESTIDO NAPOLES",
-          "ref": "1112",
+          "cantidades": {
+            "BEIGE_T10": 20,
+            "BEIGE_T12": 20,
+            "BEIGE_T14": 20,
+            "BEIGE_T16": 20,
+            "BEIGE_T4": 10,
+            "BEIGE_T6": 10,
+            "BEIGE_T8": 10,
+            "NEGRO_T10": 20,
+            "NEGRO_T12": 20,
+            "NEGRO_T14": 20,
+            "NEGRO_T16": 20,
+            "NEGRO_T6": 10,
+            "NEGRO_T8": 10
+          },
           "cat": "VESTIDOS",
-          "vmo": 3784,
           "colores": [
             "NEGRO",
             "BEIGE"
           ],
+          "maquilador_id": "",
+          "nombre": "VESTIDO NAPOLES",
+          "ref": "1112",
           "tallas": [
             "T4",
             "T6",
@@ -7661,22 +7670,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 10,
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "BEIGE_T4": 10,
-            "BEIGE_T6": 10,
-            "BEIGE_T8": 10,
-            "BEIGE_T10": 20,
-            "BEIGE_T12": 20,
-            "BEIGE_T14": 20,
-            "BEIGE_T16": 20
-          },
-          "maquilador_id": ""
+          "vmo": 3784
         }
       ],
       "subg_estados": {
@@ -7692,9 +7686,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-11-18",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-11-18"
     },
     {
       "cantidades": {
@@ -12818,48 +12810,48 @@
     },
     {
       "cantidades": {
-        "NEGRO_T6": 8,
-        "NEGRO_T8": 8,
-        "NEGRO_T10": 16,
-        "NEGRO_T12": 16,
-        "NEGRO_T14": 16,
-        "NEGRO_T16": 16,
-        "BEIGE_T6": 8,
-        "BEIGE_T8": 8,
         "BEIGE_T10": 16,
         "BEIGE_T12": 16,
         "BEIGE_T14": 16,
         "BEIGE_T16": 16,
-        "TAUPE_T6": 8,
-        "TAUPE_T8": 8,
-        "TAUPE_T10": 16,
-        "TAUPE_T12": 16,
-        "TAUPE_T14": 16,
-        "TAUPE_T16": 16,
-        "ROSA_T6": 8,
-        "ROSA_T8": 8,
-        "ROSA_T10": 16,
-        "ROSA_T12": 16,
-        "ROSA_T14": 16,
-        "ROSA_T16": 16,
-        "GRIS JASPED_T6": 8,
-        "GRIS JASPED_T8": 8,
+        "BEIGE_T6": 8,
+        "BEIGE_T8": 8,
+        "CAFE_T10": 16,
+        "CAFE_T12": 16,
+        "CAFE_T14": 16,
+        "CAFE_T16": 16,
+        "CAFE_T6": 8,
+        "CAFE_T8": 8,
         "GRIS JASPED_T10": 16,
         "GRIS JASPED_T12": 16,
         "GRIS JASPED_T14": 16,
         "GRIS JASPED_T16": 16,
-        "VINOTINTO_T6": 8,
-        "VINOTINTO_T8": 8,
+        "GRIS JASPED_T6": 8,
+        "GRIS JASPED_T8": 8,
+        "NEGRO_T10": 16,
+        "NEGRO_T12": 16,
+        "NEGRO_T14": 16,
+        "NEGRO_T16": 16,
+        "NEGRO_T6": 8,
+        "NEGRO_T8": 8,
+        "ROSA_T10": 16,
+        "ROSA_T12": 16,
+        "ROSA_T14": 16,
+        "ROSA_T16": 16,
+        "ROSA_T6": 8,
+        "ROSA_T8": 8,
+        "TAUPE_T10": 16,
+        "TAUPE_T12": 16,
+        "TAUPE_T14": 16,
+        "TAUPE_T16": 16,
+        "TAUPE_T6": 8,
+        "TAUPE_T8": 8,
         "VINOTINTO_T10": 16,
         "VINOTINTO_T12": 16,
         "VINOTINTO_T14": 16,
         "VINOTINTO_T16": 16,
-        "CAFE_T6": 8,
-        "CAFE_T8": 8,
-        "CAFE_T10": 16,
-        "CAFE_T12": 16,
-        "CAFE_T14": 16,
-        "CAFE_T16": 16
+        "VINOTINTO_T6": 8,
+        "VINOTINTO_T8": 8
       },
       "categoria": "VESTIDOS",
       "colores": [
@@ -12884,10 +12876,51 @@
       "numero": 213,
       "referencias": [
         {
-          "nombre": "VESTIDO KIKI",
-          "ref": "",
+          "cantidades": {
+            "BEIGE_T10": 16,
+            "BEIGE_T12": 16,
+            "BEIGE_T14": 16,
+            "BEIGE_T16": 16,
+            "BEIGE_T6": 8,
+            "BEIGE_T8": 8,
+            "CAFE_T10": 16,
+            "CAFE_T12": 16,
+            "CAFE_T14": 16,
+            "CAFE_T16": 16,
+            "CAFE_T6": 8,
+            "CAFE_T8": 8,
+            "GRIS JASPED_T10": 16,
+            "GRIS JASPED_T12": 16,
+            "GRIS JASPED_T14": 16,
+            "GRIS JASPED_T16": 16,
+            "GRIS JASPED_T6": 8,
+            "GRIS JASPED_T8": 8,
+            "NEGRO_T10": 16,
+            "NEGRO_T12": 16,
+            "NEGRO_T14": 16,
+            "NEGRO_T16": 16,
+            "NEGRO_T6": 8,
+            "NEGRO_T8": 8,
+            "ROSA_T10": 16,
+            "ROSA_T12": 16,
+            "ROSA_T14": 16,
+            "ROSA_T16": 16,
+            "ROSA_T6": 8,
+            "ROSA_T8": 8,
+            "TAUPE_T10": 16,
+            "TAUPE_T12": 16,
+            "TAUPE_T14": 16,
+            "TAUPE_T16": 16,
+            "TAUPE_T6": 8,
+            "TAUPE_T8": 8,
+            "VINOTINTO_T10": 16,
+            "VINOTINTO_T12": 16,
+            "VINOTINTO_T14": 16,
+            "VINOTINTO_T16": 16,
+            "VINOTINTO_T6": 8,
+            "VINOTINTO_T8": 8
+          },
           "cat": "VESTIDOS",
-          "vmo": 1151,
           "colores": [
             "NEGRO",
             "BEIGE",
@@ -12897,6 +12930,9 @@
             "VINOTINTO",
             "CAFE"
           ],
+          "maquilador_id": "",
+          "nombre": "VESTIDO KIKI",
+          "ref": "",
           "tallas": [
             "T6",
             "T8",
@@ -12905,51 +12941,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T6": 8,
-            "NEGRO_T8": 8,
-            "NEGRO_T10": 16,
-            "NEGRO_T12": 16,
-            "NEGRO_T14": 16,
-            "NEGRO_T16": 16,
-            "BEIGE_T6": 8,
-            "BEIGE_T8": 8,
-            "BEIGE_T10": 16,
-            "BEIGE_T12": 16,
-            "BEIGE_T14": 16,
-            "BEIGE_T16": 16,
-            "TAUPE_T6": 8,
-            "TAUPE_T8": 8,
-            "TAUPE_T10": 16,
-            "TAUPE_T12": 16,
-            "TAUPE_T14": 16,
-            "TAUPE_T16": 16,
-            "ROSA_T6": 8,
-            "ROSA_T8": 8,
-            "ROSA_T10": 16,
-            "ROSA_T12": 16,
-            "ROSA_T14": 16,
-            "ROSA_T16": 16,
-            "GRIS JASPED_T6": 8,
-            "GRIS JASPED_T8": 8,
-            "GRIS JASPED_T10": 16,
-            "GRIS JASPED_T12": 16,
-            "GRIS JASPED_T14": 16,
-            "GRIS JASPED_T16": 16,
-            "VINOTINTO_T6": 8,
-            "VINOTINTO_T8": 8,
-            "VINOTINTO_T10": 16,
-            "VINOTINTO_T12": 16,
-            "VINOTINTO_T14": 16,
-            "VINOTINTO_T16": 16,
-            "CAFE_T6": 8,
-            "CAFE_T8": 8,
-            "CAFE_T10": 16,
-            "CAFE_T12": 16,
-            "CAFE_T14": 16,
-            "CAFE_T16": 16
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "tallas": [
@@ -12960,9 +12952,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-11-18",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-11-18"
     },
     {
       "cantidades": {
@@ -16899,6 +16889,70 @@
         }
       ],
       "updated_at": "2026-11-17"
+    },
+    {
+      "id": "OP-2026-252",
+      "numero": 252,
+      "fecha_op": "2026-11-18",
+      "cortador": "Corte Carbajal",
+      "categoria": "CHAQUETAS",
+      "nombre_producto": "CHAQUETA CAZADORA",
+      "colores": [
+        "AZUL BEBE"
+      ],
+      "tallas": [
+        "T4",
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ],
+      "cantidades": {
+        "AZUL BEBE_T4": 12,
+        "AZUL BEBE_T6": 12,
+        "AZUL BEBE_T8": 12,
+        "AZUL BEBE_T10": 12,
+        "AZUL BEBE_T12": 12,
+        "AZUL BEBE_T14": 12,
+        "AZUL BEBE_T16": 12
+      },
+      "referencias": [
+        {
+          "nombre": "CHAQUETA CAZADORA",
+          "ref": "1002",
+          "cat": "CHAQUETAS",
+          "vmo": 11561,
+          "colores": [
+            "AZUL BEBE"
+          ],
+          "tallas": [
+            "T4",
+            "T6",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "cantidades": {
+            "AZUL BEBE_T4": 12,
+            "AZUL BEBE_T6": 12,
+            "AZUL BEBE_T8": 12,
+            "AZUL BEBE_T10": 12,
+            "AZUL BEBE_T12": 12,
+            "AZUL BEBE_T14": 12,
+            "AZUL BEBE_T16": 12
+          },
+          "totalUds": 84,
+          "maquilador_id": ""
+        }
+      ],
+      "op_effi": null,
+      "estado_op": "EN_PROCESO",
+      "created_at": "2026-11-18",
+      "created_by": "Jefa de Producción"
     }
   ]
 }
