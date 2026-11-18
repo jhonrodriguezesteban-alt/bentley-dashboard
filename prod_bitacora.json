@@ -43611,19 +43611,30 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1795009258215_sqoo3",
-      "ts": 1795009258215,
-      "user": "Jefa de Producción",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-252",
-      "op_nombre": "CHAQUETA CAZADORA",
       "categoria": "CHAQUETAS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-11-18",
-      "total_uds": 84,
+      "id": "evt_1795009258215_sqoo3",
+      "op_id": "OP-2026-252",
+      "op_nombre": "CHAQUETA CAZADORA",
       "referencias": [
         "CHAQUETA CAZADORA"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 84,
+      "ts": 1795009258215,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1795009277160_gu2ze",
+      "ts": 1795009277160,
+      "user": "Jefa de Producción",
+      "tipo": "cambiar_estado_op_all",
+      "op_id": "OP-2026-252",
+      "estado": "PENDIENTE_CORTAR",
+      "colores": 1,
+      "protegidos": [],
+      "nombre": "CHAQUETA CAZADORA"
     }
   ]
 }
