@@ -43661,15 +43661,25 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1795009601076_5tsla",
-      "ts": 1795009601076,
-      "user": "Jefa de Producción",
-      "tipo": "cambiar_estado_op_all",
-      "op_id": "OP-2026-253",
-      "estado": "PENDIENTE_CORTAR",
       "colores": 2,
-      "protegidos": [],
-      "nombre": "RANGLAND SOFT"
+      "estado": "PENDIENTE_CORTAR",
+      "id": "evt_1795009601076_5tsla",
+      "nombre": "RANGLAND SOFT",
+      "op_id": "OP-2026-253",
+      "tipo": "cambiar_estado_op_all",
+      "ts": 1795009601076,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1795018450473_bt4mh",
+      "ts": 1795018450473,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-128",
+      "nombre": "PILOTO PANCAKE",
+      "categoria": "CHAQUETAS",
+      "colores": 4,
+      "refs": 1
     }
   ]
 }
