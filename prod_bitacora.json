@@ -42953,6 +42953,38 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "AVENA",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "id": "evt_1794959068202_kwm9u",
+      "motivo": "EN TALLER",
+      "op_id": "OP-0167",
+      "op_nombre": "CONJUNTO TRENZAS",
+      "referencia": "CONJUNTO TRENZAS",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1794959068202,
+      "uds": 96,
+      "user": "Jefa de Producción"
+    },
+    {
+      "bulk": true,
+      "color": "AVENA",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "id": "evt_1794959070609_x9a0o",
+      "motivo": "EN TALLER",
+      "op_id": "OP-0167",
+      "op_nombre": "CONJUNTO TRENZAS",
+      "referencia": "CONJUNTO TRENZAS",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1794959070609,
+      "uds": 96,
+      "user": "Jefa de Producción"
+    },
+    {
       "categoria": "CONJUNTOS",
       "colores": [
         "MARFIL",
@@ -43569,14 +43601,29 @@
       "user": "John Rodriguez"
     },
     {
+      "color": "NEGRO",
       "id": "evt_1795005315771_z1v72",
-      "ts": 1795005315771,
-      "user": "John Rodriguez",
-      "tipo": "planeacion_asignar",
+      "mes": "2027-01",
       "op_id": "OP-2026-217",
       "op_nombre": "BODY BASICO",
-      "color": "NEGRO",
-      "mes": "2027-01"
+      "tipo": "planeacion_asignar",
+      "ts": 1795005315771,
+      "user": "John Rodriguez"
+    },
+    {
+      "id": "evt_1795009258215_sqoo3",
+      "ts": 1795009258215,
+      "user": "Jefa de Producción",
+      "tipo": "crear_op",
+      "op_id": "OP-2026-252",
+      "op_nombre": "CHAQUETA CAZADORA",
+      "categoria": "CHAQUETAS",
+      "cortador": "Corte Carbajal",
+      "fecha_op": "2026-11-18",
+      "total_uds": 84,
+      "referencias": [
+        "CHAQUETA CAZADORA"
+      ]
     }
   ]
 }
