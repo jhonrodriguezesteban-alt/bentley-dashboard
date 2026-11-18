@@ -3401,7 +3401,18 @@
       "op_id": "OP-2026-121",
       "op_nombre": "ABRIGO FROZEN",
       "satelite_id": "id_1792265698470_wrade47pt",
-      "uds": 90
+      "uds": 90,
+      "historial": [
+        {
+          "fecha_anterior": null,
+          "fecha_nueva": "2026-11-27",
+          "motivo": "Fecha inicial asignada",
+          "by": "Jefa de Producción",
+          "at": "2026-11-18"
+        }
+      ],
+      "fecha_inicial": "2026-11-27",
+      "fecha_compromiso": "2026-11-27"
     },
     {
       "color": "NEGRO",
@@ -3647,11 +3658,11 @@
           "motivo": "maquina en arreglo"
         },
         {
-          "at": "2026-11-18",
-          "by": "Jefa de Producción",
           "fecha_anterior": "2026-11-17",
           "fecha_nueva": "2026-11-20",
-          "motivo": "Reubicado en tablero"
+          "motivo": "Reubicado en tablero",
+          "by": "Jefa de Producción",
+          "at": "2026-11-18"
         }
       ],
       "id": "id_1792525218192_bkvv5c8k0",
