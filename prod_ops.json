@@ -7593,19 +7593,19 @@
     },
     {
       "cantidades": {
-        "BEIGE_T10": 12,
-        "BEIGE_T12": 16,
-        "BEIGE_T14": 16,
-        "BEIGE_T16": 16,
+        "NEGRO_T6": 10,
+        "NEGRO_T8": 10,
+        "NEGRO_T10": 20,
+        "NEGRO_T12": 20,
+        "NEGRO_T14": 20,
+        "NEGRO_T16": 20,
         "BEIGE_T4": 10,
         "BEIGE_T6": 10,
-        "BEIGE_T8": 12,
-        "NEGRO_T10": 12,
-        "NEGRO_T12": 16,
-        "NEGRO_T14": 16,
-        "NEGRO_T16": 16,
-        "NEGRO_T6": 10,
-        "NEGRO_T8": 12
+        "BEIGE_T8": 10,
+        "BEIGE_T10": 20,
+        "BEIGE_T12": 20,
+        "BEIGE_T14": 20,
+        "BEIGE_T16": 20
       },
       "categoria": "VESTIDOS",
       "colores": [
@@ -7627,28 +7627,14 @@
       "receta_nombre": "VESTIDO NAPOLES - REF: 1112",
       "referencias": [
         {
-          "cantidades": {
-            "BEIGE_T10": 12,
-            "BEIGE_T12": 16,
-            "BEIGE_T14": 16,
-            "BEIGE_T16": 16,
-            "BEIGE_T4": 10,
-            "BEIGE_T6": 10,
-            "BEIGE_T8": 12,
-            "NEGRO_T10": 12,
-            "NEGRO_T12": 16,
-            "NEGRO_T14": 16,
-            "NEGRO_T16": 16,
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 12
-          },
+          "nombre": "VESTIDO NAPOLES",
+          "ref": "1112",
           "cat": "VESTIDOS",
+          "vmo": 3784,
           "colores": [
             "NEGRO",
             "BEIGE"
           ],
-          "nombre": "VESTIDO NAPOLES",
-          "ref": "1112",
           "tallas": [
             "T4",
             "T6",
@@ -7658,8 +7644,22 @@
             "T14",
             "T16"
           ],
-          "totalUds": 174,
-          "vmo": 3784
+          "cantidades": {
+            "NEGRO_T6": 10,
+            "NEGRO_T8": 10,
+            "NEGRO_T10": 20,
+            "NEGRO_T12": 20,
+            "NEGRO_T14": 20,
+            "NEGRO_T16": 20,
+            "BEIGE_T4": 10,
+            "BEIGE_T6": 10,
+            "BEIGE_T8": 10,
+            "BEIGE_T10": 20,
+            "BEIGE_T12": 20,
+            "BEIGE_T14": 20,
+            "BEIGE_T16": 20
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -7674,7 +7674,10 @@
         "T12",
         "T14",
         "T16"
-      ]
+      ],
+      "updated_at": "2026-11-18",
+      "diseno_origen_id": null,
+      "diseno_origen_nombre": null
     },
     {
       "cantidades": {
