@@ -43651,12 +43651,22 @@
       "user": "Jefa de Producción"
     },
     {
+      "colores": 2,
+      "estado": "POR_REVISAR",
       "id": "evt_1795009585445_c0y9c",
+      "nombre": "RANGLAND SOFT",
+      "op_id": "OP-2026-253",
+      "tipo": "cambiar_estado_op_all",
       "ts": 1795009585445,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1795009601076_5tsla",
+      "ts": 1795009601076,
       "user": "Jefa de Producción",
       "tipo": "cambiar_estado_op_all",
       "op_id": "OP-2026-253",
-      "estado": "POR_REVISAR",
+      "estado": "PENDIENTE_CORTAR",
       "colores": 2,
       "protegidos": [],
       "nombre": "RANGLAND SOFT"
