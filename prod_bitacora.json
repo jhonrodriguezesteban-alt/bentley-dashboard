@@ -43720,20 +43720,42 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "CAMEL",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1795018624885_eble7",
-      "ts": 1795018624885,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-128",
       "op_nombre": "PILOTO PANCAKE",
       "referencia": "PILOTO PANCAKE",
-      "color": "CAMEL",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1795018624885,
       "uds": 116,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "categoria": "CHAQUETAS",
+      "colores": 4,
+      "id": "evt_1795018659529_3xl5o",
+      "nombre": "PILOTO PANCAKE",
+      "op_id": "OP-2026-112",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1795018659529,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1795021199633_r3k17",
+      "ts": 1795021199633,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-129",
+      "nombre": "CHAQUETA ONION",
+      "categoria": "CHAQUETAS",
+      "colores": 2,
+      "refs": 1
     }
   ]
 }
