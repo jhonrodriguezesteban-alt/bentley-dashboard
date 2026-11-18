@@ -43636,19 +43636,30 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1795009546036_qzb43",
-      "ts": 1795009546036,
-      "user": "Jefa de Producción",
-      "tipo": "crear_op",
-      "op_id": "OP-2026-253",
-      "op_nombre": "RANGLAND SOFT",
       "categoria": "BUZOS",
       "cortador": "Corte Carbajal",
       "fecha_op": "2026-11-18",
-      "total_uds": 208,
+      "id": "evt_1795009546036_qzb43",
+      "op_id": "OP-2026-253",
+      "op_nombre": "RANGLAND SOFT",
       "referencias": [
         "RANGLAND SOFT"
-      ]
+      ],
+      "tipo": "crear_op",
+      "total_uds": 208,
+      "ts": 1795009546036,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1795009585445_c0y9c",
+      "ts": 1795009585445,
+      "user": "Jefa de Producción",
+      "tipo": "cambiar_estado_op_all",
+      "op_id": "OP-2026-253",
+      "estado": "POR_REVISAR",
+      "colores": 2,
+      "protegidos": [],
+      "nombre": "RANGLAND SOFT"
     }
   ]
 }
