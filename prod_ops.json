@@ -4628,8 +4628,8 @@
       ],
       "subg_estados": {
         "OP-2026-073||BEIGE": "POR_REVISAR",
-        "OP-2026-073||NEGRO": "POR_REVISAR",
         "OP-2026-073||CAFE": "POR_REVISAR",
+        "OP-2026-073||NEGRO": "POR_REVISAR",
         "OP-2026-073||TAUPE": "POR_REVISAR"
       },
       "tallas": [
@@ -7590,6 +7590,12 @@
           "vmo": 5781
         }
       ],
+      "subg_estados": {
+        "OP-2026-105||BEIGE": "POR_REVISAR",
+        "OP-2026-105||CAFE": "POR_REVISAR",
+        "OP-2026-105||NEGRO": "POR_REVISAR",
+        "OP-2026-105||TAUPE": "POR_REVISAR"
+      },
       "tallas": [
         "T6",
         "T8",
@@ -7598,13 +7604,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-11-18",
-      "subg_estados": {
-        "OP-2026-105||BEIGE": "POR_REVISAR",
-        "OP-2026-105||NEGRO": "POR_REVISAR",
-        "OP-2026-105||CAFE": "POR_REVISAR",
-        "OP-2026-105||TAUPE": "POR_REVISAR"
-      }
+      "updated_at": "2026-11-18"
     },
     {
       "cantidades": {
@@ -9852,29 +9852,30 @@
     },
     {
       "cantidades": {
-        "BEIGE_T10": 16,
-        "BEIGE_T12": 16,
-        "BEIGE_T14": 16,
-        "BEIGE_T16": 16,
-        "BEIGE_T6": 12,
-        "BEIGE_T8": 12,
-        "CAMEL_T10": 6,
-        "CAMEL_T12": 6,
-        "CAMEL_T14": 6,
-        "CAMEL_T16": 6,
-        "CAMEL_T6": 6,
-        "CAMEL_T8": 6,
-        "MARFIL_T10": 18,
-        "MARFIL_T12": 18,
-        "MARFIL_T14": 18,
-        "MARFIL_T16": 18,
-        "MARFIL_T8": 18,
+        "NEGRO_T6": 14,
+        "NEGRO_T8": 14,
         "NEGRO_T10": 21,
         "NEGRO_T12": 21,
         "NEGRO_T14": 21,
         "NEGRO_T16": 21,
-        "NEGRO_T6": 14,
-        "NEGRO_T8": 14
+        "BEIGE_T4": 12,
+        "BEIGE_T6": 12,
+        "BEIGE_T8": 12,
+        "BEIGE_T10": 16,
+        "BEIGE_T12": 16,
+        "BEIGE_T14": 16,
+        "BEIGE_T16": 16,
+        "CAMEL_T6": 6,
+        "CAMEL_T8": 6,
+        "CAMEL_T10": 6,
+        "CAMEL_T12": 6,
+        "CAMEL_T14": 6,
+        "CAMEL_T16": 6,
+        "MARFIL_T8": 18,
+        "MARFIL_T10": 18,
+        "MARFIL_T12": 18,
+        "MARFIL_T14": 18,
+        "MARFIL_T16": 18
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -9921,42 +9922,18 @@
       "receta_nombre": "PILOTO PANCAKE - REF: 1099",
       "referencias": [
         {
-          "cantidades": {
-            "BEIGE_T10": 16,
-            "BEIGE_T12": 16,
-            "BEIGE_T14": 16,
-            "BEIGE_T16": 16,
-            "BEIGE_T6": 12,
-            "BEIGE_T8": 12,
-            "CAMEL_T10": 6,
-            "CAMEL_T12": 6,
-            "CAMEL_T14": 6,
-            "CAMEL_T16": 6,
-            "CAMEL_T6": 6,
-            "CAMEL_T8": 6,
-            "MARFIL_T10": 18,
-            "MARFIL_T12": 18,
-            "MARFIL_T14": 18,
-            "MARFIL_T16": 18,
-            "MARFIL_T8": 18,
-            "NEGRO_T10": 21,
-            "NEGRO_T12": 21,
-            "NEGRO_T14": 21,
-            "NEGRO_T16": 21,
-            "NEGRO_T6": 14,
-            "NEGRO_T8": 14
-          },
+          "nombre": "PILOTO PANCAKE",
+          "ref": "1099",
           "cat": "CHAQUETAS",
+          "vmo": 9459,
           "colores": [
             "NEGRO",
             "BEIGE",
             "CAMEL",
             "MARFIL"
           ],
-          "maquilador_id": "",
-          "nombre": "PILOTO PANCAKE",
-          "ref": "1099",
           "tallas": [
+            "T4",
             "T6",
             "T8",
             "T10",
@@ -9964,7 +9941,33 @@
             "T14",
             "T16"
           ],
-          "vmo": 9459
+          "cantidades": {
+            "NEGRO_T6": 14,
+            "NEGRO_T8": 14,
+            "NEGRO_T10": 21,
+            "NEGRO_T12": 21,
+            "NEGRO_T14": 21,
+            "NEGRO_T16": 21,
+            "BEIGE_T4": 12,
+            "BEIGE_T6": 12,
+            "BEIGE_T8": 12,
+            "BEIGE_T10": 16,
+            "BEIGE_T12": 16,
+            "BEIGE_T14": 16,
+            "BEIGE_T16": 16,
+            "CAMEL_T6": 6,
+            "CAMEL_T8": 6,
+            "CAMEL_T10": 6,
+            "CAMEL_T12": 6,
+            "CAMEL_T14": 6,
+            "CAMEL_T16": 6,
+            "MARFIL_T8": 18,
+            "MARFIL_T10": 18,
+            "MARFIL_T12": 18,
+            "MARFIL_T14": 18,
+            "MARFIL_T16": 18
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -9974,6 +9977,7 @@
         "OP-2026-128||NEGRO": "CORTE_POR_ALISTAR"
       },
       "tallas": [
+        "T4",
         "T6",
         "T8",
         "T10",
@@ -9993,7 +9997,9 @@
           "solicitud_id": "id_1793915143389_5vxogqge2"
         }
       ],
-      "updated_at": "2026-11-17"
+      "updated_at": "2026-11-18",
+      "diseno_origen_id": null,
+      "diseno_origen_nombre": null
     },
     {
       "cantidades": {
@@ -10534,10 +10540,10 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-193||CAFE": "CORTE_POR_ALISTAR",
+        "OP-2026-193||AZUL OSCURO": "POR_REVISAR",
         "OP-2026-193||BLANCO": "POR_REVISAR",
-        "OP-2026-193||VERDE MILITAR": "POR_REVISAR",
-        "OP-2026-193||AZUL OSCURO": "POR_REVISAR"
+        "OP-2026-193||CAFE": "CORTE_POR_ALISTAR",
+        "OP-2026-193||VERDE MILITAR": "POR_REVISAR"
       },
       "tallas": [
         "T4",
@@ -12951,6 +12957,15 @@
           "vmo": 1151
         }
       ],
+      "subg_estados": {
+        "OP-2026-213||BEIGE": "POR_REVISAR",
+        "OP-2026-213||CAFE": "POR_REVISAR",
+        "OP-2026-213||GRIS JASPED": "POR_REVISAR",
+        "OP-2026-213||NEGRO": "POR_REVISAR",
+        "OP-2026-213||ROSA": "POR_REVISAR",
+        "OP-2026-213||TAUPE": "POR_REVISAR",
+        "OP-2026-213||VINOTINTO": "POR_REVISAR"
+      },
       "tallas": [
         "T6",
         "T8",
@@ -12959,16 +12974,7 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-11-18",
-      "subg_estados": {
-        "OP-2026-213||NEGRO": "POR_REVISAR",
-        "OP-2026-213||BEIGE": "POR_REVISAR",
-        "OP-2026-213||TAUPE": "POR_REVISAR",
-        "OP-2026-213||ROSA": "POR_REVISAR",
-        "OP-2026-213||GRIS JASPED": "POR_REVISAR",
-        "OP-2026-213||VINOTINTO": "POR_REVISAR",
-        "OP-2026-213||CAFE": "POR_REVISAR"
-      }
+      "updated_at": "2026-11-18"
     },
     {
       "cantidades": {
@@ -16884,6 +16890,12 @@
           "vmo": 10510
         }
       ],
+      "subg_estados": {
+        "OP-2026-251||AZUL OSCURO": "CORTE_POR_ALISTAR",
+        "OP-2026-251||GRIS OSCURO": "CORTE_POR_ALISTAR",
+        "OP-2026-251||MARFIL": "CORTE_POR_ALISTAR",
+        "OP-2026-251||NEGRO": "CORTE_POR_ALISTAR"
+      },
       "tallas": [
         "T8",
         "T10",
@@ -16904,82 +16916,22 @@
           "solicitud_id": "id_1793826524137_5ku9jgrni"
         }
       ],
-      "updated_at": "2026-11-17",
-      "subg_estados": {
-        "OP-2026-251||MARFIL": "CORTE_POR_ALISTAR",
-        "OP-2026-251||NEGRO": "CORTE_POR_ALISTAR",
-        "OP-2026-251||GRIS OSCURO": "CORTE_POR_ALISTAR",
-        "OP-2026-251||AZUL OSCURO": "CORTE_POR_ALISTAR"
-      }
+      "updated_at": "2026-11-17"
     },
     {
-      "id": "OP-2026-252",
-      "numero": 252,
-      "fecha_op": "2026-11-18",
-      "cortador": "Corte Carbajal",
-      "categoria": "CHAQUETAS",
-      "nombre_producto": "CHAQUETA CAZADORA",
-      "colores": [
-        "AZUL BEBE"
-      ],
-      "tallas": [
-        "T4",
-        "T6",
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
       "cantidades": {
-        "AZUL BEBE_T4": 12,
-        "AZUL BEBE_T6": 12,
-        "AZUL BEBE_T8": 12,
         "AZUL BEBE_T10": 12,
         "AZUL BEBE_T12": 12,
         "AZUL BEBE_T14": 12,
-        "AZUL BEBE_T16": 12
+        "AZUL BEBE_T16": 12,
+        "AZUL BEBE_T4": 12,
+        "AZUL BEBE_T6": 12,
+        "AZUL BEBE_T8": 12
       },
-      "referencias": [
-        {
-          "nombre": "CHAQUETA CAZADORA",
-          "ref": "1002",
-          "cat": "CHAQUETAS",
-          "vmo": 11561,
-          "colores": [
-            "AZUL BEBE"
-          ],
-          "tallas": [
-            "T4",
-            "T6",
-            "T8",
-            "T10",
-            "T12",
-            "T14",
-            "T16"
-          ],
-          "cantidades": {
-            "AZUL BEBE_T4": 12,
-            "AZUL BEBE_T6": 12,
-            "AZUL BEBE_T8": 12,
-            "AZUL BEBE_T10": 12,
-            "AZUL BEBE_T12": 12,
-            "AZUL BEBE_T14": 12,
-            "AZUL BEBE_T16": 12
-          },
-          "totalUds": 84,
-          "maquilador_id": ""
-        }
+      "categoria": "CHAQUETAS",
+      "colores": [
+        "AZUL BEBE"
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-11-18",
-      "created_by": "Jefa de Producción",
-      "receta_id": "rec_chaqueta_cazadora_1002",
-      "receta_nombre": "CHAQUETA CAZADORA - REF: 1002",
-      "subg_estados": {
-        "OP-2026-252||AZUL BEBE": "PENDIENTE_CORTAR"
-      },
       "consumibles_check": {
         "rec_chaqueta_cazadora_1002__c38_19": true,
         "rec_chaqueta_cazadora_1002__c38_20": true,
@@ -16991,63 +16943,34 @@
         "rec_chaqueta_cazadora_1002__c38_29": true,
         "rec_chaqueta_cazadora_1002__c38_31": true
       },
-      "trazos_color_solicitado": {
-        "AZUL BEBE": true
-      },
-      "trazos_solicitudes": [
-        {
-          "solicitud_id": "id_1795016826474_b2xcjfq5l",
-          "fecha": "2026-11-18",
-          "lineas": 3
-        }
-      ]
-    },
-    {
-      "id": "OP-2026-253",
-      "numero": 253,
-      "fecha_op": "2026-11-18",
       "cortador": "Corte Carbajal",
-      "categoria": "BUZOS",
-      "nombre_producto": "RANGLAND SOFT",
-      "colores": [
-        "LOVELY- MARFIL",
-        "CANADA- MARFIL"
-      ],
-      "tallas": [
-        "T4",
-        "T6",
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
-      "cantidades": {
-        "LOVELY- MARFIL_T4": 12,
-        "LOVELY- MARFIL_T6": 12,
-        "LOVELY- MARFIL_T8": 16,
-        "LOVELY- MARFIL_T10": 16,
-        "LOVELY- MARFIL_T12": 16,
-        "LOVELY- MARFIL_T14": 16,
-        "LOVELY- MARFIL_T16": 16,
-        "CANADA- MARFIL_T4": 12,
-        "CANADA- MARFIL_T6": 12,
-        "CANADA- MARFIL_T8": 16,
-        "CANADA- MARFIL_T10": 16,
-        "CANADA- MARFIL_T12": 16,
-        "CANADA- MARFIL_T14": 16,
-        "CANADA- MARFIL_T16": 16
-      },
+      "created_at": "2026-11-18",
+      "created_by": "Jefa de Producción",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-11-18",
+      "id": "OP-2026-252",
+      "nombre_producto": "CHAQUETA CAZADORA",
+      "numero": 252,
+      "receta_id": "rec_chaqueta_cazadora_1002",
+      "receta_nombre": "CHAQUETA CAZADORA - REF: 1002",
       "referencias": [
         {
-          "nombre": "RANGLAND SOFT",
-          "ref": "1105",
-          "cat": "BUZOS",
-          "vmo": 5781,
+          "cantidades": {
+            "AZUL BEBE_T10": 12,
+            "AZUL BEBE_T12": 12,
+            "AZUL BEBE_T14": 12,
+            "AZUL BEBE_T16": 12,
+            "AZUL BEBE_T4": 12,
+            "AZUL BEBE_T6": 12,
+            "AZUL BEBE_T8": 12
+          },
+          "cat": "CHAQUETAS",
           "colores": [
-            "LOVELY- MARFIL",
-            "CANADA- MARFIL"
+            "AZUL BEBE"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA CAZADORA",
+          "ref": "1002",
           "tallas": [
             "T4",
             "T6",
@@ -17057,45 +16980,126 @@
             "T14",
             "T16"
           ],
+          "totalUds": 84,
+          "vmo": 11561
+        }
+      ],
+      "subg_estados": {
+        "OP-2026-252||AZUL BEBE": "PENDIENTE_CORTAR"
+      },
+      "tallas": [
+        "T4",
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ],
+      "trazos_color_solicitado": {
+        "AZUL BEBE": true
+      },
+      "trazos_solicitudes": [
+        {
+          "fecha": "2026-11-18",
+          "lineas": 3,
+          "solicitud_id": "id_1795016826474_b2xcjfq5l"
+        }
+      ]
+    },
+    {
+      "cantidades": {
+        "CANADA- MARFIL_T10": 16,
+        "CANADA- MARFIL_T12": 16,
+        "CANADA- MARFIL_T14": 16,
+        "CANADA- MARFIL_T16": 16,
+        "CANADA- MARFIL_T4": 12,
+        "CANADA- MARFIL_T6": 12,
+        "CANADA- MARFIL_T8": 16,
+        "LOVELY- MARFIL_T10": 16,
+        "LOVELY- MARFIL_T12": 16,
+        "LOVELY- MARFIL_T14": 16,
+        "LOVELY- MARFIL_T16": 16,
+        "LOVELY- MARFIL_T4": 12,
+        "LOVELY- MARFIL_T6": 12,
+        "LOVELY- MARFIL_T8": 16
+      },
+      "categoria": "BUZOS",
+      "colores": [
+        "LOVELY- MARFIL",
+        "CANADA- MARFIL"
+      ],
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-11-18",
+      "created_by": "Jefa de Producción",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-11-18",
+      "id": "OP-2026-253",
+      "nombre_producto": "RANGLAND SOFT",
+      "numero": 253,
+      "receta_id": "rec_rangland_soft_1105",
+      "receta_nombre": "RANGLAND SOFT - REF: 1105",
+      "referencias": [
+        {
           "cantidades": {
-            "LOVELY- MARFIL_T4": 12,
-            "LOVELY- MARFIL_T6": 12,
-            "LOVELY- MARFIL_T8": 16,
+            "CANADA- MARFIL_T10": 16,
+            "CANADA- MARFIL_T12": 16,
+            "CANADA- MARFIL_T14": 16,
+            "CANADA- MARFIL_T16": 16,
+            "CANADA- MARFIL_T4": 12,
+            "CANADA- MARFIL_T6": 12,
+            "CANADA- MARFIL_T8": 16,
             "LOVELY- MARFIL_T10": 16,
             "LOVELY- MARFIL_T12": 16,
             "LOVELY- MARFIL_T14": 16,
             "LOVELY- MARFIL_T16": 16,
-            "CANADA- MARFIL_T4": 12,
-            "CANADA- MARFIL_T6": 12,
-            "CANADA- MARFIL_T8": 16,
-            "CANADA- MARFIL_T10": 16,
-            "CANADA- MARFIL_T12": 16,
-            "CANADA- MARFIL_T14": 16,
-            "CANADA- MARFIL_T16": 16
+            "LOVELY- MARFIL_T4": 12,
+            "LOVELY- MARFIL_T6": 12,
+            "LOVELY- MARFIL_T8": 16
           },
+          "cat": "BUZOS",
+          "colores": [
+            "LOVELY- MARFIL",
+            "CANADA- MARFIL"
+          ],
+          "maquilador_id": "",
+          "nombre": "RANGLAND SOFT",
+          "ref": "1105",
+          "tallas": [
+            "T4",
+            "T6",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
           "totalUds": 208,
-          "maquilador_id": ""
+          "vmo": 5781
         }
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-11-18",
-      "created_by": "Jefa de Producción",
-      "receta_id": "rec_rangland_soft_1105",
-      "receta_nombre": "RANGLAND SOFT - REF: 1105",
       "subg_estados": {
-        "OP-2026-253||LOVELY- MARFIL": "PENDIENTE_CORTAR",
-        "OP-2026-253||CANADA- MARFIL": "PENDIENTE_CORTAR"
+        "OP-2026-253||CANADA- MARFIL": "PENDIENTE_CORTAR",
+        "OP-2026-253||LOVELY- MARFIL": "PENDIENTE_CORTAR"
       },
+      "tallas": [
+        "T4",
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ],
       "trazos_color_solicitado": {
-        "LOVELY- MARFIL": true,
-        "CANADA- MARFIL": true
+        "CANADA- MARFIL": true,
+        "LOVELY- MARFIL": true
       },
       "trazos_solicitudes": [
         {
-          "solicitud_id": "id_1795016532858_h1k8bkk42",
           "fecha": "2026-11-18",
-          "lineas": 2
+          "lineas": 2,
+          "solicitud_id": "id_1795016532858_h1k8bkk42"
         }
       ]
     }
