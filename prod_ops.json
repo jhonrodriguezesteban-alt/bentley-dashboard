@@ -4577,28 +4577,35 @@
     },
     {
       "cantidades": {
-        "BEIGE_T10": 12,
-        "BEIGE_T12": 12,
-        "BEIGE_T14": 12,
-        "BEIGE_T16": 12,
-        "MARFIL_T10": 20,
-        "MARFIL_T12": 20,
-        "MARFIL_T14": 20,
-        "MARFIL_T16": 20,
-        "MARFIL_T8": 20,
-        "NEGRO_T10": 20,
-        "NEGRO_T12": 20,
-        "NEGRO_T14": 20,
-        "NEGRO_T16": 20
+        "NEGRO_T8": 11,
+        "NEGRO_T10": 22,
+        "NEGRO_T12": 22,
+        "NEGRO_T14": 22,
+        "NEGRO_T16": 22,
+        "BEIGE_T8": 11,
+        "BEIGE_T10": 22,
+        "BEIGE_T12": 22,
+        "BEIGE_T14": 22,
+        "BEIGE_T16": 22,
+        "CAFE_T6": 10,
+        "CAFE_T8": 10,
+        "CAFE_T10": 20,
+        "CAFE_T12": 20,
+        "CAFE_T14": 20,
+        "CAFE_T16": 20,
+        "TAUPE_T6": 10,
+        "TAUPE_T8": 10,
+        "TAUPE_T10": 20,
+        "TAUPE_T12": 20,
+        "TAUPE_T14": 20,
+        "TAUPE_T16": 20
       },
       "categoria": "BLUSAS",
       "colores": [
-        "MARFIL",
         "NEGRO",
         "BEIGE",
-        "BLANCO NEGRO",
-        "CAMEL",
-        "GRIS CLARO"
+        "CAFE",
+        "TAUPE"
       ],
       "cortador": "Corte Carbajal",
       "created_at": "2026-06-23",
@@ -4606,70 +4613,20 @@
       "estado_op": "EN_PROCESO",
       "fecha_op": "2026-06-23",
       "id": "OP-2026-073",
-      "nombre_producto": "BLUSA JEN + BLUSA RAYAS JEN",
+      "nombre_producto": "BLUSA JEN",
       "numero": 73,
       "referencias": [
         {
-          "cantidades": {
-            "BEIGE_T10": 12,
-            "BEIGE_T12": 12,
-            "BEIGE_T14": 12,
-            "BEIGE_T16": 12,
-            "MARFIL_T10": 20,
-            "MARFIL_T12": 20,
-            "MARFIL_T14": 20,
-            "MARFIL_T16": 20,
-            "MARFIL_T8": 20,
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20
-          },
-          "cat": "BLUSAS",
-          "colores": [
-            "MARFIL",
-            "NEGRO",
-            "BEIGE"
-          ],
-          "maquilador_id": "",
           "nombre": "BLUSA JEN",
           "ref": "1118",
-          "tallas": [
-            "T4",
-            "T6",
-            "T8",
-            "T10",
-            "T12",
-            "T14",
-            "T16"
-          ],
-          "vmo": 2200
-        },
-        {
-          "cantidades": {
-            "BLANCO NEGRO_T10": 20,
-            "BLANCO NEGRO_T12": 20,
-            "BLANCO NEGRO_T14": 20,
-            "BLANCO NEGRO_T16": 20,
-            "CAMEL_T10": 20,
-            "CAMEL_T12": 20,
-            "CAMEL_T14": 20,
-            "CAMEL_T16": 20,
-            "GRIS CLARO_T10": 20,
-            "GRIS CLARO_T12": 20,
-            "GRIS CLARO_T14": 20,
-            "GRIS CLARO_T16": 20,
-            "GRIS CLARO_T8": 20
-          },
           "cat": "BLUSAS",
+          "vmo": 2200,
           "colores": [
-            "BLANCO NEGRO",
-            "CAMEL",
-            "GRIS CLARO"
+            "NEGRO",
+            "BEIGE",
+            "CAFE",
+            "TAUPE"
           ],
-          "maquilador_id": "",
-          "nombre": "BLUSA RAYAS JEN",
-          "ref": "1111",
           "tallas": [
             "T6",
             "T8",
@@ -4678,7 +4635,31 @@
             "T14",
             "T16"
           ],
-          "vmo": 2200
+          "cantidades": {
+            "NEGRO_T8": 11,
+            "NEGRO_T10": 22,
+            "NEGRO_T12": 22,
+            "NEGRO_T14": 22,
+            "NEGRO_T16": 22,
+            "BEIGE_T8": 11,
+            "BEIGE_T10": 22,
+            "BEIGE_T12": 22,
+            "BEIGE_T14": 22,
+            "BEIGE_T16": 22,
+            "CAFE_T6": 10,
+            "CAFE_T8": 10,
+            "CAFE_T10": 20,
+            "CAFE_T12": 20,
+            "CAFE_T14": 20,
+            "CAFE_T16": 20,
+            "TAUPE_T6": 10,
+            "TAUPE_T8": 10,
+            "TAUPE_T10": 20,
+            "TAUPE_T12": 20,
+            "TAUPE_T14": 20,
+            "TAUPE_T16": 20
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -4690,7 +4671,6 @@
         "OP-2026-073||NEGRO": "POR_REVISAR"
       },
       "tallas": [
-        "T4",
         "T6",
         "T8",
         "T10",
@@ -4698,7 +4678,9 @@
         "T14",
         "T16"
       ],
-      "updated_at": "2026-08-04"
+      "updated_at": "2026-11-18",
+      "diseno_origen_id": null,
+      "diseno_origen_nombre": null
     },
     {
       "cantidades": {
@@ -16539,41 +16521,41 @@
     },
     {
       "cantidades": {
-        "BEIGE_T4": 8,
-        "BEIGE_T6": 8,
-        "BEIGE_T8": 16,
-        "BEIGE_T10": 16,
-        "BEIGE_T12": 16,
-        "BEIGE_T14": 16,
-        "BEIGE_T16": 16,
-        "VERDE MILITAR_T4": 8,
-        "VERDE MILITAR_T6": 8,
-        "VERDE MILITAR_T8": 15,
-        "VERDE MILITAR_T10": 15,
-        "VERDE MILITAR_T12": 15,
-        "VERDE MILITAR_T14": 15,
-        "VERDE MILITAR_T16": 15,
-        "NEGRO_T4": 8,
-        "NEGRO_T6": 8,
-        "NEGRO_T8": 16,
-        "NEGRO_T10": 16,
-        "NEGRO_T12": 16,
-        "NEGRO_T14": 16,
-        "NEGRO_T16": 16,
-        "AZUL OSCURO_T4": 8,
-        "AZUL OSCURO_T6": 8,
-        "AZUL OSCURO_T8": 16,
         "AZUL OSCURO_T10": 16,
         "AZUL OSCURO_T12": 16,
         "AZUL OSCURO_T14": 16,
         "AZUL OSCURO_T16": 16,
-        "ROJO_T4": 5,
-        "ROJO_T6": 5,
-        "ROJO_T8": 9,
+        "AZUL OSCURO_T4": 8,
+        "AZUL OSCURO_T6": 8,
+        "AZUL OSCURO_T8": 16,
+        "BEIGE_T10": 16,
+        "BEIGE_T12": 16,
+        "BEIGE_T14": 16,
+        "BEIGE_T16": 16,
+        "BEIGE_T4": 8,
+        "BEIGE_T6": 8,
+        "BEIGE_T8": 16,
+        "NEGRO_T10": 16,
+        "NEGRO_T12": 16,
+        "NEGRO_T14": 16,
+        "NEGRO_T16": 16,
+        "NEGRO_T4": 8,
+        "NEGRO_T6": 8,
+        "NEGRO_T8": 16,
         "ROJO_T10": 9,
         "ROJO_T12": 9,
         "ROJO_T14": 9,
-        "ROJO_T16": 9
+        "ROJO_T16": 9,
+        "ROJO_T4": 5,
+        "ROJO_T6": 5,
+        "ROJO_T8": 9,
+        "VERDE MILITAR_T10": 15,
+        "VERDE MILITAR_T12": 15,
+        "VERDE MILITAR_T14": 15,
+        "VERDE MILITAR_T16": 15,
+        "VERDE MILITAR_T4": 8,
+        "VERDE MILITAR_T6": 8,
+        "VERDE MILITAR_T8": 15
       },
       "categoria": "CONJUNTOS",
       "colores": [
@@ -16619,10 +16601,44 @@
       "receta_id": "cid_1789269430435_6299",
       "referencias": [
         {
-          "nombre": "CONJUNTO DAKOTA",
-          "ref": "1217",
+          "cantidades": {
+            "AZUL OSCURO_T10": 16,
+            "AZUL OSCURO_T12": 16,
+            "AZUL OSCURO_T14": 16,
+            "AZUL OSCURO_T16": 16,
+            "AZUL OSCURO_T4": 8,
+            "AZUL OSCURO_T6": 8,
+            "AZUL OSCURO_T8": 16,
+            "BEIGE_T10": 16,
+            "BEIGE_T12": 16,
+            "BEIGE_T14": 16,
+            "BEIGE_T16": 16,
+            "BEIGE_T4": 8,
+            "BEIGE_T6": 8,
+            "BEIGE_T8": 16,
+            "NEGRO_T10": 16,
+            "NEGRO_T12": 16,
+            "NEGRO_T14": 16,
+            "NEGRO_T16": 16,
+            "NEGRO_T4": 8,
+            "NEGRO_T6": 8,
+            "NEGRO_T8": 16,
+            "ROJO_T10": 9,
+            "ROJO_T12": 9,
+            "ROJO_T14": 9,
+            "ROJO_T16": 9,
+            "ROJO_T4": 5,
+            "ROJO_T6": 5,
+            "ROJO_T8": 9,
+            "VERDE MILITAR_T10": 15,
+            "VERDE MILITAR_T12": 15,
+            "VERDE MILITAR_T14": 15,
+            "VERDE MILITAR_T16": 15,
+            "VERDE MILITAR_T4": 8,
+            "VERDE MILITAR_T6": 8,
+            "VERDE MILITAR_T8": 15
+          },
           "cat": "CONJUNTOS",
-          "vmo": 1151,
           "colores": [
             "BEIGE",
             "VERDE MILITAR",
@@ -16630,6 +16646,9 @@
             "AZUL OSCURO",
             "ROJO"
           ],
+          "maquilador_id": "",
+          "nombre": "CONJUNTO DAKOTA",
+          "ref": "1217",
           "tallas": [
             "T4",
             "T6",
@@ -16639,44 +16658,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "BEIGE_T4": 8,
-            "BEIGE_T6": 8,
-            "BEIGE_T8": 16,
-            "BEIGE_T10": 16,
-            "BEIGE_T12": 16,
-            "BEIGE_T14": 16,
-            "BEIGE_T16": 16,
-            "VERDE MILITAR_T4": 8,
-            "VERDE MILITAR_T6": 8,
-            "VERDE MILITAR_T8": 15,
-            "VERDE MILITAR_T10": 15,
-            "VERDE MILITAR_T12": 15,
-            "VERDE MILITAR_T14": 15,
-            "VERDE MILITAR_T16": 15,
-            "NEGRO_T4": 8,
-            "NEGRO_T6": 8,
-            "NEGRO_T8": 16,
-            "NEGRO_T10": 16,
-            "NEGRO_T12": 16,
-            "NEGRO_T14": 16,
-            "NEGRO_T16": 16,
-            "AZUL OSCURO_T4": 8,
-            "AZUL OSCURO_T6": 8,
-            "AZUL OSCURO_T8": 16,
-            "AZUL OSCURO_T10": 16,
-            "AZUL OSCURO_T12": 16,
-            "AZUL OSCURO_T14": 16,
-            "AZUL OSCURO_T16": 16,
-            "ROJO_T4": 5,
-            "ROJO_T6": 5,
-            "ROJO_T8": 9,
-            "ROJO_T10": 9,
-            "ROJO_T12": 9,
-            "ROJO_T14": 9,
-            "ROJO_T16": 9
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
@@ -16708,9 +16690,7 @@
           "solicitud_id": "id_1794066067226_5q2s2cskl"
         }
       ],
-      "updated_at": "2026-11-17",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-11-17"
     },
     {
       "cantidades": {
@@ -16810,26 +16790,26 @@
     },
     {
       "cantidades": {
-        "MARFIL_T8": 7,
-        "MARFIL_T10": 7,
-        "MARFIL_T12": 7,
-        "MARFIL_T14": 7,
-        "MARFIL_T16": 7,
-        "NEGRO_T8": 9,
-        "NEGRO_T10": 9,
-        "NEGRO_T12": 9,
-        "NEGRO_T14": 9,
-        "NEGRO_T16": 9,
-        "GRIS OSCURO_T8": 10,
+        "AZUL OSCURO_T10": 8,
+        "AZUL OSCURO_T12": 8,
+        "AZUL OSCURO_T14": 8,
+        "AZUL OSCURO_T16": 8,
+        "AZUL OSCURO_T8": 8,
         "GRIS OSCURO_T10": 10,
         "GRIS OSCURO_T12": 10,
         "GRIS OSCURO_T14": 10,
         "GRIS OSCURO_T16": 10,
-        "AZUL OSCURO_T8": 8,
-        "AZUL OSCURO_T10": 8,
-        "AZUL OSCURO_T12": 8,
-        "AZUL OSCURO_T14": 8,
-        "AZUL OSCURO_T16": 8
+        "GRIS OSCURO_T8": 10,
+        "MARFIL_T10": 7,
+        "MARFIL_T12": 7,
+        "MARFIL_T14": 7,
+        "MARFIL_T16": 7,
+        "MARFIL_T8": 7,
+        "NEGRO_T10": 9,
+        "NEGRO_T12": 9,
+        "NEGRO_T14": 9,
+        "NEGRO_T16": 9,
+        "NEGRO_T8": 9
       },
       "categoria": "CONJUNTOS",
       "colores": [
@@ -16868,16 +16848,38 @@
       "receta_nombre": "CONJUNTO CHILLY - REF: 1153",
       "referencias": [
         {
-          "nombre": "CONJUNTO CHILLY",
-          "ref": "1153",
+          "cantidades": {
+            "AZUL OSCURO_T10": 8,
+            "AZUL OSCURO_T12": 8,
+            "AZUL OSCURO_T14": 8,
+            "AZUL OSCURO_T16": 8,
+            "AZUL OSCURO_T8": 8,
+            "GRIS OSCURO_T10": 10,
+            "GRIS OSCURO_T12": 10,
+            "GRIS OSCURO_T14": 10,
+            "GRIS OSCURO_T16": 10,
+            "GRIS OSCURO_T8": 10,
+            "MARFIL_T10": 7,
+            "MARFIL_T12": 7,
+            "MARFIL_T14": 7,
+            "MARFIL_T16": 7,
+            "MARFIL_T8": 7,
+            "NEGRO_T10": 9,
+            "NEGRO_T12": 9,
+            "NEGRO_T14": 9,
+            "NEGRO_T16": 9,
+            "NEGRO_T8": 9
+          },
           "cat": "CONJUNTOS",
-          "vmo": 10510,
           "colores": [
             "MARFIL",
             "NEGRO",
             "GRIS OSCURO",
             "AZUL OSCURO"
           ],
+          "maquilador_id": "",
+          "nombre": "CONJUNTO CHILLY",
+          "ref": "1153",
           "tallas": [
             "T8",
             "T10",
@@ -16885,29 +16887,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "MARFIL_T8": 7,
-            "MARFIL_T10": 7,
-            "MARFIL_T12": 7,
-            "MARFIL_T14": 7,
-            "MARFIL_T16": 7,
-            "NEGRO_T8": 9,
-            "NEGRO_T10": 9,
-            "NEGRO_T12": 9,
-            "NEGRO_T14": 9,
-            "NEGRO_T16": 9,
-            "GRIS OSCURO_T8": 10,
-            "GRIS OSCURO_T10": 10,
-            "GRIS OSCURO_T12": 10,
-            "GRIS OSCURO_T14": 10,
-            "GRIS OSCURO_T16": 10,
-            "AZUL OSCURO_T8": 8,
-            "AZUL OSCURO_T10": 8,
-            "AZUL OSCURO_T12": 8,
-            "AZUL OSCURO_T14": 8,
-            "AZUL OSCURO_T16": 8
-          },
-          "maquilador_id": ""
+          "vmo": 10510
         }
       ],
       "tallas": [
@@ -16930,9 +16910,7 @@
           "solicitud_id": "id_1793826524137_5ku9jgrni"
         }
       ],
-      "updated_at": "2026-11-17",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-11-17"
     }
   ]
 }
