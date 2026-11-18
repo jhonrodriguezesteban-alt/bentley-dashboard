@@ -42728,24 +42728,35 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1794959134421_tym53",
-      "ts": 1794959134421,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-251",
-      "op_nombre": "CONJUNTO CHILLY",
       "categoria": "CONJUNTOS",
-      "total_ots": 20,
-      "total_uds": 165,
       "colores": [
         "MARFIL",
         "NEGRO",
         "GRIS OSCURO",
         "AZUL OSCURO"
       ],
+      "id": "evt_1794959134421_tym53",
+      "op_id": "OP-2026-251",
+      "op_nombre": "CONJUNTO CHILLY",
       "referencias": [
         "CONJUNTO CHILLY"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 20,
+      "total_uds": 165,
+      "ts": 1794959134421,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1794962416545_4ctuz",
+      "ts": 1794962416545,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-251",
+      "nombre": "CONJUNTO CHILLY",
+      "categoria": "CONJUNTOS",
+      "colores": 4,
+      "refs": 1
     }
   ]
 }
