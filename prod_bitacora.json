@@ -43758,20 +43758,40 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "CAFE",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1795021234395_4x1vj",
-      "ts": 1795021234395,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-2026-129",
       "op_nombre": "CHAQUETA ONION",
       "referencia": "CHAQUETA ONION",
-      "color": "CAFE",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1795021234395,
       "uds": 100,
-      "motivo": "ENTREGADO"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1795037353228_qy72x",
+      "ts": 1795037353228,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-252",
+      "op_nombre": "CHAQUETA CAZADORA",
+      "color": "AZUL BEBE",
+      "mes": "2026-11"
+    },
+    {
+      "id": "evt_1795037355318_vqpfl",
+      "ts": 1795037355318,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-253",
+      "op_nombre": "RANGLAND SOFT",
+      "color": "LOVELY- MARFIL",
+      "mes": "2026-11"
     }
   ]
 }
