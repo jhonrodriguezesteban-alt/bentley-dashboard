@@ -43747,15 +43747,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1795021199633_r3k17",
-      "ts": 1795021199633,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-129",
-      "nombre": "CHAQUETA ONION",
       "categoria": "CHAQUETAS",
       "colores": 2,
-      "refs": 1
+      "id": "evt_1795021199633_r3k17",
+      "nombre": "CHAQUETA ONION",
+      "op_id": "OP-2026-129",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1795021199633,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1795021234395_4x1vj",
+      "ts": 1795021234395,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-129",
+      "op_nombre": "CHAQUETA ONION",
+      "referencia": "CHAQUETA ONION",
+      "color": "CAFE",
+      "talla": "todas las tallas",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
+      "bulk": true,
+      "uds": 100,
+      "motivo": "ENTREGADO"
     }
   ]
 }
