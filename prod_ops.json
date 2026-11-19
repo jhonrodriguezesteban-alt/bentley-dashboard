@@ -1388,7 +1388,7 @@
         }
       ],
       "subg_estados": {
-        "OP-0031||AZUL BEBE": "CORTE_POR_ALISTAR"
+        "OP-0031||AZUL BEBE": "EN_CONFECCION"
       },
       "tallas": [
         "T4",
@@ -9989,18 +9989,18 @@
     },
     {
       "cantidades": {
-        "CAFE_T6": 12,
-        "CAFE_T8": 12,
         "CAFE_T10": 19,
         "CAFE_T12": 19,
         "CAFE_T14": 19,
         "CAFE_T16": 19,
-        "VERDE MILITAR_T6": 12,
-        "VERDE MILITAR_T8": 12,
+        "CAFE_T6": 12,
+        "CAFE_T8": 12,
         "VERDE MILITAR_T10": 20,
         "VERDE MILITAR_T12": 20,
         "VERDE MILITAR_T14": 20,
-        "VERDE MILITAR_T16": 20
+        "VERDE MILITAR_T16": 20,
+        "VERDE MILITAR_T6": 12,
+        "VERDE MILITAR_T8": 12
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -10032,14 +10032,28 @@
       "receta_nombre": "CHAQUETA ONION - REF: 1165",
       "referencias": [
         {
-          "nombre": "CHAQUETA ONION",
-          "ref": "1166",
+          "cantidades": {
+            "CAFE_T10": 19,
+            "CAFE_T12": 19,
+            "CAFE_T14": 19,
+            "CAFE_T16": 19,
+            "CAFE_T6": 12,
+            "CAFE_T8": 12,
+            "VERDE MILITAR_T10": 20,
+            "VERDE MILITAR_T12": 20,
+            "VERDE MILITAR_T14": 20,
+            "VERDE MILITAR_T16": 20,
+            "VERDE MILITAR_T6": 12,
+            "VERDE MILITAR_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 9000,
           "colores": [
             "CAFE",
             "VERDE MILITAR"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA ONION",
+          "ref": "1166",
           "tallas": [
             "T6",
             "T8",
@@ -10048,21 +10062,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "CAFE_T6": 12,
-            "CAFE_T8": 12,
-            "CAFE_T10": 19,
-            "CAFE_T12": 19,
-            "CAFE_T14": 19,
-            "CAFE_T16": 19,
-            "VERDE MILITAR_T6": 12,
-            "VERDE MILITAR_T8": 12,
-            "VERDE MILITAR_T10": 20,
-            "VERDE MILITAR_T12": 20,
-            "VERDE MILITAR_T14": 20,
-            "VERDE MILITAR_T16": 20
-          },
-          "maquilador_id": ""
+          "vmo": 9000
         }
       ],
       "subg_estados": {
@@ -10081,9 +10081,7 @@
         "CAFE": true,
         "VERDE MILITAR": true
       },
-      "updated_at": "2026-11-18",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-11-18"
     },
     {
       "cantidades": {
