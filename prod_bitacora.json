@@ -43869,22 +43869,38 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1795127453498_31dd1",
-      "ts": 1795127453498,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-195",
-      "op_nombre": "HOODIE RANGLAND PAÑO ALGODON CERRADO",
       "categoria": "BUZOS",
-      "total_ots": 5,
-      "total_uds": 50,
       "colores": [
         "AVENA"
       ],
       "estado_inicial": "PENDIENTE_CORTAR",
+      "id": "evt_1795127453498_31dd1",
+      "op_id": "OP-2026-195",
+      "op_nombre": "HOODIE RANGLAND PAÑO ALGODON CERRADO",
       "referencias": [
         "HOODIE RANGLAND PAÑO ALGODON CERRADO"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 5,
+      "total_uds": 50,
+      "ts": 1795127453498,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1795127488476_57s6l",
+      "ts": 1795127488476,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-195",
+      "op_nombre": "HOODIE RANGLAND PAÑO ALGODON CERRADO",
+      "referencia": "HOODIE RANGLAND PAÑO ALGODON CERRADO",
+      "color": "AVENA",
+      "talla": "todas las tallas",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
+      "bulk": true,
+      "uds": 50,
+      "motivo": "en insumos"
     }
   ]
 }
