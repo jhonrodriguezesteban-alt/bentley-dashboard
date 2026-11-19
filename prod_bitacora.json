@@ -43853,20 +43853,38 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "ROSA",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1795116712725_wp04d",
-      "ts": 1795116712725,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-0149",
       "op_nombre": "CONJUNTO TRENZAS",
       "referencia": "CONJUNTO TRENZAS",
-      "color": "ROSA",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1795116712725,
       "uds": 104,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1795127453498_31dd1",
+      "ts": 1795127453498,
+      "user": "Jefa de Producción",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-195",
+      "op_nombre": "HOODIE RANGLAND PAÑO ALGODON CERRADO",
+      "categoria": "BUZOS",
+      "total_ots": 5,
+      "total_uds": 50,
+      "colores": [
+        "AVENA"
+      ],
+      "estado_inicial": "PENDIENTE_CORTAR",
+      "referencias": [
+        "HOODIE RANGLAND PAÑO ALGODON CERRADO"
+      ]
     }
   ]
 }
