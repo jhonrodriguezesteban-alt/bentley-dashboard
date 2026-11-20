@@ -10320,20 +10320,20 @@
     },
     {
       "cantidades": {
-        "ROSA_T4": 12,
-        "ROSA_T6": 12,
-        "ROSA_T8": 12,
+        "AZUL BEBE_T10": 24,
+        "AZUL BEBE_T12": 24,
+        "AZUL BEBE_T14": 24,
+        "AZUL BEBE_T16": 24,
+        "AZUL BEBE_T4": 12,
+        "AZUL BEBE_T6": 12,
+        "AZUL BEBE_T8": 12,
         "ROSA_T10": 24,
         "ROSA_T12": 24,
         "ROSA_T14": 24,
         "ROSA_T16": 24,
-        "AZUL BEBE_T4": 12,
-        "AZUL BEBE_T6": 12,
-        "AZUL BEBE_T8": 12,
-        "AZUL BEBE_T10": 24,
-        "AZUL BEBE_T12": 24,
-        "AZUL BEBE_T14": 24,
-        "AZUL BEBE_T16": 24
+        "ROSA_T4": 12,
+        "ROSA_T6": 12,
+        "ROSA_T8": 12
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -10358,14 +10358,30 @@
       "numero": 192,
       "referencias": [
         {
-          "nombre": "CHAQUETA LENTEJUELAS",
-          "ref": "",
+          "cantidades": {
+            "AZUL BEBE_T10": 24,
+            "AZUL BEBE_T12": 24,
+            "AZUL BEBE_T14": 24,
+            "AZUL BEBE_T16": 24,
+            "AZUL BEBE_T4": 12,
+            "AZUL BEBE_T6": 12,
+            "AZUL BEBE_T8": 12,
+            "ROSA_T10": 24,
+            "ROSA_T12": 24,
+            "ROSA_T14": 24,
+            "ROSA_T16": 24,
+            "ROSA_T4": 12,
+            "ROSA_T6": 12,
+            "ROSA_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 1151,
           "colores": [
             "ROSA",
             "AZUL BEBE"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA LENTEJUELAS",
+          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -10375,23 +10391,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "ROSA_T4": 12,
-            "ROSA_T6": 12,
-            "ROSA_T8": 12,
-            "ROSA_T10": 24,
-            "ROSA_T12": 24,
-            "ROSA_T14": 24,
-            "ROSA_T16": 24,
-            "AZUL BEBE_T4": 12,
-            "AZUL BEBE_T6": 12,
-            "AZUL BEBE_T8": 12,
-            "AZUL BEBE_T10": 24,
-            "AZUL BEBE_T12": 24,
-            "AZUL BEBE_T14": 24,
-            "AZUL BEBE_T16": 24
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
@@ -16792,7 +16792,7 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-250||GRIS CLARO": "CORTE_POR_ALISTAR",
+        "OP-2026-250||GRIS CLARO": "EN_CONFECCION",
         "OP-2026-250||NEGRO": "CORTE_POR_ALISTAR"
       },
       "tallas": [
