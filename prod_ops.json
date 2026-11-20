@@ -8480,14 +8480,14 @@
         "CAMEL": true,
         "NEGRO": true
       },
-      "updated_at": "2026-09-15",
       "trazos_solicitudes": [
         {
-          "solicitud_id": "id_1795209874563_bu8r1naso",
           "fecha": "2026-11-20",
-          "lineas": 2
+          "lineas": 2,
+          "solicitud_id": "id_1795209874563_bu8r1naso"
         }
-      ]
+      ],
+      "updated_at": "2026-09-15"
     },
     {
       "cantidades": {
@@ -9883,8 +9883,8 @@
       "trazos_color_solicitado": {
         "CAFE": true,
         "GRIS OSCURO": true,
-        "VINOTINTO": true,
-        "ROSA": true
+        "ROSA": true,
+        "VINOTINTO": true
       },
       "trazos_solicitudes": [
         {
@@ -9893,9 +9893,9 @@
           "solicitud_id": "id_1794666421733_1eqep6896"
         },
         {
-          "solicitud_id": "id_1795209525302_bdzv71swl",
           "fecha": "2026-11-20",
-          "lineas": 2
+          "lineas": 2,
+          "solicitud_id": "id_1795209525302_bdzv71swl"
         }
       ]
     },
@@ -11336,36 +11336,36 @@
     },
     {
       "cantidades": {
-        "CAFE_T10": 30,
-        "CAFE_T12": 30,
-        "CAFE_T14": 30,
-        "CAFE_T16": 30,
-        "CAFE_T6": 15,
-        "CAFE_T8": 15,
+        "GRIS CLARO_T6": 15,
+        "GRIS CLARO_T8": 15,
         "GRIS CLARO_T10": 20,
         "GRIS CLARO_T12": 20,
         "GRIS CLARO_T14": 20,
         "GRIS CLARO_T16": 20,
-        "GRIS CLARO_T6": 15,
-        "GRIS CLARO_T8": 15,
+        "MARFIL_T6": 15,
+        "MARFIL_T8": 15,
         "MARFIL_T10": 30,
         "MARFIL_T12": 30,
         "MARFIL_T14": 30,
         "MARFIL_T16": 30,
-        "MARFIL_T6": 15,
-        "MARFIL_T8": 15,
-        "ROSA_T10": 16,
-        "ROSA_T12": 16,
-        "ROSA_T14": 16,
-        "ROSA_T16": 16,
-        "ROSA_T6": 8,
-        "ROSA_T8": 8,
+        "CAFE_T6": 15,
+        "CAFE_T8": 15,
+        "CAFE_T10": 30,
+        "CAFE_T12": 30,
+        "CAFE_T14": 30,
+        "CAFE_T16": 30,
+        "VINOTINTO_T6": 8,
+        "VINOTINTO_T8": 8,
         "VINOTINTO_T10": 16,
         "VINOTINTO_T12": 16,
         "VINOTINTO_T14": 16,
         "VINOTINTO_T16": 16,
-        "VINOTINTO_T6": 8,
-        "VINOTINTO_T8": 8
+        "ROSA_T6": 8,
+        "ROSA_T8": 8,
+        "ROSA_T10": 16,
+        "ROSA_T12": 16,
+        "ROSA_T14": 16,
+        "ROSA_T16": 16
       },
       "categoria": "CONJUNTOS",
       "colores": [
@@ -11405,39 +11405,10 @@
       "numero": 201,
       "referencias": [
         {
-          "cantidades": {
-            "CAFE_T10": 30,
-            "CAFE_T12": 30,
-            "CAFE_T14": 30,
-            "CAFE_T16": 30,
-            "CAFE_T6": 15,
-            "CAFE_T8": 15,
-            "GRIS CLARO_T10": 20,
-            "GRIS CLARO_T12": 20,
-            "GRIS CLARO_T14": 20,
-            "GRIS CLARO_T16": 20,
-            "GRIS CLARO_T6": 15,
-            "GRIS CLARO_T8": 15,
-            "MARFIL_T10": 30,
-            "MARFIL_T12": 30,
-            "MARFIL_T14": 30,
-            "MARFIL_T16": 30,
-            "MARFIL_T6": 15,
-            "MARFIL_T8": 15,
-            "ROSA_T10": 16,
-            "ROSA_T12": 16,
-            "ROSA_T14": 16,
-            "ROSA_T16": 16,
-            "ROSA_T6": 8,
-            "ROSA_T8": 8,
-            "VINOTINTO_T10": 16,
-            "VINOTINTO_T12": 16,
-            "VINOTINTO_T14": 16,
-            "VINOTINTO_T16": 16,
-            "VINOTINTO_T6": 8,
-            "VINOTINTO_T8": 8
-          },
+          "nombre": "SET BOMBER CORTA",
+          "ref": "",
           "cat": "CONJUNTOS",
+          "vmo": 1151,
           "colores": [
             "GRIS CLARO",
             "MARFIL",
@@ -11445,9 +11416,6 @@
             "VINOTINTO",
             "ROSA"
           ],
-          "maquilador_id": "",
-          "nombre": "SET BOMBER CORTA",
-          "ref": "",
           "tallas": [
             "T6",
             "T8",
@@ -11456,7 +11424,39 @@
             "T14",
             "T16"
           ],
-          "vmo": 1151
+          "cantidades": {
+            "GRIS CLARO_T6": 15,
+            "GRIS CLARO_T8": 15,
+            "GRIS CLARO_T10": 20,
+            "GRIS CLARO_T12": 20,
+            "GRIS CLARO_T14": 20,
+            "GRIS CLARO_T16": 20,
+            "MARFIL_T6": 15,
+            "MARFIL_T8": 15,
+            "MARFIL_T10": 30,
+            "MARFIL_T12": 30,
+            "MARFIL_T14": 30,
+            "MARFIL_T16": 30,
+            "CAFE_T6": 15,
+            "CAFE_T8": 15,
+            "CAFE_T10": 30,
+            "CAFE_T12": 30,
+            "CAFE_T14": 30,
+            "CAFE_T16": 30,
+            "VINOTINTO_T6": 8,
+            "VINOTINTO_T8": 8,
+            "VINOTINTO_T10": 16,
+            "VINOTINTO_T12": 16,
+            "VINOTINTO_T14": 16,
+            "VINOTINTO_T16": 16,
+            "ROSA_T6": 8,
+            "ROSA_T8": 8,
+            "ROSA_T10": 16,
+            "ROSA_T12": 16,
+            "ROSA_T14": 16,
+            "ROSA_T16": 16
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -11488,7 +11488,7 @@
           "solicitud_id": "id_1792432010223_9enwvovoq"
         }
       ],
-      "updated_at": "2026-11-03"
+      "updated_at": "2026-11-20"
     },
     {
       "cantidades": {
@@ -15055,9 +15055,9 @@
       },
       "trazos_solicitudes": [
         {
-          "solicitud_id": "id_1795210370512_y321n0mnt",
           "fecha": "2026-11-20",
-          "lineas": 4
+          "lineas": 4,
+          "solicitud_id": "id_1795210370512_y321n0mnt"
         }
       ]
     },
