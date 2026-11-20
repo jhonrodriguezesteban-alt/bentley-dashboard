@@ -11342,12 +11342,12 @@
         "GRIS CLARO_T12": 20,
         "GRIS CLARO_T14": 20,
         "GRIS CLARO_T16": 20,
-        "MARFIL_T6": 15,
-        "MARFIL_T8": 15,
-        "MARFIL_T10": 30,
-        "MARFIL_T12": 30,
-        "MARFIL_T14": 30,
-        "MARFIL_T16": 30,
+        "MARFIL_T6": 6,
+        "MARFIL_T8": 6,
+        "MARFIL_T10": 9,
+        "MARFIL_T12": 9,
+        "MARFIL_T14": 9,
+        "MARFIL_T16": 9,
         "CAFE_T6": 15,
         "CAFE_T8": 15,
         "CAFE_T10": 31,
@@ -11376,11 +11376,11 @@
         "ROSA"
       ],
       "consumibles_check": {
-        "cid_1789266683478_7780__cid_1789266530296_1277||GRIS CLARO": true,
-        "cid_1789266683478_7780__cid_1789266530296_1277||VINOTINTO": true,
-        "cid_1789266683478_7780__cid_1789266530297_8597": true,
         "cid_1789266683478_7780__cid_1789266530296_1277||CAFE": true,
-        "cid_1789266683478_7780__cid_1789266530296_1277||ROSA": true
+        "cid_1789266683478_7780__cid_1789266530296_1277||GRIS CLARO": true,
+        "cid_1789266683478_7780__cid_1789266530296_1277||ROSA": true,
+        "cid_1789266683478_7780__cid_1789266530296_1277||VINOTINTO": true,
+        "cid_1789266683478_7780__cid_1789266530297_8597": true
       },
       "consumibles_desagregado": {
         "cid_1789266683478_7780__cid_1789266530296_1277": true
@@ -11433,12 +11433,12 @@
             "GRIS CLARO_T12": 20,
             "GRIS CLARO_T14": 20,
             "GRIS CLARO_T16": 20,
-            "MARFIL_T6": 15,
-            "MARFIL_T8": 15,
-            "MARFIL_T10": 30,
-            "MARFIL_T12": 30,
-            "MARFIL_T14": 30,
-            "MARFIL_T16": 30,
+            "MARFIL_T6": 6,
+            "MARFIL_T8": 6,
+            "MARFIL_T10": 9,
+            "MARFIL_T12": 9,
+            "MARFIL_T14": 9,
+            "MARFIL_T16": 9,
             "CAFE_T6": 15,
             "CAFE_T8": 15,
             "CAFE_T10": 31,
@@ -11879,9 +11879,9 @@
           "solicitud_id": "id_1791585802032_imh9mhqfa"
         },
         {
-          "solicitud_id": "id_1795211724198_4qum0ci26",
           "fecha": "2026-11-20",
-          "lineas": 2
+          "lineas": 2,
+          "solicitud_id": "id_1795211724198_4qum0ci26"
         }
       ],
       "updated_at": "2026-10-24"
