@@ -44053,20 +44053,30 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "MARFIL",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
       "id": "evt_1795211750570_r6qzq",
-      "ts": 1795211750570,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "en insumos",
       "op_id": "OP-2026-201",
       "op_nombre": "SET BOMBER CORTA",
       "referencia": "SET BOMBER CORTA",
-      "color": "MARFIL",
       "talla": "todas las tallas",
-      "estado_anterior": "CORTE_POR_ALISTAR",
-      "estado_nuevo": "CORTE_POR_ALISTAR",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1795211750570,
       "uds": 48,
-      "motivo": "en insumos"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1795213499043_us33g",
+      "ts": 1795213499043,
+      "user": "John Rodriguez",
+      "tipo": "planeacion_asignar",
+      "op_id": "OP-2026-209",
+      "op_nombre": "BLUSA COSMO",
+      "color": "VINOTINTO",
+      "mes": "2027-01"
     }
   ]
 }
