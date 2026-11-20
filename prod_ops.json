@@ -13007,24 +13007,24 @@
     },
     {
       "cantidades": {
-        "CAMEL_T10": 12,
-        "CAMEL_T12": 16,
-        "CAMEL_T14": 16,
-        "CAMEL_T16": 16,
-        "CAMEL_T6": 12,
-        "CAMEL_T8": 12,
-        "MARFIL_T10": 12,
-        "MARFIL_T12": 16,
-        "MARFIL_T14": 16,
-        "MARFIL_T16": 16,
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 12,
+        "NEGRO_T6": 12,
+        "NEGRO_T8": 12,
         "NEGRO_T10": 12,
         "NEGRO_T12": 20,
         "NEGRO_T14": 20,
         "NEGRO_T16": 20,
-        "NEGRO_T6": 12,
-        "NEGRO_T8": 12
+        "MARFIL_T6": 12,
+        "MARFIL_T8": 12,
+        "MARFIL_T10": 12,
+        "MARFIL_T12": 16,
+        "MARFIL_T14": 16,
+        "MARFIL_T16": 16,
+        "CAMEL_T6": 11,
+        "CAMEL_T8": 12,
+        "CAMEL_T10": 12,
+        "CAMEL_T12": 16,
+        "CAMEL_T14": 16,
+        "CAMEL_T16": 16
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -13070,35 +13070,15 @@
       "numero": 214,
       "referencias": [
         {
-          "cantidades": {
-            "CAMEL_T10": 12,
-            "CAMEL_T12": 16,
-            "CAMEL_T14": 16,
-            "CAMEL_T16": 16,
-            "CAMEL_T6": 12,
-            "CAMEL_T8": 12,
-            "MARFIL_T10": 12,
-            "MARFIL_T12": 16,
-            "MARFIL_T14": 16,
-            "MARFIL_T16": 16,
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 12,
-            "NEGRO_T10": 12,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "NEGRO_T6": 12,
-            "NEGRO_T8": 12
-          },
+          "nombre": "BLAZER DONATELLA",
+          "ref": "",
           "cat": "CHAQUETAS",
+          "vmo": 1151,
           "colores": [
             "NEGRO",
             "MARFIL",
             "CAMEL"
           ],
-          "maquilador_id": "",
-          "nombre": "BLAZER DONATELLA",
-          "ref": "",
           "tallas": [
             "T6",
             "T8",
@@ -13107,7 +13087,27 @@
             "T14",
             "T16"
           ],
-          "vmo": 1151
+          "cantidades": {
+            "NEGRO_T6": 12,
+            "NEGRO_T8": 12,
+            "NEGRO_T10": 12,
+            "NEGRO_T12": 20,
+            "NEGRO_T14": 20,
+            "NEGRO_T16": 20,
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 12,
+            "MARFIL_T10": 12,
+            "MARFIL_T12": 16,
+            "MARFIL_T14": 16,
+            "MARFIL_T16": 16,
+            "CAMEL_T6": 11,
+            "CAMEL_T8": 12,
+            "CAMEL_T10": 12,
+            "CAMEL_T12": 16,
+            "CAMEL_T14": 16,
+            "CAMEL_T16": 16
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -13135,7 +13135,7 @@
           "solicitud_id": "id_1790985232576_0y6pubf7h"
         }
       ],
-      "updated_at": "2026-11-03"
+      "updated_at": "2026-11-20"
     },
     {
       "cantidades": {
@@ -14806,24 +14806,24 @@
     },
     {
       "cantidades": {
-        "ROSA_T6": 10,
-        "ROSA_T8": 14,
-        "ROSA_T10": 14,
-        "ROSA_T12": 16,
-        "ROSA_T14": 16,
-        "ROSA_T16": 16,
-        "AZUL BEBE_T6": 10,
-        "AZUL BEBE_T8": 14,
         "AZUL BEBE_T10": 14,
         "AZUL BEBE_T12": 16,
         "AZUL BEBE_T14": 16,
         "AZUL BEBE_T16": 16,
-        "GRIS CLARO_T6": 10,
-        "GRIS CLARO_T8": 14,
+        "AZUL BEBE_T6": 10,
+        "AZUL BEBE_T8": 14,
         "GRIS CLARO_T10": 14,
         "GRIS CLARO_T12": 16,
         "GRIS CLARO_T14": 16,
-        "GRIS CLARO_T16": 16
+        "GRIS CLARO_T16": 16,
+        "GRIS CLARO_T6": 10,
+        "GRIS CLARO_T8": 14,
+        "ROSA_T10": 14,
+        "ROSA_T12": 16,
+        "ROSA_T14": 16,
+        "ROSA_T16": 16,
+        "ROSA_T6": 10,
+        "ROSA_T8": 14
       },
       "categoria": "VESTIDOS",
       "colores": [
@@ -14867,15 +14867,35 @@
       "receta_nombre": "VESTIDO MINI DRESS",
       "referencias": [
         {
-          "nombre": "VESTIDO MINI DRESS",
-          "ref": "1185",
+          "cantidades": {
+            "AZUL BEBE_T10": 14,
+            "AZUL BEBE_T12": 16,
+            "AZUL BEBE_T14": 16,
+            "AZUL BEBE_T16": 16,
+            "AZUL BEBE_T6": 10,
+            "AZUL BEBE_T8": 14,
+            "GRIS CLARO_T10": 14,
+            "GRIS CLARO_T12": 16,
+            "GRIS CLARO_T14": 16,
+            "GRIS CLARO_T16": 16,
+            "GRIS CLARO_T6": 10,
+            "GRIS CLARO_T8": 14,
+            "ROSA_T10": 14,
+            "ROSA_T12": 16,
+            "ROSA_T14": 16,
+            "ROSA_T16": 16,
+            "ROSA_T6": 10,
+            "ROSA_T8": 14
+          },
           "cat": "VESTIDOS",
-          "vmo": 1151,
           "colores": [
             "ROSA",
             "AZUL BEBE",
             "GRIS CLARO"
           ],
+          "maquilador_id": "",
+          "nombre": "VESTIDO MINI DRESS",
+          "ref": "1185",
           "tallas": [
             "T6",
             "T8",
@@ -14884,27 +14904,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "ROSA_T6": 10,
-            "ROSA_T8": 14,
-            "ROSA_T10": 14,
-            "ROSA_T12": 16,
-            "ROSA_T14": 16,
-            "ROSA_T16": 16,
-            "AZUL BEBE_T6": 10,
-            "AZUL BEBE_T8": 14,
-            "AZUL BEBE_T10": 14,
-            "AZUL BEBE_T12": 16,
-            "AZUL BEBE_T14": 16,
-            "AZUL BEBE_T16": 16,
-            "GRIS CLARO_T6": 10,
-            "GRIS CLARO_T8": 14,
-            "GRIS CLARO_T10": 14,
-            "GRIS CLARO_T12": 16,
-            "GRIS CLARO_T14": 16,
-            "GRIS CLARO_T16": 16
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
@@ -16729,6 +16729,14 @@
         "GRIS CLARO",
         "NEGRO"
       ],
+      "consumibles_check": {
+        "rec_pantalon_rave_1063__c96_23": true,
+        "rec_pantalon_rave_1063__c96_24": true,
+        "rec_pantalon_rave_1063__c96_25": true,
+        "rec_pantalon_rave_1063__c96_28": true,
+        "rec_pantalon_rave_1063__c96_29": true,
+        "rec_pantalon_rave_1063__c96_30": true
+      },
       "cortador": "Carolina Salazar",
       "created_at": "2026-11-04",
       "created_by": "Jefa de Producción",
@@ -16801,15 +16809,7 @@
           "solicitud_id": "id_1793826788638_tonkmmnm2"
         }
       ],
-      "updated_at": "2026-11-04",
-      "consumibles_check": {
-        "rec_pantalon_rave_1063__c96_23": true,
-        "rec_pantalon_rave_1063__c96_24": true,
-        "rec_pantalon_rave_1063__c96_25": true,
-        "rec_pantalon_rave_1063__c96_28": true,
-        "rec_pantalon_rave_1063__c96_29": true,
-        "rec_pantalon_rave_1063__c96_30": true
-      }
+      "updated_at": "2026-11-04"
     },
     {
       "cantidades": {
