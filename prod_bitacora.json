@@ -43941,13 +43941,29 @@
       "user": "Jefa de Producción"
     },
     {
+      "capacidad": 0,
       "id": "evt_1795187537446_uuet7",
-      "ts": 1795187537446,
-      "user": "Jefa de Producción",
-      "tipo": "satelite_crear",
       "nombre": "SANDRA HURTADO",
       "personas": 1,
-      "capacidad": 0
+      "tipo": "satelite_crear",
+      "ts": 1795187537446,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1795188614833_v6wdp",
+      "ts": 1795188614833,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-250",
+      "op_nombre": "PANTALON RAVE",
+      "referencia": "PANTALON RAVE",
+      "color": "NEGRO",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 112,
+      "motivo": "EN TALLER"
     }
   ]
 }
