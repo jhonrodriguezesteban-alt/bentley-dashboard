@@ -44042,15 +44042,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1795211732858_ofoqy",
-      "ts": 1795211732858,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-201",
-      "nombre": "SET BOMBER CORTA",
       "categoria": "CONJUNTOS",
       "colores": 5,
-      "refs": 1
+      "id": "evt_1795211732858_ofoqy",
+      "nombre": "SET BOMBER CORTA",
+      "op_id": "OP-2026-201",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1795211732858,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1795211750570_r6qzq",
+      "ts": 1795211750570,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-201",
+      "op_nombre": "SET BOMBER CORTA",
+      "referencia": "SET BOMBER CORTA",
+      "color": "MARFIL",
+      "talla": "todas las tallas",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
+      "bulk": true,
+      "uds": 48,
+      "motivo": "en insumos"
     }
   ]
 }
