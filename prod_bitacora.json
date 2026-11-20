@@ -43988,15 +43988,31 @@
       "user": "Jefa de Producción"
     },
     {
-      "id": "evt_1795211506622_v5lty",
-      "ts": 1795211506622,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-201",
-      "nombre": "SET BOMBER CORTA",
       "categoria": "CONJUNTOS",
       "colores": 5,
-      "refs": 1
+      "id": "evt_1795211506622_v5lty",
+      "nombre": "SET BOMBER CORTA",
+      "op_id": "OP-2026-201",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1795211506622,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1795211537556_0vqie",
+      "ts": 1795211537556,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-201",
+      "op_nombre": "SET BOMBER CORTA",
+      "referencia": "SET BOMBER CORTA",
+      "color": "ROSA",
+      "talla": "todas las tallas",
+      "estado_anterior": "CORTE_POR_ALISTAR",
+      "estado_nuevo": "CORTE_POR_ALISTAR",
+      "bulk": true,
+      "uds": 80,
+      "motivo": "en insumos"
     }
   ]
 }
