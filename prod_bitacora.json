@@ -43950,20 +43950,42 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "NEGRO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1795188614833_v6wdp",
-      "ts": 1795188614833,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-250",
       "op_nombre": "PANTALON RAVE",
       "referencia": "PANTALON RAVE",
-      "color": "NEGRO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1795188614833,
       "uds": 112,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "categoria": "VESTIDOS",
+      "colores": 3,
+      "id": "evt_1795196384457_8hhc0",
+      "nombre": "VESTIDO MINI DRESS",
+      "op_id": "OP-2026-231",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1795196384457,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1795204560405_f8hy8",
+      "ts": 1795204560405,
+      "user": "Jefa de Producción",
+      "tipo": "editar_op_refs",
+      "op_id": "OP-2026-214",
+      "nombre": "BLAZER DONATELLA",
+      "categoria": "CHAQUETAS",
+      "colores": 3,
+      "refs": 1
     }
   ]
 }
