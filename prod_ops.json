@@ -14904,24 +14904,24 @@
     },
     {
       "cantidades": {
-        "ROSA_T6": 20,
-        "ROSA_T8": 14,
-        "ROSA_T10": 14,
-        "ROSA_T12": 16,
-        "ROSA_T14": 16,
-        "ROSA_T16": 16,
-        "AZUL BEBE_T6": 20,
-        "AZUL BEBE_T8": 14,
         "AZUL BEBE_T10": 14,
         "AZUL BEBE_T12": 16,
         "AZUL BEBE_T14": 16,
         "AZUL BEBE_T16": 16,
-        "GRIS CLARO_T6": 20,
-        "GRIS CLARO_T8": 20,
+        "AZUL BEBE_T6": 20,
+        "AZUL BEBE_T8": 14,
         "GRIS CLARO_T10": 20,
         "GRIS CLARO_T12": 22,
         "GRIS CLARO_T14": 22,
-        "GRIS CLARO_T16": 22
+        "GRIS CLARO_T16": 22,
+        "GRIS CLARO_T6": 20,
+        "GRIS CLARO_T8": 20,
+        "ROSA_T10": 14,
+        "ROSA_T12": 16,
+        "ROSA_T14": 16,
+        "ROSA_T16": 16,
+        "ROSA_T6": 20,
+        "ROSA_T8": 14
       },
       "categoria": "VESTIDOS",
       "colores": [
@@ -14965,15 +14965,35 @@
       "receta_nombre": "VESTIDO MINI DRESS",
       "referencias": [
         {
-          "nombre": "VESTIDO MINI DRESS",
-          "ref": "1185",
+          "cantidades": {
+            "AZUL BEBE_T10": 14,
+            "AZUL BEBE_T12": 16,
+            "AZUL BEBE_T14": 16,
+            "AZUL BEBE_T16": 16,
+            "AZUL BEBE_T6": 20,
+            "AZUL BEBE_T8": 14,
+            "GRIS CLARO_T10": 20,
+            "GRIS CLARO_T12": 22,
+            "GRIS CLARO_T14": 22,
+            "GRIS CLARO_T16": 22,
+            "GRIS CLARO_T6": 20,
+            "GRIS CLARO_T8": 20,
+            "ROSA_T10": 14,
+            "ROSA_T12": 16,
+            "ROSA_T14": 16,
+            "ROSA_T16": 16,
+            "ROSA_T6": 20,
+            "ROSA_T8": 14
+          },
           "cat": "VESTIDOS",
-          "vmo": 1151,
           "colores": [
             "ROSA",
             "AZUL BEBE",
             "GRIS CLARO"
           ],
+          "maquilador_id": "",
+          "nombre": "VESTIDO MINI DRESS",
+          "ref": "1185",
           "tallas": [
             "T6",
             "T8",
@@ -14982,27 +15002,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "ROSA_T6": 20,
-            "ROSA_T8": 14,
-            "ROSA_T10": 14,
-            "ROSA_T12": 16,
-            "ROSA_T14": 16,
-            "ROSA_T16": 16,
-            "AZUL BEBE_T6": 20,
-            "AZUL BEBE_T8": 14,
-            "AZUL BEBE_T10": 14,
-            "AZUL BEBE_T12": 16,
-            "AZUL BEBE_T14": 16,
-            "AZUL BEBE_T16": 16,
-            "GRIS CLARO_T6": 20,
-            "GRIS CLARO_T8": 20,
-            "GRIS CLARO_T10": 20,
-            "GRIS CLARO_T12": 22,
-            "GRIS CLARO_T14": 22,
-            "GRIS CLARO_T16": 22
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
@@ -15828,7 +15828,7 @@
       ],
       "subg_estados": {
         "OP-2026-240||AZUL OSCURO": "CORTE_POR_ALISTAR",
-        "OP-2026-240||GRIS OSCURO": "CORTE_POR_ALISTAR",
+        "OP-2026-240||GRIS OSCURO": "EN_CONFECCION",
         "OP-2026-240||MARFIL": "CORTE_POR_ALISTAR",
         "OP-2026-240||NEGRO": "CORTE_POR_ALISTAR"
       },
