@@ -44100,19 +44100,35 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "GRIS OSCURO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1795271971574_2hdsi",
-      "ts": 1795271971574,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-240",
       "op_nombre": "CONJUNTO CHILLY",
       "referencia": "CONJUNTO CHILLY",
-      "color": "GRIS OSCURO",
+      "talla": "todas las tallas",
+      "tipo": "estado_ot",
+      "ts": 1795271971574,
+      "uds": 75,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1795272149443_s3x4x",
+      "ts": 1795272149443,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-0167",
+      "op_nombre": "CONJUNTO TRENZAS",
+      "referencia": "CONJUNTO TRENZAS",
+      "color": "MARFIL",
       "talla": "todas las tallas",
       "estado_anterior": "EN_CONFECCION",
       "estado_nuevo": "EN_CONFECCION",
       "bulk": true,
-      "uds": 75,
+      "uds": 96,
       "motivo": "EN TALLER"
     }
   ]
