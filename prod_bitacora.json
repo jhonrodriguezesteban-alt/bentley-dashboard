@@ -44089,15 +44089,31 @@
       "user": "John Rodriguez"
     },
     {
-      "id": "evt_1795271342725_67e1i",
-      "ts": 1795271342725,
-      "user": "Jefa de Producción",
-      "tipo": "editar_op_refs",
-      "op_id": "OP-2026-231",
-      "nombre": "VESTIDO MINI DRESS",
       "categoria": "VESTIDOS",
       "colores": 3,
-      "refs": 1
+      "id": "evt_1795271342725_67e1i",
+      "nombre": "VESTIDO MINI DRESS",
+      "op_id": "OP-2026-231",
+      "refs": 1,
+      "tipo": "editar_op_refs",
+      "ts": 1795271342725,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1795271971574_2hdsi",
+      "ts": 1795271971574,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-240",
+      "op_nombre": "CONJUNTO CHILLY",
+      "referencia": "CONJUNTO CHILLY",
+      "color": "GRIS OSCURO",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 75,
+      "motivo": "EN TALLER"
     }
   ]
 }
