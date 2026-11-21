@@ -7150,7 +7150,9 @@
             "T8"
           ],
           "tipo": "FORRO",
-          "tipo_custom": ""
+          "tipo_custom": "",
+          "imagen_url": "https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/tecpatron-imgs/trazo_id_1795209475583_ut2gstt53_1795280858537.jpg",
+          "imagen_url_blob": "tp_1795280859503"
         },
         {
           "ancho_util": 135,
@@ -7449,93 +7451,108 @@
       "op_nombre": "HOODIE CAROLINA"
     },
     {
-      "id": "id_1795212991882_12chiqfxj",
-      "op_id": "OP-2026-122",
-      "op_nombre": "COUNTRY 2.0",
       "categoria": "BUZOS",
-      "creado_por": "Isabel",
       "creado_en": "2026-11-20",
-      "estado": "ENVIADA",
+      "creado_por": "Isabel",
       "enviada_en": "2026-11-20",
+      "estado": "ENVIADA",
+      "id": "id_1795212991882_12chiqfxj",
       "lineas": [
         {
-          "id": "id_1795212872743_jpez8yvx0",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T4"
-          ],
-          "marcadas_por_talla": {
-            "T4": 1
-          },
-          "cantidad_trazos": 1,
           "ancho_util": 172,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "Trazos para el Carvajal",
+          "cantidad_trazos": 1,
           "colores": [
             "GRIS CLARO"
           ],
           "generado": false,
+          "id": "id_1795212872743_jpez8yvx0",
           "impreso": false,
-          "recogido": false
+          "marcadas_por_talla": {
+            "T4": 1
+          },
+          "notas": "Trazos para el Carvajal",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T4"
+          ],
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
         },
         {
+          "ancho_util": 172,
+          "cantidad_trazos": 1,
+          "colores": [
+            "GRIS CLARO"
+          ],
+          "generado": false,
           "id": "id_1795212900228_7nsmnlf81",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
+          "impreso": false,
+          "marcadas_por_talla": {
+            "T10": 1,
+            "T6": 1,
+            "T8": 1
+          },
+          "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
           "tallas": [
             "T6",
             "T8",
             "T10"
           ],
-          "marcadas_por_talla": {
-            "T6": 1,
-            "T8": 1,
-            "T10": 1
-          },
-          "cantidad_trazos": 1,
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
+        },
+        {
           "ancho_util": 172,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "",
+          "cantidad_trazos": 1,
           "colores": [
             "GRIS CLARO"
           ],
           "generado": false,
-          "impreso": false,
-          "recogido": false
-        },
-        {
           "id": "id_1795212932640_nc6qqrgvq",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T12",
-            "T14",
-            "T16"
-          ],
+          "impreso": false,
           "marcadas_por_talla": {
             "T12": 1,
             "T14": 1,
             "T16": 1
           },
-          "cantidad_trazos": 1,
-          "ancho_util": 172,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
           "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
+        },
+        {
+          "ancho_util": 0.78,
+          "cantidad_trazos": 1,
           "colores": [
             "GRIS CLARO"
           ],
           "generado": false,
-          "impreso": false,
-          "recogido": false
-        },
-        {
           "id": "id_1795212982991_lwlc9p0j8",
-          "tipo": "RIB",
-          "tipo_custom": "",
+          "impreso": false,
+          "marcadas_por_talla": {
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1,
+            "T6": 1,
+            "T8": 1
+          },
+          "notas": "Cuellos en rib",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
           "tallas": [
             "T6",
             "T8",
@@ -7544,27 +7561,12 @@
             "T14",
             "T16"
           ],
-          "marcadas_por_talla": {
-            "T6": 1,
-            "T8": 1,
-            "T10": 1,
-            "T12": 1,
-            "T14": 1,
-            "T16": 1
-          },
-          "cantidad_trazos": 1,
-          "ancho_util": 0.78,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "Cuellos en rib",
-          "colores": [
-            "GRIS CLARO"
-          ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
+          "tipo": "RIB",
+          "tipo_custom": ""
         }
-      ]
+      ],
+      "op_id": "OP-2026-122",
+      "op_nombre": "COUNTRY 2.0"
     }
   ]
 }
