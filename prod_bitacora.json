@@ -44132,20 +44132,38 @@
       "user": "Jefa de Producción"
     },
     {
+      "bulk": true,
+      "color": "GRIS CLARO",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1795273171770_swj3l",
-      "ts": 1795273171770,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-241",
       "op_nombre": "CONJUNTO SUECIA",
       "referencia": "CONJUNTO SUECIA",
-      "color": "GRIS CLARO",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1795273171770,
       "uds": 120,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1795283124147_x4xot",
+      "ts": 1795283124147,
+      "user": "Jefa de Producción",
+      "tipo": "generar_ots",
+      "op_id": "OP-2026-253",
+      "op_nombre": "RANGLAND SOFT",
+      "categoria": "BUZOS",
+      "total_ots": 14,
+      "total_uds": 208,
+      "colores": [
+        "LOVELY- MARFIL",
+        "CANADA- MARFIL"
+      ],
+      "referencias": [
+        "RANGLAND SOFT"
+      ]
     }
   ]
 }
