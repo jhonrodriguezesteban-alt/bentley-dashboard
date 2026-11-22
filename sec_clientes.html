@@ -21,7 +21,13 @@
   color-scheme:dark;}
 .t100,.t100 *{box-sizing:border-box}
 .t100{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.45;border-radius:14px;text-align:left}
-.t100 .wrap{max-width:1280px;margin:0 auto;padding:20px 16px 48px;display:grid;gap:16px}
+.t100{max-width:100%;min-width:0}
+.t100 .wrap{max-width:1280px;margin:0 auto;padding:20px 16px 48px;display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.t100 .wrap>*{min-width:0}
+.t100 .panel{overflow:hidden}
+.t100 header,.t100 nav,.t100 section{background:none;border:0;box-shadow:none;position:static;margin:0;padding:0;backdrop-filter:none;min-height:0;height:auto;width:auto}
+.t100 section.panel{background:var(--surface);border:1px solid var(--line)}
+.t100 section.kpis{display:grid}
 .t100 header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px}
 .t100 h1{font-family:var(--f-display);font-weight:800;font-size:24px;margin:0;text-wrap:balance;letter-spacing:-.01em;color:var(--ink)}
 .t100 .sub{color:var(--muted);font-size:13px;margin:4px 0 0;max-width:70ch}
@@ -69,21 +75,21 @@
 .t100-toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#152033;color:#fff;padding:10px 16px;border-radius:8px;font:600 13px "Manrope",system-ui,sans-serif;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9999}
 .t100-toast.on{opacity:1}
 @media (prefers-reduced-motion:reduce){.t100-toast{transition:none}}
-@media (max-width:520px){.t100 h1{font-size:20px} .t100 input[type=search]{min-width:0;width:100%}}
+@media (max-width:520px){.t100 h1{font-size:20px} .t100 input[type=search]{min-width:0;width:100%} .t100 .wrap{padding:16px 12px 32px} .t100 .kpis{grid-template-columns:repeat(2,minmax(0,1fr))} .t100 .count{margin-left:0} .t100 .kpi .v{font-size:17px}}
 </style>
 <div class="t100" id="t100"><div class="wrap">
   <header><div><h1>Top 100 clientes por canal</h1><p class="sub">Grupo Bentley · Ventas 1 ene 2025 – 22 nov 2026 según Effi. Con IVA, sin devoluciones, cada venta contada una vez y sin remisiones anuladas. Actualizado 2026-11-22 12:41.</p></div></header>
-  <nav class="chips" id="chips" aria-label="Canal"></nav>
-  <section class="kpis" id="kpis" aria-label="Resumen"></section>
+  <nav class="chips" id="t100-chips" aria-label="Canal"></nav>
+  <section class="kpis" id="t100-kpis" aria-label="Resumen"></section>
   <section class="panel"><div class="toolbar">
-    <input type="search" id="q" placeholder="Buscar cliente, código o teléfono" aria-label="Buscar">
-    <label for="est">Estado <select id="est"><option value="">Todos</option><option>Activo</option><option>Sin compra 2026</option><option>Nuevo 2026</option></select></label>
-    <label for="tel">Teléfono <select id="tel"><option value="">Todos</option><option value="1">Con teléfono</option><option value="0">Sin teléfono</option></select></label>
-    <label for="rec">Última compra <select id="rec"><option value="">Todas</option><option value="0-30">Últimos 30 días</option><option value="31-90">Hace 31 a 90 días</option><option value="91-180">Hace 91 a 180 días</option><option value="181-365">Hace 181 a 365 días</option><option value="366-9999">Hace más de un año</option></select></label>
-    <button class="act" id="copyTel" type="button">Copiar teléfonos de la vista</button>
-    <button class="act" id="copyCsv" type="button">Copiar tabla (CSV)</button>
-    <span class="count" id="count"></span>
-  </div><div class="tablebox"><table><thead><tr id="thead"></tr></thead><tbody id="tbody"><tr><td colspan="11">Cargando…</td></tr></tbody></table></div></section>
+    <input type="search" id="t100-q" placeholder="Buscar cliente, código o teléfono" aria-label="Buscar">
+    <label for="t100-est">Estado <select id="t100-est"><option value="">Todos</option><option>Activo</option><option>Sin compra 2026</option><option>Nuevo 2026</option></select></label>
+    <label for="t100-tel">Teléfono <select id="t100-tel"><option value="">Todos</option><option value="1">Con teléfono</option><option value="0">Sin teléfono</option></select></label>
+    <label for="t100-rec">Última compra <select id="t100-rec"><option value="">Todas</option><option value="0-30">Últimos 30 días</option><option value="31-90">Hace 31 a 90 días</option><option value="91-180">Hace 91 a 180 días</option><option value="181-365">Hace 181 a 365 días</option><option value="366-9999">Hace más de un año</option></select></label>
+    <button class="act" id="t100-copyTel" type="button">Copiar teléfonos de la vista</button>
+    <button class="act" id="t100-copyCsv" type="button">Copiar tabla (CSV)</button>
+    <span class="count" id="t100-count"></span>
+  </div><div class="tablebox"><table><thead><tr id="t100-thead"></tr></thead><tbody id="t100-tbody"><tr><td colspan="11">Cargando…</td></tr></tbody></table></div></section>
   <p class="notes"><b>Cómo leerlo.</b> El puesto es dentro de su canal. "Sin compra 2026" = compró en 2025 y no ha vuelto este año. Fuera del ranking quedan los clientes genéricos (Consumidor final, Cliente general); su venta aparece en el resumen.<br><b>Teléfonos:</b> se toma primero el WhatsApp de la ficha del cliente en Effi, luego el celular, el teléfono fijo y el que quedó en las compras. Si el cliente tiene otro número distinto, aparece debajo. 0 clientes no tienen ningún número registrado.<br><b>Fábrica BK</b> puede incluir facturas de publicidad e insumos. <b>Página Web 2025</b> está subestimada: ese año casi toda su venta quedó registrada en otras cuentas.<br>Marcados como internos: Bentley Acolchados, Grupo Bentley Sas, John Esteban Rodriguez Arbelaez.</p>
 </div></div>
 <div class="t100-toast" id="t100-toast" role="status" aria-live="polite"></div>
@@ -101,8 +107,8 @@
     r.tot=(r.a||0)+(r.b||0);
     r.d=r.u?Math.round((CORTE-new Date(r.u+"T00:00:00"))/86400000):null;
     return r;});
-  var $=function(id){return root.querySelector('#'+id);};
-  var canal='', sortK='tot', sortDir='desc';
+  var $=function(id){return root.querySelector('#t100-'+id);};
+  var FIJO=""; var canal=FIJO||'', sortK='tot', sortDir='desc';
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
   function money(n){return '$'+Math.round(n).toLocaleString('es-CO');}
   function fdate(u){if(!u)return '';var p=u.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
@@ -194,7 +200,8 @@
     if(push){var s=canal?'#'+slug(canal):'';if(s){if(location.hash!==s)history.replaceState(null,'',s);}else if(location.hash){history.replaceState(null,'',location.pathname+location.search);}}
     chips();render();}
   function desdeHash(){var h=location.hash.replace('#','');var m=CANALES.filter(function(c){return slug(c[0])===h;})[0];return m?m[0]:'';}
-  window.addEventListener('hashchange',function(){var c=desdeHash();if(c||!location.hash)setCanal(c,false);});
-  setCanal(desdeHash(),false);
+  if(FIJO){$('chips').style.display='none';chips=function(){};setCanal(FIJO,false);}
+  else{window.addEventListener('hashchange',function(){var c=desdeHash();if(c||!location.hash)setCanal(c,false);});
+  setCanal(desdeHash(),false);}
 })();
 </script>
