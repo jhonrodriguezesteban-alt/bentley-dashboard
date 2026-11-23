@@ -14091,20 +14091,20 @@
     },
     {
       "cantidades": {
-        "GRIS JASPED_T10": 24,
-        "GRIS JASPED_T12": 24,
-        "GRIS JASPED_T14": 24,
-        "GRIS JASPED_T16": 24,
-        "GRIS JASPED_T4": 12,
-        "GRIS JASPED_T6": 12,
-        "GRIS JASPED_T8": 24,
-        "MARFIL_T10": 24,
-        "MARFIL_T12": 24,
-        "MARFIL_T14": 24,
-        "MARFIL_T16": 24,
         "MARFIL_T4": 12,
         "MARFIL_T6": 12,
-        "MARFIL_T8": 24
+        "MARFIL_T8": 25,
+        "MARFIL_T10": 25,
+        "MARFIL_T12": 25,
+        "MARFIL_T14": 25,
+        "MARFIL_T16": 25,
+        "GRIS JASPED_T4": 12,
+        "GRIS JASPED_T6": 12,
+        "GRIS JASPED_T8": 26,
+        "GRIS JASPED_T10": 26,
+        "GRIS JASPED_T12": 26,
+        "GRIS JASPED_T14": 26,
+        "GRIS JASPED_T16": 26
       },
       "categoria": "CONJUNTOS",
       "colores": [
@@ -14142,30 +14142,14 @@
       "receta_nombre": "CONJUNTO JACOBO",
       "referencias": [
         {
-          "cantidades": {
-            "GRIS JASPED_T10": 24,
-            "GRIS JASPED_T12": 24,
-            "GRIS JASPED_T14": 24,
-            "GRIS JASPED_T16": 24,
-            "GRIS JASPED_T4": 12,
-            "GRIS JASPED_T6": 12,
-            "GRIS JASPED_T8": 24,
-            "MARFIL_T10": 24,
-            "MARFIL_T12": 24,
-            "MARFIL_T14": 24,
-            "MARFIL_T16": 24,
-            "MARFIL_T4": 12,
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 24
-          },
+          "nombre": "CONJUNTO JACOBO",
+          "ref": "1218",
           "cat": "CONJUNTOS",
+          "vmo": 1151,
           "colores": [
             "MARFIL",
             "GRIS JASPED"
           ],
-          "maquilador_id": "",
-          "nombre": "CONJUNTO JACOBO",
-          "ref": "1218",
           "tallas": [
             "T4",
             "T6",
@@ -14175,8 +14159,23 @@
             "T14",
             "T16"
           ],
-          "totalUds": 288,
-          "vmo": 1151
+          "cantidades": {
+            "MARFIL_T4": 12,
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 25,
+            "MARFIL_T10": 25,
+            "MARFIL_T12": 25,
+            "MARFIL_T14": 25,
+            "MARFIL_T16": 25,
+            "GRIS JASPED_T4": 12,
+            "GRIS JASPED_T6": 12,
+            "GRIS JASPED_T8": 26,
+            "GRIS JASPED_T10": 26,
+            "GRIS JASPED_T12": 26,
+            "GRIS JASPED_T14": 26,
+            "GRIS JASPED_T16": 26
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -14202,7 +14201,8 @@
           "lineas": 2,
           "solicitud_id": "id_1791293869659_gt4k1nla0"
         }
-      ]
+      ],
+      "updated_at": "2026-11-23"
     },
     {
       "cantidades": {
