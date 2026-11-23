@@ -44193,20 +44193,42 @@
       "user": "Carolina Telles"
     },
     {
+      "bulk": true,
+      "color": "CAMEL",
+      "estado_anterior": "ENTREGADO",
+      "estado_nuevo": "ENTREGADO",
       "id": "evt_1795460564560_jywdk",
-      "ts": 1795460564560,
-      "user": "Carolina Telles",
-      "tipo": "estado_ot",
+      "motivo": "ENTREGADO",
       "op_id": "OP-0040",
       "op_nombre": "PANTALON DONATELLA",
       "referencia": "PANTALON DONATELLA",
-      "color": "CAMEL",
       "talla": "todas las tallas",
-      "estado_anterior": "ENTREGADO",
-      "estado_nuevo": "ENTREGADO",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1795460564560,
       "uds": 84,
-      "motivo": "ENTREGADO"
+      "user": "Carolina Telles"
+    },
+    {
+      "id": "evt_1795463281829_wu6p8",
+      "ts": 1795463281829,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1794580809859_zex8d4emk",
+      "op_id": "OP-2026-119",
+      "color": "VINOTINTO",
+      "fecha_nueva": "2026-12-02",
+      "motivo": "Asignación inicial"
+    },
+    {
+      "id": "evt_1795463282659_91u68",
+      "ts": 1795463282659,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1794580809859_zex8d4emk",
+      "op_id": "OP-2026-119",
+      "color": "VINOTINTO",
+      "fecha_nueva": "2026-12-02",
+      "motivo": "Asignación inicial"
     }
   ]
 }
