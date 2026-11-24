@@ -57214,7 +57214,7 @@
       "created_at": "2026-03-24",
       "created_by": "migrado_matriz",
       "cumplió_fecha": false,
-      "estado": "CORTE_POR_ALISTAR",
+      "estado": "PAGO_PENDIENTE",
       "fecha_op": "2026-03-24",
       "fecha_ot": "2026-03-20",
       "id": "OT-12201",
@@ -57234,7 +57234,18 @@
       "unidades_novedad": 0,
       "unidades_por_llegar": 2,
       "valor_mo": 1025,
-      "historial": []
+      "historial": [
+        {
+          "fecha": "2026-11-24T19:19:05.222Z",
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → ENTREGADO. Motivo: ENTREGADO",
+          "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-11-24T19:19:13.603Z",
+          "accion": "Pasado a Pago desde Alistamiento",
+          "user": "Jefa de Producción"
+        }
+      ]
     },
     {
       "cantidad": 2,
@@ -57245,7 +57256,7 @@
       "created_at": "2026-03-24",
       "created_by": "migrado_matriz",
       "cumplió_fecha": false,
-      "estado": "CORTE_POR_ALISTAR",
+      "estado": "PAGO_PENDIENTE",
       "fecha_op": "2026-03-24",
       "fecha_ot": "2026-03-20",
       "id": "OT-12202",
@@ -57265,7 +57276,18 @@
       "unidades_novedad": 0,
       "unidades_por_llegar": 2,
       "valor_mo": 1025,
-      "historial": []
+      "historial": [
+        {
+          "fecha": "2026-11-24T19:19:05.222Z",
+          "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → ENTREGADO. Motivo: ENTREGADO",
+          "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-11-24T19:19:13.603Z",
+          "accion": "Pasado a Pago desde Alistamiento",
+          "user": "Jefa de Producción"
+        }
+      ]
     },
     {
       "cantidad": 1,
