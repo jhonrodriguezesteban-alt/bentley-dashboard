@@ -44578,20 +44578,31 @@
       "user": "Carolina Telles"
     },
     {
+      "bulk": true,
+      "color": "CANADA - MARFIL",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
       "id": "evt_1795554099320_gpw3f",
-      "ts": 1795554099320,
-      "user": "Jefa de Producción",
-      "tipo": "estado_ot",
+      "motivo": "EN TALLER",
       "op_id": "OP-2026-242",
       "op_nombre": "RANGLAND SOFT",
       "referencia": "RANGLAND SOFT",
-      "color": "CANADA - MARFIL",
       "talla": "todas las tallas",
-      "estado_anterior": "EN_CONFECCION",
-      "estado_nuevo": "EN_CONFECCION",
-      "bulk": true,
+      "tipo": "estado_ot",
+      "ts": 1795554099320,
       "uds": 99,
-      "motivo": "EN TALLER"
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1795555507325_wyoeo",
+      "ts": 1795555507325,
+      "user": "Jefa de Producción",
+      "tipo": "cronograma_fecha",
+      "entry_id": "id_1795187410540_zs47puqma",
+      "op_id": "OP-2026-250",
+      "color": "GRIS CLARO",
+      "fecha_nueva": "2026-12-04",
+      "motivo": "Asignación inicial"
     }
   ]
 }
