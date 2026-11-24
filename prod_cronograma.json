@@ -732,11 +732,11 @@
       "color": "AZUL OSCURO",
       "entregado": true,
       "fecha_entrada": "2026-07-02",
+      "fecha_entrega_real": "2026-11-24",
       "id": "id_1783030889777_yqi3k8nd5",
       "op_id": "OP-0051",
       "op_nombre": "CAZADORA ANIMALITOS",
-      "uds": 160,
-      "fecha_entrega_real": "2026-11-24"
+      "uds": 160
     },
     {
       "color": "MARFIL",
@@ -2603,7 +2603,7 @@
     },
     {
       "color": "CAMEL",
-      "entregado": false,
+      "entregado": true,
       "fecha_compromiso": "2026-10-16",
       "fecha_entrada": "2026-09-19",
       "fecha_inicial": "2026-10-16",
@@ -2619,7 +2619,8 @@
       "op_id": "OP-2026-203",
       "op_nombre": "CONJUNTO CHELSY",
       "satelite_id": "id_1789247306328_smd3rq88s",
-      "uds": 132
+      "uds": 132,
+      "fecha_entrega_real": "2026-11-24"
     },
     {
       "color": "NEGRO",
@@ -4825,18 +4826,14 @@
       "uds": 120
     },
     {
+      "color": "AZUL BEBE",
+      "entregado": false,
+      "fecha_entrada": "2026-11-24",
       "id": "id_1795547762458_8xkd21wji",
       "op_id": "OP-2026-252",
       "op_nombre": "CHAQUETA CAZADORA",
-      "color": "AZUL BEBE",
       "satelite_id": "sat_13",
-      "uds": 84,
-      "fecha_entrada": "2026-11-24",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 84
     }
   ]
 }
