@@ -2466,21 +2466,21 @@
     },
     {
       "color": "AZUL OSCURO",
-      "entregado": false,
+      "entregado": true,
       "fecha_entrada": "2026-09-16",
-      "fecha_entrega_real": null,
+      "historial": [
+        {
+          "accion": "Entrega revertida (corrección): EN TALLER",
+          "fecha": "2026-11-24T22:29:09.430Z",
+          "user": "Jefa de Producción"
+        }
+      ],
       "id": "id_1789587963477_rfd84ihed",
       "op_id": "OP-2026-098",
       "op_nombre": "CHAQUETA CAZADORA",
       "satelite_id": "id_1789587911711_aexkkxr7d",
       "uds": 8,
-      "historial": [
-        {
-          "fecha": "2026-11-24T22:29:09.430Z",
-          "user": "Jefa de Producción",
-          "accion": "Entrega revertida (corrección): EN TALLER"
-        }
-      ]
+      "fecha_entrega_real": "2026-11-24"
     },
     {
       "color": "VERDE MILITAR",
