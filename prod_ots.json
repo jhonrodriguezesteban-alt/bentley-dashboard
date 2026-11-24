@@ -57528,7 +57528,7 @@
       "created_at": "2026-03-24",
       "created_by": "migrado_matriz",
       "cumplió_fecha": false,
-      "estado": "ENTREGADO",
+      "estado": "PAGO_PENDIENTE",
       "fecha_op": "2026-03-24",
       "fecha_ot": "2026-03-20",
       "id": "OT-12209",
@@ -57553,6 +57553,11 @@
           "fecha": "2026-11-24T19:17:57.286Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → ENTREGADO. Motivo: ENTREGADO",
           "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-11-24T19:18:19.508Z",
+          "accion": "Pasado a Pago desde Alistamiento",
+          "user": "Jefa de Producción"
         }
       ]
     },
@@ -57565,7 +57570,7 @@
       "created_at": "2026-03-24",
       "created_by": "migrado_matriz",
       "cumplió_fecha": false,
-      "estado": "ENTREGADO",
+      "estado": "PAGO_PENDIENTE",
       "fecha_op": "2026-03-24",
       "fecha_ot": "2026-03-20",
       "id": "OT-12210",
@@ -57589,6 +57594,11 @@
         {
           "fecha": "2026-11-24T19:17:57.286Z",
           "accion": "Estado cambiado (todas las tallas): CORTE_POR_ALISTAR → ENTREGADO. Motivo: ENTREGADO",
+          "user": "Jefa de Producción"
+        },
+        {
+          "fecha": "2026-11-24T19:18:19.508Z",
+          "accion": "Pasado a Pago desde Alistamiento",
           "user": "Jefa de Producción"
         }
       ]
