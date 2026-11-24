@@ -2466,14 +2466,21 @@
     },
     {
       "color": "AZUL OSCURO",
-      "entregado": true,
+      "entregado": false,
       "fecha_entrada": "2026-09-16",
-      "fecha_entrega_real": "2026-09-16",
+      "fecha_entrega_real": null,
       "id": "id_1789587963477_rfd84ihed",
       "op_id": "OP-2026-098",
       "op_nombre": "CHAQUETA CAZADORA",
       "satelite_id": "id_1789587911711_aexkkxr7d",
-      "uds": 8
+      "uds": 8,
+      "historial": [
+        {
+          "fecha": "2026-11-24T22:29:09.430Z",
+          "user": "Jefa de Producción",
+          "accion": "Entrega revertida (corrección): EN TALLER"
+        }
+      ]
     },
     {
       "color": "VERDE MILITAR",
@@ -4986,18 +4993,14 @@
       "uds": 124
     },
     {
+      "color": "AVENA",
+      "entregado": false,
+      "fecha_entrada": "2026-11-24",
       "id": "id_1795558920178_x1k5airtc",
       "op_id": "OP-2026-195",
       "op_nombre": "HOODIE RANGLAND PAÑO ALGODON CERRADO",
-      "color": "AVENA",
       "satelite_id": "sat_04",
-      "uds": 50,
-      "fecha_entrada": "2026-11-24",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 50
     }
   ]
 }
