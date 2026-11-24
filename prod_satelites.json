@@ -106,14 +106,18 @@
       "telefono": ""
     },
     {
-      "activo": true,
+      "activo": false,
       "capacidad_semanal": 0,
       "created_at": "2025-01-01",
       "id": "sat_05",
       "nombre": "SONIA VARGAS",
       "notas": "",
       "personas": 0,
-      "telefono": ""
+      "telefono": "",
+      "tipo": "interno",
+      "producto_terminado": false,
+      "especialidades": [],
+      "maquinas": []
     },
     {
       "activo": true,
@@ -1255,10 +1259,9 @@
       "nombre": "ELIZABETH RUIZ MARTINEZ",
       "notas": "",
       "personas": 1,
-      "telefono": "3114495638",
-      "tipo": "interno",
       "producto_terminado": false,
-      "maquinas": []
+      "telefono": "3114495638",
+      "tipo": "interno"
     },
     {
       "activo": true,
@@ -1470,11 +1473,9 @@
       "nombre": "MICHELL PUENTE ARANDA",
       "notas": "Creado desde revisión de paquetes con Paola (20-nov-2026)",
       "personas": 0,
-      "telefono": "",
-      "tipo": "interno",
       "producto_terminado": false,
-      "especialidades": [],
-      "maquinas": []
+      "telefono": "",
+      "tipo": "interno"
     },
     {
       "activo": true,
