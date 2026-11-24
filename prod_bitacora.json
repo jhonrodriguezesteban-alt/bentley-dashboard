@@ -44385,21 +44385,37 @@
       "user": "Carolina Telles"
     },
     {
-      "id": "evt_1795547735043_yqcp8",
-      "ts": 1795547735043,
-      "user": "Jefa de Producción",
-      "tipo": "generar_ots",
-      "op_id": "OP-2026-252",
-      "op_nombre": "CHAQUETA CAZADORA",
       "categoria": "CHAQUETAS",
-      "total_ots": 7,
-      "total_uds": 84,
       "colores": [
         "AZUL BEBE"
       ],
+      "id": "evt_1795547735043_yqcp8",
+      "op_id": "OP-2026-252",
+      "op_nombre": "CHAQUETA CAZADORA",
       "referencias": [
         "CHAQUETA CAZADORA"
-      ]
+      ],
+      "tipo": "generar_ots",
+      "total_ots": 7,
+      "total_uds": 84,
+      "ts": 1795547735043,
+      "user": "Jefa de Producción"
+    },
+    {
+      "id": "evt_1795547762562_hthtz",
+      "ts": 1795547762562,
+      "user": "Jefa de Producción",
+      "tipo": "estado_ot",
+      "op_id": "OP-2026-252",
+      "op_nombre": "CHAQUETA CAZADORA",
+      "referencia": "CHAQUETA CAZADORA",
+      "color": "AZUL BEBE",
+      "talla": "todas las tallas",
+      "estado_anterior": "EN_CONFECCION",
+      "estado_nuevo": "EN_CONFECCION",
+      "bulk": true,
+      "uds": 84,
+      "motivo": "EN TALLER"
     }
   ]
 }
