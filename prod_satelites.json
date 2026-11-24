@@ -1461,7 +1461,7 @@
       "tipo": "interno"
     },
     {
-      "activo": true,
+      "activo": false,
       "capacidad_semanal": 0,
       "created_at": "2026-11-20",
       "id": "id_1795183403854_ii0gr7gvn",
@@ -1469,16 +1469,15 @@
       "notas": "Creado desde revisión de paquetes con Paola (20-nov-2026)",
       "personas": 0,
       "telefono": "",
-      "tipo": "interno"
+      "tipo": "interno",
+      "producto_terminado": false,
+      "especialidades": [],
+      "maquinas": []
     },
     {
-      "id": "id_1795187537445_btjg2ifj3",
-      "nombre": "SANDRA HURTADO",
       "activo": true,
-      "tipo": "interno",
-      "personas": 1,
       "capacidad_semanal": 0,
-      "telefono": "302 7066323",
+      "created_at": "2026-11-20",
       "especialidades": [
         "CHAQUETAS",
         "BUZOS",
@@ -1489,9 +1488,12 @@
         "VESTIDOS",
         "CAMISONES"
       ],
-      "maquinas": [],
+      "id": "id_1795187537445_btjg2ifj3",
+      "nombre": "SANDRA HURTADO",
       "notas": "",
-      "created_at": "2026-11-20"
+      "personas": 1,
+      "telefono": "302 7066323",
+      "tipo": "interno"
     }
   ]
 }
