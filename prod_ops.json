@@ -10687,11 +10687,11 @@
       ],
       "consumibles_check": {
         "rec_hoodie_pa_o_algodon_abierto_1177__c77_21||AZUL BEBE": true,
+        "rec_hoodie_pa_o_algodon_abierto_1177__c77_21||AZUL OSCURO": true,
+        "rec_hoodie_pa_o_algodon_abierto_1177__c77_21||ROSA": true,
         "rec_hoodie_pa_o_algodon_abierto_1177__c77_23": true,
         "rec_hoodie_pa_o_algodon_abierto_1177__c77_27": true,
-        "rec_hoodie_pa_o_algodon_abierto_1177__c77_28": true,
-        "rec_hoodie_pa_o_algodon_abierto_1177__c77_21||ROSA": true,
-        "rec_hoodie_pa_o_algodon_abierto_1177__c77_21||AZUL OSCURO": true
+        "rec_hoodie_pa_o_algodon_abierto_1177__c77_28": true
       },
       "consumibles_desagregado": {
         "rec_hoodie_pa_o_algodon_abierto_1177__c77_21": true
@@ -14091,20 +14091,20 @@
     },
     {
       "cantidades": {
-        "MARFIL_T4": 12,
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 25,
+        "GRIS JASPED_T10": 26,
+        "GRIS JASPED_T12": 26,
+        "GRIS JASPED_T14": 26,
+        "GRIS JASPED_T16": 26,
+        "GRIS JASPED_T4": 12,
+        "GRIS JASPED_T6": 12,
+        "GRIS JASPED_T8": 26,
         "MARFIL_T10": 25,
         "MARFIL_T12": 25,
         "MARFIL_T14": 25,
         "MARFIL_T16": 25,
-        "GRIS JASPED_T4": 12,
-        "GRIS JASPED_T6": 12,
-        "GRIS JASPED_T8": 26,
-        "GRIS JASPED_T10": 26,
-        "GRIS JASPED_T12": 26,
-        "GRIS JASPED_T14": 26,
-        "GRIS JASPED_T16": 26
+        "MARFIL_T4": 12,
+        "MARFIL_T6": 12,
+        "MARFIL_T8": 25
       },
       "categoria": "CONJUNTOS",
       "colores": [
@@ -14142,14 +14142,30 @@
       "receta_nombre": "CONJUNTO JACOBO",
       "referencias": [
         {
-          "nombre": "CONJUNTO JACOBO",
-          "ref": "1218",
+          "cantidades": {
+            "GRIS JASPED_T10": 26,
+            "GRIS JASPED_T12": 26,
+            "GRIS JASPED_T14": 26,
+            "GRIS JASPED_T16": 26,
+            "GRIS JASPED_T4": 12,
+            "GRIS JASPED_T6": 12,
+            "GRIS JASPED_T8": 26,
+            "MARFIL_T10": 25,
+            "MARFIL_T12": 25,
+            "MARFIL_T14": 25,
+            "MARFIL_T16": 25,
+            "MARFIL_T4": 12,
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 25
+          },
           "cat": "CONJUNTOS",
-          "vmo": 1151,
           "colores": [
             "MARFIL",
             "GRIS JASPED"
           ],
+          "maquilador_id": "",
+          "nombre": "CONJUNTO JACOBO",
+          "ref": "1218",
           "tallas": [
             "T4",
             "T6",
@@ -14159,23 +14175,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "MARFIL_T4": 12,
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 25,
-            "MARFIL_T10": 25,
-            "MARFIL_T12": 25,
-            "MARFIL_T14": 25,
-            "MARFIL_T16": 25,
-            "GRIS JASPED_T4": 12,
-            "GRIS JASPED_T6": 12,
-            "GRIS JASPED_T8": 26,
-            "GRIS JASPED_T10": 26,
-            "GRIS JASPED_T12": 26,
-            "GRIS JASPED_T14": 26,
-            "GRIS JASPED_T16": 26
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
@@ -17125,7 +17125,7 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-252||AZUL BEBE": "PENDIENTE_CORTAR"
+        "OP-2026-252||AZUL BEBE": "EN_CONFECCION"
       },
       "tallas": [
         "T4",
