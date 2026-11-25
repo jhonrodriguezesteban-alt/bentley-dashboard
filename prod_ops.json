@@ -4608,6 +4608,11 @@
         "CAFE",
         "TAUPE"
       ],
+      "consumibles_check": {
+        "rec_blusa_jen_1118__c8_20": true,
+        "rec_blusa_jen_1118__c8_23": true,
+        "rec_blusa_jen_1118__cid_1787085787806_501": true
+      },
       "cortador": "Corte Carbajal",
       "corte_ok_color": {
         "BEIGE": {
@@ -4708,12 +4713,7 @@
           "solicitud_id": "id_1795124049233_e4qeoyxxh"
         }
       ],
-      "updated_at": "2026-11-18",
-      "consumibles_check": {
-        "rec_blusa_jen_1118__c8_20": true,
-        "rec_blusa_jen_1118__c8_23": true,
-        "rec_blusa_jen_1118__cid_1787085787806_501": true
-      }
+      "updated_at": "2026-11-18"
     },
     {
       "cantidades": {
@@ -7717,6 +7717,16 @@
         "rec_vestido_napoles_1112__c109_20": true
       },
       "cortador": "Corte Carbajal",
+      "corte_ok_color": {
+        "BEIGE": {
+          "por": "John Rodriguez",
+          "ts": "2026-11-25T20:56:23.905Z"
+        },
+        "NEGRO": {
+          "por": "John Rodriguez",
+          "ts": "2026-11-25T20:56:24.727Z"
+        }
+      },
       "created_at": "2026-07-31",
       "created_by": "John Rodriguez",
       "estado_op": "EN_PROCESO",
@@ -7787,17 +7797,7 @@
           "solicitud_id": "id_1795124475865_chz1kb8en"
         }
       ],
-      "updated_at": "2026-11-18",
-      "corte_ok_color": {
-        "BEIGE": {
-          "por": "John Rodriguez",
-          "ts": "2026-11-25T20:56:23.905Z"
-        },
-        "NEGRO": {
-          "por": "John Rodriguez",
-          "ts": "2026-11-25T20:56:24.727Z"
-        }
-      }
+      "updated_at": "2026-11-18"
     },
     {
       "cantidades": {
@@ -9861,10 +9861,10 @@
       "consumibles_check": {
         "cid_1783368475768_2164__cid_1783368475768_3498": true,
         "cid_1783368475768_2164__cid_1783368475768_4295||CAFE": true,
+        "cid_1783368475768_2164__cid_1783368475768_4295||VINOTINTO": true,
         "cid_1783368475768_2164__cid_1783368475768_4637": true,
         "cid_1783368475768_2164__cid_1783368475768_5574": true,
-        "cid_1783368475768_2164__cid_1783368475768_6797": true,
-        "cid_1783368475768_2164__cid_1783368475768_4295||VINOTINTO": true
+        "cid_1783368475768_2164__cid_1783368475768_6797": true
       },
       "consumibles_desagregado": {
         "cid_1783368475768_2164__cid_1783368475768_4295": true
@@ -9943,6 +9943,10 @@
           "vmo": 10000
         }
       ],
+      "subg_estados": {
+        "OP-2026-127||GRIS OSCURO": "CORTE_POR_ALISTAR",
+        "OP-2026-127||VINOTINTO": "CORTE_POR_ALISTAR"
+      },
       "tallas": [
         "T6",
         "T8",
@@ -9968,11 +9972,7 @@
           "lineas": 2,
           "solicitud_id": "id_1795209525302_bdzv71swl"
         }
-      ],
-      "subg_estados": {
-        "OP-2026-127||VINOTINTO": "CORTE_POR_ALISTAR",
-        "OP-2026-127||GRIS OSCURO": "CORTE_POR_ALISTAR"
-      }
+      ]
     },
     {
       "cantidades": {
@@ -10673,38 +10673,38 @@
     },
     {
       "cantidades": {
-        "ROJO_T4": 8,
-        "ROJO_T6": 12,
-        "ROJO_T8": 16,
-        "ROJO_T10": 16,
-        "ROJO_T12": 20,
-        "ROJO_T14": 20,
-        "ROJO_T16": 20,
-        "AZUL BEBE_T4": 8,
-        "AZUL BEBE_T6": 12,
-        "AZUL BEBE_T8": 16,
         "AZUL BEBE_T10": 16,
         "AZUL BEBE_T12": 20,
         "AZUL BEBE_T14": 20,
         "AZUL BEBE_T16": 20,
-        "AZUL OSCURO_T4": 8,
-        "AZUL OSCURO_T6": 12,
-        "AZUL OSCURO_T8": 16,
+        "AZUL BEBE_T4": 8,
+        "AZUL BEBE_T6": 12,
+        "AZUL BEBE_T8": 16,
         "AZUL OSCURO_T10": 16,
         "AZUL OSCURO_T12": 20,
         "AZUL OSCURO_T14": 20,
         "AZUL OSCURO_T16": 20,
-        "ROSA_T4": 8,
-        "ROSA_T6": 12,
-        "ROSA_T8": 16,
+        "AZUL OSCURO_T4": 8,
+        "AZUL OSCURO_T6": 12,
+        "AZUL OSCURO_T8": 16,
+        "CAFE_T10": 12,
+        "CAFE_T12": 12,
+        "CAFE_T14": 12,
+        "CAFE_T16": 12,
+        "ROJO_T10": 16,
+        "ROJO_T12": 20,
+        "ROJO_T14": 20,
+        "ROJO_T16": 20,
+        "ROJO_T4": 8,
+        "ROJO_T6": 12,
+        "ROJO_T8": 16,
         "ROSA_T10": 12,
         "ROSA_T12": 20,
         "ROSA_T14": 20,
         "ROSA_T16": 20,
-        "CAFE_T10": 12,
-        "CAFE_T12": 12,
-        "CAFE_T14": 12,
-        "CAFE_T16": 12
+        "ROSA_T4": 8,
+        "ROSA_T6": 12,
+        "ROSA_T8": 16
       },
       "categoria": "BUZOS",
       "colores": [
@@ -10759,10 +10759,41 @@
       "receta_nombre": "HOODIE PAÑO ALGODON ABIERTO - REF: 1177",
       "referencias": [
         {
-          "nombre": "HOODIE RANGLAND PAÑO ALGODON ABIERTO",
-          "ref": "1177",
+          "cantidades": {
+            "AZUL BEBE_T10": 16,
+            "AZUL BEBE_T12": 20,
+            "AZUL BEBE_T14": 20,
+            "AZUL BEBE_T16": 20,
+            "AZUL BEBE_T4": 8,
+            "AZUL BEBE_T6": 12,
+            "AZUL BEBE_T8": 16,
+            "AZUL OSCURO_T10": 16,
+            "AZUL OSCURO_T12": 20,
+            "AZUL OSCURO_T14": 20,
+            "AZUL OSCURO_T16": 20,
+            "AZUL OSCURO_T4": 8,
+            "AZUL OSCURO_T6": 12,
+            "AZUL OSCURO_T8": 16,
+            "CAFE_T10": 12,
+            "CAFE_T12": 12,
+            "CAFE_T14": 12,
+            "CAFE_T16": 12,
+            "ROJO_T10": 16,
+            "ROJO_T12": 20,
+            "ROJO_T14": 20,
+            "ROJO_T16": 20,
+            "ROJO_T4": 8,
+            "ROJO_T6": 12,
+            "ROJO_T8": 16,
+            "ROSA_T10": 12,
+            "ROSA_T12": 20,
+            "ROSA_T14": 20,
+            "ROSA_T16": 20,
+            "ROSA_T4": 8,
+            "ROSA_T6": 12,
+            "ROSA_T8": 16
+          },
           "cat": "BUZOS",
-          "vmo": 6800,
           "colores": [
             "ROJO",
             "AZUL BEBE",
@@ -10770,6 +10801,9 @@
             "ROSA",
             "CAFE"
           ],
+          "maquilador_id": "",
+          "nombre": "HOODIE RANGLAND PAÑO ALGODON ABIERTO",
+          "ref": "1177",
           "tallas": [
             "T4",
             "T6",
@@ -10779,43 +10813,16 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "ROJO_T4": 8,
-            "ROJO_T6": 12,
-            "ROJO_T8": 16,
-            "ROJO_T10": 16,
-            "ROJO_T12": 20,
-            "ROJO_T14": 20,
-            "ROJO_T16": 20,
-            "AZUL BEBE_T4": 8,
-            "AZUL BEBE_T6": 12,
-            "AZUL BEBE_T8": 16,
-            "AZUL BEBE_T10": 16,
-            "AZUL BEBE_T12": 20,
-            "AZUL BEBE_T14": 20,
-            "AZUL BEBE_T16": 20,
-            "AZUL OSCURO_T4": 8,
-            "AZUL OSCURO_T6": 12,
-            "AZUL OSCURO_T8": 16,
-            "AZUL OSCURO_T10": 16,
-            "AZUL OSCURO_T12": 20,
-            "AZUL OSCURO_T14": 20,
-            "AZUL OSCURO_T16": 20,
-            "ROSA_T4": 8,
-            "ROSA_T6": 12,
-            "ROSA_T8": 16,
-            "ROSA_T10": 12,
-            "ROSA_T12": 20,
-            "ROSA_T14": 20,
-            "ROSA_T16": 20,
-            "CAFE_T10": 12,
-            "CAFE_T12": 12,
-            "CAFE_T14": 12,
-            "CAFE_T16": 12
-          },
-          "maquilador_id": ""
+          "vmo": 6800
         }
       ],
+      "subg_estados": {
+        "OP-2026-194||AZUL BEBE": "CORTE_POR_ALISTAR",
+        "OP-2026-194||AZUL OSCURO": "CORTE_POR_ALISTAR",
+        "OP-2026-194||CAFE": "POR_REVISAR",
+        "OP-2026-194||ROJO": "POR_REVISAR",
+        "OP-2026-194||ROSA": "CORTE_POR_ALISTAR"
+      },
       "tallas": [
         "T4",
         "T6",
@@ -10836,16 +10843,7 @@
           "solicitud_id": "id_1794666677881_patvzzdnc"
         }
       ],
-      "subg_estados": {
-        "OP-2026-194||AZUL BEBE": "CORTE_POR_ALISTAR",
-        "OP-2026-194||AZUL OSCURO": "CORTE_POR_ALISTAR",
-        "OP-2026-194||ROSA": "CORTE_POR_ALISTAR",
-        "OP-2026-194||ROJO": "POR_REVISAR",
-        "OP-2026-194||CAFE": "POR_REVISAR"
-      },
-      "updated_at": "2026-11-25",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-11-25"
     },
     {
       "cantidades": {
@@ -10939,24 +10937,24 @@
     },
     {
       "cantidades": {
-        "CAMEL_T6": 28,
-        "CAMEL_T8": 28,
+        "BEIGE_T10": 20,
+        "BEIGE_T12": 20,
+        "BEIGE_T14": 20,
+        "BEIGE_T16": 20,
+        "BEIGE_T6": 8,
+        "BEIGE_T8": 8,
         "CAMEL_T10": 41,
         "CAMEL_T12": 41,
         "CAMEL_T14": 41,
         "CAMEL_T16": 41,
-        "NEGRO_T6": 8,
-        "NEGRO_T8": 8,
+        "CAMEL_T6": 28,
+        "CAMEL_T8": 28,
         "NEGRO_T10": 12,
         "NEGRO_T12": 12,
         "NEGRO_T14": 12,
         "NEGRO_T16": 12,
-        "BEIGE_T6": 8,
-        "BEIGE_T8": 8,
-        "BEIGE_T10": 20,
-        "BEIGE_T12": 20,
-        "BEIGE_T14": 20,
-        "BEIGE_T16": 20
+        "NEGRO_T6": 8,
+        "NEGRO_T8": 8
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -10998,15 +10996,35 @@
       "receta_nombre": "CHAQUETA RALPH - REF: 1155",
       "referencias": [
         {
-          "nombre": "CHAQUETA RALPH",
-          "ref": "1155",
+          "cantidades": {
+            "BEIGE_T10": 20,
+            "BEIGE_T12": 20,
+            "BEIGE_T14": 20,
+            "BEIGE_T16": 20,
+            "BEIGE_T6": 8,
+            "BEIGE_T8": 8,
+            "CAMEL_T10": 41,
+            "CAMEL_T12": 41,
+            "CAMEL_T14": 41,
+            "CAMEL_T16": 41,
+            "CAMEL_T6": 28,
+            "CAMEL_T8": 28,
+            "NEGRO_T10": 12,
+            "NEGRO_T12": 12,
+            "NEGRO_T14": 12,
+            "NEGRO_T16": 12,
+            "NEGRO_T6": 8,
+            "NEGRO_T8": 8
+          },
           "cat": "CHAQUETAS",
-          "vmo": 9459,
           "colores": [
             "CAMEL",
             "NEGRO",
             "BEIGE"
           ],
+          "maquilador_id": "",
+          "nombre": "CHAQUETA RALPH",
+          "ref": "1155",
           "tallas": [
             "T6",
             "T8",
@@ -11015,27 +11033,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "CAMEL_T6": 28,
-            "CAMEL_T8": 28,
-            "CAMEL_T10": 41,
-            "CAMEL_T12": 41,
-            "CAMEL_T14": 41,
-            "CAMEL_T16": 41,
-            "NEGRO_T6": 8,
-            "NEGRO_T8": 8,
-            "NEGRO_T10": 12,
-            "NEGRO_T12": 12,
-            "NEGRO_T14": 12,
-            "NEGRO_T16": 12,
-            "BEIGE_T6": 8,
-            "BEIGE_T8": 8,
-            "BEIGE_T10": 20,
-            "BEIGE_T12": 20,
-            "BEIGE_T14": 20,
-            "BEIGE_T16": 20
-          },
-          "maquilador_id": ""
+          "vmo": 9459
         }
       ],
       "subg_estados": {
@@ -11061,9 +11059,7 @@
           "solicitud_id": "id_1793827206787_gk8yhcnsi"
         }
       ],
-      "updated_at": "2026-11-25",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-11-25"
     },
     {
       "cantidades": {
@@ -13033,6 +13029,36 @@
         "cid_1789098775195_6944__cid_1789098515119_5088": true
       },
       "cortador": "Corte Carbajal",
+      "corte_ok_color": {
+        "BEIGE": {
+          "por": "John Rodriguez",
+          "ts": "2026-11-25T20:56:26.634Z"
+        },
+        "CAFE": {
+          "por": "John Rodriguez",
+          "ts": "2026-11-25T20:56:27.634Z"
+        },
+        "GRIS JASPED": {
+          "por": "John Rodriguez",
+          "ts": "2026-11-25T20:56:28.435Z"
+        },
+        "NEGRO": {
+          "por": "John Rodriguez",
+          "ts": "2026-11-25T20:56:30.036Z"
+        },
+        "ROSA": {
+          "por": "John Rodriguez",
+          "ts": "2026-11-25T20:56:29.224Z"
+        },
+        "TAUPE": {
+          "por": "John Rodriguez",
+          "ts": "2026-11-25T20:56:31.569Z"
+        },
+        "VINOTINTO": {
+          "por": "John Rodriguez",
+          "ts": "2026-11-25T20:56:30.755Z"
+        }
+      },
       "created_at": "2026-09-02",
       "created_by": "John Rodriguez",
       "estado_op": "EN_PROCESO",
@@ -13142,37 +13168,7 @@
           "solicitud_id": "id_1795123011757_nj1f8kc62"
         }
       ],
-      "updated_at": "2026-11-18",
-      "corte_ok_color": {
-        "BEIGE": {
-          "por": "John Rodriguez",
-          "ts": "2026-11-25T20:56:26.634Z"
-        },
-        "CAFE": {
-          "por": "John Rodriguez",
-          "ts": "2026-11-25T20:56:27.634Z"
-        },
-        "GRIS JASPED": {
-          "por": "John Rodriguez",
-          "ts": "2026-11-25T20:56:28.435Z"
-        },
-        "ROSA": {
-          "por": "John Rodriguez",
-          "ts": "2026-11-25T20:56:29.224Z"
-        },
-        "NEGRO": {
-          "por": "John Rodriguez",
-          "ts": "2026-11-25T20:56:30.036Z"
-        },
-        "VINOTINTO": {
-          "por": "John Rodriguez",
-          "ts": "2026-11-25T20:56:30.755Z"
-        },
-        "TAUPE": {
-          "por": "John Rodriguez",
-          "ts": "2026-11-25T20:56:31.569Z"
-        }
-      }
+      "updated_at": "2026-11-18"
     },
     {
       "cantidades": {
@@ -17232,20 +17228,20 @@
     },
     {
       "cantidades": {
-        "LOVELY- MARFIL_T4": 12,
-        "LOVELY- MARFIL_T6": 12,
-        "LOVELY- MARFIL_T8": 17,
+        "CANADA- MARFIL_T10": 17,
+        "CANADA- MARFIL_T12": 17,
+        "CANADA- MARFIL_T14": 17,
+        "CANADA- MARFIL_T16": 17,
+        "CANADA- MARFIL_T4": 12,
+        "CANADA- MARFIL_T6": 12,
+        "CANADA- MARFIL_T8": 17,
         "LOVELY- MARFIL_T10": 17,
         "LOVELY- MARFIL_T12": 17,
         "LOVELY- MARFIL_T14": 17,
         "LOVELY- MARFIL_T16": 17,
-        "CANADA- MARFIL_T4": 12,
-        "CANADA- MARFIL_T6": 12,
-        "CANADA- MARFIL_T8": 17,
-        "CANADA- MARFIL_T10": 17,
-        "CANADA- MARFIL_T12": 17,
-        "CANADA- MARFIL_T14": 17,
-        "CANADA- MARFIL_T16": 17
+        "LOVELY- MARFIL_T4": 12,
+        "LOVELY- MARFIL_T6": 12,
+        "LOVELY- MARFIL_T8": 17
       },
       "categoria": "BUZOS",
       "colores": [
@@ -17270,14 +17266,30 @@
       "receta_nombre": "RANGLAND SOFT - REF: 1105",
       "referencias": [
         {
-          "nombre": "RANGLAND SOFT",
-          "ref": "1105",
+          "cantidades": {
+            "CANADA- MARFIL_T10": 17,
+            "CANADA- MARFIL_T12": 17,
+            "CANADA- MARFIL_T14": 17,
+            "CANADA- MARFIL_T16": 17,
+            "CANADA- MARFIL_T4": 12,
+            "CANADA- MARFIL_T6": 12,
+            "CANADA- MARFIL_T8": 17,
+            "LOVELY- MARFIL_T10": 17,
+            "LOVELY- MARFIL_T12": 17,
+            "LOVELY- MARFIL_T14": 17,
+            "LOVELY- MARFIL_T16": 17,
+            "LOVELY- MARFIL_T4": 12,
+            "LOVELY- MARFIL_T6": 12,
+            "LOVELY- MARFIL_T8": 17
+          },
           "cat": "BUZOS",
-          "vmo": 5781,
           "colores": [
             "LOVELY- MARFIL",
             "CANADA- MARFIL"
           ],
+          "maquilador_id": "",
+          "nombre": "RANGLAND SOFT",
+          "ref": "1105",
           "tallas": [
             "T4",
             "T6",
@@ -17287,23 +17299,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "LOVELY- MARFIL_T4": 12,
-            "LOVELY- MARFIL_T6": 12,
-            "LOVELY- MARFIL_T8": 17,
-            "LOVELY- MARFIL_T10": 17,
-            "LOVELY- MARFIL_T12": 17,
-            "LOVELY- MARFIL_T14": 17,
-            "LOVELY- MARFIL_T16": 17,
-            "CANADA- MARFIL_T4": 12,
-            "CANADA- MARFIL_T6": 12,
-            "CANADA- MARFIL_T8": 17,
-            "CANADA- MARFIL_T10": 17,
-            "CANADA- MARFIL_T12": 17,
-            "CANADA- MARFIL_T14": 17,
-            "CANADA- MARFIL_T16": 17
-          },
-          "maquilador_id": ""
+          "vmo": 5781
         }
       ],
       "subg_estados": {
@@ -17330,9 +17326,67 @@
           "solicitud_id": "id_1795016532858_h1k8bkk42"
         }
       ],
-      "updated_at": "2026-11-25",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-11-25"
+    },
+    {
+      "id": "OP-2026-254",
+      "numero": 254,
+      "fecha_op": "2026-11-25",
+      "cortador": "Corte Carbajal",
+      "categoria": "CHAQUETAS",
+      "nombre_producto": "PILOTO PANCAKE",
+      "colores": [
+        "NEGRO"
+      ],
+      "tallas": [
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ],
+      "cantidades": {
+        "NEGRO_T6": 14,
+        "NEGRO_T8": 14,
+        "NEGRO_T10": 16,
+        "NEGRO_T12": 16,
+        "NEGRO_T14": 16,
+        "NEGRO_T16": 16
+      },
+      "referencias": [
+        {
+          "nombre": "PILOTO PANCAKE",
+          "ref": "1099",
+          "cat": "CHAQUETAS",
+          "vmo": 9459,
+          "colores": [
+            "NEGRO"
+          ],
+          "tallas": [
+            "T6",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "cantidades": {
+            "NEGRO_T6": 14,
+            "NEGRO_T8": 14,
+            "NEGRO_T10": 16,
+            "NEGRO_T12": 16,
+            "NEGRO_T14": 16,
+            "NEGRO_T16": 16
+          },
+          "totalUds": 92,
+          "maquilador_id": ""
+        }
+      ],
+      "op_effi": null,
+      "estado_op": "EN_PROCESO",
+      "created_at": "2026-11-25",
+      "created_by": "Jefa de Producción"
     }
   ]
 }
