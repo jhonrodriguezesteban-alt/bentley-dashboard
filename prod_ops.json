@@ -2101,11 +2101,11 @@
         "rec_chaqueta_cazadora_1002__c38_30||AZUL OSCURO": true,
         "rec_chaqueta_cazadora_1002__c38_30||LILA": true,
         "rec_chaqueta_cazadora_1002__c38_30||ROJO": true,
+        "rec_chaqueta_cazadora_1002__c38_30||ROSA": true,
         "rec_chaqueta_cazadora_1002__c38_30||SALMON": true,
         "rec_chaqueta_cazadora_1002__c38_30||VERDE MENTA": true,
-        "rec_chaqueta_cazadora_1002__c38_31": true,
-        "rec_chaqueta_cazadora_1002__c38_30||ROSA": true,
-        "rec_chaqueta_cazadora_1002__c38_30||VERDE MILITAR": true
+        "rec_chaqueta_cazadora_1002__c38_30||VERDE MILITAR": true,
+        "rec_chaqueta_cazadora_1002__c38_31": true
       },
       "consumibles_desagregado": {
         "rec_chaqueta_cazadora_1002__c38_19": true,
@@ -11409,16 +11409,16 @@
         "T16"
       ],
       "trazos_color_solicitado": {
+        "AZUL BEBE": true,
         "CAFE": true,
         "GRIS CLARO": true,
-        "AZUL BEBE": true,
         "NEGRO": true
       },
       "trazos_solicitudes": [
         {
-          "solicitud_id": "id_1795618347874_m6zbuu5ty",
           "fecha": "2026-11-25",
-          "lineas": 2
+          "lineas": 2,
+          "solicitud_id": "id_1795618347874_m6zbuu5ty"
         }
       ]
     },
@@ -17171,20 +17171,20 @@
     },
     {
       "cantidades": {
-        "CANADA- MARFIL_T10": 16,
-        "CANADA- MARFIL_T12": 16,
-        "CANADA- MARFIL_T14": 16,
-        "CANADA- MARFIL_T16": 16,
-        "CANADA- MARFIL_T4": 12,
-        "CANADA- MARFIL_T6": 12,
-        "CANADA- MARFIL_T8": 16,
-        "LOVELY- MARFIL_T10": 16,
-        "LOVELY- MARFIL_T12": 16,
-        "LOVELY- MARFIL_T14": 16,
-        "LOVELY- MARFIL_T16": 16,
         "LOVELY- MARFIL_T4": 12,
         "LOVELY- MARFIL_T6": 12,
-        "LOVELY- MARFIL_T8": 16
+        "LOVELY- MARFIL_T8": 17,
+        "LOVELY- MARFIL_T10": 17,
+        "LOVELY- MARFIL_T12": 17,
+        "LOVELY- MARFIL_T14": 17,
+        "LOVELY- MARFIL_T16": 17,
+        "CANADA- MARFIL_T4": 12,
+        "CANADA- MARFIL_T6": 12,
+        "CANADA- MARFIL_T8": 17,
+        "CANADA- MARFIL_T10": 17,
+        "CANADA- MARFIL_T12": 17,
+        "CANADA- MARFIL_T14": 17,
+        "CANADA- MARFIL_T16": 17
       },
       "categoria": "BUZOS",
       "colores": [
@@ -17209,30 +17209,14 @@
       "receta_nombre": "RANGLAND SOFT - REF: 1105",
       "referencias": [
         {
-          "cantidades": {
-            "CANADA- MARFIL_T10": 16,
-            "CANADA- MARFIL_T12": 16,
-            "CANADA- MARFIL_T14": 16,
-            "CANADA- MARFIL_T16": 16,
-            "CANADA- MARFIL_T4": 12,
-            "CANADA- MARFIL_T6": 12,
-            "CANADA- MARFIL_T8": 16,
-            "LOVELY- MARFIL_T10": 16,
-            "LOVELY- MARFIL_T12": 16,
-            "LOVELY- MARFIL_T14": 16,
-            "LOVELY- MARFIL_T16": 16,
-            "LOVELY- MARFIL_T4": 12,
-            "LOVELY- MARFIL_T6": 12,
-            "LOVELY- MARFIL_T8": 16
-          },
+          "nombre": "RANGLAND SOFT",
+          "ref": "1105",
           "cat": "BUZOS",
+          "vmo": 5781,
           "colores": [
             "LOVELY- MARFIL",
             "CANADA- MARFIL"
           ],
-          "maquilador_id": "",
-          "nombre": "RANGLAND SOFT",
-          "ref": "1105",
           "tallas": [
             "T4",
             "T6",
@@ -17242,8 +17226,23 @@
             "T14",
             "T16"
           ],
-          "totalUds": 208,
-          "vmo": 5781
+          "cantidades": {
+            "LOVELY- MARFIL_T4": 12,
+            "LOVELY- MARFIL_T6": 12,
+            "LOVELY- MARFIL_T8": 17,
+            "LOVELY- MARFIL_T10": 17,
+            "LOVELY- MARFIL_T12": 17,
+            "LOVELY- MARFIL_T14": 17,
+            "LOVELY- MARFIL_T16": 17,
+            "CANADA- MARFIL_T4": 12,
+            "CANADA- MARFIL_T6": 12,
+            "CANADA- MARFIL_T8": 17,
+            "CANADA- MARFIL_T10": 17,
+            "CANADA- MARFIL_T12": 17,
+            "CANADA- MARFIL_T14": 17,
+            "CANADA- MARFIL_T16": 17
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -17269,7 +17268,10 @@
           "lineas": 2,
           "solicitud_id": "id_1795016532858_h1k8bkk42"
         }
-      ]
+      ],
+      "updated_at": "2026-11-25",
+      "diseno_origen_id": null,
+      "diseno_origen_nombre": null
     }
   ]
 }
