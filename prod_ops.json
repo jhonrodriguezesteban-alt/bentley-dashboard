@@ -9976,29 +9976,29 @@
     },
     {
       "cantidades": {
-        "NEGRO_T6": 14,
-        "NEGRO_T8": 14,
-        "NEGRO_T10": 21,
-        "NEGRO_T12": 21,
-        "NEGRO_T14": 21,
-        "NEGRO_T16": 21,
-        "BEIGE_T6": 12,
-        "BEIGE_T8": 12,
         "BEIGE_T10": 16,
         "BEIGE_T12": 16,
         "BEIGE_T14": 16,
         "BEIGE_T16": 16,
-        "CAMEL_T6": 14,
-        "CAMEL_T8": 14,
+        "BEIGE_T6": 12,
+        "BEIGE_T8": 12,
         "CAMEL_T10": 22,
         "CAMEL_T12": 22,
         "CAMEL_T14": 22,
         "CAMEL_T16": 22,
-        "MARFIL_T8": 18,
+        "CAMEL_T6": 14,
+        "CAMEL_T8": 14,
         "MARFIL_T10": 18,
         "MARFIL_T12": 18,
         "MARFIL_T14": 18,
-        "MARFIL_T16": 18
+        "MARFIL_T16": 18,
+        "MARFIL_T8": 18,
+        "NEGRO_T10": 21,
+        "NEGRO_T12": 21,
+        "NEGRO_T14": 21,
+        "NEGRO_T16": 21,
+        "NEGRO_T6": 14,
+        "NEGRO_T8": 14
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -10045,16 +10045,41 @@
       "receta_nombre": "PILOTO PANCAKE - REF: 1099",
       "referencias": [
         {
-          "nombre": "PILOTO PANCAKE",
-          "ref": "1099",
+          "cantidades": {
+            "BEIGE_T10": 16,
+            "BEIGE_T12": 16,
+            "BEIGE_T14": 16,
+            "BEIGE_T16": 16,
+            "BEIGE_T6": 12,
+            "BEIGE_T8": 12,
+            "CAMEL_T10": 22,
+            "CAMEL_T12": 22,
+            "CAMEL_T14": 22,
+            "CAMEL_T16": 22,
+            "CAMEL_T6": 14,
+            "CAMEL_T8": 14,
+            "MARFIL_T10": 18,
+            "MARFIL_T12": 18,
+            "MARFIL_T14": 18,
+            "MARFIL_T16": 18,
+            "MARFIL_T8": 18,
+            "NEGRO_T10": 21,
+            "NEGRO_T12": 21,
+            "NEGRO_T14": 21,
+            "NEGRO_T16": 21,
+            "NEGRO_T6": 14,
+            "NEGRO_T8": 14
+          },
           "cat": "CHAQUETAS",
-          "vmo": 9459,
           "colores": [
             "NEGRO",
             "BEIGE",
             "CAMEL",
             "MARFIL"
           ],
+          "maquilador_id": "",
+          "nombre": "PILOTO PANCAKE",
+          "ref": "1099",
           "tallas": [
             "T4",
             "T6",
@@ -10064,32 +10089,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T6": 14,
-            "NEGRO_T8": 14,
-            "NEGRO_T10": 21,
-            "NEGRO_T12": 21,
-            "NEGRO_T14": 21,
-            "NEGRO_T16": 21,
-            "BEIGE_T6": 12,
-            "BEIGE_T8": 12,
-            "BEIGE_T10": 16,
-            "BEIGE_T12": 16,
-            "BEIGE_T14": 16,
-            "BEIGE_T16": 16,
-            "CAMEL_T6": 14,
-            "CAMEL_T8": 14,
-            "CAMEL_T10": 22,
-            "CAMEL_T12": 22,
-            "CAMEL_T14": 22,
-            "CAMEL_T16": 22,
-            "MARFIL_T8": 18,
-            "MARFIL_T10": 18,
-            "MARFIL_T12": 18,
-            "MARFIL_T14": 18,
-            "MARFIL_T16": 18
-          },
-          "maquilador_id": ""
+          "vmo": 9459
         }
       ],
       "subg_estados": {
@@ -10119,9 +10119,7 @@
           "solicitud_id": "id_1793915143389_5vxogqge2"
         }
       ],
-      "updated_at": "2026-11-25",
-      "diseno_origen_id": null,
-      "diseno_origen_nombre": null
+      "updated_at": "2026-11-25"
     },
     {
       "cantidades": {
@@ -12227,7 +12225,7 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-206||BEIGE": "EN_CONFECCION",
+        "OP-2026-206||BEIGE": "ALISTAMIENTO",
         "OP-2026-206||NEGRO": "EN_CONFECCION",
         "OP-2026-206||VERDE MILITAR": "EN_CONFECCION"
       },
@@ -17329,66 +17327,18 @@
       "updated_at": "2026-11-25"
     },
     {
-      "id": "OP-2026-254",
-      "numero": 254,
-      "fecha_op": "2026-11-25",
-      "cortador": "Corte Carbajal",
-      "categoria": "CHAQUETAS",
-      "nombre_producto": "PILOTO PANCAKE",
-      "colores": [
-        "NEGRO"
-      ],
-      "tallas": [
-        "T6",
-        "T8",
-        "T10",
-        "T12",
-        "T14",
-        "T16"
-      ],
       "cantidades": {
-        "NEGRO_T6": 14,
-        "NEGRO_T8": 14,
         "NEGRO_T10": 16,
         "NEGRO_T12": 16,
         "NEGRO_T14": 16,
-        "NEGRO_T16": 16
+        "NEGRO_T16": 16,
+        "NEGRO_T6": 14,
+        "NEGRO_T8": 14
       },
-      "referencias": [
-        {
-          "nombre": "PILOTO PANCAKE",
-          "ref": "1099",
-          "cat": "CHAQUETAS",
-          "vmo": 9459,
-          "colores": [
-            "NEGRO"
-          ],
-          "tallas": [
-            "T6",
-            "T8",
-            "T10",
-            "T12",
-            "T14",
-            "T16"
-          ],
-          "cantidades": {
-            "NEGRO_T6": 14,
-            "NEGRO_T8": 14,
-            "NEGRO_T10": 16,
-            "NEGRO_T12": 16,
-            "NEGRO_T14": 16,
-            "NEGRO_T16": 16
-          },
-          "totalUds": 92,
-          "maquilador_id": ""
-        }
+      "categoria": "CHAQUETAS",
+      "colores": [
+        "NEGRO"
       ],
-      "op_effi": null,
-      "estado_op": "EN_PROCESO",
-      "created_at": "2026-11-25",
-      "created_by": "Jefa de Producción",
-      "receta_id": "rec_piloto_pancake_1099",
-      "receta_nombre": "PILOTO PANCAKE - REF: 1099",
       "consumibles_check": {
         "rec_piloto_pancake_1099__c98_21": true,
         "rec_piloto_pancake_1099__c98_22": true,
@@ -17401,9 +17351,56 @@
         "rec_piloto_pancake_1099__c98_32": true,
         "rec_piloto_pancake_1099__c98_40": true
       },
+      "cortador": "Corte Carbajal",
+      "created_at": "2026-11-25",
+      "created_by": "Jefa de Producción",
+      "estado_op": "EN_PROCESO",
+      "fecha_op": "2026-11-25",
+      "id": "OP-2026-254",
+      "nombre_producto": "PILOTO PANCAKE",
+      "numero": 254,
+      "receta_id": "rec_piloto_pancake_1099",
+      "receta_nombre": "PILOTO PANCAKE - REF: 1099",
+      "referencias": [
+        {
+          "cantidades": {
+            "NEGRO_T10": 16,
+            "NEGRO_T12": 16,
+            "NEGRO_T14": 16,
+            "NEGRO_T16": 16,
+            "NEGRO_T6": 14,
+            "NEGRO_T8": 14
+          },
+          "cat": "CHAQUETAS",
+          "colores": [
+            "NEGRO"
+          ],
+          "maquilador_id": "",
+          "nombre": "PILOTO PANCAKE",
+          "ref": "1099",
+          "tallas": [
+            "T6",
+            "T8",
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "totalUds": 92,
+          "vmo": 9459
+        }
+      ],
       "subg_estados": {
         "OP-2026-254||NEGRO": "EN_CONFECCION"
-      }
+      },
+      "tallas": [
+        "T6",
+        "T8",
+        "T10",
+        "T12",
+        "T14",
+        "T16"
+      ]
     }
   ]
 }
