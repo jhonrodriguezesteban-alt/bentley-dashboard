@@ -4162,7 +4162,7 @@
     },
     {
       "color": "MORA LECHE",
-      "entregado": false,
+      "entregado": true,
       "fecha_compromiso": "2026-11-12",
       "fecha_entrada": "2026-10-29",
       "fecha_inicial": "2026-11-12",
@@ -4178,7 +4178,8 @@
       "op_id": "OP-2026-112",
       "op_nombre": "PILOTO PANCAKE",
       "satelite_id": "sat_10",
-      "uds": 76
+      "uds": 76,
+      "fecha_entrega_real": "2026-11-26"
     },
     {
       "color": "NEGRO",
@@ -5057,18 +5058,14 @@
       "uds": 108
     },
     {
+      "color": "NEGRO",
+      "entregado": false,
+      "fecha_entrada": "2026-11-26",
       "id": "id_1795728615197_nwxl7wsk7",
       "op_id": "OP-2026-240",
       "op_nombre": "CONJUNTO CHILLY",
-      "color": "NEGRO",
       "satelite_id": "id_1795728565893_zm229xszq",
-      "uds": 80,
-      "fecha_entrada": "2026-11-26",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 80
     }
   ]
 }
