@@ -10815,7 +10815,7 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-194||AZUL BEBE": "CORTE_POR_ALISTAR",
+        "OP-2026-194||AZUL BEBE": "EN_CONFECCION",
         "OP-2026-194||AZUL OSCURO": "CORTE_POR_ALISTAR",
         "OP-2026-194||CAFE": "POR_REVISAR",
         "OP-2026-194||ROJO": "POR_REVISAR",
@@ -11767,27 +11767,27 @@
     },
     {
       "cantidades": {
-        "NEGRO_T4": 14,
-        "NEGRO_T6": 14,
-        "NEGRO_T8": 14,
-        "NEGRO_T10": 27,
-        "NEGRO_T12": 27,
-        "NEGRO_T14": 27,
-        "NEGRO_T16": 27,
-        "CAMEL_T4": 13,
-        "CAMEL_T6": 13,
-        "CAMEL_T8": 13,
         "CAMEL_T10": 29,
         "CAMEL_T12": 29,
         "CAMEL_T14": 29,
         "CAMEL_T16": 29,
-        "GRIS_T4": 15,
-        "GRIS_T6": 15,
-        "GRIS_T8": 15,
+        "CAMEL_T4": 13,
+        "CAMEL_T6": 13,
+        "CAMEL_T8": 13,
         "GRIS_T10": 28,
         "GRIS_T12": 28,
         "GRIS_T14": 28,
-        "GRIS_T16": 28
+        "GRIS_T16": 28,
+        "GRIS_T4": 15,
+        "GRIS_T6": 15,
+        "GRIS_T8": 15,
+        "NEGRO_T10": 27,
+        "NEGRO_T12": 27,
+        "NEGRO_T14": 27,
+        "NEGRO_T16": 27,
+        "NEGRO_T4": 14,
+        "NEGRO_T6": 14,
+        "NEGRO_T8": 14
       },
       "categoria": "CONJUNTOS",
       "colores": [
@@ -11819,15 +11819,38 @@
       "numero": 203,
       "referencias": [
         {
-          "nombre": "CONJUNTO CHELSY",
-          "ref": "",
+          "cantidades": {
+            "CAMEL_T10": 29,
+            "CAMEL_T12": 29,
+            "CAMEL_T14": 29,
+            "CAMEL_T16": 29,
+            "CAMEL_T4": 13,
+            "CAMEL_T6": 13,
+            "CAMEL_T8": 13,
+            "GRIS_T10": 28,
+            "GRIS_T12": 28,
+            "GRIS_T14": 28,
+            "GRIS_T16": 28,
+            "GRIS_T4": 15,
+            "GRIS_T6": 15,
+            "GRIS_T8": 15,
+            "NEGRO_T10": 27,
+            "NEGRO_T12": 27,
+            "NEGRO_T14": 27,
+            "NEGRO_T16": 27,
+            "NEGRO_T4": 14,
+            "NEGRO_T6": 14,
+            "NEGRO_T8": 14
+          },
           "cat": "CONJUNTOS",
-          "vmo": 1151,
           "colores": [
             "NEGRO",
             "CAMEL",
             "GRIS"
           ],
+          "maquilador_id": "",
+          "nombre": "CONJUNTO CHELSY",
+          "ref": "",
           "tallas": [
             "T4",
             "T6",
@@ -11837,30 +11860,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T4": 14,
-            "NEGRO_T6": 14,
-            "NEGRO_T8": 14,
-            "NEGRO_T10": 27,
-            "NEGRO_T12": 27,
-            "NEGRO_T14": 27,
-            "NEGRO_T16": 27,
-            "CAMEL_T4": 13,
-            "CAMEL_T6": 13,
-            "CAMEL_T8": 13,
-            "CAMEL_T10": 29,
-            "CAMEL_T12": 29,
-            "CAMEL_T14": 29,
-            "CAMEL_T16": 29,
-            "GRIS_T4": 15,
-            "GRIS_T6": 15,
-            "GRIS_T8": 15,
-            "GRIS_T10": 28,
-            "GRIS_T12": 28,
-            "GRIS_T14": 28,
-            "GRIS_T16": 28
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
@@ -12442,7 +12442,7 @@
         }
       ],
       "subg_estados": {
-        "OP-2026-208||AZUL BEBE": "CORTE_POR_ALISTAR"
+        "OP-2026-208||AZUL BEBE": "EN_CONFECCION"
       },
       "tallas": [
         "T4",
