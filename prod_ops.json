@@ -8228,11 +8228,11 @@
       "subg_estados": {
         "OP-2026-111||CAFE": "CORTE_POR_ALISTAR",
         "OP-2026-111||CAMEL": "CORTE_POR_ALISTAR",
-        "OP-2026-111||MARFIL": "ALISTAMIENTO",
+        "OP-2026-111||MARFIL": "PAGO_PENDIENTE",
         "OP-2026-111||MORA LECHE": "EN_CONFECCION",
         "OP-2026-111||NEGRO": "PAGO_PENDIENTE",
-        "OP-2026-111||VERDE MILITAR": "ALISTAMIENTO",
-        "OP-2026-111||VINOTINTO": "ALISTAMIENTO"
+        "OP-2026-111||VERDE MILITAR": "PAGO_PENDIENTE",
+        "OP-2026-111||VINOTINTO": "PAGO_PENDIENTE"
       },
       "tallas": [
         "T4",
@@ -8386,7 +8386,7 @@
       "subg_estados": {
         "OP-2026-112||AZUL OSCURO": "EN_CONFECCION",
         "OP-2026-112||MARFIL": "CORTE_POR_ALISTAR",
-        "OP-2026-112||MORA LECHE": "EN_CONFECCION",
+        "OP-2026-112||MORA LECHE": "ALISTAMIENTO",
         "OP-2026-112||NEGRO": "EN_CONFECCION"
       },
       "tallas": [
@@ -17040,6 +17040,17 @@
         "GRIS OSCURO",
         "AZUL OSCURO"
       ],
+      "consumibles_check": {
+        "rec_conjunto_chilly_1153__c51_22": true,
+        "rec_conjunto_chilly_1153__c51_23": true,
+        "rec_conjunto_chilly_1153__c51_24": true,
+        "rec_conjunto_chilly_1153__c51_25": true,
+        "rec_conjunto_chilly_1153__c51_26": true,
+        "rec_conjunto_chilly_1153__c51_27": true,
+        "rec_conjunto_chilly_1153__c51_28": true,
+        "rec_conjunto_chilly_1153__c51_31": true,
+        "rec_conjunto_chilly_1153__c51_32": true
+      },
       "cortador": "Corte Carbajal",
       "corte_ok_color": {
         "AZUL OSCURO": {
@@ -17138,18 +17149,7 @@
           "solicitud_id": "id_1793826524137_5ku9jgrni"
         }
       ],
-      "updated_at": "2026-11-17",
-      "consumibles_check": {
-        "rec_conjunto_chilly_1153__c51_22": true,
-        "rec_conjunto_chilly_1153__c51_23": true,
-        "rec_conjunto_chilly_1153__c51_24": true,
-        "rec_conjunto_chilly_1153__c51_25": true,
-        "rec_conjunto_chilly_1153__c51_26": true,
-        "rec_conjunto_chilly_1153__c51_27": true,
-        "rec_conjunto_chilly_1153__c51_28": true,
-        "rec_conjunto_chilly_1153__c51_31": true,
-        "rec_conjunto_chilly_1153__c51_32": true
-      }
+      "updated_at": "2026-11-17"
     },
     {
       "cantidades": {
