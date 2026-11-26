@@ -4453,7 +4453,7 @@
     },
     {
       "color": "BEIGE",
-      "entregado": false,
+      "entregado": true,
       "fecha_compromiso": "2026-11-21",
       "fecha_entrada": "2026-11-09",
       "fecha_inicial": "2026-11-21",
@@ -4469,7 +4469,8 @@
       "op_id": "OP-2026-206",
       "op_nombre": "PANTALON TRENCH",
       "satelite_id": "id_1785259712827_cwczmsu5r",
-      "uds": 100
+      "uds": 100,
+      "fecha_entrega_real": "2026-11-26"
     },
     {
       "color": "NEGRO",
@@ -5003,18 +5004,14 @@
       "uds": 50
     },
     {
+      "color": "NEGRO",
+      "entregado": false,
+      "fecha_entrada": "2026-11-25",
       "id": "id_1795642806782_nhizjpvds",
       "op_id": "OP-2026-254",
       "op_nombre": "PILOTO PANCAKE",
-      "color": "NEGRO",
       "satelite_id": "sat_17",
-      "uds": 92,
-      "fecha_entrada": "2026-11-25",
-      "fecha_compromiso": null,
-      "fecha_inicial": null,
-      "historial": [],
-      "entregado": false,
-      "fecha_entrega_real": null
+      "uds": 92
     }
   ]
 }
