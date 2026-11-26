@@ -7740,32 +7740,16 @@
       "op_nombre": "COUNTRY 2.0"
     },
     {
-      "id": "id_1795618347874_m6zbuu5ty",
-      "op_id": "OP-2026-199",
-      "op_nombre": "CONJUNTO MANCHESTER",
       "categoria": "CONJUNTOS",
-      "creado_por": "Isabel",
       "creado_en": "2026-11-25",
-      "estado": "ENVIADA",
+      "creado_por": "Isabel",
       "enviada_en": "2026-11-25",
+      "estado": "ENVIADA",
+      "id": "id_1795618347874_m6zbuu5ty",
       "lineas": [
         {
-          "id": "id_1795618295495_lv2519zbn",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T6",
-            "T8"
-          ],
-          "marcadas_por_talla": {
-            "T6": 1,
-            "T8": 1
-          },
-          "cantidad_trazos": 4,
           "ancho_util": 172,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "Trazos para el Carvajal",
+          "cantidad_trazos": 4,
           "colores": [
             "CAFE",
             "GRIS CLARO",
@@ -7773,41 +7757,59 @@
             "NEGRO"
           ],
           "generado": false,
+          "id": "id_1795618295495_lv2519zbn",
           "impreso": false,
-          "recogido": false
+          "marcadas_por_talla": {
+            "T6": 1,
+            "T8": 1
+          },
+          "notas": "Trazos para el Carvajal",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T6",
+            "T8"
+          ],
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
         },
         {
-          "id": "id_1795618332919_73g157m1s",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T10",
-            "T12",
-            "T14",
-            "T16"
+          "ancho_util": 172,
+          "cantidad_trazos": 4,
+          "colores": [
+            "CAFE",
+            "GRIS CLARO",
+            "AZUL BEBE",
+            "NEGRO"
           ],
+          "generado": false,
+          "id": "id_1795618332919_73g157m1s",
+          "impreso": false,
           "marcadas_por_talla": {
             "T10": 1,
             "T12": 1,
             "T14": 1,
             "T16": 1
           },
-          "cantidad_trazos": 4,
-          "ancho_util": 172,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
           "notas": "",
-          "colores": [
-            "CAFE",
-            "GRIS CLARO",
-            "AZUL BEBE",
-            "NEGRO"
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T10",
+            "T12",
+            "T14",
+            "T16"
           ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": "",
+          "imagen_url": "https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/tecpatron-imgs/trazo_id_1795618332919_73g157m1s_1795713081240.jpg",
+          "imagen_url_blob": "tp_1795713082321"
         }
-      ]
+      ],
+      "op_id": "OP-2026-199",
+      "op_nombre": "CONJUNTO MANCHESTER"
     }
   ]
 }
