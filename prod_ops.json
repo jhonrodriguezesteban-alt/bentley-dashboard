@@ -8228,7 +8228,7 @@
       "subg_estados": {
         "OP-2026-111||CAFE": "CORTE_POR_ALISTAR",
         "OP-2026-111||CAMEL": "CORTE_POR_ALISTAR",
-        "OP-2026-111||MARFIL": "EN_CONFECCION",
+        "OP-2026-111||MARFIL": "ALISTAMIENTO",
         "OP-2026-111||MORA LECHE": "EN_CONFECCION",
         "OP-2026-111||NEGRO": "PAGO_PENDIENTE",
         "OP-2026-111||VERDE MILITAR": "ALISTAMIENTO",
@@ -13171,24 +13171,24 @@
     },
     {
       "cantidades": {
-        "NEGRO_T6": 12,
-        "NEGRO_T8": 12,
-        "NEGRO_T10": 12,
-        "NEGRO_T12": 20,
-        "NEGRO_T14": 20,
-        "NEGRO_T16": 20,
-        "MARFIL_T6": 12,
-        "MARFIL_T8": 12,
+        "CAMEL_T10": 12,
+        "CAMEL_T12": 21,
+        "CAMEL_T14": 21,
+        "CAMEL_T16": 21,
+        "CAMEL_T6": 12,
+        "CAMEL_T8": 12,
         "MARFIL_T10": 12,
         "MARFIL_T12": 16,
         "MARFIL_T14": 16,
         "MARFIL_T16": 16,
-        "CAMEL_T6": 12,
-        "CAMEL_T8": 12,
-        "CAMEL_T10": 12,
-        "CAMEL_T12": 21,
-        "CAMEL_T14": 21,
-        "CAMEL_T16": 21
+        "MARFIL_T6": 12,
+        "MARFIL_T8": 12,
+        "NEGRO_T10": 12,
+        "NEGRO_T12": 20,
+        "NEGRO_T14": 20,
+        "NEGRO_T16": 20,
+        "NEGRO_T6": 12,
+        "NEGRO_T8": 12
       },
       "categoria": "CHAQUETAS",
       "colores": [
@@ -13234,15 +13234,35 @@
       "numero": 214,
       "referencias": [
         {
-          "nombre": "BLAZER DONATELLA",
-          "ref": "",
+          "cantidades": {
+            "CAMEL_T10": 12,
+            "CAMEL_T12": 21,
+            "CAMEL_T14": 21,
+            "CAMEL_T16": 21,
+            "CAMEL_T6": 12,
+            "CAMEL_T8": 12,
+            "MARFIL_T10": 12,
+            "MARFIL_T12": 16,
+            "MARFIL_T14": 16,
+            "MARFIL_T16": 16,
+            "MARFIL_T6": 12,
+            "MARFIL_T8": 12,
+            "NEGRO_T10": 12,
+            "NEGRO_T12": 20,
+            "NEGRO_T14": 20,
+            "NEGRO_T16": 20,
+            "NEGRO_T6": 12,
+            "NEGRO_T8": 12
+          },
           "cat": "CHAQUETAS",
-          "vmo": 1151,
           "colores": [
             "NEGRO",
             "MARFIL",
             "CAMEL"
           ],
+          "maquilador_id": "",
+          "nombre": "BLAZER DONATELLA",
+          "ref": "",
           "tallas": [
             "T6",
             "T8",
@@ -13251,27 +13271,7 @@
             "T14",
             "T16"
           ],
-          "cantidades": {
-            "NEGRO_T6": 12,
-            "NEGRO_T8": 12,
-            "NEGRO_T10": 12,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "MARFIL_T6": 12,
-            "MARFIL_T8": 12,
-            "MARFIL_T10": 12,
-            "MARFIL_T12": 16,
-            "MARFIL_T14": 16,
-            "MARFIL_T16": 16,
-            "CAMEL_T6": 12,
-            "CAMEL_T8": 12,
-            "CAMEL_T10": 12,
-            "CAMEL_T12": 21,
-            "CAMEL_T14": 21,
-            "CAMEL_T16": 21
-          },
-          "maquilador_id": ""
+          "vmo": 1151
         }
       ],
       "subg_estados": {
