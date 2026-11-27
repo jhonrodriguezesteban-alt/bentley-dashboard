@@ -7570,30 +7570,30 @@
     },
     {
       "cantidades": {
-        "BEIGE_T10": 20,
-        "BEIGE_T12": 20,
-        "BEIGE_T14": 20,
-        "BEIGE_T16": 20,
-        "BEIGE_T6": 10,
-        "BEIGE_T8": 10,
-        "CAFE_T10": 20,
-        "CAFE_T12": 20,
-        "CAFE_T14": 20,
-        "CAFE_T16": 20,
-        "CAFE_T6": 10,
-        "CAFE_T8": 10,
-        "NEGRO_T10": 20,
-        "NEGRO_T12": 20,
-        "NEGRO_T14": 20,
-        "NEGRO_T16": 20,
-        "NEGRO_T6": 10,
-        "NEGRO_T8": 10,
-        "TAUPE_T10": 20,
-        "TAUPE_T12": 20,
-        "TAUPE_T14": 20,
-        "TAUPE_T16": 20,
-        "TAUPE_T6": 10,
-        "TAUPE_T8": 10
+        "BEIGE_T6": 8,
+        "BEIGE_T8": 8,
+        "BEIGE_T10": 11,
+        "BEIGE_T12": 11,
+        "BEIGE_T14": 11,
+        "BEIGE_T16": 11,
+        "NEGRO_T6": 4,
+        "NEGRO_T8": 4,
+        "NEGRO_T10": 6,
+        "NEGRO_T12": 6,
+        "NEGRO_T14": 6,
+        "NEGRO_T16": 6,
+        "CAFE_T6": 6,
+        "CAFE_T8": 6,
+        "CAFE_T10": 13,
+        "CAFE_T12": 13,
+        "CAFE_T14": 13,
+        "CAFE_T16": 13,
+        "TAUPE_T6": 7,
+        "TAUPE_T8": 7,
+        "TAUPE_T10": 11,
+        "TAUPE_T12": 11,
+        "TAUPE_T14": 11,
+        "TAUPE_T16": 11
       },
       "categoria": "PANTALONES",
       "colores": [
@@ -7635,42 +7635,16 @@
       "receta_nombre": "PANTALON ARIEL - REF: 1144",
       "referencias": [
         {
-          "cantidades": {
-            "BEIGE_T10": 20,
-            "BEIGE_T12": 20,
-            "BEIGE_T14": 20,
-            "BEIGE_T16": 20,
-            "BEIGE_T6": 10,
-            "BEIGE_T8": 10,
-            "CAFE_T10": 20,
-            "CAFE_T12": 20,
-            "CAFE_T14": 20,
-            "CAFE_T16": 20,
-            "CAFE_T6": 10,
-            "CAFE_T8": 10,
-            "NEGRO_T10": 20,
-            "NEGRO_T12": 20,
-            "NEGRO_T14": 20,
-            "NEGRO_T16": 20,
-            "NEGRO_T6": 10,
-            "NEGRO_T8": 10,
-            "TAUPE_T10": 20,
-            "TAUPE_T12": 20,
-            "TAUPE_T14": 20,
-            "TAUPE_T16": 20,
-            "TAUPE_T6": 10,
-            "TAUPE_T8": 10
-          },
+          "nombre": "PANTALON ARIEL",
+          "ref": "1144",
           "cat": "PANTALONES",
+          "vmo": 5781,
           "colores": [
             "BEIGE",
             "NEGRO",
             "CAFE",
             "TAUPE"
           ],
-          "maquilador_id": "",
-          "nombre": "PANTALON ARIEL",
-          "ref": "1144",
           "tallas": [
             "T6",
             "T8",
@@ -7679,7 +7653,33 @@
             "T14",
             "T16"
           ],
-          "vmo": 5781
+          "cantidades": {
+            "BEIGE_T6": 8,
+            "BEIGE_T8": 8,
+            "BEIGE_T10": 11,
+            "BEIGE_T12": 11,
+            "BEIGE_T14": 11,
+            "BEIGE_T16": 11,
+            "NEGRO_T6": 4,
+            "NEGRO_T8": 4,
+            "NEGRO_T10": 6,
+            "NEGRO_T12": 6,
+            "NEGRO_T14": 6,
+            "NEGRO_T16": 6,
+            "CAFE_T6": 6,
+            "CAFE_T8": 6,
+            "CAFE_T10": 13,
+            "CAFE_T12": 13,
+            "CAFE_T14": 13,
+            "CAFE_T16": 13,
+            "TAUPE_T6": 7,
+            "TAUPE_T8": 7,
+            "TAUPE_T10": 11,
+            "TAUPE_T12": 11,
+            "TAUPE_T14": 11,
+            "TAUPE_T16": 11
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -7709,7 +7709,9 @@
           "solicitud_id": "id_1795123718692_d4hfw68dg"
         }
       ],
-      "updated_at": "2026-11-18"
+      "updated_at": "2026-11-27",
+      "diseno_origen_id": null,
+      "diseno_origen_nombre": null
     },
     {
       "cantidades": {
@@ -16819,6 +16821,21 @@
         "AZUL OSCURO",
         "ROJO"
       ],
+      "consumibles_check": {
+        "cid_1789269430435_6299__cid_1789268387931_4635": true,
+        "cid_1789269430435_6299__cid_1789268387931_7184||AZUL OSCURO": true,
+        "cid_1789269430435_6299__cid_1789268387931_7184||BEIGE": true,
+        "cid_1789269430435_6299__cid_1789268387931_7184||NEGRO": true,
+        "cid_1789269430435_6299__cid_1789268387931_7184||ROJO": true,
+        "cid_1789269430435_6299__cid_1789268387931_7184||VERDE MILITAR": true,
+        "cid_1789269430435_6299__cid_1789268387931_8367": true,
+        "cid_1789269430435_6299__cid_1789269198383_3842": true,
+        "cid_1789269430435_6299__cid_1789269258075_8398": true,
+        "cid_1789269430435_6299__cid_1789269296895_6829": true,
+        "cid_1789269430435_6299__cid_1789269310409_5605": true,
+        "cid_1789269430435_6299__cid_1789269339495_1489": true,
+        "cid_1789269430435_6299__cid_1789269353425_730": true
+      },
       "consumibles_desagregado": {
         "cid_1789269430435_6299__cid_1789268387931_7184": true
       },
@@ -16944,22 +16961,7 @@
           "solicitud_id": "id_1794066067226_5q2s2cskl"
         }
       ],
-      "updated_at": "2026-11-17",
-      "consumibles_check": {
-        "cid_1789269430435_6299__cid_1789268387931_7184||BEIGE": true,
-        "cid_1789269430435_6299__cid_1789268387931_7184||NEGRO": true,
-        "cid_1789269430435_6299__cid_1789268387931_7184||VERDE MILITAR": true,
-        "cid_1789269430435_6299__cid_1789268387931_7184||AZUL OSCURO": true,
-        "cid_1789269430435_6299__cid_1789268387931_7184||ROJO": true,
-        "cid_1789269430435_6299__cid_1789268387931_8367": true,
-        "cid_1789269430435_6299__cid_1789268387931_4635": true,
-        "cid_1789269430435_6299__cid_1789269198383_3842": true,
-        "cid_1789269430435_6299__cid_1789269258075_8398": true,
-        "cid_1789269430435_6299__cid_1789269296895_6829": true,
-        "cid_1789269430435_6299__cid_1789269310409_5605": true,
-        "cid_1789269430435_6299__cid_1789269339495_1489": true,
-        "cid_1789269430435_6299__cid_1789269353425_730": true
-      }
+      "updated_at": "2026-11-17"
     },
     {
       "cantidades": {
