@@ -7820,184 +7820,186 @@
       "op_nombre": "CONJUNTO MANCHESTER"
     },
     {
-      "id": "id_1795784936148_pywg9rj4l",
-      "op_id": "OP-2026-221",
-      "op_nombre": "SET CHALECO VIENA",
       "categoria": "CONJUNTOS",
-      "creado_por": "Isabel",
       "creado_en": "2026-11-27",
-      "estado": "ENVIADA",
+      "creado_por": "Isabel",
       "enviada_en": "2026-11-27",
+      "estado": "ENVIADA",
+      "id": "id_1795784936148_pywg9rj4l",
       "lineas": [
         {
+          "ancho_util": 145,
+          "cantidad_trazos": 3,
+          "colores": [
+            "NEGRO",
+            "CAMEL",
+            "VINOTINTO"
+          ],
+          "generado": false,
           "id": "id_1795784712028_xwsnpicd6",
-          "tipo": "TELA_PRINCIPAL",
-          "tipo_custom": "",
-          "tallas": [
-            "T6",
-            "T8"
-          ],
+          "impreso": false,
           "marcadas_por_talla": {
             "T6": 1,
             "T8": 1
           },
-          "cantidad_trazos": 3,
-          "ancho_util": 145,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
           "notas": "Trazos para el Carvajal",
-          "colores": [
-            "NEGRO",
-            "CAMEL",
-            "VINOTINTO"
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T6",
+            "T8"
           ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
-        },
-        {
-          "id": "id_1795784751638_ckx9ez0yf",
           "tipo": "TELA_PRINCIPAL",
           "tipo_custom": "",
-          "tallas": [
-            "T10",
-            "T12",
-            "T14",
-            "T16"
-          ],
-          "marcadas_por_talla": {
-            "T10": 1,
-            "T12": 1,
-            "T14": 1,
-            "T16": 1
-          },
-          "cantidad_trazos": 3,
+          "imagen_url": "https://raw.githubusercontent.com/jhonrodriguezesteban-alt/bentley-dashboard/main/tecpatron-imgs/trazo_id_1795784712028_xwsnpicd6_1795805002509.jpg",
+          "imagen_url_blob": "tp_1795805003610"
+        },
+        {
           "ancho_util": 145,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
-          "notas": "",
+          "cantidad_trazos": 3,
           "colores": [
             "NEGRO",
             "CAMEL",
             "VINOTINTO"
           ],
           "generado": false,
+          "id": "id_1795784751638_ckx9ez0yf",
           "impreso": false,
-          "recogido": false
+          "marcadas_por_talla": {
+            "T10": 1,
+            "T12": 1,
+            "T14": 1,
+            "T16": 1
+          },
+          "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "tipo": "TELA_PRINCIPAL",
+          "tipo_custom": ""
         },
         {
+          "ancho_util": 142,
+          "cantidad_trazos": 3,
+          "colores": [
+            "NEGRO",
+            "CAMEL",
+            "VINOTINTO"
+          ],
+          "generado": false,
           "id": "id_1795784785972_crpbmwvno",
-          "tipo": "FORRO",
-          "tipo_custom": "",
-          "tallas": [
-            "T6",
-            "T8"
-          ],
+          "impreso": false,
           "marcadas_por_talla": {
             "T6": 1,
             "T8": 1
           },
-          "cantidad_trazos": 3,
-          "ancho_util": 142,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
           "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T6",
+            "T8"
+          ],
+          "tipo": "FORRO",
+          "tipo_custom": ""
+        },
+        {
+          "ancho_util": 142,
+          "cantidad_trazos": 3,
           "colores": [
             "NEGRO",
             "CAMEL",
             "VINOTINTO"
           ],
           "generado": false,
-          "impreso": false,
-          "recogido": false
-        },
-        {
           "id": "id_1795784820973_sllmk57q3",
-          "tipo": "FORRO",
-          "tipo_custom": "",
-          "tallas": [
-            "T10",
-            "T12",
-            "T14",
-            "T16"
-          ],
+          "impreso": false,
           "marcadas_por_talla": {
             "T10": 1,
             "T12": 1,
             "T14": 1,
             "T16": 1
           },
-          "cantidad_trazos": 3,
-          "ancho_util": 142,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
           "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T10",
+            "T12",
+            "T14",
+            "T16"
+          ],
+          "tipo": "FORRO",
+          "tipo_custom": ""
+        },
+        {
+          "ancho_util": 147,
+          "cantidad_trazos": 3,
           "colores": [
             "NEGRO",
             "CAMEL",
             "VINOTINTO"
           ],
           "generado": false,
-          "impreso": false,
-          "recogido": false
-        },
-        {
           "id": "id_1795784863266_2b5stwsb5",
-          "tipo": "ENTRETELA",
-          "tipo_custom": "",
-          "tallas": [
-            "T6",
-            "T8"
-          ],
+          "impreso": false,
           "marcadas_por_talla": {
             "T6": 1,
             "T8": 1
           },
-          "cantidad_trazos": 3,
-          "ancho_util": 147,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
           "notas": "",
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T6",
+            "T8"
+          ],
+          "tipo": "ENTRETELA",
+          "tipo_custom": ""
+        },
+        {
+          "ancho_util": 147,
+          "cantidad_trazos": 3,
           "colores": [
             "NEGRO",
             "CAMEL",
             "VINOTINTO"
           ],
           "generado": false,
-          "impreso": false,
-          "recogido": false
-        },
-        {
           "id": "id_1795784888983_7gw83pntw",
-          "tipo": "ENTRETELA",
-          "tipo_custom": "",
-          "tallas": [
-            "T10",
-            "T12",
-            "T14",
-            "T16"
-          ],
+          "impreso": false,
           "marcadas_por_talla": {
             "T10": 1,
             "T12": 1,
             "T14": 1,
             "T16": 1
           },
-          "cantidad_trazos": 3,
-          "ancho_util": 147,
-          "sentido": "DOS_DIRECCIONES",
-          "orientacion": "AL_HILO",
           "notas": "",
-          "colores": [
-            "NEGRO",
-            "CAMEL",
-            "VINOTINTO"
+          "orientacion": "AL_HILO",
+          "recogido": false,
+          "sentido": "DOS_DIRECCIONES",
+          "tallas": [
+            "T10",
+            "T12",
+            "T14",
+            "T16"
           ],
-          "generado": false,
-          "impreso": false,
-          "recogido": false
+          "tipo": "ENTRETELA",
+          "tipo_custom": ""
         }
-      ]
+      ],
+      "op_id": "OP-2026-221",
+      "op_nombre": "SET CHALECO VIENA"
     }
   ]
 }
