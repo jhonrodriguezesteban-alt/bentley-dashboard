@@ -12033,24 +12033,24 @@
     },
     {
       "cantidades": {
-        "BEIGE_T10": 20,
-        "BEIGE_T12": 20,
-        "BEIGE_T14": 20,
-        "BEIGE_T16": 20,
-        "BEIGE_T6": 10,
-        "BEIGE_T8": 10,
-        "MARFIL_T10": 20,
-        "MARFIL_T12": 20,
-        "MARFIL_T14": 20,
-        "MARFIL_T16": 20,
-        "MARFIL_T6": 10,
-        "MARFIL_T8": 10,
+        "ROSA_T6": 10,
+        "ROSA_T8": 10,
         "ROSA_T10": 20,
         "ROSA_T12": 20,
         "ROSA_T14": 20,
         "ROSA_T16": 20,
-        "ROSA_T6": 10,
-        "ROSA_T8": 10
+        "MARFIL_T6": 10,
+        "MARFIL_T8": 10,
+        "MARFIL_T10": 31,
+        "MARFIL_T12": 31,
+        "MARFIL_T14": 31,
+        "MARFIL_T16": 31,
+        "BEIGE_T6": 10,
+        "BEIGE_T8": 10,
+        "BEIGE_T10": 20,
+        "BEIGE_T12": 20,
+        "BEIGE_T14": 20,
+        "BEIGE_T16": 20
       },
       "categoria": "BUZOS",
       "colores": [
@@ -12078,35 +12078,15 @@
       "numero": 205,
       "referencias": [
         {
-          "cantidades": {
-            "BEIGE_T10": 20,
-            "BEIGE_T12": 20,
-            "BEIGE_T14": 20,
-            "BEIGE_T16": 20,
-            "BEIGE_T6": 10,
-            "BEIGE_T8": 10,
-            "MARFIL_T10": 20,
-            "MARFIL_T12": 20,
-            "MARFIL_T14": 20,
-            "MARFIL_T16": 20,
-            "MARFIL_T6": 10,
-            "MARFIL_T8": 10,
-            "ROSA_T10": 20,
-            "ROSA_T12": 20,
-            "ROSA_T14": 20,
-            "ROSA_T16": 20,
-            "ROSA_T6": 10,
-            "ROSA_T8": 10
-          },
+          "nombre": "CAMIBUZO NEVADO",
+          "ref": "",
           "cat": "BUZOS",
+          "vmo": 1151,
           "colores": [
             "ROSA",
             "MARFIL",
             "BEIGE"
           ],
-          "maquilador_id": "",
-          "nombre": "CAMIBUZO NEVADO",
-          "ref": "",
           "tallas": [
             "T6",
             "T8",
@@ -12115,8 +12095,27 @@
             "T14",
             "T16"
           ],
-          "totalUds": 300,
-          "vmo": 1151
+          "cantidades": {
+            "ROSA_T6": 10,
+            "ROSA_T8": 10,
+            "ROSA_T10": 20,
+            "ROSA_T12": 20,
+            "ROSA_T14": 20,
+            "ROSA_T16": 20,
+            "MARFIL_T6": 10,
+            "MARFIL_T8": 10,
+            "MARFIL_T10": 31,
+            "MARFIL_T12": 31,
+            "MARFIL_T14": 31,
+            "MARFIL_T16": 31,
+            "BEIGE_T6": 10,
+            "BEIGE_T8": 10,
+            "BEIGE_T10": 20,
+            "BEIGE_T12": 20,
+            "BEIGE_T14": 20,
+            "BEIGE_T16": 20
+          },
+          "maquilador_id": ""
         }
       ],
       "subg_estados": {
@@ -12148,7 +12147,8 @@
           "lineas": 2,
           "solicitud_id": "id_1793218315784_e91y439ne"
         }
-      ]
+      ],
+      "updated_at": "2026-11-27"
     },
     {
       "cantidades": {
