@@ -16919,7 +16919,7 @@
         "OP-2026-249||AZUL OSCURO": "CORTE_POR_ALISTAR",
         "OP-2026-249||BEIGE": "EN_CONFECCION",
         "OP-2026-249||NEGRO": "CORTE_POR_ALISTAR",
-        "OP-2026-249||ROJO": "CORTE_POR_ALISTAR",
+        "OP-2026-249||ROJO": "EN_CONFECCION",
         "OP-2026-249||VERDE MILITAR": "CORTE_POR_ALISTAR"
       },
       "tallas": [
@@ -16944,7 +16944,10 @@
           "solicitud_id": "id_1794066067226_5q2s2cskl"
         }
       ],
-      "updated_at": "2026-11-17"
+      "updated_at": "2026-11-17",
+      "consumibles_check": {
+        "cid_1789269430435_6299__cid_1789268387931_7184||BEIGE": true
+      }
     },
     {
       "cantidades": {
